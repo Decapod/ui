@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+		<title>Thumbnail browser</title>
+
+		<!-- TODO Use a custom CSS style instead of the iPhone one. -->
+        <link type="text/css" rel="stylesheet" href="../../../infusion/src/webapp/framework/fss/css/fss-mobile-iphone-layout.css" />
+
+		<script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
+		<script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
+		<script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
+		
+        <script type="text/javascript" src="../js/ThumbnailBrowser.js"></script>
+	</head>
+    
+	<!-- TODO Discuss the needed structure for the list and make changes if necessary. -->
+	<body class="fl-theme-iphone">
+        
+        <div class="thumbBrowser">
+            <ul class="flc-thumbBrowser-listGroup">
+                <li class="flc-thumbBrowser-items">
+                    <a class="flc-thumbBrowser-link">
+                        <img class="flc-thumbBrowser-image"/>                        
+                    </a>
+					<a class="flc-thumsBrowser-deleteLink">Delete</a>
+                </li>
+            </ul>
+        </div>
+        
+		<!-- TODO Use real thumbnails instead of large images. -->
+        <script type="text/javascript">
+            var links = [
+                            {
+                                target: "#",
+                                image: "http://localhost:8080/capture?fileIndex=0",
+                            },
+							{
+                                target: "#",
+                                image: "http://localhost:8080/capture?fileIndex=1",
+                            },
+							{
+                                target: "#",
+                                image: "http://localhost:8080/capture?fileIndex=2",
+                            },
+							{
+                                target: "#",
+                                image: "http://localhost:8080/capture?fileIndex=3",
+                            },
+                        ];
+            
+            fluid.thumbBrowser(".thumbBrowser", {links: links});
+        </script>
+
+	</body>
+</html>
