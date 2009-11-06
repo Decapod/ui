@@ -26,33 +26,37 @@
                     <a class="flc-thumbBrowser-link">
                         <img class="flc-thumbBrowser-image"/>                        
                     </a>
-					<a class="flc-thumsBrowser-deleteLink">Delete</a>
+					<a class="flc-thumbBrowser-deleteButton">Delete</a>
                 </li>
             </ul>
         </div>
         
 		<!-- TODO Use real thumbnails instead of large images. -->
         <script type="text/javascript">
-            var links = [
+            var thumbs = [
                             {
                                 target: "#",
                                 image: "http://localhost:8080/capture?fileIndex=0",
+								deleteTarget: "#",
                             },
 							{
                                 target: "#",
                                 image: "http://localhost:8080/capture?fileIndex=1",
+								deleteTarget: "#",
                             },
 							{
                                 target: "#",
                                 image: "http://localhost:8080/capture?fileIndex=2",
+								deleteTarget: "#",
                             },
 							{
                                 target: "#",
                                 image: "http://localhost:8080/capture?fileIndex=3",
+								deleteTarget: "#",
                             },
                         ];
             
-            fluid.thumbBrowser(".thumbBrowser", {links: links});
+            fluid.thumbBrowser(".thumbBrowser", {thumbs: thumbs});
         </script>
 
 	</body>

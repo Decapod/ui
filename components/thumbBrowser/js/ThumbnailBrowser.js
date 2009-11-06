@@ -17,13 +17,17 @@ fluid = fluid || {};
 (function ($) {
     
     /**
-     * Creates a render component for the component tree. The key can be any key that a componet tree would take and the value is what would be assigned to it.
-     * For example if you wanted to have node that just prints out "Hello World" you could set the key to "value" and the value to "Hello World"
-     * 
+     * Creates a render component for the component tree. The key can be any key
+     * that a componet tree would take and the value is what would be assigned
+     * to it. For example if you wanted to have node that just prints out
+     * "Hello World" you could set the key to "value" and the value to
+     * "Hello World".
+     *
      * @param {Object} id, the ID used by the component tree
      * @param {Object} key, a key representing an entry in a renderer component
      * @param {Object} value, the value assigned to the key
-     * @param {Object} classes, (optional) can add classes without having to specify the decorator key. 
+     * @param {Object} classes, (optional) can add classes without having to
+     * 				   specify the decorator key
      */
     var treeNode = function (id, key, value, classes) {
         var obj = {ID: id};
@@ -48,25 +52,26 @@ fluid = fluid || {};
             {selector: that.options.selectors.listItems, id: "listItems:"},
             {selector: that.options.selectors.link, id: "link"},
             {selector: that.options.selectors.image, id: "image"},
+			{selector: that.options.selectors.deleteButton, id: "deleteButton"},
         ];
 
         var generateTree = function () {
             var styles = that.options.styles;
-            return fluid.transform(that.options.links, function (object) {
-                var tree = treeNode("listItems:", "children", 
-                    [treeNode("link", "target", object.target || "", styles.link)],                    
-                styles.listItems);
+            return fluid.transform(that.options.thumbs, function (object) {
+                var tree = treeNode(
+					"listItems:",
+					"children", 
+                    [treeNode("link", "target", object.target, styles.link),
+					 treeNode("deleteButton", "target", object.deleteTarget, styles.deleteButton)],                    
+                	styles.listItems);
                 
-                if (object.image || that.options.useDefaultImage) {
-                    tree.children.push({
-                        ID: "image",
-                        target: object.image,
-                        decorators: [{
-                            type: "addClass",
-                            classes: styles.image
-                        }]
-                    });
-                }
+                if (object.image) {
+                    tree.children.push(treeNode(
+						"image",
+						"target",
+						object.image,
+						styles.image));
+                };
                 
                 return tree;
             });
@@ -85,8 +90,8 @@ fluid = fluid || {};
      * images, each one having a delete button next to it and possibly a title
      * message.
      * 
-     * @param {Object} container The component this View should be placed in.
-     * @param {Object} options The options passed into the component.
+     * @param {Object} container, the component this View should be placed in
+     * @param {Object} options, the options passed into the component
      */
     fluid.thumbBrowser = function (container, options) {
         var that = fluid.initView("fluid.thumbBrowser", container, options);
@@ -98,7 +103,7 @@ fluid = fluid || {};
     };
     
     /**
-     * The components defaults
+     * The components defaults.
      */
     fluid.defaults("fluid.thumbBrowser", {
         selectors: {
@@ -114,15 +119,15 @@ fluid = fluid || {};
             listItems: null,
             link: null,
             image: "fl-icon",
+			deleteButton: null,
         },
         
-        useDefaultImage: true,
-        
-        links: [
+        thumbs: [
                 {
                     target: "",
                     image: "",
-                }
+					deleteTarget: "",
+                }			
             ]
         }
     );
