@@ -96,6 +96,8 @@ fluid = fluid || {};
     fluid.thumbBrowser = function (container, options) {
         var that = fluid.initView("fluid.thumbBrowser", container, options);
 		
+		that.model = that.options.thumbs;
+		
 		that.locate("listGroup").addClass(that.options.styles.listGroup);
 		render(that);		
        
@@ -110,6 +112,7 @@ fluid = fluid || {};
             listGroup: ".flc-thumbBrowser-listGroup",
             listItems: ".flc-thumbBrowser-items",
             link: ".flc-thumbBrowser-link",
+			label: ".flc-thumbBrowser-label",
             image: ".flc-thumbBrowser-image",
 			deleteButton: ".flc-thumbBrowser-deleteButton",
         },
@@ -118,6 +121,7 @@ fluid = fluid || {};
             listGroup: "fl-list-menu fl-list-thumbnails fl-thumbnails-expanded",
             listItems: null,
             link: null,
+			label: null,
             image: "fl-icon",
 			deleteButton: null,
         },

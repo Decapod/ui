@@ -17,13 +17,13 @@
         <script type="text/javascript" src="../js/ThumbnailBrowser.js"></script>
 	</head>
     
-	<!-- TODO Discuss the needed structure for the list and make changes if necessary. -->
 	<body class="fl-theme-iphone">
         
         <div class="thumbBrowser">
             <ul class="flc-thumbBrowser-listGroup">
                 <li class="flc-thumbBrowser-items">
                     <a class="flc-thumbBrowser-link">
+                    	<span class="flc-thumbBrowser-label">Unfixed</span>
                         <img class="flc-thumbBrowser-image"/>                        
                     </a>
 					<a class="flc-thumbBrowser-deleteButton">Delete</a>
@@ -36,22 +36,22 @@
             var thumbs = [
                             {
                                 target: "#",
-                                image: "http://localhost:8080/capture?fileIndex=0",
+                                image: "../../server/testData/Image1.jpg",
 								deleteTarget: "#",
                             },
 							{
                                 target: "#",
-                                image: "http://localhost:8080/capture?fileIndex=1",
+                                image: "../../server/testData/Image2.jpg",
 								deleteTarget: "#",
                             },
 							{
                                 target: "#",
-                                image: "http://localhost:8080/capture?fileIndex=2",
+                                image: "../../server/testData/Image3.jpg",
 								deleteTarget: "#",
                             },
 							{
                                 target: "#",
-                                image: "http://localhost:8080/capture?fileIndex=3",
+                                image: "../../server/testData/Image4.jpg",
 								deleteTarget: "#",
                             },
                         ];
