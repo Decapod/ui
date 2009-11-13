@@ -52,7 +52,7 @@ fluid = fluid || {};
             {selector: that.options.selectors.listItems, id: "listItems:"},
             {selector: that.options.selectors.link, id: "link"},
             {selector: that.options.selectors.image, id: "image"},
-			{selector: that.options.selectors.deleteButton, id: "deleteButton"},
+			{selector: that.options.selectors.deleteButton, id: "deleteButton"}
         ];
 
         var generateTree = function () {
@@ -78,10 +78,10 @@ fluid = fluid || {};
         };
         
         var options = {
-            cutpoints: selectorMap,
+            cutpoints: selectorMap
         };
         
-        fluid.selfRender(that.locate("listGroup"), generateTree(), options);
+        fluid.selfRender(that.locate("allImages"), generateTree(), options);
          
     };
     
@@ -94,45 +94,51 @@ fluid = fluid || {};
      * @param {Object} options, the options passed into the component
      */
     fluid.thumbBrowser = function (container, options) {
-        var that = fluid.initView("fluid.thumbBrowser", container, options);
-		
+		var that = fluid.initView("fluid.thumbBrowser", container, options);
+	   
+	  	that.reorderer = fluid.initSubcomponents(that, "reorderer", [that.container, that.options.reorderer.options]);
+				
 		that.model = that.options.thumbs;
 		
-		that.locate("listGroup").addClass(that.options.styles.listGroup);
 		render(that);		
        
         return that;
     };
     
-    /**
-     * The components defaults.
-     */
     fluid.defaults("fluid.thumbBrowser", {
+		reorderer : {
+			type: "fluid.reorderImages",
+			options: {
+				selectors: {
+					movables: ".flc-thumbBrowser-link",
+					imageTitle: ".flc-thumbBrowser-imageTitle"
+				}
+			}
+		},
+		
         selectors: {
-            listGroup: ".flc-thumbBrowser-listGroup",
+            allImages: ".flc-thumbBrowser-allImages",
             listItems: ".flc-thumbBrowser-items",
             link: ".flc-thumbBrowser-link",
-			label: ".flc-thumbBrowser-label",
             image: ".flc-thumbBrowser-image",
-			deleteButton: ".flc-thumbBrowser-deleteButton",
+			deleteButton: ".flc-thumbBrowser-deleteButton"			
         },
         
         styles: {
-            listGroup: "fl-list-menu fl-list-thumbnails fl-thumbnails-expanded",
+            allImages: null,
             listItems: null,
             link: null,
-			label: null,
-            image: "fl-icon",
-			deleteButton: null,
+            image: null,
+			deleteButton: null
         },
         
         thumbs: [
                 {
                     target: "",
                     image: "",
-					deleteTarget: "",
+					deleteTarget: ""
                 }			
-            ]
+            ]		
         }
     );
     

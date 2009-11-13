@@ -2,14 +2,31 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-		<title>Thumbnail browser</title>
-
-		<!-- TODO Use a custom CSS style instead of the iPhone one. -->
-        <link type="text/css" rel="stylesheet" href="../../../infusion/src/webapp/framework/fss/css/fss-mobile-iphone-layout.css" />
-
-		<script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+		<title>Thumbnail Browser</title>
+		
+		<!-- Required stylesheets for Fluid Skinning System -->
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-reset.css" />
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-layout.css" />
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-text.css" />
+		
+		<!-- Custom stylesheets for the Thumbnails Browser component. -->
+		<link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/components/reorderer/css/Reorderer.css" />
+        <link rel="stylesheet" type="text/css" href="../css/ThumbnailBrowser.css"/>
+        
+        <!--  Required JavaScript modules for the Thumbnails Browser. -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.core.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.draggable.js"></script>
+		<script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/plugins/delegate/js/jquery.delegate.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
+		
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/FluidDOMUtilities.js"></script>
+		
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/GeometricManager.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/Reorderer.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/ImageReorderer.js"></script>
+
 		<script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
 		<script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
@@ -17,21 +34,19 @@
         <script type="text/javascript" src="../js/ThumbnailBrowser.js"></script>
 	</head>
     
-	<body class="fl-theme-iphone">
-        
-        <div class="thumbBrowser">
-            <ul class="flc-thumbBrowser-listGroup">
-                <li class="flc-thumbBrowser-items">
-                    <a class="flc-thumbBrowser-link">
-                    	<span class="flc-thumbBrowser-label">Unfixed</span>
-                        <img class="flc-thumbBrowser-image"/>                        
+	<body>
+		<form action="#" id="thumb-browser-form" class="flc-thumbBrowser fl-thumbBrowser fl-thumbBrowser-verticalLayout">
+			<div class="flc-thumbBrowser-allImages">
+				<div class="flc-thumbBrowser-items">
+                    <a class="flc-thumbBrowser-link fl-imageReorderer-item fl-reorderer-movable-default ui-draggable">
+                    	<span class="flc-thumbBrowser-imageTitle">Unfixed</span>	
+                    	<img class="flc-thumbBrowser-image"/>                    						
                     </a>
-					<a class="flc-thumbBrowser-deleteButton">Delete</a>
-                </li>
-            </ul>
-        </div>
-        
-		<!-- TODO Use real thumbnails instead of large images. -->
+					<a class="flc-thumbBrowser-deleteButton">Delete</a>					
+				</div>
+			</div>
+		</form>
+		
         <script type="text/javascript">
             var thumbs = [
                             {
@@ -52,11 +67,11 @@
 							{
                                 target: "#",
                                 image: "../../server/testData/Image4.jpg",
-								deleteTarget: "#",
-                            },
+								deleteTarget: "#"
+                            }
                         ];
             
-            fluid.thumbBrowser(".thumbBrowser", {thumbs: thumbs});
+            fluid.thumbBrowser(".flc-thumbBrowser", {thumbs: thumbs});
         </script>
 
 	</body>
