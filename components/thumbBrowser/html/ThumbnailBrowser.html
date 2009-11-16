@@ -3,30 +3,25 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Thumbnail Browser</title>
-		
-		<!-- Required stylesheets for Fluid Skinning System -->
-        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-reset.css" />
-        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-layout.css" />
-        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-text.css" />
-		
-		<!-- Custom stylesheets for the Thumbnails Browser component. -->
-		<link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/components/reorderer/css/Reorderer.css" />
-        <link rel="stylesheet" type="text/css" href="../css/ThumbnailBrowser.css"/>
         
         <!--  Required JavaScript modules for the Thumbnails Browser. -->
+		<!-- jQuery -->
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.core.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.draggable.js"></script>
 		<script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/plugins/delegate/js/jquery.delegate.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
 		
+		<!-- Fluid -->
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/FluidDOMUtilities.js"></script>
 		
+		<!-- Reorderer -->
         <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/GeometricManager.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/Reorderer.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/ImageReorderer.js"></script>
 
+		<!-- Renderer -->
 		<script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
 		<script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
@@ -34,39 +29,39 @@
         <script type="text/javascript" src="../js/ThumbnailBrowser.js"></script>
 	</head>
     
+	<!-- TODO Remove BR tags when implementing styling -->
 	<body>
-		<form action="#" id="thumb-browser-form" class="flc-thumbBrowser fl-thumbBrowser fl-thumbBrowser-verticalLayout">
-			<div class="flc-thumbBrowser-allImages">
-				<div class="flc-thumbBrowser-items">
-                    <a class="flc-thumbBrowser-link fl-imageReorderer-item fl-reorderer-movable-default ui-draggable">
-                    	<span class="flc-thumbBrowser-imageTitle">Unfixed</span>	
-                    	<img class="flc-thumbBrowser-image"/>                    						
-                    </a>
-					<a class="flc-thumbBrowser-deleteButton">Delete</a>					
-				</div>
+		<form action="#" id="thumb-browser-form" class="flc-thumbBrowser">
+			<div class="flc-thumbBrowser-items">
+				<a class="flc-thumbBrowser-link">
+					<span class="flc-thumbBrowser-label">Unfixed</span><br />
+                    <img class="flc-thumbBrowser-image"><br />
+                </a>
+				<a class="flc-thumbBrowser-deleteButton">Delete</a>					
 			</div>
 		</form>
 		
+		<!-- Staticly loaded testing images -->
         <script type="text/javascript">
             var thumbs = [
                             {
-                                target: "#",
-                                image: "../../server/testData/Image1.jpg",
+                                target: "../../server/testData/Image1.jpg",
+                                image: "../../server/testData/Image1-thumb.jpg",
 								deleteTarget: "#",
                             },
 							{
-                                target: "#",
-                                image: "../../server/testData/Image2.jpg",
+                                target: "../../server/testData/Image2.jpg",
+                                image: "../../server/testData/Image2-thumb.jpg",
 								deleteTarget: "#",
                             },
 							{
-                                target: "#",
-                                image: "../../server/testData/Image3.jpg",
+                                target: "../../server/testData/Image3.jpg",
+                                image: "../../server/testData/Image3-thumb.jpg",
 								deleteTarget: "#",
                             },
 							{
-                                target: "#",
-                                image: "../../server/testData/Image4.jpg",
+                                target: "../../server/testData/Image4.jpg",
+                                image: "../../server/testData/Image4-thumb.jpg",
 								deleteTarget: "#"
                             }
                         ];

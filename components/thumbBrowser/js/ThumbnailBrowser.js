@@ -10,11 +10,11 @@ https://source.fluidproject.org/svn/LICENSE.txt
 */
 
 /*global jQuery*/
-/*global fluid*/
+/*global fluid_1_2*/
 
-fluid = fluid || {};
+fluid_1_2 = fluid_1_2 || {};
 
-(function ($) {
+(function ($, fluid) {
     
     /**
      * Creates a render component for the component tree. The key can be any key
@@ -27,7 +27,7 @@ fluid = fluid || {};
      * @param {Object} key, a key representing an entry in a renderer component
      * @param {Object} value, the value assigned to the key
      * @param {Object} classes, (optional) can add classes without having to
-     * 				   specify the decorator key
+     *                 specify the decorator key
      */
     var treeNode = function (id, key, value, classes) {
         var obj = {ID: id};
@@ -43,7 +43,7 @@ fluid = fluid || {};
     };
     
     /**
-     * Renders the copmonent based on values passed into the options
+     * Renders the component in a "thumbBrowser" node by generating its tree.
      * 
      * @param {Object} that, the component
      */
@@ -57,13 +57,14 @@ fluid = fluid || {};
 
         var generateTree = function () {
             var styles = that.options.styles;
-            return fluid.transform(that.options.thumbs, function (object) {
+			
+            return fluid.transform(that.model, function (object) {
                 var tree = treeNode(
 					"listItems:",
 					"children", 
                     [treeNode("link", "target", object.target, styles.link),
 					 treeNode("deleteButton", "target", object.deleteTarget, styles.deleteButton)],                    
-                	styles.listItems);
+                    styles.listItems);
                 
                 if (object.image) {
                     tree.children.push(treeNode(
@@ -71,8 +72,17 @@ fluid = fluid || {};
 						"target",
 						object.image,
 						styles.image));
-                };
-                
+                }
+				
+                var decorator = 
+				{
+					type: "fluid",
+					func: "fluid.reorderImages",
+					container: that.container,
+					options: that.options.reorderer.options
+				};
+				tree.decorators = decorator;
+				
                 return tree;
             });
         };
@@ -81,24 +91,26 @@ fluid = fluid || {};
             cutpoints: selectorMap
         };
         
-        fluid.selfRender(that.locate("allImages"), generateTree(), options);
-         
+        fluid.selfRender(that.locate(that.options.selectors.thumbBrowser), generateTree(), options);         
     };
     
     /**
      * Creates a View for the thumbBrowser component. It contains a list of
-     * images, each one having a delete button next to it and possibly a title
-     * message.
+     * images, each one having a delete button next to it and possibly a label.
      * 
      * @param {Object} container, the component this View should be placed in
      * @param {Object} options, the options passed into the component
      */
     fluid.thumbBrowser = function (container, options) {
+		
 		var that = fluid.initView("fluid.thumbBrowser", container, options);
-	   
-	  	that.reorderer = fluid.initSubcomponents(that, "reorderer", [that.container, that.options.reorderer.options]);
+		
+		that.reorderer = fluid.initSubcomponents(
+		  that, "reorderer", [that.container, that.options.reorderer.options]);
 				
 		that.model = that.options.thumbs;
+		
+		that.locate(that.options.selectors.thumbBrowser).addClass(that.options.styles.thumbBrowser);
 		
 		render(that);		
        
@@ -110,13 +122,14 @@ fluid = fluid || {};
 			type: "fluid.reorderImages",
 			options: {
 				selectors: {
-					movables: ".flc-thumbBrowser-link",
-					imageTitle: ".flc-thumbBrowser-imageTitle"
+					movables: ".flc-thumbBrowser-items",
+					imageTitle: ".flc-thumbBrowser-label"
 				}
 			}
 		},
 		
         selectors: {
+			thumbBrowser: ".flc-thumbBrowser",
             allImages: ".flc-thumbBrowser-allImages",
             listItems: ".flc-thumbBrowser-items",
             link: ".flc-thumbBrowser-link",
@@ -125,6 +138,7 @@ fluid = fluid || {};
         },
         
         styles: {
+			thumbBrowser: null,
             allImages: null,
             listItems: null,
             link: null,
@@ -142,4 +156,4 @@ fluid = fluid || {};
         }
     );
     
-})(jQuery);
+})(jQuery, fluid_1_2);
