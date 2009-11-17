@@ -18,7 +18,7 @@ fluid_1_2 = fluid_1_2 || {};
     
     /**
      * Creates a render component for the component tree. The key can be any key
-     * that a componet tree would take and the value is what would be assigned
+     * that a component tree would take and the value is what would be assigned
      * to it. For example if you wanted to have node that just prints out
      * "Hello World" you could set the key to "value" and the value to
      * "Hello World".

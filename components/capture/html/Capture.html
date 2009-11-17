@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Decapod Capture</title>
+        
+        <!-- Required JavaScript modules for the Capture component. -->
+		<!-- TODO See if the list of required libraries can be reduced. -->
+        <!-- jQuery -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.core.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.draggable.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/plugins/delegate/js/jquery.delegate.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
+        
+        <!-- Fluid -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/FluidDOMUtilities.js"></script>
+        
+        <!-- Reorderer -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/GeometricManager.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/Reorderer.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/ImageReorderer.js"></script>
+
+        <!-- Renderer -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
+        
+		<script type="text/javascript" src="../js/Capture.js"></script>
+        <script type="text/javascript" src="../../thumbBrowser/js/ThumbnailBrowser.js"></script>
+    </head>
+    
+    <!-- TODO Remove BR tags when implementing styling -->
+    <body class="flc-capture">
+    	<h1>Decapod</h1>
+        <form action="#" id="thumb-browser-form" class="flc-thumbBrowser">
+            <div class="flc-thumbBrowser-items">
+                <a class="flc-thumbBrowser-link">
+                    <span class="flc-thumbBrowser-label">Unfixed</span><br />
+                    <img class="flc-thumbBrowser-image"><br />
+                </a>
+                <a class="flc-thumbBrowser-deleteButton">Delete</a>                 
+            </div>
+        </form>
+		
+		<div class="flc-preview-area">
+			<div class="flc-preview-menubar">
+				<a class="flc-fix-link">Fix Image</a>
+				<a class="flc-compare-link">Compare Before/After</a>
+				<a class="flc-export-link">Export to PDF</a>
+				<img class="flc-image-preview">
+			</div>
+		</div>
+		<div class="flc-bottom-area">
+			<a class="flc-capture-button">Take picture</a>
+			<span class="flc-zoom-control">Camera zoom</span>			
+		</div>
+        
+		<!-- Initializing Capture component. -->
+        <script type="text/javascript">
+        	fluid.capture(".flc-capture");
+        </script>
+    </body>
+</html>
