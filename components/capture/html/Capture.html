@@ -5,7 +5,6 @@
         <title>Decapod Capture</title>
         
         <!-- Required JavaScript modules for the Capture component. -->
-		<!-- TODO See if the list of required libraries can be reduced. -->
         <!-- jQuery -->
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.core.js"></script>
@@ -27,6 +26,7 @@
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
         
+		<!-- Decapod components -->
 		<script type="text/javascript" src="../js/Capture.js"></script>
         <script type="text/javascript" src="../../thumbBrowser/js/ThumbnailBrowser.js"></script>
     </head>
@@ -35,29 +35,28 @@
     <body class="flc-capture">
     	<h1>Decapod</h1>
         <form action="#" id="thumb-browser-form" class="flc-thumbBrowser">
-            <div class="flc-thumbBrowser-items">
+            <div class="flc-thumbBrowser-container-thumbs">
                 <a class="flc-thumbBrowser-link">
                     <span class="flc-thumbBrowser-label">Unfixed</span><br />
                     <img class="flc-thumbBrowser-image"><br />
                 </a>
-                <a class="flc-thumbBrowser-deleteButton">Delete</a>                 
+                <a class="flc-thumbBrowser-button-delete">Delete</a>                 
             </div>
         </form>
 		
-		<div class="flc-preview-area">
-			<div class="flc-preview-menubar">
-				<a class="flc-fix-link">Fix Image</a>
-				<a class="flc-compare-link">Compare Before/After</a>
-				<a class="flc-export-link">Export to PDF</a>
-				<img class="flc-image-preview">
+		<div class="flc-capture-container-preview">
+			<div class="flc-capture-container-menuBar">
+				<a class="flc-capture-button-fix">Fix Image</a>
+				<a class="flc-capture-button-compare">Compare Before/After</a>
+				<a class="flc-capture-button-export">Export to PDF</a>
+				<img class="flc-capture-image-preview">
 			</div>
 		</div>
-		<div class="flc-bottom-area">
-			<a class="flc-capture-button">Take picture</a>
-			<span class="flc-zoom-control">Camera zoom</span>			
+		<div class="flc-capture-container-bottom">
+			<a class="flc-capture-button-takePicture">Take picture</a>
 		</div>
         
-		<!-- Initializing Capture component. -->
+		<!-- Initializing the Capture component. -->
         <script type="text/javascript">
         	fluid.capture(".flc-capture");
         </script>

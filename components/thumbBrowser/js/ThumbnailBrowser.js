@@ -122,7 +122,7 @@ fluid_1_2 = fluid_1_2 || {};
 			type: "fluid.reorderImages",
 			options: {
 				selectors: {
-					movables: ".flc-thumbBrowser-items",
+					movables: ".flc-thumbBrowser-container-thumbs",
 					imageTitle: ".flc-thumbBrowser-label"
 				}
 			}
@@ -130,11 +130,10 @@ fluid_1_2 = fluid_1_2 || {};
 		
         selectors: {
 			thumbBrowser: ".flc-thumbBrowser",
-            allImages: ".flc-thumbBrowser-allImages",
-            listItems: ".flc-thumbBrowser-items",
+            listItems: ".flc-thumbBrowser-container-thumbs",
             link: ".flc-thumbBrowser-link",
             image: ".flc-thumbBrowser-image",
-			deleteButton: ".flc-thumbBrowser-deleteButton"			
+			deleteButton: ".flc-thumbBrowser-button-delete"			
         },
         
         styles: {
