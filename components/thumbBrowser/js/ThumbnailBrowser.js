@@ -51,8 +51,8 @@ fluid_1_2 = fluid_1_2 || {};
         var selectorMap = [
             {selector: that.options.selectors.listItems, id: "listItems:"},
             {selector: that.options.selectors.link, id: "link"},
-            {selector: that.options.selectors.image, id: "image"},
-			{selector: that.options.selectors.deleteButton, id: "deleteButton"}
+			{selector: that.options.selectors.deleteButton, id: "deleteButton"},
+            {selector: that.options.selectors.image, id: "image"}
         ];
 
         var generateTree = function () {
@@ -63,7 +63,7 @@ fluid_1_2 = fluid_1_2 || {};
 					"listItems:",
 					"children", 
                     [treeNode("link", "target", object.target, styles.link),
-					 treeNode("deleteButton", "target", object.deleteTarget, styles.deleteButton)],                    
+					 treeNode("deleteButton", "target", "#", styles.deleteButton)],                    
                     styles.listItems);
                 
                 if (object.image) {
@@ -93,8 +93,12 @@ fluid_1_2 = fluid_1_2 || {};
         
         fluid.selfRender(that.locate(that.options.selectors.thumbBrowser), generateTree(), options);         
     };
-    
-    /**
+	
+	var onSelectListener = function (item) {
+		// TODO Fire an event to be listened to by other components.
+    };
+	
+	/**
      * Creates a View for the thumbBrowser component. It contains a list of
      * images, each one having a delete button next to it and possibly a label.
      * 
@@ -111,7 +115,7 @@ fluid_1_2 = fluid_1_2 || {};
 		that.model = that.options.thumbs;
 		
 		that.locate(that.options.selectors.thumbBrowser).addClass(that.options.styles.thumbBrowser);
-		
+
 		render(that);		
        
         return that;
@@ -124,6 +128,10 @@ fluid_1_2 = fluid_1_2 || {};
 				selectors: {
 					movables: ".flc-thumbBrowser-container-thumbs",
 					imageTitle: ".flc-thumbBrowser-label"
+				},
+				
+				listeners: {
+					onSelect: onSelectListener
 				}
 			}
 		},
@@ -138,20 +146,22 @@ fluid_1_2 = fluid_1_2 || {};
         
         styles: {
 			thumbBrowser: null,
-            allImages: null,
             listItems: null,
             link: null,
             image: null,
 			deleteButton: null
         },
+		
+		events: {
+            onThumbSelected: null
+        },
         
         thumbs: [
                 {
                     target: "",
-                    image: "",
-					deleteTarget: ""
+                    image: ""
                 }			
-            ]		
+            ]
         }
     );
     

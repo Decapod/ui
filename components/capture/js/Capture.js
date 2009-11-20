@@ -15,6 +15,38 @@ https://source.fluidproject.org/svn/LICENSE.txt
 fluid_1_2 = fluid_1_2 || {};
 
 (function ($, fluid) {
+	
+	/**
+	 * Binds listeners for the click events of the various buttons in the UI,
+	 * such as fixing/comparing images, exporting to PDF, and taking pictures.
+	 * 
+	 * @param {Object} that, the Capture component
+	 */
+	var bindHandlers = function (that) { 
+        that.locate("fixButton").click( 
+            function () {
+                // TODO Implement fix image functionality.
+        });
+		
+		that.locate("compareButton").click( 
+            function () {
+                // TODO Implement compare images functionality.
+        });
+		
+		that.locate("exportButton").click( 
+            function () {
+                // TODO Implement export to PDF functionality.
+        });
+		
+		that.locate("takePictureButton").click( 
+            function () {
+                // TODO Implement take picture functionality.
+        });
+    };
+	
+	var thumbSelectionListener = function (item) {
+		// TODO Implement thumb selection handler.
+	};
     
     /**
      * Creates a View for the Capture component. Contains a thumbBrowser
@@ -28,7 +60,13 @@ fluid_1_2 = fluid_1_2 || {};
         var that = fluid.initView("fluid.capture", container, options);
         
         that.thumbBrowser = fluid.initSubcomponents(
-          that, "thumbBrowser", [".flc-thumbBrowser", that.options.thumbBrowser.options]);
+          that, "thumbBrowser", [that.locate("thumbBrowser"), that.options.thumbBrowser.options]);
+		  
+		var listeners = bindHandlers(that);
+        
+        that.returnedOptions = {
+            listeners: listeners
+        };
         
         return that;
     };
@@ -39,27 +77,36 @@ fluid_1_2 = fluid_1_2 || {};
 			options: {
 				thumbs: [
                     {
-                        target: "../../server/testData/Image1.jpg",
-                        image: "../../server/testData/Image1-thumb.jpg",
-                        deleteTarget: "#"
+                        target: "#",
+                        image: "../../server/testData/Image1-thumb.jpg"
                     },
                     {
-                        target: "../../server/testData/Image2.jpg",
-                        image: "../../server/testData/Image2-thumb.jpg",
-                        deleteTarget: "#"
+                        target: "#",
+                        image: "../../server/testData/Image2-thumb.jpg"
                     },
                     {
-                        target: "../../server/testData/Image3.jpg",
-                        image: "../../server/testData/Image3-thumb.jpg",
-                        deleteTarget: "#"
+                        target: "#",
+                        image: "../../server/testData/Image3-thumb.jpg"
                     },
                     {
-                        target: "../../server/testData/Image4.jpg",
-                        image: "../../server/testData/Image4-thumb.jpg",
-                        deleteTarget: "#"
+                        target: "#",
+                        image: "../../server/testData/Image4-thumb.jpg"
                     }
-                ]
+                ],
+				
+				listeners: {
+					onThumbSelected: thumbSelectionListener
+				}
 			}
+		},
+		
+		selectors: {
+			thumbBrowser: ".flc-thumbBrowser",
+			thumbImage: ".flc-thumbBrowser-image",
+			fixButton: ".flc-capture-button-fix",
+			compareButton: ".flc-capture-button-compare",
+			exportButton: ".flc-capture-button-export",
+			takePictureButton: ".flc-capture-button-takePicture"
 		}
 	});
     
