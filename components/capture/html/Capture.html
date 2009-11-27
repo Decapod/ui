@@ -28,19 +28,18 @@
         
 		<!-- Decapod components -->
 		<script type="text/javascript" src="../js/Capture.js"></script>
-        <script type="text/javascript" src="../../thumbBrowser/js/ThumbnailBrowser.js"></script>
     </head>
     
     <!-- TODO Remove BR tags when implementing styling -->
     <body class="flc-capture">
     	<h1>Decapod</h1>
-        <form action="#" id="thumb-browser-form" class="flc-thumbBrowser">
-            <div class="flc-thumbBrowser-container-thumbs">
-                <a class="flc-thumbBrowser-link">
-                    <span class="flc-thumbBrowser-label">Unfixed</span><br />
-                    <img class="flc-thumbBrowser-image"><br />
+        <form action="#" id="reorder-images-form" class="flc-imageReorderer">
+            <div class="flc-imageReorderer-item">
+                <a class="flc-imageReorderer-link">
+                    <span class="flc-imageReorderer-label">Unfixed</span><br />
+                    <img class="flc-imageReorderer-image"><br />
                 </a>
-                <a href="#" class="flc-thumbBrowser-button-delete">Delete</a>                 
+                <a href="#" class="flc-imageReorderer-button-delete">Delete</a>
             </div>
         </form>
 		
@@ -58,7 +57,25 @@
         
 		<!-- Initializing the Capture component. -->
         <script type="text/javascript">
-        	fluid.capture(".flc-capture");
+        	var thumbs = [
+                    {
+                        target: "../../server/testData/Image1.jpg",
+                        image: "../../server/testData/Image1-thumb.jpg"
+                    },
+                    {
+                        target: "../../server/testData/Image2.jpg",
+                        image: "../../server/testData/Image2-thumb.jpg"
+                    },
+                    {
+                        target: "../../server/testData/Image3.jpg",
+                        image: "../../server/testData/Image3-thumb.jpg"
+                    },
+                    {
+                        target: "../../server/testData/Image4.jpg",
+                        image: "../../server/testData/Image4-thumb.jpg"
+                    }
+                ]
+        	fluid.capture(".flc-capture", {thumbs: thumbs});
         </script>
     </body>
 </html>

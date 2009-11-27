@@ -15,6 +15,59 @@ https://source.fluidproject.org/svn/LICENSE.txt
 fluid_1_2 = fluid_1_2 || {};
 
 (function ($, fluid) {
+    
+    /**
+     * Renders the component in an "imageReorderer" node by generating its tree.
+     * 
+     * @param {Object} that, the component
+     */
+    var render = function (that) {
+        var selectorMap = [
+            {selector: that.options.selectors.thumbItem, id: "item:"},
+            {selector: that.options.selectors.thumbLink, id: "link"},
+			{selector: that.options.selectors.thumbImage, id: "image"},
+            {selector: that.options.selectors.deleteButton, id: "deleteButton"}            
+        ];
+
+        var generateTree = function () {            
+            return fluid.transform(that.model, function (object) {
+                var tree = {
+					ID: "item:",
+					children: [
+					    {
+							ID: "link",
+							target: object.target
+					    },
+					    {
+						    ID: "deleteButton",
+						    target: "#"
+					    },
+					    {
+						    ID: "image",
+						    target: object.image
+					    }
+					]
+				};
+				
+				var decorator = 
+                {
+                    type: "fluid",
+                    func: "fluid.reorderImages",
+                    container: that.locate("imageReorderer"),
+                    options: that.options.imageReorderer.options
+                };
+                tree.decorators = decorator;
+
+                return tree;
+            });
+        };
+        
+        var options = {
+            cutpoints: selectorMap
+        };
+        
+        fluid.selfRender(that.locate(that.options.selectors.imageReorderer), generateTree(), options);
+    };
 	
 	/**
 	 * Binds listeners for the click events of the various buttons in the UI,
@@ -43,14 +96,10 @@ fluid_1_2 = fluid_1_2 || {};
                 // TODO Implement take picture functionality.
         });
     };
-	
-	var thumbSelectionListener = function (item) {
-		// TODO Implement thumb selection handler.
-	};
     
     /**
-     * Creates a View for the Capture component. Contains a thumbBrowser
-     * subcomponent, a preview area for the image, and controls for taking
+     * Creates a View for the Capture component. Contains an imageReorderer
+     * subcomponent, a preview area for the image, and controls for capturing
      * images and manipulating them.
      * 
      * @param {Object} container, the component this View should be placed in
@@ -59,9 +108,13 @@ fluid_1_2 = fluid_1_2 || {};
     fluid.capture = function (container, options) {        
         var that = fluid.initView("fluid.capture", container, options);
         
-        that.thumbBrowser = fluid.initSubcomponents(
-          that, "thumbBrowser", [that.locate("thumbBrowser"), that.options.thumbBrowser.options]);
-		  
+        that.imageReorderer = fluid.initSubcomponents(
+          that, "imageReorderer", [that.locate("imageReorderer"), that.options.imageReorderer.options]);
+		
+		that.model = that.options.thumbs;
+		
+		render(that);
+		
 		var listeners = bindHandlers(that);
         
         that.returnedOptions = {
@@ -72,42 +125,37 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     fluid.defaults("fluid.capture", {
-		thumbBrowser: {
-			type: "fluid.thumbBrowser",
-			options: {
-				thumbs: [
-                    {
-                        target: "#",
-                        image: "../../server/testData/Image1-thumb.jpg"
-                    },
-                    {
-                        target: "#",
-                        image: "../../server/testData/Image2-thumb.jpg"
-                    },
-                    {
-                        target: "#",
-                        image: "../../server/testData/Image3-thumb.jpg"
-                    },
-                    {
-                        target: "#",
-                        image: "../../server/testData/Image4-thumb.jpg"
-                    }
-                ],
-				
-				listeners: {
-					onThumbSelected: thumbSelectionListener
-				}
-			}
-		},
-		
 		selectors: {
-			thumbBrowser: ".flc-thumbBrowser",
-			thumbImage: ".flc-thumbBrowser-image",
+			capture: ".flc-capture",
+			imageReorderer: ".flc-imageReorderer",
+			thumbItem: ".flc-imageReorderer-item",	
+			thumbLink: ".flc-imageReorderer-link",		
+			thumbImage: ".flc-imageReorderer-image",
+			deleteButton: ".flc-imageReorderer-button-delete",
+			
 			fixButton: ".flc-capture-button-fix",
 			compareButton: ".flc-capture-button-compare",
 			exportButton: ".flc-capture-button-export",
-			takePictureButton: ".flc-capture-button-takePicture"
-		}
+			takePictureButton: ".flc-capture-button-takePicture",
+			previewArea: ".flc-capture-image-preview"
+		},
+		
+		imageReorderer: {
+            type: "fluid.reorderImages",
+            options: {              
+                selectors: {
+                    movables: ".flc-imageReorderer-item",
+                    imageTitle: ".flc-imageReorderer-label"
+                }
+            }
+        },
+		
+		thumbs: [
+		    {
+                target: null,
+			    image: null
+		    }
+		]
 	});
     
 })(jQuery, fluid_1_2);
