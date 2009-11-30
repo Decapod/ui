@@ -25,39 +25,30 @@ fluid_1_2 = fluid_1_2 || {};
         var selectorMap = [
             {selector: that.options.selectors.thumbItem, id: "item:"},
             {selector: that.options.selectors.thumbLink, id: "link"},
-			{selector: that.options.selectors.thumbImage, id: "image"},
-            {selector: that.options.selectors.deleteButton, id: "deleteButton"}            
+            {selector: that.options.selectors.thumbImage, id: "image"},
+            {selector: that.options.selectors.deleteButton, id: "deleteButton"}
         ];
 
-        var generateTree = function () {            
+        var generateTree = function () {
             return fluid.transform(that.model, function (object) {
                 var tree = {
-					ID: "item:",
-					children: [
-					    {
-							ID: "link",
-							target: object.target
-					    },
-					    {
-						    ID: "deleteButton",
-						    target: "#"
-					    },
-					    {
-						    ID: "image",
-						    target: object.image
-					    }
-					]
-				};
-				
-				var decorator = 
-                {
-                    type: "fluid",
-                    func: "fluid.reorderImages",
-                    container: that.locate("imageReorderer"),
-                    options: that.options.imageReorderer.options
+                    ID: "item:",
+                    children: [
+                        {
+                            ID: "link",
+                            target: object.target
+                        },
+                        {
+                            ID: "deleteButton",
+                            target: "#"
+                        },
+                        {
+                            ID: "image",
+                            target: object.image
+                        }
+                    ]
                 };
-                tree.decorators = decorator;
-
+                
                 return tree;
             });
         };
@@ -68,30 +59,30 @@ fluid_1_2 = fluid_1_2 || {};
         
         fluid.selfRender(that.locate(that.options.selectors.imageReorderer), generateTree(), options);
     };
-	
-	/**
-	 * Binds listeners for the click events of the various buttons in the UI,
-	 * such as fixing/comparing images, exporting to PDF, and taking pictures.
-	 * 
-	 * @param {Object} that, the Capture component
-	 */
-	var bindHandlers = function (that) { 
+    
+    /**
+     * Binds listeners for the click events of the various buttons in the UI,
+     * such as fixing/comparing images, exporting to PDF, and taking pictures.
+     * 
+     * @param {Object} that, the Capture component
+     */
+    var bindHandlers = function (that) { 
         that.locate("fixButton").click( 
             function () {
-                // TODO Implement fix image functionality.
+                // TODO Implement fix images functionality.
         });
-		
-		that.locate("compareButton").click( 
+        
+        that.locate("compareButton").click( 
             function () {
                 // TODO Implement compare images functionality.
         });
-		
-		that.locate("exportButton").click( 
+        
+        that.locate("exportButton").click( 
             function () {
                 // TODO Implement export to PDF functionality.
         });
-		
-		that.locate("takePictureButton").click( 
+        
+        that.locate("takePictureButton").click( 
             function () {
                 // TODO Implement take picture functionality.
         });
@@ -108,39 +99,35 @@ fluid_1_2 = fluid_1_2 || {};
     fluid.capture = function (container, options) {        
         var that = fluid.initView("fluid.capture", container, options);
         
+        that.model = that.options.thumbs;
+        
+        render(that);
+        
         that.imageReorderer = fluid.initSubcomponents(
           that, "imageReorderer", [that.locate("imageReorderer"), that.options.imageReorderer.options]);
-		
-		that.model = that.options.thumbs;
-		
-		render(that);
-		
-		var listeners = bindHandlers(that);
         
-        that.returnedOptions = {
-            listeners: listeners
-        };
+        bindHandlers(that);
         
         return that;
     };
     
     fluid.defaults("fluid.capture", {
-		selectors: {
-			capture: ".flc-capture",
-			imageReorderer: ".flc-imageReorderer",
-			thumbItem: ".flc-imageReorderer-item",	
-			thumbLink: ".flc-imageReorderer-link",		
-			thumbImage: ".flc-imageReorderer-image",
-			deleteButton: ".flc-imageReorderer-button-delete",
-			
-			fixButton: ".flc-capture-button-fix",
-			compareButton: ".flc-capture-button-compare",
-			exportButton: ".flc-capture-button-export",
-			takePictureButton: ".flc-capture-button-takePicture",
-			previewArea: ".flc-capture-image-preview"
-		},
-		
-		imageReorderer: {
+        selectors: {
+            capture: ".flc-capture",
+            imageReorderer: ".flc-imageReorderer",
+            thumbItem: ".flc-imageReorderer-item",	
+            thumbLink: ".flc-imageReorderer-link",		
+            thumbImage: ".flc-imageReorderer-image",
+            deleteButton: ".flc-imageReorderer-button-delete",
+            
+            fixButton: ".flc-capture-button-fix",
+            compareButton: ".flc-capture-button-compare",
+            exportButton: ".flc-capture-button-export",
+            takePictureButton: ".flc-capture-button-takePicture",
+            previewArea: ".flc-capture-image-preview"
+        },
+        
+        imageReorderer: {
             type: "fluid.reorderImages",
             options: {              
                 selectors: {
@@ -149,13 +136,13 @@ fluid_1_2 = fluid_1_2 || {};
                 }
             }
         },
-		
-		thumbs: [
-		    {
+        
+        thumbs: [
+            {
                 target: null,
-			    image: null
-		    }
-		]
-	});
+                image: null
+            }
+        ]
+    });
     
 })(jQuery, fluid_1_2);
