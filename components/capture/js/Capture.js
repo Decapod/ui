@@ -135,7 +135,7 @@ fluid_1_2 = fluid_1_2 || {};
         fluid.merge(null, selectOptions, that.options.imageReorderer.options);
         
         that.imageReorderer = fluid.initSubcomponents(
-          that, "imageReorderer", [that.locate("imageReorderer"), options]);
+          that, "imageReorderer", [that.locate("imageReorderer"), selectOptions]);
         
         bindHandlers(that);
         
