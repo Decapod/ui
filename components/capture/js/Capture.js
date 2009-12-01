@@ -79,6 +79,7 @@ fluid_1_2 = fluid_1_2 || {};
                     }
                     
                     var image = images.get(0);
+                    // TODO Use the full-sized image link from the item or from the model.
                     var previewSrc = image.getAttribute('src').replace("-thumb", "");
                     
                     var imagePreview = that.locate("imagePreview").get(0);
