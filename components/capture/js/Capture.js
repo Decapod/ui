@@ -36,15 +36,15 @@ fluid_1_2 = fluid_1_2 || {};
                     children: [
                         {
                             ID: "link",
-                            target: object.target
-                        },
-                        {
-                            ID: "deleteButton",
                             target: "#"
                         },
                         {
                             ID: "image",
                             target: object.image
+                        },
+                        {
+                            ID: "deleteButton",
+                            target: "#"
                         }
                     ]
                 };
@@ -58,6 +58,34 @@ fluid_1_2 = fluid_1_2 || {};
         };
         
         fluid.selfRender(that.locate(that.options.selectors.imageReorderer), generateTree(), options);
+    };
+    
+    /**
+     * Adds a listener for the onSelect event of the Reorderer. The listener
+     * should display the selected thumbnail in the preview area of the Capture
+     * component.
+     * 
+     * @param {Object} that, the Capture component
+     */
+    var addSelectionListener = function (that) {
+        return {
+            listeners: {
+                onSelect: function (item) {
+                    var images = $(item).find('img');
+                    
+                    if (images.length !== 1) {
+                        fluid.fail("Expecting only one image to be selected. Instead, " +
+                          images.length + " were selected.");
+                    }
+                    
+                    var image = images.get(0);
+                    var previewSrc = image.getAttribute('src').replace("-thumb", "");
+                    
+                    var imagePreview = that.locate("imagePreview").get(0);
+                    imagePreview.setAttribute('src', previewSrc);
+                }
+            }
+        };
     };
     
     /**
@@ -96,15 +124,18 @@ fluid_1_2 = fluid_1_2 || {};
      * @param {Object} container, the component this View should be placed in
      * @param {Object} options, the options passed into the component
      */
-    fluid.capture = function (container, options) {        
+    fluid.capture = function (container, options) {
         var that = fluid.initView("fluid.capture", container, options);
         
         that.model = that.options.thumbs;
         
         render(that);
         
+        var selectOptions = addSelectionListener(that);
+        fluid.merge(null, selectOptions, that.options.imageReorderer.options);
+        
         that.imageReorderer = fluid.initSubcomponents(
-          that, "imageReorderer", [that.locate("imageReorderer"), that.options.imageReorderer.options]);
+          that, "imageReorderer", [that.locate("imageReorderer"), options]);
         
         bindHandlers(that);
         
@@ -115,8 +146,8 @@ fluid_1_2 = fluid_1_2 || {};
         selectors: {
             capture: ".flc-capture",
             imageReorderer: ".flc-imageReorderer",
-            thumbItem: ".flc-imageReorderer-item",	
-            thumbLink: ".flc-imageReorderer-link",		
+            thumbItem: ".flc-imageReorderer-item",
+            thumbLink: ".flc-imageReorderer-link",
             thumbImage: ".flc-imageReorderer-image",
             deleteButton: ".flc-imageReorderer-button-delete",
             
@@ -124,12 +155,12 @@ fluid_1_2 = fluid_1_2 || {};
             compareButton: ".flc-capture-button-compare",
             exportButton: ".flc-capture-button-export",
             takePictureButton: ".flc-capture-button-takePicture",
-            previewArea: ".flc-capture-image-preview"
+            imagePreview: ".flc-capture-image-preview"
         },
         
         imageReorderer: {
             type: "fluid.reorderImages",
-            options: {              
+            options: {
                 selectors: {
                     movables: ".flc-imageReorderer-item",
                     imageTitle: ".flc-imageReorderer-label"

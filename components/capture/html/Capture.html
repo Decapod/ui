@@ -6,58 +6,59 @@
         
         <!-- Required JavaScript modules for the Capture component. -->
         <!-- jQuery -->
-        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
-        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.core.js"></script>
-        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.draggable.js"></script>
-        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/plugins/delegate/js/jquery.delegate.js"></script>
-        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.core.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.draggable.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/plugins/delegate/js/jquery.delegate.js"></script>
+        <script src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
         
         <!-- Fluid -->
-        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
-        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/FluidDOMUtilities.js"></script>
+        <script src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
+        <script src="../../../infusion/src/webapp/framework/core/js/FluidDOMUtilities.js"></script>
         
         <!-- Reorderer -->
-        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/GeometricManager.js"></script>
-        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/Reorderer.js"></script>
-        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/ImageReorderer.js"></script>
+        <script src="../../../infusion/src/webapp/components/reorderer/js/GeometricManager.js"></script>
+        <script src="../../../infusion/src/webapp/components/reorderer/js/Reorderer.js"></script>
+        <script src="../../../infusion/src/webapp/components/reorderer/js/ImageReorderer.js"></script>
 
         <!-- Renderer -->
-        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
-        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
-        <script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
+        <script src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
+        <script src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
+        <script src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
         
-		<!-- Decapod components -->
-		<script type="text/javascript" src="../js/Capture.js"></script>
+        <!-- Decapod components -->
+        <script src="../js/Capture.js"></script>
     </head>
     
     <!-- TODO Remove BR tags when implementing styling -->
     <body class="flc-capture">
-    	<h1>Decapod</h1>
+        <h1>Decapod</h1>
         <form action="#" id="reorder-images-form" class="flc-imageReorderer">
             <div class="flc-imageReorderer-item">
                 <a class="flc-imageReorderer-link">
-                    <span class="flc-imageReorderer-label">Unfixed</span><br />
-                    <img class="flc-imageReorderer-image"><br />
+                    <span class="flc-imageReorderer-label">Unfixed</span><br>
+                    <img class="flc-imageReorderer-image" src="" alt="Captured image thumbnail"><br>
                 </a>
                 <a href="#" class="flc-imageReorderer-button-delete">Delete</a>
             </div>
         </form>
-		
-		<div>
-			<div>
-				<a href="#" class="flc-capture-button-fix">Fix Image</a>
-				<a href="#" class="flc-capture-button-compare">Compare Before/After</a>
-				<a href="#" class="flc-capture-button-export">Export to PDF</a>
-				<img class="flc-capture-image-preview">
-			</div>
-		</div>
-		<div>
-			<a href="#" class="flc-capture-button-takePicture">Take picture</a>
-		</div>
         
-		<!-- Initializing the Capture component. -->
-        <script type="text/javascript">
-        	var thumbs = [
+        <div>
+            <div>
+                <a href="#" class="flc-capture-button-fix">Fix Image</a>
+                <a href="#" class="flc-capture-button-compare">Compare Before/After</a>
+                <a href="#" class="flc-capture-button-export">Export to PDF</a>
+                <img class="flc-capture-image-preview" src="" alt="Preview of the currently seleected thumbnail">
+            </div>
+        </div>
+        <div>
+            <a href="#" class="flc-capture-button-takePicture">Take picture</a>
+        </div>
+        
+        <!-- Initializing the Capture component. -->
+        <script>
+            /*global fluid*/
+            var thumbs = [
                     {
                         target: "../../server/testData/Image1.jpg",
                         image: "../../server/testData/Image1-thumb.jpg"
@@ -74,8 +75,8 @@
                         target: "../../server/testData/Image4.jpg",
                         image: "../../server/testData/Image4-thumb.jpg"
                     }
-                ]
-        	fluid.capture(".flc-capture", {thumbs: thumbs});
+                ];
+            fluid.capture(".flc-capture", {thumbs: thumbs});
         </script>
     </body>
 </html>
