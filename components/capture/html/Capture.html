@@ -35,10 +35,8 @@
         <h1>Decapod</h1>
         <form action="#" id="reorder-images-form" class="flc-imageReorderer">
             <div class="flc-imageReorderer-item">
-                <a class="flc-imageReorderer-link">
-                    <span class="flc-imageReorderer-label">Unfixed</span><br>
-                    <img class="flc-imageReorderer-image"><br>
-                </a>
+                <span class="flc-imageReorderer-label">Unfixed</span><br>
+                <img class="flc-imageReorderer-image"><br>
                 <a href="#" class="flc-imageReorderer-button-delete">Delete</a>
             </div>
         </form>
@@ -58,25 +56,7 @@
         <!-- Initializing the Capture component. -->
         <script>
             /*global fluid*/
-            var thumbs = [
-                    {
-                        target: "../../server/testData/Image1.jpg",
-                        image: "../../server/testData/Image1-thumb.jpg"
-                    },
-                    {
-                        target: "../../server/testData/Image2.jpg",
-                        image: "../../server/testData/Image2-thumb.jpg"
-                    },
-                    {
-                        target: "../../server/testData/Image3.jpg",
-                        image: "../../server/testData/Image3-thumb.jpg"
-                    },
-                    {
-                        target: "../../server/testData/Image4.jpg",
-                        image: "../../server/testData/Image4-thumb.jpg"
-                    }
-                ];
-            fluid.capture(".flc-capture", {thumbs: thumbs});
+            fluid.capture(".flc-capture");
         </script>
     </body>
 </html>

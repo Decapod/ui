@@ -17,34 +17,28 @@ fluid_1_2 = fluid_1_2 || {};
 (function ($, fluid) {
     
     /**
-     * Renders the component in an "imageReorderer" node by generating its tree.
+     * Renders the reorderable list of thumbnails. For each item in the model,
+     * adds an appropriate image tag for it. An item in the rendered markup
+     * consists of (optionally) a label, an image and a delete button. Only
+     * the image is rendered dynamically.
      * 
-     * @param {Object} that, the component
+     * @param {Object} that, the Capture component
      */
     var render = function (that) {
         var selectorMap = [
             {selector: that.options.selectors.thumbItem, id: "item:"},
-            {selector: that.options.selectors.thumbLink, id: "link"},
             {selector: that.options.selectors.thumbImage, id: "image"},
-            {selector: that.options.selectors.deleteButton, id: "deleteButton"}
         ];
 
         var generateTree = function () {
+            
             return fluid.transform(that.model, function (object) {
                 var tree = {
                     ID: "item:",
                     children: [
                         {
-                            ID: "link",
-                            target: "#"
-                        },
-                        {
                             ID: "image",
                             target: object.image
-                        },
-                        {
-                            ID: "deleteButton",
-                            target: "#"
                         }
                     ]
                 };
@@ -71,15 +65,11 @@ fluid_1_2 = fluid_1_2 || {};
         return {
             listeners: {
                 onSelect: function (item) {
-                    var images = $(item).find('img');
-                    
-                    if (images.length !== 1) {
-                        fluid.fail("Expecting only one image to be selected. Instead, " +
-                          images.length + " were selected.");
-                    }
-                    
-                    var image = images.get(0);
-                    // TODO Use the full-sized image link from the item or from the model.
+                    var image = $(item).find('img').get(0);                    
+                    // TODO What if an item contains no image or more than one image?
+
+                    // TODO Use the path to the full-sized image from the model.
+                    // Cannot count on what the file name is expected to be!!!
                     var previewSrc = image.getAttribute('src').replace("-thumb", "");
                     
                     var imagePreview = that.locate("imagePreview").get(0);
@@ -91,14 +81,20 @@ fluid_1_2 = fluid_1_2 || {};
     
     /**
      * Binds listeners for the click events of the various buttons in the UI,
-     * such as fixing/comparing images, exporting to PDF, and taking pictures.
+     * such as fixing/comparing images, exporting to PDF, deleting and taking
+     * pictures.
      * 
      * @param {Object} that, the Capture component
      */
-    var bindHandlers = function (that) { 
+    var bindHandlers = function (that) {
+        that.locate("deleteButton").click(
+            function () {
+                // TODO Implement delete image functionality.
+        });
+        
         that.locate("fixButton").click( 
             function () {
-                // TODO Implement fix images functionality.
+                // TODO Implement fix image functionality.
         });
         
         that.locate("compareButton").click( 
@@ -111,11 +107,45 @@ fluid_1_2 = fluid_1_2 || {};
                 // TODO Implement export to PDF functionality.
         });
         
+        var imageToInsert = 1;
         that.locate("takePictureButton").click( 
             function () {
-                // TODO Implement take picture functionality.
+                var newItem = {
+                    target: "../../server/testData/Image" + imageToInsert + ".jpg",
+                    image: "../../server/testData/Image" + imageToInsert + "-thumb.jpg"
+                }
+                
+                that.model.push(newItem);
+                that.events.modelChanged.fire(that, newItem);
+                imageToInsert++;
         });
     };
+    
+    /**
+     * Listener for the modelChanged event. Should refresh the thumbnails
+     * displayed and select the last captured image.
+     * 
+     * @param {Object} that, the Capture component
+     * @param {Object} newItem, the new item inserted into the model
+     */
+    var onModelChanged = function(that, newItem) {
+        var clone;
+        var template = that.locate("thumbItem").get(0);
+        
+        // TODO Do not use hard-coded values. Make a smarter check!
+        if ($(template).find('img').get(0).getAttribute('src') === "../../server/testData/noImage-thumb.jpg") {
+            clone = template;
+        } else {
+            clone = $(template).clone();
+        }
+        $(clone).find('img').get(0).setAttribute('src', newItem.image);
+        
+        $(that.locate("imageReorderer")).append(clone);
+        
+        that.imageReorderer[0].refresh();
+        
+        $(clone).focus();
+    }
     
     /**
      * Creates a View for the Capture component. Contains an imageReorderer
@@ -144,21 +174,6 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     fluid.defaults("fluid.capture", {
-        selectors: {
-            capture: ".flc-capture",
-            imageReorderer: ".flc-imageReorderer",
-            thumbItem: ".flc-imageReorderer-item",
-            thumbLink: ".flc-imageReorderer-link",
-            thumbImage: ".flc-imageReorderer-image",
-            deleteButton: ".flc-imageReorderer-button-delete",
-            
-            fixButton: ".flc-capture-button-fix",
-            compareButton: ".flc-capture-button-compare",
-            exportButton: ".flc-capture-button-export",
-            takePictureButton: ".flc-capture-button-takePicture",
-            imagePreview: ".flc-capture-image-preview"
-        },
-        
         imageReorderer: {
             type: "fluid.reorderImages",
             options: {
@@ -169,12 +184,33 @@ fluid_1_2 = fluid_1_2 || {};
             }
         },
         
+        selectors: {
+            capture: ".flc-capture",
+            imageReorderer: ".flc-imageReorderer",
+            thumbItem: ".flc-imageReorderer-item",
+            thumbImage: ".flc-imageReorderer-image",
+            deleteButton: ".flc-imageReorderer-button-delete",
+            
+            fixButton: ".flc-capture-button-fix",
+            compareButton: ".flc-capture-button-compare",
+            exportButton: ".flc-capture-button-export",
+            takePictureButton: ".flc-capture-button-takePicture",
+            imagePreview: ".flc-capture-image-preview"
+        },
+        
+        events: {
+            modelChanged: null
+        },
+        
+        listeners: {
+            modelChanged: onModelChanged
+        },
+        
         thumbs: [
-            {
-                target: null,
-                image: null
-            }
-        ]
+        {
+            target: "#",
+            image: "../../server/testData/noImage-thumb.jpg"
+        }]
     });
     
 })(jQuery, fluid_1_2);
