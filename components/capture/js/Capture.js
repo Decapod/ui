@@ -27,9 +27,9 @@ fluid_1_2 = fluid_1_2 || {};
     var render = function (that) {
         var selectorMap = [
             {selector: that.options.selectors.thumbItem, id: "item:"},
-            {selector: that.options.selectors.thumbImage, id: "image"},
+            {selector: that.options.selectors.thumbImage, id: "image"}
         ];
-
+        
         var generateTree = function () {
             
             return fluid.transform(that.model, function (object) {
@@ -38,7 +38,7 @@ fluid_1_2 = fluid_1_2 || {};
                     children: [
                         {
                             ID: "image",
-                            target: object.image
+                            target: object.thumbImage
                         }
                     ]
                 };
@@ -65,9 +65,9 @@ fluid_1_2 = fluid_1_2 || {};
         return {
             listeners: {
                 onSelect: function (item) {
-                    var image = $(item).find('img').get(0);                    
+                    var image = $(item).find('img').get(0);
                     // TODO What if an item contains no image or more than one image?
-
+                    
                     // TODO Use the path to the full-sized image from the model.
                     // Cannot count on what the file name is expected to be!!!
                     var previewSrc = image.getAttribute('src').replace("-thumb", "");
@@ -84,9 +84,31 @@ fluid_1_2 = fluid_1_2 || {};
      * such as fixing/comparing images, exporting to PDF, deleting and taking
      * pictures.
      * 
+     * Adds a listener for the modelChanged event. Should refresh the thumbnails
+     * displayed and select the last captured image.
+     * 
      * @param {Object} that, the Capture component
      */
     var bindHandlers = function (that) {
+        that.events.modelChanged.addListener(function (newItem) {
+            var clone;
+            var template = that.locate("thumbItem").get(0);
+        
+            // TODO Do not use hard-coded values. Make a smarter check!
+            if ($(template).find('img').get(0).getAttribute('src') === "../../server/testData/noImage-thumb.jpg") {
+                clone = template;
+            } else {
+                clone = $(template).clone();
+            }
+            $(clone).find('img').get(0).setAttribute('src', newItem.thumbImage);
+           
+            $(that.locate("imageReorderer")).append(clone);
+          
+            that.imageReorderer.refresh();
+          
+            $(clone).focus();
+        });
+        
         that.locate("deleteButton").click(
             function () {
                 // TODO Implement delete image functionality.
@@ -108,44 +130,19 @@ fluid_1_2 = fluid_1_2 || {};
         });
         
         var imageToInsert = 1;
+        // TODO Make taking pictures work with the server, not directly from the filesystem.
         that.locate("takePictureButton").click( 
             function () {
                 var newItem = {
-                    target: "../../server/testData/Image" + imageToInsert + ".jpg",
-                    image: "../../server/testData/Image" + imageToInsert + "-thumb.jpg"
-                }
+                    fullImage: "../../server/testData/Image" + imageToInsert + ".jpg",
+                    thumbImage: "../../server/testData/Image" + imageToInsert + "-thumb.jpg"
+                };
                 
                 that.model.push(newItem);
-                that.events.modelChanged.fire(that, newItem);
+                that.events.modelChanged.fire(newItem);
                 imageToInsert++;
-        });
+            });
     };
-    
-    /**
-     * Listener for the modelChanged event. Should refresh the thumbnails
-     * displayed and select the last captured image.
-     * 
-     * @param {Object} that, the Capture component
-     * @param {Object} newItem, the new item inserted into the model
-     */
-    var onModelChanged = function(that, newItem) {
-        var clone;
-        var template = that.locate("thumbItem").get(0);
-        
-        // TODO Do not use hard-coded values. Make a smarter check!
-        if ($(template).find('img').get(0).getAttribute('src') === "../../server/testData/noImage-thumb.jpg") {
-            clone = template;
-        } else {
-            clone = $(template).clone();
-        }
-        $(clone).find('img').get(0).setAttribute('src', newItem.image);
-        
-        $(that.locate("imageReorderer")).append(clone);
-        
-        that.imageReorderer[0].refresh();
-        
-        $(clone).focus();
-    }
     
     /**
      * Creates a View for the Capture component. Contains an imageReorderer
@@ -165,7 +162,7 @@ fluid_1_2 = fluid_1_2 || {};
         var selectOptions = addSelectionListener(that);
         fluid.merge(null, selectOptions, that.options.imageReorderer.options);
         
-        that.imageReorderer = fluid.initSubcomponents(
+        that.imageReorderer = fluid.initSubcomponent(
           that, "imageReorderer", [that.locate("imageReorderer"), selectOptions]);
         
         bindHandlers(that);
@@ -202,15 +199,12 @@ fluid_1_2 = fluid_1_2 || {};
             modelChanged: null
         },
         
-        listeners: {
-            modelChanged: onModelChanged
-        },
-        
         thumbs: [
-        {
-            target: "#",
-            image: "../../server/testData/noImage-thumb.jpg"
-        }]
+            {
+                fullImage: "#",
+                thumbImage: "../../server/testData/noImage-thumb.jpg"
+            }
+        ]
     });
     
 })(jQuery, fluid_1_2);
