@@ -48,10 +48,10 @@ fluid_1_2 = fluid_1_2 || {};
         };
         
         var options = {
-            cutpoints: selectorMap
+            cutpoints: selectorMap,
         };
         
-        fluid.selfRender(that.locate(that.options.selectors.imageReorderer), generateTree(), options);
+        return fluid.selfRender(that.locate(that.options.selectors.imageReorderer), generateTree(), options);
     };
     
     /**
@@ -79,6 +79,23 @@ fluid_1_2 = fluid_1_2 || {};
         };
     };
     
+    var bindDelete = function (that, item) {
+        var src = $(item).find('img').get(0).getAttribute('src');
+        var deleteButton = $(item).find('.flc-imageReorderer-button-delete');
+        deleteButton.click(
+            function () {
+                var i;
+                for (i = 0; i < that.model.length; i++) {
+                    if (that.model[i].thumbImage === src) {
+                        that.model.splice(i, 1);                        
+                        $(item).siblings().get(0).focus();
+                        $(item).remove();
+                        that.imageReorderer.refresh();
+                    }
+                }
+        });
+    }
+    
     /**
      * Binds listeners for the click events of the various buttons in the UI,
      * such as fixing/comparing images, exporting to PDF, deleting and taking
@@ -102,16 +119,12 @@ fluid_1_2 = fluid_1_2 || {};
             }
             $(clone).find('img').get(0).setAttribute('src', newItem.thumbImage);
            
-            $(that.locate("imageReorderer")).append(clone);
+            $(that.locate("imageReorderer")).append(clone);          
           
-            that.imageReorderer.refresh();
+            bindDelete(that, clone);
+            that.imageReorderer.refresh();            
           
             $(clone).focus();
-        });
-        
-        that.locate("deleteButton").click(
-            function () {
-                // TODO Implement delete image functionality.
         });
         
         that.locate("fixButton").click( 
@@ -130,14 +143,17 @@ fluid_1_2 = fluid_1_2 || {};
         });
         
         var imageToInsert = 1;
-        // TODO Make taking pictures work with the server, not directly from the filesystem.
+        // TODO Make taking pictures work with the server, not directly from the file system.
+        // TODO Stop taking pictures localy when there are no more samples.
         that.locate("takePictureButton").click( 
             function () {
                 var newItem = {
                     fullImage: "../../server/testData/Image" + imageToInsert + ".jpg",
                     thumbImage: "../../server/testData/Image" + imageToInsert + "-thumb.jpg"
                 };
-                
+                if (imageToInsert == 1) {
+                    that.model.pop();
+                }
                 that.model.push(newItem);
                 that.events.modelChanged.fire(newItem);
                 imageToInsert++;
@@ -166,6 +182,7 @@ fluid_1_2 = fluid_1_2 || {};
           that, "imageReorderer", [that.locate("imageReorderer"), selectOptions]);
         
         bindHandlers(that);
+        //bindDelete(that);
         
         return that;
     };
