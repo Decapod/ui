@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Decapod Capture Tests</title>
+        
+        <link rel="Stylesheet" media="screen" href="../../../infusion/src/webapp/tests/lib/qunit/css/testsuite.css" />
+        
+        <!-- Required JavaScript modules for testing the Capture component. -->
+        <!-- jQuery -->
+        <script src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.core.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.draggable.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/plugins/delegate/js/jquery.delegate.js"></script>
+        <script src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
+        
+        <!-- Fluid -->
+        <script src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
+        <script src="../../../infusion/src/webapp/framework/core/js/FluidDOMUtilities.js"></script>
+        
+        <!-- Reorderer -->
+        <script src="../../../infusion/src/webapp/components/reorderer/js/GeometricManager.js"></script>
+        <script src="../../../infusion/src/webapp/components/reorderer/js/Reorderer.js"></script>
+        <script src="../../../infusion/src/webapp/components/reorderer/js/ImageReorderer.js"></script>
+
+        <!-- Renderer -->
+        <script src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
+        <script src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
+        <script src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
+
+        <!-- jqUnit -->
+        <script src="../../../infusion/src/webapp/tests/lib/qunit/js/testrunner.js"></script>
+        <script src="../../../infusion/src/webapp/tests/test-core/jqUnit/js/jqUnit.js"></script>
+
+        <!-- Tests -->
+        <script src="../../../components/capture/js/Capture.js"></script>
+        <script src="../js/CaptureTests.js"></script>
+
+    </head>
+    <body>
+    <h1 id="header">Decapod Capture Test Suite</h1>
+    <h2 id="banner"></h2>
+    <h2 id="userAgent"></h2>
+    <ol id="tests"></ol>
+
+    <!-- Test HTML -->
+    <div id="main" class="flc-capture">
+        <form action="#" id="reorder-images-form" class="flc-imageReorderer">
+            <div class="flc-imageReorderer-item">
+                <span class="flc-imageReorderer-label">Unfixed</span><br>
+                <img class="flc-imageReorderer-image" src="../../server/testData/noImage-thumb.jpg"><br>
+                <a href="#" class="flc-imageReorderer-button-delete">Delete</a>
+            </div>
+        </form>        
+        
+        <div>
+            <div>
+                <a href="#" class="flc-capture-button-fix">Fix Image</a>
+                <a href="#" class="flc-capture-button-compare">Compare Before/After</a>
+                <a href="#" class="flc-capture-button-export">Export to PDF</a>
+                <img class="flc-capture-image-preview" src="../../server/testData/noImage.jpg">
+            </div>
+        </div>
+        <div>
+            <a href="#" class="flc-capture-button-takePicture">Take picture</a>
+        </div>
+        </div>
+    </body>
+</html>
