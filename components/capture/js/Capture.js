@@ -63,8 +63,8 @@ fluid_1_2 = fluid_1_2 || {};
      * Finds an item in the model by the source of its thumbnail image. Returns
      * the index of that item in the model or -1 if no such item exists.
      * 
-     * @param {Array} model, the model of items to search in.
-     * @param {String} src, the 'src' tag of the thumbnail image.
+     * @param {Array} model, the model of items to search in
+     * @param {String} src, the 'src' tag of the thumbnail image
      */
     var findByThumbSrc = function (model, thumbSrc) {
         var i;
@@ -115,7 +115,7 @@ fluid_1_2 = fluid_1_2 || {};
      * the last image is deleted, the previous thumbnail is selected.
      * 
      * @param {Object} that, the Capture component
-     * @param {Object} item, the item that is to be deleted.
+     * @param {Object} item, the item that is to be deleted
      */
     // TODO Actually delete the image from the file system.
     // This should be done as a part of the server integration.
@@ -209,6 +209,16 @@ fluid_1_2 = fluid_1_2 || {};
                 that.events.afterPictureTaken.fire(newItem);
                 imageToInsert++;
             });
+        
+        if (that.model.length !== 0) {
+            var i;
+            var thumbItems = that.locate("thumbItem");
+            for (i = 0; i < thumbItems.length; i++) {
+                bindDeleteHandler(that, thumbItems[i]);
+            }
+            $(thumbItems[i - 1]).focus();
+        }
+        
     };
     
     /**
@@ -224,7 +234,7 @@ fluid_1_2 = fluid_1_2 || {};
         
         that.model = that.options.thumbs || [];
         that.initialModel = that.locate("thumbItem").get(0);
-                
+        
         render(that);
         
         var selectOptions = addSelectionListener(that);
