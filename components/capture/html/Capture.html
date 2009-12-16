@@ -4,6 +4,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Decapod Capture</title>
         
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-reset.css" />
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-layout.css" />
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-text.css" />
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-theme-coal.css" />
+        <link rel="stylesheet" type="text/css" href="../css/Capture.css" />
+        
         <!-- Required JavaScript modules for the Capture component. -->
         <!-- jQuery -->
         <script src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
@@ -20,7 +26,7 @@
         <script src="../../../infusion/src/webapp/components/reorderer/js/GeometricManager.js"></script>
         <script src="../../../infusion/src/webapp/components/reorderer/js/Reorderer.js"></script>
         <script src="../../../infusion/src/webapp/components/reorderer/js/ImageReorderer.js"></script>
-
+        
         <!-- Renderer -->
         <script src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
         <script src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
@@ -30,27 +36,38 @@
         <script src="../js/Capture.js"></script>
     </head>
     
-    <!-- TODO Remove BR tags when implementing styling -->
-    <body class="flc-capture">
-        <h1>Decapod</h1>
-        <form action="#" id="reorder-images-form" class="flc-imageReorderer">
-            <div class="flc-imageReorderer-item">
-                <span class="flc-imageReorderer-label">Unfixed</span><br>
-                <img class="flc-imageReorderer-image" src="../../server/testData/noImage-thumb.jpg"><br>
-                <a href="#" class="flc-imageReorderer-button-delete">Delete</a>
-            </div>
-        </form>
-        
+    <body class="flc-capture fl-theme-coal">
         <div>
-            <div>
-                <a href="#" class="flc-capture-button-fix">Fix Image</a>
-                <a href="#" class="flc-capture-button-compare">Compare Before/After</a>
-                <a href="#" class="flc-capture-button-export">Export to PDF</a>
-                <img class="flc-capture-image-preview" src="../../server/testData/noImage.jpg">
+            <h1>Decapod</h1>
+        </div>
+        
+        <div class="fl-col-mixed">
+            <div class="fl-col-fixed fl-force-left">
+            <form action="#" id="reorder-images-form">
+                <ul class="flc-imageReorderer fl-grid">
+                    <li class="flc-imageReorderer-item">
+                        <span class="flc-imageReorderer-label">Unfixed</span>
+                        <img class="flc-imageReorderer-image" src="../../server/testData/noImage-thumb.jpg">
+                        <button class="flc-imageReorderer-button-delete">Delete</button>
+                    </li>
+                </ul>
+            </form>
+            </div>
+            
+            <div class="fl-col-flex">
+                <div>
+                    <div>
+                    <button class="flc-capture-button-fix">Fix Image</button>
+                    <button class="flc-capture-button-compare">Compare Before/After</button>
+                    <button class="flc-capture-button-export">Export to PDF</button>
+                    </div>
+                    <img class="flc-capture-image-preview" src="../../server/testData/noImage.jpg">
+                </div>
             </div>
         </div>
+        
         <div>
-            <a href="#" class="flc-capture-button-takePicture">Take picture</a>
+            <button type="" name="" value="" class="flc-capture-button-takePicture">Take picture</button>
         </div>
         
         <!-- Initializing the Capture component. -->
