@@ -196,13 +196,14 @@ fluid_1_2 = fluid_1_2 || {};
         });
         
         var imageToInsert = 0;
-        // TODO Make taking pictures work with the server, not directly from the file system.
-        // Do not use magic numbers and strings. Use data returned from server instead.
         that.locate("takePictureButton").click(
             function () {
+                
                 var newItem = {
-                    fullImage: "../../server/testData/Image" + (imageToInsert % 4 + 1) + ".jpg",
-                    thumbImage: "../../server/testData/Image" + (imageToInsert  % 4 + 1) + "-thumb.jpg"
+                    fullImage: "http://localhost:8080/capture?fileIndex=" + imageToInsert,
+                    thumbImage: "http://localhost:8080/thumb?fileIndex=" + imageToInsert
+                    //fullImage: "../../server/testData/capturedImages/Image" + imageToInsert + ".jpg",
+                    //thumbImage: "../../server/testData/capturedImages/Image" + imageToInsert + "-thumb.jpg"
                 };
                 
                 that.model.push(newItem);
