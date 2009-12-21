@@ -2,6 +2,7 @@ import cherrypy
 import re,string,os,sys,shutil,glob
 from numpy import *
 from pylab import imread,imshow
+from PIL import Image
 
 index = """
 <a href="startProject?id=temp">startProject temp</a><br>
@@ -38,14 +39,41 @@ class DecapodServer(object):
     def startProject(self,id=None):
         check_id(id)
         os.mkdir(id)
+
     @cherrypy.expose
-    def capture(self,fileIndex=0):
-        files = os.listdir("testData");
-        if int(fileIndex) < len(files):
-            jpeg = open("%s/%s" % ("testData", files[int(fileIndex)])).read()
-            cherrypy.response.headers['Content-type'] = 'image/jpeg'
-            return [jpeg]
-        return """No more files.<br><a href="index">Back</a><br>"""
+    def capture(self, fileIndex):
+	files = glob.glob("testData/imageFeed/*")
+	files.sort()
+	file_count = len(files)
+
+	filename = files[(int(fileIndex) % file_count)]
+	im = Image.open(filename)
+	path, extension = "testData/capturedImages/Image", ".jpg"
+
+	im.save(path + fileIndex + extension);
+
+        jpeg = open(path + fileIndex + extension).read()
+        cherrypy.response.headers['Content-type'] = 'image/jpeg'
+        return [jpeg]
+
+    @cherrypy.expose
+    def thumb(self,fileIndex=0):
+	files = glob.glob("testData/imageFeed/*")
+	files.sort()
+	file_count = len(files)
+
+	filename = files[(int(fileIndex) % file_count)]
+	im = Image.open(filename)
+	path, extension = "testData/capturedImages/Image", ".jpg"
+
+	size = 200, 150
+	im.thumbnail(size, Image.ANTIALIAS)
+    	im.save(path + fileIndex + "-thumb" + extension)
+
+        jpeg = open(path + fileIndex + "-thumb" + extension).read()
+        cherrypy.response.headers['Content-type'] = 'image/jpeg'
+        return [jpeg]
+
     @cherrypy.expose
     def dewarp(self,id=None,image=None):
         check_id(id)
