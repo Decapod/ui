@@ -37,7 +37,8 @@ https://source.fluidproject.org/svn/LICENSE.txt
                     fullImage: "../../../components/server/testData/Image4.jpg",
                     thumbImage: "../../../components/server/testData/Image4-thumb.jpg"
                 }
-            ]
+            ],
+            offlineMode: true
         };
         
         /**
@@ -187,7 +188,8 @@ https://source.fluidproject.org/svn/LICENSE.txt
                         fullImage: "../../../components/server/testData/Image1.jpg",
                         thumbImage: "../../../components/server/testData/Image1-thumb.jpg"
                     }
-                ]
+                ],
+                offlineMode: true
             });
             
             var thumbItems = capture.locate("thumbItem");

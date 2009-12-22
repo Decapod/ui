@@ -117,8 +117,6 @@ fluid_1_2 = fluid_1_2 || {};
      * @param {Object} that, the Capture component
      * @param {Object} item, the item that is to be deleted
      */
-    // TODO Actually delete the image from the file system.
-    // This should be done as a part of the server integration.
     var bindDeleteHandler = function (that, item) {
         var images = $(item).find(that.options.selectors.thumbImage);
         if (images.length !== 1) {
@@ -143,6 +141,10 @@ fluid_1_2 = fluid_1_2 || {};
                 }
                 
                 $(item).remove();
+                if (that.options.serverOn) {
+                    $.get("http://localhost:8080/delete?fileIndex=" + itemIndex);
+                }
+                
                 if (that.model.length === 0) {
                     $(that.locate("imageReorderer")).append(that.initialModel);
                     $(that.locate("imagePreview")).attr('src', previewSrc);
@@ -198,17 +200,29 @@ fluid_1_2 = fluid_1_2 || {};
         var imageToInsert = 0;
         that.locate("takePictureButton").click(
             function () {
-                
-                var newItem = {
-                    fullImage: "http://localhost:8080/capture?fileIndex=" + imageToInsert,
-                    thumbImage: "http://localhost:8080/thumb?fileIndex=" + imageToInsert
-                    //fullImage: "../../server/testData/capturedImages/Image" + imageToInsert + ".jpg",
-                    //thumbImage: "../../server/testData/capturedImages/Image" + imageToInsert + "-thumb.jpg"
-                };
-                
-                that.model.push(newItem);
-                that.events.afterPictureTaken.fire(newItem);
-                imageToInsert++;
+                var newItem = {};
+                if (that.options.serverOn) {
+                    $.get("http://localhost:8080/takePicture",
+                       {
+                        fileIndex: imageToInsert,
+                        cameraOn: that.options.cameraOn
+                    }, function(path){
+                        var imagePaths = path.split("|");
+                        newItem.fullImage = imagePaths[0];
+                        newItem.thumbImage = imagePaths[1];
+                        
+                        that.model.push(newItem);
+                        that.events.afterPictureTaken.fire(newItem);
+                        imageToInsert++;
+                    });
+                } else {
+                    newItem.fullImage = "../../server/testData/capturedImages/Image" + imageToInsert + ".jpg";
+                    newItem.thumbImage = "../../server/testData/capturedImages/Image" + imageToInsert + "-thumb.jpg";
+                    
+                    that.model.push(newItem);
+                    that.events.afterPictureTaken.fire(newItem);
+                    imageToInsert++;
+                }                
             });
         
         if (that.model.length !== 0) {
