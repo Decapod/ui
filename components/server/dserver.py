@@ -14,7 +14,7 @@ class DecapodServer (object):
 
     @cherrypy.expose
     def index(self):
-        raise cherrypy.HTTPRedirect("./capture")    
+        raise cherrypy.HTTPRedirect("./capture")
 
     @cherrypy.expose
     def capture(self):
@@ -27,7 +27,7 @@ class DecapodServer (object):
         nameToSave = path + fileIndex + extension
         
         if cameraOn:
-            camcap(nameToSave)            
+            camcap(nameToSave)
         else:
             files = glob.glob("testData/imageFeed/*")
             files.sort()

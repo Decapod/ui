@@ -101,7 +101,7 @@ fluid_1_2 = fluid_1_2 || {};
                     if (that.model.length !== 0) {
                         previewSrc = that.model[itemIndex].fullImage;
                     }
-                
+                    
                     $(imagePreview).attr('src', previewSrc);
                 }
             }
@@ -166,7 +166,7 @@ fluid_1_2 = fluid_1_2 || {};
     var bindHandlers = function (that) {
         that.events.afterPictureTaken.addListener(function (newItem) {
             var clone = $(that.initialModel).clone();
-        
+            
             if (that.model.length === 1) {
                 $(that.initialModel).remove();
             }
@@ -203,10 +203,10 @@ fluid_1_2 = fluid_1_2 || {};
                 var newItem = {};
                 if (that.options.serverOn) {
                     $.get("http://localhost:8080/takePicture",
-                       {
+                      {
                         fileIndex: imageToInsert,
                         cameraOn: that.options.cameraOn
-                    }, function(path){
+                      }, function (path) {
                         var imagePaths = path.split("|");
                         newItem.fullImage = imagePaths[0];
                         newItem.thumbImage = imagePaths[1];
@@ -222,8 +222,8 @@ fluid_1_2 = fluid_1_2 || {};
                     that.model.push(newItem);
                     that.events.afterPictureTaken.fire(newItem);
                     imageToInsert++;
-                }                
-            });
+                }
+        });
         
         if (that.model.length !== 0) {
             var i;
