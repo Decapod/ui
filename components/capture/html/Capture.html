@@ -46,27 +46,29 @@
             <form action="#" id="reorder-images-form">
                 <ul class="flc-imageReorderer fl-grid">
                     <li class="flc-imageReorderer-item">
-                        <span class="flc-imageReorderer-label">Unfixed</span>
+                        <span class="flc-imageReorderer-label">
+                            <span class="flc-imageReorderer-itemIndex"></span>
+                            Unfixed
+                        </span>
                         <img class="flc-imageReorderer-image" src="../../server/testData/noImage-thumb.jpg">
-                        <button class="flc-imageReorderer-button-delete fl-button-left"><span class="fl-button-inner">Delete</span></button>
                     </li>
                 </ul>
             </form>
             </div>
             
             <div class="fl-col-flex">
-                <div>
-                    <button class="flc-capture-button-fix fl-button-left"><span class="fl-button-inner">Fix Image</span></button>
-                    <button class="flc-capture-button-compare fl-button-left"><span class="fl-button-inner">Compare before/after</span></button>
-                    <button class="flc-capture-button-export fl-button-left"><span class="fl-button-inner">Export to PDF</span></button>
-                    <br />
+                <div class="flc-capture-previewArea">
+                    <a class="flc-capture-button-fix fl-button-left"><span class="fl-button-inner">Fix Image</span></a>
+                    <a class="flc-capture-button-compare fl-button-left"><span class="fl-button-inner">Compare before/after</span></a>
+                    <a class="flc-capture-button-export fl-button-left"><span class="fl-button-inner">Export to PDF</span></a>
+                    <br /><br />
                     <img class="flc-capture-image-preview" src="../../server/testData/noImage.jpg">
                 </div>
             </div>
         </div>
         
         <div>
-            <button type="" name="" value="" class="flc-capture-button-takePicture fl-button-left"><span class="fl-button-inner">Take picture</span></button>
+            <a type="" name="" value="" class="flc-capture-button-takePicture fl-button-left"><span class="fl-button-inner">Take picture</span></a>
         </div>
         
         <!-- Initializing the Capture component. -->

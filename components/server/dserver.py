@@ -50,9 +50,9 @@ class DecapodServer (object):
     def delete(self, fileIndex = None):
         result = ""
         path = "testData/capturedImages/Image" + fileIndex
-        for filename in glob.glob(path + "*.*"):
+        for filename in glob.glob(path + "*"):
             os.unlink(filename)
-            result += file + "\n"
+            result += filename + "\n"
         cherrypy.response.headers['Content-type'] = 'text/plain'
         return result
     

@@ -141,11 +141,12 @@ https://source.fluidproject.org/svn/LICENSE.txt
             var capture = fluid.capture(".flc-capture", options);
             var currentLength = options.thumbs.length;
             var thumbItems = capture.locate("thumbItem");
+            $(thumbItems[0]).focus();
             var deleteButton = $(thumbItems[0]).find(capture.options.selectors.deleteButton)[0];
             var itemToBeSelected = thumbItems[1];
             
             jqUnit.assertEquals("Model length before deletion is", currentLength, capture.model.length);
-            jqUnit.assertEquals("Images on page before deletion are", currentLength, thumbItems.length);
+            jqUnit.assertEquals("Images on page before deletion are", currentLength, thumbItems.length);            
             
             $(deleteButton).click();
             thumbItems = capture.locate("thumbItem");
@@ -156,6 +157,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             testPreview(capture, itemToBeSelected);
             
             currentLength = capture.model.length;
+            $(thumbItems[currentLength - 1]).focus();
             deleteButton = $(thumbItems[currentLength - 1]).find(capture.options.selectors.deleteButton)[0];
             itemToBeSelected = thumbItems[currentLength - 2];
             

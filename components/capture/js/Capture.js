@@ -77,6 +77,55 @@ fluid_1_2 = fluid_1_2 || {};
         return -1;
     };
     
+        /**
+     * Adds a listener for the click event of the delete button. Should remove
+     * the item from the model as well as from the markup. Asks for confirmation
+     * before that and focuses on the next image (if such) after deletion. If
+     * the last image is deleted, the previous thumbnail is selected.
+     * 
+     * @param {Object} that, the Capture component
+     * @param {Object} item, the item that is to be deleted
+     */
+    var bindDeleteHandler = function (that, item) {
+        var images = $(item).find(that.options.selectors.thumbImage);
+        if (images.length !== 1) {
+            fluid.fail("Each thumbnail item is expected to have exactly one image.");
+        }
+        
+        var deleteButton = $(item).find(that.options.selectors.deleteButton);
+        deleteButton.click(
+            function () {
+                var previewSrc = "../../server/testData/noImage.jpg";
+                
+                var imgSrc = $(images).attr('src');
+                var itemIndex = findByThumbSrc(that.model, imgSrc);
+                var fileIndex = imgSrc.match(/\d+/);
+                
+                if (itemIndex === -1) {
+                    fluid.fail("The image you want to delete is not in the model.");
+                }
+                
+                that.model.splice(itemIndex, 1);
+                if ($(item).next().length !== 0) {
+                    $(item).next().focus();
+                } else {
+                    $(item).prev().focus();
+                }
+                
+                $(item).remove();
+                if (that.options.serverOn) {
+                    $.get("http://localhost:8080/delete?fileIndex=" + fileIndex);
+                }
+                
+                if (that.model.length === 0) {
+                    $(that.locate("imageReorderer")).append(that.initialModel);
+                    $(that.locate("imagePreview")).attr('src', previewSrc);
+                }
+                
+                that.imageReorderer.refresh();
+            });
+    };
+    
     /**
      * Adds a listener for the onSelect event of the Reorderer. The listener
      * should display the selected thumbnail in the preview area of the Capture
@@ -88,6 +137,15 @@ fluid_1_2 = fluid_1_2 || {};
         return {
             listeners: {
                 onSelect: function (item) {
+                    var deleteButtonMarkup = '<a class="flc-imageReorderer-button-delete fl-button-left">' +
+                      '<span class="fl-button-inner">Delete</span></a>';
+                    $(that.locate("deleteButton")).remove();
+                    
+                    if ($(item).find(that.options.selectors.deleteButton).length === 0) {
+                        $(item).append(deleteButtonMarkup);
+                        bindDeleteHandler(that, item);
+                    }
+                    
                     var images = $(item).find(that.options.selectors.thumbImage);
                     var imagePreview = that.locate("imagePreview");
                     var previewSrc;
@@ -109,52 +167,6 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     /**
-     * Adds a listener for the click event of the delete button. Should remove
-     * the item from the model as well as from the markup. Asks for confirmation
-     * before that and focuses on the next image (if such) after deletion. If
-     * the last image is deleted, the previous thumbnail is selected.
-     * 
-     * @param {Object} that, the Capture component
-     * @param {Object} item, the item that is to be deleted
-     */
-    var bindDeleteHandler = function (that, item) {
-        var images = $(item).find(that.options.selectors.thumbImage);
-        if (images.length !== 1) {
-            fluid.fail("Each thumbnail item is expected to have exactly one image.");
-        }
-        
-        var deleteButton = $(item).find(that.options.selectors.deleteButton);
-        deleteButton.click(
-            function () {
-                var previewSrc = "../../server/testData/noImage.jpg";
-                
-                var itemIndex = findByThumbSrc(that.model, $(images).attr('src'));
-                if (itemIndex === -1) {
-                    fluid.fail("The image you want to delete is not in the model.");
-                }
-                
-                that.model.splice(itemIndex, 1);
-                if ($(item).next().length !== 0) {
-                    $(item).next().focus();
-                } else {
-                    $(item).prev().focus();
-                }
-                
-                $(item).remove();
-                if (that.options.serverOn) {
-                    $.get("http://localhost:8080/delete?fileIndex=" + itemIndex);
-                }
-                
-                if (that.model.length === 0) {
-                    $(that.locate("imageReorderer")).append(that.initialModel);
-                    $(that.locate("imagePreview")).attr('src', previewSrc);
-                }
-                
-                that.imageReorderer.refresh();
-            });
-    };
-    
-    /**
      * Binds listeners for the click events of the various buttons in the UI,
      * such as fixing/comparing images, exporting to PDF, and taking pictures.
      * 
@@ -171,14 +183,12 @@ fluid_1_2 = fluid_1_2 || {};
                 $(that.initialModel).remove();
             }
             
+            $(clone).find(".flc-imageReorderer-itemIndex").text(that.model.length);
             var images = $(clone).find(that.options.selectors.thumbImage);
             $(images).attr('src', newItem.thumbImage);
            
             $(that.locate("imageReorderer")).append(clone);
-            
-            bindDeleteHandler(that, clone);
             that.imageReorderer.refresh();
-            
             $(clone).focus();
         });
         
@@ -198,15 +208,18 @@ fluid_1_2 = fluid_1_2 || {};
         });
         
         var imageToInsert = 0;
+        var totalImages = 5; // For testing purposes in offline mode only.
         that.locate("takePictureButton").click(
             function () {
                 var newItem = {};
+                var params = {
+                    fileIndex: imageToInsert
+                };
+                if (that.options.cameraOn) {
+                    params.cameraOn = 'True';
+                }
                 if (that.options.serverOn) {
-                    $.get("http://localhost:8080/takePicture",
-                      {
-                        fileIndex: imageToInsert,
-                        cameraOn: that.options.cameraOn
-                      }, function (path) {
+                    $.get("http://localhost:8080/takePicture", params, function (path) {
                         var imagePaths = path.split("|");
                         newItem.fullImage = imagePaths[0];
                         newItem.thumbImage = imagePaths[1];
@@ -216,8 +229,9 @@ fluid_1_2 = fluid_1_2 || {};
                         imageToInsert++;
                     });
                 } else {
-                    newItem.fullImage = "../../server/testData/capturedImages/Image" + imageToInsert + ".jpg";
-                    newItem.thumbImage = "../../server/testData/capturedImages/Image" + imageToInsert + "-thumb.jpg";
+                    var imageToShow = imageToInsert % totalImages;
+                    newItem.fullImage = "../../server/testData/capturedImages/Image" + imageToShow + ".jpg";
+                    newItem.thumbImage = "../../server/testData/capturedImages/Image" + imageToShow + "-thumb.jpg";
                     
                     that.model.push(newItem);
                     that.events.afterPictureTaken.fire(newItem);
@@ -226,14 +240,9 @@ fluid_1_2 = fluid_1_2 || {};
         });
         
         if (that.model.length !== 0) {
-            var i;
             var thumbItems = that.locate("thumbItem");
-            for (i = 0; i < thumbItems.length; i++) {
-                bindDeleteHandler(that, thumbItems[i]);
-            }
-            $(thumbItems[i - 1]).focus();
+            $(thumbItems[thumbItems.length - 1]).focus();
         }
-        
     };
     
     /**
