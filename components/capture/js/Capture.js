@@ -31,15 +31,20 @@ fluid_1_2 = fluid_1_2 || {};
         
         var selectorMap = [
             {selector: that.options.selectors.thumbItem, id: "item:"},
+            {selector: that.options.selectors.itemIndex, id: "index"},
             {selector: that.options.selectors.thumbImage, id: "image"}
         ];
         
         var generateTree = function () {
             
-            return fluid.transform(that.model, function (object) {
+            return fluid.transform(that.model, function (object, index) {
                 var tree = {
                     ID: "item:",
                     children: [
+                        {
+                            ID: "index",
+                            value: index + 1
+                        },
                         {
                             ID: "image",
                             target: object.thumbImage
@@ -102,7 +107,7 @@ fluid_1_2 = fluid_1_2 || {};
                     $.get("http://localhost:8080/delete?fileIndex=" + fileIndex);
                 }
                 
-                if (that.model.length === 0) {
+                if (that.model.length === 1) {
                     var previewSrc = "../../server/testData/noImage.jpg";
                     
                     $(that.locate("imageReorderer")).append(that.initialModel);
@@ -167,8 +172,6 @@ fluid_1_2 = fluid_1_2 || {};
                       '<span class="fl-button-inner">Delete</span></a>';
                       
                     $(that.locate("deleteButton")).remove();
-                    $(item).append(deleteButtonMarkup);
-                    bindDeleteHandler(that, item);
                     
                     var imagePreview = that.locate("imagePreview");
                     var previewSrc = "../../server/testData/noImage.jpg";
@@ -177,13 +180,15 @@ fluid_1_2 = fluid_1_2 || {};
                     
                     if (that.model.length !== 0) {
                         previewSrc = that.model[itemIndex].fullImage;
+                        $(item).append(deleteButtonMarkup);
+                        bindDeleteHandler(that, item);
                     }
                     
                     $(imagePreview).attr('src', previewSrc);
                 },
                 
                 afterMove: function (item, requestedPosition, allItems) {
-                    var index = allItems.index(item) - 1;
+                    var index = allItems.index(item);
                     var oldIndex = $(item).find(that.options.selectors.itemIndex).text() - 1;
                     
                     if (index === oldIndex) {
@@ -271,7 +276,6 @@ fluid_1_2 = fluid_1_2 || {};
         that.initialModel = that.locate("thumbItem").get(0);
         
         render(that);
-        refreshIndices(that);
         
         var modifiedOptions = addReordererListeners(that);
         fluid.merge(null, modifiedOptions, that.options.imageReorderer.options);

@@ -36,29 +36,14 @@ https://source.fluidproject.org/svn/LICENSE.txt
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image3.jpg",
                     thumbImage: "../../../components/server/testData/capturedImages/Image3-thumb.jpg"
+                },
+                {
+                    fullImage: "../../../components/server/testData/capturedImages/Image4.jpg",
+                    thumbImage: "../../../components/server/testData/capturedImages/Image4-thumb.jpg"
                 }
             ],
             serverOn: false,
             cameraOn: false
-        };
-        
-        /**
-         * Finds the path to the full-sized image of an item in the model
-         * by the source of its thumbnail image. Returns the path found or a
-         * default path if no such item exists.
-         * 
-         * @param {Array} model, the model of items to search in
-         * @param {String} src, the 'src' tag of the thumbnail image
-         */
-        var findFullSrc = function (model, thumbSrc) {
-            var i;
-            for (i = 0; i < model.length; i++) {
-                if (model[i].thumbImage === thumbSrc) {
-                    return model[i].fullImage;
-                }
-            }
-            
-            return "../../../components/server/testData/noImage.jpg";
         };
         
         /**
@@ -84,15 +69,51 @@ https://source.fluidproject.org/svn/LICENSE.txt
          * selected thumbnail item.
          * 
          * @param {Object} component, the Capture component to be tested
-         * @param {Object} thumbItem, the selected item which should be displayed
-         *                  full-sized in the preview area.
+         * @param {Object} thumbItem, the selected item which should be
+         *                  displayed full-sized in the preview area.
          */
         var testPreview = function (component, thumbItem) {
-            var thumbSrc = $(thumbItem).find(component.options.selectors.thumbImage).attr('src');
-            var fullSrc = findFullSrc(component.model, thumbSrc);
-            var imagePreview = component.locate("imagePreview")[0];
+            var fullSrc;
+            var itemIndex = $(component.locate("thumbItem")).index(thumbItem);
+            if (component.model.length !== 0) {
+                fullSrc = component.model[itemIndex].fullImage;
+            } else {
+                fullSrc = "../../../components/server/testData/noImage.jpg";
+            }
+            var imagePreview = component.locate("imagePreview");
             
             jqUnit.assertEquals("Image in preview is", fullSrc, $(imagePreview).attr('src'));
+        };
+        
+        /**
+         * Test that there is only one delete button on the page (the one of the
+         * selected thumbnail).
+         * 
+         * @param {Object} component, the Capture component to be tested
+         * @param {Object} item, the currently selected item
+         */
+        var testDeleteButtons = function (component, item) {
+            var delButtonsCount = component.locate("deleteButton").length;
+            jqUnit.assertEquals("Delete buttons on page are", 1, delButtonsCount);
+            
+            if (item) {
+                delButtonsCount = $(item).find(component.options.selectors.deleteButton).length;
+                jqUnit.assertEquals("Delete buttons in the selected item are ", 1, delButtonsCount);
+            }
+        };
+        
+        /**
+         * Tests whether the indices of the thumbnails are in the correct order
+         * and that the markup is synced with the model.
+         * 
+         * @param {Object} component, the Capture component to be tested.
+         */
+        var testIndices = function (component) {
+            var allIndices = component.locate("itemIndex");
+            jqUnit.assertEquals("Number of item indices are", component.model.length, allIndices.length);
+            allIndices.each(function (index, item) {
+                jqUnit.assertEquals("Current item has index", index + 1, $(item).text());
+            });
         };
         
         tests.test("Component construction with no model", function () {
@@ -109,7 +130,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
         });
         
         tests.test("Component construction with a sample model", function () {
-            expect(7);
+            expect(8 + options.thumbs.length);
             
             var capture = fluid.capture(".flc-capture", options);
             var thumbItems = capture.locate("thumbItem");
@@ -119,51 +140,59 @@ https://source.fluidproject.org/svn/LICENSE.txt
             jqUnit.assertEquals("Image items on page are", capture.model.length, thumbItems.length);
             
             testPreview(capture, thumbItems[thumbItems.length - 1]);
+            testIndices(capture);
         });
         
-        tests.test("Preview update on image selection", function () {
-            expect(2);
+        tests.test("UI update on image selection", function () {
+            expect(7);
             
             var capture = fluid.capture(".flc-capture", options);
+            var thumbItems = capture.locate("thumbItem");
+            var firstItem = thumbItems[0];
+            var secondItem = thumbItems[1];
             
-            var firstItem = capture.locate("thumbItem")[0];
-            var secondItem = capture.locate("thumbItem")[1];
+            testDeleteButtons(capture);
             
             $(firstItem).click();
             testPreview(capture, firstItem);
+            testDeleteButtons(capture, firstItem);
             
             $(secondItem).click();
             testPreview(capture, secondItem);
+            testDeleteButtons(capture, secondItem);
         });
         
         tests.test("Thumbnail deletion", function () {
-            expect(6);
+            expect(10 + options.thumbs.length);
             
             var capture = fluid.capture(".flc-capture", options);
             var currentLength = options.thumbs.length;
             var thumbItems = capture.locate("thumbItem");
             $(thumbItems[0]).focus();
-            var deleteButton = $(thumbItems[0]).find(capture.options.selectors.deleteButton)[0];
+            var deleteButton = $(thumbItems[0]).find(capture.options.selectors.deleteButton);
             var itemToBeSelected = thumbItems[1];
             
             jqUnit.assertEquals("Model length before deletion is", currentLength, capture.model.length);
-            jqUnit.assertEquals("Images on page before deletion are", currentLength, thumbItems.length);            
+            jqUnit.assertEquals("Images on page before deletion are", currentLength, thumbItems.length);
             
             $(deleteButton).click();
             thumbItems = capture.locate("thumbItem");
+            testIndices(capture);
             
             jqUnit.assertEquals("Model length after deletion is", currentLength - 1, capture.model.length);
             jqUnit.assertEquals("Images on page after deletion are", currentLength - 1, thumbItems.length);
             
             testPreview(capture, itemToBeSelected);
+            testDeleteButtons(capture, itemToBeSelected);
             
             currentLength = capture.model.length;
             $(thumbItems[currentLength - 1]).focus();
-            deleteButton = $(thumbItems[currentLength - 1]).find(capture.options.selectors.deleteButton)[0];
+            deleteButton = $(thumbItems[currentLength - 1]).find(capture.options.selectors.deleteButton);
             itemToBeSelected = thumbItems[currentLength - 2];
             
             $(deleteButton).click();
             testPreview(capture, itemToBeSelected);
+            testDeleteButtons(capture, itemToBeSelected);
         });
         
         tests.test("Taking pictures", function () {
@@ -172,7 +201,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             var capture = fluid.capture(".flc-capture", options);
             var thumbItems;
             
-            var takePictureButton = capture.locate("takePictureButton")[0];
+            var takePictureButton = capture.locate("takePictureButton");
             
             $(takePictureButton).click();
             thumbItems = capture.locate("thumbItem");
@@ -183,24 +212,28 @@ https://source.fluidproject.org/svn/LICENSE.txt
         });
         
         tests.test("Deleting the last image left", function () {
-            expect(2);
+            expect(3);
             
             var capture = fluid.capture(".flc-capture", {
                 thumbs: [
                     {
-                        fullImage: "../../../components/server/testData/Image1.jpg",
-                        thumbImage: "../../../components/server/testData/Image1-thumb.jpg"
+                        fullImage: "../../../components/server/testData/capturedImages/Image0.jpg",
+                        thumbImage: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
                     }
-                ],
-                offlineMode: true
+                ]
             });
             
             var thumbItems = capture.locate("thumbItem");
-            var deleteButton = $(thumbItems[0]).find(capture.options.selectors.deleteButton)[0];
+            var deleteButton = $(thumbItems[0]).find(capture.options.selectors.deleteButton);
             $(deleteButton).click();
             
+            thumbItems = capture.locate("thumbItem");
             jqUnit.assertEquals("Model length is", 0, capture.model.length);
             jqUnit.assertEquals("Image items on page are", 1, thumbItems.length);
+            
+            $(thumbItems[0]).click();
+            var delButtonsCount = $(thumbItems[0]).find(capture.options.selectors.deleteButton).length;
+            jqUnit.assertEquals("Delete buttons on page are", 0, delButtonsCount);
         });
     });
     
