@@ -19,9 +19,8 @@ fluid_1_2 = fluid_1_2 || {};
     /**
      * Renders the reorderable list of thumbnails. For each item in the model
      * adds the appropriate markup for it. An item in the rendered markup
-     * consists of a label (optionally), an image and a delete button. The last
-     * two should be present exactly once in the markup. Currently only the
-     * image is rendered dynamically. 
+     * consists of a label and an image (they should be present exactly once).
+     * Currently only the image is rendered dynamically.
      * 
      * @param {Object} that, the Capture component
      */
@@ -60,52 +59,36 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     /**
-     * Finds an item in the model by the source of its thumbnail image. Returns
-     * the index of that item in the model or -1 if no such item exists.
+     * Refreshes the indices in the thumbnails' title. Should be called after
+     * model change - for example deletion or reordering of images.
      * 
-     * @param {Array} model, the model of items to search in
-     * @param {String} src, the 'src' tag of the thumbnail image
+     * @param {Object} that, the Capture component
      */
-    var findByThumbSrc = function (model, thumbSrc) {
-        var i;
-        for (i = 0; i < model.length; i++) {
-            if (model[i].thumbImage === thumbSrc) {
-                return i;
-            }
-        }
-        
-        return -1;
+    var refreshIndices = function (that) {
+        $(that.locate("itemIndex")).each(function (index, item) {
+            $(item).text(index + 1);
+        });
     };
     
-        /**
+    /**
      * Adds a listener for the click event of the delete button. Should remove
-     * the item from the model as well as from the markup. Asks for confirmation
-     * before that and focuses on the next image (if such) after deletion. If
-     * the last image is deleted, the previous thumbnail is selected.
+     * the item from the model as well as from the markup. When working with the
+     * server on, removes the image from the file system as well. Focuses on the
+     * next image (if such) after the deletion. If the last image is deleted,
+     * the previous thumbnail is selected.
      * 
      * @param {Object} that, the Capture component
      * @param {Object} item, the item that is to be deleted
      */
     var bindDeleteHandler = function (that, item) {
-        var images = $(item).find(that.options.selectors.thumbImage);
-        if (images.length !== 1) {
-            fluid.fail("Each thumbnail item is expected to have exactly one image.");
-        }
-        
         var deleteButton = $(item).find(that.options.selectors.deleteButton);
         deleteButton.click(
             function () {
-                var previewSrc = "../../server/testData/noImage.jpg";
-                
-                var imgSrc = $(images).attr('src');
-                var itemIndex = findByThumbSrc(that.model, imgSrc);
-                var fileIndex = imgSrc.match(/\d+/);
-                
+                var itemIndex = $(item).find(that.options.selectors.itemIndex).text() - 1;
                 if (itemIndex === -1) {
-                    fluid.fail("The image you want to delete is not in the model.");
+                    fluid.fail("The image you want to delete is with an invalid index.");
                 }
                 
-                that.model.splice(itemIndex, 1);
                 if ($(item).next().length !== 0) {
                     $(item).next().focus();
                 } else {
@@ -113,54 +96,102 @@ fluid_1_2 = fluid_1_2 || {};
                 }
                 
                 $(item).remove();
+                
                 if (that.options.serverOn) {
+                    var fileIndex = that.model[itemIndex].fullImage.match(/\d+/);
                     $.get("http://localhost:8080/delete?fileIndex=" + fileIndex);
                 }
                 
                 if (that.model.length === 0) {
+                    var previewSrc = "../../server/testData/noImage.jpg";
+                    
                     $(that.locate("imageReorderer")).append(that.initialModel);
                     $(that.locate("imagePreview")).attr('src', previewSrc);
                 }
                 
+                that.model.splice(itemIndex, 1);
+                refreshIndices(that);
                 that.imageReorderer.refresh();
             });
     };
     
+    
     /**
-     * Adds a listener for the onSelect event of the Reorderer. The listener
+     * Reorders the model after images have been reordered on the page. Moves an
+     * image from the old index to its new one by manipulating the array.
+     * 
+     * @param {Object} model, the model of images to be reordered
+     * @param {Object} index, the new index of the moved image
+     * @param {Object} oldIndex, the old index of the moved image
+     */
+    var reorderModel = function (model, index, oldIndex) {
+        var result;
+        var start;
+        var middle;
+        var end;
+        
+        if (index > oldIndex) {
+            start = model.slice(0, oldIndex);
+            middle = model.slice(oldIndex + 1, index + 1);
+            end = model.slice(index + 1);
+            
+            result = start.concat(middle);
+            result.push(model[oldIndex]);
+            result = result.concat(end);
+        } else {
+            start = model.slice(0, index);
+            middle = model.slice(index, oldIndex);
+            end = model.slice(oldIndex + 1);
+            
+            result = start;
+            result.push(model[oldIndex]);
+            result = result.concat(middle).concat(end);
+        }
+        
+        return result;
+    };
+    
+    /**
+     * Adds listeners for the events of the Reorderer. The onSelect listener
      * should display the selected thumbnail in the preview area of the Capture
-     * component.
+     * component. The afrerMove listener should update the model and refresh the
+     * indices in the title of the images.
      * 
      * @param {Object} that, the Capture component
      */
-    var addSelectionListener = function (that) {
+    var addReordererListeners = function (that) {
         return {
             listeners: {
                 onSelect: function (item) {
                     var deleteButtonMarkup = '<a class="flc-imageReorderer-button-delete fl-button-left">' +
                       '<span class="fl-button-inner">Delete</span></a>';
+                      
                     $(that.locate("deleteButton")).remove();
+                    $(item).append(deleteButtonMarkup);
+                    bindDeleteHandler(that, item);
                     
-                    if ($(item).find(that.options.selectors.deleteButton).length === 0) {
-                        $(item).append(deleteButtonMarkup);
-                        bindDeleteHandler(that, item);
-                    }
-                    
-                    var images = $(item).find(that.options.selectors.thumbImage);
                     var imagePreview = that.locate("imagePreview");
-                    var previewSrc;
+                    var previewSrc = "../../server/testData/noImage.jpg";
                     
-                    if (images.length !== 1) {
-                        fluid.fail("Each thumbnail item is expected to have exactly one image.");
-                    }
-                    
-                    var itemIndex = findByThumbSrc(that.model, $(images).attr('src'));
+                    var itemIndex = $(item).find(that.options.selectors.itemIndex).text() - 1;
                     
                     if (that.model.length !== 0) {
                         previewSrc = that.model[itemIndex].fullImage;
                     }
                     
                     $(imagePreview).attr('src', previewSrc);
+                },
+                
+                afterMove: function (item, requestedPosition, allItems) {
+                    var index = allItems.index(item) - 1;
+                    var oldIndex = $(item).find(that.options.selectors.itemIndex).text() - 1;
+                    
+                    if (index === oldIndex) {
+                        return;
+                    }
+                    
+                    that.model = reorderModel(that.model, index, oldIndex);
+                    refreshIndices(that);
                 }
             }
         };
@@ -170,8 +201,8 @@ fluid_1_2 = fluid_1_2 || {};
      * Binds listeners for the click events of the various buttons in the UI,
      * such as fixing/comparing images, exporting to PDF, and taking pictures.
      * 
-     * Adds a listener for the afterPictureTaken event. Should refresh the thumbnails
-     * displayed and select the last captured image.
+     * Adds a listener for the afterPictureTaken event. Should refresh the
+     * thumbnails displayed and select the last captured image.
      * 
      * @param {Object} that, the Capture component
      */
@@ -190,21 +221,6 @@ fluid_1_2 = fluid_1_2 || {};
             $(that.locate("imageReorderer")).append(clone);
             that.imageReorderer.refresh();
             $(clone).focus();
-        });
-        
-        that.locate("fixButton").click(
-            function () {
-                // TODO Implement fix image functionality.
-        });
-        
-        that.locate("compareButton").click(
-            function () {
-                // TODO Implement compare images functionality.
-        });
-        
-        that.locate("exportButton").click(
-            function () {
-                // TODO Implement export to PDF functionality.
         });
         
         var imageToInsert = 0;
@@ -237,12 +253,7 @@ fluid_1_2 = fluid_1_2 || {};
                     that.events.afterPictureTaken.fire(newItem);
                     imageToInsert++;
                 }
-        });
-        
-        if (that.model.length !== 0) {
-            var thumbItems = that.locate("thumbItem");
-            $(thumbItems[thumbItems.length - 1]).focus();
-        }
+            });
     };
     
     /**
@@ -251,7 +262,7 @@ fluid_1_2 = fluid_1_2 || {};
      * images and manipulating them.
      * 
      * @param {Object} container, the component this View should be placed in
-     * @param {Object} options, the options passed into the component
+     * @param {Object} options, the options passed to the component
      */
     fluid.capture = function (container, options) {
         var that = fluid.initView("fluid.capture", container, options);
@@ -260,14 +271,20 @@ fluid_1_2 = fluid_1_2 || {};
         that.initialModel = that.locate("thumbItem").get(0);
         
         render(that);
+        refreshIndices(that);
         
-        var selectOptions = addSelectionListener(that);
-        fluid.merge(null, selectOptions, that.options.imageReorderer.options);
+        var modifiedOptions = addReordererListeners(that);
+        fluid.merge(null, modifiedOptions, that.options.imageReorderer.options);
         
         that.imageReorderer = fluid.initSubcomponent(
-          that, "imageReorderer", [that.locate("imageReorderer"), selectOptions]);
+          that, "imageReorderer", [that.locate("imageReorderer"), modifiedOptions]);
         
         bindHandlers(that);
+        
+        if (that.model.length !== 0) {
+            var thumbItems = that.locate("thumbItem");
+            $(thumbItems[thumbItems.length - 1]).focus();
+        }
         
         return that;
     };
@@ -286,6 +303,8 @@ fluid_1_2 = fluid_1_2 || {};
         selectors: {
             imageReorderer: ".flc-imageReorderer",
             thumbItem: ".flc-imageReorderer-item",
+            imageLabel: ".flc-imageReorderer-label",
+            itemIndex: ".flc-imageReorderer-itemIndex",
             thumbImage: ".flc-imageReorderer-image",
             deleteButton: ".flc-imageReorderer-button-delete",
             

@@ -22,23 +22,24 @@ https://source.fluidproject.org/svn/LICENSE.txt
         var options = {
             thumbs: [
                 {
-                    fullImage: "../../../components/server/testData/Image1.jpg",
-                    thumbImage: "../../../components/server/testData/Image1-thumb.jpg"
+                    fullImage: "../../../components/server/testData/capturedImages/Image0.jpg",
+                    thumbImage: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
                 },
                 {
-                    fullImage: "../../../components/server/testData/Image2.jpg",
-                    thumbImage: "../../../components/server/testData/Image2-thumb.jpg"
+                    fullImage: "../../../components/server/testData/capturedImages/Image1.jpg",
+                    thumbImage: "../../../components/server/testData/capturedImages/Image1-thumb.jpg"
                 },
                 {
-                    fullImage: "../../../components/server/testData/Image3.jpg",
-                    thumbImage: "../../../components/server/testData/Image3-thumb.jpg"
+                    fullImage: "../../../components/server/testData/capturedImages/Image2.jpg",
+                    thumbImage: "../../../components/server/testData/capturedImages/Image2-thumb.jpg"
                 },
                 {
-                    fullImage: "../../../components/server/testData/Image4.jpg",
-                    thumbImage: "../../../components/server/testData/Image4-thumb.jpg"
+                    fullImage: "../../../components/server/testData/capturedImages/Image3.jpg",
+                    thumbImage: "../../../components/server/testData/capturedImages/Image3-thumb.jpg"
                 }
             ],
-            offlineMode: true
+            serverOn: false,
+            cameraOn: false
         };
         
         /**
