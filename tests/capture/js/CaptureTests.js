@@ -17,7 +17,9 @@ https://source.fluidproject.org/svn/LICENSE.txt
 (function ($) {
     $(document).ready(function () {
         
-        var tests = jqUnit.testCase("Decapod Capture Tests");
+        var tests = jqUnit.testCase("Decapod Capture Tests", function () {
+            tests.fetchTemplate("../../../components/capture/html/Capture.html", ".flc-capture");
+        });
         
         var options = {
             thumbs: [
@@ -78,7 +80,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             if (component.model.length !== 0) {
                 fullSrc = component.model[itemIndex].fullImage;
             } else {
-                fullSrc = "../../../components/server/testData/noImage.jpg";
+                fullSrc = "../../server/testData/noImage.jpg";
             }
             var imagePreview = component.locate("imagePreview");
             
