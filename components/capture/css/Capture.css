@@ -30,7 +30,7 @@
     margin-top:0px;
 }
 
-.flc-imageReorderer-label {
+.flc-capture-thumbLabel {
     text-align:right;
     padding-right:5px;
     background-color:yellow;   
@@ -39,14 +39,14 @@
     display:block;
 }
 
-.flc-imageReorderer-itemIndex {
+.flc-capture-thumbIndex {
     text-align:left;
     display:block;
     float:left;
     padding-left:5px;
 }
 
-.flc-imageReorderer-button-delete,
+.flc-capture-button-delete,
 .flc-capture-button-takePicture  {
     margin-left: 33%;
 }

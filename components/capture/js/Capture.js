@@ -19,8 +19,9 @@ fluid_1_2 = fluid_1_2 || {};
     /**
      * Renders the reorderable list of thumbnails. For each item in the model
      * adds the appropriate markup for it. An item in the rendered markup
-     * consists of a label and an image (they should be present exactly once).
-     * Currently only the image is rendered dynamically.
+     * consists of a label, an image, and a delete button that is visible only
+     * when the item is selected. All these should be present exactly once.
+     * Currently the image and its index are rendered dynamically.
      * 
      * @param {Object} that, the Capture component
      */
@@ -70,7 +71,7 @@ fluid_1_2 = fluid_1_2 || {};
      * @param {Object} that, the Capture component
      */
     var refreshIndices = function (that) {
-        $(that.locate("itemIndex")).each(function (index, item) {
+        that.locate("itemIndex").each(function (index, item) {
             $(item).text(index + 1);
         });
     };
@@ -86,7 +87,7 @@ fluid_1_2 = fluid_1_2 || {};
      * @param {Object} item, the item that is to be deleted
      */
     var bindDeleteHandler = function (that, item) {
-        var deleteButton = $(item).find(that.options.selectors.deleteButton);
+        var deleteButton = $(':visible', that.locate("deleteButton"));
         deleteButton.click(
             function () {
                 var itemIndex = $(item).find(that.options.selectors.itemIndex).text() - 1;
@@ -110,20 +111,21 @@ fluid_1_2 = fluid_1_2 || {};
                 if (that.model.length === 1) {
                     var previewSrc = "../../server/testData/noImage.jpg";
                     
-                    $(that.locate("imageReorderer")).append(that.initialModel);
-                    $(that.locate("imagePreview")).attr('src', previewSrc);
+                    that.locate("imageReorderer").append(that.initialModel);
+                    that.locate("deleteButton").hide();
+                    that.locate("imagePreview").attr('src', previewSrc);
                 }
                 
                 that.model.splice(itemIndex, 1);
                 refreshIndices(that);
                 that.imageReorderer.refresh();
             });
-    };
-    
+    };    
     
     /**
      * Reorders the model after images have been reordered on the page. Moves an
-     * image from the old index to its new one by manipulating the array.
+     * image from the old index to its new one by manipulating the array
+     * directly.
      * 
      * @param {Object} model, the model of images to be reordered
      * @param {Object} index, the new index of the moved image
@@ -168,10 +170,7 @@ fluid_1_2 = fluid_1_2 || {};
         return {
             listeners: {
                 onSelect: function (item) {
-                    var deleteButtonMarkup = '<a class="flc-imageReorderer-button-delete fl-button-left">' +
-                      '<span class="fl-button-inner">Delete</span></a>';
-                      
-                    $(that.locate("deleteButton")).remove();
+                    that.locate("deleteButton").hide();
                     
                     var imagePreview = that.locate("imagePreview");
                     var previewSrc = "../../server/testData/noImage.jpg";
@@ -180,11 +179,11 @@ fluid_1_2 = fluid_1_2 || {};
                     
                     if (that.model.length !== 0) {
                         previewSrc = that.model[itemIndex].fullImage;
-                        $(item).append(deleteButtonMarkup);
+                        $(item).find(that.options.selectors.deleteButton).show();
                         bindDeleteHandler(that, item);
                     }
                     
-                    $(imagePreview).attr('src', previewSrc);
+                    imagePreview.attr('src', previewSrc);
                 },
                 
                 afterMove: function (item, requestedPosition, allItems) {
@@ -219,26 +218,28 @@ fluid_1_2 = fluid_1_2 || {};
                 $(that.initialModel).remove();
             }
             
-            $(clone).find(".flc-imageReorderer-itemIndex").text(that.model.length);
+            $(clone).find(that.options.selectors.itemIndex).text(that.model.length);
             var images = $(clone).find(that.options.selectors.thumbImage);
             $(images).attr('src', newItem.thumbImage);
            
-            $(that.locate("imageReorderer")).append(clone);
+            that.locate("imageReorderer").append(clone);
             that.imageReorderer.refresh();
             $(clone).focus();
         });
         
         var imageToInsert = 0;
-        var totalImages = 5; // For testing purposes in offline mode only.
+        var totalImages = 5; // For testing purposes with no server only.
         that.locate("takePictureButton").click(
             function () {
                 var newItem = {};
+                
                 var params = {
                     fileIndex: imageToInsert
                 };
                 if (that.options.cameraOn) {
                     params.cameraOn = 'True';
                 }
+                
                 if (that.options.serverOn) {
                     $.get("http://localhost:8080/takePicture", params, function (path) {
                         var imagePaths = path.split("|");
@@ -276,6 +277,7 @@ fluid_1_2 = fluid_1_2 || {};
         that.initialModel = that.locate("thumbItem").get(0);
         
         render(that);
+        that.locate("deleteButton").hide();
         
         var modifiedOptions = addReordererListeners(that);
         fluid.merge(null, modifiedOptions, that.options.imageReorderer.options);
@@ -298,19 +300,18 @@ fluid_1_2 = fluid_1_2 || {};
             type: "fluid.reorderImages",
             options: {
                 selectors: {
-                    movables: ".flc-imageReorderer-item",
-                    imageTitle: ".flc-imageReorderer-label"
+                    movables: ".flc-capture-thumbItem"
                 }
             }
         },
         
         selectors: {
-            imageReorderer: ".flc-imageReorderer",
-            thumbItem: ".flc-imageReorderer-item",
-            imageLabel: ".flc-imageReorderer-label",
-            itemIndex: ".flc-imageReorderer-itemIndex",
-            thumbImage: ".flc-imageReorderer-image",
-            deleteButton: ".flc-imageReorderer-button-delete",
+            imageReorderer: ".flc-capture-reorderer",
+            thumbItem: ".flc-capture-thumbItem",
+            imageLabel: ".flc-capture-thumbLabel",
+            itemIndex: ".flc-capture-thumbIndex",
+            thumbImage: ".flc-capture-thumbImage",
+            deleteButton: ".flc-capture-button-delete",
             
             fixButton: ".flc-capture-button-fix",
             compareButton: ".flc-capture-button-compare",

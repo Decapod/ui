@@ -57,7 +57,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
          */
         var testComponentConstruction = function (component) {
             var captureContainer = $(".flc-capture");
-            var reordererContainer = $(".flc-imageReorderer");
+            var reordererContainer = $(".flc-capture-reorderer");
             
             jqUnit.assertEquals("Capture container is set to", captureContainer[0].id, component.container[0].id);
             jqUnit.assertEquals("Image reorderer container is set to", reordererContainer[0].id, component.imageReorderer.container[0].id);
@@ -95,13 +95,8 @@ https://source.fluidproject.org/svn/LICENSE.txt
          * @param {Object} item, the currently selected item
          */
         var testDeleteButtons = function (component, item) {
-            var delButtonsCount = component.locate("deleteButton").length;
-            jqUnit.assertEquals("Delete buttons on page are", 1, delButtonsCount);
-            
-            if (item) {
-                delButtonsCount = $(item).find(component.options.selectors.deleteButton).length;
-                jqUnit.assertEquals("Delete buttons in the selected item are ", 1, delButtonsCount);
-            }
+            var delButtonsCount = $(':visible', component.locate("deleteButton")).length;
+            jqUnit.assertEquals("Visible delete buttons on page are", 1, delButtonsCount);
         };
         
         /**
@@ -146,7 +141,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
         });
         
         tests.test("UI update on image selection", function () {
-            expect(7);
+            expect(5);
             
             var capture = fluid.capture(".flc-capture", options);
             var thumbItems = capture.locate("thumbItem");
@@ -165,13 +160,13 @@ https://source.fluidproject.org/svn/LICENSE.txt
         });
         
         tests.test("Thumbnail deletion", function () {
-            expect(10 + options.thumbs.length);
+            expect(8 + options.thumbs.length);
             
             var capture = fluid.capture(".flc-capture", options);
             var currentLength = options.thumbs.length;
             var thumbItems = capture.locate("thumbItem");
             $(thumbItems[0]).focus();
-            var deleteButton = $(thumbItems[0]).find(capture.options.selectors.deleteButton);
+            var deleteButton = $(':visible', capture.locate("deleteButton"));
             var itemToBeSelected = thumbItems[1];
             
             jqUnit.assertEquals("Model length before deletion is", currentLength, capture.model.length);
@@ -189,7 +184,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             currentLength = capture.model.length;
             $(thumbItems[currentLength - 1]).focus();
-            deleteButton = $(thumbItems[currentLength - 1]).find(capture.options.selectors.deleteButton);
+            deleteButton = $(':visible', capture.locate("deleteButton"));
             itemToBeSelected = thumbItems[currentLength - 2];
             
             $(deleteButton).click();
@@ -226,7 +221,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             });
             
             var thumbItems = capture.locate("thumbItem");
-            var deleteButton = $(thumbItems[0]).find(capture.options.selectors.deleteButton);
+            var deleteButton = $(':visible', capture.locate("deleteButton"));
             $(deleteButton).click();
             
             thumbItems = capture.locate("thumbItem");
@@ -234,7 +229,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             jqUnit.assertEquals("Image items on page are", 1, thumbItems.length);
             
             $(thumbItems[0]).click();
-            var delButtonsCount = $(thumbItems[0]).find(capture.options.selectors.deleteButton).length;
+            var delButtonsCount = $(':visible', capture.locate("deleteButton")).length;
             jqUnit.assertEquals("Delete buttons on page are", 0, delButtonsCount);
         });
     });
