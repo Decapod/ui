@@ -21,15 +21,18 @@ https://source.fluidproject.org/svn/LICENSE.txt
             tests.fetchTemplate("../../../components/capture/html/Capture.html", ".flc-capture");
         });
         
+        // TODO Load the options from a config file (when the model is persisted).
         var options = {
             thumbs: [
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image0.jpg",
-                    thumbImage: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
+                    thumbImage: "../../../components/server/testData/capturedImages/Image0-thumb.jpg",
+                    isFixed: true
                 },
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image1.jpg",
-                    thumbImage: "../../../components/server/testData/capturedImages/Image1-thumb.jpg"
+                    thumbImage: "../../../components/server/testData/capturedImages/Image1-thumb.jpg",
+                    isFixed: true
                 },
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image2.jpg",
@@ -56,12 +59,6 @@ https://source.fluidproject.org/svn/LICENSE.txt
          * @param {Object} component, the Capture component to be tested
          */
         var testComponentConstruction = function (component) {
-            var captureContainer = $(".flc-capture");
-            var reordererContainer = $(".flc-capture-reorderer");
-            
-            jqUnit.assertEquals("Capture container is set to", captureContainer[0].id, component.container[0].id);
-            jqUnit.assertEquals("Image reorderer container is set to", reordererContainer[0].id, component.imageReorderer.container[0].id);
-            
             jqUnit.assertNotUndefined("Model is not undefined", component.model);
             jqUnit.assertNotNull("Model is not null", component.model);
         };
@@ -80,6 +77,8 @@ https://source.fluidproject.org/svn/LICENSE.txt
             if (component.model.length !== 0) {
                 fullSrc = component.model[itemIndex].fullImage;
             } else {
+                // TODO get the image source from the template via jQuery.
+                // Or, alternatively, use text instead of an image.
                 fullSrc = "../../server/testData/noImage.jpg";
             }
             var imagePreview = component.locate("imagePreview");
@@ -94,10 +93,29 @@ https://source.fluidproject.org/svn/LICENSE.txt
          * @param {Object} component, the Capture component to be tested
          * @param {Object} item, the currently selected item
          */
-        var testDeleteButtons = function (component, item) {
+        var testDeleteButtons = function (component) {
             var delButtonsCount = $(':visible', component.locate("deleteButton")).length;
-            //alert(delButtonsCount);
             jqUnit.assertEquals("Visible delete buttons on page are", 1, delButtonsCount);
+        };
+        
+        /**
+         * Tests that the state of the 'Fix image' and 'Compare before/after'
+         * buttons is correct. Only one of them should be enabled according to
+         * the state of the selected image (whether it is fixed or not).
+         * 
+         * @param {Object} component, the Capture component to be tested
+         */
+        var testButtonState = function (component) {
+            var isFixed = component.model[component.selectedItemIndex].isFixed;
+            var fixClass = component.locate("fixButton").hasClass("ui-state-disabled");
+            var compareClass = component.locate("compareButton").hasClass("ui-state-disabled");
+            if (isFixed) {
+                jqUnit.assertTrue("Fix button state is correct.", fixClass);
+                jqUnit.assertFalse("Compare button state is correct.", compareClass);
+            } else {
+                jqUnit.assertFalse("Fix button state is correct.", fixClass);
+                jqUnit.assertTrue("Compare button state is correct.", compareClass);
+            }
         };
         
         /**
@@ -125,6 +143,8 @@ https://source.fluidproject.org/svn/LICENSE.txt
             jqUnit.assertEquals("Image items on page are", 1, thumbItems.length);
             
             testPreview(capture, thumbItems[0]);
+            jqUnit.assertTrue("Fix button is disabled.", capture.locate("fixButton").hasClass("ui-state-disabled"));
+            jqUnit.assertTrue("Compare button is disabled.", capture.locate("fixButton").hasClass("ui-state-disabled"));
         });
         
         tests.test("Component construction with a sample model", function () {
@@ -140,10 +160,11 @@ https://source.fluidproject.org/svn/LICENSE.txt
             testPreview(capture, thumbItems[thumbItems.length - 1]);
             testIndices(capture);
             testDeleteButtons(capture);
+            testButtonState(capture);
         });
         
         tests.test("UI update on image selection", function () {
-            expect(5);
+            expect(9);
             
             var capture = fluid.capture(".flc-capture", options);
             var thumbItems = capture.locate("thumbItem");
@@ -154,11 +175,13 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             $(firstItem).click();
             testPreview(capture, firstItem);
-            testDeleteButtons(capture, firstItem);
+            testDeleteButtons(capture);
+            testButtonState(capture);
             
             $(secondItem).click();
             testPreview(capture, secondItem);
-            testDeleteButtons(capture, secondItem);
+            testDeleteButtons(capture);
+            testButtonState(capture);
         });
         
         tests.test("Thumbnail deletion", function () {
@@ -174,7 +197,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             jqUnit.assertEquals("Model length before deletion is", currentLength, capture.model.length);
             jqUnit.assertEquals("Images on page before deletion are", currentLength, thumbItems.length);
             
-            $(deleteButton).click();
+            deleteButton.click();
             thumbItems = capture.locate("thumbItem");
             testIndices(capture);
             
@@ -182,16 +205,16 @@ https://source.fluidproject.org/svn/LICENSE.txt
             jqUnit.assertEquals("Images on page after deletion are", currentLength - 1, thumbItems.length);
             
             testPreview(capture, itemToBeSelected);
-            testDeleteButtons(capture, itemToBeSelected);
+            testDeleteButtons(capture);
             
-            currentLength = capture.model.length;
+            currentLength = thumbItems.length;
             $(thumbItems[currentLength - 1]).focus();
             deleteButton = $(':visible', capture.locate("deleteButton"));
             itemToBeSelected = thumbItems[currentLength - 2];
             
-            $(deleteButton).click();
+            deleteButton.click();
             testPreview(capture, itemToBeSelected);
-            testDeleteButtons(capture, itemToBeSelected);
+            testDeleteButtons(capture);
         });
         
         tests.test("Taking pictures", function () {
@@ -202,7 +225,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             var takePictureButton = capture.locate("takePictureButton");
             
-            $(takePictureButton).click();
+            takePictureButton.click();
             thumbItems = capture.locate("thumbItem");
             
             jqUnit.assertEquals("Model length after first picture taken", options.thumbs.length + 1, capture.model.length);
@@ -222,11 +245,10 @@ https://source.fluidproject.org/svn/LICENSE.txt
                 ]
             });
             
-            var thumbItems = capture.locate("thumbItem");
             var deleteButton = $(':visible', capture.locate("deleteButton"));
-            $(deleteButton).click();
+            deleteButton.click();
             
-            thumbItems = capture.locate("thumbItem");
+            var thumbItems = capture.locate("thumbItem");
             jqUnit.assertEquals("Model length is", 0, capture.model.length);
             jqUnit.assertEquals("Image items on page are", 1, thumbItems.length);
             

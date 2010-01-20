@@ -91,3 +91,7 @@
 .fl-capture-thumbItem-fixed .flc-capture-label-unfixed {
     display: none;
 }
+
+.fl-theme-coal .ui-dialog-titlebar {
+    display: none;
+}

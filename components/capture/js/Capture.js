@@ -29,6 +29,30 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     /**
+     * Updates the state of the 'Fix image' and 'Compare before/after' buttons
+     * according to the selected image. Only one of them should be enabled
+     * according to the state of the image currently focused (whether it is
+     * fixed or not).
+     * 
+     * @param {Object} that, the Capture component
+     * @param {Object} itemIndex, the index of the selected item
+     */
+    var updateButtons = function (that) {
+        var styleClass = that.options.styles.stateDisabled;
+        var itemIndex = that.selectedItemIndex;
+        
+        if (itemIndex < 0 || itemIndex >= that.model.length) {
+            that.locate("fixButton").addClass(styleClass);
+            that.locate("compareButton").addClass(styleClass);
+            return;
+        }
+        
+        var isFixed = that.model[itemIndex].isFixed || false;
+        that.locate("fixButton").toggleClass(styleClass, isFixed);
+        that.locate("compareButton").toggleClass(styleClass, !isFixed);
+    };
+    
+    /**
      * The function that is executed upon clicking the delete button. Finds the
      * currently selected thumbnail item by its index, stored in the view.
      * Should remove the item from the model as well as from the markup. When
@@ -40,6 +64,7 @@ fluid_1_2 = fluid_1_2 || {};
      * @param {Object} item, the thumbnail item to be deleted
      * @param {Object} itemIndex, the index of the item in the model
      */
+    // TODO Show a confirmation dialog before deleting.
     var deleteHandler = function (that) {
         var itemIndex = that.selectedItemIndex;
         if (itemIndex < 0 || itemIndex >= that.model.length) {
@@ -51,13 +76,14 @@ fluid_1_2 = fluid_1_2 || {};
         var next = $(item).next(":visible");
         var prev = $(item).prev(":visible");
         
+        $(item).remove();
+        refreshIndices(that);
+        
         if (next.length !== 0) {
             next.focus();
         } else if (prev.length !== 0) {
             prev.focus();
         }
-        
-        $(item).remove();
         
         if (that.options.serverOn) {
             // TODO Send the filename of the image to be deleted to the server.
@@ -75,10 +101,11 @@ fluid_1_2 = fluid_1_2 || {};
             
             that.locate("imageReorderer").append(that.itemTemplate);
             that.locate("imagePreview").attr('src', previewSrc);
+            that.selectedItemIndex = -1;
+            updateButtons(that);
         }
         
         that.model.splice(itemIndex, 1);
-        refreshIndices(that);
         that.imageReorderer.refresh();
     };
     
@@ -131,6 +158,15 @@ fluid_1_2 = fluid_1_2 || {};
                     ]
                 };
                 
+                if (object.isFixed) {
+                    tree.decorators = [
+                        {
+                            type: "addClass",
+                            classes: that.options.styles.itemFixed
+                        }
+                    ];
+                }
+                
                 return tree;
             });
         };
@@ -176,30 +212,6 @@ fluid_1_2 = fluid_1_2 || {};
         }
         
         return result;
-    };
-    
-    /**
-     * Updates the state of the 'Fix image' and 'Compare before/after' buttons
-     * according to the selected image. Only one of them should be enabled
-     * according to the state of the image currently focused (whether it is
-     * fixed or not).
-     * 
-     * @param {Object} that, the Capture component
-     * @param {Object} itemIndex, the index of the selected item
-     */
-    var updateButtons = function (that) {
-        var styleClass = that.options.styles.stateDisabled;
-        var itemIndex = that.selectedItemIndex;
-        
-        if (itemIndex < 0 || itemIndex >= that.model.length) {
-            that.locate("fixButton").addClass(styleClass);
-            that.locate("compareButton").addClass(styleClass);
-            return;
-        }
-        
-        var isFixed = that.model[itemIndex].isFixed || false;
-        that.locate("fixButton").toggleClass(styleClass, isFixed);
-        that.locate("compareButton").toggleClass(styleClass, !isFixed);
     };
     
     /**
@@ -269,6 +281,11 @@ fluid_1_2 = fluid_1_2 || {};
             
             that.imageReorderer.refresh();
             $(clone).focus();
+            var deleteButton = that.locate("deleteButton", clone);
+            deleteButton.click(
+                function () {
+                    deleteHandler(that);
+                });
         });
         
         // XXX Get rid of this once deployed on the build server.
@@ -339,7 +356,6 @@ fluid_1_2 = fluid_1_2 || {};
         };
         
         that.locate("progressDialog").dialog(dialogOptions);
-        $(".ui-dialog-titlebar").remove();
     };
     
     /**
@@ -356,13 +372,8 @@ fluid_1_2 = fluid_1_2 || {};
         that.model = that.options.thumbs || [];
         that.selectedItemIndex = -1;
         that.itemTemplate = that.locate("thumbItem").get(0);
-        
-        var deleteButton = that.locate("deleteButton", that.itemTemplate);
-        deleteButton.click(
-            function () {
-                deleteHandler(that);
-            });
-        
+            
+        updateButtons(that);
         render(that);
         
         var modifiedOptions = addReordererListeners(that);

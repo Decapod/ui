@@ -67,7 +67,7 @@
                     <div class="flc-capture-previewArea">
                         <a class="flc-capture-button-fix fl-button-left"><span class="fl-button-inner">Fix Image</span></a>
                         <a class="flc-capture-button-compare fl-button-left"><span class="fl-button-inner">Compare before/after</span></a>
-                        <a class="flc-capture-button-export fl-button-left"><span class="fl-button-inner">Export to PDF</span></a>
+                        <a class="flc-capture-button-export fl-button-left ui-state-disabled"><span class="fl-button-inner">Export to PDF</span></a>
                         <br /><br />
                         <img class="flc-capture-image-preview" src="../../server/testData/noImage.jpg">
                     </div>
@@ -85,11 +85,13 @@
                 thumbs: [
                     {
                         fullImage: "../../../components/server/testData/capturedImages/Image0.jpg",
-                        thumbImage: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
+                        thumbImage: "../../../components/server/testData/capturedImages/Image0-thumb.jpg",
+                        isFixed: true
                     },
                     {
                         fullImage: "../../../components/server/testData/capturedImages/Image1.jpg",
-                        thumbImage: "../../../components/server/testData/capturedImages/Image1-thumb.jpg"
+                        thumbImage: "../../../components/server/testData/capturedImages/Image1-thumb.jpg",
+                        isFixed: true
                     },
                     {
                         fullImage: "../../../components/server/testData/capturedImages/Image2.jpg",
@@ -97,7 +99,7 @@
                     },
                     {
                         fullImage: "../../../components/server/testData/capturedImages/Image3.jpg",
-                        thumbImage: "../../../components/server/testData/capturedImages/Image3-thumb.jpg"
+                        thumbImage: "../../../components/server/testData/capturedImages/Image3-thumb.jpg",
                     },
                     {
                         fullImage: "../../../components/server/testData/capturedImages/Image4.jpg",
@@ -107,7 +109,7 @@
                 serverOn: false,
                 cameraOn: false
             };
-            fluid.capture(".flc-capture");
+            fluid.capture(".flc-capture", options);
         </script>
     </body>
 </html>
