@@ -73,7 +73,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
          */
         var testPreview = function (component, thumbItem) {
             var fullSrc;
-            var itemIndex = $(component.locate("thumbItem")).index(thumbItem);
+            var itemIndex = component.locate(("itemIndex"), thumbItem).text() - 1;
             if (component.model.length !== 0) {
                 fullSrc = component.model[itemIndex].fullImage;
             } else {

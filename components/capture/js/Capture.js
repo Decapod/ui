@@ -71,20 +71,6 @@ fluid_1_2 = fluid_1_2 || {};
             return; // No image selected or invalid index.
         }
         
-        var item = that.locate("thumbItem").get(itemIndex);
-        
-        var next = $(item).next(":visible");
-        var prev = $(item).prev(":visible");
-        
-        $(item).remove();
-        refreshIndices(that);
-        
-        if (next.length !== 0) {
-            next.focus();
-        } else if (prev.length !== 0) {
-            prev.focus();
-        }
-        
         if (that.options.serverOn) {
             // TODO Send the filename of the image to be deleted to the server.
             // Or, if the model is persisted, only the item index.
@@ -105,7 +91,21 @@ fluid_1_2 = fluid_1_2 || {};
             updateButtons(that);
         }
         
+        var item = that.locate("thumbItem").get(itemIndex);
+        
+        var next = $(item).next(":visible");
+        var prev = $(item).prev(":visible");
+        
+        $(item).remove();
+        refreshIndices(that);
         that.model.splice(itemIndex, 1);
+        
+        if (next.length !== 0) {
+            next.focus();
+        } else if (prev.length !== 0) {
+            prev.focus();
+        }
+        
         that.imageReorderer.refresh();
     };
     
