@@ -96,6 +96,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
          */
         var testDeleteButtons = function (component, item) {
             var delButtonsCount = $(':visible', component.locate("deleteButton")).length;
+            //alert(delButtonsCount);
             jqUnit.assertEquals("Visible delete buttons on page are", 1, delButtonsCount);
         };
         
@@ -127,7 +128,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
         });
         
         tests.test("Component construction with a sample model", function () {
-            expect(8 + options.thumbs.length);
+            expect(9 + options.thumbs.length);
             
             var capture = fluid.capture(".flc-capture", options);
             var thumbItems = capture.locate("thumbItem");
@@ -138,6 +139,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             testPreview(capture, thumbItems[thumbItems.length - 1]);
             testIndices(capture);
+            testDeleteButtons(capture);
         });
         
         tests.test("UI update on image selection", function () {

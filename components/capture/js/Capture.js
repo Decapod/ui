@@ -17,11 +17,76 @@ fluid_1_2 = fluid_1_2 || {};
 (function ($, fluid) {
     
     /**
+     * Refreshes the indices in the thumbnails' title. Should be called after
+     * model change - for example deletion or reordering of images.
+     * 
+     * @param {Object} that, the Capture component
+     */
+    var refreshIndices = function (that) {
+        that.locate("itemIndex").each(function (index) {
+            $(this).text(index + 1);
+        });
+    };
+    
+    /**
+     * The function that is executed upon clicking the delete button. Finds the
+     * currently selected thumbnail item by its index, stored in the view.
+     * Should remove the item from the model as well as from the markup. When
+     * working with the server on, removes the image from the file system as
+     * well. Focuses on the next image (if such) after the deletion. If the last
+     * image is deleted, the previous thumbnail is selected.
+     * 
+     * @param {Object} that, the Capture component
+     * @param {Object} item, the thumbnail item to be deleted
+     * @param {Object} itemIndex, the index of the item in the model
+     */
+    var deleteHandler = function (that) {
+        var itemIndex = that.selectedItemIndex;
+        if (itemIndex < 0 || itemIndex >= that.model.length) {
+            return; // No image selected or invalid index.
+        }
+        
+        var item = that.locate("thumbItem").get(itemIndex);
+        
+        var next = $(item).next(":visible");
+        var prev = $(item).prev(":visible");
+        
+        if (next.length !== 0) {
+            next.focus();
+        } else if (prev.length !== 0) {
+            prev.focus();
+        }
+        
+        $(item).remove();
+        
+        if (that.options.serverOn) {
+            // TODO Send the filename of the image to be deleted to the server.
+            // Or, if the model is persisted, only the item index.
+            // We should not make assumptions about the file name.
+            // TODO Load the server URL from a config file.
+            var fileIndex = that.model[itemIndex].fullImage.match(/\d+/);
+            $.get("http://localhost:8080/delete", {fileIndex: fileIndex});
+        }
+        
+        if (that.model.length === 1) { // About to remove the last image.
+            // TODO get the image source from the template via jQuery.
+            // Or, alternatively, use text instead of an image.
+            var previewSrc = "../../server/testData/noImage.jpg";
+            
+            that.locate("imageReorderer").append(that.itemTemplate);
+            that.locate("imagePreview").attr('src', previewSrc);
+        }
+        
+        that.model.splice(itemIndex, 1);
+        refreshIndices(that);
+        that.imageReorderer.refresh();
+    };
+    
+    /**
      * Renders the reorderable list of thumbnails. For each item in the model
      * adds the appropriate markup for it. An item in the rendered markup
      * consists of a label, an image, and a delete button that is visible only
      * when the item is selected. All these should be present exactly once.
-     * Currently the image and its index are rendered dynamically.
      * 
      * @param {Object} that, the Capture component
      */
@@ -33,7 +98,8 @@ fluid_1_2 = fluid_1_2 || {};
         var selectorMap = [
             {selector: that.options.selectors.thumbItem, id: "item:"},
             {selector: that.options.selectors.itemIndex, id: "index"},
-            {selector: that.options.selectors.thumbImage, id: "image"}
+            {selector: that.options.selectors.thumbImage, id: "image"},
+            {selector: that.options.selectors.deleteButton, id: "deleteButton"}
         ];
         
         var generateTree = function () {
@@ -49,6 +115,18 @@ fluid_1_2 = fluid_1_2 || {};
                         {
                             ID: "image",
                             target: object.thumbImage
+                        },
+                        {
+                            ID: "deleteButton",
+                            decorators: [
+                                {
+                                    type: "jQuery",
+                                    func: "click",
+                                    args: function () {
+                                        deleteHandler(that);
+                                    }
+                                }
+                            ]
                         }
                     ]
                 };
@@ -65,66 +143,8 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     /**
-     * Refreshes the indices in the thumbnails' title. Should be called after
-     * model change - for example deletion or reordering of images.
-     * 
-     * @param {Object} that, the Capture component
-     */
-    var refreshIndices = function (that) {
-        that.locate("itemIndex").each(function (index, item) {
-            $(item).text(index + 1);
-        });
-    };
-    
-    /**
-     * Adds a listener for the click event of the delete button. Should remove
-     * the item from the model as well as from the markup. When working with the
-     * server on, removes the image from the file system as well. Focuses on the
-     * next image (if such) after the deletion. If the last image is deleted,
-     * the previous thumbnail is selected.
-     * 
-     * @param {Object} that, the Capture component
-     * @param {Object} item, the item that is to be deleted
-     */
-    var bindDeleteHandler = function (that, item) {
-        var deleteButton = $(':visible', that.locate("deleteButton"));
-        deleteButton.click(
-            function () {
-                var itemIndex = $(item).find(that.options.selectors.itemIndex).text() - 1;
-                if (itemIndex === -1) {
-                    fluid.fail("The image you want to delete is with an invalid index.");
-                }
-                
-                if ($(item).next().length !== 0) {
-                    $(item).next().focus();
-                } else {
-                    $(item).prev().focus();
-                }
-                
-                $(item).remove();
-                
-                if (that.options.serverOn) {
-                    var fileIndex = that.model[itemIndex].fullImage.match(/\d+/);
-                    $.get("http://localhost:8080/delete?fileIndex=" + fileIndex);
-                }
-                
-                if (that.model.length === 1) {
-                    var previewSrc = "../../server/testData/noImage.jpg";
-                    
-                    that.locate("imageReorderer").append(that.initialModel);
-                    that.locate("deleteButton").hide();
-                    that.locate("imagePreview").attr('src', previewSrc);
-                }
-                
-                that.model.splice(itemIndex, 1);
-                refreshIndices(that);
-                that.imageReorderer.refresh();
-            });
-    };    
-    
-    /**
      * Reorders the model after images have been reordered on the page. Moves an
-     * image from the old index to its new one by manipulating the array
+     * item from the old index to its new one by manipulating the array
      * directly.
      * 
      * @param {Object} model, the model of images to be reordered
@@ -159,6 +179,30 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     /**
+     * Updates the state of the 'Fix image' and 'Compare before/after' buttons
+     * according to the selected image. Only one of them should be enabled
+     * according to the state of the image currently focused (whether it is
+     * fixed or not).
+     * 
+     * @param {Object} that, the Capture component
+     * @param {Object} itemIndex, the index of the selected item
+     */
+    var updateButtons = function (that) {
+        var styleClass = that.options.styles.stateDisabled;
+        var itemIndex = that.selectedItemIndex;
+        
+        if (itemIndex < 0 || itemIndex >= that.model.length) {
+            that.locate("fixButton").addClass(styleClass);
+            that.locate("compareButton").addClass(styleClass);
+            return;
+        }
+        
+        var isFixed = that.model[itemIndex].isFixed || false;
+        that.locate("fixButton").toggleClass(styleClass, isFixed);
+        that.locate("compareButton").toggleClass(styleClass, !isFixed);
+    };
+    
+    /**
      * Adds listeners for the events of the Reorderer. The onSelect listener
      * should display the selected thumbnail in the preview area of the Capture
      * component. The afrerMove listener should update the model and refresh the
@@ -170,32 +214,30 @@ fluid_1_2 = fluid_1_2 || {};
         return {
             listeners: {
                 onSelect: function (item) {
-                    that.locate("deleteButton").hide();
-                    
                     var imagePreview = that.locate("imagePreview");
+                    // TODO get the image source from the template via jQuery.
+                    // Or, alternatively, use text instead of an image.
                     var previewSrc = "../../server/testData/noImage.jpg";
                     
-                    var itemIndex = $(item).find(that.options.selectors.itemIndex).text() - 1;
+                    var itemIndex = that.locate("itemIndex", item).text() - 1;
+                    that.selectedItemIndex = itemIndex;
                     
                     if (that.model.length !== 0) {
                         previewSrc = that.model[itemIndex].fullImage;
-                        $(item).find(that.options.selectors.deleteButton).show();
-                        bindDeleteHandler(that, item);
                     }
                     
                     imagePreview.attr('src', previewSrc);
+                    updateButtons(that);
                 },
                 
                 afterMove: function (item, requestedPosition, allItems) {
                     var index = allItems.index(item);
-                    var oldIndex = $(item).find(that.options.selectors.itemIndex).text() - 1;
+                    var oldIndex = that.locate("itemIndex", item).text() - 1;
                     
-                    if (index === oldIndex) {
-                        return;
+                    if (index !== oldIndex) {
+                        that.model = reorderModel(that.model, index, oldIndex);
+                        refreshIndices(that);
                     }
-                    
-                    that.model = reorderModel(that.model, index, oldIndex);
-                    refreshIndices(that);
                 }
             }
         };
@@ -212,54 +254,92 @@ fluid_1_2 = fluid_1_2 || {};
      */
     var bindHandlers = function (that) {
         that.events.afterPictureTaken.addListener(function (newItem) {
-            var clone = $(that.initialModel).clone();
+            that.model.push(newItem);
+            var clone = $(that.itemTemplate).clone(true);
             
             if (that.model.length === 1) {
-                $(that.initialModel).remove();
+                $(that.itemTemplate).remove();
             }
             
-            $(clone).find(that.options.selectors.itemIndex).text(that.model.length);
-            var images = $(clone).find(that.options.selectors.thumbImage);
-            $(images).attr('src', newItem.thumbImage);
+            that.locate("itemIndex", clone).text(that.model.length);
+            var image = that.locate("thumbImage", clone);
+            $(image).attr('src', newItem.thumbImage);
            
             that.locate("imageReorderer").append(clone);
+            
             that.imageReorderer.refresh();
             $(clone).focus();
         });
         
-        var imageToInsert = 0;
+        // XXX Get rid of this once deployed on the build server.
         var totalImages = 5; // For testing purposes with no server only.
         that.locate("takePictureButton").click(
             function () {
                 var newItem = {};
                 
                 var params = {
-                    fileIndex: imageToInsert
+                    fileIndex: that.model.length
                 };
                 if (that.options.cameraOn) {
                     params.cameraOn = 'True';
                 }
                 
+                // TODO Automatically detect if there is server according to the document location.
                 if (that.options.serverOn) {
                     $.get("http://localhost:8080/takePicture", params, function (path) {
                         var imagePaths = path.split("|");
                         newItem.fullImage = imagePaths[0];
                         newItem.thumbImage = imagePaths[1];
                         
-                        that.model.push(newItem);
                         that.events.afterPictureTaken.fire(newItem);
-                        imageToInsert++;
                     });
                 } else {
-                    var imageToShow = imageToInsert % totalImages;
+                    // TODO Load image paths from a config file instead of using them staticly.
+                    var imageToShow = that.model.length % totalImages;
                     newItem.fullImage = "../../server/testData/capturedImages/Image" + imageToShow + ".jpg";
                     newItem.thumbImage = "../../server/testData/capturedImages/Image" + imageToShow + "-thumb.jpg";
                     
-                    that.model.push(newItem);
                     that.events.afterPictureTaken.fire(newItem);
-                    imageToInsert++;
                 }
             });
+            
+        that.locate("fixButton").click(
+            function () {
+                var progressDialog = that.locate("progressDialog", document);
+                progressDialog.dialog("open");
+                setTimeout(function () {
+                    progressDialog.dialog("close");
+                    
+                    that.model[that.selectedItemIndex].isFixed = true;
+                    
+                    var selectedItem = that.locate("thumbItem").get(that.selectedItemIndex);
+                    $(selectedItem).addClass(that.options.styles.itemFixed).focus();
+                    
+                    var fixConfirmMessage = that.locate("fixConfirmMessage");
+                    fixConfirmMessage.slideDown(1000);
+                    setTimeout(function () {
+                        fixConfirmMessage.slideUp(1000);
+                    }, 2000);
+                    
+                }, 3000);
+            });
+    };
+    
+    var initProgressDialog = function (that) {
+        var dialogOptions = {
+            modal: true,
+            draggable: false,
+            resizable: false,
+            autoOpen: false,
+            closeOnEscape: false,
+            width: 160,
+            height: 50,
+            minHeight: 50,
+            maxHeight: 50
+        };
+        
+        that.locate("progressDialog").dialog(dialogOptions);
+        $(".ui-dialog-titlebar").remove();
     };
     
     /**
@@ -274,10 +354,16 @@ fluid_1_2 = fluid_1_2 || {};
         var that = fluid.initView("fluid.capture", container, options);
         
         that.model = that.options.thumbs || [];
-        that.initialModel = that.locate("thumbItem").get(0);
+        that.selectedItemIndex = -1;
+        that.itemTemplate = that.locate("thumbItem").get(0);
+        
+        var deleteButton = that.locate("deleteButton", that.itemTemplate);
+        deleteButton.click(
+            function () {
+                deleteHandler(that);
+            });
         
         render(that);
-        that.locate("deleteButton").hide();
         
         var modifiedOptions = addReordererListeners(that);
         fluid.merge(null, modifiedOptions, that.options.imageReorderer.options);
@@ -285,6 +371,7 @@ fluid_1_2 = fluid_1_2 || {};
         that.imageReorderer = fluid.initSubcomponent(
           that, "imageReorderer", [that.locate("imageReorderer"), modifiedOptions]);
         
+        initProgressDialog(that);
         bindHandlers(that);
         
         if (that.model.length !== 0) {
@@ -309,6 +396,7 @@ fluid_1_2 = fluid_1_2 || {};
             imageReorderer: ".flc-capture-reorderer",
             thumbItem: ".flc-capture-thumbItem",
             imageLabel: ".flc-capture-thumbLabel",
+            unfixedLabel: ".flc-capture-label-unfixed",
             itemIndex: ".flc-capture-thumbIndex",
             thumbImage: ".flc-capture-thumbImage",
             deleteButton: ".flc-capture-button-delete",
@@ -317,7 +405,15 @@ fluid_1_2 = fluid_1_2 || {};
             compareButton: ".flc-capture-button-compare",
             exportButton: ".flc-capture-button-export",
             takePictureButton: ".flc-capture-button-takePicture",
-            imagePreview: ".flc-capture-image-preview"
+            imagePreview: ".flc-capture-image-preview",
+            
+            progressDialog: ".flc-capture-dialog",
+            fixConfirmMessage: ".flc-capture-message-confirm"
+        },
+        
+        styles: {
+            stateDisabled: "ui-state-disabled",
+            itemFixed: "fl-capture-thumbItem-fixed"
         },
         
         events: {
