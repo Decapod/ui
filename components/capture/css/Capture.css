@@ -1,49 +1,100 @@
 .fl-theme-coal h1 {
-    margin-left:20px;
-    border-bottom:none;
+    margin-left: 20px;
+    border-bottom: none;
 }
 
 .fl-theme-coal .fl-grid {
-    border:none;
+    border: none;
 }
 
-.fl-theme-coal .fl-button-inner {
-    float:none;
-    display:block;
-    padding-bottom:7px;
+.fl-theme-coal .ui-dialog-titlebar {
+    display: none;
 }
 
-.fl-theme-coal .fl-button-left {
-    background-position-y:transparent !important;
-    padding-left:13px;
-    border:none;
-    overflow:visible;
+.fl-theme-coal .flc-capture-thumbItem {
+    width: 200px;
+    height: 200px;    
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
 }
 
-.fl-grid li {
-    width:100%;
-    height:200px;
-    margin-top:10px;
+.fl-reorderer-movable-default .flc-capture-button-delete {
+    display: none;
 }
 
-.fl-grid li img {
-    margin-top:0px;
+.fl-theme-coal .fl-reorderer-movable-selected {
+    border-width: 2px !important;
+    background-color: lightskyblue !important;
 }
 
-.flc-capture-thumbLabel {
-    text-align:right;
-    padding-right:5px;
-    background-color:yellow;
-    margin-bottom:0px; 
-    height:16px;
-    display:block;
+.ui-state-disabled span {
+    cursor: default;
 }
 
-.flc-capture-thumbIndex {
-    text-align:left;
-    display:block;
-    float:left;
-    padding-left:5px;
+.flc-capture-message-confirm {
+    background-color: #90ee90;
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    top: 0px;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+    display: none;
+}
+
+.flc-capture-dialog-content {
+    position: absolute;
+    top: 50%;
+    height: 25px;
+    margin-top: -12px;
+    margin-left: 5px;
+}
+
+.flc-capture-label-index {
+    display: block;
+    float: left;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.flc-capture-label-item {
+    display: block;
+    background-color: yellow;
+    height: 16px;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.fl-capture-thumbItem-fixed .flc-capture-label-item {
+    background-color: white;
+}
+
+.fl-capture-thumbItem-fixed .flc-capture-label-unfixed,
+.fl-capture-element-hidden {
+    display: none;
+}
+
+.fl-theme-coal .fl-col-fixed {
+    width: 230px;
+}
+
+.fl-theme-coal .fl-reorderer-dropMarker {
+    width: 200px;
+    height: 2px;
+}
+
+.flc-capture-reorderer {
+    height: 650px;
+    overflow: auto;
+}
+
+.flc-capture-image-preview {
+    margin-top: 5px;
+    height: 613px;
 }
 
 .flc-capture-button-delete,
@@ -51,47 +102,9 @@
     margin-left: 33%;
 }
 
-.flc-capture-image-preview {
-    margin-top:5px;
-    width:800px;
-}
-
-.flc-capture-dialog-content {
-    margin-left: 5px;
-    position:absolute;
-    top:50%;
-    height:25px; margin-top:-12px;
-}
-
-.flc-capture-message-confirm {
-    background-color: yellow;
-    width: 100%;
-    height: 25px;
-    padding-top:6px;
-    display:none;
-    position:absolute;
-    top:0px;
-    left:0px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.fl-reorderer-movable-default .flc-capture-button-delete {
-    display: none;
-}
-
-.ui-state-disabled span {
-    cursor: default;
-}
-
-.fl-capture-thumbItem-fixed .flc-capture-thumbLabel {
-    background-color: white;
-}
-
-.fl-capture-thumbItem-fixed .flc-capture-label-unfixed {
-    display: none;
-}
-
-.fl-theme-coal .ui-dialog-titlebar {
-    display: none;
+.flc-capture-message-noImage {
+    font-size: large;
+    position: absolute;
+    top: 42%;
+    left: 20%;
 }

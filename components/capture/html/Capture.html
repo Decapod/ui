@@ -9,6 +9,7 @@
         <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-text.css" />
         <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-theme-coal.css" />
         <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/lib/jquery/ui/css/fl-theme-coal/coal.css" />
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/demos/reorderer/imageReorderer/css" />
         <link rel="stylesheet" type="text/css" href="../css/Capture.css" />
         
         <!-- Required JavaScript modules for the Capture component. -->
@@ -50,13 +51,14 @@
             <div class="fl-col-mixed">
                 <div class="fl-col-fixed fl-force-left">
                 <form>
-                    <ul class="flc-capture-reorderer fl-grid">
-                        <li class="flc-capture-thumbItem">
-                            <span class="flc-capture-thumbLabel">
-                                <span class="flc-capture-thumbIndex"></span>
+                    <ul class="flc-capture-reorderer fl-grid fl-imageReorderer fl-reorderer-horizontalLayout">
+                        <li class="flc-capture-thumbItem fl-imageReorderer-item">
+                            <span class="flc-capture-label-item">
+                                <span class="flc-capture-label-index"></span>
                                 <span class="flc-capture-label-unfixed">Unfixed</span>
                             </span>
-                            <img class="flc-capture-thumbImage" src="../../server/testData/noImage-thumb.jpg">
+                            <div class="flc-capture-message-noImage fl-capture-element-hidden"><p>No pictures yet.</p></div>
+                            <img class="flc-capture-thumbImage">
                             <a class="flc-capture-button-delete fl-button-left"><span class="fl-button-inner">Delete</span></a>
                         </li>
                     </ul>
@@ -65,16 +67,16 @@
                 
                 <div class="fl-col-flex">
                     <div class="flc-capture-previewArea">
-                        <a class="flc-capture-button-fix fl-button-left"><span class="fl-button-inner">Fix Image</span></a>
-                        <a class="flc-capture-button-compare fl-button-left"><span class="fl-button-inner">Compare before/after</span></a>
-                        <a class="flc-capture-button-export fl-button-left ui-state-disabled"><span class="fl-button-inner">Export to PDF</span></a>
+                        <a class="flc-capture-button-fix fl-button-left" tabindex="30"><span class="fl-button-inner">Fix Image</span></a>
+                        <a class="flc-capture-button-compare fl-button-left" tabindex="40"><span class="fl-button-inner">Compare before/after</span></a>
+                        <a class="flc-capture-button-export fl-button-left ui-state-disabled" tabindex="50"><span class="fl-button-inner">Export to PDF</span></a>
                         <br /><br />
-                        <img class="flc-capture-image-preview" src="../../server/testData/noImage.jpg">
+                        <img class="flc-capture-image-preview">
                     </div>
                 </div>
             </div>
             <div>
-                <a class="flc-capture-button-takePicture fl-button-left"><span class="fl-button-inner">Take picture</span></a>
+                <a class="flc-capture-button-takePicture fl-button-left" tabindex="20"><span class="fl-button-inner">Take picture</span></a>
             </div>            
         </div>
         

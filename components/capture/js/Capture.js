@@ -29,27 +29,33 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     /**
-     * Updates the state of the 'Fix image' and 'Compare before/after' buttons
-     * according to the selected image. Only one of them should be enabled
-     * according to the state of the image currently focused (whether it is
-     * fixed or not).
+     * Updates the state of various elements on the page according to the
+     * currently selected image. Only one of the 'Fix image' and 'Compare
+     * before/after' buttons should be enabled (depending on whether the image
+     * is fixed or not). If the model is empty, both buttons should be disabled
+     * and the empty thumbnail item should have no styles.
      * 
      * @param {Object} that, the Capture component
-     * @param {Object} itemIndex, the index of the selected item
      */
-    var updateButtons = function (that) {
-        var styleClass = that.options.styles.stateDisabled;
+    var updateElementStates = function (that) {
+        var disabledClass = that.options.styles.stateDisabled;
+        var hiddenClass = that.options.styles.elementHidden;
         var itemIndex = that.selectedItemIndex;
         
         if (itemIndex < 0 || itemIndex >= that.model.length) {
-            that.locate("fixButton").addClass(styleClass);
-            that.locate("compareButton").addClass(styleClass);
+            that.locate("fixButton").addClass(disabledClass);
+            that.locate("compareButton").addClass(disabledClass);
+            
+            var thumbItem = that.locate("thumbItem");
+            thumbItem.children().addClass(hiddenClass);
+            that.locate("noImage").removeClass(hiddenClass);
+            
             return;
         }
         
         var isFixed = that.model[itemIndex].isFixed || false;
-        that.locate("fixButton").toggleClass(styleClass, isFixed);
-        that.locate("compareButton").toggleClass(styleClass, !isFixed);
+        that.locate("fixButton").toggleClass(disabledClass, isFixed);
+        that.locate("compareButton").toggleClass(disabledClass, !isFixed);
     };
     
     /**
@@ -81,14 +87,10 @@ fluid_1_2 = fluid_1_2 || {};
         }
         
         if (that.model.length === 1) { // About to remove the last image.
-            // TODO get the image source from the template via jQuery.
-            // Or, alternatively, use text instead of an image.
-            var previewSrc = "../../server/testData/noImage.jpg";
-            
-            that.locate("imageReorderer").append(that.itemTemplate);
-            that.locate("imagePreview").attr('src', previewSrc);
+            that.locate("imageReorderer").append(that.itemTemplate.clone());
+            that.locate("imagePreview").removeAttr('src');
             that.selectedItemIndex = -1;
-            updateButtons(that);
+            updateElementStates(that);
         }
         
         var item = that.locate("thumbItem").get(itemIndex);
@@ -227,19 +229,15 @@ fluid_1_2 = fluid_1_2 || {};
             listeners: {
                 onSelect: function (item) {
                     var imagePreview = that.locate("imagePreview");
-                    // TODO get the image source from the template via jQuery.
-                    // Or, alternatively, use text instead of an image.
-                    var previewSrc = "../../server/testData/noImage.jpg";
                     
                     var itemIndex = that.locate("itemIndex", item).text() - 1;
                     that.selectedItemIndex = itemIndex;
                     
                     if (that.model.length !== 0) {
-                        previewSrc = that.model[itemIndex].fullImage;
+                        imagePreview.attr("src", that.model[itemIndex].fullImage);
                     }
                     
-                    imagePreview.attr('src', previewSrc);
-                    updateButtons(that);
+                    updateElementStates(that);
                 },
                 
                 afterMove: function (item, requestedPosition, allItems) {
@@ -270,7 +268,7 @@ fluid_1_2 = fluid_1_2 || {};
             var clone = $(that.itemTemplate).clone(true);
             
             if (that.model.length === 1) {
-                $(that.itemTemplate).remove();
+                that.locate("thumbItem").remove();
             }
             
             that.locate("itemIndex", clone).text(that.model.length);
@@ -371,16 +369,13 @@ fluid_1_2 = fluid_1_2 || {};
         
         that.model = that.options.thumbs || [];
         that.selectedItemIndex = -1;
-        that.itemTemplate = that.locate("thumbItem").get(0);
-            
-        updateButtons(that);
+        that.itemTemplate = that.locate("thumbItem").clone();
+        
         render(that);
         
-        var modifiedOptions = addReordererListeners(that);
-        fluid.merge(null, modifiedOptions, that.options.imageReorderer.options);
-        
-        that.imageReorderer = fluid.initSubcomponent(
-          that, "imageReorderer", [that.locate("imageReorderer"), modifiedOptions]);
+        var reordererOptions = addReordererListeners(that);
+        fluid.merge(null, reordererOptions, that.options.imageReorderer.options);        
+        that.imageReorderer = fluid.initSubcomponent(that, "imageReorderer", [that.locate("imageReorderer"), reordererOptions]);
         
         initProgressDialog(that);
         bindHandlers(that);
@@ -389,6 +384,7 @@ fluid_1_2 = fluid_1_2 || {};
             var thumbItems = that.locate("thumbItem");
             $(thumbItems[thumbItems.length - 1]).focus();
         }
+        updateElementStates(that);
         
         return that;
     };
@@ -406,9 +402,9 @@ fluid_1_2 = fluid_1_2 || {};
         selectors: {
             imageReorderer: ".flc-capture-reorderer",
             thumbItem: ".flc-capture-thumbItem",
-            imageLabel: ".flc-capture-thumbLabel",
+            imageLabel: ".flc-capture-label-item",
             unfixedLabel: ".flc-capture-label-unfixed",
-            itemIndex: ".flc-capture-thumbIndex",
+            itemIndex: ".flc-capture-label-index",
             thumbImage: ".flc-capture-thumbImage",
             deleteButton: ".flc-capture-button-delete",
             
@@ -419,12 +415,14 @@ fluid_1_2 = fluid_1_2 || {};
             imagePreview: ".flc-capture-image-preview",
             
             progressDialog: ".flc-capture-dialog",
-            fixConfirmMessage: ".flc-capture-message-confirm"
+            fixConfirmMessage: ".flc-capture-message-confirm",
+            noImage: ".flc-capture-message-noImage"
         },
         
         styles: {
             stateDisabled: "ui-state-disabled",
-            itemFixed: "fl-capture-thumbItem-fixed"
+            itemFixed: "fl-capture-thumbItem-fixed",
+            elementHidden: "fl-capture-element-hidden"
         },
         
         events: {

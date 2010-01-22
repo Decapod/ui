@@ -76,10 +76,6 @@ https://source.fluidproject.org/svn/LICENSE.txt
             var itemIndex = component.locate(("itemIndex"), thumbItem).text() - 1;
             if (component.model.length !== 0) {
                 fullSrc = component.model[itemIndex].fullImage;
-            } else {
-                // TODO get the image source from the template via jQuery.
-                // Or, alternatively, use text instead of an image.
-                fullSrc = "../../server/testData/noImage.jpg";
             }
             var imagePreview = component.locate("imagePreview");
             
@@ -133,7 +129,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
         };
         
         tests.test("Component construction with no model", function () {
-            expect(7);
+            expect(6);
             
             var capture = fluid.capture(".flc-capture");
             var thumbItems = capture.locate("thumbItem");
@@ -142,7 +138,6 @@ https://source.fluidproject.org/svn/LICENSE.txt
             jqUnit.assertEquals("Model length is", 0, capture.model.length);
             jqUnit.assertEquals("Image items on page are", 1, thumbItems.length);
             
-            testPreview(capture, thumbItems[0]);
             jqUnit.assertTrue("Fix button is disabled.", capture.locate("fixButton").hasClass("ui-state-disabled"));
             jqUnit.assertTrue("Compare button is disabled.", capture.locate("fixButton").hasClass("ui-state-disabled"));
         });
