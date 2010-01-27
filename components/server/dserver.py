@@ -56,4 +56,8 @@ class DecapodServer (object):
         cherrypy.response.headers['Content-type'] = 'text/plain'
         return result
     
+    @cherrypy.expose
+    def fix(self, fileIndex=None):
+        return "testData/capturedImages/Image" + fileIndex + ".jpg"
+    
 cherrypy.quickstart(DecapodServer(), '/', 'dserver.conf')

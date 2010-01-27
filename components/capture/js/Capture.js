@@ -160,7 +160,7 @@ fluid_1_2 = fluid_1_2 || {};
                     ]
                 };
                 
-                if (object.isFixed) {
+                if (object.fixedImage) {
                     tree.decorators = [
                         {
                             type: "addClass",
@@ -322,10 +322,16 @@ fluid_1_2 = fluid_1_2 || {};
             function () {
                 var progressDialog = that.locate("progressDialog", document);
                 progressDialog.dialog("open");
+                if (that.options.serverOn) {
+                    $.get("http://localhost:8080/fix", {fileIndex: that.selectedItemIndex}, function (fixedPath) {
+                        that.model[that.selectedItemIndex].fixedImage = fixedPath;
+                    });
+                } else {
+                    that.model[that.selectedItemIndex].fixedImage = that.model[that.selectedItemIndex].fullImage;
+                }
+                
                 setTimeout(function () {
                     progressDialog.dialog("close");
-                    
-                    that.model[that.selectedItemIndex].isFixed = true;
                     
                     var selectedItem = that.locate("thumbItem").get(that.selectedItemIndex);
                     $(selectedItem).addClass(that.options.styles.itemFixed).focus();

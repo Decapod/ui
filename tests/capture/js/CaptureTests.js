@@ -27,12 +27,12 @@ https://source.fluidproject.org/svn/LICENSE.txt
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image0.jpg",
                     thumbImage: "../../../components/server/testData/capturedImages/Image0-thumb.jpg",
-                    isFixed: true
+                    fixedImage: "../../../components/server/testData/capturedImages/Image0.jpg"
                 },
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image1.jpg",
                     thumbImage: "../../../components/server/testData/capturedImages/Image1-thumb.jpg",
-                    isFixed: true
+                    fixedImage: "../../../components/server/testData/capturedImages/Image1.jpg"
                 },
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image2.jpg",
