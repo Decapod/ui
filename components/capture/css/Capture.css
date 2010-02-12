@@ -1,16 +1,42 @@
+.fl-theme-coal .ui-dialog-titlebar {
+    display: none;
+}
+
+.flc-capture-dialog-content {
+    position: absolute;
+    top: 50%;
+    margin-top: -0.9em;
+    margin-left: 0.8em;
+}
+
+.flc-capture-message-confirm {
+    background-color: #bbfabb;
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    top: 0px;
+    text-align: center;
+    font-size: 1.2em;
+    display: none;
+}
+
 .fl-theme-coal h1 {
-    margin-left: 20px;
+    margin-left: 2em;
     border-bottom: none;
 }
 
 .fl-theme-coal .fl-grid {
     border: none;
+    padding: 5px;
+    height: 650px;
+    overflow: auto;
 }
 
-.fl-theme-coal .ui-dialog-titlebar {
-    display: none;
+.ui-state-disabled span {
+    cursor: default;
 }
 
+/* TODO Improve styling */
 .fl-theme-coal .flc-capture-thumbItem {
     width: 200px;
     height: 200px;    
@@ -28,30 +54,6 @@
 .fl-theme-coal .fl-reorderer-movable-selected {
     border-width: 2px !important;
     background-color: lightskyblue !important;
-}
-
-.ui-state-disabled span {
-    cursor: default;
-}
-
-.flc-capture-message-confirm {
-    background-color: #90ee90;
-    width: 100%;
-    height: 20px;
-    position: absolute;
-    top: 0px;
-    text-align: center;
-    font-weight: bold;
-    font-size: larger;
-    display: none;
-}
-
-.flc-capture-dialog-content {
-    position: absolute;
-    top: 50%;
-    height: 25px;
-    margin-top: -12px;
-    margin-left: 5px;
 }
 
 .flc-capture-label-index {
@@ -79,17 +81,12 @@
 }
 
 .fl-theme-coal .fl-col-fixed {
-    width: 230px;
+    width: 232px;
 }
 
 .fl-theme-coal .fl-reorderer-dropMarker {
     width: 200px;
     height: 2px;
-}
-
-.flc-capture-reorderer {
-    height: 650px;
-    overflow: auto;
 }
 
 .flc-capture-image-preview {

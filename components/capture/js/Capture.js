@@ -78,12 +78,11 @@ fluid_1_2 = fluid_1_2 || {};
         }
         
         if (that.options.serverOn) {
-            // TODO Send the filename of the image to be deleted to the server.
-            // Or, if the model is persisted, only the item index.
-            // We should not make assumptions about the file name.
             // TODO Load the server URL from a config file.
-            var fileIndex = that.model[itemIndex].fullImage.match(/\d+/);
-            $.get("http://localhost:8080/delete", {fileIndex: fileIndex});
+            $.ajax({
+                url: "http://localhost:8080/images/" + itemIndex,
+                type: "DELETE"
+            });
         }
         
         if (that.model.length === 1) { // About to remove the last image.
@@ -224,6 +223,7 @@ fluid_1_2 = fluid_1_2 || {};
      * 
      * @param {Object} that, the Capture component
      */
+    // TODO Sync the model of the server with the one in the client.
     var addReordererListeners = function (that) {
         return {
             listeners: {
@@ -286,7 +286,6 @@ fluid_1_2 = fluid_1_2 || {};
                 });
         });
         
-        // XXX Get rid of this once deployed on the build server.
         var totalImages = 5; // For testing purposes with no server only.
         that.locate("takePictureButton").click(
             function () {
@@ -296,18 +295,23 @@ fluid_1_2 = fluid_1_2 || {};
                     fileIndex: that.model.length
                 };
                 if (that.options.cameraOn) {
-                    params.cameraOn = 'True';
+                    params['camera-on'] = 'True';
                 }
                 
                 // TODO Automatically detect if there is server according to the document location.
                 if (that.options.serverOn) {
-                    $.get("http://localhost:8080/takePicture", params, function (path) {
-                        var imagePaths = path.split("|");
-                        newItem.fullImage = imagePaths[0];
-                        newItem.thumbImage = imagePaths[1];
+                    $.ajax({
+                        url: "http://localhost:8080/images/",
+                        type: "POST",
+                        dataType: "json",
+                        success: function(json_model){
+                            newItem.fullImage = json_model.fullImage;
+                            newItem.thumbImage = json_model.thumbImage;
                         
-                        that.events.afterPictureTaken.fire(newItem);
+                            that.events.afterPictureTaken.fire(newItem);
+                        }
                     });
+                    
                 } else {
                     // TODO Load image paths from a config file instead of using them staticly.
                     var imageToShow = that.model.length % totalImages;
@@ -323,7 +327,7 @@ fluid_1_2 = fluid_1_2 || {};
                 var progressDialog = that.locate("progressDialog", document);
                 progressDialog.dialog("open");
                 if (that.options.serverOn) {
-                    $.get("http://localhost:8080/fix", {fileIndex: that.selectedItemIndex}, function (fixedPath) {
+                    $.post("http://localhost:8080/images/" + that.selectedItemIndex + "/fixed", function (fixedPath) {
                         that.model[that.selectedItemIndex].fixedImage = fixedPath;
                     });
                 } else {
@@ -373,7 +377,19 @@ fluid_1_2 = fluid_1_2 || {};
     fluid.capture = function (container, options) {
         var that = fluid.initView("fluid.capture", container, options);
         
-        that.model = that.options.thumbs || [];
+        if (that.options.serverOn) {
+            $.ajax({
+                url: "http://localhost:8080/images/",
+                dataType: "json",
+                async: false,
+                success: function (json_model) {
+                    that.model = json_model;
+                }
+            });
+        } else {
+            that.model = that.options.thumbs || [];
+        }
+        
         that.selectedItemIndex = -1;
         that.itemTemplate = that.locate("thumbItem").clone();
         
