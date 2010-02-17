@@ -1,8 +1,8 @@
-.fl-theme-coal .ui-dialog-titlebar {
+.fl-container-progress > .ui-dialog-titlebar {
     display: none;
 }
 
-.flc-capture-dialog-content {
+.flc-capture-progress-message {
     position: absolute;
     top: 50%;
     margin-top: -0.9em;
@@ -39,7 +39,7 @@
 /* TODO Improve styling */
 .fl-theme-coal .flc-capture-thumbItem {
     width: 200px;
-    height: 200px;    
+    height: 200px;
     margin-bottom: 10px;
     display: block;
     margin-left: auto;

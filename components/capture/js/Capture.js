@@ -70,7 +70,6 @@ fluid_1_2 = fluid_1_2 || {};
      * @param {Object} item, the thumbnail item to be deleted
      * @param {Object} itemIndex, the index of the item in the model
      */
-    // TODO Show a confirmation dialog before deleting.
     var deleteHandler = function (that) {
         var itemIndex = that.selectedItemIndex;
         if (itemIndex < 0 || itemIndex >= that.model.length) {
@@ -108,6 +107,30 @@ fluid_1_2 = fluid_1_2 || {};
         }
         
         that.imageReorderer.refresh();
+    };
+    
+    /**
+     * Displays a confirmation dialog with the specified options.
+     * 
+     * @param {Object} that, the Capture component
+     * @param {Object} title, the title of the dialog
+     * @param {Object} message, the content of the dialog
+     * @param {Object} confirmed, the callback to be executed on confirmation
+     * @param {Object} cancelled, the callback to be executed on cancellation
+     */
+    var invokeConfirmationDialog = function (that, title, message, confirmed, cancelled) {
+        var confirmDialog = that.locate("confirmDialog", document);
+        confirmDialog.dialog('option', 'title', title);
+        confirmDialog.text(message);
+        confirmDialog.dialog('open');
+        confirmDialog.bind('dialogclose', function (event, ui) {
+            if (that.confirmed === true) {
+                confirmed.call();
+            } else {
+                cancelled.call();
+            }
+            that.confirmed = false;
+        });
     };
     
     /**
@@ -151,7 +174,14 @@ fluid_1_2 = fluid_1_2 || {};
                                     type: "jQuery",
                                     func: "click",
                                     args: function () {
-                                        deleteHandler(that);
+                                        invokeConfirmationDialog(that, "Delete image?",
+                                            "Are you sure you want to delete this image?",
+                                            function () {
+                                                deleteHandler(that);
+                                            },
+                                            function () {
+                                                $(that.locate("thumbItem")[that.selectedItemIndex]).focus();
+                                            });
                                     }
                                 }
                             ]
@@ -254,6 +284,45 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     /**
+     * Initializes two dialogs for the component - one for displaying progress
+     * indication and another to ask for confirmation.
+     * 
+     * @param {Object} that, the Capture component
+     */
+    var initDialogs = function (that) {
+        var progressOptions = {
+            modal: true,
+            draggable: false,
+            resizable: false,
+            autoOpen: false,
+            closeOnEscape: false,
+            width: 160,
+            height: 50,
+            minHeight: 50,
+            maxHeight: 50,
+            dialogClass: 'fl-container-progress'
+        };
+        
+        var confirmOptions = {
+            modal: true,
+            autoOpen: false,
+            dialogClass: 'fl-container-confirm',
+            buttons: {
+                "Yes": function () {
+                    that.confirmed = true;
+                    $(this).dialog("close");
+                },
+                "No": function () { 
+                    $(this).dialog("close");
+                }
+            }
+        };
+        
+        that.locate("progressDialog", document).dialog(progressOptions);
+        that.locate("confirmDialog", document).dialog(confirmOptions);
+    };
+    
+    /**
      * Binds listeners for the click events of the various buttons in the UI,
      * such as fixing/comparing images, exporting to PDF, and taking pictures.
      * 
@@ -282,7 +351,14 @@ fluid_1_2 = fluid_1_2 || {};
             var deleteButton = that.locate("deleteButton", clone);
             deleteButton.click(
                 function () {
-                    deleteHandler(that);
+                    invokeConfirmationDialog(that, "Delete image?",
+                        "Are you sure you want to delete this image?",
+                        function () {
+                            deleteHandler(that);
+                        },
+                        function () {
+                            $(that.locate("thumbItem")[that.selectedItemIndex]).focus();
+                        });
                 });
         });
         
@@ -304,7 +380,7 @@ fluid_1_2 = fluid_1_2 || {};
                         url: "http://localhost:8080/images/",
                         type: "POST",
                         dataType: "json",
-                        success: function(json_model){
+                        success: function (json_model) {
                             newItem.fullImage = json_model.fullImage;
                             newItem.thumbImage = json_model.thumbImage;
                         
@@ -350,22 +426,6 @@ fluid_1_2 = fluid_1_2 || {};
             });
     };
     
-    var initProgressDialog = function (that) {
-        var dialogOptions = {
-            modal: true,
-            draggable: false,
-            resizable: false,
-            autoOpen: false,
-            closeOnEscape: false,
-            width: 160,
-            height: 50,
-            minHeight: 50,
-            maxHeight: 50
-        };
-        
-        that.locate("progressDialog").dialog(dialogOptions);
-    };
-    
     /**
      * Creates a View for the Capture component. Contains an imageReorderer
      * subcomponent, a preview area for the image, and controls for capturing
@@ -396,10 +456,10 @@ fluid_1_2 = fluid_1_2 || {};
         render(that);
         
         var reordererOptions = addReordererListeners(that);
-        fluid.merge(null, reordererOptions, that.options.imageReorderer.options);        
+        fluid.merge(null, reordererOptions, that.options.imageReorderer.options);
         that.imageReorderer = fluid.initSubcomponent(that, "imageReorderer", [that.locate("imageReorderer"), reordererOptions]);
         
-        initProgressDialog(that);
+        initDialogs(that);
         bindHandlers(that);
         
         if (that.model.length !== 0) {
@@ -436,7 +496,8 @@ fluid_1_2 = fluid_1_2 || {};
             takePictureButton: ".flc-capture-button-takePicture",
             imagePreview: ".flc-capture-image-preview",
             
-            progressDialog: ".flc-capture-dialog",
+            progressDialog: ".flc-capture-dialog-progress",
+            confirmDialog: ".flc-capture-dialog-confirm",
             fixConfirmMessage: ".flc-capture-message-confirm",
             noImage: ".flc-capture-message-noImage"
         },
