@@ -9,7 +9,7 @@
     margin-left: 0.8em;
 }
 
-.flc-capture-message-confirm {
+.fl-message-confirm {
     background-color: #bbfabb;
     width: 100%;
     height: 20px;
@@ -95,7 +95,7 @@
 }
 
 .flc-capture-button-delete,
-.flc-capture-button-takePicture  {
+.flc-capture-button-takePicture {
     margin-left: 33%;
 }
 

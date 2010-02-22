@@ -59,6 +59,24 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     /**
+     * Displays a message with user information. The message currently slides
+     * down from the top of the page, stays for a moment and slides back up.
+     * 
+     * @param {Object} that, the Capture component
+     * @param {Object} styleClass, the class used to determine the style of the message
+     * @param {Object} text, the message text
+     */
+    var showMessage = function (that, styleClass, messageText) {
+        var message = that.locate("message");
+        message.text(messageText);
+        message.addClass(styleClass);
+        message.slideDown(1000);
+        setTimeout(function () {
+            message.slideUp(1000);
+        }, 2000);
+    };
+    
+    /**
      * The function that is executed upon clicking the delete button. Finds the
      * currently selected thumbnail item by its index, stored in the view.
      * Should remove the item from the model as well as from the markup. When
@@ -107,6 +125,7 @@ fluid_1_2 = fluid_1_2 || {};
         }
         
         that.imageReorderer.refresh();
+        showMessage(that, "fl-message-confirm", "Image successfully deleted");
     };
     
     /**
@@ -308,11 +327,11 @@ fluid_1_2 = fluid_1_2 || {};
             autoOpen: false,
             dialogClass: 'fl-container-confirm',
             buttons: {
-                "Yes": function () {
-                    that.confirmed = true;
+                "No": function () {
                     $(this).dialog("close");
                 },
-                "No": function () { 
+                "Yes": function () {
+                    that.confirmed = true;
                     $(this).dialog("close");
                 }
             }
@@ -416,12 +435,7 @@ fluid_1_2 = fluid_1_2 || {};
                     var selectedItem = that.locate("thumbItem").get(that.selectedItemIndex);
                     $(selectedItem).addClass(that.options.styles.itemFixed).focus();
                     
-                    var fixConfirmMessage = that.locate("fixConfirmMessage");
-                    fixConfirmMessage.slideDown(1000);
-                    setTimeout(function () {
-                        fixConfirmMessage.slideUp(1000);
-                    }, 2000);
-                    
+                    showMessage(that, "fl-message-confirm", "Image successfully fixed");
                 }, 3000);
             });
     };
@@ -498,7 +512,7 @@ fluid_1_2 = fluid_1_2 || {};
             
             progressDialog: ".flc-capture-dialog-progress",
             confirmDialog: ".flc-capture-dialog-confirm",
-            fixConfirmMessage: ".flc-capture-message-confirm",
+            message: ".flc-capture-message",
             noImage: ".flc-capture-message-noImage"
         },
         
