@@ -29,33 +29,22 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     /**
-     * Updates the state of various elements on the page according to the
-     * currently selected image. Only one of the 'Fix image' and 'Compare
-     * before/after' buttons should be enabled (depending on whether the image
-     * is fixed or not). If the model is empty, both buttons should be disabled
-     * and the empty thumbnail item should have no styles.
+     * Updates the state of various elements on the page. If the model is empty,
+     * the empty thumbnail item should have no styles.
      * 
      * @param {Object} that, the Capture component
      */
     var updateElementStates = function (that) {
-        var disabledClass = that.options.styles.stateDisabled;
         var hiddenClass = that.options.styles.elementHidden;
         var itemIndex = that.selectedItemIndex;
         
         if (itemIndex < 0 || itemIndex >= that.model.length) {
-            that.locate("fixButton").addClass(disabledClass);
-            that.locate("compareButton").addClass(disabledClass);
-            
             var thumbItem = that.locate("thumbItem");
             thumbItem.children().addClass(hiddenClass);
             that.locate("noImage").removeClass(hiddenClass);
             
             return;
         }
-        
-        var isFixed = that.model[itemIndex].isFixed || false;
-        that.locate("fixButton").toggleClass(disabledClass, isFixed);
-        that.locate("compareButton").toggleClass(disabledClass, !isFixed);
     };
     
     /**
@@ -208,15 +197,6 @@ fluid_1_2 = fluid_1_2 || {};
                     ]
                 };
                 
-                if (object.fixedImage) {
-                    tree.decorators = [
-                        {
-                            type: "addClass",
-                            classes: that.options.styles.itemFixed
-                        }
-                    ];
-                }
-                
                 return tree;
             });
         };
@@ -342,8 +322,7 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     /**
-     * Binds listeners for the click events of the various buttons in the UI,
-     * such as fixing/comparing images, exporting to PDF, and taking pictures.
+     * Binds listeners for the click events of the various buttons in the UI.
      * 
      * Adds a listener for the afterPictureTaken event. Should refresh the
      * thumbnails displayed and select the last captured image.
@@ -416,28 +395,6 @@ fluid_1_2 = fluid_1_2 || {};
                     that.events.afterPictureTaken.fire(newItem);
                 }
             });
-            
-        that.locate("fixButton").click(
-            function () {
-                var progressDialog = that.locate("progressDialog", document);
-                progressDialog.dialog("open");
-                if (that.options.serverOn) {
-                    $.post("http://localhost:8080/images/" + that.selectedItemIndex + "/fixed", function (fixedPath) {
-                        that.model[that.selectedItemIndex].fixedImage = fixedPath;
-                    });
-                } else {
-                    that.model[that.selectedItemIndex].fixedImage = that.model[that.selectedItemIndex].fullImage;
-                }
-                
-                setTimeout(function () {
-                    progressDialog.dialog("close");
-                    
-                    var selectedItem = that.locate("thumbItem").get(that.selectedItemIndex);
-                    $(selectedItem).addClass(that.options.styles.itemFixed).focus();
-                    
-                    showMessage(that, "fl-message-confirm", "Image successfully fixed");
-                }, 3000);
-            });
     };
     
     /**
@@ -499,13 +456,10 @@ fluid_1_2 = fluid_1_2 || {};
             imageReorderer: ".flc-capture-reorderer",
             thumbItem: ".flc-capture-thumbItem",
             imageLabel: ".flc-capture-label-item",
-            unfixedLabel: ".flc-capture-label-unfixed",
             itemIndex: ".flc-capture-label-index",
             thumbImage: ".flc-capture-thumbImage",
             deleteButton: ".flc-capture-button-delete",
             
-            fixButton: ".flc-capture-button-fix",
-            compareButton: ".flc-capture-button-compare",
             exportButton: ".flc-capture-button-export",
             takePictureButton: ".flc-capture-button-takePicture",
             imagePreview: ".flc-capture-image-preview",
@@ -518,7 +472,6 @@ fluid_1_2 = fluid_1_2 || {};
         
         styles: {
             stateDisabled: "ui-state-disabled",
-            itemFixed: "fl-capture-thumbItem-fixed",
             elementHidden: "fl-capture-element-hidden"
         },
         

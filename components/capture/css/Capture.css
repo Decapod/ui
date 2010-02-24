@@ -71,11 +71,6 @@
     padding-right: 5px;
 }
 
-.fl-capture-thumbItem-fixed .flc-capture-label-item {
-    background-color: white;
-}
-
-.fl-capture-thumbItem-fixed .flc-capture-label-unfixed,
 .fl-capture-element-hidden {
     display: none;
 }

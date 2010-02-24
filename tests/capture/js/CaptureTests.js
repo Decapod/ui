@@ -27,12 +27,10 @@ https://source.fluidproject.org/svn/LICENSE.txt
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image0.jpg",
                     thumbImage: "../../../components/server/testData/capturedImages/Image0-thumb.jpg",
-                    fixedImage: "../../../components/server/testData/capturedImages/Image0.jpg"
                 },
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image1.jpg",
                     thumbImage: "../../../components/server/testData/capturedImages/Image1-thumb.jpg",
-                    fixedImage: "../../../components/server/testData/capturedImages/Image1.jpg"
                 },
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image2.jpg",
@@ -95,26 +93,6 @@ https://source.fluidproject.org/svn/LICENSE.txt
         };
         
         /**
-         * Tests that the state of the 'Fix image' and 'Compare before/after'
-         * buttons is correct. Only one of them should be enabled according to
-         * the state of the selected image (whether it is fixed or not).
-         * 
-         * @param {Object} component, the Capture component to be tested
-         */
-        var testButtonState = function (component) {
-            var isFixed = component.model[component.selectedItemIndex].isFixed;
-            var fixClass = component.locate("fixButton").hasClass("ui-state-disabled");
-            var compareClass = component.locate("compareButton").hasClass("ui-state-disabled");
-            if (isFixed) {
-                jqUnit.assertTrue("Fix button state is correct.", fixClass);
-                jqUnit.assertFalse("Compare button state is correct.", compareClass);
-            } else {
-                jqUnit.assertFalse("Fix button state is correct.", fixClass);
-                jqUnit.assertTrue("Compare button state is correct.", compareClass);
-            }
-        };
-        
-        /**
          * Tests whether the indices of the thumbnails are in the correct order
          * and that the markup is synced with the model.
          * 
@@ -129,7 +107,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
         };
         
         tests.test("Component construction with no model", function () {
-            expect(6);
+            expect(4);
             
             var capture = fluid.capture(".flc-capture");
             var thumbItems = capture.locate("thumbItem");
@@ -137,13 +115,10 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             jqUnit.assertEquals("Model length is", 0, capture.model.length);
             jqUnit.assertEquals("Image items on page are", 1, thumbItems.length);
-            
-            jqUnit.assertTrue("Fix button is disabled.", capture.locate("fixButton").hasClass("ui-state-disabled"));
-            jqUnit.assertTrue("Compare button is disabled.", capture.locate("fixButton").hasClass("ui-state-disabled"));
         });
         
         tests.test("Component construction with a sample model", function () {
-            expect(9 + options.thumbs.length);
+            expect(7 + options.thumbs.length);
             
             var capture = fluid.capture(".flc-capture", options);
             var thumbItems = capture.locate("thumbItem");
@@ -155,11 +130,10 @@ https://source.fluidproject.org/svn/LICENSE.txt
             testPreview(capture, thumbItems[thumbItems.length - 1]);
             testIndices(capture);
             testDeleteButtons(capture);
-            testButtonState(capture);
         });
         
         tests.test("UI update on image selection", function () {
-            expect(9);
+            expect(5);
             
             var capture = fluid.capture(".flc-capture", options);
             var thumbItems = capture.locate("thumbItem");
@@ -171,16 +145,14 @@ https://source.fluidproject.org/svn/LICENSE.txt
             $(firstItem).click();
             testPreview(capture, firstItem);
             testDeleteButtons(capture);
-            testButtonState(capture);
             
             $(secondItem).click();
             testPreview(capture, secondItem);
             testDeleteButtons(capture);
-            testButtonState(capture);
         });
         
         tests.test("Thumbnail deletion", function () {
-            expect(8 + options.thumbs.length);
+            expect(9 + options.thumbs.length);
             
             var capture = fluid.capture(".flc-capture", options);
             var currentLength = options.thumbs.length;

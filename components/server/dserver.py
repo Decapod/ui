@@ -14,9 +14,9 @@ from PIL import Image
 class ImageController(object):
     """Main class for manipulating images.
     
-    Exposes operations such as capturing, fixing and deleting pictures and sets
-    of pictures. All URLs are considered a path to an image or to a set of
-    images represented by a JSON file of their attributes."""
+    Exposes operations such as capturing, post-processing and deleting pictures
+    and sets of pictures. All URLs are considered a path to an image or to a set
+    of images represented by a JSON file of their attributes."""
     
     camcap_cmd = \
     "gst-launch-0.10 v4l2src num-buffers=1 device=%s ! " + \
@@ -141,10 +141,9 @@ class ImageController(object):
         return
     
     def fix(self, file_index=None):
-        """A mock implementation of image dewarping. Currently does nothing."""
+        """Currently unsupported."""
         
-        self.images[file_index]['fixedImage'] = self.images[file_index]['fullImage']
-        return json.dumps(self.images[file_index])
+        raise cherrypy.HTTPError(404)
 
 class DecapodServer(object):
     """Main class for the Decapod server.
