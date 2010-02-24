@@ -71,7 +71,10 @@ https://source.fluidproject.org/svn/LICENSE.txt
          */
         var testPreview = function (component, thumbItem) {
             var fullSrc;
-            var itemIndex = component.locate(("itemIndex"), thumbItem).text() - 1;
+            
+            var labelText = component.locate('itemIndex', thumbItem).text();
+            var itemIndex = labelText.slice(labelText.indexOf('-') + 1) / 2 - 1;
+            
             if (component.model.length !== 0) {
                 fullSrc = component.model[itemIndex].fullImage;
             }
@@ -99,10 +102,11 @@ https://source.fluidproject.org/svn/LICENSE.txt
          * @param {Object} component, the Capture component to be tested.
          */
         var testIndices = function (component) {
-            var allIndices = component.locate("itemIndex");
+            var allIndices = component.locate('itemIndex');
             jqUnit.assertEquals("Number of item indices are", component.model.length, allIndices.length);
             allIndices.each(function (index, item) {
-                jqUnit.assertEquals("Current item has index", index + 1, $(item).text());
+                var labelText = [2 * index + 1, "-", 2 * index + 2].join('');
+                jqUnit.assertEquals("Current item has index", labelText, $(item).text());
             });
         };
         

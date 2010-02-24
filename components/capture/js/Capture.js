@@ -23,8 +23,9 @@ fluid_1_2 = fluid_1_2 || {};
      * @param {Object} that, the Capture component
      */
     var refreshIndices = function (that) {
-        that.locate("itemIndex").each(function (index) {
-            $(this).text(index + 1);
+        that.locate('itemIndex').each(function (index) {
+            var labelText = [2 * index + 1, "-", 2 * index + 2];
+            $(this).text(labelText.join(''));
         });
     };
     
@@ -169,7 +170,7 @@ fluid_1_2 = fluid_1_2 || {};
                     children: [
                         {
                             ID: "index",
-                            value: index + 1
+                            value: [2 * index + 1, "-", 2 * index + 2].join('')
                         },
                         {
                             ID: "image",
@@ -259,7 +260,9 @@ fluid_1_2 = fluid_1_2 || {};
                 onSelect: function (item) {
                     var imagePreview = that.locate("imagePreview");
                     
-                    var itemIndex = that.locate("itemIndex", item).text() - 1;
+                    var labelText = that.locate('itemIndex', item).text();
+                    var itemIndex = labelText.slice(labelText.indexOf('-') + 1) / 2 - 1;
+                    
                     that.selectedItemIndex = itemIndex;
                     
                     if (that.model.length !== 0) {
@@ -271,7 +274,8 @@ fluid_1_2 = fluid_1_2 || {};
                 
                 afterMove: function (item, requestedPosition, allItems) {
                     var index = allItems.index(item);
-                    var oldIndex = that.locate("itemIndex", item).text() - 1;
+                    var labelText = that.locate('itemIndex', item).text();
+                    var oldIndex = labelText.slice(labelText.indexOf('-') + 1) / 2 - 1;
                     
                     if (index !== oldIndex) {
                         that.model = reorderModel(that.model, index, oldIndex);
@@ -338,7 +342,9 @@ fluid_1_2 = fluid_1_2 || {};
                 that.locate("thumbItem").remove();
             }
             
-            that.locate("itemIndex", clone).text(that.model.length);
+            var labelText = [2 * that.model.length - 1, "-", 2 * that.model.length];
+            that.locate('itemIndex', clone).text(labelText.join(''));
+            
             var image = that.locate("thumbImage", clone);
             $(image).attr('src', newItem.thumbImage);
            
