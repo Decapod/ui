@@ -30,6 +30,11 @@
     padding: 5px;
     height: 650px;
     overflow: auto;
+    background-color: #fff;
+}
+
+.fl-theme-coal .fl-grid li {
+    background-color:#fff;
 }
 
 .ui-state-disabled span {
@@ -65,7 +70,8 @@
 
 .flc-capture-label-item {
     display: block;
-    background-color: yellow;
+    color: #fff;
+    background-color:#717171;
     height: 16px;
     text-align: right;
     padding-right: 5px;
