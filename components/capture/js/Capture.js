@@ -75,15 +75,9 @@ fluid_1_2 = fluid_1_2 || {};
      * image is deleted, the previous thumbnail is selected.
      * 
      * @param {Object} that, the Capture component
-     * @param {Object} item, the thumbnail item to be deleted
      * @param {Object} itemIndex, the index of the item in the model
      */
-    var deleteHandler = function (that) {
-        var itemIndex = that.selectedItemIndex;
-        if (itemIndex < 0 || itemIndex >= that.model.length) {
-            return; // No image selected or invalid index.
-        }
-        
+    var deleteHandler = function (that, itemIndex) {
         if (that.options.serverOn) {
             // TODO Load the server URL from a config file.
             $.ajax({
@@ -143,6 +137,29 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     /**
+     * Handles a user request to delete the currently selected image. Displays a
+     * confirmation dialog first and does nothing if the user cancels the
+     * operation.
+     * 
+     * @param {Object} that, the Capture component
+     */
+    var deleteSelectedImage = function (that) {
+        var itemIndex = that.selectedItemIndex;
+        if (itemIndex < 0 || itemIndex >= that.model.length) {
+            return; // No image selected or invalid index.
+        }
+        
+        invokeConfirmationDialog(that, "Delete image?",
+            "Are you sure you want to delete this image?",
+            function () {
+                deleteHandler(that, itemIndex);
+            },
+            function () {
+                $(that.locate("thumbItem")[that.selectedItemIndex]).focus();
+            });
+    };
+    
+    /**
      * Renders the reorderable list of thumbnails. For each item in the model
      * adds the appropriate markup for it. An item in the rendered markup
      * consists of a label, an image, and a delete button that is visible only
@@ -183,14 +200,7 @@ fluid_1_2 = fluid_1_2 || {};
                                     type: "jQuery",
                                     func: "click",
                                     args: function () {
-                                        invokeConfirmationDialog(that, "Delete image?",
-                                            "Are you sure you want to delete this image?",
-                                            function () {
-                                                deleteHandler(that);
-                                            },
-                                            function () {
-                                                $(that.locate("thumbItem")[that.selectedItemIndex]).focus();
-                                            });
+                                        deleteSelectedImage(that);
                                     }
                                 }
                             ]
@@ -355,14 +365,7 @@ fluid_1_2 = fluid_1_2 || {};
             var deleteButton = that.locate("deleteButton", clone);
             deleteButton.click(
                 function () {
-                    invokeConfirmationDialog(that, "Delete image?",
-                        "Are you sure you want to delete this image?",
-                        function () {
-                            deleteHandler(that);
-                        },
-                        function () {
-                            $(that.locate("thumbItem")[that.selectedItemIndex]).focus();
-                        });
+                    deleteSelectedImage(that);
                 });
         });
         
@@ -401,6 +404,23 @@ fluid_1_2 = fluid_1_2 || {};
                     that.events.afterPictureTaken.fire(newItem);
                 }
             });
+            
+        that.locate("imageReorderer").keyup(function (event) {
+            var thumbItems = that.locate('thumbItem');
+            if ($.ui.keyCode.PAGE_UP === event.keyCode) {
+                thumbItems.get(0).focus();
+            } else if ($.ui.keyCode.PAGE_DOWN === event.keyCode) {
+                thumbItems.get(thumbItems.length - 1).focus();
+            } else if ($.ui.keyCode.DELETE === event.keyCode) {
+                deleteSelectedImage(that);
+            }
+        });
+        
+        $().keyup(function (event) {
+            if ($.ui.keyCode.SPACE === event.keyCode) {
+                that.locate('takePictureButton').click();
+            }
+        });
     };
     
     /**

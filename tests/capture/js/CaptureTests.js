@@ -227,6 +227,33 @@ https://source.fluidproject.org/svn/LICENSE.txt
             var delButtonsCount = $(':visible', capture.locate("deleteButton")).length;
             jqUnit.assertEquals("Delete buttons on page are", 0, delButtonsCount);
         });
+        
+        tests.test("Keyboard shortcuts test", function () {
+            expect(7);
+            
+            var capture = fluid.capture(".flc-capture", options);
+            var thumbItems = capture.locate("thumbItem");
+            
+            testPreview(capture, thumbItems[thumbItems.length - 1]);
+            
+            jQuery.event.trigger({type:'keyup', keyCode: $.ui.keyCode.PAGE_UP});
+            testPreview(capture, thumbItems[0]);
+            
+            jQuery.event.trigger({type:'keyup', keyCode: $.ui.keyCode.PAGE_DOWN});
+            testPreview(capture, thumbItems[thumbItems.length - 1]);
+            
+            jQuery.event.trigger({type:'keyup', keyCode: $.ui.keyCode.SPACE});
+            thumbItems = capture.locate("thumbItem");
+            
+            jqUnit.assertEquals("Model length after first picture taken", options.thumbs.length + 1, capture.model.length);
+            jqUnit.assertEquals("Images on page after first picture taken", capture.model.length, thumbItems.length);
+            
+            jQuery.event.trigger({type:'keyup', keyCode: $.ui.keyCode.DELETE});
+            thumbItems = capture.locate("thumbItem");
+            
+            jqUnit.assertEquals("Model length after deletion is", options.thumbs.length, capture.model.length);
+            jqUnit.assertEquals("Images on page after deletion are", options.thumbs.length, thumbItems.length);
+        });
     });
     
 })(jQuery);
