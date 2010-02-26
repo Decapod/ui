@@ -2,6 +2,28 @@
     background: #fff;
 }
 
+.flc-capture .footer {
+	background-color: #333333;
+	background-image: url(../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png);
+}
+
+.flc-capture .header {
+	background-color: #333333;
+	background-image: url(../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png);
+}
+
+
+.flc-capture .header h1 {
+    font-size: 2em;
+    margin-left: 2em;
+    border-bottom: none;
+    color: #fff;
+}
+
+.flc-capture .fl-col-mixed .fl-col-flex {
+margin-left:250px;
+}
+
 .fl-container-progress > .ui-dialog-titlebar {
     display: none;
 }
