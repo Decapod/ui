@@ -65,14 +65,25 @@
                     <form>
                         <ul class="flc-capture-reorderer fl-grid">
                             <li class="flc-capture-thumbItem">
-                                <span class="flc-capture-label-item">
-                                    <span class="flc-capture-label-index"></span>
-                                </span>
-                                <div class="flc-capture-message-noImage fl-capture-element-hidden"><p>No pictures yet.</p></div>
-                                <img class="flc-capture-thumbImage">
-                                <div class="fl-force-right">
-                                    <a class="flc-capture-button-delete"><span>Delete</span></a>
-                                </div>
+                                
+								<div class="fl-container-flex flc-capture-message-noImage fl-capture-element-hidden">
+									<span class="flc-capture-label-item">
+										<span class="flc-capture-label-noimage">No pages yet</span>
+									</span>
+									<div class="fl-force-left flc-capture-placeholder flc-capture-thumb-page-placeholder">&nbsp</div>
+									<div class="fl-force-right flc-capture-placeholder flc-capture-thumb-page-placeholder">&nbsp</div>
+								</div>
+
+
+                                <!-- <div class="flc-capture-message-noImage fl-capture-element-hidden"><p>No pictures yet.</p></div> -->
+								<span class="flc-capture-label-item">
+									<span class="flc-capture-label-index"></span>
+								</span>
+
+								<img class="flc-capture-thumbImage">
+								<div class="fl-force-right">
+									<a class="flc-capture-button-delete"><span>Delete</span></a>
+								</div>
                             </li>
                         </ul>
                     </form>

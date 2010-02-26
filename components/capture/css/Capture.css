@@ -131,10 +131,10 @@ margin-left:250px;
 }
 
 .flc-capture-message-noImage {
-    font-size: large;
+/*    font-size: large;
     position: absolute;
     top: 42%;
-    left: 20%;
+    left: 20%;*/
 }
 
 .flc-capture button.flc-capture-button-takePicture {
@@ -154,4 +154,19 @@ margin-left:250px;
     background-image: url(./images/camera.png);
     background-repeat: no-repeat;
     background-position: 5px 10px;
+}
+
+.flc-capture-placeholder {
+	background: #fff;
+	border:1;
+	border-color: #778899;
+	border-style:dotted;
+}
+
+.flc-capture-thumb-page-placeholder {
+	width:90px;
+	height: 150px;
+	margin-left:2px;
+	margin-right:2px;
+	margin-top:4px;
 }
