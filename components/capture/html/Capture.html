@@ -50,46 +50,50 @@
         </div>
         
         <div class="flc-capture">
+            <div class="flc-capture-message"></div>
             <div class="fl-container-flex header">
-				<div class="flc-capture-message"></div>
-				
-				<h1>Decapod</h1>
-			</div>
-
+                <h1>Decapod</h1>
+                
+                <div class="fl-force-right">
+                    <a class="flc-capture-button-import ui-state-disabled">Import Folder of Images</a>
+                    <a class="flc-capture-button-export ui-state-disabled">Finish Book and Export</a>
+                    <a class="flc-capture-button-help ui-state-disabled">Help</a>
+                </div>
+            </div>
+            
             <div class="fl-container-flex content">
-				<div class="fl-col-mixed">
-					<div class="fl-col-fixed fl-force-left">
-					<form>
-						<ul class="flc-capture-reorderer fl-grid">
-							<li class="flc-capture-thumbItem">
-								<span class="flc-capture-label-item">
-									<span class="flc-capture-label-index"></span>
-								</span>
-								<div class="flc-capture-message-noImage fl-capture-element-hidden"><p>No pictures yet.</p></div>
-								<img class="flc-capture-thumbImage">
-								<div class="fl-force-right">
-								    <a class="flc-capture-button-delete"><span>Delete</span></a>
-								</div>
-							</li>
-						</ul>
-					</form>
-					</div>
-					
-					<div class="fl-col-flex">
-						<div class="flc-capture-previewArea">
-							<a class="flc-capture-button-export fl-button-left ui-state-disabled" tabindex="50"><span class="fl-button-inner">Export to PDF</span></a>
-							<br /><br />
-							<img class="flc-capture-image-preview">
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="fl-container-flex footer">
-				<div>
-					<button class="flc-capture-button-takePicture" tabindex="20">Take picture</button>
-				</div>
-			</div>
+                <div class="fl-col-mixed">
+                    <div class="fl-col-fixed fl-force-left">
+                    <form>
+                        <ul class="flc-capture-reorderer fl-grid">
+                            <li class="flc-capture-thumbItem">
+                                <span class="flc-capture-label-item">
+                                    <span class="flc-capture-label-index"></span>
+                                </span>
+                                <div class="flc-capture-message-noImage fl-capture-element-hidden"><p>No pictures yet.</p></div>
+                                <img class="flc-capture-thumbImage">
+                                <div class="fl-force-right">
+                                    <a class="flc-capture-button-delete"><span>Delete</span></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                    </div>
+                    
+                    <div class="fl-col-flex">
+                        <div class="flc-capture-previewArea">
+                            <img class="flc-capture-image-preview">
+                        </div>
+                        
+                        <div class="fl-container-flex footer">
+                            <button class="flc-capture-button-takePicture">Take picture</button>
+                            <a class="flc-capture-button-export fl-button-left ui-state-disabled">
+                                <span class="fl-button-inner">Finish Book and Export</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <!-- Initializing the Capture component. -->

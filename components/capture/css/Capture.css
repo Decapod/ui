@@ -1,5 +1,5 @@
 .flc-capture .content {
-	background: #fff;
+    background: #fff;
 }
 
 .fl-container-progress > .ui-dialog-titlebar {
@@ -46,7 +46,6 @@
     cursor: default;
 }
 
-/* TODO Improve styling */
 .fl-theme-coal .flc-capture-thumbItem {
     width: 200px;
     height: 200px;
@@ -59,7 +58,7 @@
 
 .flc-capture-button-delete{
     margin-right: 8px;
-	padding-left: 20px;
+    padding-left: 20px;
     background-image: url(./images/remove.png);
     background-repeat: no-repeat;
 
@@ -71,7 +70,7 @@
 }
 
 .fl-theme-coal .fl-reorderer-movable-selected {
-	outline: 5px solid #6dacc6;
+    outline: 5px solid #6dacc6;
 
 }
 
@@ -107,12 +106,6 @@
 .flc-capture-image-preview {
     margin-top: 5px;
     height: 613px;
-}
-
-
-
-.flc-capture-button-takePicture {
-    margin-left: 33%;
 }
 
 .flc-capture-message-noImage {
