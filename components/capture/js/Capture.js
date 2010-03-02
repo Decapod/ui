@@ -109,7 +109,7 @@ fluid_1_2 = fluid_1_2 || {};
         }
         
         that.imageReorderer.refresh();
-        showMessage(that, "fl-message-confirm", "Image successfully deleted");
+        showMessage(that, "fl-message-confirm-success", "Image successfully deleted");
     };
     
     /**
