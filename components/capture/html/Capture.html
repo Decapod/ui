@@ -41,6 +41,7 @@
     </head>
     
     <body class="fl-theme-coal">
+
         <div class="flc-capture-dialog-progress">
             <img src="../css/images/spinner.gif">
             <span class="flc-capture-progress-message"></span>
@@ -48,42 +49,39 @@
         <div class="flc-capture-dialog-confirm">
             <span class="flc-capture-confirm-content">Are you sure you want to delete this image?</span>
         </div>
-        
+
         <div class="flc-capture">
             <div class="flc-capture-message"></div>
+
             <div class="fl-container-flex header">
-				<h1>Decapod</h1>
-				 
-				<div class="fl-force-right">
-				<a class="flc-capture-button-import ui-state-disabled">Import Folder of Images</a> | <a class="flc-capture-button-export ui-state-disabled">Finish Book and Export</a> | <a class="flc-capture-button-help ui-state-disabled">Help</a> 
-				</div>
+                <h1>Decapod</h1>
+                 
+                <div class="fl-force-right fl-decapod-menu">
+                <a class="flc-capture-button-import">Import Folder of Images</a> | <a class="flc-capture-button-export ui-state-disabled">Finish Book and Export</a> | <a class="flc-capture-button-help ui-state-disabled">Help</a> 
+                </div>
             </div>
-            
+
             <div class="fl-container-flex content">
                 <div class="fl-col-mixed">
                     <div class="fl-col-fixed fl-force-left">
                     <form>
                         <ul class="flc-capture-reorderer fl-grid">
                             <li class="flc-capture-thumbItem">
-                                
-								<div class="fl-container-flex flc-capture-message-noImage fl-capture-element-hidden">
-									<span class="flc-capture-label-item">
-										<span class="flc-capture-label-noimage">No pages yet</span>
-									</span>
-									<div class="fl-force-left flc-capture-placeholder flc-capture-thumb-page-placeholder">&nbsp</div>
-									<div class="fl-force-right flc-capture-placeholder flc-capture-thumb-page-placeholder">&nbsp</div>
-								</div>
+                               
+                                <span class="flc-capture-label-item">
+                                    <span class="flc-capture-label-noimage">No pages yet</span>
+                                    <span class="flc-capture-label-index"></span>
+                                </span>
 
+                                <div class="flc-capture-message-noImage fl-container-flex fl-capture-element-hidden">
+                                    <div class="fl-force-left fl-capture-placeholder fl-capture-placeholder-thumbnail">&nbsp</div>
+                                    <div class="fl-force-right fl-capture-placeholder fl-capture-placeholder-thumbnail">&nbsp</div>
+                                </div>
 
-                                <!-- <div class="flc-capture-message-noImage fl-capture-element-hidden"><p>No pictures yet.</p></div> -->
-								<span class="flc-capture-label-item">
-									<span class="flc-capture-label-index"></span>
-								</span>
-
-								<img class="flc-capture-thumbImage">
-								<div class="fl-force-right">
-									<a class="flc-capture-button-delete"><span>Delete</span></a>
-								</div>
+                                <img class="flc-capture-thumbImage">
+                                <div class="fl-force-right">
+                                    <a class="flc-capture-button-delete"><span>Delete</span></a>
+                                </div>
                             </li>
                         </ul>
                     </form>
@@ -91,19 +89,24 @@
                     
                     <div class="fl-col-flex">
                         <div class="flc-capture-previewArea">
-                            <img class="flc-capture-image-preview">
+                            <div class="fl-capture-previewArea-content">
+                                <span class="flc-capture-label-index-left"></span>
+                                <span class="flc-capture-label-index-right"></span>
+                                <img class="flc-capture-image-preview">
+                            </div>
                         </div>
-                        
-						<div class="fl-container-flex footer">
-							<button class="flc-capture-button-takePicture">Take picture</button>
-							<button class="flc-capture-button-export ui-state-disabled">
-								<span class="fl-button-inner">Finish Book and Export</span>
-							</button>
-						</div>					
                     </div>
                 </div>
             </div>
 
+            <div class="fl-container-flex footer">
+                <div class="fl-capture-buttons-footer">
+                    <div><button class="flc-capture-button-takePicture">Take picture</button></div>
+                    <div><button class="flc-capture-button-export ui-state-disabled">
+                        <span class="fl-button-inner">Finish Book and Export</span>
+                    </button></div>
+                </div>
+            </div>                  
 
 
         </div>

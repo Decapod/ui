@@ -3,15 +3,16 @@
 }
 
 .flc-capture .footer {
-	background-color: #333333;
-	background-image: url(../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png);
+    background-color: #333333;
+    background-image: url(../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png);
+    margin-top:20px;
 }
 
 .flc-capture .header {
-	background-color: #333333;
-	background-image: url(../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png);
+    background-color: #333333;
+    background-image: url(../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png);
+    height:6em;
 }
-
 
 .flc-capture .header h1 {
     font-size: 2em;
@@ -20,8 +21,17 @@
     color: #fff;
 }
 
+.flc-capture .header .fl-decapod-menu {
+    color: #fff;
+}
+
+.flc-capture .header a {
+    color: #fff;
+}
+
+
 .flc-capture .fl-col-mixed .fl-col-flex {
-margin-left:250px;
+    margin-left:270px;
 }
 
 .fl-container-progress > .ui-dialog-titlebar {
@@ -130,13 +140,6 @@ margin-left:250px;
     height: 613px;
 }
 
-.flc-capture-message-noImage {
-/*    font-size: large;
-    position: absolute;
-    top: 42%;
-    left: 20%;*/
-}
-
 .flc-capture button.flc-capture-button-takePicture {
     color: #000;
     width: 8.4em;
@@ -156,17 +159,21 @@ margin-left:250px;
     background-position: 5px 10px;
 }
 
-.flc-capture-placeholder {
-	background: #fff;
-	border:1;
-	border-color: #778899;
-	border-style:dotted;
+.fl-capture-placeholder {
+    background: #fff;
+    border:1;
+    border-color: #778899;
+    border-style:dotted;
 }
 
-.flc-capture-thumb-page-placeholder {
-	width:90px;
-	height: 150px;
-	margin-left:2px;
-	margin-right:2px;
-	margin-top:4px;
+.fl-capture-placeholder-thumbnail {
+    width:90px;
+    height: 150px;
+    margin-left:2px;
+    margin-right:2px;
+    margin-top:4px;
+}
+
+.fl-capture-buttons-footer {
+    text-align:center;
 }
