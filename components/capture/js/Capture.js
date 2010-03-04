@@ -40,11 +40,13 @@ fluid_1_2 = fluid_1_2 || {};
         var itemIndex = that.selectedItemIndex;
         
         if (itemIndex < 0 || itemIndex >= that.model.length) {
-            var thumbItem = that.locate("thumbItem");
-            thumbItem.children().addClass(hiddenClass);
-            that.locate("noImage").removeClass(hiddenClass);
-            
-            return;
+            that.locate("itemIndex").addClass(hiddenClass);
+            that.locate("deleteButton").addClass(hiddenClass);
+            that.locate("noImageLabel").removeClass(hiddenClass);
+            that.locate("emptyPlaceholder").removeClass(hiddenClass);
+        } else {
+            that.locate("noImageLabel").remove();
+            that.locate("emptyPlaceholder").remove();
         }
     };
     
@@ -351,6 +353,8 @@ fluid_1_2 = fluid_1_2 || {};
             if (that.model.length === 1) {
                 that.locate("thumbItem").remove();
             }
+            that.locate("emptyPlaceholder", clone).remove();
+            that.locate("noImageLabel", clone).remove();
             
             var labelText = [2 * that.model.length - 1, "-", 2 * that.model.length];
             that.locate('itemIndex', clone).text(labelText.join(''));
@@ -493,7 +497,8 @@ fluid_1_2 = fluid_1_2 || {};
             progressDialog: ".flc-capture-dialog-progress",
             confirmDialog: ".flc-capture-dialog-confirm",
             message: ".flc-capture-message",
-            noImage: ".flc-capture-message-noImage"
+            noImageLabel: ".flc-capture-label-noImage",
+            emptyPlaceholder: ".flc-capture-thumbItem-empty"
         },
         
         styles: {

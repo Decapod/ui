@@ -26,11 +26,11 @@ https://source.fluidproject.org/svn/LICENSE.txt
             thumbs: [
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image0.jpg",
-                    thumbImage: "../../../components/server/testData/capturedImages/Image0-thumb.jpg",
+                    thumbImage: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
                 },
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image1.jpg",
-                    thumbImage: "../../../components/server/testData/capturedImages/Image1-thumb.jpg",
+                    thumbImage: "../../../components/server/testData/capturedImages/Image1-thumb.jpg"
                 },
                 {
                     fullImage: "../../../components/server/testData/capturedImages/Image2.jpg",
@@ -111,7 +111,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
         };
         
         tests.test("Component construction with no model", function () {
-            expect(4);
+            expect(6);
             
             var capture = fluid.capture(".flc-capture");
             var thumbItems = capture.locate("thumbItem");
@@ -119,6 +119,12 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             jqUnit.assertEquals("Model length is", 0, capture.model.length);
             jqUnit.assertEquals("Image items on page are", 1, thumbItems.length);
+            
+            var placeholderHidden = capture.locate("emptyPlaceholder").hasClass(capture.options.styles.elementHidden);
+            var labelHidden = capture.locate("noImageLabel").hasClass(capture.options.styles.elementHidden);
+            
+            jqUnit.assertFalse("No image placeholder is visible", placeholderHidden);
+            jqUnit.assertFalse("No pages yet label is visible", labelHidden);
         });
         
         tests.test("Component construction with a sample model", function () {
@@ -189,7 +195,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
         });
         
         tests.test("Taking pictures", function () {
-            expect(3);
+            expect(5);
             
             var capture = fluid.capture(".flc-capture", options);
             var thumbItems;
@@ -202,6 +208,12 @@ https://source.fluidproject.org/svn/LICENSE.txt
             jqUnit.assertEquals("Model length after first picture taken", options.thumbs.length + 1, capture.model.length);
             jqUnit.assertEquals("Images on page after first picture taken", capture.model.length, thumbItems.length);
             testPreview(capture, thumbItems[thumbItems.length - 1]);
+            
+            var placeholders = capture.locate("emptyPlaceholder");
+            var labels = capture.locate("noImageLabel");
+            
+            jqUnit.assertEquals("Image placeholders on page", 0, placeholders.length);
+            jqUnit.assertEquals("No pages yet labels on page", 0, labels.length);
         });
         
         tests.test("Deleting the last image left", function () {
@@ -236,19 +248,19 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             testPreview(capture, thumbItems[thumbItems.length - 1]);
             
-            jQuery.event.trigger({type:'keyup', keyCode: $.ui.keyCode.PAGE_UP});
+            jQuery.event.trigger({type: 'keyup', keyCode: $.ui.keyCode.PAGE_UP});
             testPreview(capture, thumbItems[0]);
             
-            jQuery.event.trigger({type:'keyup', keyCode: $.ui.keyCode.PAGE_DOWN});
+            jQuery.event.trigger({type: 'keyup', keyCode: $.ui.keyCode.PAGE_DOWN});
             testPreview(capture, thumbItems[thumbItems.length - 1]);
             
-            jQuery.event.trigger({type:'keyup', keyCode: $.ui.keyCode.SPACE});
+            jQuery.event.trigger({type: 'keyup', keyCode: $.ui.keyCode.SPACE});
             thumbItems = capture.locate("thumbItem");
             
             jqUnit.assertEquals("Model length after first picture taken", options.thumbs.length + 1, capture.model.length);
             jqUnit.assertEquals("Images on page after first picture taken", capture.model.length, thumbItems.length);
             
-            jQuery.event.trigger({type:'keyup', keyCode: $.ui.keyCode.DELETE});
+            jQuery.event.trigger({type: 'keyup', keyCode: $.ui.keyCode.DELETE});
             thumbItems = capture.locate("thumbItem");
             
             jqUnit.assertEquals("Model length after deletion is", options.thumbs.length, capture.model.length);
