@@ -5,18 +5,21 @@
 .footer {
     background-color: #333333;
     background-image: url(../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png);
-    margin-top:20px;
+    margin-top:2px;
 }
 
 .header {
     background-color: #333333;
     background-image: url(../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png);
-    height:6em;
+    height:4em;
+    margin-bottom:2px;
 }
 
 .header h1 {
     font-size: 2em;
     margin-left: 2em;
+    margin-top: 0em;
+    margin-bottom: 0em;
     border-bottom: none;
     color: #fff;
 }
@@ -55,7 +58,7 @@
     background-color: #c9eac0;
     width: 100%;
     padding-top: 2em;
-	padding-bottom: 2em;
+    padding-bottom: 2em;
     position: absolute;
     top: 0px;
     text-align: center;
@@ -168,7 +171,7 @@
 
 .flc-capture button.flc-capture-button-takePicture {
     color: #000;
-    width: 8.4em;
+    width: 200px;
     font-size: 1.8em;
     height: 64px;
     border-color: #2A3990;
@@ -183,6 +186,20 @@
     background-image: url(./images/camera.png);
     background-repeat: no-repeat;
     background-position: 5px 10px;
+}
+
+button.flc-capture-button-export {
+    color: #000;
+    width: 200px;
+    border-color: #2A3990;
+    border-width: 1px;
+    padding-left: 2em;
+    padding-right: 2em;
+    margin-bottom: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    background-color: #cfcfcf;
+    border-color: #006838;
 }
 
 .fl-capture-placeholder {
@@ -203,3 +220,15 @@
 .fl-capture-buttons-footer {
     text-align:center;
 }
+
+
+/*Override default style */
+.fl-theme-coal .ui-dialog {
+    background:#fff;
+}
+
+/*Override default style */
+.fl-theme-coal .ui-dialog .ui-dialog-buttonpane {
+    background:#fff;
+}
+
