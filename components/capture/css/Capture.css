@@ -19,14 +19,20 @@
 .header {
     background-color: #333333;
     background-image: url(../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png);
-    height:4em;
+    height:110px;
     margin-bottom:2px;
     padding-top:15px;
 }
 
-.header h1 {
+.fl-decapodBadge{
+}
+
+.fl-decapodBadge img {
+    margin-left: 59px;
+}
+
+.fl-decapodBadge h1 {
     font-size: 2em;
-    margin-left: 2em;
     margin-top: 0em;
     margin-bottom: 0em;
     border-bottom: none;
