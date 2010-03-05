@@ -109,20 +109,29 @@
 
 .fl-theme-coal .flc-capture-thumbItem {
     width: 200px;
-    height: 200px;
+    height: 180px;
     margin-bottom: 10px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     position: relative;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
+
 .flc-capture-button-delete {
-    margin-right: 8px;
-    padding-left: 20px;
+    margin-right: 3px;
+    margin-top: 100px;
+    padding-right: 20px;
     background-image: url(./images/remove.png);
     background-repeat: no-repeat;
     cursor: pointer;
+    background-position: 100% 0;
+}
+
+.flc-capture-button-delete span {
+    color: #fff;
 }
 
 .fl-reorderer-movable-default .flc-capture-button-delete {
@@ -132,7 +141,6 @@
 
 .fl-theme-coal .fl-reorderer-movable-selected {
     outline: 5px solid #6dacc6;
-
 }
 
 .flc-capture-label-index {
@@ -186,6 +194,7 @@
     background-image: url(./images/camera.png);
     background-repeat: no-repeat;
     background-position: 5px 10px;
+    -moz-border-radius: 10px;
 }
 
 button.flc-capture-button-export {
@@ -200,6 +209,7 @@ button.flc-capture-button-export {
     margin-top: 10px;
     background-color: #cfcfcf;
     border-color: #006838;
+    -moz-border-radius: 6px;
 }
 
 .fl-capture-placeholder {
