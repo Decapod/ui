@@ -1,10 +1,15 @@
 .flc-capture {
+    width: 1100px;
     -moz-box-shadow: 10px 10px 9px #999;
     padding: 5px 5px 5px 0px;
-    width: 1180px;
+    margin-left:20px;
+    margin-top: 10px;
+
+    /* See FLUID-3518
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto;*/
 }
+
 
 .content {
     background: #fff;
