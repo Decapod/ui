@@ -1,9 +1,12 @@
+body {
+background-image: url(./images/background.gif);
+}
+
 .flc-capture {
     width: 1100px;
     -moz-box-shadow: 10px 10px 9px #999;
-    padding: 5px 5px 5px 0px;
     margin-left:20px;
-    margin-top: 10px;
+    margin-top: 2px;
 
     /* See FLUID-3518
     margin-left: auto;
@@ -24,7 +27,7 @@
 .header {
     background-color: #333333;
     background-image: url(../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png);
-    height:110px;
+    height:90px;
     margin-bottom:2px;
     padding-top:15px;
 }
@@ -33,13 +36,15 @@
 }
 
 .fl-decapodBadge img {
-    margin-left: 59px;
+    margin-left: 15px;
+    float:left;
 }
 
 .fl-decapodBadge h1 {
-    font-size: 2em;
+    font-size: 2.8em;
     margin-top: 0em;
     margin-bottom: 0em;
+    padding-top: 20px;
     border-bottom: none;
     color: #fff;
 }
@@ -113,7 +118,7 @@
 .fl-theme-coal .fl-grid {
     border: none;
     padding: 5px;
-    height: 650px;
+    height: 610px;
     overflow: auto;
     background-color: #fff;
 
@@ -129,8 +134,8 @@
 
 .fl-theme-coal .flc-capture-thumbItem {
     width: 200px;
-    height: 180px;
-    margin-bottom: 10px;
+    height: 175px;
+    margin-bottom: 5px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -246,7 +251,7 @@ button.flc-capture-button-export {
 
 .fl-capture-placeholder-thumbnail {
     width:90px;
-    height: 150px;
+    height: 145px;
     margin-left:2px;
     margin-right:2px;
     margin-top:4px;
