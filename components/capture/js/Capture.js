@@ -336,7 +336,7 @@ fluid_1_2 = fluid_1_2 || {};
         var cameraOptions = {
             modal: true,
             autoOpen: false
-        }
+        };
         
         that.locate("progressDialog", document).dialog(progressOptions);
         that.locate("confirmDialog", document).dialog(confirmOptions);
@@ -353,7 +353,7 @@ fluid_1_2 = fluid_1_2 || {};
      */
     var invokeInitialDialog = function (that, cameraList) {
         var supportedCameras = 0;
-        for (camera in cameraList) {
+        for (var camera in cameraList) {
             if (camera.capture === true) {
                 supportedCameras++;
             }
@@ -390,21 +390,21 @@ fluid_1_2 = fluid_1_2 || {};
             progressDialog.dialog("open");
             
             $.ajax({
-               url: that.url + "/cameras/",
-               type: "GET",
-               dataType: "json",
-               
-               success: function (cameraList) {
-                   invokeInitialDialog(that, cameraList);
-               },
-               
-               error: function () {
-                   showMessage(that, that.options.styles.errorMessage, "Error detecting cameras.");
-               },
-               
-               complete: function () {
-                   progressDialog.dialog("close");
-               }
+                url: that.url + "/cameras/",
+                type: "GET",
+                dataType: "json",
+                
+                success: function (cameraList) {
+                    invokeInitialDialog(that, cameraList);
+                },
+                
+                error: function () {
+                    showMessage(that, that.options.styles.errorMessage, "Error detecting cameras.");
+                },
+                
+                complete: function () {
+                    progressDialog.dialog("close");
+                }
             });
         });
         
@@ -510,7 +510,7 @@ fluid_1_2 = fluid_1_2 || {};
     fluid.capture = function (container, options) {
         var that = fluid.initView("fluid.capture", container, options);
         
-        var url = window.location.href;
+        var url = window.location.href; // TODO Is this right?
         var protocol = url.slice(0, url.indexOf(":"));
         that.options.serverOn = (protocol.toLowerCase() === "http");
         that.url = url.slice(0, url.lastIndexOf("/"));
