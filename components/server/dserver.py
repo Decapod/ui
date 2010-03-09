@@ -58,7 +58,7 @@ class ImageController(object):
         if not state:
             if method == "GET":
                 cherrypy.response.headers["Content-Type"] = "application/json"
-                cherrypy.response.headers["Content-Disposition"] = "attachment; filename='Image%d.json'" % index
+                cherrypy.response.headers["Content-Disposition"] = "attachment; filename=Image%d.json" % index
                 return json.dumps(self.images[index])
 
             elif method == "DELETE":
@@ -75,7 +75,10 @@ class ImageController(object):
 
                 path = self.images[index][state]
                 cherrypy.response.headers["Content-type"] = "image/jpeg"
-                return open(path).read()
+                file = open(path)
+                content = file.read()
+                file.close()
+                return content
             else:
                 cherrypy.response.headers["Allow"] = "GET"
                 raise cherrypy.HTTPError(405)
@@ -94,16 +97,20 @@ class ImageController(object):
                 raise cherrypy.HTTPError(500, "Camera could not capture.")
 
             os.system("gphoto2 --list-files 2>>capture.log | tail -1 | grep '#[0-9]\{1,\}' -o >/tmp/output.tmp")
-            content = open("/tmp/output.tmp", "r").read()
+            file = open("/tmp/output.tmp", "r")
+            content = file.read()
             file_index = content.lstrip("#")
+            file.close()
             os.chdir(path)
             status = os.system("gphoto2 --get-file %d --force-overwrite 2>>../../capture.log | tail -1 >/tmp/output.tmp" %int(file_index))
             os.chdir("../..")
             if status != 0:
                 raise cherrypy.HTTPError(500, "Could not transfer file.")
 
-            content = open("/tmp/output.tmp", "r").read()
+            file = open("/tmp/output.tmp", "r")
+            content = file.read()
             filename = path + content[content.rfind(" ") + 1 : len(content)].rstrip("\n")
+            file.close()
         else:
             index = len(self.images)
             filename = path + "Image" + `index` + ".jpg"
@@ -123,6 +130,7 @@ class ImageController(object):
         im.save(thumbname)
 
         cherrypy.response.headers["Content-type"] = "application/json"
+        cherrypy.response.headers["Content-Disposition"] = "attachment; filename=Image%d.json" % index
         model_entry = {"full": filename, "thumb": thumbname}
         self.images.append(model_entry)
         return json.dumps(model_entry)
@@ -148,7 +156,44 @@ class DecapodServer(object):
     @cherrypy.expose
     def capture(self):
         html_path = "../capture/html/Capture.html"
-        return open(html_path).read()
+        file = open(html_path)
+        content = file.read()
+        file.close()
+        return content
+    
+    @cherrypy.expose
+    def cameras(self):
+        """Detects the cameras attached to the PC.
+        
+        Returns a JSON object, describing the camera and its capabilities:
+        model, port, download support, capture support."""
+        
+        cameras = []
+        status = os.system("gphoto2 --auto-detect | grep '^Model\|^-' -v >/tmp/output.tmp")
+        if status != 0:
+            return json.dumps(cameras)
+        
+        file = open("/tmp/output.tmp")
+        for line in file:
+            info = line.split()
+            port = info.pop().rstrip("\n")
+            if port.endswith(":"):
+                continue
+            model = " ".join(info)
+            
+            status = os.system("gphoto2 --summary --camera='%s' --port=%s | grep 'Generic Image Capture'" % (model, port))
+            capture = (status == 0)
+            
+            status = os.system("gphoto2 --summary --camera='%s' --port=%s | grep 'No File Download'" % (model, port))
+            download = (status != 0)
+            
+            camera = {"model": model, "port": port, "capture": capture, "download": download}
+            cameras.append(camera)
+        file.close()
+        
+        cherrypy.response.headers["Content-type"] = "application/json"
+        cherrypy.response.headers["Content-Disposition"] = "attachment; filename=Cameras.json"
+        return json.dumps(cameras)
 
 if __name__ == "__main__":
     root = DecapodServer()
