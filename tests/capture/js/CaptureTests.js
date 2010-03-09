@@ -25,28 +25,27 @@ https://source.fluidproject.org/svn/LICENSE.txt
         var options = {
             thumbs: [
                 {
-                    fullImage: "../../../components/server/testData/capturedImages/Image0.jpg",
-                    thumbImage: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
+                    full: "../../../components/server/testData/capturedImages/Image0.jpg",
+                    thumb: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
                 },
                 {
-                    fullImage: "../../../components/server/testData/capturedImages/Image1.jpg",
-                    thumbImage: "../../../components/server/testData/capturedImages/Image1-thumb.jpg"
+                    full: "../../../components/server/testData/capturedImages/Image1.jpg",
+                    thumb: "../../../components/server/testData/capturedImages/Image1-thumb.jpg"
                 },
                 {
-                    fullImage: "../../../components/server/testData/capturedImages/Image2.jpg",
-                    thumbImage: "../../../components/server/testData/capturedImages/Image2-thumb.jpg"
+                    full: "../../../components/server/testData/capturedImages/Image2.jpg",
+                    thumb: "../../../components/server/testData/capturedImages/Image2-thumb.jpg"
                 },
                 {
-                    fullImage: "../../../components/server/testData/capturedImages/Image3.jpg",
-                    thumbImage: "../../../components/server/testData/capturedImages/Image3-thumb.jpg"
+                    full: "../../../components/server/testData/capturedImages/Image3.jpg",
+                    thumb: "../../../components/server/testData/capturedImages/Image3-thumb.jpg"
                 },
                 {
-                    fullImage: "../../../components/server/testData/capturedImages/Image4.jpg",
-                    thumbImage: "../../../components/server/testData/capturedImages/Image4-thumb.jpg"
+                    full: "../../../components/server/testData/capturedImages/Image4.jpg",
+                    thumb: "../../../components/server/testData/capturedImages/Image4-thumb.jpg"
                 }
             ],
-            serverOn: false,
-            cameraOn: false
+            testingMode: true
         };
         
         /**
@@ -76,7 +75,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             var itemIndex = labelText.slice(labelText.indexOf('-') + 1) / 2 - 1;
             
             if (component.model.length !== 0) {
-                fullSrc = component.model[itemIndex].fullImage;
+                fullSrc = component.model[itemIndex].full;
             }
             var imagePreview = component.locate("imagePreview");
             
@@ -222,10 +221,11 @@ https://source.fluidproject.org/svn/LICENSE.txt
             var capture = fluid.capture(".flc-capture", {
                 thumbs: [
                     {
-                        fullImage: "../../../components/server/testData/capturedImages/Image0.jpg",
-                        thumbImage: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
+                        full: "../../../components/server/testData/capturedImages/Image0.jpg",
+                        thumb: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
                     }
-                ]
+                ],
+                testingMode: true
             });
             
             var deleteButton = $(':visible', capture.locate("deleteButton"));

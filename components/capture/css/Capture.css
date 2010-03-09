@@ -79,7 +79,7 @@ background-image: url(./images/background.gif);
     margin-left: 0.8em;
 }
 
-.fl-message-confirm-success {
+.fl-capture-message-success {
     background-color: #c9eac0;
     width: 100%;
     padding-top: 2em;
@@ -95,7 +95,7 @@ background-image: url(./images/background.gif);
 }
 
 
-.fl-message-confirm-warning {
+.fl-capture-message-error {
     background-color: #f2ef98;
     width: 100%;
     padding-top: 2em;

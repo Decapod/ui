@@ -111,7 +111,7 @@ fluid_1_2 = fluid_1_2 || {};
         }
         
         that.imageReorderer.refresh();
-        showMessage(that, "fl-message-confirm-success", "Image successfully deleted");
+        showMessage(that, "fl-capture-message-success", "Image successfully deleted");
     };
     
     /**
@@ -193,7 +193,7 @@ fluid_1_2 = fluid_1_2 || {};
                         },
                         {
                             ID: "image",
-                            target: object.thumbImage
+                            target: object.thumb
                         },
                         {
                             ID: "deleteButton",
@@ -278,7 +278,7 @@ fluid_1_2 = fluid_1_2 || {};
                     that.selectedItemIndex = itemIndex;
                     
                     if (that.model.length !== 0) {
-                        imagePreview.attr("src", that.model[itemIndex].fullImage);
+                        imagePreview.attr("src", that.model[itemIndex].full);
                     }
                     
                     updateElementStates(that);
@@ -333,8 +333,46 @@ fluid_1_2 = fluid_1_2 || {};
             }
         };
         
+        var cameraOptions = {
+            modal: true,
+            autoOpen: false
+        }
+        
         that.locate("progressDialog", document).dialog(progressOptions);
         that.locate("confirmDialog", document).dialog(confirmOptions);
+        that.locate("cameraDialog", document).dialog(cameraOptions);
+    };
+    
+    /**
+     * Displays an informational dialog about detected cameras. Should provide
+     * the user with the list of camera models and whether they are supported or
+     * not.
+     * 
+     * @param {Object} that, the Capture component
+     * @param {Object} cameraList, a list of the cameras detected
+     */
+    var invokeInitialDialog = function (that, cameraList) {
+        var supportedCameras = 0;
+        for (camera in cameraList) {
+            if (camera.capture === true) {
+                supportedCameras++;
+            }
+        }
+        
+        if (supportedCameras < 2) {
+            var cameraDialog = that.locate("cameraDialog", document);
+            // TODO: Add list of cameras to the dialog.
+            cameraDialog.dialog('option', 'buttons', {
+                "Try again": function () {
+                    $(this).dialog("close");
+                },
+                "Close": function () {
+                    $(this).dialog("close");
+                }
+            });
+        } else {
+            // take picture with first two cameras
+        }
     };
     
     /**
@@ -346,6 +384,30 @@ fluid_1_2 = fluid_1_2 || {};
      * @param {Object} that, the Capture component
      */
     var bindHandlers = function (that) {
+        that.events.onBeginFirstCapture.addListener(function () {
+            var progressDialog = that.locate("progressDialog", document);
+            progressDialog.text("Detecting cameras...");
+            progressDialog.dialog("open");
+            
+            $.ajax({
+               url: that.url + "/cameras/",
+               type: "GET",
+               dataType: "json",
+               
+               success: function (cameraList) {
+                   invokeInitialDialog(that, cameraList);
+               },
+               
+               error: function () {
+                   showMessage(that, that.options.styles.errorMessage, "Error detecting cameras.");
+               },
+               
+               complete: function () {
+                   progressDialog.dialog("close");
+               }
+            });
+        });
+        
         that.events.afterPictureTaken.addListener(function (newItem) {
             that.model.push(newItem);
             var clone = $(that.itemTemplate).clone(true);
@@ -360,7 +422,7 @@ fluid_1_2 = fluid_1_2 || {};
             that.locate('itemIndex', clone).text(labelText.join(''));
             
             var image = that.locate("thumbImage", clone);
-            $(image).attr('src', newItem.thumbImage);
+            $(image).attr('src', newItem.thumb);
            
             that.locate("imageReorderer").append(clone);
             
@@ -373,42 +435,52 @@ fluid_1_2 = fluid_1_2 || {};
                 });
         });
         
-        var totalImages = 5; // For testing purposes with no server only.
-        that.locate("takePictureButton").click(
-            function () {
-                var newItem = {};
-                
-                var params = {
-                    fileIndex: that.model.length
-                };
-                if (that.options.cameraOn) {
-                    params['camera-on'] = 'True';
-                }
-                
-                // TODO Automatically detect if there is server according to the document location.
-                if (that.options.serverOn) {
-                    $.ajax({
-                        url: "http://localhost:8080/images/",
-                        type: "POST",
-                        dataType: "json",
-                        success: function (json_model) {
-                            newItem.fullImage = json_model.fullImage;
-                            newItem.thumbImage = json_model.thumbImage;
-                        
-                            that.events.afterPictureTaken.fire(newItem);
-                        }
-                    });
-                    
-                } else {
-                    // TODO Load image paths from a config file instead of using them staticly.
-                    var imageToShow = that.model.length % totalImages;
-                    newItem.fullImage = "../../server/testData/capturedImages/Image" + imageToShow + ".jpg";
-                    newItem.thumbImage = "../../server/testData/capturedImages/Image" + imageToShow + "-thumb.jpg";
-                    
-                    that.events.afterPictureTaken.fire(newItem);
-                }
-            });
+        that.locate("takePictureButton").click(function () {
+/*
+            if (that.model.length === 0) {
+                that.events.onBeginFirstCapture.fire();
+            }
+*/
             
+            if (that.options.serverOn) {
+                var progressDialog = that.locate("progressDialog", document);
+                progressDialog.text("Taking picture...");
+                progressDialog.dialog("open");
+                
+                var params = {"testingMode": that.options.testingMode};
+                $.ajax({
+                    url: that.url + "/images/",
+                    type: "POST",
+                    data: params,
+                    dataType: "json",
+                    
+                    success: function (newItem) {
+                        that.events.afterPictureTaken.fire(newItem);
+                        showMessage(that, that.options.styles.successMessage, "Picture successfully taken.");
+                    },
+                    
+                    error: function (arg1, arg2, arg3) {
+                        showMessage(that, that.options.styles.errorMessage, "Error taking picture.");
+                    },
+                    
+                    complete: function () {
+                        progressDialog.dialog("close");
+                    }
+                });
+                    
+            } else {
+                // TODO Load image paths from a config file instead of using them staticly.
+                var totalImages = 5; // For testing purposes with no server only.
+                var imageToShow = that.model.length % totalImages;
+                
+                var newItem = {};
+                newItem.full = "../../server/testData/capturedImages/Image" + imageToShow + ".jpg";
+                newItem.thumb = "../../server/testData/capturedImages/Image" + imageToShow + "-thumb.jpg";
+                
+                that.events.afterPictureTaken.fire(newItem);
+            }
+        });
+        
         that.locate("imageReorderer").keyup(function (event) {
             var thumbItems = that.locate('thumbItem');
             if ($.ui.keyCode.PAGE_UP === event.keyCode) {
@@ -438,9 +510,15 @@ fluid_1_2 = fluid_1_2 || {};
     fluid.capture = function (container, options) {
         var that = fluid.initView("fluid.capture", container, options);
         
+        var url = window.location.href;
+        var protocol = url.slice(0, url.indexOf(":"));
+        that.options.serverOn = (protocol.toLowerCase() === "http");
+        that.url = url.slice(0, url.lastIndexOf("/"));
+        
+        // TODO Handle failure of getting the model.
         if (that.options.serverOn) {
             $.ajax({
-                url: "http://localhost:8080/images/",
+                url: that.url + "/images/",
                 dataType: "json",
                 async: false,
                 success: function (json_model) {
@@ -496,6 +574,7 @@ fluid_1_2 = fluid_1_2 || {};
             
             progressDialog: ".flc-capture-dialog-progress",
             confirmDialog: ".flc-capture-dialog-confirm",
+            cameraDialog: ".flc-capture-dialog-cameras",
             message: ".flc-capture-message",
             noImageLabel: ".flc-capture-label-noImage",
             emptyPlaceholder: ".flc-capture-thumbItem-empty"
@@ -503,10 +582,13 @@ fluid_1_2 = fluid_1_2 || {};
         
         styles: {
             stateDisabled: "ui-state-disabled",
-            elementHidden: "fl-capture-element-hidden"
+            elementHidden: "fl-capture-element-hidden",
+            successMessage: "fl-capture-message-success",
+            errorMessage: "fl-capture-message-error"
         },
         
         events: {
+            onBeginFirstCapture: "preventable",
             afterPictureTaken: null
         }
     });
