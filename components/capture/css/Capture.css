@@ -32,9 +32,6 @@ background-image: url(./images/background.gif);
     padding-top:5px;
 }
 
-.fl-decapodBadge{
-}
-
 .fl-decapodBadge img {
     margin-left: 15px;
     float:left;
@@ -127,6 +124,35 @@ background-image: url(./images/background.gif);
 .fl-theme-coal .fl-grid li {
     background-color:#fff;
 }
+
+
+.fl-reorderer-movable-dragging{
+	background-color: #eee;
+    float: left;
+    margin: 5px !important;
+	border: 2px solid #666;
+	opacity: .2;
+	filter: alpha(opacity=20);
+}
+
+.fl-reorderer-avatar {
+    cursor          : move;
+    list-style-type : none;
+    border-width: 1px;
+    filter          : alpha(opacity=75);
+    opacity         : 0.75;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.fl-reorderer-avatar img {
+    display: block;
+    margin-top: 5px;
+    margin-right: auto;
+    margin-bottom: 5px;
+    margin-left: auto;
+}
+
 
 .ui-state-disabled span {
     cursor: default;
