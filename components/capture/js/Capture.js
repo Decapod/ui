@@ -182,7 +182,7 @@ fluid_1_2 = fluid_1_2 || {};
         ];
         
         var generateTree = function () {
-            
+            // TODO Use thumbnail of stitched image instead of right image.
             return fluid.transform(that.model, function (object, index) {
                 var tree = {
                     ID: "item:",
@@ -193,7 +193,7 @@ fluid_1_2 = fluid_1_2 || {};
                         },
                         {
                             ID: "image",
-                            target: object.thumb
+                            target: object.right
                         },
                         {
                             ID: "deleteButton",
@@ -277,8 +277,9 @@ fluid_1_2 = fluid_1_2 || {};
                     
                     that.selectedItemIndex = itemIndex;
                     
+                    // TODO Use stitched image instead of left image
                     if (that.model.length !== 0) {
-                        imagePreview.attr("src", that.model[itemIndex].full);
+                        imagePreview.attr("src", that.model[itemIndex].left);
                     }
                     
                     updateElementStates(that);
@@ -421,8 +422,9 @@ fluid_1_2 = fluid_1_2 || {};
             var labelText = [2 * that.model.length - 1, "-", 2 * that.model.length];
             that.locate('itemIndex', clone).text(labelText.join(''));
             
+            // TODO Use thumbnail of stitched image instead of right image.
             var image = that.locate("thumbImage", clone);
-            $(image).attr('src', newItem.thumb);
+            $(image).attr('src', newItem.right);
            
             that.locate("imageReorderer").append(clone);
             
@@ -447,7 +449,12 @@ fluid_1_2 = fluid_1_2 || {};
                 progressDialog.text("Taking picture...");
                 progressDialog.dialog("open");
                 
-                var params = {"testingMode": that.options.testingMode};
+                // TODO Get ports and models from detected cameras.
+                var params = {
+                    "testingMode": that.options.testingMode,
+                    "ports": [], 
+                    "models": []
+                };
                 $.ajax({
                     url: that.url + "/images/",
                     type: "POST",
@@ -473,9 +480,10 @@ fluid_1_2 = fluid_1_2 || {};
                 var totalImages = 5; // For testing purposes with no server only.
                 var imageToShow = that.model.length % totalImages;
                 
+                // TODO Provide stitched and thumbnail test images.
                 var newItem = {};
-                newItem.full = "../../server/testData/capturedImages/Image" + imageToShow + ".jpg";
-                newItem.thumb = "../../server/testData/capturedImages/Image" + imageToShow + "-thumb.jpg";
+                newItem.left = "../../server/testData/capturedImages/Image" + imageToShow + ".jpg";
+                newItem.right = "../../server/testData/capturedImages/Image" + imageToShow + "-thumb.jpg";
                 
                 that.events.afterPictureTaken.fire(newItem);
             }

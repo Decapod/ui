@@ -22,27 +22,28 @@ https://source.fluidproject.org/svn/LICENSE.txt
         });
         
         // TODO Load the options from a config file (when the model is persisted).
+        // TODO Provide stitched and thumbnail test images.
         var options = {
             thumbs: [
                 {
-                    full: "../../../components/server/testData/capturedImages/Image0.jpg",
-                    thumb: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
+                    left: "../../../components/server/testData/capturedImages/Image0.jpg",
+                    right: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
                 },
                 {
-                    full: "../../../components/server/testData/capturedImages/Image1.jpg",
-                    thumb: "../../../components/server/testData/capturedImages/Image1-thumb.jpg"
+                    left: "../../../components/server/testData/capturedImages/Image1.jpg",
+                    right: "../../../components/server/testData/capturedImages/Image1-thumb.jpg"
                 },
                 {
-                    full: "../../../components/server/testData/capturedImages/Image2.jpg",
-                    thumb: "../../../components/server/testData/capturedImages/Image2-thumb.jpg"
+                    left: "../../../components/server/testData/capturedImages/Image2.jpg",
+                    right: "../../../components/server/testData/capturedImages/Image2-thumb.jpg"
                 },
                 {
-                    full: "../../../components/server/testData/capturedImages/Image3.jpg",
-                    thumb: "../../../components/server/testData/capturedImages/Image3-thumb.jpg"
+                    left: "../../../components/server/testData/capturedImages/Image3.jpg",
+                    right: "../../../components/server/testData/capturedImages/Image3-thumb.jpg"
                 },
                 {
-                    full: "../../../components/server/testData/capturedImages/Image4.jpg",
-                    thumb: "../../../components/server/testData/capturedImages/Image4-thumb.jpg"
+                    left: "../../../components/server/testData/capturedImages/Image4.jpg",
+                    right: "../../../components/server/testData/capturedImages/Image4-thumb.jpg"
                 }
             ],
             testingMode: true
@@ -74,8 +75,9 @@ https://source.fluidproject.org/svn/LICENSE.txt
             var labelText = component.locate('itemIndex', thumbItem).text();
             var itemIndex = labelText.slice(labelText.indexOf('-') + 1) / 2 - 1;
             
+            // TODO Use stitched image instead of left image.
             if (component.model.length !== 0) {
-                fullSrc = component.model[itemIndex].full;
+                fullSrc = component.model[itemIndex].left;
             }
             var imagePreview = component.locate("imagePreview");
             
@@ -218,11 +220,12 @@ https://source.fluidproject.org/svn/LICENSE.txt
         tests.test("Deleting the last image left", function () {
             expect(3);
             
+            // TODO Provide stitched and thumbnail test images.
             var capture = fluid.capture(".flc-capture", {
                 thumbs: [
                     {
-                        full: "../../../components/server/testData/capturedImages/Image0.jpg",
-                        thumb: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
+                        left: "../../../components/server/testData/capturedImages/Image0.jpg",
+                        right: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
                     }
                 ],
                 testingMode: true
