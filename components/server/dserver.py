@@ -64,7 +64,9 @@ class ImageController(object):
 
         Supports getting (GET) and deleting (DELETE) sets of images by their id.
         The first operation returns a JSON text with the paths to the images. If
-        state is provided, GET returns a jpeg image with the specified state."""
+        state is provided, GET returns a jpeg image with the specified state.
+        POST is supported together with state, performing some operation(s) on
+        the image."""
 
         index = int(id)
         if index < 0 or index >= len(self.images):
@@ -95,8 +97,22 @@ class ImageController(object):
                 content = file.read()
                 file.close()
                 return content
+
+            elif method == "POST":
+                if state.lower() == "processed":
+                    #TODO Run crop & stitch process here instead of generating a thumbnail
+                    size = 150, 100
+                    filename = self.images[index]["left"]
+                    im = Image.open(filename)
+                    im.thumbnail(size, Image.ANTIALIAS)
+                    thumbname = filename + "-thumb.jpg"
+                    im.save(thumbname)
+                    self.images[index]["thumb"] = thumbname
+                    cherrypy.response.headers["Content-Type"] = "application/json"
+                    return json.dumps(self.images[index])
+
             else:
-                cherrypy.response.headers["Allow"] = "GET"
+                cherrypy.response.headers["Allow"] = "GET, POST"
                 raise cherrypy.HTTPError(405)
 
     def take_picture(self, testingMode=True, port=None, model=None):
