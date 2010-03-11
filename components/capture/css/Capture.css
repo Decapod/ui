@@ -128,7 +128,6 @@ background-image: url(./images/background.gif);
 
 .fl-reorderer-movable-dragging{
 	background-color: #eee;
-    float: left;
     margin: 5px !important;
 	border: 2px solid #666;
 	opacity: .2;
@@ -138,6 +137,7 @@ background-image: url(./images/background.gif);
 .fl-reorderer-avatar {
     cursor          : move;
     list-style-type : none;
+    background-color: #eee;
     border-width: 1px;
     filter          : alpha(opacity=75);
     opacity         : 0.75;
