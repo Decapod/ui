@@ -59,15 +59,13 @@
             </span>
         </div>
         
-        <div class="flc-capture">
+        <div class="flc-capture fl-capture">
             
             <div class="flc-capture-message"></div>
             
-            <div class="fl-container-flex header">
-                <div class="fl-decapodBadge">
-                    <img src="../css/images/transLogosm-light.png" title="Fluid" alt="Logo for the Fluid Project.">
-                    <h1>Decapod</h1>
-                </div>
+            <div class="fl-container-flex fl-decapodBadge header">
+				
+				<h1>Decapod</h1>
                  
                 <div class="fl-force-right fl-decapod-menu">
                 <a class="flc-capture-button-import ui-state-disabled">Import Folder of Images</a> | 
@@ -76,47 +74,42 @@
                 </div>
             </div>
             
-            <div class="fl-container-flex content">
-                <div class="fl-col-mixed">
-                    <div class="fl-col-fixed fl-force-left">
-                    <form>
-                        <ul class="flc-capture-reorderer fl-grid">
-                            <li class="flc-capture-thumbItem">
-                               
-                                <span class="flc-capture-label-item">
-                                    <a class="flc-capture-button-delete"><span>Delete</span></a>
-                                    <span class="flc-capture-label-index"></span>
-                                    <span class="flc-capture-label-noImage">No pages yet</span>
-                                </span>
-                                
-                                <div class="flc-capture-thumbItem-empty fl-container-flex">
-                                    <div class="fl-force-left fl-capture-placeholder fl-capture-placeholder-thumbnail">&nbsp;</div>
-                                    <div class="fl-force-right fl-capture-placeholder fl-capture-placeholder-thumbnail">&nbsp;</div>
-                                </div>
-                                
-                                <img class="flc-capture-thumbImage">
-                            </li>
-                        </ul>
-                    </form>
-                    </div>
+            <div class="fl-container-flex content">                
                     
-                    <div class="fl-col-flex">
-                        <div class="flc-capture-previewArea">
-                            <div class="fl-capture-previewArea-content">
-                                <span class="flc-capture-label-index-left"></span>
-                                <span class="flc-capture-label-index-right"></span>
-                                <img class="flc-capture-image-preview">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+				<form class="fl-thumbnailContainer">
+					<ul class="flc-capture-reorderer fl-grid">
+						<li class="flc-capture-thumbItem">
+						   
+							<span class="flc-capture-label-item">
+								<a class="flc-capture-button-delete"><span>Delete</span></a>
+								<span class="flc-capture-label-index"></span>
+								<span class="flc-capture-label-noImage">No pages yet</span>
+							</span>
+							
+							<div class="flc-capture-thumbItem-empty fl-container-flex">
+								<div class="fl-force-left fl-capture-placeholder fl-capture-placeholder-thumbnail">&nbsp;</div>
+								<div class="fl-force-right fl-capture-placeholder fl-capture-placeholder-thumbnail">&nbsp;</div>
+							</div>
+							
+							<img class="flc-capture-thumbImage">
+						</li>
+					</ul>
+				</form>
+			
+				<div class="flc-capture-previewArea fl-capture-previewArea">
+					<div class="fl-capture-previewArea-content">
+						<span class="flc-capture-label-index-left"></span>
+						<span class="flc-capture-label-index-right"></span>
+						<img class="flc-capture-image-preview">
+					</div>
+				</div>
+                    
+                
             </div>
             
-            <div class="fl-container-flex footer">
-                <div class="fl-capture-buttons-footer">
-                    <div><button class="flc-capture-button-takePicture">Take picture</button></div>
-                    <div><button class="flc-capture-button-export ui-state-disabled"><span>Finish Book and Export</span></button></div>
-                </div>
+            <div class="fl-container-flex fl-capture-buttons-footer footer">
+				<div><button class="flc-capture-button-takePicture">Take picture</button></div>
+				<button class="flc-capture-button-export ui-state-disabled"><span>Finish Book and Export</span></button>
             </div>
         </div>
         
@@ -148,7 +141,8 @@
                     }
                 ],
             };
-            fluid.capture(".flc-capture", options);
+/*            fluid.capture(".flc-capture", options);*/
+            fluid.capture(".flc-capture", {testingMode: true});
         </script>
     </body>
 </html>

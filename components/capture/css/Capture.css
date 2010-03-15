@@ -1,35 +1,61 @@
 body {
-background-image: url(./images/background.gif);
+	background-image:url("./images/background.gif");
+	bottom:30px;
+	left:20px;
+	position:absolute;
+	right:30px;
+	top:2px;
+	-moz-box-shadow:10px 10px 9px #999999;
+	min-width:850px;
 }
 
-.flc-capture {
-    width: 1100px;
-    -moz-box-shadow: 10px 10px 9px #999;
-    margin-left:20px;
-    margin-top: 2px;
-
-    /* See FLUID-3518
-    margin-left: auto;
-    margin-right: auto;*/
+.fl-capture {
+	background-color:#FFFFFF;
+	height:100%;
 }
 
 
 .content {
-    background: #fff;
+	background:none repeat scroll 0 0 #FFFFFF;
+	bottom:120px;
+	overflow:hidden;
+	position:absolute;
+	top:90px;
 }
 
 .footer {
-    background-color: #333333;
-    background-image: url(../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png);
-    margin-top:2px;
+	background-color:#333333;
+	background-image:url("../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png");
+	bottom:0;
+	position:absolute;
 }
 
 .header {
-    background-color: #333333;
-    background-image: url(../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png);
-    height:85px;
-    margin-bottom:2px;
-    padding-top:5px;
+	background-color:#333333;
+	background-image:url("../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png");
+	height:85px;
+	left:0;
+	margin-bottom:2px;
+	padding-top:5px;
+	position:absolute;
+	right:0;
+	top:0;
+}
+.fl-thumbnailContainer {
+	position: absolute; 
+	top: 0pt; 
+	left: 0pt; 
+	bottom: 0pt; 
+	overflow: auto; 
+	width: 235px; 
+	z-index: 100;
+}
+.fl-capture-previewArea {
+	left:250px;
+	position:absolute;
+	right:0;
+	text-align:center;
+	z-index:0;
 }
 
 .fl-decapodBadge img {
@@ -44,6 +70,10 @@ background-image: url(./images/background.gif);
     padding-top: 20px;
     border-bottom: none;
     color: #fff;
+    padding-left: 2.75em;
+	margin-left:0.5em;
+    border-bottom: none;
+	background:transparent url("../css/images/transLogosm-light.png") no-repeat center left scroll;
 }
 
 .header .fl-decapod-menu {
@@ -61,7 +91,7 @@ background-image: url(./images/background.gif);
     cursor: pointer;
 }
 
-.flc-capture .fl-col-mixed .fl-col-flex {
+.fl-capture .fl-col-mixed .fl-col-flex {
     margin-left:270px;
 }
 
@@ -89,6 +119,7 @@ background-image: url(./images/background.gif);
     background-image: url(./images/checkmark.png);
     background-repeat: no-repeat;
     background-position: 30% 50%;
+	z-index:100000;
 }
 
 
@@ -105,17 +136,12 @@ background-image: url(./images/background.gif);
     background-image: url(./images/info.png);
     background-repeat: no-repeat;
     background-position: 30% 50%;
-}
-
-.fl-theme-coal h1 {
-    margin-left: 2em;
-    border-bottom: none;
+	z-index:100000;
 }
 
 .fl-theme-coal .fl-grid {
     border: none;
     padding: 5px;
-    height: 610px;
     overflow: auto;
     background-color: #fff;
 
@@ -143,6 +169,7 @@ background-image: url(./images/background.gif);
     opacity         : 0.75;
     -moz-border-radius: 5px;
     border-radius: 5px;
+	z-index:100000;
 }
 
 .fl-reorderer-avatar img {
