@@ -4,8 +4,8 @@ body {
 	left:20px;
 	position:absolute;
 	right:30px;
-	top:2px;
-	-moz-box-shadow:10px 10px 9px #999999;
+	top:20px;
+	-moz-box-shadow:5px 5px 20px rgba(0,0,0,0.7);
 	min-width:850px;
 }
 
