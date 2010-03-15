@@ -27,8 +27,7 @@ class ImageController(object):
         """Handles the /images/ URL - a collection of sets of images.
 
         Supports getting the list of images (GET) and adding a new image to the
-        collection (POST). An option telling whether to use a camera can be
-        passed."""
+        collection (POST)."""
 
         method = cherrypy.request.method.upper()
         if method == "GET":
@@ -38,7 +37,6 @@ class ImageController(object):
 
         elif method == "POST":
             params = cherrypy.request.params
-            testingMode = params["testingMode"]
             ports, models = [None, None], [None, None]
             if "ports" in params and "models" in params:
                 ports, models = params["ports"], params["models"]
@@ -46,8 +44,8 @@ class ImageController(object):
             assert len(ports) >= 2
             assert len(models) >= 2
 
-            first_image = self.take_picture(testingMode, ports[0], models[0])
-            second_image = self.take_picture(testingMode, ports[1], models[1])
+            first_image = self.take_picture(ports[0], models[0])
+            second_image = self.take_picture(ports[1], models[1])
 
             cherrypy.response.headers["Content-type"] = "application/json"
             cherrypy.response.headers["Content-Disposition"] = "attachment; filename=Image%d.json" % len(self.images)
@@ -115,45 +113,33 @@ class ImageController(object):
                 cherrypy.response.headers["Allow"] = "GET, POST"
                 raise cherrypy.HTTPError(405)
 
-    def take_picture(self, testingMode=True, port=None, model=None):
+    def take_picture(self, port=None, model=None):
         """Capture an image and save it to disk.
 
         If the application is in testing mode, do not use a camera. Instead, get
         an image from the local filesytem."""
 
         path, filename = "testData/capturedImages/", ""
-        if testingMode.lower() != "true":
-            status = os.system("gphoto2 --capture-image --port=%s --camera='%s' 2>>capture.log" % (port, model))
-            if status != 0:
-                raise cherrypy.HTTPError(500, "Camera could not capture.")
+        status = os.system("gphoto2 --capture-image --port=%s --camera='%s' 2>>capture.log" % (port, model))
+        if status != 0:
+            raise cherrypy.HTTPError(500, "Camera could not capture.")
 
-            os.system("gphoto2 --list-files --port=%s --camera='%s' 2>>capture.log | tail -1 | grep '#[0-9]\{1,\}' -o >/tmp/output.tmp" % (port, model))
-            file = open("/tmp/output.tmp", "r")
-            content = file.read()
-            file_index = content.lstrip("#")
-            file.close()
-            os.chdir(path)
-            status = os.system("gphoto2 --get-file %d --force-overwrite --port=%s --camera='%s' 2>>../../capture.log | tail -1 >/tmp/output.tmp" % (int(file_index), port, model))
-            os.chdir("../..")
-            if status != 0:
-                raise cherrypy.HTTPError(500, "Could not transfer file.")
+        os.system("gphoto2 --list-files --port=%s --camera='%s' 2>>capture.log | tail -1 | grep '#[0-9]\{1,\}' -o >/tmp/output.tmp" % (port, model))
+        file = open("/tmp/output.tmp", "r")
+        content = file.read()
+        file_index = content.lstrip("#")
+        file.close()
+        os.chdir(path)
+        status = os.system("gphoto2 --get-file %d --force-overwrite --port=%s --camera='%s' 2>>../../capture.log | tail -1 >/tmp/output.tmp" % (int(file_index), port, model))
+        os.chdir("../..")
+        if status != 0:
+            raise cherrypy.HTTPError(500, "Could not transfer file.")
 
-            file = open("/tmp/output.tmp", "r")
-            content = file.read()
-            filename = path + content[content.rfind(" ") + 1 : len(content)].rstrip("\n")
-            file.close()
-        else:
-            filename = path + "Image" + `self.ind` + ".jpg"
-            self.ind = self.ind + 1
-            
-            files = glob.glob("testData/imageFeed/*")
-            files.sort()
-            file_count = len(files)
+        file = open("/tmp/output.tmp", "r")
+        content = file.read()
+        filename = path + content[content.rfind(" ") + 1 : len(content)].rstrip("\n")
+        file.close()
 
-            name_to_open = files[self.ind % file_count]
-            im = Image.open(name_to_open)
-            im.save(filename);
-        
         return filename
 
     def delete(self, index=None):

@@ -502,7 +502,6 @@ fluid_1_2 = fluid_1_2 || {};
             if (that.options.serverOn) {
                 // TODO Get ports and models from detected/supported cameras.
                 var params = {
-                    "testingMode": that.options.testingMode,
                     "ports": [], 
                     "models": []
                 };

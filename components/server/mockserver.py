@@ -37,7 +37,6 @@ class ImageController(object):
 
         elif method == "POST":
             params = cherrypy.request.params
-            testingMode = params["testingMode"]
             ports, models = [None, None], [None, None]
             if "ports" in params and "models" in params:
                 ports, models = params["ports"], params["models"]
@@ -45,8 +44,8 @@ class ImageController(object):
             assert len(ports) >= 2
             assert len(models) >= 2
 
-            first_image = self.take_picture(testingMode, ports[0], models[0])
-            second_image = self.take_picture(testingMode, ports[1], models[1])
+            first_image = self.take_picture(ports[0], models[0])
+            second_image = self.take_picture(ports[1], models[1])
 
             cherrypy.response.headers["Content-type"] = "application/json"
             cherrypy.response.headers["Content-Disposition"] = "attachment; filename=Image%d.json" % len(self.images)
@@ -114,7 +113,7 @@ class ImageController(object):
                 cherrypy.response.headers["Allow"] = "GET, POST"
                 raise cherrypy.HTTPError(405)
 
-    def take_picture(self, testingMode=True, port=None, model=None):
+    def take_picture(self, port=None, model=None):
         """Copies an image from an image feed folder to the captured images folder."""
 
         path, filename = "testData/capturedImages/", ""
