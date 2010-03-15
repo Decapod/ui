@@ -312,10 +312,6 @@ fluid_1_2 = fluid_1_2 || {};
             resizable: false,
             autoOpen: false,
             closeOnEscape: false,
-            width: 160,
-            height: 50,
-            minHeight: 50,
-            maxHeight: 50,
             dialogClass: 'fl-container-progress'
         };
         
@@ -344,69 +340,123 @@ fluid_1_2 = fluid_1_2 || {};
         that.locate("cameraDialog", document).dialog(cameraOptions);
     };
     
+    var invokePageOrderDialog = function (that) {
+        // TODO Implement page order dialog.
+    };
+    
     /**
      * Displays an informational dialog about detected cameras. Should provide
      * the user with the list of camera models and whether they are supported or
      * not.
      * 
      * @param {Object} that, the Capture component
-     * @param {Object} cameraList, a list of the cameras detected
      */
-    var invokeInitialDialog = function (that, cameraList) {
-        var supportedCameras = 0;
-        for (var camera in cameraList) {
-            if (camera.capture === true) {
-                supportedCameras++;
-            }
-        }
+    var invokeCameraDialog = function (that) {
+        var cameraDialog = that.locate("cameraDialog", document);
+        var cameraList = that.locate("cameraList", document);
+        var camerasElement = that.locate("cameraEntry", document);
+        cameraList.children().remove();
         
-        if (supportedCameras < 2) {
-            var cameraDialog = that.locate("cameraDialog", document);
-            // TODO: Add list of cameras to the dialog.
-            cameraDialog.dialog('option', 'buttons', {
-                "Try again": function () {
-                    $(this).dialog("close");
+        var i;
+        for (i = 0; i < that.detectedCameras.length; i++) {
+            var cameraSupported = "Not ";
+            if (that.detectedCameras[i].capture) {
+                cameraSupported = "";
+            }
+            
+            var textToInsert = [that.detectedCameras[i].model, "-", cameraSupported, "Supported"].join(" ");
+            var elementToInsert = $(camerasElement[0]).clone().text(textToInsert);            
+            cameraList.append(elementToInsert);
+        }
+                    
+        cameraDialog.dialog('option', 'buttons', {
+            "Close": function () {
+                $(this).dialog("close");
+            },
+            "Try again": function () {
+                $(this).dialog("close");
+                that.events.onBeginFirstCapture.fire();
+            }
+        });
+        cameraDialog.dialog("open");
+    };
+    
+    /**
+     * Issues a synchronious request to the server to detect the currently
+     * attached cameras. Stores the list returned in the component. Displays a
+     * "busy" progress indicator while waiting for the response and shows an
+     * error message upon failure.
+     * 
+     * If there is no server (the HTML file is loaded from the local
+     * filesystem), returns two supported cameras to allow for testing.
+     * 
+     * @param {Object} that, the Capture component
+     */
+    var detectCameras = function (that) {
+        var progressDialog = that.locate("progressDialog", document);
+        var progressMessage = that.locate("progressMessage", document);
+        progressMessage.text("Detecting cameras...");
+        progressDialog.dialog("open");
+        
+        if (that.options.serverOn) {
+            $.ajax({
+                url: [that.url, "/cameras/"].join(''),
+                type: "GET",
+                dataType: "json",
+                async: false,
+                
+                success: function (cameraList) {
+                    progressDialog.dialog("close");
+                    that.detectedCameras = cameraList;
                 },
-                "Close": function () {
-                    $(this).dialog("close");
+                
+                error: function () {
+                    progressDialog.dialog("close");
+                    showMessage(that, that.options.styles.errorMessage, "Error detecting cameras.");
                 }
             });
         } else {
-            // take picture with first two cameras
+            that.detectedCameras = [
+                {
+                    "model": "Dummy Camera 1",
+                    "port": "DummyPort1",
+                    "download": true,
+                    "capture": true
+                },
+                {
+                    "model": "Dummy Camera 2",
+                    "port": "DummyPort2",
+                    "download": true,
+                    "capture": true
+                }
+            ];
+            progressDialog.dialog("close");
         }
     };
     
     /**
-     * Binds listeners for the click events of the various buttons in the UI.
-     * 
-     * Adds a listener for the afterPictureTaken event. Should refresh the
-     * thumbnails displayed and select the last captured image.
+     * Binds listeners for the component events. These include picture taking
+     * and keyboard shortcuts.
      * 
      * @param {Object} that, the Capture component
      */
     var bindHandlers = function (that) {
         that.events.onBeginFirstCapture.addListener(function () {
-            var progressDialog = that.locate("progressDialog", document);
-            progressDialog.text("Detecting cameras...");
-            progressDialog.dialog("open");
-            
-            $.ajax({
-                url: that.url + "/cameras/",
-                type: "GET",
-                dataType: "json",
-                
-                success: function (cameraList) {
-                    invokeInitialDialog(that, cameraList);
-                },
-                
-                error: function () {
-                    showMessage(that, that.options.styles.errorMessage, "Error detecting cameras.");
-                },
-                
-                complete: function () {
-                    progressDialog.dialog("close");
+            detectCameras(that);
+            that.supportedCameras = [];
+            var i;
+            for (i = 0; i < that.detectedCameras.length; i++) {
+                if (that.detectedCameras[i].capture === true) {
+                    that.supportedCameras.push(that.detectedCameras[i]);
                 }
-            });
+            }
+            if (that.supportedCameras.length < 2) {
+                invokeCameraDialog(that);
+                return false;
+            } else {
+                invokePageOrderDialog(that);
+                return true;
+            }
         });
         
         that.events.afterPictureTaken.addListener(function (newItem) {
@@ -438,23 +488,25 @@ fluid_1_2 = fluid_1_2 || {};
         });
         
         that.locate("takePictureButton").click(function () {
-/*
             if (that.model.length === 0) {
-                that.events.onBeginFirstCapture.fire();
+                var prevent = that.events.onBeginFirstCapture.fire();
+                if (prevent === false) {
+                    return false;
+                }
             }
-*/
+            
+            var progressDialog = that.locate("progressDialog", document);
+            progressDialog.text("Taking picture...");
+            progressDialog.dialog("open");
             
             if (that.options.serverOn) {
-                var progressDialog = that.locate("progressDialog", document);
-                progressDialog.text("Taking picture...");
-                progressDialog.dialog("open");
-                
-                // TODO Get ports and models from detected cameras.
+                // TODO Get ports and models from detected/supported cameras.
                 var params = {
                     "testingMode": that.options.testingMode,
                     "ports": [], 
                     "models": []
                 };
+                
                 $.ajax({
                     url: that.url + "/images/",
                     type: "POST",
@@ -462,16 +514,14 @@ fluid_1_2 = fluid_1_2 || {};
                     dataType: "json",
                     
                     success: function (newItem) {
-                        that.events.afterPictureTaken.fire(newItem);
-                        showMessage(that, that.options.styles.successMessage, "Picture successfully taken.");
-                    },
-                    
-                    error: function (arg1, arg2, arg3) {
-                        showMessage(that, that.options.styles.errorMessage, "Error taking picture.");
-                    },
-                    
-                    complete: function () {
                         progressDialog.dialog("close");
+                        showMessage(that, that.options.styles.successMessage, "Picture successfully taken.");
+                        that.events.afterPictureTaken.fire(newItem);
+                    },
+                    
+                    error: function () {
+                        progressDialog.dialog("close");
+                        showMessage(that, that.options.styles.errorMessage, "Error taking picture.");
                     }
                 });
                     
@@ -485,6 +535,7 @@ fluid_1_2 = fluid_1_2 || {};
                 newItem.left = "../../server/testData/capturedImages/Image" + imageToShow + ".jpg";
                 newItem.right = "../../server/testData/capturedImages/Image" + imageToShow + "-thumb.jpg";
                 
+                progressDialog.dialog("close");
                 that.events.afterPictureTaken.fire(newItem);
             }
         });
@@ -581,11 +632,15 @@ fluid_1_2 = fluid_1_2 || {};
             imagePreview: ".flc-capture-image-preview",
             
             progressDialog: ".flc-capture-dialog-progress",
+            progressMessage: ".flc-capture-progress-content",
             confirmDialog: ".flc-capture-dialog-confirm",
             cameraDialog: ".flc-capture-dialog-cameras",
             message: ".flc-capture-message",
             noImageLabel: ".flc-capture-label-noImage",
-            emptyPlaceholder: ".flc-capture-thumbItem-empty"
+            emptyPlaceholder: ".flc-capture-thumbItem-empty",
+            
+            cameraList: ".flc-capture-list-cameras",
+            cameraEntry: ".flc-capture-entry-camera"
         },
         
         styles: {
