@@ -227,10 +227,6 @@ height: 100px;
     -moz-border-radius:11px 11px 0 0;
 }
 
-/*.fl-theme-coal .fl-reorderer-movable-selected {
-    outline: 5px solid #6dacc6;
-}*/
-
 .flc-capture-label-index {
     display: block;
     float: left;
@@ -256,8 +252,8 @@ height: 100px;
 }
 
 .fl-theme-coal .fl-reorderer-dropMarker {
-    width: 200px;
-    height: 2px;
+    background-color:#6E9F62 !important;
+	height:2px !important;
 }
 
 .flc-capture-image-preview {
