@@ -81,9 +81,8 @@ fluid_1_2 = fluid_1_2 || {};
      */
     var deleteHandler = function (that, itemIndex) {
         if (that.options.serverOn) {
-            // TODO Load the server URL from a config file.
             $.ajax({
-                url: "http://localhost:8080/images/" + itemIndex,
+                url: that.url + "/images/" + itemIndex,
                 type: "DELETE"
             });
         }
@@ -294,6 +293,15 @@ fluid_1_2 = fluid_1_2 || {};
                         that.model = reorderModel(that.model, index, oldIndex);
                         refreshIndices(that);
                     }
+
+                    $.ajax({
+                        url: that.url + "/images/",
+                        type: "PUT",
+                        data: {
+                    	    images: JSON.stringify(that.model)
+                        }
+                    });
+
                 }
             }
         };

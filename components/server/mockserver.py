@@ -27,8 +27,8 @@ class ImageController(object):
 
         Supports getting the list of images (GET) and adding a new image to the
         collection (POST). An option telling whether to use a camera can be
-        passed."""
-
+        passed. Also supports changing the list of images (PUT)"""
+        print(self.images)
         method = cherrypy.request.method.upper()
         if method == "GET":
             cherrypy.response.headers["Content-Type"] = "application/json"
@@ -52,8 +52,14 @@ class ImageController(object):
             model_entry = {"left": first_image, "right": second_image}
             self.images.append(model_entry)
             return json.dumps(model_entry)
+
+        elif method == "PUT":
+            params = cherrypy.request.params
+            self.images = json.loads(params["images"])
+            return params["images"]
+
         else:
-            cherrypy.response.headers["Allow"] = "GET, POST"
+            cherrypy.response.headers["Allow"] = "GET, POST, PUT"
             raise cherrypy.HTTPError(405)
 
     @cherrypy.expose
