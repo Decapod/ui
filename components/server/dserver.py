@@ -12,6 +12,9 @@ import simplejson as json
 import sys
 from PIL import Image
 
+imageIndex = 0
+
+
 class ImageController(object):
     """Main class for manipulating images.
 
@@ -20,7 +23,6 @@ class ImageController(object):
     of images represented by a JSON file of their attributes."""
 
     images = []
-    ind = 0
 
     @cherrypy.expose
     def index(self, *args, **kwargs):
@@ -36,16 +38,17 @@ class ImageController(object):
             return json.dumps(self.images)
 
         elif method == "POST":
+
+            # TODO: remove the ports and models param lookup, and assertions.
             params = cherrypy.request.params
             ports, models = [None, None], [None, None]
             if "ports" in params and "models" in params:
                 ports, models = params["ports"], params["models"]
-
             assert len(ports) >= 2
             assert len(models) >= 2
 
-            first_image = self.take_picture(ports[0], models[0])
-            second_image = self.take_picture(ports[1], models[1])
+            first_image  = self.take_picture(found_cameras[0]["port"], found_cameras[0]["model"])
+            second_image = self.take_picture(found_cameras[1]["port"], found_cameras[1]["model"])
 
             cherrypy.response.headers["Content-type"] = "application/json"
             cherrypy.response.headers["Content-Disposition"] = "attachment; filename=Image%d.json" % len(self.images)
@@ -97,7 +100,11 @@ class ImageController(object):
 
                 path = self.images[index][state]
                 cherrypy.response.headers["Content-type"] = "image/jpeg"
-                file = open(path)
+                try:
+                    file = open(path)
+                except IOError:
+                    raise cherrypy.HTTPError(404, "Image path can not be opened")
+                    
                 content = file.read()
                 file.close()
                 return content
@@ -125,28 +132,41 @@ class ImageController(object):
         If the application is in testing mode, do not use a camera. Instead, get
         an image from the local filesytem."""
 
-        path, filename = "testData/capturedImages/", ""
-        status = os.system("gphoto2 --capture-image --port=%s --camera='%s' 2>>capture.log" % (port, model))
+
+        # Filename and directory declarations.
+        captureFilename = 'newDecapodCapture.jpg'
+        decapodImagePrefix = 'decapod'
+        targetPath = "testData/capturedImages" #TODO: change to a better path
+
+
+        # Check save path for images.
+        # TODO: move this to server initialization so it's only done once
+        # TODO: change the save location for files, and change the code that is depends on the directory being testdata/capturedImages/
+        if not os.access (targetPath,os.F_OK) and os.access ("./",os.W_OK):
+            status = os.system("mkdir %s" % targetPath)
+            if status !=0:
+                raise cherrypy.HTTPError(403, "Could not create path %s." % targetPath)
+        elif not os.access ("./",os.W_OK):
+            raise cherrypy.HTTPError(403, "Can not write to directory")
+
+        status = os.system("gphoto2 --capture-image-and-download --force-overwrite --port=%s --camera='%s' --filename=%s 2>>capture.log" % (port, model,captureFilename))
         if status != 0:
             raise cherrypy.HTTPError(500, "Camera could not capture.")
+        
+        # create new filename for image.
+        # TODO: Move filename generation to a new function.
+        global imageIndex
+        imageIndex += 1
+        
+        #TODO: change newFilename = '%s-%04d.jpg' % (decapodImagePrefix,imageIndex)
+        newFilename = 'Image%d.jpg' % imageIndex
 
-        os.system("gphoto2 --list-files --port=%s --camera='%s' 2>>capture.log | tail -1 | grep '#[0-9]\{1,\}' -o >/tmp/output.tmp" % (port, model))
-        file = open("/tmp/output.tmp", "r")
-        content = file.read()
-        file_index = content.lstrip("#")
-        file.close()
-        os.chdir(path)
-        status = os.system("gphoto2 --get-file %d --force-overwrite --port=%s --camera='%s' 2>>../../capture.log | tail -1 >/tmp/output.tmp" % (int(file_index), port, model))
-        os.chdir("../..")
+        status = os.system("mv -f %s %s/%s" % (captureFilename,targetPath,newFilename))
         if status != 0:
-            raise cherrypy.HTTPError(500, "Could not transfer file.")
+            raise cherrypy.HTTPError(500, "Could not rename file %s to %s/%s" % (captureFilename,targetPath,newFilename))
 
-        file = open("/tmp/output.tmp", "r")
-        content = file.read()
-        filename = path + content[content.rfind(" ") + 1 : len(content)].rstrip("\n")
-        file.close()
-
-        return filename
+        newFilePath = '%s/%s' % (targetPath,newFilename)
+        return newFilePath
 
     def delete(self, index=None):
         """Delete an image from the list of images and from the file system."""
@@ -180,11 +200,12 @@ class DecapodServer(object):
 
         Returns a JSON document, describing the camera and its capabilities:
         model, port, download support, and capture support."""
+        global found_cameras
 
-        cameras = []
+        found_cameras = []
         status = os.system("gphoto2 --auto-detect | grep '^Model\|^-' -v >/tmp/output.tmp")
         if status != 0:
-            return json.dumps(cameras)
+            return json.dumps(found_cameras)
 
         file = open("/tmp/output.tmp")
         for line in file:
@@ -206,12 +227,14 @@ class DecapodServer(object):
                 download = (status != 0)
 
             camera = {"model": model, "port": port, "capture": capture, "download": download}
-            cameras.append(camera)
+            found_cameras.append(camera)
+
+
         file.close()
 
         cherrypy.response.headers["Content-type"] = "application/json"
-        cherrypy.response.headers["Content-Disposition"] = "attachment; filename=Cameras.json"
-        return json.dumps(cameras)
+        cherrypy.response.headers["Content-Disposition"] = "attachment; filename=found_cameras.json"
+        return json.dumps(found_cameras)
 
 if __name__ == "__main__":
     root = DecapodServer()
