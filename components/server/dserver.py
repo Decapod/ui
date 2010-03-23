@@ -200,7 +200,8 @@ class Export(object):
         elif method == "POST":
 
             #TODO: make export asynchronous and abstracted from server.
-            status = os.system("mogrify -path %s -format tiff %s/*.jpg" % (exportPdfPath,imagePath))
+            #TODO: change new filename FLUID-3538
+            status = os.system("mogrify -path %s -format tiff %s/Image*[0123456789].jpg" % (exportPdfPath,imagePath))
             if status !=0:
                 raise cherrypy.HTTPError(500, "Could not create path %s." % exportPdfPath)
 
@@ -208,7 +209,7 @@ class Export(object):
             if status !=0:
                 raise cherrypy.HTTPError(500, "Could not generate tiff")
 
-            status = os.system("runPipeLine.py -b %s/multi.tiff -d %s/tmpdir -p %s/DecapodExport.pdf" % (exportPdfPath, exportPdfPath, exportPdfPath)) 
+            status = os.system("runPipeLine.py -t 0 -b %s/multi-page.tiff -d %s/tmpdir -p %s/DecapodExport.pdf" % (exportPdfPath, exportPdfPath, exportPdfPath)) 
             #TODO: give a better export PDF filename
             if status !=0:
                 raise cherrypy.HTTPError(500, "Could not create PDF." )
