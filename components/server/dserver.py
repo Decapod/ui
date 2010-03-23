@@ -13,7 +13,7 @@ import sys
 from PIL import Image
 
 imageIndex = 0
-
+imagePath = "testData/capturedImages" #TODO: change to a better path FLUID-3538
 
 class ImageController(object):
     """Main class for manipulating images.
@@ -44,6 +44,7 @@ class ImageController(object):
             ports, models = [None, None], [None, None]
             if "ports" in params and "models" in params:
                 ports, models = params["ports"], params["models"]
+            
             assert len(ports) >= 2
             assert len(models) >= 2
 
@@ -126,16 +127,14 @@ class ImageController(object):
         # Filename and directory declarations.
         captureFilename = 'newDecapodCapture.jpg'
         decapodImagePrefix = 'decapod'
-        targetPath = "testData/capturedImages" #TODO: change to a better path FLUID-3538
-
-
+        
         # Check save path for images.
         # TODO: move this to server initialization so it's only done once (FLUID-3537)
         # TODO: change the save location for files, and change the code that is depends on the directory being testdata/capturedImages/
-        if not os.access (targetPath,os.F_OK) and os.access ("./",os.W_OK):
-            status = os.system("mkdir %s" % targetPath)
+        if not os.access (imagePath,os.F_OK) and os.access ("./",os.W_OK):
+            status = os.system("mkdir %s" % imagePath)
             if status !=0:
-                raise cherrypy.HTTPError(403, "Could not create path %s." % targetPath)
+                raise cherrypy.HTTPError(403, "Could not create path %s." % imagePath)
         elif not os.access ("./",os.W_OK):
             raise cherrypy.HTTPError(403, "Can not write to directory")
 
@@ -151,11 +150,11 @@ class ImageController(object):
         #TODO: change newFilename = '%s-%04d.jpg' % (decapodImagePrefix,imageIndex) FLUID-3538
         newFilename = 'Image%d.jpg' % imageIndex
 
-        status = os.system("mv -f %s %s/%s" % (captureFilename,targetPath,newFilename))
+        status = os.system("mv -f %s %s/%s" % (captureFilename,imagePath,newFilename))
         if status != 0:
-            raise cherrypy.HTTPError(500, "Could not rename file %s to %s/%s" % (captureFilename,targetPath,newFilename))
+            raise cherrypy.HTTPError(500, "Could not rename file %s to %s/%s" % (captureFilename,imagePath,newFilename))
 
-        newFilePath = '%s/%s' % (targetPath,newFilename)
+        newFilePath = '%s/%s' % (imagePath,newFilename)
         return newFilePath
 
     def delete(self, index=None):
@@ -176,6 +175,48 @@ class ImageController(object):
         model_entry["thumb"] = thumbName
         return model_entry["thumb"]
         
+class Export(object):
+
+    @cherrypy.expose
+    def default(self, name=None):
+        exportPdfPath = "pdf"
+
+        # Check save path for images.
+        # TODO: move this to server initialization so it's only done once (FLUID-3537)
+        if not os.access (exportPdfPath,os.F_OK) and os.access ("./",os.W_OK):
+            status = os.system("mkdir %s" % exportPdfPath)
+            if status !=0:
+                raise cherrypy.HTTPError(403, "Could not create path %s." % exportPdfPath)
+        elif not os.access ("./",os.W_OK):
+            raise cherrypy.HTTPError(403, "Can not write to directory")
+
+
+        method = cherrypy.request.method.upper()
+        if method == "GET":
+            file = open(exportPdfPath + name)
+            content = file.read()
+            file.close()
+            return content
+        elif method == "POST":
+
+            #TODO: make export asynchronous and abstracted from server.
+            status = os.system("mogrify -path %s -format tiff %s/*.jpg" % (exportPdfPath,imagePath))
+            if status !=0:
+                raise cherrypy.HTTPError(500, "Could not create path %s." % exportPdfPath)
+
+            status = os.system("tiffcp %s/*.tiff %s/multi-page.tiff" % (exportPdfPath, exportPdfPath))
+            if status !=0:
+                raise cherrypy.HTTPError(500, "Could not generate tiff")
+
+            status = os.system("runPipeLine.py -b %s/multi.tiff -d %s/tmpdir -p %s/DecapodExport.pdf" % (exportPdfPath, exportPdfPath, exportPdfPath)) 
+            #TODO: give a better export PDF filename
+            if status !=0:
+                raise cherrypy.HTTPError(500, "Could not create PDF." )
+
+            return exportPdfPath + "/DecapodExport.pdf" 
+        else:
+            cherrypy.response.headers["Allow"] = "GET, POST"
+            raise cherrypy.HTTPError(405)
 
 class DecapodServer(object):
     """Main class for the Decapod server.
@@ -240,4 +281,5 @@ class DecapodServer(object):
 if __name__ == "__main__":
     root = DecapodServer()
     root.images = ImageController()
+    root.pdf = Export()
     cherrypy.quickstart(root, "/", "dserver.conf")

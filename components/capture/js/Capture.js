@@ -494,6 +494,14 @@ fluid_1_2 = fluid_1_2 || {};
                 });
         });
         
+        that.locate("exportButton").click(function () {
+        	$.ajax({
+        		url: that.url + "/pdf/",
+        		type: "POST"
+        	});
+        		
+        });
+        
         that.locate("takePictureButton").click(function () {
             if (that.model.length === 0) {
                 var prevent = that.events.onBeginFirstCapture.fire();
