@@ -53,6 +53,9 @@ class ImageController(object):
             cherrypy.response.headers["Content-type"] = "application/json"
             cherrypy.response.headers["Content-Disposition"] = "attachment; filename=Image%d.json" % len(self.images)
             model_entry = {"left": first_image, "right": second_image}
+
+            #TODO: add stitching of images FLUID-3539
+            self.generateThumbnail(model_entry)
             self.images.append(model_entry)
             return json.dumps(model_entry)
 
@@ -109,21 +112,8 @@ class ImageController(object):
                 file.close()
                 return content
 
-            elif method == "POST":
-                if state.lower() == "processed":
-                    #TODO Run crop & stitch process here instead of generating a thumbnail
-                    size = 150, 100
-                    filename = self.images[index]["left"]
-                    im = Image.open(filename)
-                    im.thumbnail(size, Image.ANTIALIAS)
-                    thumbname = filename + "-thumb.jpg"
-                    im.save(thumbname)
-                    self.images[index]["thumb"] = thumbname
-                    cherrypy.response.headers["Content-Type"] = "application/json"
-                    return json.dumps(self.images[index])
-
             else:
-                cherrypy.response.headers["Allow"] = "GET, POST"
+                cherrypy.response.headers["Allow"] = "GET"
                 raise cherrypy.HTTPError(405)
 
     def take_picture(self, port=None, model=None):
@@ -136,11 +126,11 @@ class ImageController(object):
         # Filename and directory declarations.
         captureFilename = 'newDecapodCapture.jpg'
         decapodImagePrefix = 'decapod'
-        targetPath = "testData/capturedImages" #TODO: change to a better path
+        targetPath = "testData/capturedImages" #TODO: change to a better path FLUID-3538
 
 
         # Check save path for images.
-        # TODO: move this to server initialization so it's only done once
+        # TODO: move this to server initialization so it's only done once (FLUID-3537)
         # TODO: change the save location for files, and change the code that is depends on the directory being testdata/capturedImages/
         if not os.access (targetPath,os.F_OK) and os.access ("./",os.W_OK):
             status = os.system("mkdir %s" % targetPath)
@@ -154,11 +144,11 @@ class ImageController(object):
             raise cherrypy.HTTPError(500, "Camera could not capture.")
         
         # create new filename for image.
-        # TODO: Move filename generation to a new function.
+        # TODO: Move filename generation to a new function. FLUID-3538
         global imageIndex
         imageIndex += 1
         
-        #TODO: change newFilename = '%s-%04d.jpg' % (decapodImagePrefix,imageIndex)
+        #TODO: change newFilename = '%s-%04d.jpg' % (decapodImagePrefix,imageIndex) FLUID-3538
         newFilename = 'Image%d.jpg' % imageIndex
 
         status = os.system("mv -f %s %s/%s" % (captureFilename,targetPath,newFilename))
@@ -175,6 +165,17 @@ class ImageController(object):
             os.unlink(filename)
         self.images.pop(index)
         return
+
+    def generateThumbnail (self, model_entry):
+        size = 75, 100
+        filename = model_entry["left"] # TODO: change to use the combined / stitched image instead.
+        im = Image.open(filename)
+        im.thumbnail(size, Image.ANTIALIAS)
+        thumbName = filename + "-thumb.jpg"
+        im.save(thumbName)
+        model_entry["thumb"] = thumbName
+        return model_entry["thumb"]
+        
 
 class DecapodServer(object):
     """Main class for the Decapod server.

@@ -50,6 +50,9 @@ class ImageController(object):
             cherrypy.response.headers["Content-type"] = "application/json"
             cherrypy.response.headers["Content-Disposition"] = "attachment; filename=Image%d.json" % len(self.images)
             model_entry = {"left": first_image, "right": second_image}
+
+            #TODO: add stitching of images FLUID-3539
+            self.generateThumbnail(model_entry)
             self.images.append(model_entry)
             return json.dumps(model_entry)
 
@@ -102,21 +105,8 @@ class ImageController(object):
                 file.close()
                 return content
 
-            elif method == "POST":
-                if state.lower() == "processed":
-                    #TODO Run crop & stitch process here instead of generating a thumbnail
-                    size = 150, 100
-                    filename = self.images[index]["left"]
-                    im = Image.open(filename)
-                    im.thumbnail(size, Image.ANTIALIAS)
-                    thumbname = filename + "-thumb.jpg"
-                    im.save(thumbname)
-                    self.images[index]["thumb"] = thumbname
-                    cherrypy.response.headers["Content-Type"] = "application/json"
-                    return json.dumps(self.images[index])
-
             else:
-                cherrypy.response.headers["Allow"] = "GET, POST"
+                cherrypy.response.headers["Allow"] = "GET"
                 raise cherrypy.HTTPError(405)
 
     def take_picture(self, port=None, model=None):
@@ -144,6 +134,17 @@ class ImageController(object):
             os.unlink(filename)
         self.images.pop(index)
         return
+
+    def generateThumbnail (self, model_entry):
+        size = 75, 100
+        filename = model_entry["left"] # TODO: change to use the combined / stitched image instead.
+        im = Image.open(filename)
+        im.thumbnail(size, Image.ANTIALIAS)
+        thumbName = filename + "-thumb.jpg"
+        im.save(thumbName)
+        model_entry["thumb"] = thumbName
+        return model_entry["thumb"]
+
 
 class MockServer(object):
     """Main class for the mock server.

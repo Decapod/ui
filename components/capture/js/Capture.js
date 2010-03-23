@@ -480,9 +480,8 @@ fluid_1_2 = fluid_1_2 || {};
             var labelText = [2 * that.model.length - 1, "-", 2 * that.model.length];
             that.locate('itemIndex', clone).text(labelText.join(''));
             
-            // TODO Use thumbnail of stitched image instead of right image.
             var image = that.locate("thumbImage", clone);
-            $(image).attr('src', newItem.right);
+            $(image).attr('src', newItem.thumb);
            
             that.locate("imageReorderer").append(clone);
             
