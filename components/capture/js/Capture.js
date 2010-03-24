@@ -497,7 +497,10 @@ fluid_1_2 = fluid_1_2 || {};
         that.locate("exportButton").click(function () {
         	$.ajax({
         		url: that.url + "/pdf/",
-        		type: "POST"
+        		type: "POST",
+                        data: {
+                            images: JSON.stringify(that.model)
+                        }
         	});
         		
         });

@@ -178,7 +178,7 @@ class ImageController(object):
 class Export(object):
 
     @cherrypy.expose
-    def default(self, name=None):
+    def default(self, name=None, images=[]):
         exportPdfPath = "pdf"
 
         # Check save path for images.
@@ -198,10 +198,18 @@ class Export(object):
             file.close()
             return content
         elif method == "POST":
+            images = json.loads(cherrypy.request.params["images"])
+            fileStr = ''
+            for img in images:
+                fileStr += '%s %s ' % (img['left'], img['right'])
 
             #TODO: make export asynchronous and abstracted from server.
             #TODO: change new filename FLUID-3538
-            status = os.system("mogrify -path %s -format tiff %s/Image*[0123456789].jpg" % (exportPdfPath,imagePath))
+            # hard coding the clean up of the pdf directory because a bug here can do some damage 
+            # this will be removed post 0.3 when the implementation details of pdf generation are abstracted from CherryPY
+            os.system("rm -rf pdf/tmpdir")
+            os.system("rm pdf/*")
+            status = os.system("mogrify -path %s -format tiff %s" % (exportPdfPath, fileStr))
             if status !=0:
                 raise cherrypy.HTTPError(500, "Could not create path %s." % exportPdfPath)
 
@@ -209,7 +217,7 @@ class Export(object):
             if status !=0:
                 raise cherrypy.HTTPError(500, "Could not generate tiff")
 
-            status = os.system("runPipeLine.py -t 0 -b %s/multi-page.tiff -d %s/tmpdir -p %s/DecapodExport.pdf" % (exportPdfPath, exportPdfPath, exportPdfPath)) 
+            status = os.system("decapod-genpdf.py -d %s/tmpdir -p %s/DecapodExport.pdf -b %s/multi-page.tiff -v 1" % (exportPdfPath, exportPdfPath, exportPdfPath)) 
             #TODO: give a better export PDF filename
             if status !=0:
                 raise cherrypy.HTTPError(500, "Could not create PDF." )
