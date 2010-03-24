@@ -56,7 +56,10 @@ class ImageController(object):
             model_entry = {"left": first_image, "right": second_image}
 
             #TODO: add stitching of images FLUID-3539
-            self.generateThumbnail(model_entry)
+            
+            model_entry["spread"] = self.stitchImages (first_image, second_image)
+            model_entry["thumb"]  = self.generateThumbnail(model_entry["spread"])
+
             self.images.append(model_entry)
             return json.dumps(model_entry)
 
@@ -165,7 +168,16 @@ class ImageController(object):
         self.images.pop(index)
         return
 
-    def generateThumbnail (self, model_entry):
+    def generateThumbnail (self, filepath):
+        size = 100, 146
+        im = Image.open(filepath)
+        im.thumbnail(size, Image.ANTIALIAS)
+        thumbnailPath = filepath[:-4] + "-thumb.jpg"
+        im.save(thumbnailPath)
+        return thumbnailPath
+
+
+    """def generateThumbnail (self, model_entry):
         size = 75, 100
         filename = model_entry["left"] # TODO: change to use the combined / stitched image instead.
         im = Image.open(filename)
@@ -173,7 +185,20 @@ class ImageController(object):
         thumbName = filename + "-thumb.jpg"
         im.save(thumbName)
         model_entry["thumb"] = thumbName
-        return model_entry["thumb"]
+        return model_entry["thumb"]"""
+
+    def stitchImages (self, image_one, image_two):
+        stitchFilename = image_one.split('/').pop()
+        stitchFilename = stitchFilename[:-4] + "-" +image_two.split('/').pop()
+        stitchFilepath = imagePath + "/" + stitchFilename[:-4] + ".png"
+
+        #Image Magick implementation
+        #os.system ("convert %s %s +append %s" % (image_one, image_two, stitchFilepath))
+
+        #Decapod implementation
+        os.system ("decapod-stitching %s %s -o %s" % (image_one, image_two, stitchFilepath))
+
+        return stitchFilepath
         
 class Export(object):
 
