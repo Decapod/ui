@@ -226,4 +226,5 @@ class MockServer(object):
 if __name__ == "__main__":
     root = MockServer()
     root.images = ImageController()
+    root.pdf = Export()
     cherrypy.quickstart(root, "/", "dserver.conf")
