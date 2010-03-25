@@ -192,7 +192,7 @@ fluid_1_2 = fluid_1_2 || {};
                         },
                         {
                             ID: "image",
-                            target: object.right
+                            target: object.spread
                         },
                         {
                             ID: "deleteButton",
@@ -278,7 +278,7 @@ fluid_1_2 = fluid_1_2 || {};
                     
                     // TODO Use stitched image instead of left image
                     if (that.model.length !== 0) {
-                        imagePreview.attr("src", that.model[itemIndex].left);
+                        imagePreview.attr("src", that.model[itemIndex].spread);
                     }
                     
                     updateElementStates(that);

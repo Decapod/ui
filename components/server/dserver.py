@@ -55,8 +55,8 @@ class ImageController(object):
             cherrypy.response.headers["Content-Disposition"] = "attachment; filename=Image%d.json" % len(self.images)
             model_entry = {"left": first_image, "right": second_image}
 
-            #TODO: add stitching of images FLUID-3539
-            
+            #TODO: add page order correction.            
+
             model_entry["spread"] = self.stitchImages (first_image, second_image)
             model_entry["thumb"]  = self.generateThumbnail(model_entry["spread"])
 
@@ -175,17 +175,6 @@ class ImageController(object):
         thumbnailPath = filepath[:-4] + "-thumb.jpg"
         im.save(thumbnailPath)
         return thumbnailPath
-
-
-    """def generateThumbnail (self, model_entry):
-        size = 75, 100
-        filename = model_entry["left"] # TODO: change to use the combined / stitched image instead.
-        im = Image.open(filename)
-        im.thumbnail(size, Image.ANTIALIAS)
-        thumbName = filename + "-thumb.jpg"
-        im.save(thumbName)
-        model_entry["thumb"] = thumbName
-        return model_entry["thumb"]"""
 
     def stitchImages (self, image_one, image_two):
         stitchFilename = image_one.split('/').pop()
