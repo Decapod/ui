@@ -11,6 +11,9 @@ import simplejson as json
 import sys
 from PIL import Image
 
+imageIndex = 0
+imagePath = "testData/capturedImages" #TODO: change to a better path FLUID-3538
+
 class ImageController(object):
     """Main class for manipulating images.
 
@@ -19,7 +22,6 @@ class ImageController(object):
     of images represented by a JSON file of their attributes."""
 
     images = []
-    ind = 0
 
     @cherrypy.expose
     def index(self, *args, **kwargs):
@@ -44,15 +46,18 @@ class ImageController(object):
             assert len(ports) >= 2
             assert len(models) >= 2
 
-            first_image = self.take_picture(ports[0], models[0])
-            second_image = self.take_picture(ports[1], models[1])
+            first_image  = self.take_picture()
+            second_image = self.take_picture()
 
             cherrypy.response.headers["Content-type"] = "application/json"
             cherrypy.response.headers["Content-Disposition"] = "attachment; filename=Image%d.json" % len(self.images)
             model_entry = {"left": first_image, "right": second_image}
 
-            #TODO: add stitching of images FLUID-3539
-            self.generateThumbnail(model_entry)
+            #TODO: add page order correction.            
+
+            model_entry["spread"] = self.stitchImages (first_image, second_image)
+            model_entry["thumb"]  = self.generateThumbnail(model_entry["spread"])
+
             self.images.append(model_entry)
             return json.dumps(model_entry)
 
@@ -111,17 +116,17 @@ class ImageController(object):
 
     def take_picture(self, port=None, model=None):
         """Copies an image from an image feed folder to the captured images folder."""
-
+        global imageIndex
         path, filename = "testData/capturedImages/", ""
 
-        filename = path + "Image" + `self.ind` + ".jpg"
-        self.ind = self.ind + 1
+        filename = '%sImage%d.jpg' % (path, imageIndex)
+        imageIndex = imageIndex + 1
             
         files = glob.glob("testData/imageFeed/*")
         files.sort()
         file_count = len(files)
 
-        name_to_open = files[self.ind % file_count]
+        name_to_open = files[imageIndex % file_count]
         im = Image.open(name_to_open)
         im.save(filename);
         
@@ -135,16 +140,56 @@ class ImageController(object):
         self.images.pop(index)
         return
 
-    def generateThumbnail (self, model_entry):
-        size = 75, 100
-        filename = model_entry["left"] # TODO: change to use the combined / stitched image instead.
-        im = Image.open(filename)
+    def generateThumbnail (self, filepath):
+        size = 100, 146
+        im = Image.open(filepath)
         im.thumbnail(size, Image.ANTIALIAS)
-        thumbName = filename + "-thumb.jpg"
-        im.save(thumbName)
-        model_entry["thumb"] = thumbName
-        return model_entry["thumb"]
+        thumbnailPath = filepath[:-4] + "-thumb.jpg"
+        im.save(thumbnailPath)
+        return thumbnailPath
 
+    def stitchImages (self, image_one, image_two):
+        stitchFilename = image_one.split('/').pop()
+        stitchFilename = stitchFilename[:-4] + "-" +image_two.split('/').pop()
+        stitchFilepath = imagePath + "/" + stitchFilename[:-4] + ".png"
+
+        #Image Magick implementation
+        #os.system ("convert %s %s +append %s" % (image_one, image_two, stitchFilepath))
+
+        #Decapod implementation
+        os.system ("decapod-stitching %s %s -o %s" % (image_one, image_two, stitchFilepath))
+
+        return stitchFilepath
+        
+class Export(object):
+
+    @cherrypy.expose
+    def default(self, name=None, images=[]):
+        exportPdfPath = "pdf"
+
+        # Check save path for images.
+        # TODO: move this to server initialization so it's only done once (FLUID-3537)
+        if not os.access (exportPdfPath,os.F_OK) and os.access ("./",os.W_OK):
+            status = os.system("mkdir %s" % exportPdfPath)
+            if status !=0:
+                raise cherrypy.HTTPError(403, "Could not create path %s." % exportPdfPath)
+        elif not os.access ("./",os.W_OK):
+            raise cherrypy.HTTPError(403, "Can not write to directory")
+
+
+        method = cherrypy.request.method.upper()
+        if method == "GET":
+            file = open(exportPdfPath + name)
+            content = file.read()
+            file.close()
+            return content
+        elif method == "POST":
+            # The mockserver does not actually generate the pdf
+
+            return exportPdfPath + "/DecapodExport.pdf" 
+        else:
+            cherrypy.response.headers["Allow"] = "GET, POST"
+            raise cherrypy.HTTPError(405)
 
 class MockServer(object):
     """Main class for the mock server.
