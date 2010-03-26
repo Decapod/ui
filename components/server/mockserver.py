@@ -157,7 +157,7 @@ class ImageController(object):
         #os.system ("convert %s %s +append %s" % (image_one, image_two, stitchFilepath))
 
         #Decapod implementation
-        os.system ("decapod-stitching %s %s -o %s" % (image_one, image_two, stitchFilepath))
+        os.system ("decapod-stitching -R rr %s %s -o %s" % (image_one, image_two, stitchFilepath))
 
         return stitchFilepath
         
