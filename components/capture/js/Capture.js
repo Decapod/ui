@@ -192,7 +192,7 @@ fluid_1_2 = fluid_1_2 || {};
                         },
                         {
                             ID: "image",
-                            target: object.spread
+                            target: object.thumb
                         },
                         {
                             ID: "deleteButton",
