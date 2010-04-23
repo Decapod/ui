@@ -5,15 +5,18 @@
         <title>Decapod Capture Tests</title>
         
         <!-- Required stylesheets for testing the Capture component. -->
-        <link rel="Stylesheet" media="screen" href="../../../infusion/src/webapp/tests/lib/qunit/css/testsuite.css" />
+        <link rel="Stylesheet" media="screen" href="../../../infusion/src/webapp/tests/lib/qunit/css/qunit.css" />
         <link rel="stylesheet" type="text/css" href="../../../components/capture/css/Capture.css" />
         
         <!-- Required JavaScript modules for testing the Capture component. -->
         <!-- jQuery -->
         <script src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
-        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.core.js"></script>
-        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.draggable.js"></script>
-        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/ui.dialog.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.core.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.widget.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.mouse.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.position.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.draggable.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.dialog.js"></script>
         <script src="../../../infusion/src/webapp/lib/jquery/plugins/delegate/js/jquery.delegate.js"></script>
         <script src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
         
@@ -33,7 +36,7 @@
         <script src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
         
         <!-- jqUnit -->
-        <script src="../../../infusion/src/webapp/tests/lib/qunit/js/testrunner.js"></script>
+        <script src="../../../infusion/src/webapp/tests/lib/qunit/js/qunit.js"></script>
         <script src="../../../infusion/src/webapp/tests/test-core/jqUnit/js/jqUnit.js"></script>
         
         <!-- Tests and tested component -->
@@ -43,10 +46,10 @@
     </head>
     <body>
         <!-- Markup that jqUnit will look for when running tests and displaying the results. -->
-        <h1 id="header">Decapod Capture Test Suite</h1>
-        <h2 id="banner"></h2>
-        <h2 id="userAgent"></h2>
-        <ol id="tests"></ol>
+        <h1 id="qunit-header">Decapod Capture Test Suite</h1>
+        <h2 id="qunit-banner"></h2>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
         <div id="main"></div>
     </body>
 </html>
