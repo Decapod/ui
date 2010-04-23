@@ -26,24 +26,24 @@ https://source.fluidproject.org/svn/LICENSE.txt
         var options = {
             thumbs: [
                 {
-                    left: "../../../components/server/testData/capturedImages/Image0.jpg",
-                    right: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
+                    spread: "../../../components/server/testData/capturedImages/Image0.jpg",
+                    thumb: "../../../components/server/testData/capturedImages/Image0-thumb.jpg"
                 },
                 {
-                    left: "../../../components/server/testData/capturedImages/Image1.jpg",
-                    right: "../../../components/server/testData/capturedImages/Image1-thumb.jpg"
+                    spread: "../../../components/server/testData/capturedImages/Image1.jpg",
+                    thumb: "../../../components/server/testData/capturedImages/Image1-thumb.jpg"
                 },
                 {
-                    left: "../../../components/server/testData/capturedImages/Image2.jpg",
-                    right: "../../../components/server/testData/capturedImages/Image2-thumb.jpg"
+                    spread: "../../../components/server/testData/capturedImages/Image2.jpg",
+                    thumb: "../../../components/server/testData/capturedImages/Image2-thumb.jpg"
                 },
                 {
-                    left: "../../../components/server/testData/capturedImages/Image3.jpg",
-                    right: "../../../components/server/testData/capturedImages/Image3-thumb.jpg"
+                    spread: "../../../components/server/testData/capturedImages/Image3.jpg",
+                    thumb: "../../../components/server/testData/capturedImages/Image3-thumb.jpg"
                 },
                 {
-                    left: "../../../components/server/testData/capturedImages/Image4.jpg",
-                    right: "../../../components/server/testData/capturedImages/Image4-thumb.jpg"
+                    spread: "../../../components/server/testData/capturedImages/Image4.jpg",
+                    thumb: "../../../components/server/testData/capturedImages/Image4-thumb.jpg"
                 }
             ],
             testingMode: true
@@ -77,7 +77,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             // TODO Use stitched image instead of left image.
             if (component.model.length !== 0) {
-                fullSrc = component.model[itemIndex].left;
+                fullSrc = component.model[itemIndex].spread;
             }
             var imagePreview = component.locate("imagePreview");
             
