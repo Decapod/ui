@@ -549,8 +549,8 @@ fluid_1_2 = fluid_1_2 || {};
                 
                 // TODO Provide stitched and thumbnail test images.
                 var newItem = {};
-                newItem.left = "../../server/testData/capturedImages/Image" + imageToShow + ".jpg";
-                newItem.right = "../../server/testData/capturedImages/Image" + imageToShow + "-thumb.jpg";
+                newItem.spread = "../../server/testData/capturedImages/Image" + imageToShow + ".jpg";
+                newItem.thumb = "../../server/testData/capturedImages/Image" + imageToShow + "-thumb.jpg";
                 
                 progressDialog.dialog("close");
                 that.events.afterPictureTaken.fire(newItem);
