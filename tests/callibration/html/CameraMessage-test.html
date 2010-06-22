@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Decapod Camera Message Tests</title>
+        
+        <link rel="Stylesheet" media="screen" href="../../../infusion/src/webapp/tests/lib/qunit/css/qunit.css" />
+        
+        <!-- Required JavaScript modules for testing the CameraMessage component. -->
+        <script src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+        <script src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.core.js"></script>
+        <script src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
+        <script src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
+        <script src="../../../infusion/src/webapp/framework/core/js/FluidDOMUtilities.js"></script>
+        <script src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
+        <script src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
+        <script src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
+        
+        <!-- jqUnit -->
+        <script src="../../../infusion/src/webapp/tests/lib/qunit/js/qunit.js"></script>
+        <script src="../../../infusion/src/webapp/tests/test-core/jqUnit/js/jqUnit.js"></script>
+        
+        <!-- Tests and tested component -->
+        <script src="../../../components/capture/js/CameraMessage.js"></script>
+        <script src="../js/CameraMessageTests.js"></script>
+        
+    </head>
+    <body>
+        <!-- Markup that jqUnit will look for when running tests and displaying the results. -->
+        <h1 id="qunit-header">Decapod Camera Message Test Suite</h1>
+        <h2 id="qunit-banner"></h2>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="main">
+        	<div class="dc-cameraMessage">
+	            <p class="dc-cameraMessage-message">Error</p>
+	            <p>
+	                <span class="dc-cameraMessage-requirement">Decapod requires two matching, </span> 
+	                <a href="#_" class="dc-cameraMessage-requirementLink">supported cameras</a>
+	            </p>
+	            <a href="#_" class="dc-cameraMessage-retryLink">I've connected the camers, Try again</a>
+	            <a href="#_" class="dc-cameraMessage-skipLink">Skip camera setup</a>
+	            <p class="dc-cameraMessage-warning">(You won't be able to capture)</p>
+	        </div>
+        </div>
+    </body>
+</html>

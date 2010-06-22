@@ -1,8 +1,0 @@
-{
-    "message": "It seems like you have two cameras connected; one is compatible, the other is not.",
-    "requirement": "Decapod requires two matching, ",
-    "requirementLink": "supported cameras",
-    "retryLink": "Try again",
-    "skipLink": "Skip camera setup",
-    "warning": "(You won't be able to capture)"
-}

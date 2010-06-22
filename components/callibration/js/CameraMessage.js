@@ -33,7 +33,7 @@ var decapod = decapod || {};
 		return cutpoints;
 	};
 	
-	var generateTree = function (opts) {
+	var generateErrorTree = function (opts) {
 		var str = opts.strings;
 		var url = opts.urls;
 		return {
@@ -69,6 +69,8 @@ var decapod = decapod || {};
 		};
 	};
 	
+	generateSuccessTree
+	
 	var render = function (that, container) {
 		var tree = generateTree(that.options);
         var opts = {
@@ -84,8 +86,12 @@ var decapod = decapod || {};
 	
 	var bindEvents = function (that) {
 		// Add a click event that calls cameraChecker to retest the cameras
-		
 		that.locate("retryLink").click(function () {
+			
+		});
+		
+		// Add a click event that displays the supported cameras
+		that.locate("").click(function () {
 			
 		});
 	};
@@ -100,23 +106,23 @@ var decapod = decapod || {};
 	 * @param {Object} container
 	 * @param {Object} options
 	 */
-    decapod.cameraError = function (container, options) {
-        var that = fluid.initView("decapod.cameraError", container, options);
+    decapod.cameraMessage = function (container, options) {
+        var that = fluid.initView("decapod.cameraMessage", container, options);
 		
 		setup();
 		
         return that;
     };
     
-    fluid.defaults("decapod.cameraError", {
+    fluid.defaults("decapod.cameraMessage", {
         
         selectors: {
-            message: ".dc-cameraError-message",
-            requirement: ".dc-cameraError-requirement",
-            requirementLink: ".dc-cameraError-requirementLink",
-            retryLink: ".dc-cameraError-retryLink",
-            skipLink: ".dc-cameraError-skipLink",
-            warning: ".dc-cameraError-warning"
+            message: ".dc-cameraMessage-message",
+            supportedCamerasMessage: ".dc-cameraMessage-requirement",
+            supportedCamerasLink: ".dc-cameraMessage-requirementLink",
+            retryLink: ".dc-cameraMessage-retryLink",
+            skipLink: ".dc-cameraMessage-skipLink",
+            warning: ".dc-cameraMessage-warning"
 		},
         
         styles: {
@@ -124,12 +130,21 @@ var decapod = decapod || {};
 		},
 		
 		strings: {
-			message: "It seems like no cameras are connected.",
-            requirement: "Decapod requires two matching, ",
-            requirementLink: "supported cameras",
+			oneCameraIncompatible: "It seems like you only have one camera connected, and it is incompatible.",
+			oneCameraCompatible: "It seems like you have only one camera connected.",
+			notMatchingOneCompatibleOneNot: "It seems like you have two cameras connected; one is compatible, the other is not.",
+			notMatchingIncompatible: "It seems like you have two cameras connected, buty they are not compatible nor matching.",
+			notMatchingCompatible: "It seems like you have two supported cameras connected, but they are not matching.",
+			incompatible: "It seems like you have two matching cameras connected, but they are not compatible.",
+			noCameras: "It seems like no cameras are connected.",
+			success: "To get the best results, you should run through calibration before capturing",
+            supportCamerasMessage: "Decapod requires two matching, ",
+            supportCamerasLink: "supported cameras",
             retryLink: "Try again",
+			continueLink: "Continue to calibration",
             skipLink: "Skip camera setup",
-            warning: "(You won't be able to capture)"
+            skipWarningError: "(You won't be able to capture)",
+			skipWarningSuccess: "Results may be unpredictable"
 		},
         
         events: {
@@ -137,8 +152,9 @@ var decapod = decapod || {};
 		},
 		
 		urls: {
-			retry: "#_",
-			requirementLink: "#_",
+			retryLink: "#_",
+			continueLink: "#_",
+			supportedCamerasLink: "#_",
 			skipLink: "#_"
 		}
     });

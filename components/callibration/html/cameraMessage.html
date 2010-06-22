@@ -2,10 +2,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Camera Error Message</title>
+        <title>Camera Message</title>
         
 		<link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-layout.css" />
-        <link rel="stylesheet" type="text/css" href="../css/CameraError.css" />
+        <link rel="stylesheet" type="text/css" href="../css/CameraMessage.css" />
         
         <script src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
 		<script src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.core.js"></script>
@@ -16,39 +16,22 @@
         <script src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
         <script src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
         <script src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
-        <script src="../js/CameraError.js"></script>
+        <script src="../../../shared/js/decapodUtils.js"></script>
+		<script src="../js/CameraMessage.js"></script>
     </head>
 	<body>
-		<div class="dc-cameraError">
-            <p class="dc-cameraError-message">Error</p>
-            <p class="dc-cameraError-requirement">Decapod requires two matching, <a href="">supported cameras</a>.</p>
+		<div class="dc-cameraMessage">
+            <p class="dc-cameraMessage-message">Error</p>
             <p>
-                <span>Decapod requires two matching, </span> 
-                <a href="#_" class="dc-cameraError-requirementLink">supported cameras</a>
+                <span class="dc-cameraMessage-requirement">Decapod requires two matching, </span> 
+                <a href="#_" class="dc-cameraMessage-requirementLink">supported cameras</a>
             </p>
-            <a href="#_" class="dc-cameraError-retryLink">I've connected the camers, Try again</a>
-            <a href="#_" class="dc-cameraError-skipLink">Skip camera setup</a>
-            <p class="dc-cameraError-warning">(You won't be able to capture)</p>
+            <a href="#_" class="dc-cameraMessage-retryLink">I've connected the camers, Try again</a>
+            <a href="#_" class="dc-cameraMessage-skipLink">Skip camera setup</a>
+            <p class="dc-cameraMessage-warning">(You won't be able to capture)</p>
         </div>
 		<script>
-			(function() {
-				var fetchParams = function () {
-					//
-				};
-				
-				var params = fetchParams();
-				
-				var launchComponent = function (data) {
-					decapod.cameraError(".dc-cameraError", {strings: data, url: {skipLink: params.origin}});
-				};
-				
-				jQuery.ajax({
-					data: "json",
-					type: "GET",
-					success: launchComponent,
-					url: "../messages" + params.error + ".json"
-				});
-			})();
+			decapod.cameraMessage(".dc-cameraMessage");
 		</script>
 	</body>
 </html>
