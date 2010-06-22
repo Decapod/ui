@@ -9,11 +9,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://source.fluidproject.org/svn/LICENSE.txt
 */
 
-/*global jQuery*/
-/*global fluid*/
-/*global jqUnit*/
-/*global expect*/
-/*global decapod*/
+/*global jQuery,fluid,jqUnit,expect,decapod*/
 
 (function ($) {
 	
@@ -43,6 +39,17 @@ https://source.fluidproject.org/svn/LICENSE.txt
 		return component.locate(selector).attr("href");
 	}
 	
+	/*
+	 * oneCameraIncompatible: "It seems like you only have one camera connected, and it is incompatible.",
+            oneCameraCompatible: "It seems like you have only one camera connected.",
+            notMatchingOneCompatibleOneNot: "It seems like you have two cameras connected; one is compatible, the other is not.",
+            notMatchingIncompatible: "It seems like you have two cameras connected, buty they are not compatible nor matching.",
+            notMatchingCompatible: "It seems like you have two supported cameras connected, but they are not matching.",
+            incompatible: "It seems like you have two matching cameras connected, but they are not compatible.",
+            noCameras: "It seems like no cameras are connected.",
+            success: 
+	 */
+	
 	/**
 	 * Asserts the error state for a given error
 	 * 
@@ -53,84 +60,92 @@ https://source.fluidproject.org/svn/LICENSE.txt
 		var str = component.options.strings;
 		var url = component.options.urls;
 		
-		jqunit.assertEquals("The " + error + " message is set", str[error], getText(component, "message"));
-		jqunit.assertEquals("The supported cameras message is set", str.supportedCamerasMessage, getText(component, "supportedCamerasMessage"));
-		jqunit.assertEquals("The supported cameras link text is set", str.supportedCamerasLink, getText(component, "supportedCamerasLink"));
-		jqunit.assertEquals("The supported cameras link url is set", url.supportedCamerasLink, getURL(component, "supportedCamerasLink"));
-		jqunit.assertEquals("The retry link text is set", str.retryLink, getText(component, "retryLink"));
-		jqunit.assertEquals("The retry link url is set", url.retryLink, getText(component, "retryLink"));
-		jqunit.assertEquals("The skip link text is set", str.skipLink, getText(component, "skipLink"));
-		jqunit.assertEquals("The skip link url is set", url.skipLink, getURL(component, "skipLink"));
-		jqunit.assertEquals("The warning message is set", str.skipWarningError, getText(component, "warning"));
+		jqUnit.assertEquals("The " + error + " message is set", str[error], getText(component, "message"));
+		jqUnit.assertEquals("The supported cameras message is set", str.supportedCamerasMessage, getText(component, "supportedCamerasMessage"));
+		jqUnit.assertEquals("The supported cameras link text is set", str.supportedCamerasLink, getText(component, "supportedCamerasLink"));
+		jqUnit.assertEquals("The supported cameras link url is set", url.supportedCamerasLink, getURL(component, "supportedCamerasLink"));
+		jqUnit.assertEquals("The retry link text is set", str.retryLink, getText(component, "retryLink"));
+		jqUnit.assertEquals("The retry link url is set", url.retryLink, getText(component, "retryLink"));
+		jqUnit.assertEquals("The skip link text is set", str.skipErrorLink, getText(component, "skipLink"));
+		jqUnit.assertEquals("The skip link url is set", url.skipErrorLink, getURL(component, "skipLink"));
+		jqUnit.assertEquals("The warning message is set", str.skipWarningError, getText(component, "warning"));
 	}
 	
 	$(document).ready(function () {
 		var messageTests = new jqUnit.TestCase("Message Tests", setup);
 		
 		messageTests.test("Success Message", function () {
-			// assert success message
-			// assert continue text
-			// assert continue url
-			// assert skip text
-			// assert skip url
-			// assert warning message
-			// assert no supported cameras message 
-			// assert no supported cameras link
+			var str = component.options.strings;
+			var url = component.options.urls;
+			
+			component.showSuccessMessage();
+			
+			//assert strings and urls are correct
+			jqUnit.assertEquals("The success message is set", str.success, getText(component, "message"));
+	        jqUnit.assertEquals("The continue link text is set", str.continueLink, getText(component, "retryLink"));
+	        jqUnit.assertEquals("The continue link url is set", url.continueLink, getText(component, "retryLink"));
+	        jqUnit.assertEquals("The skip link text is set", str.skipSuccessLink, getText(component, "skipLink"));
+	        jqUnit.assertEquals("The skip link url is set", url.skipSuccessLink, getURL(component, "skipLink"));
+	        jqUnit.assertEquals("The warning message is set", str.skipWarningSuccess, getText(component, "warning"));
+			
+			//assert items aren't present
+			jqUnit.assertEquals("The supported cameras message should not be rendered", 0, component.locate("supportedCamerasMessage").length);
+			jqUnit.assertEquals("The supported cameras link should not be rendered", 0, component.locate("supportedCamerasLink").length);
 		});
 		
 		messageTests.test("One Camera and Incompatible Error Message", function () {
-			var error = "";
+			var error = "oneCameraIncompatible";
 			
-			component.errorMessage(error);
+			component.showErrorMessage(error);
             assertErrorStrings(component, error);
         });
 		
-		messageTests.test("One Camera Connected and Incompatible Error Message", function () {
-            var error = "";
+		messageTests.test("One Compatible Camera Connected Error Message", function () {
+            var error = "oneCameraCompatible";
             
-            component.errorMessage(error);
+            component.showErrorMessage(error);
             assertErrorStrings(component, error);
         });
 		
 		messageTests.test("One Camera Compatible One Not Error Message", function () {
-            var error = "";
+            var error = "notMatchingOneCompatibleOneNot";
             
-            component.errorMessage(error);
+            component.showErrorMessage(error);
             assertErrorStrings(component, error);
         });
         
 		messageTests.test("One Camera Connected and Compatible Error Message", function () {
-            var error = "";
-            
-            component.errorMessage(error);
+            var error = "notMatchingIncompatible";
+            notMatchingCompatible
+            component.showErrorMessage(error);
             assertErrorStrings(component, error);
         });
 		
 		messageTests.test("Cameras Not Matching and Both Incompatible Error Message", function () {
-            var error = "";
+            var error = "notMatchingIncompatible";
             
-            component.errorMessage(error);
+            component.showErrorMessage(error);
             assertErrorStrings(component, error);
         });
 		
 		messageTests.test("Cameras Not Matching and Both Compatible Error Message", function () {
-            var error = "";
+            var error = "notMatchingCompatible";
             
-            component.errorMessage(error);
+            component.showErrorMessage(error);
             assertErrorStrings(component, error);
         });
 		
 		messageTests.test("Both Cameras are Incompatible Error Message", function () {
-            var error = "";
+            var error = "incompatible";
             
-            component.errorMessage(error);
+            component.showErrorMessage(error);
             assertErrorStrings(component, error);
         });
 		
 		messageTests.test("No Cameras Connected Error Message", function () {
-            var error = "";
+            var error = "noCameras";
             
-            component.errorMessage(error);
+            component.showErrorMessage(error);
             assertErrorStrings(component, error);
         });
 	})

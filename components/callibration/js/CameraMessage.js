@@ -142,7 +142,8 @@ var decapod = decapod || {};
             supportCamerasLink: "supported cameras",
             retryLink: "Try again",
 			continueLink: "Continue to calibration",
-            skipLink: "Skip camera setup",
+            skipErrorLink: "Skip camera setup",
+			skipSuccessLink: "Skip calibration",
             skipWarningError: "(You won't be able to capture)",
 			skipWarningSuccess: "Results may be unpredictable"
 		},
@@ -155,7 +156,8 @@ var decapod = decapod || {};
 			retryLink: "#_",
 			continueLink: "#_",
 			supportedCamerasLink: "#_",
-			skipLink: "#_"
+			skipErrorLink: "#_",
+			skipSuccessLink: "#_"
 		}
     });
     
