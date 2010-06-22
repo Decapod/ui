@@ -69,7 +69,7 @@ var decapod = decapod || {};
 		};
 	};
 	
-	generateSuccessTree
+	var generateSuccessTree;
 	
 	var render = function (that, container) {
 		var tree = generateTree(that.options);
@@ -100,16 +100,18 @@ var decapod = decapod || {};
 		render(that);
 	};
 	
-	/**
-	 * 
-	 * 
-	 * @param {Object} container
-	 * @param {Object} options
-	 */
     decapod.cameraMessage = function (container, options) {
         var that = fluid.initView("decapod.cameraMessage", container, options);
 		
-		setup();
+		that.showSuccessMessage = function (error) {
+			
+		};
+		
+		that.showErrorMessage = function () {
+			
+		};
+		
+//		setup();
 		
         return that;
     };

@@ -16,7 +16,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
 	var component;
 	
 	var setup = function () {
-		component = decapod.message("dc-message");
+		component = decapod.cameraMessage(".dc-cameraMessage");
 	}
 	
 	/**
@@ -38,17 +38,6 @@ https://source.fluidproject.org/svn/LICENSE.txt
 	var getURL = function (component, selector) {
 		return component.locate(selector).attr("href");
 	}
-	
-	/*
-	 * oneCameraIncompatible: "It seems like you only have one camera connected, and it is incompatible.",
-            oneCameraCompatible: "It seems like you have only one camera connected.",
-            notMatchingOneCompatibleOneNot: "It seems like you have two cameras connected; one is compatible, the other is not.",
-            notMatchingIncompatible: "It seems like you have two cameras connected, buty they are not compatible nor matching.",
-            notMatchingCompatible: "It seems like you have two supported cameras connected, but they are not matching.",
-            incompatible: "It seems like you have two matching cameras connected, but they are not compatible.",
-            noCameras: "It seems like no cameras are connected.",
-            success: 
-	 */
 	
 	/**
 	 * Asserts the error state for a given error
@@ -116,7 +105,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
         
 		messageTests.test("One Camera Connected and Compatible Error Message", function () {
             var error = "notMatchingIncompatible";
-            notMatchingCompatible
+			
             component.showErrorMessage(error);
             assertErrorStrings(component, error);
         });
