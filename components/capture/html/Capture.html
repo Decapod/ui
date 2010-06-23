@@ -71,9 +71,14 @@
             
             <div class="fl-container-flex fl-decapodBadge header">
 				
-				<h1>Decapod</h1>
-                 
+				<!-- <h1>Decapod</h1> -->
+                <div class="fl-decapod-navbar"><ol class="dca-navigation-breadcrumb flat-list"><li>Book Management</li> <li>Capture</li></ol></div>
                 <div class="fl-force-right fl-decapod-menu">
+                   
+                <ul class="flat-list">
+                <li>Recalibrate</li>
+                <li><a href="#" class="flc-capture-button-export ui-state-disabled">Export</a></li>
+                </ul>
                 </div>
             </div>
             
@@ -100,22 +105,16 @@
 				</form>
 			
 				<div class="flc-capture-previewArea fl-capture-previewArea">
-					<div class="fl-capture-previewArea-content">
-						<span class="flc-capture-label-index-left"></span>
-						<span class="flc-capture-label-index-right"></span>
-						<img class="flc-capture-image-preview">
-					</div>
+                    <span class="flc-capture-label-index-left"></span>
+                    <span class="flc-capture-label-index-right"></span>
+                    <img class="flc-capture-image-preview">
 				</div>
-                    
+                <div class="dca-capture-controls">
+                    <a href="#" class="flc-capture-button-takePicture fl-takePicture">Take picture</a>
+                </div>    
                 
             </div>
             
-            <div class="fl-container-flex footer">
-                <div class="fl-capture-buttons">
-                    <a href="#" class="flc-capture-button-takePicture fl-takePicture">Take picture</a>
-                    <a href="#" class="flc-capture-button-export fl-export ui-state-disabled">Finish Book and Export</a>
-                </div>
-            </div>
         </div>
         
         <!-- Initializing the Capture component. -->

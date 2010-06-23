@@ -17,17 +17,10 @@ body {
 
 .content {
 	background:none repeat scroll 0 0 #FFFFFF;
-	bottom:113px;
+	bottom:0px;
 	overflow:hidden;
 	position:absolute;
 	top:90px;
-}
-
-.footer {
-	background-color:#333333;
-	background-image:url("../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png");
-	bottom:0;
-	position:absolute;
 }
 
 .header {
@@ -41,6 +34,22 @@ body {
 	right:0;
 	top:0;
 }
+
+.dca-navigation-breadcrumb {
+
+}
+
+/* Breadcrumb */
+.flat-list, .flat-list li {
+ margin: 0;
+ padding: 0;
+ display: inline;
+ list-style: none;
+}
+.flat-list li {
+ padding-right: 0.75em;
+}
+
 .fl-thumbnailContainer {
 	position: absolute; 
 	top: 0pt; 
@@ -51,12 +60,26 @@ body {
 	z-index: 100;
 }
 .fl-capture-previewArea {
-	left:250px;
 	position:absolute;
+	left:185px;
 	right:0;
+    bottom:0;
+    top:0;
 	text-align:center;
 	z-index:0;
+    background-color:#efefef;
 }
+
+.dca-capture-controls {
+	position:absolute;
+	left:185px;
+    right:0;
+	bottom:0;
+    background-color: #aaa;
+    text-align:center;
+    padding:10px;
+}
+
 
 .fl-decapodBadge img {
     margin-left: 15px;
@@ -260,11 +283,6 @@ body {
     height: 613px;
 }
 
-.fl-capture-buttons {
-    width:250px;
-	margin:auto;
-}
-
 a.fl-takePicture {
 	-moz-border-radius:8px 8px 8px 8px;
 	-moz-box-shadow:0 3px 5px rgba(0, 0, 0, 0.25);
@@ -274,7 +292,6 @@ a.fl-takePicture {
     height: 35px;
 	color:#FFFFFF !important;
 	font-size:1.4em;
-	margin:10px;
 	display:block;
 	text-decoration:none;
     text-align:center;
@@ -282,6 +299,7 @@ a.fl-takePicture {
     background-image: url(./images/camera.png);
     background-repeat: no-repeat;
     background-position: 2px 1px;
+    margin:auto;
 }
 
 a.fl-takePicture:hover {
