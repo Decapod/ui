@@ -16,7 +16,13 @@ https://source.fluidproject.org/svn/LICENSE.txt
     var component;
     
     var setup = function () {
-        component = decapod.cameraMessage(".dc-cameraMessage");
+        var opts = {
+            initialModel: {
+                status: "success"
+            }
+        };
+        
+        component = decapod.cameraMessage(".dc-cameraMessage", opts);
     };
     
     /**
@@ -60,6 +66,10 @@ https://source.fluidproject.org/svn/LICENSE.txt
         jqUnit.assertEquals("The warning message is set", str.skipWarningError, getText(component, "warning"));
     };
     
+    var assertModel = function (component, status) {
+        jqUnit.assertEquals("The model should be updated", status, component.model.status);
+    };
+    
     $(document).ready(function () {
         var messageTests = new jqUnit.TestCase("Message Tests", setup);
         
@@ -80,6 +90,9 @@ https://source.fluidproject.org/svn/LICENSE.txt
             //assert items aren't present
             jqUnit.assertEquals("The supported cameras message should not be rendered", 0, component.locate("supportedCamerasMessage").length);
             jqUnit.assertEquals("The supported cameras link should not be rendered", 0, component.locate("supportedCamerasLink").length);
+            
+            //assert model
+            assertModel("success");
         });
         
         messageTests.test("One Camera and Incompatible Error Message", function () {
@@ -87,6 +100,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             component.showErrorMessage(error);
             assertErrorStrings(component, error);
+            assertModel(error);
         });
         
         messageTests.test("One Compatible Camera Connected Error Message", function () {
@@ -94,6 +108,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             component.showErrorMessage(error);
             assertErrorStrings(component, error);
+            assertModel(error);
         });
         
         messageTests.test("One Camera Compatible One Not Error Message", function () {
@@ -101,6 +116,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             component.showErrorMessage(error);
             assertErrorStrings(component, error);
+            assertModel(error);
         });
         
         messageTests.test("One Camera Connected and Compatible Error Message", function () {
@@ -108,6 +124,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             component.showErrorMessage(error);
             assertErrorStrings(component, error);
+            assertModel(error);
         });
         
         messageTests.test("Cameras Not Matching and Both Incompatible Error Message", function () {
@@ -115,6 +132,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             component.showErrorMessage(error);
             assertErrorStrings(component, error);
+            assertModel(error);
         });
         
         messageTests.test("Cameras Not Matching and Both Compatible Error Message", function () {
@@ -122,6 +140,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             component.showErrorMessage(error);
             assertErrorStrings(component, error);
+            assertModel(error);
         });
         
         messageTests.test("Both Cameras are Incompatible Error Message", function () {
@@ -129,6 +148,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             component.showErrorMessage(error);
             assertErrorStrings(component, error);
+            assertModel(error);
         });
         
         messageTests.test("No Cameras Connected Error Message", function () {
@@ -136,6 +156,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             component.showErrorMessage(error);
             assertErrorStrings(component, error);
+            assertModel(error);
         });
     });
 })(jQuery);
