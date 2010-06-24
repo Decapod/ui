@@ -198,7 +198,7 @@ var decapod = decapod || {};
         },
         
         styles: {
-            showProgress: "dc-cameraMessage-showProgress"
+            showProgress: "ds-cameraMessage-showProgress"
         },
         
         strings: {

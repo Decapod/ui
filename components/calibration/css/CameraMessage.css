@@ -7,3 +7,15 @@ body {
 a {
 	color: #39B54A;
 }
+
+.ds-cameraMessage-progress {
+    display: none;
+}
+
+.ds-cameraMessage-showProgress .ds-cameraMessage-progress {
+    display: block;
+}
+
+.ds-cameraMessage-showProgress .ds-cameraMessage-message {
+    display: none;
+}

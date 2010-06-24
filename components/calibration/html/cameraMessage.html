@@ -21,14 +21,19 @@
     </head>
 	<body>
 		<div class="dc-cameraMessage">
-            <p class="dc-cameraMessage-message">Error</p>
-            <p>
-                <span class="dc-cameraMessage-requirement">Decapod requires two matching, </span> 
-                <a href="#_" class="dc-cameraMessage-requirementLink">supported cameras</a>
-            </p>
-            <a href="#_" class="dc-cameraMessage-retryLink">I've connected the camers, Try again</a>
-            <a href="#_" class="dc-cameraMessage-skipLink">Skip camera setup</a>
-            <p class="dc-cameraMessage-warning">(You won't be able to capture)</p>
+		    <div class="ds-cameraMessage-progress">
+		        
+		    </div>
+            <div class="ds-cameraMessage-message">
+                <p class="dc-cameraMessage-message">Error</p>
+                <p>
+                    <span class="dc-cameraMessage-requirement">Decapod requires two matching, </span> 
+                    <a href="#_" class="dc-cameraMessage-requirementLink">supported cameras</a>
+                </p>
+                <a href="#_" class="dc-cameraMessage-retryLink">I've connected the camers, Try again</a>
+                <a href="#_" class="dc-cameraMessage-skipLink">Skip camera setup</a>
+                <p class="dc-cameraMessage-warning">(You won't be able to capture)</p>
+            </div>
         </div>
 		<script>
 			decapod.cameraMessage(".dc-cameraMessage");
