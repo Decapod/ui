@@ -77,36 +77,53 @@ https://source.fluidproject.org/svn/LICENSE.txt
         jqUnit.assertEquals("The warning message is set", str.skipWarningError, getText(component, "warning"));
     };
     
+    /**
+     * Asserts the success state
+     * 
+     * @param {Object} component
+     */
+    var assertSuccessStrings = function (component) {
+        var str = component.options.strings;
+        var url = component.options.urls;
+        
+        //assert strings and urls are correct
+        jqUnit.assertEquals("The success message is set", str.success, getText(component, "message"));
+        jqUnit.assertEquals("The continue link text is set", str.continueLink, getText(component, "retryLink"));
+        jqUnit.assertEquals("The continue link url is set", url.continueLink, getURL(component, "retryLink"));
+        jqUnit.assertEquals("The skip link text is set", str.skipSuccessLink, getText(component, "skipLink"));
+        jqUnit.assertEquals("The skip link url is set", url.skipSuccessLink, getURL(component, "skipLink"));
+        jqUnit.assertEquals("The warning message is set", str.skipWarningSuccess, getText(component, "warning"));
+        
+        //assert items aren't present
+        jqUnit.assertEquals("The supported cameras message should not be rendered", 0, component.locate("supportedCamerasMessage").length);
+        jqUnit.assertEquals("The supported cameras link should not be rendered", 0, component.locate("supportedCamerasLink").length);
+    }
+    
     var assertModel = function (component, status) {
         jqUnit.assertEquals("The model should be updated", status, component.model.status);
     };
     
     $(document).ready(function () {
-        var messageTests = new jqUnit.TestCase("Message Tests", setup, teardown);
+        var messageTests = new jqUnit.TestCase("CameraMessage Tests", setup, teardown);
+        
+        messageTests.test("Default Model Status", function () {
+            var initStatus = component.options.initialModel.status;
+            
+            if (initStatus) {
+                if (initStatus === "success") {
+                    assertSuccessStrings(component);
+                } else {
+                    assertErrorStrings(component, initStatus);
+                }
+                jqUnit.assertTrue("afterRender event should have fired", eventFired);
+            }
+        });
         
         messageTests.test("Success Message", function () {
-            var str = component.options.strings;
-            var url = component.options.urls;
-            
             component.updateStatus("success");
-            
-            //assert strings and urls are correct
-            jqUnit.assertEquals("The success message is set", str.success, getText(component, "message"));
-            jqUnit.assertEquals("The continue link text is set", str.continueLink, getText(component, "retryLink"));
-            jqUnit.assertEquals("The continue link url is set", url.continueLink, getURL(component, "retryLink"));
-            jqUnit.assertEquals("The skip link text is set", str.skipSuccessLink, getText(component, "skipLink"));
-            jqUnit.assertEquals("The skip link url is set", url.skipSuccessLink, getURL(component, "skipLink"));
-            jqUnit.assertEquals("The warning message is set", str.skipWarningSuccess, getText(component, "warning"));
-            
-            //assert items aren't present
-            jqUnit.assertEquals("The supported cameras message should not be rendered", 0, component.locate("supportedCamerasMessage").length);
-            jqUnit.assertEquals("The supported cameras link should not be rendered", 0, component.locate("supportedCamerasLink").length);
-            
-            //assert model
+            assertSuccessStrings(component);
             assertModel(component, "success");
-            
-            //assert events
-            jqUnit.assertTrue("afterRender event should fired", eventFired);
+            jqUnit.assertTrue("afterRender event should have fired", eventFired);
         });
         
         messageTests.test("One Camera and Incompatible Error Message", function () {
@@ -115,7 +132,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             component.updateStatus(error);
             assertErrorStrings(component, error);
             assertModel(component, error);
-            jqUnit.assertTrue("afterRender event should fired", eventFired);
+            jqUnit.assertTrue("afterRender event should have fired", eventFired);
         });
         
         messageTests.test("One Compatible Camera Connected Error Message", function () {
@@ -124,7 +141,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             component.updateStatus(error);
             assertErrorStrings(component, error);
             assertModel(component, error);
-            jqUnit.assertTrue("afterRender event should fired", eventFired);
+            jqUnit.assertTrue("afterRender event should have fired", eventFired);
         });
         
         messageTests.test("One Camera Compatible One Not Error Message", function () {
@@ -133,7 +150,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             component.updateStatus(error);
             assertErrorStrings(component, error);
             assertModel(component, error);
-            jqUnit.assertTrue("afterRender event should fired", eventFired);
+            jqUnit.assertTrue("afterRender event should have fired", eventFired);
         });
         
         messageTests.test("One Camera Connected and Compatible Error Message", function () {
@@ -142,7 +159,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             component.updateStatus(error);
             assertErrorStrings(component, error);
             assertModel(component, error);
-            jqUnit.assertTrue("afterRender event should fired", eventFired);
+            jqUnit.assertTrue("afterRender event should have fired", eventFired);
         });
         
         messageTests.test("Cameras Not Matching and Both Incompatible Error Message", function () {
@@ -151,7 +168,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             component.updateStatus(error);
             assertErrorStrings(component, error);
             assertModel(component, error);
-            jqUnit.assertTrue("afterRender event should fired", eventFired);
+            jqUnit.assertTrue("afterRender event should have fired", eventFired);
         });
         
         messageTests.test("Cameras Not Matching and Both Compatible Error Message", function () {
@@ -160,7 +177,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             component.updateStatus(error);
             assertErrorStrings(component, error);
             assertModel(component, error);
-            jqUnit.assertTrue("afterRender event should fired", eventFired);
+            jqUnit.assertTrue("afterRender event should have fired", eventFired);
         });
         
         messageTests.test("Both Cameras are Incompatible Error Message", function () {
@@ -169,7 +186,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             component.updateStatus(error);
             assertErrorStrings(component, error);
             assertModel(component, error);
-            jqUnit.assertTrue("afterRender event should fired", eventFired);
+            jqUnit.assertTrue("afterRender event should have fired", eventFired);
         });
         
         messageTests.test("No Cameras Connected Error Message", function () {
@@ -178,7 +195,25 @@ https://source.fluidproject.org/svn/LICENSE.txt
             component.updateStatus(error);
             assertErrorStrings(component, error);
             assertModel(component, error);
-            jqUnit.assertTrue("afterRender event should fired", eventFired);
+            jqUnit.assertTrue("afterRender event should have fired", eventFired);
+        });
+        
+        messageTests.test("Show Progress", function () {
+            var progStyle = component.options.styles.showProgress;
+            component.startProgress();
+            
+            jqUnit.assertEquals("Only one element should have the " + progStyle + " class", 1, $(progStyle).length);
+            jqUnit.assertTrue("The cameraMessage component's container should have the " + progStyle + " class", component.container.hasClass(progStyle));
+            
+        });
+        
+        messageTests.test("Hide Progress", function () {
+            var progStyle = component.options.styles.showProgress;
+            
+            component.startProgress();
+            component.stopProgress();
+            
+            jqUnit.assertEquals("No element should have the " + progStyle + " class", 0, $(progStyle).length);
         });
     });
 })(jQuery);
