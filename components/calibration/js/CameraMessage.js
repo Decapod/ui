@@ -9,17 +9,12 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://source.fluidproject.org/svn/LICENSE.txt
 */
 
-/*global jQuer,fluid,decapod*/
+/*global jQuery,fluid,decapod*/
 
 var decapod = decapod || {};
 
 (function ($) {
     
-    /**
-     * Creates a selector map
-     * 
-     * @param {Object} selectors, an object literal of the selectors
-     */
     var generateCutpoints = function (selectors) {
         var cutpoints = [];
         for (var key in selectors) {
@@ -31,130 +26,162 @@ var decapod = decapod || {};
         return cutpoints;
     };
     
-    var generateErrorTree = function (opts, error) {
-        var str = opts.strings;
-        var url = opts.urls;
-        return {
-            children: [
-                {
-                    ID: "message",
-                    value: str.error
-                },
-                {
-                    ID: "requirement",
-                    value: str.supportCamerasMessage
-                },
-                {
-                    ID: "warning",
-                    value: str.skipWarningError
-                },
-                {
-                    ID: "requirementLink",
-                    linktext: str.supportCamerasLink,
-                    target: url.supportCamerasLink
-                },
-                {
-                    ID: "retryLink",
-                    linktext: str.retryLink,
-                    target: url.retryLink
-                },
-                {
-                    ID: "skipLink",
-                    linktext: str.skipErrorLink,
-                    target: url.skipErrorLink
-                }
-            ]
-        };
-    };
-    
-    var generateTree = function (opts, error) {
+    var generateTree = function (opts, model) {
+        var tree, skipLink, skipWarning, retryLink;
+        var isError = model.status !== "success";
         var str = opts.strings;
         var url = opts.urls;
         
-        var tree = [
-            {
+        if (isError) {
+            skipLink = "skipErrorLink";
+            skipWarning = "skipWarningError";
+            retryLink = "retryLink";
+            
+            tree = [
+                {
+                    ID: "supportedCamerasMessage",
+                    value: str.supportedCamerasMessage
+                },
+                {
+                    ID: "supportedCamerasLink",
+                    linktext: str.supportedCamerasLink,
+                    target: url.supportedCamerasLink
+                }
+            ];
+        } else {
+            skipLink = "skipSuccessLink";
+            skipWarning = "skipWarningSuccess";
+            retryLink = "continueLink";
+            
+            tree = [];
+        }
+        
+        tree.push({
                 ID: "message",
-                value: str[error || "success"]
-            },
-            {
-                ID: "requirement",
-                value: str.supportCamerasMessage
-            },
-            {
+                value: str[model.status]
+            });
+        tree.push({
                 ID: "warning",
-                value: str.skipWarningError
-            },
-            {
-                ID: "requirementLink",
-                linktext: str.supportCamerasLink,
-                target: url.supportCamerasLink
-            },
-            {
+                value: str[skipWarning]
+            });
+        tree.push({
                 ID: "retryLink",
-                linktext: str.retryLink,
-                target: url.retryLink
-            },
-            {
+                linktext: str[retryLink],
+                target: url[retryLink]
+            });
+        tree.push({
                 ID: "skipLink",
-                linktext: str.skipErrorLink,
-                target: url.skipErrorLink
-            }
-        ];
+                linktext: str[skipLink],
+                target: url[skipLink]
+            });
             
         return {
             children: tree
         };
     };
     
-    var render = function (that, container) {
-        var tree = generateTree(that.options);
+    var render = function (that) {
+        var tree = generateTree(that.options, that.model);
         var opts = {
             cutpoints: generateCutpoints(that.options.selectors)
         };
         
         if (that.templates) {
-            fluid.reRender(that.templates, container, tree, opts);
+            fluid.reRender(that.templates, that.container, tree, opts);
         } else {
-            that.templates = fluid.render(that, container, tree, opts);
+            that.templates = fluid.selfRender(that.container, tree, opts);
         }
+        
+        that.events.afterRender.fire();
     };
     
     var bindEvents = function (that) {
-        // Add a click event that calls cameraChecker to retest the cameras
+        //TODO: Add a click event that calls cameraChecker to retest the cameras
         that.locate("retryLink").click(function () {
             
         });
         
-        // Add a click event that displays the supported cameras
+        //TODO: Add a click event that displays the supported cameras
         that.locate("").click(function () {
             
         });
     };
     
     var setup = function (that) {
-        that.testCameras();
+        that.model = that.options.initialModel;
+        if (that.model.status) {
+            that.currentStatus();
+        } else {
+            that.testCameras();
+        }
     };
     
     decapod.cameraMessage = function (container, options) {
         var that = fluid.initView("decapod.cameraMessage", container, options);
         
-        that.showSuccessMessage = function (error) {
-            // render the success message
+        /**
+         * Shows the progress message
+         */  
+        that.startProgress = function () {
+            //TODO: show progress screen
         };
         
-        that.showErrorMessage = function () {
-            // renders the specified error message
+        /**
+         * Hides the progress message
+         */
+        that.stopProgress = function () {
+            //TODO: hide progress screen
         };
         
+        /**
+         * Shows the set of supported cameras
+         */
+        that.showSupportedCameras = function () {
+            //TODO: show set of supported cameras
+        };
+        
+        /**
+         * Hides the set of supported cameras
+         */
+        that.hideSupportedCameras = function () {
+            //TODO: hide set of supported cameras
+        };
+        
+        /**
+         * Updates the model (status of cameras) and renders
+         * out the appropriate message
+         * 
+         * @param {Object} status, the status of the cameras
+         */
+        that.updateStatus = function (status) {
+            that.model.status = status;
+            render(that);
+        };
+        
+        /**
+         * Renders out the appropriate message based on the 
+         * current model (status of cameras)
+         */
+        that.currentStatus = function () {
+            render(that);
+        };
+        
+        /**
+         * Tests the status of the cameras.
+         * The model (status of cameras) will be updated and
+         * and the appropriate message rendered.
+         */
         that.testCameras = function () {
-            var callErrorMessage = function (result) {
-                that.showSuccessMessage(result.status);
+            var update = function (result) {
+                that.updateStatus(result.status);
+                that.stopProgress();
             };
             
-            decapod.checkCameras(that.showSuccessMessage, callErrorMessage);
+            that.startProgress();
+            decapod.checkCameras(update, update);
         };
         
-//        setup();
+        setup(that);
         
         return that;
     };
@@ -183,8 +210,8 @@ var decapod = decapod || {};
             incompatible: "It seems like you have two matching cameras connected, but they are not compatible.",
             noCameras: "It seems like no cameras are connected.",
             success: "To get the best results, you should run through calibration before capturing",
-            supportCamerasMessage: "Decapod requires two matching, ",
-            supportCamerasLink: "supported cameras",
+            supportedCamerasMessage: "Decapod requires two matching, ",
+            supportedCamerasLink: "supported cameras",
             retryLink: "Try again",
             continueLink: "Continue to calibration",
             skipErrorLink: "Skip camera setup",
@@ -195,6 +222,10 @@ var decapod = decapod || {};
         
         events: {
             afterRender: null
+        },
+        
+        initialModel: {
+            status: null
         },
         
         urls: {
