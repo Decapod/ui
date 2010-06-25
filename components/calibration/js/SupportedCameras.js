@@ -17,14 +17,19 @@ var decapod = decapod || {};
     
     var generateCutpoints = function (selectors) {
         return [
+            {id: "label", selector: selectors.label},
             {id: "manufacturers:", selector: selectors.manufacturers},
             {id: "manufacturerName", selector: selectors.manufacturerName},
             {id: "model:", selector: selectors.model}
         ];
     };
     
-    var generateTree = function (model) {
-        var tree = [];
+    var generateTree = function (model, strings) {
+        var tree = [{
+            ID: "label",
+            value: strings.label
+        }];
+        
         $.each(model, function (manufacturer, devices) {
             var manufacturerNodes = fluid.transform(devices, function (device) {
                 return {
@@ -50,7 +55,7 @@ var decapod = decapod || {};
     };
     
     var render = function (that) {
-        var tree = generateTree(that.model);
+        var tree = generateTree(that.model, that.options.strings);
         var opts = {
             cutpoints: generateCutpoints(that.options.selectors)
         };
@@ -61,18 +66,52 @@ var decapod = decapod || {};
             that.templates = fluid.selfRender(that.container, tree, opts);
         }
         
+        that.locate("closeButton").click(that.hide);
+        
         that.events.afterRender.fire();
+    };
+    
+    var setup = function (that) {
+        that.model = that.options.model;
+        
+        if (!that.model) {
+            decapod.checkSupportedCameras(function (model) {
+                that.model = model;
+            }, 
+            function () {
+                that.model = {};
+            });
+        }
+        
+        that.refreshView();
     };
     
     decapod.supportedCameras = function (container, options) {
         var that = fluid.initView("decapod.supportedCameras", container, options);
         
-        that.model = that.options.model;
+        /**
+         * Refreshes the view. 
+         * Useful if the model has been updated.
+         */
         that.refreshView = function () {
             render(that);
         };
         
-        that.refreshView();
+        /**
+         * Shows the entire component
+         */
+        that.show = function () {
+            that.container.show();
+        };
+        
+        /**
+         * Hides the entire component
+         */
+        that.hide = function () {
+            that.container.hide();
+        };
+        
+        setup(that);
         
         return that;
     };
@@ -82,7 +121,13 @@ var decapod = decapod || {};
         selectors: {
             manufacturers: ".dc-supportedCameras-manufacturer",
             manufacturerName: ".dc-supportedCameras-manufacturerName",
-            model: ".dc-supportedCameras-model"
+            model: ".dc-supportedCameras-model",
+            label: ".dc-supportedCameras-label",
+            closeButton: ".dc-supportedCameras-closeButton"
+        },
+        
+        strings: {
+            label: "Supported Cameras"
         },
         
         events: {

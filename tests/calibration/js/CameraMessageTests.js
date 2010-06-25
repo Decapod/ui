@@ -97,7 +97,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
         //assert items aren't present
         jqUnit.assertEquals("The supported cameras message should not be rendered", 0, component.locate("supportedCamerasMessage").length);
         jqUnit.assertEquals("The supported cameras link should not be rendered", 0, component.locate("supportedCamerasLink").length);
-    }
+    };
     
     var assertModel = function (component, status) {
         jqUnit.assertEquals("The model should be updated", status, component.model.status);
@@ -202,7 +202,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             var progStyle = component.options.styles.showProgress;
             component.startProgress();
             
-            jqUnit.assertEquals("Only one element should have the " + progStyle + " class", 1, $(progStyle).length);
+            jqUnit.assertEquals("Only one element should have the " + progStyle + " class", 1, $("." + progStyle).length);
             jqUnit.assertTrue("The cameraMessage component's container should have the " + progStyle + " class", component.container.hasClass(progStyle));
             
         });

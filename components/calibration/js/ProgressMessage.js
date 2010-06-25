@@ -33,7 +33,7 @@ var decapod = decapod || {};
             };
             
             if (stringName === "cancel") {
-                target: opts.urls.stringName
+                obj.target = opts.urls.stringName;
             } 
             
             tree.push(obj);

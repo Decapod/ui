@@ -16,14 +16,14 @@ var decapod = decapod || {};
 (function ($) {
     
     var generateCutpoints = function (selectors) {
-        var cutpoints = [];
-        for (var key in selectors) {
-            cutpoints.push({
-                id: key,
-                selector: selectors[key]
-            });
-        }
-        return cutpoints;
+        return [
+            {id: "message", selector: selectors.message},
+            {id: "supportedCamerasMessage", selector: selectors.supportedCamerasMessage},
+            {id: "supportedCamerasLink", selector: selectors.supportedCamerasLink},
+            {id: "retryLink", selector: selectors.retryLink},
+            {id: "skipLink", selector: selectors.skipLink},
+            {id: "warning", selector: selectors.warning}
+        ];
     };
     
     var generateTree = function (opts, model) {
@@ -80,6 +80,18 @@ var decapod = decapod || {};
         };
     };
     
+    var bindEvents = function (that) {
+        that.locate("retryLink").click(function (event) {
+            that.testCameras();
+            event.preventDefault();
+        });
+        
+        that.locate("supportedCamerasLink").click(function (event) {
+            that.showSupportedCameras();
+            event.preventDefault();
+        });
+    };
+    
     var render = function (that) {
         var tree = generateTree(that.options, that.model);
         var opts = {
@@ -87,28 +99,28 @@ var decapod = decapod || {};
         };
         
         if (that.templates) {
-            fluid.reRender(that.templates, that.container, tree, opts);
+            fluid.reRender(that.templates, that.locate("messageContainer"), tree, opts);
         } else {
-            that.templates = fluid.selfRender(that.container, tree, opts);
+            that.templates = fluid.selfRender(that.locate("messageContainer"), tree, opts);
         }
         
-        that.events.afterRender.fire();
+        if (that.model.status !== "success") {
+            bindEvents(that);
+        }
+        
+        that.events.afterRender.fire(that.model);
     };
     
-    var bindEvents = function (that) {
-        //TODO: Add a click event that calls cameraChecker to retest the cameras
-        that.locate("retryLink").click(function () {
-            
-        });
-        
-        //TODO: Add a click event that displays the supported cameras
-        that.locate("").click(function () {
-            
-        });
+    var initSubcomponents = function (that) {
+        that.progress = fluid.initSubcomponent(that, "progressMessage", [that.locate("progressContainer"), fluid.COMPONENT_OPTIONS]);
+        that.supportedCameras = fluid.initSubcomponent(that, "supportedCameras", [that.locate("supportedCamerasContainer"), fluid.COMPONENT_OPTIONS]);
     };
     
     var setup = function (that) {
         that.model = that.options.initialModel;
+        initSubcomponents(that);
+        that.supportedCameras.hide();
+        
         if (that.model.status) {
             that.currentStatus();
         } else {
@@ -123,28 +135,28 @@ var decapod = decapod || {};
          * Shows the progress message
          */  
         that.startProgress = function () {
-            //TODO: show progress screen
+            that.container.addClass(that.options.styles.showProgress);
         };
         
         /**
          * Hides the progress message
          */
         that.stopProgress = function () {
-            //TODO: hide progress screen
+            that.container.removeClass(that.options.styles.showProgress);
         };
         
         /**
          * Shows the set of supported cameras
          */
         that.showSupportedCameras = function () {
-            //TODO: show set of supported cameras
+            that.supportedCameras.show();
         };
         
         /**
          * Hides the set of supported cameras
          */
         that.hideSupportedCameras = function () {
-            //TODO: hide set of supported cameras
+            that.supportedCameras.hide();
         };
         
         /**
@@ -188,7 +200,20 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.cameraMessage", {
         
+        progressMessage: {
+            type: "decapod.progressMessage",
+            options: {}
+        },
+        
+        supportedCameras: {
+            type: "decapod.supportedCameras",
+            options: {}
+        },
+        
         selectors: {
+            supportedCamerasContainer: ".dc-cameraMessage-supportedCameras",
+            progressContainer: ".dc-cameraMessage-progress",
+            messageContainer: ".dc-cameraMessage-messageContainer",
             message: ".dc-cameraMessage-message",
             supportedCamerasMessage: ".dc-cameraMessage-requirement",
             supportedCamerasLink: ".dc-cameraMessage-requirementLink",

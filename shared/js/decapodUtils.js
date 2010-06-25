@@ -29,7 +29,7 @@ var decapod = decapod || {};
         });
     };
     
-    decapod.supportedCameras = function (success, error) {
+    decapod.checkSupportedCameras = function (success, error) {
         $.ajax({
             url: decapod.resources.supportedCameras,
             type: "GET",
