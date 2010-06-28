@@ -1,12 +1,12 @@
 body {
 	background-image:url("./images/background.gif");
-	bottom:30px;
-	left:20px;
 	position:absolute;
-	right:30px;
-	top:20px;
-	-moz-box-shadow:5px 5px 20px rgba(0,0,0,0.7);
-	min-width:850px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	top:0px;
+	min-width:800px;
+	min-height:600px;
 }
 
 .fl-capture {
@@ -26,17 +26,38 @@ body {
 .header {
 	background-color:#333333;
 	background-image:url("../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png");
-	height:85px;
+	height:106px;
 	left:0;
-	margin-bottom:2px;
-	padding-top:5px;
+	margin-bottom:0px;
+	padding-top:0px;
 	position:absolute;
 	right:0;
 	top:0;
 }
 
+/* Toolbar: toolbar gradient background */
+.fl-decapod-toolbar
+{
+    background: -moz-linear-gradient(top,  #f7f7f7,  #e8e8e8);
+    height: 64px;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+}
+
 .dca-navigation-breadcrumb {
 
+}
+
+
+
+
+/* Breadcrumb: navigation bar gradient background */
+.fl-decapod-navbar
+{
+    background: -moz-linear-gradient(top,  #f1f1f1,  #d2d2d2);
+    height: 42px;
 }
 
 /* Breadcrumb */
@@ -49,6 +70,9 @@ body {
 .flat-list li {
  padding-right: 0.75em;
 }
+
+
+
 
 .fl-thumbnailContainer {
 	position: absolute; 
