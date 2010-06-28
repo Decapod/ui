@@ -77,13 +77,15 @@ var decapod = decapod || {};
         if (!that.model) {
             decapod.checkSupportedCameras(function (model) {
                 that.model = model;
+                that.refreshView();
             }, 
             function () {
                 that.model = {};
+                that.refreshView();
             });
+        } else {
+            refreshView();
         }
-        
-        that.refreshView();
     };
     
     decapod.supportedCameras = function (container, options) {

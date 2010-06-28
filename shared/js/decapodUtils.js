@@ -15,13 +15,13 @@ var decapod = decapod || {};
 
 (function ($) {
     decapod.resources = {
-        cameras: "/cameras",
-        supportedCameras: "/supportedCameras.json"
+        cameras: "../data/cameras.json",
+        supportedCameras: "../data/supportedCameras.json"
     };
     
     decapod.checkCameras = function (success, error) {
         $.ajax({
-            url: decapod.resources.camera,
+            url: decapod.resources.cameras,
             type: "GET",
             dataType: "json",
             success: success,

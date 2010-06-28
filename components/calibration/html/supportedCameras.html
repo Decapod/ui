@@ -12,6 +12,7 @@
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
+        <script type="text/javascript" src="../../../shared/js/decapodUtils.js"></script>
         <script type="text/javascript" src="../js/SupportedCameras.js"></script>
         
         <title>Supported Cameras</title>
@@ -30,42 +31,7 @@
         </div>
         
         <script type="text/javascript">
-            var opts = {
-                model: {
-                    Canon: [{
-                        model: "G10",
-                        deviceName: "PowerShot G10"
-                    }, {
-                        model: "G11",
-                        deviceName: "PowerShot G11"
-                    }, {
-                        model: "550D",
-                        deviceName: "EOS 550D"
-                    }],
-                    Nikon: [{
-                        model: "D90",
-                        deviceName: "D90"
-                    }, {
-                        model: "D300",
-                        deviceName: "D300"
-                    }, {
-                        model: "D3S",
-                        deviceName: "D3S"
-                    }],
-                    Sony: [{
-                        model: "DSLR-A500",
-                        deviceName: "α500"
-                    }, {
-                        model: "DSLR-A290",
-                        deviceName: "α290"
-                    }, {
-                        model: "NEX-5",
-                        deviceName: "NEX-5"
-                    }]
-                }
-            };
-            
-            decapod.supportedCameras(".dc-supportedCameras", opts);
+            decapod.supportedCameras(".dc-supportedCameras");
         </script>        
     </body>
 </html>

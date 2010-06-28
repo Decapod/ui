@@ -52,51 +52,7 @@
             </div>
         </div>
 		<script>
-		    var opts = {
-                supportedCameras: {
-                    type: "decapod.supportedCameras",
-                    options: {
-                        model: {
-                            Canon: [{
-                                model: "G10",
-                                deviceName: "PowerShot G10"
-                            }, {
-                                model: "G11",
-                                deviceName: "PowerShot G11"
-                            }, {
-                                model: "550D",
-                                deviceName: "EOS 550D"
-                            }],
-                            Nikon: [{
-                                model: "D90",
-                                deviceName: "D90"
-                            }, {
-                                model: "D300",
-                                deviceName: "D300"
-                            }, {
-                                model: "D3S",
-                                deviceName: "D3S"
-                            }],
-                            Sony: [{
-                                model: "DSLR-A500",
-                                deviceName: "α500"
-                            }, {
-                                model: "DSLR-A290",
-                                deviceName: "α290"
-                            }, {
-                                model: "NEX-5",
-                                deviceName: "NEX-5"
-                            }]
-                        }
-                    }
-                },
-                
-                initialModel: {
-                    status: "oneCameraCompatible"
-                }
-            };
-            
-			decapod.cameraMessage(".dc-cameraMessage", opts);
+			decapod.cameraMessage(".dc-cameraMessage");
 		</script>
 	</body>
 </html>
