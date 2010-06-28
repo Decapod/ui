@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="../css/SupportedCameras.css" />
+                
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.core.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
+        <script type="text/javascript" src="../js/SupportedCameras.js"></script>
+        
+        <title>Supported Cameras</title>
+    </head>
+    
+    <body>
+        <div class="dc-supportedCameras">
+            <p class="dc-supportedCameras-label">Cameras</p>
+            <a href="#_" class="dc-supportedCameras-closeButton">x</a>
+            <div class="dc-supportedCameras-manufacturer">
+                <strong class="dc-supportedCameras-manufacturerName">Brand</strong>
+                <ul>
+                    <li class="dc-supportedCameras-model">Model</li>
+                </ul>
+            </div>
+        </div>
+        
+        <script type="text/javascript">
+            var opts = {
+                model: {
+                    Canon: [{
+                        model: "G10",
+                        deviceName: "PowerShot G10"
+                    }, {
+                        model: "G11",
+                        deviceName: "PowerShot G11"
+                    }, {
+                        model: "550D",
+                        deviceName: "EOS 550D"
+                    }],
+                    Nikon: [{
+                        model: "D90",
+                        deviceName: "D90"
+                    }, {
+                        model: "D300",
+                        deviceName: "D300"
+                    }, {
+                        model: "D3S",
+                        deviceName: "D3S"
+                    }],
+                    Sony: [{
+                        model: "DSLR-A500",
+                        deviceName: "α500"
+                    }, {
+                        model: "DSLR-A290",
+                        deviceName: "α290"
+                    }, {
+                        model: "NEX-5",
+                        deviceName: "NEX-5"
+                    }]
+                }
+            };
+            
+            decapod.supportedCameras(".dc-supportedCameras", opts);
+        </script>        
+    </body>
+</html>
