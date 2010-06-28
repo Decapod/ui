@@ -27,14 +27,19 @@ var decapod = decapod || {};
     var generateTree = function (opts) {
         var tree = [];
         $.each(opts.strings, function (stringName, string) {
+            console.log(stringName);
+            console.log(string);
+            
             var obj = {
-                ID: stringName,
-                value: string
+                ID: stringName
             };
             
             if (stringName === "cancel") {
-                obj.target = opts.urls.stringName;
-            } 
+                obj.linktext = string;
+                obj.target = opts.urls[stringName];
+            } else {
+                obj.value = string;
+            }
             
             tree.push(obj);
         });
@@ -92,7 +97,7 @@ var decapod = decapod || {};
         },
         
         urls: {
-            cancel: "#_"
+            cancel: decapod.resources.cancel
         }
     });
     
