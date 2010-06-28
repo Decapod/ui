@@ -27,9 +27,6 @@ var decapod = decapod || {};
     var generateTree = function (opts) {
         var tree = [];
         $.each(opts.strings, function (stringName, string) {
-            console.log(stringName);
-            console.log(string);
-            
             var obj = {
                 ID: stringName
             };
