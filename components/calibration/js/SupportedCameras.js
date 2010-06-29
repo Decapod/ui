@@ -85,6 +85,8 @@ var decapod = decapod || {};
             addHeadingRole(elm);
             that.locate("models").eq(idx).attr("aria-labelledby", fluid.allocateSimpleId(elm));
         });
+        
+        that.locate("closeButton").attr("role", "button");
     };
     
     var setup = function (that) {
