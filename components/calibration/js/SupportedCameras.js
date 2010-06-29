@@ -71,6 +71,22 @@ var decapod = decapod || {};
         that.events.afterRender.fire();
     };
     
+    var addHeadingRole = function(elm){
+        if (!elm.is(":header")) {
+            elm.attr("role", "heading");
+        }
+    };
+    
+    var addAria = function (that) {
+        addHeadingRole(that.locate("label"));
+        
+        that.locate("manufacturerName").each(function (idx, element) {
+            var elm = $(element);
+            addHeadingRole(elm);
+            that.locate("models").eq(idx).attr("aria-labelledby", fluid.allocateSimpleId(elm));
+        });
+    };
+    
     var setup = function (that) {
         that.model = that.options.model;
         
@@ -97,6 +113,7 @@ var decapod = decapod || {};
          */
         that.refreshView = function () {
             render(that);
+            addAria(that);
         };
         
         /**
@@ -123,6 +140,7 @@ var decapod = decapod || {};
         selectors: {
             manufacturers: ".dc-supportedCameras-manufacturer",
             manufacturerName: ".dc-supportedCameras-manufacturerName",
+            models: ".dc-supportedCameras-models",
             model: ".dc-supportedCameras-model",
             label: ".dc-supportedCameras-label",
             closeButton: ".dc-supportedCameras-closeButton"
