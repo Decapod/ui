@@ -94,7 +94,7 @@ var decapod = decapod || {};
         },
         
         urls: {
-            cancel: decapod.resources.cancel
+            cancel: decapod.resources.bookManagement
         }
     });
     

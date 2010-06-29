@@ -17,7 +17,11 @@ var decapod = decapod || {};
     decapod.resources = {
         cameras: "../data/cameras.json",
         supportedCameras: "../data/supportedCameras.json",
-        cancel: "#_"
+        
+        bookManagement: "#_", 
+        leftRightCalibration: "#_",
+        capture: "#_",
+        captureBlocked: "#_"
     };
     
     decapod.checkCameras = function (success, error) {
