@@ -9,7 +9,7 @@ body {
 	min-height:600px;
 }
 
-.fl-capture {
+.ds-capture {
 	background-color:#FFFFFF;
 	height:100%;
 }
@@ -20,13 +20,13 @@ body {
 	bottom:0px;
 	overflow:hidden;
 	position:absolute;
-	top:90px;
+	top:102px; /* Top offset by header height */
 }
 
 .header {
 	background-color:#333333;
 	background-image:url("../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png");
-	height:200px;
+	height:102px;
 	left:0;
 	margin-bottom:0px;
 	padding-top:0px;
@@ -35,48 +35,13 @@ body {
 	top:0;
 }
 
-/* Toolbar: toolbar gradient background */
-.fl-decapod-toolbar
-{
-    background: -moz-linear-gradient(top,  #f7f7f7,  #e8e8e8);
-    height: 170px;
-    left:0;
-    right:0;
-    top:0;
-    bottom:0;
+/* A flat list. Used for breadcrumb. */
+.flat-list, .flat-list li {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    list-style: none;
 }
-
-
-a.ds-button-export {
-	-moz-border-radius:8px 8px 8px 8px;
-	-moz-box-shadow:0 1px 1px rgba(0, 0, 0, 0.25);
-	border:1px outset #1F1F1F;
-    padding-top:33px;
-    width: 50px;
-    height: 20px;
-	color:#FFFFFF !important;
-	display:block;
-	text-decoration:none;
-    text-align:center;
-    background-image: url(./images/export.png);
-    background-repeat: no-repeat;
-    background-position: 12px 3px;
-    margin:auto;
-}
-
-a.ds-button-export .ui-state-disabled {
-background-image: url(./images/export.png);
-    background-repeat: no-repeat;
-    background-position: 1px 1px;
-}
-
-
-
-a.ds-button-export:hover {
-	color:#fff !important;
-}
-
-
 
 .ds-decapod-navbar .flat-list li:before {
     content: ">";
@@ -94,18 +59,49 @@ a.ds-button-export:hover {
     font-weight:bold;    
 }
 
-/* A flat list. Used for breadcrumb. */
-.flat-list, .flat-list li {
-    margin: 0;
-    padding: 0;
-    display: inline;
-    list-style: none;
+/* Toolbar: toolbar gradient background */
+.ds-decapod-toolbar {
+    background: -moz-linear-gradient(top,  #f7f7f7,  #e8e8e8);
+    height: 62px;
+    left:0;
+    right:0;
+    bottom:0;
+    padding-top:38px;
+    padding-left:10px;
+    padding-right:10px;
 }
 
+a.ds-toolbar-button {
+    padding-top:33px; /*offset the height of the navbar */
+    width: 50px;
+    height: 25px;
+	color:#000 !important;
+	text-decoration:none;
+    text-align:center;
+    background-repeat: no-repeat;
+    margin-left:10px;
+    margin-right:10px;
+}
 
+a.ds-toolbar-button.export {
+    background-image: url(./images/export.png);
+    background-position: 12px 3px;        
+}
 
+a.ds-toolbar-button.recalibrate {
+    background-image: url(./images/recalibrate.png);
+    background-position: 23px 3px;    
+}
 
-.fl-thumbnailContainer {
+a.ds-button-export .ui-state-disabled {
+}
+
+a.ds-button-export:hover {
+    color: #999999 !important; 
+    cursor: pointer;
+}
+
+.ds-thumbnailContainer {
 	position: absolute; 
 	top: 0pt; 
 	left: 0pt; 
@@ -114,9 +110,9 @@ a.ds-button-export:hover {
 	width: 185px; 
 	z-index: 100;
 }
-.fl-capture-previewArea {
+.ds-capture-previewArea {
 	position:absolute;
-	left:185px;
+	left:185px; /* indented x pixels as width of thumbnailContainer */
 	right:0;
     bottom:0;
     top:0;
@@ -133,21 +129,6 @@ a.ds-button-export:hover {
     background-color: #aaa;
     text-align:center;
     padding:10px;
-}
-
-.header .fl-decapod-menu {
-    color: #fff;
-    margin-right: 1em;
-}
-
-.header a {
-    color: #fff !important;
-    font-weight:bold;
-}
-
-.header a:hover {
-    color: #999999 !important; 
-    cursor: pointer;
 }
 
 .fl-capture .fl-col-mixed .fl-col-flex {
@@ -342,6 +323,7 @@ a.fl-takePicture:hover {
 	color:#fff !important;
 }
 
+/*
 a.fl-export {
 	-moz-border-radius:8px 8px 8px 8px;
 	-moz-box-shadow:0 3px 5px rgba(0, 0, 0, 0.25);
@@ -359,7 +341,7 @@ a.fl-export {
 
 a.fl-export:hover {
 	color:#fff !important;
-}
+}*/
 
 .fl-capture-placeholder {
     background: #fff;
