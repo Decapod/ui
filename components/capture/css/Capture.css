@@ -1,12 +1,12 @@
 body {
 	background-image:url("./images/background.gif");
-	bottom:30px;
-	left:20px;
 	position:absolute;
-	right:30px;
-	top:20px;
-	-moz-box-shadow:5px 5px 20px rgba(0,0,0,0.7);
-	min-width:850px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	top:0px;
+	min-width:800px;
+	min-height:600px;
 }
 
 .fl-capture {
@@ -26,29 +26,84 @@ body {
 .header {
 	background-color:#333333;
 	background-image:url("../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png");
-	height:85px;
+	height:200px;
 	left:0;
-	margin-bottom:2px;
-	padding-top:5px;
+	margin-bottom:0px;
+	padding-top:0px;
 	position:absolute;
 	right:0;
 	top:0;
 }
 
-.dca-navigation-breadcrumb {
-
+/* Toolbar: toolbar gradient background */
+.fl-decapod-toolbar
+{
+    background: -moz-linear-gradient(top,  #f7f7f7,  #e8e8e8);
+    height: 170px;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
 }
 
-/* Breadcrumb */
+
+a.ds-button-export {
+	-moz-border-radius:8px 8px 8px 8px;
+	-moz-box-shadow:0 1px 1px rgba(0, 0, 0, 0.25);
+	border:1px outset #1F1F1F;
+    padding-top:33px;
+    width: 50px;
+    height: 20px;
+	color:#FFFFFF !important;
+	display:block;
+	text-decoration:none;
+    text-align:center;
+    background-image: url(./images/export.png);
+    background-repeat: no-repeat;
+    background-position: 12px 3px;
+    margin:auto;
+}
+
+a.ds-button-export .ui-state-disabled {
+background-image: url(./images/export.png);
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+}
+
+
+
+a.ds-button-export:hover {
+	color:#fff !important;
+}
+
+
+
+.ds-decapod-navbar .flat-list li:before {
+    content: ">";
+    padding-left:0.5em;
+    padding-right:0.5em;
+}
+
+/* Breadcrumb: navigation bar gradient background */
+.ds-decapod-navbar {
+    background: -moz-linear-gradient(top,  #f1f1f1,  #d2d2d2);
+    height: 30px;
+    padding-left:10px;
+    padding-top:10px;
+    font-size: 1.1em;
+    font-weight:bold;    
+}
+
+/* A flat list. Used for breadcrumb. */
 .flat-list, .flat-list li {
- margin: 0;
- padding: 0;
- display: inline;
- list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline;
+    list-style: none;
 }
-.flat-list li {
- padding-right: 0.75em;
-}
+
+
+
 
 .fl-thumbnailContainer {
 	position: absolute; 
@@ -70,7 +125,7 @@ body {
     background-color:#efefef;
 }
 
-.dca-capture-controls {
+.ds-capture-controls {
 	position:absolute;
 	left:185px;
     right:0;
@@ -78,25 +133,6 @@ body {
     background-color: #aaa;
     text-align:center;
     padding:10px;
-}
-
-
-.fl-decapodBadge img {
-    margin-left: 15px;
-    float:left;
-}
-
-.fl-decapodBadge h1 {
-    font-size: 2.8em;
-    margin-top: 0em;
-    margin-bottom: 0em;
-    padding-top: 20px;
-    border-bottom: none;
-    color: #fff;
-    padding-left: 2.75em;
-	margin-left:0.5em;
-    border-bottom: none;
-	background:transparent url("../css/images/transLogosm-light.png") no-repeat center left scroll;
 }
 
 .header .fl-decapod-menu {
