@@ -33,70 +33,26 @@
             <div class="dc-cameraMessage-messageContainer ds-cameraMessage-messageContainer">
                 <p class="dc-cameraMessage-message">Error</p>
                 <p>
-                    <span class="dc-cameraMessage-requirement">Decapod requires two matching, </span> 
-                    <a href="#_" class="dc-cameraMessage-requirementLink">supported cameras</a>
+                    <span class="dc-cameraMessage-supportedCamerasMessage">Decapod requires two matching, </span> 
+                    <a href="#_" class="dc-cameraMessage-supportedCamerasButton">supported cameras</a>
                 </p>
-                <a href="#_" class="dc-cameraMessage-retryLink">I've connected the cameras, Try again</a>
+                <a href="#_" class="dc-cameraMessage-retryAndContinue">I've connected the cameras, Try again</a>
                 <a href="#_" class="dc-cameraMessage-skipLink">Skip camera setup</a>
                 <p class="dc-cameraMessage-warning">(You won't be able to capture)</p>
             </div>
             <div class="dc-cameraMessage-supportedCameras">
-                <p class="dc-supportedCameras-label">Cameras</p>
+                <h2 class="dc-supportedCameras-label">Cameras</h2>
                 <a href="#_" class="dc-supportedCameras-closeButton">x</a>
                 <div class="dc-supportedCameras-manufacturer">
-                    <strong class="dc-supportedCameras-manufacturerName">Brand</strong>
-                    <ul>
+                    <h3 class="dc-supportedCameras-manufacturerName">Brand</h3>
+                    <ul class="dc-supportedCameras-models">
                         <li class="dc-supportedCameras-model">Model</li>
                     </ul>
                 </div>
             </div>
         </div>
 		<script>
-		    var opts = {
-                supportedCameras: {
-                    type: "decapod.supportedCameras",
-                    options: {
-                        model: {
-                            Canon: [{
-                                model: "G10",
-                                deviceName: "PowerShot G10"
-                            }, {
-                                model: "G11",
-                                deviceName: "PowerShot G11"
-                            }, {
-                                model: "550D",
-                                deviceName: "EOS 550D"
-                            }],
-                            Nikon: [{
-                                model: "D90",
-                                deviceName: "D90"
-                            }, {
-                                model: "D300",
-                                deviceName: "D300"
-                            }, {
-                                model: "D3S",
-                                deviceName: "D3S"
-                            }],
-                            Sony: [{
-                                model: "DSLR-A500",
-                                deviceName: "α500"
-                            }, {
-                                model: "DSLR-A290",
-                                deviceName: "α290"
-                            }, {
-                                model: "NEX-5",
-                                deviceName: "NEX-5"
-                            }]
-                        }
-                    }
-                },
-                
-                initialModel: {
-                    status: "oneCameraCompatible"
-                }
-            };
-            
-			decapod.cameraMessage(".dc-cameraMessage", opts);
+			decapod.cameraMessage(".dc-cameraMessage");
 		</script>
 	</body>
 </html>

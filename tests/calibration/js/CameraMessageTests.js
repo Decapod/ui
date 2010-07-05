@@ -68,10 +68,8 @@ https://source.fluidproject.org/svn/LICENSE.txt
         
         jqUnit.assertEquals("The " + error + " message is set", str[error], getText(component, "message"));
         jqUnit.assertEquals("The supported cameras message is set", str.supportedCamerasMessage, getText(component, "supportedCamerasMessage"));
-        jqUnit.assertEquals("The supported cameras link text is set", str.supportedCamerasLink, getText(component, "supportedCamerasLink"));
-        jqUnit.assertEquals("The supported cameras link url is set", url.supportedCamerasLink, getURL(component, "supportedCamerasLink"));
-        jqUnit.assertEquals("The retry link text is set", str.retryLink, getText(component, "retryLink"));
-        jqUnit.assertEquals("The retry link url is set", url.retryLink, getURL(component, "retryLink"));
+        jqUnit.assertEquals("The supported cameras button text is set", str.supportedCamerasButton, getText(component, "supportedCamerasButton"));
+        jqUnit.assertEquals("The retry link text is set", str.retryLink, getText(component, "retryAndContinue"));
         jqUnit.assertEquals("The skip link text is set", str.skipErrorLink, getText(component, "skipLink"));
         jqUnit.assertEquals("The skip link url is set", url.skipErrorLink, getURL(component, "skipLink"));
         jqUnit.assertEquals("The warning message is set", str.skipWarningError, getText(component, "warning"));
@@ -88,15 +86,15 @@ https://source.fluidproject.org/svn/LICENSE.txt
         
         //assert strings and urls are correct
         jqUnit.assertEquals("The success message is set", str.success, getText(component, "message"));
-        jqUnit.assertEquals("The continue link text is set", str.continueLink, getText(component, "retryLink"));
-        jqUnit.assertEquals("The continue link url is set", url.continueLink, getURL(component, "retryLink"));
+        jqUnit.assertEquals("The continue link text is set", str.continueLink, getText(component, "retryAndContinue"));
+        jqUnit.assertEquals("The continue link url is set", url.continueLink, getURL(component, "retryAndContinue"));
         jqUnit.assertEquals("The skip link text is set", str.skipSuccessLink, getText(component, "skipLink"));
         jqUnit.assertEquals("The skip link url is set", url.skipSuccessLink, getURL(component, "skipLink"));
         jqUnit.assertEquals("The warning message is set", str.skipWarningSuccess, getText(component, "warning"));
         
         //assert items aren't present
         jqUnit.assertEquals("The supported cameras message should not be rendered", 0, component.locate("supportedCamerasMessage").length);
-        jqUnit.assertEquals("The supported cameras link should not be rendered", 0, component.locate("supportedCamerasLink").length);
+        jqUnit.assertEquals("The supported cameras button should not be rendered", 0, component.locate("supportedCamerasButton").length);
     };
     
     var assertModel = function (component, status) {
