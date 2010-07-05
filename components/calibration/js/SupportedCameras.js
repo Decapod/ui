@@ -102,7 +102,7 @@ var decapod = decapod || {};
                 that.refreshView();
             });
         } else {
-            refreshView();
+            that.refreshView();
         }
     };
     
