@@ -84,6 +84,8 @@ https://source.fluidproject.org/svn/LICENSE.txt
                 });
                 manIdx++;
             });
+            
+            jqUnit.assertTrue("The afterRender event should have fired", eventFired);
         });
         
         tests.test("Hiding with Function Call Tests", function () {
