@@ -71,19 +71,39 @@ var decapod = decapod || {};
         that.events.afterRender.fire();
     };
     
+    var addHeadingRole = function(elm){
+        if (!elm.is(":header")) {
+            elm.attr("role", "heading");
+        }
+    };
+    
+    var addAria = function (that) {
+        addHeadingRole(that.locate("label"));
+        
+        that.locate("manufacturerName").each(function (idx, element) {
+            var elm = $(element);
+            addHeadingRole(elm);
+            that.locate("models").eq(idx).attr("aria-labelledby", fluid.allocateSimpleId(elm));
+        });
+        
+        that.locate("closeButton").attr("role", "button");
+    };
+    
     var setup = function (that) {
         that.model = that.options.model;
         
         if (!that.model) {
             decapod.checkSupportedCameras(function (model) {
                 that.model = model;
+                that.refreshView();
             }, 
             function () {
                 that.model = {};
+                that.refreshView();
             });
+        } else {
+            refreshView();
         }
-        
-        that.refreshView();
     };
     
     decapod.supportedCameras = function (container, options) {
@@ -95,6 +115,7 @@ var decapod = decapod || {};
          */
         that.refreshView = function () {
             render(that);
+            addAria(that);
         };
         
         /**
@@ -121,6 +142,7 @@ var decapod = decapod || {};
         selectors: {
             manufacturers: ".dc-supportedCameras-manufacturer",
             manufacturerName: ".dc-supportedCameras-manufacturerName",
+            models: ".dc-supportedCameras-models",
             model: ".dc-supportedCameras-model",
             label: ".dc-supportedCameras-label",
             closeButton: ".dc-supportedCameras-closeButton"

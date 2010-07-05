@@ -19,15 +19,15 @@ var decapod = decapod || {};
         return [
             {id: "message", selector: selectors.message},
             {id: "supportedCamerasMessage", selector: selectors.supportedCamerasMessage},
-            {id: "supportedCamerasLink", selector: selectors.supportedCamerasLink},
-            {id: "retryLink", selector: selectors.retryLink},
+            {id: "supportedCamerasButton", selector: selectors.supportedCamerasButton},
+            {id: "retryAndContinue", selector: selectors.retryAndContinue},
             {id: "skipLink", selector: selectors.skipLink},
             {id: "warning", selector: selectors.warning}
         ];
     };
     
     var generateTree = function (opts, model) {
-        var tree, skipLink, skipWarning, retryLink;
+        var tree, skipLink, skipWarning;
         var isError = model.status !== "success";
         var str = opts.strings;
         var url = opts.urls;
@@ -35,7 +35,6 @@ var decapod = decapod || {};
         if (isError) {
             skipLink = "skipErrorLink";
             skipWarning = "skipWarningError";
-            retryLink = "retryLink";
             
             tree = [
                 {
@@ -43,17 +42,31 @@ var decapod = decapod || {};
                     value: str.supportedCamerasMessage
                 },
                 {
-                    ID: "supportedCamerasLink",
-                    linktext: str.supportedCamerasLink,
-                    target: url.supportedCamerasLink
+                    ID: "supportedCamerasButton",
+                    value: str.supportedCamerasLink,
+                    decorators: [{
+                        type: "attrs",
+                        attributes: {role: "button"}
+                    }]
+                }, 
+                {
+                    ID: "retryAndContinue",
+                    value: str.retryLink,
+                    decorators: [{
+                        type: "attrs",
+                        attributes: {role: "button"}
+                    }]
                 }
             ];
         } else {
             skipLink = "skipSuccessLink";
             skipWarning = "skipWarningSuccess";
-            retryLink = "continueLink";
             
-            tree = [];
+            tree = [{
+                ID: "retryAndContinue",
+                linktext: str.continueLink,
+                target: url.continueLink
+            }];
         }
         
         tree.push({
@@ -63,11 +76,6 @@ var decapod = decapod || {};
         tree.push({
                 ID: "warning",
                 value: str[skipWarning]
-            });
-        tree.push({
-                ID: "retryLink",
-                linktext: str[retryLink],
-                target: url[retryLink]
             });
         tree.push({
                 ID: "skipLink",
@@ -81,12 +89,12 @@ var decapod = decapod || {};
     };
     
     var bindEvents = function (that) {
-        that.locate("retryLink").click(function (event) {
+        that.locate("retryAndContinue").click(function (event) {
             that.testCameras();
             event.preventDefault();
         });
         
-        that.locate("supportedCamerasLink").click(function (event) {
+        that.locate("supportedCamerasButton").click(function (event) {
             that.showSupportedCameras();
             event.preventDefault();
         });
@@ -215,9 +223,9 @@ var decapod = decapod || {};
             progressContainer: ".dc-cameraMessage-progress",
             messageContainer: ".dc-cameraMessage-messageContainer",
             message: ".dc-cameraMessage-message",
-            supportedCamerasMessage: ".dc-cameraMessage-requirement",
-            supportedCamerasLink: ".dc-cameraMessage-requirementLink",
-            retryLink: ".dc-cameraMessage-retryLink",
+            supportedCamerasMessage: ".dc-cameraMessage-supportedCamerasMessage",
+            supportedCamerasButton: ".dc-cameraMessage-supportedCamerasButton",
+            retryAndContinue: ".dc-cameraMessage-retryAndContinue",
             skipLink: ".dc-cameraMessage-skipLink",
             warning: ".dc-cameraMessage-warning"
         },
@@ -236,13 +244,13 @@ var decapod = decapod || {};
             noCameras: "It seems like no cameras are connected.",
             success: "To get the best results, you should run through calibration before capturing",
             supportedCamerasMessage: "Decapod requires two matching, ",
-            supportedCamerasLink: "supported cameras",
+            supportedCamerasButton: "supported cameras",
             retryLink: "Try again",
             continueLink: "Continue to calibration",
             skipErrorLink: "Skip camera setup",
             skipSuccessLink: "Skip calibration",
             skipWarningError: "(You won't be able to capture)",
-            skipWarningSuccess: "Results may be unpredictable"
+            skipWarningSuccess: "(Results may be unpredictable)"
         },
         
         events: {
@@ -254,11 +262,9 @@ var decapod = decapod || {};
         },
         
         urls: {
-            retryLink: "#_",
-            continueLink: "#_",
-            supportedCamerasLink: "#_",
-            skipErrorLink: "#_",
-            skipSuccessLink: "#_"
+            continueLink: decapod.resources.leftRightCalibration,
+            skipErrorLink: decapod.resources.captureBlocked,
+            skipSuccessLink: decapod.resources.capture
         }
     });
     
