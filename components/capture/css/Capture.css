@@ -9,6 +9,10 @@ body {
 	min-height:600px;
 }
 
+h1 {
+border-bottom-style: none !important;
+}
+
 .ds-capture {
 	background-color:#FFFFFF;
 	height:100%;
@@ -91,9 +95,6 @@ a.ds-toolbar-button.export {
 a.ds-toolbar-button.recalibrate {
     background-image: url(./images/recalibrate.png);
     background-position: 23px 3px;    
-}
-
-a.ds-button-export .ui-state-disabled {
 }
 
 a.ds-button-export:hover {
@@ -237,8 +238,33 @@ a.ds-button-export:hover {
     border-radius: 5px;
 }
 
-.fl-capture-thumbImage {
+.ds-capture-previewArea .ds-capture-export-busy {
+    position:absolute;
+    cursor:progress;
+    background: rgba(0, 0, 0, 0.8);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:100%;
 }
+
+.ds-capture-previewArea .ds-capture-export-busy img {
+position:relative;
+top:200px;
+}
+
+.ds-capture-previewArea .ds-capture-export-busy span h1 {
+color: #fff;
+
+}
+
+.ds-capture-previewArea .ds-capture-export-busy span {
+position:relative;
+top:300px;
+text-align:center;
+color: #fff;
+}
+
 
 .flc-capture-button-delete {
     margin-right: 3px;
