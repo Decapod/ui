@@ -16,7 +16,6 @@ var decapod = decapod || {};
 (function ($) {
     decapod.resources = {
         cameras: "../data/cameras.json",
-        supportedCameras: "../data/supportedCameras.json",
         testCaptureLeft: "../data/testCapture.json",
         testCaptureRight: "../data/testCapture.json",
         
@@ -24,25 +23,5 @@ var decapod = decapod || {};
         leftRightCalibration: "#_",
         capture: "#_",
         captureBlocked: "#_"
-    };
-    
-    decapod.checkCameras = function (success, error) {
-        $.ajax({
-            url: decapod.resources.cameras,
-            type: "GET",
-            dataType: "json",
-            success: success,
-            error: error
-        });
-    };
-    
-    decapod.checkSupportedCameras = function (success, error) {
-        $.ajax({
-            url: decapod.resources.supportedCameras,
-            type: "GET",
-            dataType: "json",
-            success: success,
-            error: error
-        });
     };
 })(jQuery);

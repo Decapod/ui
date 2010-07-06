@@ -25,36 +25,39 @@ https://source.fluidproject.org/svn/LICENSE.txt
             },
             
             model: {
-                "Canon": [{
-                    "model": "G10",
-                    "deviceName": "PowerShot G10"
-                }, {
-                    "model": "G11",
-                    "deviceName": "PowerShot G11"
-                }, {
-                    "model": "550D",
-                    "deviceName": "EOS 550D"
-                }],
-                "Nikon": [{
-                    "model": "D90",
-                    "deviceName": "D90"
-                }, {
-                    "model": "D300",
-                    "deviceName": "D300"
-                }, {
-                    "model": "D3S",
-                    "deviceName": "D3S"
-                }],
-                "Sony": [{
-                    "model": "DSLR-A500",
-                    "deviceName": "α500"
-                }, {
-                    "model": "DSLR-A290",
-                    "deviceName": "α290"
-                }, {
-                    "model": "NEX-5",
-                    "deviceName": "NEX-5"
-                }]
+                "status": "oneCameraCompatible",
+                "supportedCameras": {
+                    "Canon": [{
+                        "name": "Canon PowerShot G10",
+                        "label": "PowerShot G10"
+                    }, {
+                        "name": "Canon PowerShot G11",
+                        "label": "PowerShot G11"
+                    }, {
+                        "name": "Canon 550D",
+                        "label": "EOS 550D"
+                    }],
+                    "Nikon": [{
+                        "name": "Nikon D90",
+                        "label": "D90"
+                    }, {
+                        "name": "Nikon D300",
+                        "label": "D300"
+                    }, {
+                        "name": "Nikon D3S",
+                        "label": "D3S"
+                    }],
+                    "Sony": [{
+                        "name": "Sony DSLR-A500",
+                        "label": "α500"
+                    }, {
+                        "name": "Sony DSLR-A290",
+                        "label": "α290"
+                    }, {
+                        "name": "Sony NEX-5",
+                        "label": "NEX-5"
+                    }]
+                }
             }
         };
         
@@ -73,14 +76,14 @@ https://source.fluidproject.org/svn/LICENSE.txt
             var manufacturers = component.locate("manufacturers");
             var manIdx = 0;
             
-            jqUnit.assertEquals("The label should be set correctly", component.options.strings.label, component.locate("label").text());
+            jqUnit.assertEquals("The componentHeader should be set correctly", component.options.strings.componentHeader, component.locate("componentHeader").text());
             
-            $.each(component.model, function (manufacturer, devices) {
+            $.each(component.model.supportedCameras, function (manufacturer, devices) {
                 var cameraMan = manufacturers.eq(manIdx);
-                var cameraDev = component.locate("model", cameraMan);
+                var cameraDev = component.locate("deviceLabel", cameraMan);
                 jqUnit.assertEquals("The manufacturer name should be set correctly", manufacturer, component.locate("manufacturerName", cameraMan).text());
                 $.each(devices, function (idx, device) {
-                    jqUnit.assertEquals("The camera model should be set correctly", device.deviceName, cameraDev.eq(idx).text());
+                    jqUnit.assertEquals("The camera deviceLabel should be set correctly", device.label, cameraDev.eq(idx).text());
                 });
                 manIdx++;
             });
