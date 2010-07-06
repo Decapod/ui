@@ -201,7 +201,13 @@ var decapod = decapod || {};
             };
             
             that.startProgress();
-            decapod.checkCameras(update, update);
+            $.ajax({
+                url: that.options.urls.cameras,
+                type: "GET",
+                dataType: "json",
+                success: update,
+                error: update
+            });
         };
         
         setup(that);
@@ -267,7 +273,8 @@ var decapod = decapod || {};
         urls: {
             continueLink: decapod.resources.leftRightCalibration,
             skipErrorLink: decapod.resources.captureBlocked,
-            skipSuccessLink: decapod.resources.capture
+            skipSuccessLink: decapod.resources.capture,
+            cameras: decapod.resources.cameras
         }
     });
     
