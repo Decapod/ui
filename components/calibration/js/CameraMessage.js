@@ -119,18 +119,18 @@ var decapod = decapod || {};
         that.events.afterRender.fire(that.model);
     };
     
-    var initSubcomponents = function (that) {
-        that.progress = fluid.initSubcomponent(that, "progressMessage", [that.locate("progressContainer"), fluid.COMPONENT_OPTIONS]);
+    var initSupportedCameras = function (that) {
         that.supportedCameras = fluid.initSubcomponent(that, "supportedCameras", [that.locate("supportedCamerasContainer"), {model: that.model}]);
         that.supportedCameras.hide();
     };
     
     var setup = function (that) {
         that.model = that.options.initialModel;
+        that.progress = fluid.initSubcomponent(that, "progressMessage", [that.locate("progressContainer"), fluid.COMPONENT_OPTIONS]);
         
         if (that.model.status) {
             that.currentStatus();
-            initSubcomponents(that);
+            initSupportedCameras(that);
         } else {
             that.testCameras();
         }
@@ -193,11 +193,12 @@ var decapod = decapod || {};
          */
         that.testCameras = function () {
             var update = function (result) {
-                that.updateStatus(result.status);
-                that.stopProgress();
+                that.model = result;
+                render(that);
                 if (!that.supportedCameras) {
-                    initSubcomponents(that);
+                    initSupportedCameras(that);
                 }
+                that.stopProgress();
             };
             
             that.startProgress();
