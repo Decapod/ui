@@ -24,24 +24,4 @@ var decapod = decapod || {};
         capture: "#_",
         captureBlocked: "#_"
     };
-    
-    decapod.checkCameras = function (success, error) {
-        $.ajax({
-            url: decapod.resources.cameras,
-            type: "GET",
-            dataType: "json",
-            success: success,
-            error: error
-        });
-    };
-    
-    decapod.checkSupportedCameras = function (success, error) {
-        $.ajax({
-            url: decapod.resources.cameras,
-            type: "GET",
-            dataType: "json",
-            success: success,
-            error: error
-        });
-    };
 })(jQuery);

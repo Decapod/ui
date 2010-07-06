@@ -93,13 +93,18 @@ var decapod = decapod || {};
         that.model = that.options.model;
         
         if (!that.model.supportedCameras) {
-            decapod.checkSupportedCameras(function (model) {
-                that.model = model;
-                that.refreshView();
-            }, 
-            function () {
-                that.model.supportedCameras = {};
-                that.refreshView();
+            $.ajax({
+                url: that.options.url,
+                type: "GET",
+                dataType: "json",
+                success: function (model) {
+                    that.model = model;
+                    that.refreshView();
+                },
+                error: function () {
+                    that.model.supportedCameras = {};
+                    that.refreshView();
+                }
             });
         } else {
             that.refreshView();
@@ -158,7 +163,9 @@ var decapod = decapod || {};
         
         model: {
             supportedCameras: null
-        }
+        },
+        
+        url: decapod.resources.cameras
     });
     
 })(jQuery);
