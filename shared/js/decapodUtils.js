@@ -17,6 +17,8 @@ var decapod = decapod || {};
     decapod.resources = {
         cameras: "../data/cameras.json",
         supportedCameras: "../data/supportedCameras.json",
+        testCaptureLeft: "../data/testCapture.json",
+        testCaptureRight: "../data/testCapture.json",
         
         bookManagement: "#_", 
         leftRightCalibration: "#_",

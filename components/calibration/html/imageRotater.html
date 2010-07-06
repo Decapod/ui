@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="../css/ImageRotater.css" />
+                
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.core.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
+        <script type="text/javascript" src="../../../shared/js/decapodUtils.js"></script>
+        <script type="text/javascript" src="../js/ImageRotater.js"></script>
+        
+        <title>Image Rotater</title>
+    </head>
+    
+    <body>
+        <div class="dc-imageRotater">
+            <a href="#_" class="dc-imageRotater-ccw">ccw</a>
+            <a href="#_" class="dc-imageRotater-cw">cw</a>
+            <img src="" class="dc-imageRotater-image" />
+            <a href="#_" class="dc-imageRotater-capture">capture</a>
+        </div>
+        
+        <script type="text/javascript"> 
+            decapod.imageRotater(".dc-imageRotater");
+        </script>        
+    </body>
+</html>
