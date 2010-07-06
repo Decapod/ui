@@ -16,7 +16,6 @@ var decapod = decapod || {};
 (function ($) {
     decapod.resources = {
         cameras: "../data/cameras.json",
-        supportedCameras: "../data/supportedCameras.json",
         testCaptureLeft: "../data/testCapture.json",
         testCaptureRight: "../data/testCapture.json",
         
@@ -38,7 +37,7 @@ var decapod = decapod || {};
     
     decapod.checkSupportedCameras = function (success, error) {
         $.ajax({
-            url: decapod.resources.supportedCameras,
+            url: decapod.resources.cameras,
             type: "GET",
             dataType: "json",
             success: success,
