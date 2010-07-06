@@ -1,5 +1,4 @@
 body {
-	background-image:url("./images/background.gif");
 	position:absolute;
 	bottom:0px;
 	left:0px;
@@ -9,15 +8,10 @@ body {
 	min-height:600px;
 }
 
-h1 {
-border-bottom-style: none !important;
-}
-
 .ds-capture {
 	background-color:#FFFFFF;
 	height:100%;
 }
-
 
 .content {
 	background:none repeat scroll 0 0 #FFFFFF;
@@ -28,8 +22,6 @@ border-bottom-style: none !important;
 }
 
 .header {
-	background-color:#333333;
-	background-image:url("../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png");
 	height:102px;
 	left:0;
 	margin-bottom:0px;
@@ -37,54 +29,6 @@ border-bottom-style: none !important;
 	position:absolute;
 	right:0;
 	top:0;
-}
-
-/* A flat list. Used for breadcrumb. */
-.flat-list, .flat-list li {
-    margin: 0;
-    padding: 0;
-    display: inline;
-    list-style: none;
-}
-
-.ds-decapod-navbar .flat-list li:before {
-    content: ">";
-    padding-left:0.5em;
-    padding-right:0.5em;
-}
-
-/* Breadcrumb: navigation bar gradient background */
-.ds-decapod-navbar {
-    background: -moz-linear-gradient(top,  #f1f1f1,  #d2d2d2);
-    height: 30px;
-    padding-left:10px;
-    padding-top:10px;
-    font-size: 1.1em;
-    font-weight:bold;    
-}
-
-/* Toolbar: toolbar gradient background */
-.ds-decapod-toolbar {
-    background: -moz-linear-gradient(top,  #f7f7f7,  #e8e8e8);
-    height: 62px;
-    left:0;
-    right:0;
-    bottom:0;
-    padding-top:38px;
-    padding-left:10px;
-    padding-right:10px;
-}
-
-a.ds-toolbar-button {
-    padding-top:33px; /*offset the height of the navbar */
-    width: 50px;
-    height: 25px;
-	color:#000 !important;
-	text-decoration:none;
-    text-align:center;
-    background-repeat: no-repeat;
-    margin-left:10px;
-    margin-right:10px;
 }
 
 a.ds-toolbar-button.export {
@@ -95,11 +39,6 @@ a.ds-toolbar-button.export {
 a.ds-toolbar-button.recalibrate {
     background-image: url(./images/recalibrate.png);
     background-position: 23px 3px;    
-}
-
-a.ds-button-export:hover {
-    color: #999999 !important; 
-    cursor: pointer;
 }
 
 .ds-thumbnailContainer {
@@ -221,10 +160,6 @@ a.ds-button-export:hover {
     margin-left: auto;
 }
 
-
-.ui-state-disabled span {
-    cursor: default;
-}
 
 .fl-theme-coal .fl-grid li {
     width: 150px;
@@ -349,26 +284,6 @@ a.fl-takePicture:hover {
 	color:#fff !important;
 }
 
-/*
-a.fl-export {
-	-moz-border-radius:8px 8px 8px 8px;
-	-moz-box-shadow:0 3px 5px rgba(0, 0, 0, 0.25);
-    background-color: #cfcfcf;
-	border:2px outset #efefef;
-    width: 200px;
-    height: 25px;
-    color: #000;
-	margin:10px;
-	display:block;
-	text-decoration:none;
-    text-align:center;
-    padding-top: 4px;
-}
-
-a.fl-export:hover {
-	color:#fff !important;
-}*/
-
 .fl-capture-placeholder {
     background: #fff;
     border: 1px dotted #778899;
@@ -378,18 +293,5 @@ a.fl-export:hover {
     width:69px;
     height: 92px;
     margin: 4px 2px 0px 2px;
-}
-
-
-
-
-/*Override default style */
-.fl-theme-coal .ui-dialog {
-    background:#fff;
-}
-
-/*Override default style */
-.fl-theme-coal .ui-dialog .ui-dialog-buttonpane {
-    background:#fff;
 }
 
