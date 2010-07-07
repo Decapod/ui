@@ -131,3 +131,7 @@ a.ds-navigationBar-hereElement {
 .ds-cameraMessage-showProgress .ds-cameraMessage-messageContainer {
     display: none;
 }
+
+.ds-cameraMessage-supportedCameras {
+    display: none;
+}

@@ -17,24 +17,24 @@ var decapod = decapod || {};
     
     var generateCutpoints = function (selectors) {
         return [
-            {id: "label", selector: selectors.label},
+            {id: "componentHeader", selector: selectors.componentHeader},
             {id: "manufacturers:", selector: selectors.manufacturers},
             {id: "manufacturerName", selector: selectors.manufacturerName},
-            {id: "model:", selector: selectors.model}
+            {id: "deviceLabel:", selector: selectors.deviceLabel}
         ];
     };
     
-    var generateTree = function (model, strings) {
+    var generateTree = function (cameras, strings) {
         var tree = [{
-            ID: "label",
-            value: strings.label
-        }];
+            ID: "componentHeader",
+            value: strings.componentHeader
+        }]; 
         
-        $.each(model, function (manufacturer, devices) {
+        $.each(cameras, function (manufacturer, devices) {
             var manufacturerNodes = fluid.transform(devices, function (device) {
                 return {
-                    ID: "model:",
-                    value: device.deviceName
+                    ID: "deviceLabel:",
+                    value: device.label
                 };
             });
             
@@ -55,7 +55,7 @@ var decapod = decapod || {};
     };
     
     var render = function (that) {
-        var tree = generateTree(that.model, that.options.strings);
+        var tree = generateTree(that.model.supportedCameras, that.options.strings);
         var opts = {
             cutpoints: generateCutpoints(that.options.selectors)
         };
@@ -71,19 +71,19 @@ var decapod = decapod || {};
         that.events.afterRender.fire();
     };
     
-    var addHeadingRole = function(elm){
+    var addHeadingRole = function (elm) {
         if (!elm.is(":header")) {
             elm.attr("role", "heading");
         }
     };
     
     var addAria = function (that) {
-        addHeadingRole(that.locate("label"));
+        addHeadingRole(that.locate("componentHeader"));
         
         that.locate("manufacturerName").each(function (idx, element) {
             var elm = $(element);
             addHeadingRole(elm);
-            that.locate("models").eq(idx).attr("aria-labelledby", fluid.allocateSimpleId(elm));
+            that.locate("devices").eq(idx).attr("aria-labelledby", fluid.allocateSimpleId(elm));
         });
         
         that.locate("closeButton").attr("role", "button");
@@ -92,17 +92,22 @@ var decapod = decapod || {};
     var setup = function (that) {
         that.model = that.options.model;
         
-        if (!that.model) {
-            decapod.checkSupportedCameras(function (model) {
-                that.model = model;
-                that.refreshView();
-            }, 
-            function () {
-                that.model = {};
-                that.refreshView();
+        if (!that.model.supportedCameras) {
+            $.ajax({
+                url: that.options.url,
+                type: "GET",
+                dataType: "json",
+                success: function (model) {
+                    that.model = model;
+                    that.refreshView();
+                },
+                error: function () {
+                    that.model.supportedCameras = {};
+                    that.refreshView();
+                }
             });
         } else {
-            refreshView();
+            that.refreshView();
         }
     };
     
@@ -142,21 +147,25 @@ var decapod = decapod || {};
         selectors: {
             manufacturers: ".dc-supportedCameras-manufacturer",
             manufacturerName: ".dc-supportedCameras-manufacturerName",
-            models: ".dc-supportedCameras-models",
-            model: ".dc-supportedCameras-model",
-            label: ".dc-supportedCameras-label",
+            devices: ".dc-supportedCameras-devices",
+            deviceLabel: ".dc-supportedCameras-deviceLabel",
+            componentHeader: ".dc-supportedCameras-componentHeader",
             closeButton: ".dc-supportedCameras-closeButton"
         },
         
         strings: {
-            label: "Supported Cameras"
+            componentHeader: "Supported Cameras"
         },
         
         events: {
             afterRender: null
         },
         
-        model: null
+        model: {
+            supportedCameras: null
+        },
+        
+        url: decapod.resources.cameras
     });
     
 })(jQuery);
