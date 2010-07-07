@@ -1,8 +1,4 @@
 body {
-<<<<<<< local
-=======
-	background-image:url("./images/background.gif");
->>>>>>> other
 	position:absolute;
 	bottom:0px;
 	left:0px;
@@ -26,13 +22,7 @@ body {
 }
 
 .header {
-<<<<<<< local
 	height:102px;
-=======
-	background-color:#333333;
-	background-image:url("../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png");
-	height:106px;
->>>>>>> other
 	left:0;
 	margin-bottom:0px;
 	padding-top:0px;
@@ -41,62 +31,17 @@ body {
 	top:0;
 }
 
-<<<<<<< local
 a.ds-toolbar-button.export {
     background-image: url(./images/export.png);
     background-position: 12px 3px;        
-=======
-/* Toolbar: toolbar gradient background */
-.fl-decapod-toolbar
-{
-    background: -moz-linear-gradient(top,  #f7f7f7,  #e8e8e8);
-    height: 64px;
-    left:0;
-    right:0;
-    top:0;
-    bottom:0;
 }
 
-.dca-navigation-breadcrumb {
-
->>>>>>> other
-}
-
-<<<<<<< local
 a.ds-toolbar-button.recalibrate {
     background-image: url(./images/recalibrate.png);
     background-position: 23px 3px;    
-=======
-
-
-
-/* Breadcrumb: navigation bar gradient background */
-.fl-decapod-navbar
-{
-    background: -moz-linear-gradient(top,  #f1f1f1,  #d2d2d2);
-    height: 42px;
 }
 
-/* Breadcrumb */
-.flat-list, .flat-list li {
- margin: 0;
- padding: 0;
- display: inline;
- list-style: none;
-}
-.flat-list li {
- padding-right: 0.75em;
->>>>>>> other
-}
-
-<<<<<<< local
 .ds-thumbnailContainer {
-=======
-
-
-
-.fl-thumbnailContainer {
->>>>>>> other
 	position: absolute; 
 	top: 0pt; 
 	left: 0pt; 

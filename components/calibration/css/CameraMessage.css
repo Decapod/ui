@@ -97,7 +97,7 @@ a.ds-navigationBar-hereElement {
 .ds-cameraMessage-retryAndContinue a {
     font-size: 18px;
     font-weight: bold;
-    background:url("../html/images/cameraMessage_retry_15x15.png") no-repeat scroll right 0px transparent;
+    background:url("images/cameraMessage_retry_15x15.png") no-repeat scroll right 0px transparent;
     padding-right: 23px;
 }
 
@@ -108,7 +108,7 @@ a.ds-navigationBar-hereElement {
 .ds-cameraMessage-skipLink a {
     font-size: 18px;
     font-weight: bold;
-    background:url("../html/images/cameraMessage_go_15x15.png") no-repeat scroll right 0px transparent;
+    background:url("images/cameraMessage_go_15x15.png") no-repeat scroll right 0px transparent;
     padding-right: 23px;
 }
 
