@@ -1,0 +1,11 @@
+.ds-imageRotater-90 {
+    -moz-transform: rotate(90deg);
+}
+
+.ds-imageRotater-180 {
+    -moz-transform: rotate(180deg);
+}
+
+.ds-imageRotater-270 {
+    -moz-transform: rotate(270deg);
+}

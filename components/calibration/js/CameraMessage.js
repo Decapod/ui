@@ -119,18 +119,18 @@ var decapod = decapod || {};
         that.events.afterRender.fire(that.model);
     };
     
-    var initSubcomponents = function (that) {
-        that.progress = fluid.initSubcomponent(that, "progressMessage", [that.locate("progressContainer"), fluid.COMPONENT_OPTIONS]);
-        that.supportedCameras = fluid.initSubcomponent(that, "supportedCameras", [that.locate("supportedCamerasContainer"), fluid.COMPONENT_OPTIONS]);
+    var initSupportedCameras = function (that) {
+        that.supportedCameras = fluid.initSubcomponent(that, "supportedCameras", [that.locate("supportedCamerasContainer"), {model: that.model}]);
+        that.supportedCameras.hide();
     };
     
     var setup = function (that) {
         that.model = that.options.initialModel;
-        initSubcomponents(that);
-        that.supportedCameras.hide();
+        that.progress = fluid.initSubcomponent(that, "progressMessage", [that.locate("progressContainer"), fluid.COMPONENT_OPTIONS]);
         
         if (that.model.status) {
             that.currentStatus();
+            initSupportedCameras(that);
         } else {
             that.testCameras();
         }
@@ -193,12 +193,22 @@ var decapod = decapod || {};
          */
         that.testCameras = function () {
             var update = function (result) {
-                that.updateStatus(result.status);
+                that.model = result;
+                render(that);
+                if (!that.supportedCameras) {
+                    initSupportedCameras(that);
+                }
                 that.stopProgress();
             };
             
             that.startProgress();
-            decapod.checkCameras(update, update);
+            $.ajax({
+                url: that.options.urls.cameras,
+                type: "GET",
+                dataType: "json",
+                success: update,
+                error: update
+            });
         };
         
         setup(that);
@@ -264,7 +274,8 @@ var decapod = decapod || {};
         urls: {
             continueLink: decapod.resources.leftRightCalibration,
             skipErrorLink: decapod.resources.captureBlocked,
-            skipSuccessLink: decapod.resources.capture
+            skipSuccessLink: decapod.resources.capture,
+            cameras: decapod.resources.cameras
         }
     });
     

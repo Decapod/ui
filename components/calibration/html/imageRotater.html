@@ -3,7 +3,7 @@
     
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link rel="stylesheet" type="text/css" href="../css/SupportedCameras.css" />
+        <link rel="stylesheet" type="text/css" href="../css/ImageRotater.css" />
                 
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.core.js"></script>
@@ -13,25 +13,21 @@
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
         <script type="text/javascript" src="../../../shared/js/decapodUtils.js"></script>
-        <script type="text/javascript" src="../js/SupportedCameras.js"></script>
+        <script type="text/javascript" src="../js/ImageRotater.js"></script>
         
-        <title>Supported Cameras</title>
+        <title>Image Rotater</title>
     </head>
     
     <body>
-        <div class="dc-supportedCameras">
-            <h2 class="dc-supportedCameras-componentHeader">Cameras</h2>
-            <a href="#_" class="dc-supportedCameras-closeButton">x</a>
-            <div class="dc-supportedCameras-manufacturer">
-                <h3 class="dc-supportedCameras-manufacturerName">Brand</h3>
-                <ul class="dc-supportedCameras-devices">
-                    <li class="dc-supportedCameras-deviceLabel">Model</li>
-                </ul>
-            </div>
+        <div class="dc-imageRotater">
+            <a href="#_" class="dc-imageRotater-ccw">ccw</a>
+            <a href="#_" class="dc-imageRotater-cw">cw</a>
+            <img src="" class="dc-imageRotater-image" />
+            <a href="#_" class="dc-imageRotater-capture">capture</a>
         </div>
         
-        <script type="text/javascript">
-            decapod.supportedCameras(".dc-supportedCameras");
+        <script type="text/javascript"> 
+            decapod.imageRotater(".dc-imageRotater");
         </script>        
     </body>
 </html>
