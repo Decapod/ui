@@ -9,6 +9,11 @@ height:300px;
 background-color:#fff;
 text-align:center;
 border:2px dotted #6dacc6;
+margin-top:50px;
+}
+
+.ds-page h2 {
+margin-top: -50px;
 }
 
 .ds-button-swap {
@@ -46,7 +51,25 @@ margin-right:3px;
 margin-top:3px;
 }
 
+.ds-calibrationMessage-done {
+    background:url("images/cameraMessage_go_15x15.png");
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    padding-right: 23px;
+    padding-top:20px;
+}
+
 
 h1 {
 text-align:center;
+}
+
+.ds-recapture {
+position:relative;
+text-align:center;
+top:265px;
+}
+
+ds-recapture a{
+text-decoration:none;
 }

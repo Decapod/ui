@@ -4,7 +4,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Camera Message</title>
         
-		<link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-layout.css" />
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
+        
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-reset.css" />
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-layout.css" />
+
         <link rel="stylesheet" type="text/css" href="../css/CameraMessage.css" />
         
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
@@ -22,23 +26,38 @@
         <script type="text/javascript" src="../js/CameraMessage.js"></script>
     </head>
 	<body>
-		<div class="dc-cameraMessage">
+	    <!-- NAVIGATION BAR -->
+	    
+		<div class="ds-navigationBar">
+			<ul class="ds-navigationBar-flatList">
+				<li><img src="images/navigationBar_home.png"><a href="#">Book Management</a></li>
+				<img class="ds-navigationBar-chevron" src="images/navigationBar_chevron.png">
+				<li><img src="images/navigationBar_calibration.png"><a class="ds-navigationBar-hereElement" href="#">Camera Calibration</a></li>
+			</ul>
+        </div>
+		
+		<!-- MAIN MESSAGE AREA -->
+		
+		<div class="dc-cameraMessage ds-cameraMessage">
 		    <div class="dc-cameraMessage-progress ds-cameraMessage-progress">
                 <p class="dc-progressMessage-message">Profiling</p>
                 <p class="dc-progressMessage-courtesyMessage">Please wait</p>
                 <img src=""> <!-- insert path to progress indicator -->
                 <a href="#_" class="dc-progressMessage-cancel">Cancel</a>
                 <p class="dc-progressMessage-cancelInfo">(will cancel)</p>
-                </div>
+            </div>
             <div class="dc-cameraMessage-messageContainer ds-cameraMessage-messageContainer">
-                <p class="dc-cameraMessage-message">Error</p>
-                <p>
-                    <span class="dc-cameraMessage-supportedCamerasMessage">Decapod requires two matching, </span> 
-                    <a href="#_" class="dc-cameraMessage-supportedCamerasButton">supported cameras</a>
-                </p>
-                <a href="#_" class="dc-cameraMessage-retryAndContinue">I've connected the cameras, Try again</a>
-                <a href="#_" class="dc-cameraMessage-skipLink">Skip camera setup</a>
-                <p class="dc-cameraMessage-warning">(You won't be able to capture)</p>
+                <div class="ds-cameraMessage-errorMessage">
+                    <div class="dc-cameraMessage-message">Error.</div>
+                    <span class="dc-cameraMessage-supportedCamerasMessage">Decapod requires two matching, </span>
+                    <a href="#_" class="dc-cameraMessage-supportedCamerasButton">supported cameras</a>.
+                </div>
+                
+                <div class="ds-cameraMessage-errorOptions">
+                    <div class="ds-cameraMessage-retryAndContinue"><a href="#_" class="dc-cameraMessage-retryAndContinue">I've connected the cameras, Try again</a></div>
+                    <div class="ds-cameraMessage-skipLink"><a href="#_" class="dc-cameraMessage-skipLink">Skip camera setup</a></div>
+                    <div class="dc-cameraMessage-warning ds-cameraMessage-errorOptions-warning">(You won't be able to capture)</div>
+                </div>
             </div>
             <div class="dc-cameraMessage-supportedCameras ds-cameraMessage-supportedCameras">
                 <h2 class="dc-supportedCameras-componentHeader">Cameras</h2>
