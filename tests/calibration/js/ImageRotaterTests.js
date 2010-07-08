@@ -15,12 +15,16 @@ https://source.fluidproject.org/svn/LICENSE.txt
     
     var component;
     var eventFired = false;
+    var currentRotation;
     
     var setup = function () {
         var opts = {
             listeners: {
                 afterRender: function () {
                     eventFired = true;
+                },
+                rotated: function (rotation) {
+                    currentRotation = rotation;
                 }
             }, 
             model: {
@@ -35,6 +39,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
     var teardown = function () {
         component = null;
         eventFired = false;
+        currentRotation = null;
     };
     
     var rotationAsserts = function (component, expectedRotation) {
@@ -42,6 +47,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             
             jqUnit.assertEquals("The model should reflect the rotation", expectedRotation, component.model.rotation);
             jqUnit.assertTrue("The css class, " + style + ", should be added to rotate the image", component.locate("image").hasClass(style));
+            jqUnit.assertEquals("The rotation event should have fired with the correct rotation amount", expectedRotation, currentRotation);
     };
     
     $(document).ready(function () {

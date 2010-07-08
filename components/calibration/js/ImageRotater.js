@@ -79,6 +79,12 @@ var decapod = decapod || {};
         return newRotation;
     };
     
+    var rotate = function (that, rotation) {
+        setRotation(that.model, rotation);
+        setRotationStyle(that);
+        that.events.rotated.fire(that.model.rotation);
+    };
+    
     var render = function (that) {
         var tree = generateTree(that.model, that.options);
         var opts = {
@@ -113,16 +119,14 @@ var decapod = decapod || {};
          * Rotates the displayed image clockwise (90 degrees)
          */
         that.rotateCW = function () {
-            setRotation(that.model, 90);
-            setRotationStyle(that);
+            rotate(that, 90);
         };
         
         /**
          * Rotates the displayed image counter clockwise (90 degrees)
          */
         that.rotateCCW = function () {
-            setRotation(that.model, -90);
-            setRotationStyle(that);
+            rotate(that, -90);
         };
         
         /**
@@ -181,7 +185,8 @@ var decapod = decapod || {};
         },
         
         events: {
-            afterRender: null
+            afterRender: null,
+            rotated: null
         },
         
         model: {
