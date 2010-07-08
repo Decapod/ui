@@ -1,3 +1,13 @@
+body {
+font-family: 'Droid Sans', arial, serif;
+background-color: #F8F8F8;
+position: absolute;
+bottom: 0px;
+left: 0px;
+right: 0px;
+top: 0px;
+}
+
 h1 {
     border-bottom-style: none !important;
 }
@@ -16,14 +26,14 @@ header {
 }
 
 
-.ds-decapod-navbar .flat-list li:before {
+.ds-navigationBar .flat-list li:before {
     content: ">";
     padding-left:0.5em;
     padding-right:0.5em;
 }
 
 /* Breadcrumb: navigation bar gradient background */
-.ds-decapod-navbar {
+.ds-navigationBar {
     background: -moz-linear-gradient(top,  #f1f1f1,  #d2d2d2);
     height: 30px;
     padding-left:10px;
