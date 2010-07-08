@@ -2,7 +2,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Decapod Camera Calibration</title>
+
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
         
+
         <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-reset.css" />
         <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-layout.css" />
         <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-theme-coal.css" />
@@ -24,28 +27,41 @@
     </head>
     
     <body class="fl-theme-coal">
-        <div class="fl-container-flex header">
-            <div class="ds-decapod-navbar"><ol class="flat-list"><lh>Decapod</lh><li>Book Management</li><li>Camera Calibration</li></ol></div>
+	    <!-- NAVIGATION BAR -->
+	    
+		<div class="ds-navigationBar">
+			<ul class="ds-navigationBar-flatList">
+				<li><img src="images/navigationBar_home.png"><a href="#">Book Management</a></li>
+				<img class="ds-navigationBar-chevron" src="images/navigationBar_chevron.png">
+				<li><img src="images/navigationBar_calibration.png"><a class="ds-navigationBar-hereElement" href="#">Camera Calibration</a></li>
+			</ul>
         </div>
-        
+
+        <!-- MAIN PANEL -->
+
         <h1>Adjust page rotation and order</h1>
         
         <div class="fl-centered ds-left-right-calibration">
             <div class="ds-button-swap"><a href="#">Swap</a></div>
             
+
             <div class="fl-force-left ds-page">
+                <h2>Left Page</h2>
                 <div class="ds-button-rotate-left"><a href="#"><img src="../css/images/rotate-left.png"alt="Rotate image counter-clockwise."></a></div>
                 <div class="ds-button-rotate-right"><a href="#"><img src="../css/images/rotate-right.png"alt="Rotate image clockwise."></a></div>
                 <img class="ds-page-left-image dc-page-left-image">
+                <a href="#" class="dc-recapture-right ds-recapture">Do another test capture</a>
             </div>
             
             <div class="fl-force-right ds-page">
+                <h2>Right Page</h2>
                 <div class="ds-button-rotate-left"><a href="#"><img src="../css/images/rotate-left.png"alt="Rotate image counter-clockwise."></a></div>
                 <div class="ds-button-rotate-right"><a href="#"><img src="../css/images/rotate-right.png"alt="Rotate image clockwise."></a></div>
                 <img class="ds-page-right-image dc-page-right-image">
+                <a href="#" class="dc-recapture-right ds-recapture">Do another test capture</a>
             </div>
             
-            <div class="fl-force-right">
+            <div class="fl-force-right ds-calibrationMessage-done">
                 <a href="#">Done. Let's start / continue capturing!</a>
             </div>
         </div>
