@@ -1,0 +1,77 @@
+h1 {
+    border-bottom-style: none !important;
+}
+
+header {
+	background-color:#333333;
+	background-image:url("../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png");
+}
+
+/* A flat list. Used for breadcrumb. */
+.flat-list, .flat-list li {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    list-style: none;
+}
+
+
+.ds-decapod-navbar .flat-list li:before {
+    content: ">";
+    padding-left:0.5em;
+    padding-right:0.5em;
+}
+
+/* Breadcrumb: navigation bar gradient background */
+.ds-decapod-navbar {
+    background: -moz-linear-gradient(top,  #f1f1f1,  #d2d2d2);
+    height: 30px;
+    padding-left:10px;
+    padding-top:10px;
+    font-size: 1.1em;
+    font-weight:bold;    
+}
+
+/* Toolbar: toolbar gradient background */
+.ds-decapod-toolbar {
+    background: -moz-linear-gradient(top,  #f7f7f7,  #e8e8e8);
+    height: 62px;
+    left:0;
+    right:0;
+    bottom:0;
+    padding-top:38px;
+    padding-left:10px;
+    padding-right:10px;
+}
+
+a.ds-toolbar-button {
+    padding-top:33px; /*offset the height of the navbar */
+    width: 50px;
+    height: 25px;
+	color:#000 !important;
+	text-decoration:none;
+    text-align:center;
+    background-repeat: no-repeat;
+    margin-left:10px;
+    margin-right:10px;
+}
+
+a.ds-toolbar-button:hover {
+    color: #999999 !important; 
+    cursor: pointer;
+}
+
+.ui-state-disabled span {
+    cursor: default;
+}
+
+
+/*Override default style */
+.fl-theme-coal .ui-dialog {
+    background:#fff;
+}
+
+/*Override default style */
+.fl-theme-coal .ui-dialog .ui-dialog-buttonpane {
+    background:#fff;
+}

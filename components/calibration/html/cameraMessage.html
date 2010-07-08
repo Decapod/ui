@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Camera Message</title>
+        
+		<link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-layout.css" />
+        <link rel="stylesheet" type="text/css" href="../css/CameraMessage.css" />
+        
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+		<script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.core.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/json/js/json2.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/FluidDOMUtilities.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
+        <script type="text/javascript" src="../../../shared/js/decapodUtils.js"></script>
+		<script type="text/javascript" src="../js/ProgressMessage.js"></script>
+        <script type="text/javascript" src="../js/SupportedCameras.js"></script>
+        <script type="text/javascript" src="../js/CameraMessage.js"></script>
+    </head>
+	<body>
+		<div class="dc-cameraMessage">
+		    <div class="dc-cameraMessage-progress ds-cameraMessage-progress">
+                <p class="dc-progressMessage-message">Profiling</p>
+                <p class="dc-progressMessage-courtesyMessage">Please wait</p>
+                <img src=""> <!-- insert path to progress indicator -->
+                <a href="#_" class="dc-progressMessage-cancel">Cancel</a>
+                <p class="dc-progressMessage-cancelInfo">(will cancel)</p>
+                </div>
+            <div class="dc-cameraMessage-messageContainer ds-cameraMessage-messageContainer">
+                <p class="dc-cameraMessage-message">Error</p>
+                <p>
+                    <span class="dc-cameraMessage-supportedCamerasMessage">Decapod requires two matching, </span> 
+                    <a href="#_" class="dc-cameraMessage-supportedCamerasButton">supported cameras</a>
+                </p>
+                <a href="#_" class="dc-cameraMessage-retryAndContinue">I've connected the cameras, Try again</a>
+                <a href="#_" class="dc-cameraMessage-skipLink">Skip camera setup</a>
+                <p class="dc-cameraMessage-warning">(You won't be able to capture)</p>
+            </div>
+            <div class="dc-cameraMessage-supportedCameras ds-cameraMessage-supportedCameras">
+                <h2 class="dc-supportedCameras-componentHeader">Cameras</h2>
+                <a href="#_" class="dc-supportedCameras-closeButton">x</a>
+                <div class="dc-supportedCameras-manufacturer">
+                    <h3 class="dc-supportedCameras-manufacturerName">Brand</h3>
+                    <ul class="dc-supportedCameras-devices">
+                        <li class="dc-supportedCameras-deviceLabel">Model</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+		<script>
+			decapod.cameraMessage(".dc-cameraMessage");
+		</script>
+	</body>
+</html>
