@@ -16,6 +16,7 @@ var decapod = decapod || {};
 (function ($) {
     decapod.resources = {
         cameras: "../data/cameras.json",
+        calibration: "../data/calibration.json",
         testCaptureLeft: "../data/testCapture.json",
         testCaptureRight: "../data/testCapture.json",
         
