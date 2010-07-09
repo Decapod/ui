@@ -644,7 +644,7 @@ fluid_1_2 = fluid_1_2 || {};
             thumbImage: ".flc-capture-thumbImage",
             deleteButton: ".flc-capture-button-delete",
             
-            exportButton: ".flc-capture-button-export",
+            exportButton: ".dc-toolbar-button-export",
             takePictureButton: ".flc-capture-button-takePicture",
             imagePreview: ".flc-capture-image-preview",
             
