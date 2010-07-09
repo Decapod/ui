@@ -127,14 +127,18 @@ var decapod = decapod || {};
          * Shows the entire component
          */
         that.show = function () {
-            that.container.show();
+            // that.container.show();
+
+            that.container.slideDown("slow");
         };
         
         /**
          * Hides the entire component
          */
         that.hide = function () {
-            that.container.hide();
+            // that.container.hide();
+            
+            that.container.slideUp("slow");
         };
         
         setup(that);
