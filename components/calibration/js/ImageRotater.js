@@ -37,7 +37,7 @@ var decapod = decapod || {};
             } else {
                 tree.push({
                     ID: stringName,
-                    target: model.image,
+                    target: model.image + "?" + (new Date()).getTime(),
                     decorators: [{
                         type: "attrs",
                         attributes: {alt: string}
@@ -69,12 +69,7 @@ var decapod = decapod || {};
     };
     
     var setRotation = function (model, rotation) {
-        var newRotation = (model.rotation + rotation) % 360;
-        
-        if (newRotation < 0) {
-            newRotation = newRotation + 360;
-        }
-        
+        var newRotation = decapod.rotationInDegrees(model.rotation, rotation);
         model.rotation = newRotation;
         return newRotation;
     };

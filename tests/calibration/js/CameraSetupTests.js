@@ -26,7 +26,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             model: {
                 left: {
                     id: "1234",
-                    rotation: 0
+                    rotation: 270
                 },
                 right: {
                     id: "4321",
@@ -43,30 +43,53 @@ https://source.fluidproject.org/svn/LICENSE.txt
         eventFired = false;
     };
     
+    var assertStringRendering = function (component) {
+        $.each(component.options.strings, function (stringName, string) {
+            jqUnit.assertEquals("The " + stringName + " should be set correctly", string, component.locate(stringName).text());
+        });
+    };
+    
+    var assertAriaRole = function (component, selector, role) {
+        jqUnit.assertEquals("The " + selector + " should have its aria role set correctly", role, component.locate(selector).attr("role"));
+    };
+    
+    var assertModelSwapped = function (originalModel, newModel) {
+        jqUnit.assertDeepEq("The left value in the model should be equal to the original right value", originalModel.right, newModel.left);
+        jqUnit.assertDeepEq("The right value in the model should be equal to the original left value", originalModel.left, newModel.right)
+    };
+    
     $(document).ready(function () {
         var tests = new jqUnit.TestCase("CameraSetup Tests", setup, teardown);
         
         tests.test("Rendering Tests", function () {
-            // assert rendering of text
-            // assert aria roles
+            var str = component.options.strings;
+            
+            assertStringRendering(component);
+            
+            assertAriaRole(component, "swapButton", "button");
+            assertAriaRole(component, "submitButton", "button");
             
             jqUnit.assertTrue("The afterRender event should have fired", eventFired);
         });
         
         tests.test("Swap Pages Test", function () {
+            var originalModel = fluid.copy(component.model);
             component.swapCameras();
-            // assert that the order of the pages has changed properly
+            assertModelSwapped(originalModel, component.model);
         });
         
         tests.test("Swap Pages, with Moust Click, Test", function () {
-            component.locate("").click();
-            // assert that the order of the pages has changed properly after swapping with a mouse click
+            var originalModel = fluid.copy(component.model);
+            component.locate("swapButton").click();
+            assertModelSwapped(originalModel, component.model);
         });
         
         tests.test("Model after rotation, tests", function () {
             component.leftCameraRotater.rotateCW();
             component.rightCameraRotater.rotateCCW();
-            // assert that the updated model that is returned is correct.
+            
+            jqUnit.assertEquals("The rotation value for the left camera should be updated correctly", 0, component.model.left.rotation);
+            jqUnit.assertEquals("The rotation value for the right camera should be updated correctly", 270, component.model.right.rotation);
         });
     });
 })(jQuery);
