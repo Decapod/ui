@@ -12,12 +12,14 @@
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.widget.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.mouse.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.draggable.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/json/js/json2.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/FluidDOMUtilities.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/ReordererDOMUtilities.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/GeometricManager.js"></script>
         <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/Reorderer.js"></script>
         
@@ -41,27 +43,31 @@
         <div id="main" style="display:none;">
             <div class="dc-cameraSetup">
                 <h2 class="dc-cameraSetup-pageHeader">Page Header</h2>
-                <h3 class="dc-cameraSetup-leftImageHeader">Left</h3>
-                <div>
-                    <p class="dc-cameraSetup-leftCameraID">Left Camera</p>
-                    <div class="dc-cameraSetup-leftCameraRotater">
-                        <a href="#_" class="dc-imageRotater-ccw">ccw</a>
-                        <a href="#_" class="dc-imageRotater-cw">cw</a>
-                        <img src="" class="dc-imageRotater-image" />
-                        <a href="#_" class="dc-imageRotater-capture">capture</a>
-                    </div>
-                </div>
-                <a href="#_" class="dc-cameraSetup-swapButton">swap</a>
-                <h3 class="dc-cameraSetup-rightImageHeader">Right</h3>
-                <div>
+                
+                <div class="dc-cameraSetup-imageColumn">
+                    <h3 class="dc-cameraSetup-leftImageHeader">Left</h3>
                     <p class="dc-cameraSetup-rightCameraID">Right Camera</p>
-                    <div class="dc-cameraSetup-rightCameraRotater">
+                    <div class="dc-cameraSetup-leftCameraRotater dc-cameraSetup-module">
                         <a href="#_" class="dc-imageRotater-ccw">ccw</a>
                         <a href="#_" class="dc-imageRotater-cw">cw</a>
                         <img src="" class="dc-imageRotater-image" />
-                        <a href="#_" class="dc-imageRotater-capture">capture</a>
+                        <a href="#_" class="dc-imageRotater-capture">left-capture</a>
                     </div>
                 </div>
+                
+                <a href="#_" class="dc-cameraSetup-swapButton">swap</a>
+                
+                <div class="dc-cameraSetup-imageColumn">
+                    <h3 class="dc-cameraSetup-rightImageHeader">Right</h3>
+                    <p class="dc-cameraSetup-leftCameraID">Left Camera</p>
+                    <div class="dc-cameraSetup-rightCameraRotater dc-cameraSetup-module">
+                        <a href="#_" class="dc-imageRotater-ccw">ccw</a>
+                        <a href="#_" class="dc-imageRotater-cw">cw</a>
+                        <img src="" class="dc-imageRotater-image" />
+                        <a href="#_" class="dc-imageRotater-capture">right-capture</a>
+                    </div>
+                </div>
+                
                 <a href="#_" class="dc-cameraSetup-submitButton">Done</a>
             </div>
         </div>

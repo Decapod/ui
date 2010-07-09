@@ -45,17 +45,22 @@ var decapod = decapod || {};
         };
     };
     
-    var bindEvents = function (that) {
-        that.locate("swapButton").click(that.swapCameras);
+    var setButtons = function (that) {
+        var swap = that.locate("swapButton");
+        var submit = that.locate("submitButton");
         
-        that.locate("submitButton").click(that.submitCalibration);
+        swap.click(that.swapCameras);
+        swap.attr("role", "button");
+        
+        submit.click(that.submitCalibration);
+        submit.attr("role", "button");
     };
     
     var updateRotation = function (model, id, rotation) {
         if (model.left.id === id) {
-            model.left.rotation = rotation;
+            model.left.rotation = decapod.rotationInDegrees(model.left.rotation, rotation);
         } else {
-            model.right.rotation = rotation;
+            model.right.rotation = decapod.rotationInDegrees(model.right.rotation, rotation);
         }
     };
     
@@ -107,7 +112,7 @@ var decapod = decapod || {};
             that.templates = fluid.selfRender(that.container, tree, opts);
         }
         
-        bindEvents(that);
+        setButtons(that);
         initReorderer(that);
         initImageRotaters(that);
         that.events.afterRender.fire();
@@ -228,8 +233,8 @@ var decapod = decapod || {};
         },
         
         urls: {
-            calibration: "decapod.resources.calibration",
-            submitButton: "decapod.resources.capture"
+            calibration: decapod.resources.calibration,
+            submitButton: decapod.resources.capture
         }, 
         
         model: {
