@@ -59,7 +59,11 @@ https://source.fluidproject.org/svn/LICENSE.txt
             $.each(strings, function (key, string) {
                 if (key === "image") {
                     var image = component.locate(key);
-                    jqUnit.assertEquals("The url for the image should be set", component.model.image, image.attr("src"));
+                    var imageSRC = image.attr("src");
+                    var queryIdx = imageSRC.indexOf("?");
+                    
+                    jqUnit.assertNotEquals("The url to the image should be suffixed by a timestamp to prevent cacheing", -1, queryIdx);
+                    jqUnit.assertTrue("The url to the image should be set with the correct value", component.model.image === imageSRC.substring(0, queryIdx));
                     jqUnit.assertEquals("The alt text for the image should be set", string, image.attr("alt"));
                 } else {
                     var button = component.locate(key);

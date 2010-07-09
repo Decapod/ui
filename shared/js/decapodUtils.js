@@ -25,4 +25,12 @@ var decapod = decapod || {};
         capture: "#_",
         captureBlocked: "#_"
     };
+    
+    decapod.rotationInDegrees = function (startingRotation, rotationChange) {
+        var newRotation = (startingRotation + rotationChange) % 360;
+        
+        newRotation += newRotation < 0 ? 360 : 0;
+        
+        return newRotation;
+    }
 })(jQuery);
