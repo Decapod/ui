@@ -9,3 +9,48 @@
 .ds-imageRotater-270 {
     -moz-transform: rotate(270deg);
 }
+
+
+.ds-imageRotater-ccw {
+float:left;
+font-size:0.7em;
+margin-right:3px;
+margin-top:3px;
+padding-top:20px;
+text-decoration:none;
+text-indent: -1000%;
+
+cursor: pointer;
+background-image: url(./images/rotate-right.png);
+background-repeat: no-repeat;
+}
+
+
+
+
+
+.ds-imageRotater-cw {
+float:right;
+font-size:0.7em;
+margin-right:3px;
+margin-top:3px;
+padding-top:20px;
+text-decoration:none;
+text-indent: -1000%;
+
+cursor: pointer;
+background-position: 100% 0;  
+background-image: url(./images/rotate-right.png);
+background-repeat: no-repeat;
+}
+
+.ds-imageRotater-capture {
+position:relative;
+width:300px;
+top:265px;
+text-align:center;
+}
+
+.ds-imageRotater-capture a{
+font-size: 1.0em;
+}

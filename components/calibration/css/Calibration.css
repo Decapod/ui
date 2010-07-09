@@ -1,55 +1,53 @@
-.ds-left-right-calibration {
-width: 680px;
+.ds-cameraSetup h1 {
+text-align:center;
 }
 
+.ds-left-right-calibration {
+width: 700px;
+}
 
-.ds-page {
+.ds-cameraSetup-cameraImage {
+background-image:url(./images/calibration-background.png);
+
 width:300px;
 height:300px;
 background-color:#fff;
 text-align:center;
-border:2px dotted #6dacc6;
-margin-top:50px;
+-moz-border-radius: 5px;
+border:2px dashed #aeaeae;
 }
 
-.ds-page h2 {
-margin-top: -50px;
+.ds-cameraSetup-imageColumn{
+text-align:center;
 }
 
-.ds-button-swap {
+.ds-cameraSetup-imageColumn h2 {
+margin:0em 0;
+padding-top:0px;
+}
+
+.ds-cameraSetup-swapButton {
 position: relative;
-display:inline;
-width:50px;
-top:170px;
-left:20px;
-background-image:url("./images/swap.png");
-background-repeat: no-repeat;
-background-position: center top;
+left:310px;
+top: 200px;
+
+width:60px;
 height:29px;
+
 padding-top:31px;
 text-decoration:none;
 text-align:center;
 cursor: pointer;
+
+background-image:url("./images/swap.png");
+background-repeat: no-repeat;
+background-position: center top;
 }
 
-.ds-button-swap a {
+.ds-cameraSetup-swapButton a {
 text-decoration:none;
 }
 
-.ds-button-rotate-left {
-float:left;
-font-size:0.7em;
-margin-left:3px;
-margin-top:3px;
-}
-
-
-.ds-button-rotate-right {
-float:right;
-font-size:0.7em;
-margin-right:3px;
-margin-top:3px;
-}
 
 .ds-calibrationMessage-done {
     background:url("images/cameraMessage_go_15x15.png");
@@ -57,19 +55,4 @@ margin-top:3px;
     background-position: bottom right;
     padding-right: 23px;
     padding-top:20px;
-}
-
-
-h1 {
-text-align:center;
-}
-
-.ds-recapture {
-position:relative;
-text-align:center;
-top:265px;
-}
-
-ds-recapture a{
-text-decoration:none;
 }

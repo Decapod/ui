@@ -59,46 +59,39 @@
 
         <!-- MAIN PANEL -->
 
-        <div class="dc-cameraSetup">
+        <div class="ds-cameraSetup dc-cameraSetup">
 
             <h1 class="dc-cameraSetup-pageHeader">Adjust page rotation and order</h1>
             
             <div class="fl-centered ds-left-right-calibration">
-                <div class="ds-button-swap">
-                    <a href="#_" class="dc-cameraSetup-swapButton">swap</a>
+                <div>
+                <a href="#_" class="ds-cameraSetup-swapButton dc-cameraSetup-swapButton">swap</a>
                 </div>
-                
 
-                <div class="dc-cameraSetup-imageColumn fl-force-left ds-page">
+                <div class="fl-force-left dc-cameraSetup-imageColumn ds-cameraSetup-imageColumn">
                     <h2 class="dc-cameraSetup-leftImageHeader">Left Page</h2>
                     <p class="dc-cameraSetup-rightCameraID">Right Camera</p>
 
-                    <div class="dc-cameraSetup-leftCameraRotater dc-cameraSetup-module">
-                        <a href="#_" class="dc-imageRotater-ccw ds-button-rotate-left">ccw</a>
-                        <!-- <img src="../css/images/rotate-left.png"alt="Rotate image counter-clockwise."> --> 
-
-                        <a href="#_" class="dc-imageRotater-cw ds-button-rotate-right">cw</a>
-                        <!-- <img src="../css/images/rotate-right.png"alt="Rotate image clockwise."> -->
-
-                        <img src="" class="ds-page-left-image dc-imageRotater-image" />
-                        <a href="#_" class="ds-recapture dc-imageRotater-capture">Do another test capture</a>
+                    <div class="ds-cameraSetup-cameraImage dc-cameraSetup-leftCameraRotater dc-cameraSetup-module">
+                        <a href="#_" class="ds-imageRotater-ccw dc-imageRotater-ccw">ccw</a>
+                        <a href="#_" class="ds-imageRotater-cw dc-imageRotater-cw">cw</a>
+                        <div class="fl-centered"><img src="" class="dc-imageRotater-image" /></div>
+                        <div class="fl-centered ds-imageRotater-capture"><a href="#_" class="dc-imageRotater-capture">
+                        Do another test capture</a></div>
                     </div>
                 </div>
 
 
-                <div class="dc-cameraSetup-imageColumn fl-force-right ds-page">
+                <div class="fl-force-right dc-cameraSetup-imageColumn ds-cameraSetup-imageColumn">
                     <h2 class="dc-cameraSetup-rightImageHeader">Right Page</h2>                
                     <p class="dc-cameraSetup-leftCameraID">Left Camera</p>
 
-                    <div class="dc-cameraSetup-rightCameraRotater dc-cameraSetup-module">
-                        <a href="#_" class="dc-imageRotater-ccw ds-button-rotate-left">ccw</a>
-                        <!-- <img src="../css/images/rotate-right.png"alt="Rotate image counter-clockwise."> --> 
-
-                        <a href="#_" class="dc-imageRotater-cw ds-button-rotate-right">cw</a>
-                        <!-- <img src="../css/images/rotate-left.png"alt="Rotate image clockwise."> -->
-
-                        <img src="" class="ds-page-right-image dc-imageRotater-image" />
-                        <a href="#_" class="ds-recapture dc-imageRotater-capture">Do another test capture</a>
+                    <div class="ds-cameraSetup-cameraImage dc-cameraSetup-rightCameraRotater dc-cameraSetup-module">
+                        <a href="#_" class="dc-imageRotater-ccw ds-imageRotater-ccw">ccw</a>
+                        <a href="#_" class="dc-imageRotater-cw ds-imageRotater-cw">cw</a>
+                       
+                        <div class="fl-centered"><img src="" class="dc-imageRotater-image" /></div>
+                        <div class="fl-centered ds-imageRotater-capture"><a href="#_" class=" dc-imageRotater-capture">Recapture</a></div>
 
                     </div>
                 </div>
