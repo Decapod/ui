@@ -62,8 +62,7 @@
                     </ol>
                     Actions:
                     <ul>
-                    <li> Connect a pair of supported cameras, or</li>
-                    <li> <a class="flc-capture-button-import ui-state-disabled">Import images stored on attached cameras.</a> (not available in this release)</li>
+                    <li> Connect a pair of supported cameras.</li>
                     </ul>
                 </span>
             </div>
@@ -78,22 +77,30 @@
         </div>
         
         <div class="flc-capture ds-capture">
-            
-            <div class="flc-capture-message"></div>
-            
-            <div class="fl-container-flex header">
-				
-				<!-- <h1>Decapod</h1> -->
-                <div class="ds-decapod-navbar"><ol class="flat-list"><lh>Decapod</lh><li>Book Management</li><li>Capture</li></ol></div>
-
-                <div class="ds-decapod-toolbar">
-                    <div class="fl-force-right">
-                    <a class="dc-toolbar-button-recalibrate ds-toolbar-button recalibrate ui-state-disabled" href="#">Recalibrate</a> <a class="dc-toolbar-button-export ds-toolbar-button export ui-state-disabled" href="#">Export</a>
-                    </div>
-                </div>
+        
+        <!-- MESSAGES (To be deprecated) -->
+        <div class="flc-capture-message"></div>
+        
+            <!-- NAVIGATION BAR -->
+            <div class="ds-navigationBar">
+                <ul class="ds-navigationBar-flatList">
+                    <li><img src="../../../shared/images/navigationBar_home.png"><a href="#">Book Management</a></li>
+                    <img class="ds-navigationBar-chevron" src="../../../shared/images/navigationBar_chevron.png">
+                    <li><img src="../../../shared/images/missing.png"><a class="ds-navigationBar-hereElement" href="#">Capture</a></li>
+                </ul>
             </div>
             
-            <div class="fl-container-flex content">                
+            <!-- CAPTURE TOOLBAR -->
+            <div class="ds-decapod-toolbar">
+                <div class="fl-force-right">
+                <a class="dc-toolbar-button-recalibrate ds-toolbar-button recalibrate ui-state-disabled" href="#">Recalibrate</a> <a class="dc-toolbar-button-export ds-toolbar-button export ui-state-disabled" href="#">Export</a>
+                </div>
+            </div>
+        
+        
+            <div class="fl-container-flex content">    
+
+                <!-- THUMBNAIL GRID -->
 				<form class="ds-thumbnailContainer">
 					<ul class="flc-capture-reorderer fl-grid">
 						<li class="flc-capture-thumbItem">
@@ -114,6 +121,8 @@
 					</ul>
 				</form>
 			
+            
+                <!-- PREVIEW AREA -->
 				<div class="flc-capture-previewArea ds-capture-previewArea">
                     <span class="flc-capture-label-index-left"></span>
                     <span class="flc-capture-label-index-right"></span>
@@ -122,7 +131,6 @@
                 <div class="ds-capture-controls">
                     <a href="#" class="flc-capture-button-takePicture fl-takePicture">Take picture</a>
                 </div>    
-                
             </div>
             
         </div>

@@ -21,15 +21,7 @@ body {
 	top:102px; /* Top offset by header height */
 }
 
-.header {
-	height:102px;
-	left:0;
-	margin-bottom:0px;
-	padding-top:0px;
-	position:absolute;
-	right:0;
-	top:0;
-}
+/* TOOLBAR */
 
 a.ds-toolbar-button.export {
     background-image: url(./images/export.png);
@@ -41,6 +33,44 @@ a.ds-toolbar-button.recalibrate {
     background-position: 23px 3px;    
 }
 
+
+/* MESSAGES */
+
+.fl-capture-message-success {
+    background-color: #c9eac0;
+    width: 100%;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    position: absolute;
+    top: 0px;
+    text-align: center;
+    font-size: 1.2em;
+    display: none;
+    background-image: url(./images/checkmark.png);
+    background-repeat: no-repeat;
+    background-position: 30% 50%;
+	z-index:100000;
+}
+
+
+.fl-capture-message-error {
+    background-color: #f2ef98;
+    width: 100%;
+    padding-top: 2em;
+	padding-bottom: 2em;
+    position: absolute;
+    top: 0px;
+    text-align: center;
+    font-size: 1.2em;
+    display: none;
+    background-image: url(./images/info.png);
+    background-repeat: no-repeat;
+    background-position: 30% 50%;
+	z-index:100000;
+}
+
+/* THUMBNAIL GRID */
+
 .ds-thumbnailContainer {
 	position: absolute; 
 	top: 0pt; 
@@ -50,6 +80,29 @@ a.ds-toolbar-button.recalibrate {
 	width: 185px; 
 	z-index: 100;
 }
+
+.fl-reorderer-avatar {
+    cursor          : move;
+    list-style-type : none;
+    background-color: #eee;
+    border-width: 1px;
+    filter          : alpha(opacity=75);
+    opacity         : 0.75;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+	z-index:100000;
+}
+
+.fl-reorderer-avatar img {
+    display: block;
+    margin-top: 5px;
+    margin-right: auto;
+    margin-bottom: 5px;
+    margin-left: auto;
+}
+
+/* PREVIEW AREA */
+
 .ds-capture-previewArea {
 	position:absolute;
 	left:185px; /* indented x pixels as width of thumbnailContainer */
@@ -86,38 +139,7 @@ a.ds-toolbar-button.recalibrate {
     margin-left: 0.8em;
 }
 
-.fl-capture-message-success {
-    background-color: #c9eac0;
-    width: 100%;
-    padding-top: 2em;
-    padding-bottom: 2em;
-    position: absolute;
-    top: 0px;
-    text-align: center;
-    font-size: 1.2em;
-    display: none;
-    background-image: url(./images/checkmark.png);
-    background-repeat: no-repeat;
-    background-position: 30% 50%;
-	z-index:100000;
-}
-
-
-.fl-capture-message-error {
-    background-color: #f2ef98;
-    width: 100%;
-    padding-top: 2em;
-	padding-bottom: 2em;
-    position: absolute;
-    top: 0px;
-    text-align: center;
-    font-size: 1.2em;
-    display: none;
-    background-image: url(./images/info.png);
-    background-repeat: no-repeat;
-    background-position: 30% 50%;
-	z-index:100000;
-}
+/* OVERIDING COAL THEME (to be deprecated) */
 
 .fl-theme-coal .fl-grid {
     border: none;
@@ -138,26 +160,6 @@ a.ds-toolbar-button.recalibrate {
 	border: 2px solid #666;
 	opacity: .2;
 	filter: alpha(opacity=20);
-}
-
-.fl-reorderer-avatar {
-    cursor          : move;
-    list-style-type : none;
-    background-color: #eee;
-    border-width: 1px;
-    filter          : alpha(opacity=75);
-    opacity         : 0.75;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-	z-index:100000;
-}
-
-.fl-reorderer-avatar img {
-    display: block;
-    margin-top: 5px;
-    margin-right: auto;
-    margin-bottom: 5px;
-    margin-left: auto;
 }
 
 
