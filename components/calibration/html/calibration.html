@@ -46,7 +46,7 @@
         
     </head>
     
-    <body class="fl-theme-coal">
+    <body>
 	    <!-- NAVIGATION BAR -->
 	    
         <div class="ds-navigationBar">
@@ -64,7 +64,8 @@
             <h1 class="dc-cameraSetup-pageHeader">Adjust page rotation and order</h1>
             
             <div class="fl-centered ds-left-right-calibration">
-                <div>
+            
+            <div>
                 <a href="#_" class="ds-cameraSetup-swapButton dc-cameraSetup-swapButton">swap</a>
                 </div>
 
@@ -73,11 +74,10 @@
                     <p class="dc-cameraSetup-rightCameraID">Right Camera</p>
 
                     <div class="ds-cameraSetup-cameraImage dc-cameraSetup-leftCameraRotater dc-cameraSetup-module">
-                        <a href="#_" class="ds-imageRotater-ccw dc-imageRotater-ccw">ccw</a>
-                        <a href="#_" class="ds-imageRotater-cw dc-imageRotater-cw">cw</a>
+                        <div class="fl-force-left"><a href="#_" class="ds-imageRotater-control ds-imageRotater-ccw dc-imageRotater-ccw" title="Rotate image counter-clockwise.">ccw</a></div>
+                        <div><a href="#_" class="ds-imageRotater-control ds-imageRotater-cw dc-imageRotater-cw" title="Rotate image clockwise.">cw</a></div>
                         <div class="fl-centered"><img src="" class="dc-imageRotater-image" /></div>
-                        <div class="fl-centered ds-imageRotater-capture"><a href="#_" class="dc-imageRotater-capture">
-                        Do another test capture</a></div>
+                        <div class="fl-centered ds-imageRotater-capture"><a href="#_" class="dc-imageRotater-capture">Do another test capture</a></div>
                     </div>
                 </div>
 
@@ -87,9 +87,8 @@
                     <p class="dc-cameraSetup-leftCameraID">Left Camera</p>
 
                     <div class="ds-cameraSetup-cameraImage dc-cameraSetup-rightCameraRotater dc-cameraSetup-module">
-                        <a href="#_" class="dc-imageRotater-ccw ds-imageRotater-ccw">ccw</a>
-                        <a href="#_" class="dc-imageRotater-cw ds-imageRotater-cw">cw</a>
-                       
+                        <div class="fl-force-left"><a href="#_" class="ds-imageRotater-control ds-imageRotater-ccw dc-imageRotater-ccw" title="Rotate image counter-clockwise.">ccw</a></div>
+                        <div><a href="#_" class="ds-imageRotater-control ds-imageRotater-cw dc-imageRotater-cw " title="Rotate image clockwise.">cw</a></div>                       
                         <div class="fl-centered"><img src="" class="dc-imageRotater-image" /></div>
                         <div class="fl-centered ds-imageRotater-capture"><a href="#_" class=" dc-imageRotater-capture">Recapture</a></div>
 
@@ -97,7 +96,7 @@
                 </div>
                 
                 <div class="dc-cameraSetup-submitButton fl-force-right ds-calibrationMessage-done">
-                    <a href="#">Done. Let's start / continue capturing!</a>
+                    <a href="#">Done! Go to capture.</a>
                 </div>
             </div>
 
