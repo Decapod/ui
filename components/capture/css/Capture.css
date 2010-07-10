@@ -143,8 +143,8 @@ a.ds-toolbar-button.recalibrate {
 	background-color: #eee;
     margin-right:0px;
     margin-top:0px;
-    margin-left: 10px !important;
-	border:5px solid #6dacc6;
+    margin: 0 0 0 10px !important;
+    border:5px solid #6dacc6;
 	opacity: .2;
 	filter: alpha(opacity=20);
     -moz-border-radius:11px 11px 0 0;
