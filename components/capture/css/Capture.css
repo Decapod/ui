@@ -70,6 +70,13 @@ a.ds-toolbar-button.recalibrate {
 	z-index:100000;
 }
 
+.ds-capture-progress-content {
+    position: absolute;
+    top: 50%;
+    margin-top: -0.9em;
+    margin-left: 0.8em;
+}
+
 /* THUMBNAIL GRID */
 
 .ds-thumbnailContainer {
@@ -105,7 +112,7 @@ a.ds-toolbar-button.recalibrate {
     border:1px solid #000000;
 }
 
-.flc-capture-button-delete {
+.ds-capture-button-delete {
     margin-right: 3px;
     margin-top: 100px;
     padding-right: 20px;
@@ -115,7 +122,7 @@ a.ds-toolbar-button.recalibrate {
     background-position: 100% 0;
 }
 
-.flc-capture-button-delete span {
+.ds-capture-button-delete span {
     color: #fff;
 }
 
@@ -150,7 +157,7 @@ a.ds-toolbar-button.recalibrate {
     -moz-border-radius:11px 11px 0 0;
 }
 
-.fl-reorderer-movable-default .flc-capture-button-delete {
+.fl-reorderer-movable-default .ds-capture-button-delete {
     text-align:right;
     display: none;
 }
@@ -193,12 +200,6 @@ a.ds-toolbar-button.recalibrate {
     display: none;
 }
 
-.flc-capture-progress-content {
-    position: absolute;
-    top: 50%;
-    margin-top: -0.9em;
-    margin-left: 0.8em;
-}
 
 /* EXPORT BUSY OVERLAY */
 .ds-capture-previewArea .ds-capture-export-busy {
@@ -227,14 +228,14 @@ text-align:center;
 color: #fff;
 }
 
-.flc-capture-label-index {
+.ds-capture-label-index {
     display: block;
     float: left;
     text-align: left;
     padding-left: 5px;
 }
 
-.flc-capture-label-item {
+.ds-capture-label-item {
     display: block;
     color: #fff;
     background-color:#717171;
@@ -256,7 +257,7 @@ color: #fff;
 	height:2px !important;
 }
 
-.flc-capture-image-preview {
+.ds-capture-image-preview {
     margin-top: 5px;
     height: 613px;
 }
