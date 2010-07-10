@@ -1,15 +1,23 @@
 body {
-font-family: 'Droid Sans', arial, serif;
-background-color: #F8F8F8;
-position: absolute;
-bottom: 0px;
-left: 0px;
-right: 0px;
-top: 0px;
+    font-family: 'Droid Sans', arial, serif;
+    background-color: #F8F8F8;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
 }
 
 h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3a3a3a;
+    margin-bottom: 0px;
     border-bottom-style: none !important;
+}
+
+a {
+    color: #39b54a !important;
 }
 
 header {
