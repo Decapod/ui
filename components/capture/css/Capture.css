@@ -1,3 +1,7 @@
+:focus {
+    outline: 0px !important;
+}
+
 body {
 	position:absolute;
 	bottom:0px;
@@ -18,11 +22,10 @@ body {
 	bottom:0px;
 	overflow:hidden;
 	position:absolute;
-	top:102px; /* Top offset by header height */
+	top:102px; /* Top offset by toolbar and navbar height */
 }
 
 /* TOOLBAR */
-
 a.ds-toolbar-button.export {
     background-image: url(./images/export.png);
     background-position: 12px 3px;        
@@ -35,7 +38,6 @@ a.ds-toolbar-button.recalibrate {
 
 
 /* MESSAGES */
-
 .fl-capture-message-success {
     background-color: #c9eac0;
     width: 100%;
@@ -51,7 +53,6 @@ a.ds-toolbar-button.recalibrate {
     background-position: 30% 50%;
 	z-index:100000;
 }
-
 
 .fl-capture-message-error {
     background-color: #f2ef98;
@@ -81,6 +82,43 @@ a.ds-toolbar-button.recalibrate {
 	z-index: 100;
 }
 
+ .fl-grid {
+    border: none;
+    padding: 5px;
+    overflow: auto;
+    background-color: #fff;
+
+}
+
+.fl-grid li {
+    background-color:#fff;
+    width: 150px;
+    height: 140px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    margin-top: 4px;
+    margin-right: auto;
+    display: block;
+    position: relative;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border:1px solid #000000;
+}
+
+.flc-capture-button-delete {
+    margin-right: 3px;
+    margin-top: 100px;
+    padding-right: 20px;
+    background-image: url(./images/remove.png);
+    background-repeat: no-repeat;
+    cursor: pointer;
+    background-position: 100% 0;
+}
+
+.flc-capture-button-delete span {
+    color: #fff;
+}
+
 .fl-reorderer-avatar {
     cursor          : move;
     list-style-type : none;
@@ -99,6 +137,29 @@ a.ds-toolbar-button.recalibrate {
     margin-right: auto;
     margin-bottom: 5px;
     margin-left: auto;
+}
+
+.ds-thumbnailContainer ul li.fl-reorderer-movable-dragging{
+	background-color: #eee;
+    margin-right:0px;
+    margin-top:0px;
+    margin-left: 10px !important;
+	border:5px solid #6dacc6;
+	opacity: .2;
+	filter: alpha(opacity=20);
+    -moz-border-radius:11px 11px 0 0;
+}
+
+.fl-reorderer-movable-default .flc-capture-button-delete {
+    text-align:right;
+    display: none;
+}
+
+.ds-thumbnailContainer ul li.fl-reorderer-movable-selected {
+    border:5px solid #6dacc6;
+	margin:0;
+	outline:none;
+    -moz-border-radius:11px 11px 0 0;
 }
 
 /* PREVIEW AREA */
@@ -139,42 +200,7 @@ a.ds-toolbar-button.recalibrate {
     margin-left: 0.8em;
 }
 
-/* OVERIDING COAL THEME (to be deprecated) */
-
-.fl-theme-coal .fl-grid {
-    border: none;
-    padding: 5px;
-    overflow: auto;
-    background-color: #fff;
-
-}
-
-.fl-theme-coal .fl-grid li {
-    background-color:#fff;
-}
-
-
-.fl-reorderer-movable-dragging{
-	background-color: #eee;
-    margin: 5px !important;
-	border: 2px solid #666;
-	opacity: .2;
-	filter: alpha(opacity=20);
-}
-
-
-.fl-theme-coal .fl-grid li {
-    width: 150px;
-    height: 140px;
-    margin-bottom: 4px;
-    display: block;
-    margin-left: 4px;
-    margin-right: auto;
-    position: relative;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-}
-
+/* EXPORT BUSY OVERLAY */
 .ds-capture-previewArea .ds-capture-export-busy {
     position:absolute;
     cursor:progress;
@@ -192,7 +218,6 @@ top:200px;
 
 .ds-capture-previewArea .ds-capture-export-busy span h1 {
 color: #fff;
-
 }
 
 .ds-capture-previewArea .ds-capture-export-busy span {
@@ -200,33 +225,6 @@ position:relative;
 top:300px;
 text-align:center;
 color: #fff;
-}
-
-
-.flc-capture-button-delete {
-    margin-right: 3px;
-    margin-top: 100px;
-    padding-right: 20px;
-    background-image: url(./images/remove.png);
-    background-repeat: no-repeat;
-    cursor: pointer;
-    background-position: 100% 0;
-}
-
-.flc-capture-button-delete span {
-    color: #fff;
-}
-
-.fl-reorderer-movable-default .flc-capture-button-delete {
-    text-align:right;
-    display: none;
-}
-
-.fl-thumbnailContainer ul li.fl-reorderer-movable-selected {
-    border:5px solid #6dacc6;
-	margin:0;
-	outline:none;
-    -moz-border-radius:11px 11px 0 0;
 }
 
 .flc-capture-label-index {
@@ -249,11 +247,11 @@ color: #fff;
     display: none;
 }
 
-.fl-theme-coal .fl-col-fixed {
+.fl-col-fixed {
     width: 232px;
 }
 
-.fl-theme-coal .fl-reorderer-dropMarker {
+.fl-reorderer-dropMarker {
     background-color:#6E9F62 !important;
 	height:2px !important;
 }
