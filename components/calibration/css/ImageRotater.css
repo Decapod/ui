@@ -24,12 +24,12 @@
 
 .ds-imageRotater-ccw {
     margin-left:3px;
-    background-image: url(./images/rotate-left.png);
+    background-image: url(./images/rotate-counter-clockwise.png);
 }
 
 .ds-imageRotater-cw {
     margin-left:122px;
-    background-image: url(./images/rotate-right.png);
+    background-image: url(./images/rotate-clockwise.png);
 }
 
 .ds-imageRotater-capture {
