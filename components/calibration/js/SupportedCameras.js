@@ -127,18 +127,14 @@ var decapod = decapod || {};
          * Shows the entire component
          */
         that.show = function () {
-            // that.container.show();
-
-            that.container.slideDown("slow");
+            that.container.slideDown("slow", that.events.afterDisplayed.fire);
         };
         
         /**
          * Hides the entire component
          */
         that.hide = function () {
-            // that.container.hide();
-            
-            that.container.slideUp("slow");
+            that.container.slideUp("slow", that.events.afterHidden.fire);
         };
         
         setup(that);
@@ -162,7 +158,9 @@ var decapod = decapod || {};
         },
         
         events: {
-            afterRender: null
+            afterRender: null,
+            afterHidden: null,
+            afterDisplayed: null
         },
         
         model: {

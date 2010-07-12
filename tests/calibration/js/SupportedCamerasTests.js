@@ -9,7 +9,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://source.fluidproject.org/svn/LICENSE.txt
 */
 
-/*global jQuery,fluid,jqUnit,expect,decapod*/
+/*global jQuery,fluid,jqUnit,expect,decapod, start*/
 
 (function ($) {
     
@@ -69,6 +69,18 @@ https://source.fluidproject.org/svn/LICENSE.txt
         eventFired = false;
     };
     
+    var displayTests = function (component, showFunc) {
+        component.events.afterHidden.addListener(function () {
+            jqUnit.notVisible("The component should be hidden", component.container);
+            showFunc();
+        });
+        
+        component.events.afterDisplayed.addListener(function () {
+            jqUnit.isVisible("The component should be visible", component.container);
+            start();
+        });
+    };
+    
     $(document).ready(function () {
         var tests = new jqUnit.TestCase("SupportedCameras Tests", setup, teardown);
         
@@ -91,20 +103,14 @@ https://source.fluidproject.org/svn/LICENSE.txt
             jqUnit.assertTrue("The afterRender event should have fired", eventFired);
         });
         
-        tests.test("Hiding with Function Call Tests", function () {
+        tests.asyncTest("Hiding with Function Call Tests", function () {
             component.hide();
-            jqUnit.notVisible("The component should be hidden", component.container);
-            
-            component.show();
-            jqUnit.isVisible("The component should be visible", component.container);
+            displayTests(component, component.show);
         });
         
-        tests.test("Hiding with Click Event Tests", function () {
+        tests.asyncTest("Hiding with Click Event Tests", function () {
             component.locate("closeButton").click();
-            jqUnit.notVisible("The component should be hidden", component.container);
-            
-            component.show();
-            jqUnit.isVisible("The component should be visible", component.container);
+            displayTests(component, component.show);
         });
     });
 })(jQuery);
