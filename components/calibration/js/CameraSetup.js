@@ -187,7 +187,9 @@ var decapod = decapod || {};
                 selectors: {
                     movables: ".dc-cameraSetup-module",
                     selectables: ".dc-cameraSetup-module"
-                }
+                },
+                orientation: fluid.orientation.HORIZONTAL,
+                containerRole: fluid.reorderer.roles.REGIONS
             }
         },
         
