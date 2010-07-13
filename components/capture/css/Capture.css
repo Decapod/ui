@@ -10,8 +10,6 @@ body {
 	left:0px;
 	right:0px;
 	top:0px;
-	min-width:800px;
-	min-height:600px;
 }
 
 .fl-capture-element-hidden {
@@ -24,25 +22,26 @@ body {
 }
 
 .content {
-	background:none repeat scroll 0 0 #FFFFFF;
-	bottom:0px;
-	overflow:hidden;
-	position:absolute;
-	top:102px; /* Top offset by toolbar and navbar height */
+	background: none repeat scroll 0 0 #FFFFFF;
+	bottom: 0px;
+	overflow: hidden;
+	position: absolute;
+	top: 107px; /* Top offset by toolbar and navbar height */
 }
 
 /* TOOLBAR */
+
 a.ds-toolbar-button.export {
     background-image: url(./images/export.png);
-    background-position: 12px 3px;        
+    background-position: center top;
 }
 
 a.ds-toolbar-button.recalibrate {
-    display:none; /* !!!!!!!!! NOT IN 0.4 RELEASE */
+    display:none;
+     /* !!!!!!!!! NOT IN 0.4 RELEASE */
     background-image: url(./images/recalibrate.png);
     background-position: 23px 3px;  
 }
-
 
 /* MESSAGES */
 .fl-capture-message-success {
@@ -96,12 +95,11 @@ a.ds-toolbar-button.recalibrate {
 	z-index: 100;
 }
 
- .fl-grid {
+.fl-grid {
     border: none;
     padding: 5px;
     overflow: auto;
     background-color: #fff;
-
 }
 
 .fl-grid li {
@@ -220,7 +218,7 @@ a.ds-toolbar-button.recalibrate {
     top:0;
 	text-align:center;
 	z-index:0;
-    background-color:#efefef;
+    background-color:#f3f3f3;
 }
 
 .ds-capture-controls {
