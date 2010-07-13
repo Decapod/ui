@@ -45,9 +45,9 @@ https://source.fluidproject.org/svn/LICENSE.txt
     var rotationAsserts = function (component, expectedRotation) {
         var style = component.options.styles[expectedRotation];
             
-            jqUnit.assertEquals("The model should reflect the rotation", expectedRotation, component.model.rotation);
-            jqUnit.assertTrue("The css class, " + style + ", should be added to rotate the image", component.locate("image").hasClass(style));
-            jqUnit.assertEquals("The rotation event should have fired with the correct rotation amount", expectedRotation, currentRotation);
+        jqUnit.assertEquals("The model should reflect the rotation", expectedRotation, component.model.rotation);
+        jqUnit.assertTrue("The css class, " + style + ", should be added to rotate the image", component.locate("image").hasClass(style));
+        jqUnit.assertEquals("The rotation event should have fired with the correct rotation amount", expectedRotation, currentRotation);
     };
     
     $(document).ready(function () {

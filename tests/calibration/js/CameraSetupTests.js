@@ -55,7 +55,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
     
     var assertModelSwapped = function (originalModel, newModel) {
         jqUnit.assertDeepEq("The left value in the model should be equal to the original right value", originalModel.right, newModel.left);
-        jqUnit.assertDeepEq("The right value in the model should be equal to the original left value", originalModel.left, newModel.right)
+        jqUnit.assertDeepEq("The right value in the model should be equal to the original left value", originalModel.left, newModel.right);
     };
     
     $(document).ready(function () {
