@@ -23,6 +23,7 @@ var decapod = decapod || {};
         testCaptureRight: "../data/testCapture.json",
         
         bookManagement: "../../bookManagement/html/bookManagement.html", 
+        cameraTest: "../../calibration/html/cameraMessage.html",
         leftRightCalibration: "../../calibration/html/calibration.html",
         capture: "../../capture/html/Capture.html",
         captureBlocked: "../../capture/html/Capture.html"
@@ -36,6 +37,7 @@ var decapod = decapod || {};
         testCaptureRight: "./cameras/calibration/right",
         
         bookManagement: "./bookManagement.html", 
+        cameraTest: "./cameraMessage.html",
         leftRightCalibration: "./calibration.html",
         capture: "./capture.html",
         captureBlocked: "./Capture.html"
@@ -51,4 +53,18 @@ var decapod = decapod || {};
         
         return newRotation;
     }
+    
+    // set navigationBar and bookManagement urls
+    // TODO: move these to proper component code
+    var setNavBar = function () {
+        $(".dc-navigationBar-bookManagement").attr("href", decapod.resources.bookManagement);
+        $(".dc-navigationBar-calibration").attr("href", decapod.resources.leftRightCalibration);
+        $(".dc-navigationBar-capture").attr("href", decapod.resources.capture);
+        $(".dc-bookManagement-cameraMessage").attr("href", decapod.resources.cameraTest);
+    };
+    
+    $(document).ready(function () {
+        setNavBar();
+    });
+    
 })(jQuery);
