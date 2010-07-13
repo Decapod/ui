@@ -14,17 +14,35 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
-    decapod.resources = {
+    
+    // resources to use when running off the filesystem
+    var localResources = {
         cameras: "../data/cameras.json",
         calibration: "../data/calibration.json",
         testCaptureLeft: "../data/testCapture.json",
         testCaptureRight: "../data/testCapture.json",
         
-        bookManagement: "#_", 
-        leftRightCalibration: "#_",
-        capture: "#_",
-        captureBlocked: "#_"
+        bookManagement: "../../bookManagement/html/bookManagement.html", 
+        leftRightCalibration: "../../calibration/html/calibration.html",
+        capture: "../../capture/html/Capture.html",
+        captureBlocked: "../../capture/html/Capture.html"
     };
+    
+    // resources to use when run through a server
+    var servedResources = {
+        cameras: "./cameras",
+        calibration: "./cameras/calibration",
+        testCaptureLeft: "./cameras/calibration/left",
+        testCaptureRight: "./cameras/calibration/right",
+        
+        bookManagement: "./bookManagement.html", 
+        leftRightCalibration: "./calibration.html",
+        capture: "./capture.html",
+        captureBlocked: "./Capture.html"
+    };
+    
+    // sets the approriate set of decapod resources
+    decapod.resources = window.location.protocol === "file:" ? localResources : servedResources;
     
     decapod.rotationInDegrees = function (startingRotation, rotationChange) {
         var newRotation = (startingRotation + rotationChange) % 360;
