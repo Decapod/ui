@@ -49,7 +49,6 @@
     </head>
     
     <body>
-     
         <div style="display:none">
             <!-- Decapod feedback and dialog messages -->
             <div class="flc-capture-dialog-progress">
@@ -90,21 +89,20 @@
             <div class="ds-navigationBar">
                 <ul class="ds-navigationBar-flatList">
                     <li><img src="../../../shared/images/navigationBar_home.png"><a href="#" class="dc-navigationBar-bookManagement">Book Management</a></li>
-                    <img class="ds-navigationBar-chevron" src="../../../shared/images/navigationBar_chevron.png">
-                    <li><img src="../../../shared/images/missing.png"><a class="dc-navigationBar-capture ds-navigationBar-hereElement" href="#">Capture</a></li>
+                    <span class="ds-navigationBar-chevron">&#x3009</span>
+                    <li><img src="../../../shared/images/navigationBar_capture.png"><a class="ds-navigationBar-hereElement" href="#">Capture</a></li>
                 </ul>
             </div>
             
             <!-- CAPTURE TOOLBAR -->
-            <div class="ds-decapod-toolbar">
-                <div class="fl-force-right">
-                <a class="dc-toolbar-button-recalibrate ds-toolbar-button recalibrate ui-state-disabled" href="#">Recalibrate</a> <a class="dc-toolbar-button-export ds-toolbar-button export ui-state-disabled" href="#">Export</a>
-                </div>
+            <div class="ds-toolbar">
+                <ul class="ds-toolbar-flatList">
+                    <li><a class="dc-toolbar-button-recalibrate ds-toolbar-button recalibrate ui-state-disabled" href="#">Recalibrate</a></li>
+                    <li><a class="dc-toolbar-button-export ds-toolbar-button export ui-state-disabled" href="#">Export</a></li>
+                </ul>
             </div>
-        
-        
-            <div class="fl-container-flex content">    
 
+            <div class="fl-container-flex content">
                 <!-- THUMBNAIL GRID -->
 				<form class="ds-thumbnailContainer">
 					<ul class="flc-capture-reorderer fl-grid">
@@ -125,8 +123,7 @@
 						</li>
 					</ul>
 				</form>
-			
-            
+
                 <!-- PREVIEW AREA -->
 				<div class="flc-capture-previewArea ds-capture-previewArea">
                     <span class="flc-capture-label-index-left"></span>
