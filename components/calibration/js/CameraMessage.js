@@ -71,7 +71,7 @@ var decapod = decapod || {};
         
         tree.push({
                 ID: "message",
-                value: str[model.status]
+                value: str.statuses[model.status]
             });
         tree.push({
                 ID: "warning",
@@ -245,14 +245,18 @@ var decapod = decapod || {};
         },
         
         strings: {
-            oneCameraIncompatible: "It seems like you only have one camera connected, and it is incompatible.",
-            oneCameraCompatible: "It seems like you have only one camera connected.",
-            notMatchingOneCompatibleOneNot: "It seems like you have two cameras connected; one is compatible, the other is not.",
-            notMatchingIncompatible: "It seems like you have two cameras connected, buty they are not compatible nor matching.",
-            notMatchingCompatible: "It seems like you have two supported cameras connected, but they are not matching.",
-            incompatible: "It seems like you have two matching cameras connected, but they are not compatible.",
-            noCameras: "It seems like no cameras are connected.",
-            success: "To get the best results, you should run through calibration before capturing",
+            
+            statuses: {
+                oneCameraIncompatible: "It seems like you only have one camera connected, and it is incompatible.",
+                oneCameraCompatible: "It seems like you have only one camera connected.",
+                notMatchingOneCompatibleOneNot: "It seems like you have two cameras connected; one is compatible, the other is not.",
+                notMatchingIncompatible: "It seems like you have two cameras connected, buty they are not compatible nor matching.",
+                notMatchingCompatible: "It seems like you have two supported cameras connected, but they are not matching.",
+                incompatible: "It seems like you have two matching cameras connected, but they are not compatible.",
+                noCameras: "It seems like no cameras are connected.",
+                success: "To get the best results, you should run through calibration before capturing"
+            },
+            
             supportedCamerasMessage: "Decapod requires two matching, ",
             supportedCamerasButton: "supported cameras",
             retryLink: "Try again",
