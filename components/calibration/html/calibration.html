@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Decapod Camera Calibration</title>
+
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-reset.css" />
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-layout.css" />
+        <link rel="stylesheet" type="text/css" href="../../../shared/css/Decapod.css" />
+        <link rel="stylesheet" type="text/css" href="../css/Calibration.css" />
+        <link rel="stylesheet" type="text/css" href="../css/ImageRotater.css" />
+
+        <!-- 3rd PARTY STYLING -->
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
+
+        
+        <!-- Required JavaScript modules for the Capture component. -->
+        <!-- jQuery -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.core.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.widget.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.mouse.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.draggable.js"></script>
+        
+        <!-- Fluid -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/json/js/json2.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/FluidDOMUtilities.js"></script>
+        
+        <!-- Reorderer -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/ReordererDOMUtilities.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/GeometricManager.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/Reorderer.js"></script>
+        
+        <!-- Renderer -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
+        
+        <!-- Decapod components -->
+        <script type="text/javascript" src="../../../shared/js/decapodUtils.js"></script>
+        <script type="text/javascript" src="../js/ImageRotater.js"></script>
+        <script type="text/javascript" src="../js/CameraSetup.js"></script>
+    </head>
+    
+    <body>
+	    <!-- NAVIGATION BAR -->
+	    
+        <div class="ds-navigationBar">
+            <ul class="ds-navigationBar-flatList">
+                <li><img src="../../../shared/images/navigationBar_home.png"><a href="#" class="dc-navigationBar-bookManagement">Book Management</a></li>
+                <img class="ds-navigationBar-chevron" src="../../../shared/images/navigationBar_chevron.png">
+                <li><img src="../../../shared/images/navigationBar_calibration.png"><a class="dc-navigationBar-calibration ds-navigationBar-hereElement" href="#">Camera Calibration</a></li>
+            </ul>
+        </div>
+
+        <!-- MAIN PANEL -->
+
+        <div class="ds-cameraSetup dc-cameraSetup">
+
+            <h1 class="dc-cameraSetup-pageHeader">Adjust page rotation and order</h1>
+            
+            <div class="fl-centered ds-left-right-calibration">
+            
+            <div>
+                <a href="#_" class="ds-cameraSetup-swapButton dc-cameraSetup-swapButton">swap</a>
+                </div>
+
+                <div class="fl-force-left dc-cameraSetup-imageColumn ds-cameraSetup-imageColumn">
+                    <h2 class="dc-cameraSetup-leftImageHeader">Left Page</h2>
+                    <p class="dc-cameraSetup-rightCameraID">Right Camera</p>
+
+                    <div class="ds-cameraSetup-cameraImage dc-cameraSetup-leftCameraRotater dc-cameraSetup-module">
+                        <div class="fl-force-left"><a href="#_" class="ds-imageRotater-control ds-imageRotater-ccw dc-imageRotater-ccw" title="Rotate image counter-clockwise.">ccw</a></div>
+                        <div><a href="#_" class="ds-imageRotater-control ds-imageRotater-cw dc-imageRotater-cw" title="Rotate image clockwise.">cw</a></div>
+                        <div class="fl-centered"><img src="" class="dc-imageRotater-image" /></div>
+                        <div class="fl-centered ds-imageRotater-capture"><a href="#_" class="dc-imageRotater-capture">Do another test capture</a></div>
+                    </div>
+                </div>
+
+
+                <div class="fl-force-right dc-cameraSetup-imageColumn ds-cameraSetup-imageColumn">
+                    <h2 class="dc-cameraSetup-rightImageHeader">Right Page</h2>                
+                    <p class="dc-cameraSetup-leftCameraID">Left Camera</p>
+
+                    <div class="ds-cameraSetup-cameraImage dc-cameraSetup-rightCameraRotater dc-cameraSetup-module">
+                        <div class="fl-force-left"><a href="#_" class="ds-imageRotater-control ds-imageRotater-ccw dc-imageRotater-ccw" title="Rotate image counter-clockwise.">ccw</a></div>
+                        <div><a href="#_" class="ds-imageRotater-control ds-imageRotater-cw dc-imageRotater-cw " title="Rotate image clockwise.">cw</a></div>                       
+                        <div class="fl-centered"><img src="" class="dc-imageRotater-image" /></div>
+                        <div class="fl-centered ds-imageRotater-capture"><a href="#_" class=" dc-imageRotater-capture">Recapture</a></div>
+
+                    </div>
+                </div>
+                
+                <a href="#" class="dc-cameraSetup-submitButton fl-force-right ds-calibrationMessage-done">Done! Go to capture.</a>
+            </div>
+
+        </div>
+        <script type="text/javascript"> 
+            decapod.cameraSetup(".dc-cameraSetup");
+        </script>      
+
+    </body>
+</html>
+    
