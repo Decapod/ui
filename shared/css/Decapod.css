@@ -63,32 +63,46 @@ a.ds-navigationBar-hereElement {
 }
 
 .ds-navigationBar-chevron {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 0px;
+    font-size: 20px;
 }
 
 /* Toolbar: toolbar gradient background */
-.ds-decapod-toolbar {
-    background: -moz-linear-gradient(top,  #f7f7f7,  #e8e8e8);
+.ds-toolbar {
+    display: table;
+    background: -moz-linear-gradient(top,  #f7f7f7,  #e2e2e2);
+    width: 100%;
+    text-align: right;
     height: 62px;
-    left:0;
-    right:0;
-    bottom:0;
-    padding-top:38px;
-    padding-left:10px;
-    padding-right:10px;
+
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #bbbbbb;
+}
+
+ul.ds-toolbar-flatList {
+    display: table-cell;
+    list-style-type: none;
+    vertical-align: middle;
+    padding-right: 30px;
+    padding-top: 30px;
+}
+
+.ds-toolbar-flatList li {
+    display: inline;
 }
 
 a.ds-toolbar-button {
-    padding-top:33px; /*offset the height of the navbar */
+    padding-top: 33px; /*offset the height of the navbar */
     width: 50px;
     height: 25px;
 	color:#000 !important;
-	text-decoration:none;
-    text-align:center;
+	text-decoration: underline;
+    text-align: center;
     background-repeat: no-repeat;
-    margin-left:10px;
-    margin-right:10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    
 }
 
 a.ds-toolbar-button:hover {
@@ -99,7 +113,6 @@ a.ds-toolbar-button:hover {
 .ui-state-disabled span {
     cursor: default;
 }
-
 
 /*Override default style */
 .fl-theme-coal .ui-dialog {
