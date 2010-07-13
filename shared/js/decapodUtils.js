@@ -9,7 +9,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://source.fluidproject.org/svn/LICENSE.txt
 */
 
-/*global jQuery,decapod*/
+/*global jQuery,decapod, window*/
 
 var decapod = decapod || {};
 
@@ -52,7 +52,7 @@ var decapod = decapod || {};
         newRotation += newRotation < 0 ? 360 : 0;
         
         return newRotation;
-    }
+    };
     
     // set navigationBar and bookManagement urls
     // TODO: move these to proper component code
