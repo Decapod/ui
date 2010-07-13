@@ -86,20 +86,6 @@ var decapod = decapod || {};
         }
     };
     
-    var initReorderer = function (that) {
-        if (that.reorderer) {
-            that.reorderer.refreshView();
-        } else {
-            that.reorderer = fluid.initSubcomponent(that, "reorderer", [that.container, fluid.COMPONENT_OPTIONS]);
-            that.reorderer.events.afterMove.addListener(function () {
-                var tempLeft = that.model.left;
-                that.model.left = that.model.right;
-                that.model.right = tempLeft;
-                initImageRotaters(that);
-            });
-        }
-    };
-    
     var render = function (that) {
         var tree = generateTree(that.options);
         var opts = {
@@ -113,7 +99,6 @@ var decapod = decapod || {};
         }
         
         setButtons(that);
-        initReorderer(that);
         initImageRotaters(that);
         that.events.afterRender.fire();
     };
@@ -161,9 +146,19 @@ var decapod = decapod || {};
         };
         
         that.swapCameras = function () {
-            var leftCamera = that.locate("leftCameraRotater");
-            var rightCamera = that.locate("rightCameraRotater")[0];
-            that.reorderer.requestMovement({element: rightCamera, position: -1}, leftCamera);
+            var left = that.locate("leftCameraRotater");
+            var right = that.locate("rightCameraRotater");
+            var leftParent = left.parent();
+            var rightParent = right.parent();
+            
+            leftParent.append(right.remove());
+            rightParent.append(left.remove());
+            
+            var tempLeft = that.model.left;
+            that.model.left = that.model.right;
+            that.model.right = tempLeft;
+            
+            initImageRotaters(that);
         };
         
         that.submitCalibration = function () {
@@ -181,18 +176,6 @@ var decapod = decapod || {};
     };
     
     fluid.defaults("decapod.cameraSetup", {
-        reorderer: {
-            type: "fluid.reorderList",
-            options: {
-                selectors: {
-                    movables: ".dc-cameraSetup-module",
-                    selectables: ".dc-cameraSetup-module"
-                },
-                orientation: fluid.orientation.HORIZONTAL,
-                containerRole: fluid.reorderer.roles.REGIONS
-            }
-        },
-        
         leftCameraRotater: {
             type: "decapod.imageRotater",
             options: {
