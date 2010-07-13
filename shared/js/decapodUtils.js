@@ -36,11 +36,11 @@ var decapod = decapod || {};
         testCaptureLeft: "./cameras/calibration/left",
         testCaptureRight: "./cameras/calibration/right",
         
-        bookManagement: "./bookManagement.html", 
-        cameraTest: "./cameraMessage.html",
-        leftRightCalibration: "./calibration.html",
-        capture: "./capture.html",
-        captureBlocked: "./Capture.html"
+        bookManagement: "../../../components/bookManagement/html/bookManagement.html", 
+        cameraTest: "../../../components/calibration/html/cameraMessage.html",
+        leftRightCalibration: "../../../components/calibration/html/calibration.html",
+        capture: "../../../components/capture/html/Capture.html",
+        captureBlocked: "../../../components/capture/html/Capture.html"
     };
     
     // sets the approriate set of decapod resources
