@@ -35,7 +35,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             }
         };
         
-        component = decapod.cameraSetup(".dc-cameraSetup", opts);
+        component = decapod.independentLeftRight(".dc-independentLeftRight", opts);
     };
     
     var teardown = function () {
@@ -59,7 +59,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
     };
     
     $(document).ready(function () {
-        var tests = new jqUnit.TestCase("CameraSetup Tests", setup, teardown);
+        var tests = new jqUnit.TestCase("IndependentLeftRight Tests", setup, teardown);
         
         tests.test("Rendering Tests", function () {
             var str = component.options.strings;
