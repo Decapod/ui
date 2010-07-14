@@ -1,0 +1,56 @@
+.ds-cameraSetup h1 {
+    text-align:center;
+}
+
+.ds-left-right-calibration {
+    width: 700px;
+}
+
+.ds-cameraSetup-cameraImage {
+    background-image:url(./images/calibration-background.png);
+
+    width:300px;
+    height:300px;
+    background-color:#fff;
+    text-align:center;
+    -moz-border-radius: 5px;
+    border:2px dashed #aeaeae;
+}
+
+.ds-cameraSetup-imageColumn{
+    text-align:center;
+}
+
+.ds-cameraSetup-imageColumn h2 {
+    margin:0em 0;
+}
+
+.ds-cameraSetup-swapButton {
+    position: relative;
+    left:315px;
+    top: 200px;
+
+    width:60px;
+    height:29px;
+
+    padding-top:31px;
+    text-decoration:none;
+    text-align:center;
+    cursor: pointer;
+
+    background-image:url("./images/swap.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+
+.ds-cameraSetup-swapButton a {
+    text-decoration:none;
+}
+
+.ds-calibrationMessage-done {
+    background:url("images/cameraMessage_forward_17x17.png");
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    padding-right: 23px;
+    margin-top:20px;
+}
