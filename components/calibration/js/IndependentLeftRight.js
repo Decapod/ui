@@ -138,8 +138,8 @@ var decapod = decapod || {};
         }
     };
     
-    decapod.cameraSetup = function (container, options) {
-        var that = fluid.initView("decapod.cameraSetup", container, options);
+    decapod.independentLeftRight = function (container, options) {
+        var that = fluid.initView("decapod.independentLeftRight", container, options);
         
         that.refreshView = function () {
             render(that);
@@ -177,7 +177,7 @@ var decapod = decapod || {};
         return that;
     };
     
-    fluid.defaults("decapod.cameraSetup", {
+    fluid.defaults("decapod.independentLeftRight", {
         leftCameraRotater: {
             type: "decapod.imageRotater",
             options: {
@@ -193,16 +193,16 @@ var decapod = decapod || {};
         },
         
         selectors: {
-            imageColumn: ".dc-cameraSetup-imageColumn",
-            pageHeader: ".dc-cameraSetup-pageHeader",
-            leftImageHeader: ".dc-cameraSetup-leftImageHeader",
-            rightImageHeader: ".dc-cameraSetup-rightImageHeader",
-            leftCameraID: ".dc-cameraSetup-leftCameraID",
-            rightCameraID: ".dc-cameraSetup-rightCameraID",
-            leftCameraRotater: ".dc-cameraSetup-leftCameraRotater",
-            rightCameraRotater: ".dc-cameraSetup-rightCameraRotater",
-            swapButton: ".dc-cameraSetup-swapButton",
-            submitButton: ".dc-cameraSetup-submitButton"
+            imageColumn: ".dc-independentLeftRight-imageColumn",
+            pageHeader: ".dc-independentLeftRight-pageHeader",
+            leftImageHeader: ".dc-independentLeftRight-leftImageHeader",
+            rightImageHeader: ".dc-independentLeftRight-rightImageHeader",
+            leftCameraID: ".dc-independentLeftRight-leftCameraID",
+            rightCameraID: ".dc-independentLeftRight-rightCameraID",
+            leftCameraRotater: ".dc-independentLeftRight-leftCameraRotater",
+            rightCameraRotater: ".dc-independentLeftRight-rightCameraRotater",
+            swapButton: ".dc-independentLeftRight-swapButton",
+            submitButton: ".dc-independentLeftRight-submitButton"
         },
         
         strings: {
