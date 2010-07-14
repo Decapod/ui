@@ -1,0 +1,142 @@
+/* PAGE-WIDE */
+
+body {
+    text-align: center;
+}
+
+:focus {
+    outline: 0px dotted #555555;
+}
+
+/* MAIN AREA */
+
+.ds-cameraMessage {
+    display: table;
+    height: 90%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 1px solid #dddddd;
+}
+
+.ds-cameraMessage-showProgress .ds-cameraMessage-progress,
+.ds-cameraMessage-messageContainer {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.ds-cameraMessage-progress img {
+    margin-top: 32px;
+}
+
+/* Main message */
+
+.ds-cameraMessage-mainMessage {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3a3a3a;
+    margin-bottom: 0px;
+}
+
+/* Choices */
+
+.ds-cameraMessage-choiceList {
+    margin-top: 40px;
+}
+
+.ds-cameraMessage-choice {
+    margin-top:20px;
+}
+
+.ds-cameraMessage-choice a {
+    font-size: 18px;
+    font-weight: bold;
+    padding-right: 23px;
+    padding-left: 23px;
+}
+
+a.ds-cameraMessage-choice-retry {
+    background: url("images/cameraMessage_retry_17x17.png") no-repeat scroll right 0px transparent;
+}
+
+a.ds-cameraMessage-choice-forward {
+    background: url("images/cameraMessage_forward_17x17.png") no-repeat scroll right 0px transparent;
+}
+
+a.ds-cameraMessage-choice-backward {
+    background: url("images/cameraMessage_backward_17x17.png") no-repeat scroll left 0px transparent;
+}
+
+.ds-cameraMessage-choiceSubtext {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #6d6d6d;
+}
+
+/* Supported cameras panel */
+
+.ds-cameraMessage-supportedCameras {
+    border-top: 1px solid #dddddd;
+    display: table-cell;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    background: -moz-linear-gradient(top, #f2f2f2, #c7c7c7);
+}
+
+.ds-supportedCameras-componentHeader {
+    text-align: left;
+    font-size: 20px;
+    color: #585858;
+    font-weight: normal;
+    margin-left: 20px;
+    margin-bottom: 0px;
+    width: 50%;
+    display: inline;
+    float: left;
+}
+
+.ds-supportedCameras-manufacturerName {
+    font-size: 16px;
+    color: #323232;
+    text-align: left;
+    margin-left: 20px;
+    margin-bottom: 0px;
+    width: 150px;
+    padding-bottom: 6px;
+    border-bottom: 1px dotted #585858;
+}
+
+.ds-supportedCameras-devices {
+    font-size: 14px;
+    text-align: left;
+    margin-left: 20px;
+}
+
+.ds-supportedCameras-devices li {
+    list-style-type: none;
+    margin-bottom: 8px;
+}
+
+.ds-supportedCameras-closeButton {
+    background: url("images/supportedCameras_close_20x20.png") no-repeat scroll center 0px transparent;    
+    padding: 10px;
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+/* Show/hide */
+
+.ds-cameraMessage-progress {
+    display: none;
+}
+
+.ds-cameraMessage-showProgress .ds-cameraMessage-messageContainer {
+    display: none;
+}
+
+.ds-cameraMessage-supportedCameras {
+    display: none;
+}
