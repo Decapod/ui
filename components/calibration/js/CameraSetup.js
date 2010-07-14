@@ -166,7 +166,9 @@ var decapod = decapod || {};
                 url: that.options.urls.calibration,
                 type: "POST",
                 dataType: "json",
-                data: that.model
+                data: {
+                    "calibrationModel": JSON.stringify(that.model)
+                }
             });
         };
         
