@@ -82,7 +82,7 @@ fluid_1_2 = fluid_1_2 || {};
     var deleteHandler = function (that, itemIndex) {
         if (that.options.serverOn) {
             $.ajax({
-                url: that.url + "/images/" + itemIndex,
+                url: "/images/" + itemIndex,
                 type: "DELETE"
             });
         }
@@ -295,7 +295,7 @@ fluid_1_2 = fluid_1_2 || {};
                     }
 
                     $.ajax({
-                        url: that.url + "/images/",
+                        url: "/images/",
                         type: "PUT",
                         data: {
                     	    images: JSON.stringify(that.model)
@@ -348,10 +348,6 @@ fluid_1_2 = fluid_1_2 || {};
         that.locate("cameraDialog", document).dialog(cameraOptions);
     };
     
-    var invokePageOrderDialog = function (that) {
-        // TODO Implement page order dialog.
-    };
-    
     /**
      * Displays an informational dialog about detected cameras. Should provide
      * the user with the list of camera models and whether they are supported or
@@ -389,33 +385,26 @@ fluid_1_2 = fluid_1_2 || {};
         cameraDialog.dialog("open");
     };
     
-    /**
-     * Issues a synchronious request to the server to detect the currently
-     * attached cameras. Stores the list returned in the component. Displays a
-     * "busy" progress indicator while waiting for the response and shows an
-     * error message upon failure.
-     * 
-     * If there is no server (the HTML file is loaded from the local
-     * filesystem), returns two supported cameras to allow for testing.
-     * 
-     * @param {Object} that, the Capture component
-     */
-    var detectCameras = function (that) {
+    // TODO: This method shouldn't be synchronous, and isn't really needed once we
+    // add the ability to check cameras on the server before taking a picture.
+    var checkCameraStatus = function (that) {
         var progressDialog = that.locate("progressDialog", document);
         var progressMessage = that.locate("progressMessage", document);
         progressMessage.text("Detecting cameras...");
         progressDialog.dialog("open");
         
         if (that.options.serverOn) {
+        	var status;
+        	
             $.ajax({
-                url: [that.url, "/cameras/"].join(''),
+                url: "/cameras/",
                 type: "GET",
                 dataType: "json",
                 async: false,
                 
-                success: function (cameraList) {
+                success: function (cameraInfo) {
+                    status = cameraInfo.status;
                     progressDialog.dialog("close");
-                    that.detectedCameras = cameraList;
                 },
                 
                 error: function () {
@@ -423,21 +412,10 @@ fluid_1_2 = fluid_1_2 || {};
                     showMessage(that, that.options.styles.errorMessage, "Error detecting cameras.");
                 }
             });
+            
+            return status;
         } else {
-            that.detectedCameras = [
-                {
-                    "model": "Dummy Camera 1",
-                    "port": "DummyPort1",
-                    "download": true,
-                    "capture": true
-                },
-                {
-                    "model": "Dummy Camera 2",
-                    "port": "DummyPort2",
-                    "download": true,
-                    "capture": true
-                }
-            ];
+			return "success";
             progressDialog.dialog("close");
         }
     };
@@ -450,21 +428,11 @@ fluid_1_2 = fluid_1_2 || {};
      */
     var bindHandlers = function (that) {
         that.events.onBeginFirstCapture.addListener(function () {
-            detectCameras(that);
-            that.supportedCameras = [];
-            var i;
-            for (i = 0; i < that.detectedCameras.length; i++) {
-                if (that.detectedCameras[i].capture === true) {
-                    that.supportedCameras.push(that.detectedCameras[i]);
-                }
-            }
-            if (that.supportedCameras.length < 2) {
-                invokeCameraDialog(that);
-                return false;
-            } else {
-                invokePageOrderDialog(that);
-                return true;
-            }
+        	var cameraStatus = checkCameraStatus(that);
+        	if (cameraStatus != "success") {
+        		invokeCameraDialog(that);
+        	}
+			return cameraStatus;
         });
         
         that.events.afterPictureTaken.addListener(function (newItem) {
@@ -496,11 +464,8 @@ fluid_1_2 = fluid_1_2 || {};
         
         that.locate("exportButton").click(function () {
         	$.ajax({
-        		url: that.url + "/pdf/",
-        		type: "POST",
-                        data: {
-                            images: JSON.stringify(that.model)
-                        }
+        		url: "/pdf/",
+        		type: "POST"
         	});
         		
         });
@@ -518,16 +483,9 @@ fluid_1_2 = fluid_1_2 || {};
             progressDialog.dialog("open");
             
             if (that.options.serverOn) {
-                // TODO Get ports and models from detected/supported cameras.
-                var params = {
-                    "ports": [], 
-                    "models": []
-                };
-                
                 $.ajax({
-                    url: that.url + "/images/",
+                    url: "/images/",
                     type: "POST",
-                    data: params,
                     dataType: "json",
                     
                     success: function (newItem) {
@@ -589,12 +547,11 @@ fluid_1_2 = fluid_1_2 || {};
         var url = window.location.href; // TODO Is this right?
         var protocol = url.slice(0, url.indexOf(":"));
         that.options.serverOn = (protocol.toLowerCase() === "http");
-        that.url = url.slice(0, url.lastIndexOf("/"));
         
         // TODO Handle failure of getting the model.
         if (that.options.serverOn) {
             $.ajax({
-                url: that.url + "/images/",
+                url: "/images/",
                 dataType: "json",
                 async: false,
                 success: function (json_model) {
