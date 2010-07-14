@@ -24,7 +24,7 @@ var decapod = decapod || {};
         
         bookManagement: "../../bookManagement/html/bookManagement.html", 
         cameraTest: "../../calibration/html/cameraMessage.html",
-        leftRightCalibration: "../../calibration/html/calibration.html",
+        leftRightCalibration: "../../calibration/html/independentLeftRight.html",
         capture: "../../capture/html/Capture.html",
         captureBlocked: "../../capture/html/Capture.html"
     };
@@ -38,7 +38,7 @@ var decapod = decapod || {};
         
         bookManagement: "/components/bookManagement/html/bookManagement.html", 
         cameraTest: "/components/calibration/html/cameraMessage.html",
-        leftRightCalibration: "/components/calibration/html/calibration.html",
+        leftRightCalibration: "/components/calibration/html/independentLeftRight.html",
         capture: "/components/capture/html/Capture.html",
         captureBlocked: "/components/capture/html/Capture.html"
     };
