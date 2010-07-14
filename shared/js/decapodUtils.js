@@ -31,19 +31,19 @@ var decapod = decapod || {};
     
     // resources to use when run through a server
     var servedResources = {
-        cameras: "./cameras",
-        calibration: "./cameras/calibration",
-        testCaptureLeft: "./cameras/calibration/left",
-        testCaptureRight: "./cameras/calibration/right",
+        cameras: "/cameras",
+        calibration: "/cameras/calibration",
+        testCaptureLeft: "/cameras/calibration/left",
+        testCaptureRight: "/cameras/calibration/right",
         
-        bookManagement: "../../../components/bookManagement/html/bookManagement.html", 
-        cameraTest: "../../../components/calibration/html/cameraMessage.html",
-        leftRightCalibration: "../../../components/calibration/html/calibration.html",
-        capture: "../../../components/capture/html/Capture.html",
-        captureBlocked: "../../../components/capture/html/Capture.html"
+        bookManagement: "/components/bookManagement/html/bookManagement.html", 
+        cameraTest: "/components/calibration/html/cameraMessage.html",
+        leftRightCalibration: "/components/calibration/html/calibration.html",
+        capture: "/components/capture/html/Capture.html",
+        captureBlocked: "/components/capture/html/Capture.html"
     };
     
-    // sets the approriate set of decapod resources
+    // sets the appropriate set of decapod resources
     decapod.resources = window.location.protocol === "file:" ? localResources : servedResources;
     
     decapod.rotationInDegrees = function (startingRotation, rotationChange) {
