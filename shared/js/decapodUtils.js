@@ -15,36 +15,21 @@ var decapod = decapod || {};
 
 (function ($) {
     
-    // resources to use when running off the filesystem
-    var localResources = {
+    var localDataURLs = {
         cameras: "../data/cameras.json",
         calibration: "../data/calibration.json",
         testCaptureLeft: "../data/testCapture.json",
-        testCaptureRight: "../data/testCapture.json",
-        
-        bookManagement: "../../bookManagement/html/bookManagement.html", 
-        cameraTest: "../../calibration/html/cameraMessage.html",
-        leftRightCalibration: "../../calibration/html/independentLeftRight.html",
-        capture: "../../capture/html/Capture.html",
-        captureBlocked: "../../capture/html/Capture.html"
+        testCaptureRight: "../data/testCapture.json"
     };
     
-    // resources to use when run through a server
-    var servedResources = {
+    var servedResourceURLs = {
         cameras: "/cameras/",
         calibration: "/cameras/calibration/",
         testCaptureLeft: "/cameras/calibration/left",
-        testCaptureRight: "/cameras/calibration/right",
-        
-        bookManagement: "/components/bookManagement/html/bookManagement.html", 
-        cameraTest: "/components/calibration/html/cameraMessage.html",
-        leftRightCalibration: "/components/calibration/html/independentLeftRight.html",
-        capture: "/components/capture/html/Capture.html",
-        captureBlocked: "/components/capture/html/Capture.html"
+        testCaptureRight: "/cameras/calibration/right"
     };
-    
-    // sets the appropriate set of decapod resources
-    decapod.resources = window.location.protocol === "file:" ? localResources : servedResources;
+
+    decapod.resources = window.location.protocol === "file:" ? localDataURLs : servedResourceURLs;
     
     decapod.render = function (that, treeMaker, cutpointsMaker, options) {
         var options = options || {};
@@ -67,18 +52,5 @@ var decapod = decapod || {};
         
         that.events.afterRender.fire();
     };
-    
-    // set navigationBar and bookManagement urls
-    // TODO: move these to proper component code
-    var setNavBar = function () {
-        $(".dc-navigationBar-bookManagement").attr("href", decapod.resources.bookManagement);
-        $(".dc-navigationBar-calibration").attr("href", decapod.resources.leftRightCalibration);
-        $(".dc-navigationBar-capture").attr("href", decapod.resources.capture);
-        $(".dc-bookManagement-cameraMessage").attr("href", decapod.resources.cameraTest);
-    };
-    
-    $(document).ready(function () {
-        setNavBar();
-    });
     
 })(jQuery);

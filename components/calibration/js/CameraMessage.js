@@ -30,8 +30,7 @@ var decapod = decapod || {};
     var generateTree = function (model, opts) {
         var tree, skipLink, skipWarning;
         var isError = model.status !== "success";
-        var str = opts.strings;
-        var url = opts.urls;
+        var str = opts.strings
         
         if (isError) {
             skipLink = "skipErrorLink";
@@ -65,8 +64,7 @@ var decapod = decapod || {};
             
             tree = [{
                 ID: "retryAndContinue",
-                linktext: str.continueLink,
-                target: url.continueLink
+                value: str.continueLink
             }];
         }
         
@@ -80,8 +78,7 @@ var decapod = decapod || {};
             });
         tree.push({
                 ID: "skipLink",
-                linktext: str[skipLink],
-                target: url[skipLink]
+                value: str[skipLink]
             });
             
         return {
@@ -271,9 +268,6 @@ var decapod = decapod || {};
         },
         
         urls: {
-            continueLink: decapod.resources.leftRightCalibration,
-            skipErrorLink: decapod.resources.captureBlocked,
-            skipSuccessLink: decapod.resources.capture,
             cameras: decapod.resources.cameras
         }
     });
