@@ -31,8 +31,8 @@ var decapod = decapod || {};
     
     // resources to use when run through a server
     var servedResources = {
-        cameras: "/cameras",
-        calibration: "/cameras/calibration",
+        cameras: "/cameras/",
+        calibration: "/cameras/calibration/",
         testCaptureLeft: "/cameras/calibration/left",
         testCaptureRight: "/cameras/calibration/right",
         
