@@ -114,30 +114,6 @@ fluid_1_2 = fluid_1_2 || {};
     };
     
     /**
-     * Displays a confirmation dialog with the specified options.
-     * 
-     * @param {Object} that, the Capture component
-     * @param {Object} title, the title of the dialog
-     * @param {Object} message, the content of the dialog
-     * @param {Object} confirmed, the callback to be executed on confirmation
-     * @param {Object} cancelled, the callback to be executed on cancellation
-     */
-    var invokeConfirmationDialog = function (that, title, message, confirmed, cancelled) {
-        var confirmDialog = that.locate("confirmDialog", document);
-        confirmDialog.dialog('option', 'title', title);
-        confirmDialog.text(message);
-        confirmDialog.dialog('open');
-        confirmDialog.bind('dialogclose', function (event, ui) {
-            if (that.confirmed === true) {
-                confirmed.call();
-            } else {
-                cancelled.call();
-            }
-            that.confirmed = false;
-        });
-    };
-    
-    /**
      * Handles a user request to delete the currently selected image. Displays a
      * confirmation dialog first and does nothing if the user cancels the
      * operation.
@@ -146,18 +122,10 @@ fluid_1_2 = fluid_1_2 || {};
      */
     var deleteSelectedImage = function (that) {
         var itemIndex = that.selectedItemIndex;
-        if (itemIndex < 0 || itemIndex >= that.model.length) {
-            return; // No image selected or invalid index.
-        }
         
-        invokeConfirmationDialog(that, "Delete image?",
-            "Are you sure you want to delete this image?",
-            function () {
-                deleteHandler(that, itemIndex);
-            },
-            function () {
-                $(that.locate("thumbItem")[that.selectedItemIndex]).focus();
-            });
+        if (itemIndex >= 0 && itemIndex <= that.model.length) {
+            deleteHandler(that, itemIndex);
+        }
     };
     
     /**
