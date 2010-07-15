@@ -64,26 +64,27 @@ var decapod = decapod || {};
         }
     };
     
-    var initImageRotaters = function (that) {
-        if (that.leftCameraRotater) {
-            that.leftCameraRotater.refreshView();
-        } else {
-            that.leftCameraRotater = fluid.initSubcomponent(that, "leftCameraRotater", [that.locate("leftCameraRotater"), {model: {rotation: that.model.left.rotation}}]);
-            that.leftCameraRotater.cameraID = that.model.left.id;
-            that.leftCameraRotater.events.rotated.addListener(function (rotation) {
-                updateRotation(that.model, that.leftCameraRotater.cameraID, rotation);
-            });
-        }
+    var initImageRotater = function (that, subcomponentName, cameraID, defaultRotation) {
+        var rotator = fluid.initSubcomponent(that, subcomponentName, [that.locate(subcomponentName), {model: {rotation: defaultRotation}}]);
+        rotator.cameraID = cameraID;
+        rotator.events.rotated.addListener(function (rotation) {
+            updateRotation(that.model, cameraID, rotation);
+        });
         
-        if (that.rightCameraRotater) {
-            that.rightCameraRotater.refreshView();
+        return rotator;
+    };
+    
+    var refreshOrInitRotator = function (that, rotatorName, cameraID, defaultRotation) {
+        if (that[rotatorName]) {
+            that[rotatorName].refreshView();
         } else {
-            that.rightCameraRotater = fluid.initSubcomponent(that, "rightCameraRotater", [that.locate("rightCameraRotater"), {model: {rotation: that.model.right.rotation}}]);
-            that.rightCameraRotater.cameraID = that.model.right.id;
-            that.rightCameraRotater.events.rotated.addListener(function (rotation) {
-                updateRotation(that.model, that.rightCameraRotater.cameraID, rotation);
-            });
+            that[rotatorName] = initImageRotater(that, rotatorName, cameraID, defaultRotation);
         }
+    };
+    
+    var initImageRotaters = function (that) {
+        refreshOrInitRotator(that, "leftCameraRotater", that.model.left.id, that.model.left.rotation);
+        refreshOrInitRotator(that, "rightCameraRotater", that.model.right.id, that.model.right.rotation);
     };
     
     var render = function (that) {
