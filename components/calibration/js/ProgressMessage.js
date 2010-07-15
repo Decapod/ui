@@ -15,7 +15,8 @@ var decapod = decapod || {};
 
 (function ($) {
     
-    var generateCutpoints = function (selectors) {
+    var generateCutpoints = function (options) {
+        var selectors = options.selectors;
         return [
             {id: "message", selector: selectors.message},
             {id: "courtesyMessage", selector: selectors.courtesyMessage},
@@ -24,7 +25,7 @@ var decapod = decapod || {};
         ];
     };
     
-    var generateTree = function (opts) {
+    var generateTree = function (model, opts) {
         var tree = [];
         $.each(opts.strings, function (stringName, string) {
             var obj = {
@@ -47,18 +48,7 @@ var decapod = decapod || {};
     };
     
     var render = function (that) {
-        var tree = generateTree(that.options);
-        var opts = {
-            cutpoints: generateCutpoints(that.options.selectors)
-        };
-        
-        if (that.templates) {
-            fluid.reRender(that.templates, that.container, tree, opts);
-        } else {
-            that.templates = fluid.selfRender(that.container, tree, opts);
-        }
-        
-        that.events.afterRender.fire();
+        decapod.render(that, generateTree, generateCutpoints);
     };
     
     decapod.progressMessage = function (container, options) {

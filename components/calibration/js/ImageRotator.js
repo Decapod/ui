@@ -14,7 +14,8 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
-    var generateCutpoints = function (selectors) {
+    var generateCutpoints = function (options) {
+        var selectors = options.selectors;
         var cutPoints = [];
         $.each(selectors, function (id, selector) {
             cutPoints.push({id: id, selector: selector});
@@ -89,20 +90,14 @@ var decapod = decapod || {};
     };
     
     var render = function (that) {
-        var tree = generateTree(that.model, that.options);
         var opts = {
-            cutpoints: generateCutpoints(that.options.selectors)
+            beforeAfterRenderFn: function (that) {
+                setRotationStyle(that);
+                bindEvents(that);
+            }
         };
         
-        if (that.templates) {
-            fluid.reRender(that.templates, that.container, tree, opts);
-        } else {
-            that.templates = fluid.selfRender(that.container, tree, opts);
-        }
-        
-        setRotationStyle(that);
-        bindEvents(that);
-        that.events.afterRender.fire();
+        decapod.render(that, generateTree, generateCutpoints, opts);
     };
     
     var setup = function (that) {

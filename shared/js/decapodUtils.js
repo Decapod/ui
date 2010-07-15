@@ -46,6 +46,28 @@ var decapod = decapod || {};
     // sets the appropriate set of decapod resources
     decapod.resources = window.location.protocol === "file:" ? localResources : servedResources;
     
+    decapod.render = function (that, treeMaker, cutpointsMaker, options) {
+        var options = options || {};
+        var container = options.container || that.container;
+        
+        var tree = treeMaker(that.model, that.options);
+        var opts = {
+            cutpoints: cutpointsMaker(that.options)
+        };
+        
+        if (that.templates) {
+            fluid.reRender(that.templates, container, tree, opts);
+        } else {
+            that.templates = fluid.selfRender(container, tree, opts);
+        }
+        
+        if (options.beforeAfterRenderFn) {
+            options.beforeAfterRenderFn(that);
+        }
+        
+        that.events.afterRender.fire();
+    };
+    
     // set navigationBar and bookManagement urls
     // TODO: move these to proper component code
     var setNavBar = function () {

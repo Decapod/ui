@@ -23,7 +23,7 @@ var decapod = decapod || {};
         return cutpoints;
     };
     
-    var generateTree = function (opts) {
+    var generateTree = function (model, opts) {
         var tree = [];
         $.each(opts.strings, function (stringName, string) {
             var obj = {
@@ -88,20 +88,14 @@ var decapod = decapod || {};
     };
     
     var render = function (that) {
-        var tree = generateTree(that.options);
         var opts = {
-            cutpoints: generateCutpoints(that.options)
+            beforeAfterRenderFn: function (that) {
+                setButtons(that);
+                initimageRotators(that);
+            }
         };
         
-        if (that.templates) {
-            fluid.reRender(that.templates, that.container, tree, opts);
-        } else {
-            that.templates = fluid.selfRender(that.container, tree, opts);
-        }
-        
-        setButtons(that);
-        initimageRotators(that);
-        that.events.afterRender.fire();
+        decapod.render(that, generateTree, generateCutpoints, opts);
     };
     
     var setup = function (that) {
