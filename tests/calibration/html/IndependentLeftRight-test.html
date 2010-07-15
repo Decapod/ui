@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Decapod Camera Setup Tests</title>
+        
+        <link rel="Stylesheet" type="text/css" media="screen" href="../../../infusion/src/webapp/tests/lib/qunit/css/qunit.css" />
+        
+        <!-- Required JavaScript modules for testing the CameraMessage component. -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.core.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.widget.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.mouse.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.draggable.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/json/js/json2.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/FluidDOMUtilities.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/ReordererDOMUtilities.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/GeometricManager.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/Reorderer.js"></script>
+        
+        <!-- jqUnit -->
+        <script src="../../../infusion/src/webapp/tests/lib/qunit/js/qunit.js"></script>
+        <script src="../../../infusion/src/webapp/tests/test-core/jqUnit/js/jqUnit.js"></script>
+        
+        <!-- Tests and tested component -->
+        <script src="../../../shared/js/decapodUtils.js"></script>
+        <script src="../../../components/calibration/js/ImageRotater.js"></script>
+        <script src="../../../components/calibration/js/IndependentLeftRight.js"></script>
+        <script src="../js/IndependentLeftRightTests.js"></script>
+        
+    </head>
+    <body>
+        <!-- Markup that jqUnit will look for when running tests and displaying the results. -->
+        <h1 id="qunit-header">Decapod Camera Setup Test Suite</h1>
+        <h2 id="qunit-banner"></h2>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="main" style="display:none;">
+            <div class="dc-independentLeftRight">
+                <h2 class="dc-independentLeftRight-pageHeader">Page Header</h2>
+                
+                <div class="dc-independentLeftRight-imageColumn">
+                    <h3 class="dc-independentLeftRight-leftImageHeader">Left</h3>
+                    <p class="dc-independentLeftRight-rightCameraID">Right Camera</p>
+                    <div class="dc-independentLeftRight-leftCameraRotater dc-independentLeftRight-module">
+                        <a href="#_" class="dc-imageRotater-ccw">ccw</a>
+                        <a href="#_" class="dc-imageRotater-cw">cw</a>
+                        <img src="" class="dc-imageRotater-image" />
+                        <a href="#_" class="dc-imageRotater-capture">left-capture</a>
+                    </div>
+                </div>
+                
+                <a href="#_" class="dc-independentLeftRight-swapButton">swap</a>
+                
+                <div class="dc-independentLeftRight-imageColumn">
+                    <h3 class="dc-independentLeftRight-rightImageHeader">Right</h3>
+                    <p class="dc-independentLeftRight-leftCameraID">Left Camera</p>
+                    <div class="dc-independentLeftRight-rightCameraRotater dc-independentLeftRight-module">
+                        <a href="#_" class="dc-imageRotater-ccw">ccw</a>
+                        <a href="#_" class="dc-imageRotater-cw">cw</a>
+                        <img src="" class="dc-imageRotater-image" />
+                        <a href="#_" class="dc-imageRotater-capture">right-capture</a>
+                    </div>
+                </div>
+                
+                <a href="#_" class="dc-independentLeftRight-submitButton">Done</a>
+            </div>
+        </div>
+    </body>
+</html>
