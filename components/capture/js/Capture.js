@@ -361,8 +361,8 @@ fluid_1_2 = fluid_1_2 || {};
         var camerasElement = that.locate("cameraEntry", document);
         cameraList.children().remove();
         
-        var i;
-        for (i = 0; i < that.detectedCameras.length; i++) {
+        that.detectedCameras = that.detectedCameras || [];
+        for (var i = 0; i < that.detectedCameras.length; i++) {
             var cameraSupported = "Not ";
             if (that.detectedCameras[i].capture) {
                 cameraSupported = "";
@@ -431,8 +431,9 @@ fluid_1_2 = fluid_1_2 || {};
         	var cameraStatus = checkCameraStatus(that);
         	if (cameraStatus != "success") {
         		invokeCameraDialog(that);
+        		return false;
         	}
-			return cameraStatus;
+			return true;
         });
         
         that.events.afterPictureTaken.addListener(function (newItem) {
