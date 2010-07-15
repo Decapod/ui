@@ -46,14 +46,6 @@ var decapod = decapod || {};
     // sets the appropriate set of decapod resources
     decapod.resources = window.location.protocol === "file:" ? localResources : servedResources;
     
-    decapod.rotationInDegrees = function (startingRotation, rotationChange) {
-        var newRotation = (startingRotation + rotationChange) % 360;
-        
-        newRotation += newRotation < 0 ? 360 : 0;
-        
-        return newRotation;
-    };
-    
     // set navigationBar and bookManagement urls
     // TODO: move these to proper component code
     var setNavBar = function () {

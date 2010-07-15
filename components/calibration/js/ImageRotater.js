@@ -68,8 +68,16 @@ var decapod = decapod || {};
         that.currentStyle = rotationStyle;
     };
     
+    var rotationInDegrees = function (startingRotation, rotationChange) {
+        var newRotation = (startingRotation + rotationChange) % 360;
+        
+        newRotation += newRotation < 0 ? 360 : 0;
+        
+        return newRotation;
+    };
+    
     var setRotation = function (model, rotation) {
-        var newRotation = decapod.rotationInDegrees(model.rotation, rotation);
+        var newRotation = rotationInDegrees(model.rotation, rotation);
         model.rotation = newRotation;
         return newRotation;
     };

@@ -58,9 +58,9 @@ var decapod = decapod || {};
     
     var updateRotation = function (model, id, rotation) {
         if (model.left.id === id) {
-            model.left.rotation = decapod.rotationInDegrees(model.left.rotation, rotation);
+            model.left.rotation = rotation;
         } else {
-            model.right.rotation = decapod.rotationInDegrees(model.right.rotation, rotation);
+            model.right.rotation = rotation;
         }
     };
     
@@ -68,7 +68,7 @@ var decapod = decapod || {};
         if (that.leftCameraRotater) {
             that.leftCameraRotater.refreshView();
         } else {
-            that.leftCameraRotater = fluid.initSubcomponent(that, "leftCameraRotater", [that.locate("leftCameraRotater"), fluid.COMPONENT_OPTIONS]);
+            that.leftCameraRotater = fluid.initSubcomponent(that, "leftCameraRotater", [that.locate("leftCameraRotater"), {model: {rotation: that.model.left.rotation}}]);
             that.leftCameraRotater.cameraID = that.model.left.id;
             that.leftCameraRotater.events.rotated.addListener(function (rotation) {
                 updateRotation(that.model, that.leftCameraRotater.cameraID, rotation);
@@ -78,7 +78,7 @@ var decapod = decapod || {};
         if (that.rightCameraRotater) {
             that.rightCameraRotater.refreshView();
         } else {
-            that.rightCameraRotater = fluid.initSubcomponent(that, "rightCameraRotater", [that.locate("rightCameraRotater"), fluid.COMPONENT_OPTIONS]);
+            that.rightCameraRotater = fluid.initSubcomponent(that, "rightCameraRotater", [that.locate("rightCameraRotater"), {model: {rotation: that.model.right.rotation}}]);
             that.rightCameraRotater.cameraID = that.model.right.id;
             that.rightCameraRotater.events.rotated.addListener(function (rotation) {
                 updateRotation(that.model, that.rightCameraRotater.cameraID, rotation);
