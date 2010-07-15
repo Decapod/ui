@@ -85,8 +85,8 @@ https://source.fluidproject.org/svn/LICENSE.txt
         });
         
         tests.test("Model after rotation, tests", function () {
-            component.leftCameraRotater.rotateCW();
-            component.rightCameraRotater.rotateCCW();
+            component.leftCameraRotator.rotateCW();
+            component.rightCameraRotator.rotateCCW();
             
             jqUnit.assertEquals("The rotation value for the left camera should be updated correctly", 0, component.model.left.rotation);
             jqUnit.assertEquals("The rotation value for the right camera should be updated correctly", 270, component.model.right.rotation);

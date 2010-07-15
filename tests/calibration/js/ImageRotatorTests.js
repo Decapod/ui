@@ -33,7 +33,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
             }
         };
         
-        component = decapod.imageRotater(".dc-imageRotater", opts);
+        component = decapod.imageRotator(".dc-imageRotator", opts);
     };
     
     var teardown = function () {
@@ -51,7 +51,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
     };
     
     $(document).ready(function () {
-        var tests = new jqUnit.TestCase("ImageRotater Tests", setup, teardown);
+        var tests = new jqUnit.TestCase("ImageRotator Tests", setup, teardown);
         
         tests.test("Rendering Tests", function () {
             var strings = component.options.strings;
