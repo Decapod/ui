@@ -15,7 +15,8 @@ var decapod = decapod || {};
 
 (function ($) {
     
-    var generateCutpoints = function (selectors) {
+    var generateCutpoints = function (options) {
+        var selectors = options.selectors;
         return [
             {id: "componentHeader", selector: selectors.componentHeader},
             {id: "manufacturers:", selector: selectors.manufacturers},
@@ -24,7 +25,10 @@ var decapod = decapod || {};
         ];
     };
     
-    var generateTree = function (cameras, strings) {
+    var generateTree = function (model, opts) {
+        var cameras = model.supportedCameras;
+        var strings = opts.strings;
+        
         var tree = [{
             ID: "componentHeader",
             value: strings.componentHeader
@@ -55,20 +59,13 @@ var decapod = decapod || {};
     };
     
     var render = function (that) {
-        var tree = generateTree(that.model.supportedCameras, that.options.strings);
         var opts = {
-            cutpoints: generateCutpoints(that.options.selectors)
+            beforeAfterRenderFn: function (that) {
+                that.locate("closeButton").click(that.hide);
+            }
         };
         
-        if (that.templates) {
-            fluid.reRender(that.templates, that.container, tree, opts);
-        } else {
-            that.templates = fluid.selfRender(that.container, tree, opts);
-        }
-        
-        that.locate("closeButton").click(that.hide);
-        
-        that.events.afterRender.fire();
+        decapod.render(that, generateTree, generateCutpoints, opts);
     };
     
     var addHeadingRole = function (elm) {

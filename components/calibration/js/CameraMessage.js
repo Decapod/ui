@@ -15,7 +15,8 @@ var decapod = decapod || {};
 
 (function ($) {
     
-    var generateCutpoints = function (selectors) {
+    var generateCutpoints = function (options) {
+        var selectors = options.selectors;
         return [
             {id: "message", selector: selectors.message},
             {id: "supportedCamerasMessage", selector: selectors.supportedCamerasMessage},
@@ -26,7 +27,7 @@ var decapod = decapod || {};
         ];
     };
     
-    var generateTree = function (opts, model) {
+    var generateTree = function (model, opts) {
         var tree, skipLink, skipWarning;
         var isError = model.status !== "success";
         var str = opts.strings;
@@ -101,22 +102,16 @@ var decapod = decapod || {};
     };
     
     var render = function (that) {
-        var tree = generateTree(that.options, that.model);
         var opts = {
-            cutpoints: generateCutpoints(that.options.selectors)
+            beforeAfterRenderFn: function (that) {
+                if (that.model.status !== "success") {
+                    bindEvents(that);
+                }
+            },
+            container: that.locate("messageContainer")
         };
         
-        if (that.templates) {
-            fluid.reRender(that.templates, that.locate("messageContainer"), tree, opts);
-        } else {
-            that.templates = fluid.selfRender(that.locate("messageContainer"), tree, opts);
-        }
-        
-        if (that.model.status !== "success") {
-            bindEvents(that);
-        }
-        
-        that.events.afterRender.fire(that.model);
+        decapod.render(that, generateTree, generateCutpoints, opts);
     };
     
     var initSupportedCameras = function (that) {
