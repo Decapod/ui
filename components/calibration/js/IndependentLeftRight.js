@@ -57,7 +57,8 @@ var decapod = decapod || {};
     };
     
     var initimageRotator = function (that, subcomponentName, cameraID, defaultRotation) {
-        var rotator = fluid.initSubcomponent(that, subcomponentName, [that.locate(subcomponentName), {model: {rotation: defaultRotation}}]);
+        that.options[subcomponentName].options.model = {rotation: defaultRotation};
+        var rotator = fluid.initSubcomponent(that, subcomponentName, [that.locate(subcomponentName), fluid.COMPONENT_OPTIONS]);
         rotator.cameraID = cameraID;
         rotator.events.rotated.addListener(function (rotation) {
             updateRotation(that.model, cameraID, rotation);
