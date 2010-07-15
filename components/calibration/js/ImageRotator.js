@@ -115,8 +115,8 @@ var decapod = decapod || {};
         }
     };
     
-    decapod.imageRotater = function (container, options) {
-        var that = fluid.initView("decapod.imageRotater", container, options);
+    decapod.imageRotator = function (container, options) {
+        var that = fluid.initView("decapod.imageRotator", container, options);
         
         /**
          * Rotates the displayed image clockwise (90 degrees)
@@ -166,18 +166,18 @@ var decapod = decapod || {};
         return that;
     };
     
-    fluid.defaults("decapod.imageRotater", {
+    fluid.defaults("decapod.imageRotator", {
         selectors: {
-            image: ".dc-imageRotater-image",
-            cwButton: ".dc-imageRotater-cw",
-            ccwButton: ".dc-imageRotater-ccw",
-            captureButton: ".dc-imageRotater-capture"
+            image: ".dc-imageRotator-image",
+            cwButton: ".dc-imageRotator-cw",
+            ccwButton: ".dc-imageRotator-ccw",
+            captureButton: ".dc-imageRotator-capture"
         },
         
         styles: {
-            90: "ds-imageRotater-90",
-            180: "ds-imageRotater-180",
-            270: "ds-imageRotater-270"
+            90: "ds-imageRotator-90",
+            180: "ds-imageRotator-180",
+            270: "ds-imageRotator-270"
         },
         
         strings: {

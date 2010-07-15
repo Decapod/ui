@@ -64,7 +64,7 @@ var decapod = decapod || {};
         }
     };
     
-    var initImageRotater = function (that, subcomponentName, cameraID, defaultRotation) {
+    var initimageRotator = function (that, subcomponentName, cameraID, defaultRotation) {
         var rotator = fluid.initSubcomponent(that, subcomponentName, [that.locate(subcomponentName), {model: {rotation: defaultRotation}}]);
         rotator.cameraID = cameraID;
         rotator.events.rotated.addListener(function (rotation) {
@@ -78,13 +78,13 @@ var decapod = decapod || {};
         if (that[rotatorName]) {
             that[rotatorName].refreshView();
         } else {
-            that[rotatorName] = initImageRotater(that, rotatorName, cameraID, defaultRotation);
+            that[rotatorName] = initimageRotator(that, rotatorName, cameraID, defaultRotation);
         }
     };
     
-    var initImageRotaters = function (that) {
-        refreshOrInitRotator(that, "leftCameraRotater", that.model.left.id, that.model.left.rotation);
-        refreshOrInitRotator(that, "rightCameraRotater", that.model.right.id, that.model.right.rotation);
+    var initimageRotators = function (that) {
+        refreshOrInitRotator(that, "leftCameraRotator", that.model.left.id, that.model.left.rotation);
+        refreshOrInitRotator(that, "rightCameraRotator", that.model.right.id, that.model.right.rotation);
     };
     
     var render = function (that) {
@@ -100,7 +100,7 @@ var decapod = decapod || {};
         }
         
         setButtons(that);
-        initImageRotaters(that);
+        initimageRotators(that);
         that.events.afterRender.fire();
     };
     
@@ -147,8 +147,8 @@ var decapod = decapod || {};
         };
         
         that.swapCameras = function () {
-            var left = that.locate("leftCameraRotater");
-            var right = that.locate("rightCameraRotater");
+            var left = that.locate("leftCameraRotator");
+            var right = that.locate("rightCameraRotator");
             var leftParent = left.parent();
             var rightParent = right.parent();
             
@@ -159,7 +159,7 @@ var decapod = decapod || {};
             that.model.left = that.model.right;
             that.model.right = tempLeft;
             
-            initImageRotaters(that);
+            initimageRotators(that);
         };
         
         that.submitCalibration = function () {
@@ -179,15 +179,15 @@ var decapod = decapod || {};
     };
     
     fluid.defaults("decapod.independentLeftRight", {
-        leftCameraRotater: {
-            type: "decapod.imageRotater",
+        leftCameraRotator: {
+            type: "decapod.imageRotator",
             options: {
                 url: decapod.resources.testCaptureLeft
             }
         },
         
-        rightCameraRotater: {
-            type: "decapod.imageRotater",
+        rightCameraRotator: {
+            type: "decapod.imageRotator",
             options: {
                 url: decapod.resources.testCaptureRight
             }
@@ -200,8 +200,8 @@ var decapod = decapod || {};
             rightImageHeader: ".dc-independentLeftRight-rightImageHeader",
             leftCameraID: ".dc-independentLeftRight-leftCameraID",
             rightCameraID: ".dc-independentLeftRight-rightCameraID",
-            leftCameraRotater: ".dc-independentLeftRight-leftCameraRotater",
-            rightCameraRotater: ".dc-independentLeftRight-rightCameraRotater",
+            leftCameraRotator: ".dc-independentLeftRight-leftCameraRotator",
+            rightCameraRotator: ".dc-independentLeftRight-rightCameraRotator",
             swapButton: ".dc-independentLeftRight-swapButton",
             submitButton: ".dc-independentLeftRight-submitButton"
         },
