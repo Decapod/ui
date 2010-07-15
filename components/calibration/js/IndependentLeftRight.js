@@ -26,18 +26,10 @@ var decapod = decapod || {};
     var generateTree = function (model, opts) {
         var tree = [];
         $.each(opts.strings, function (stringName, string) {
-            var obj = {
-                ID: stringName
-            };
-            
-            if (stringName === "submitButton") {
-                obj.linktext = string;
-                obj.target = opts.urls[stringName];
-            } else {
-                obj.value = string;
-            }
-            
-            tree.push(obj);
+            tree.push({
+                ID: stringName,
+                value: string
+            });
         });
             
         return {
@@ -215,8 +207,7 @@ var decapod = decapod || {};
         },
         
         urls: {
-            calibration: decapod.resources.calibration,
-            submitButton: decapod.resources.capture
+            calibration: decapod.resources.calibration
         }, 
         
         model: {

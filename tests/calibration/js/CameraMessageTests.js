@@ -47,16 +47,6 @@ https://source.fluidproject.org/svn/LICENSE.txt
     };
     
     /**
-     * Returns the url of the passed selector (only works for links)
-     * 
-     * @param {Object} component
-     * @param {Object} selector, a selector for the element who's url is returned
-     */
-    var getURL = function (component, selector) {
-        return component.locate(selector).attr("href");
-    };
-    
-    /**
      * Asserts the error state for a given error
      * 
      * @param {Object} component
@@ -64,15 +54,12 @@ https://source.fluidproject.org/svn/LICENSE.txt
      */
     var assertErrorStrings = function (component, error) {
         var str = component.options.strings;
-        var url = component.options.urls;
         
         jqUnit.assertEquals("The " + error + " message is set", str.statuses[error], getText(component, "message"));
         jqUnit.assertEquals("The supported cameras message is set", str.supportedCamerasMessage, getText(component, "supportedCamerasMessage"));
         jqUnit.assertEquals("The supported cameras button text is set", str.supportedCamerasButton, getText(component, "supportedCamerasButton"));
         jqUnit.assertEquals("The retry link text is set", str.retryLink, getText(component, "retryAndContinue"));
         jqUnit.assertEquals("The skip link text is set", str.skipErrorLink, getText(component, "skipLink"));
-        jqUnit.assertEquals("The skip link url is set", url.skipErrorLink, getURL(component, "skipLink"));
-        jqUnit.assertEquals("The warning message is set", str.skipWarningError, getText(component, "warning"));
     };
     
     /**
@@ -82,14 +69,10 @@ https://source.fluidproject.org/svn/LICENSE.txt
      */
     var assertSuccessStrings = function (component) {
         var str = component.options.strings;
-        var url = component.options.urls;
         
-        //assert strings and urls are correct
         jqUnit.assertEquals("The success message is set", str.statuses.success, getText(component, "message"));
         jqUnit.assertEquals("The continue link text is set", str.continueLink, getText(component, "retryAndContinue"));
-        jqUnit.assertEquals("The continue link url is set", url.continueLink, getURL(component, "retryAndContinue"));
         jqUnit.assertEquals("The skip link text is set", str.skipSuccessLink, getText(component, "skipLink"));
-        jqUnit.assertEquals("The skip link url is set", url.skipSuccessLink, getURL(component, "skipLink"));
         jqUnit.assertEquals("The warning message is set", str.skipWarningSuccess, getText(component, "warning"));
         
         //assert items aren't present

@@ -41,7 +41,6 @@ https://source.fluidproject.org/svn/LICENSE.txt
             $.each(opts.selectors, function (key) {
                 jqUnit.assertEquals("The " + key + " text should be set", opts.strings[key], component.locate(key).text());
             });
-            jqUnit.assertEquals("The url for the cancel link should be set", opts.urls.cancel, component.locate("cancel").attr("href"));
             jqUnit.assertTrue("The afterRender event should have fired", eventFired);
         });
     });
