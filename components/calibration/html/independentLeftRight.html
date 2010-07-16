@@ -1,0 +1,101 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Decapod Camera Calibration</title>
+
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-reset.css" />
+        <link rel="stylesheet" type="text/css" href="../../../infusion/src/webapp/framework/fss/css/fss-layout.css" />
+        <link rel="stylesheet" type="text/css" href="../../../shared/css/Decapod.css" />
+        <link rel="stylesheet" type="text/css" href="../css/IndependentLeftRight.css" />
+        <link rel="stylesheet" type="text/css" href="../css/ImageRotator.css" />
+
+        <!-- Required JavaScript modules for the Capture component. -->
+        <!-- jQuery -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/core/js/jquery.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.core.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.widget.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.mouse.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/jquery/ui/js/jquery.ui.draggable.js"></script>
+        
+        <!-- Fluid -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/fastXmlPull/js/fastXmlPull.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/lib/json/js/json2.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/jquery.keyboard-a11y.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/Fluid.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/core/js/FluidDOMUtilities.js"></script>
+        
+        <!-- Reorderer -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/ReordererDOMUtilities.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/GeometricManager.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/components/reorderer/js/Reorderer.js"></script>
+        
+        <!-- Renderer -->
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidParser.js"></script>
+        <script type="text/javascript" src="../../../infusion/src/webapp/framework/renderer/js/fluidRenderer.js"></script>
+        
+        <!-- Decapod components -->
+        <script type="text/javascript" src="../../../shared/js/decapodUtils.js"></script>
+        <script type="text/javascript" src="../js/ImageRotator.js"></script>
+        <script type="text/javascript" src="../js/IndependentLeftRight.js"></script>
+    </head>
+    
+    <body> 
+	    <!-- NAVIGATION BAR -->
+	    
+        <div class="ds-navigationBar">
+            <ul class="ds-navigationBar-flatList">
+                <li><img alt="" src="../../../shared/images/navigationBar_home.png"><a href="../../bookManagement/html/bookManagement.html">Book Management</a></li>
+                <span class="ds-navigationBar-chevron">&#x3009</span>
+                <li><img alt="" src="../../../shared/images/navigationBar_calibration.png"><a class="ds-navigationBar-hereElement" href="../../calibration/html/cameraMessage.html">Camera Calibration</a></li>
+            </ul>
+        </div>
+
+        <!-- MAIN PANEL -->
+
+        <div class="ds-independentLeftRight dc-independentLeftRight">
+
+            <h1 class="dc-independentLeftRight-pageHeader">Adjust page rotation and order</h1>
+            
+            <div class="fl-centered ds-left-right-calibration">
+            
+            <div>
+                <a href="#_" class="ds-independentLeftRight-swapButton dc-independentLeftRight-swapButton">swap</a>
+                </div>
+
+                <div class="fl-force-left dc-independentLeftRight-imageColumn ds-independentLeftRight-imageColumn">
+                    <h2 class="dc-independentLeftRight-leftImageHeader">Left Page</h2>
+                    <p class="dc-independentLeftRight-rightCameraID">Right Camera</p>
+
+                    <div class="ds-independentLeftRight-cameraImage dc-independentLeftRight-leftCameraRotator dc-independentLeftRight-module">
+                        <div class="fl-force-left"><a href="#_" class="ds-imageRotator-control ds-imageRotator-ccw dc-imageRotator-ccw" title="Rotate image counter-clockwise.">ccw</a></div>
+                        <div><a href="#_" class="ds-imageRotator-control ds-imageRotator-cw dc-imageRotator-cw" title="Rotate image clockwise.">cw</a></div>
+                        <div class="fl-centered"><img alt="Left page capture" src="" class="dc-imageRotator-image" /></div>
+                        <div class="fl-centered ds-imageRotator-capture"><a href="#_" class="dc-imageRotator-capture">Do another test capture</a></div>
+                    </div>
+                </div>
+
+
+                <div class="fl-force-right dc-independentLeftRight-imageColumn ds-independentLeftRight-imageColumn">
+                    <h2 class="dc-independentLeftRight-rightImageHeader">Right Page</h2>                
+                    <p class="dc-independentLeftRight-leftCameraID">Left Camera</p>
+
+                    <div class="ds-independentLeftRight-cameraImage dc-independentLeftRight-rightCameraRotator dc-independentLeftRight-module">
+                        <div class="fl-force-left"><a href="#_" class="ds-imageRotator-control ds-imageRotator-ccw dc-imageRotator-ccw" title="Rotate image counter-clockwise.">ccw</a></div>
+                        <div><a href="#_" class="ds-imageRotator-control ds-imageRotator-cw dc-imageRotator-cw " title="Rotate image clockwise.">cw</a></div>                       
+                        <div class="fl-centered"><img alt="Right page capture" src="" class="dc-imageRotator-image" /></div>
+                        <div class="fl-centered ds-imageRotator-capture"><a href="#_" class=" dc-imageRotator-capture">Recapture</a></div>
+
+                    </div>
+                </div>
+                
+                <a href="../../capture/html/Capture.html" class="dc-independentLeftRight-submitButton fl-force-right ds-calibrationMessage-done">Done! Go to capture.</a>
+            </div>
+
+        </div>
+        <script type="text/javascript"> 
+            decapod.independentLeftRight(".dc-independentLeftRight");
+        </script>      
+
+    </body>
+</html>
+    
