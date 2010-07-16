@@ -259,13 +259,30 @@ a.ds-takePicture {
     margin:auto;
 }
 
-/* ERROR DIALOG */
-.ds-capture-dialog-cameras {
-    background: rgba(76%, 79%, 74%, 1);
-    padding: 10px 20px 0px 20px;
-    -moz-border-radius: 5px;
+/* DIALOGS */
+
+.ui-dialog {
+    background: rgba(82%, 85%, 80%, 1);
+    -moz-border-radius: 10px;
+    -moz-box-shadow: 0 0 10px #555555;
 }
 
+.ui-dialog-titlebar {
+    background: rgba(90%, 93%, 88%, 1);
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    font-weight: bold;
+    padding: 5px 10px 5px 10px;
+}
+
+.ui-dialog-titlebar-close {
+    float: right;
+    text-align: right;
+}
+
+.ui-dialog-content {
+    padding: 10px 20px 10px 20px;
+}
 
 /* EXPORT BUSY OVERLAY */
 .ds-capture-previewArea .ds-capture-export-busy {
