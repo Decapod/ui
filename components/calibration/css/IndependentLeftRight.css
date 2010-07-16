@@ -41,6 +41,7 @@
     background-image:url("./images/swap.png");
     background-repeat: no-repeat;
     background-position: center top;
+    outline:none !important;
 }
 
 .ds-independentLeftRight-swapButton a {

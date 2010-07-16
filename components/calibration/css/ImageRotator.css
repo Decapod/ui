@@ -20,6 +20,7 @@
     width:20px;
     cursor: pointer;
     background-repeat: no-repeat;
+    outline:none;
 }
 
 .ds-imageRotator-ccw {
@@ -35,10 +36,26 @@
 .ds-imageRotator-capture {
     position:relative;
     width:300px;
-    top:265px;
+    top:-35px;
     text-align:center;
 }
 
 .ds-imageRotator-capture a{
     font-size: 1.0em;
+    outline:none;
+}
+
+.ds-imageRotator-image{
+    width:300px;
+    height:300px;
+    display: table-cell;
+    vertical-align: middle
+    
+}
+
+.ds-imageRotator-image img {
+    width:100%;
+    height:auto;
+    max-width:300px;
+    max-height:300px;
 }
