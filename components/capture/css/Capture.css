@@ -259,6 +259,14 @@ a.ds-takePicture {
     margin:auto;
 }
 
+/* ERROR DIALOG */
+.ds-capture-dialog-cameras {
+    background: rgba(76%, 79%, 74%, 1);
+    padding: 10px 20px 0px 20px;
+    -moz-border-radius: 5px;
+}
+
+
 /* EXPORT BUSY OVERLAY */
 .ds-capture-previewArea .ds-capture-export-busy {
     position:absolute;
