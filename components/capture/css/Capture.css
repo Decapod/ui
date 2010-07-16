@@ -36,6 +36,10 @@ a.ds-toolbar-button.export {
     background-position: center top;
 }
 
+a.ds-toolbar-button.export[disabled] {
+    opacity: 0.25;
+}
+
 a.ds-toolbar-button.recalibrate {
     display:none;
      /* !!!!!!!!! NOT IN 0.4 RELEASE */

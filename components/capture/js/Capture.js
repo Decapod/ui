@@ -92,6 +92,7 @@ fluid_1_2 = fluid_1_2 || {};
             that.locate("imagePreview").removeAttr('src');
             that.selectedItemIndex = -1;
             updateElementStates(that);
+            disableButton(that, "exportButton");
         }
         
         var item = that.locate("thumbItem").get(itemIndex);
@@ -388,6 +389,36 @@ fluid_1_2 = fluid_1_2 || {};
         }
     };
     
+    var enableButton = function (that, buttonName, clickFunc) {
+        var btn = that.locate(buttonName);
+        btn.bind("click." + buttonName,function () {
+            clickFunc(that);
+        })
+        btn.removeAttr("disabled");
+    };
+    
+    var disableButton = function (that, buttonName) {
+        var btn = that.locate(buttonName);
+        btn.unbind("click." + buttonName);
+        btn.attr("disabled", "disabled");
+    };
+    
+    var enableExportButton = function (that) {
+        enableButton(that, "exportButton", function () {
+            var exportProgress = that.locate("exportProgress");
+            exportProgress.show();  
+            
+            $.ajax({
+                url: "/pdf/",
+                type: "POST",
+                success: function (pdfURL) {
+                    exportProgress.hide();
+                    window.location.href = pdfURL;
+                }
+            });
+        });
+    };
+    
     /**
      * Binds listeners for the component events. These include picture taking
      * and keyboard shortcuts.
@@ -431,25 +462,13 @@ fluid_1_2 = fluid_1_2 || {};
                 });
         });
         
-        that.locate("exportButton").click(function () {
-            var exportProgress = that.locate("exportProgress");
-            exportProgress.show();  
-            
-        	$.ajax({
-        		url: "/pdf/",
-        		type: "POST",
-        		success: function (pdfURL) {
-                    exportProgress.hide();
-        		    window.location.href = pdfURL;
-        		}
-        	});
-        });
-        
         that.locate("takePictureButton").click(function () {
             if (that.model.length === 0) {
                 var prevent = that.events.onBeginFirstCapture.fire();
                 if (prevent === false) {
                     return false;
+                } else {
+                    enableExportButton(that);
                 }
             }
             
@@ -506,6 +525,12 @@ fluid_1_2 = fluid_1_2 || {};
                 that.locate('takePictureButton').click();
             }
         });
+        
+        if (that.model.length > 0) {
+            enableExportButton(that);
+        } else {
+            disableButton(that, "exportButton");
+        }
     };
     
     /**
@@ -553,6 +578,7 @@ fluid_1_2 = fluid_1_2 || {};
             var thumbItems = that.locate("thumbItem");
             $(thumbItems[thumbItems.length - 1]).focus();
         }
+        
         updateElementStates(that);
         
         return that;
