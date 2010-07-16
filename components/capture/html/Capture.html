@@ -66,14 +66,6 @@
                     </ul>
                 </span>
             </div>
-            
-            <div class="ds-capture-export-busy dc-capture-export-busy">
-                <img alt="" src="../css/images/spinner.gif">
-                <span>
-                <h1>Exporting...</h1>
-                This could take a while.
-                </span>
-            </div>
         </div>
         
         <div class="flc-capture ds-capture">
@@ -125,6 +117,15 @@
                     <span class="flc-capture-label-index-left"></span>
                     <span class="flc-capture-label-index-right"></span>
                     <img class="ds-capture-image-preview flc-capture-image-preview">
+                    
+                    <!-- Export Progress Message -->
+                    <div class="ds-capture-export-busy dc-capture-export-busy" style="display:none">
+                        <img alt="" src="../css/images/spinner.gif">
+                        <span>
+                        <h1>Exporting...</h1>
+                        This could take a while.
+                        </span>
+                    </div>
 				</div>
                 <div class="ds-capture-controls">
                     <a href="#" class="flc-capture-button-takePicture ds-takePicture">Take picture</a>

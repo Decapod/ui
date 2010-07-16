@@ -432,14 +432,17 @@ fluid_1_2 = fluid_1_2 || {};
         });
         
         that.locate("exportButton").click(function () {
+            var exportProgress = that.locate("exportProgress");
+            exportProgress.show();  
+            
         	$.ajax({
         		url: "/pdf/",
         		type: "POST",
         		success: function (pdfURL) {
+                    exportProgress.hide();
         		    window.location.href = pdfURL;
         		}
         	});
-        		
         });
         
         that.locate("takePictureButton").click(function () {
@@ -574,6 +577,7 @@ fluid_1_2 = fluid_1_2 || {};
             deleteButton: ".flc-capture-button-delete",
             
             exportButton: ".dc-toolbar-button-export",
+            exportProgress: ".dc-capture-export-busy",
             takePictureButton: ".flc-capture-button-takePicture",
             imagePreview: ".flc-capture-image-preview",
             
