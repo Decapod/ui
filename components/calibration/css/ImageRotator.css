@@ -11,51 +11,60 @@
 }
 
 .ds-imageRotator-control {
-    position:absolute;
-    font-size:0.7em;
-    margin-top:3px;
-    padding-top:12px;
-    text-decoration:none;
-    text-indent: -1000%;
-    width:20px;
-    cursor: pointer;
-    background-repeat: no-repeat;
-    outline:none;
+    text-indent: -10000%; /* This feels evil. */
+    width: 42px;
+    height: 42px;
+    outline: 0px;
 }
 
 .ds-imageRotator-ccw {
-    margin-left:3px;
-    background-image: url(./images/rotate-counter-clockwise.png);
+    margin-left: 5px;
+    margin-top: 5px;
+    float: left;
+    background-image: url(./images/rotateCounterClockwise_42x42.png);
 }
 
 .ds-imageRotator-cw {
-    margin-left:122px;
-    background-image: url(./images/rotate-clockwise.png);
+    margin-right: 5px;
+    margin-top: 5px;
+    float: right;
+    background-image: url(./images/rotateClockwise_42x42.png);
 }
 
 .ds-imageRotator-capture {
-    position:relative;
-    width:300px;
-    top:-35px;
-    text-align:center;
+    position: relative;
+    width: 380px;
+    top: -35px;
+    text-align: center;
 }
 
 .ds-imageRotator-capture a{
+    background-image: url(./images/camera_18x22.png);
+    background-repeat: no-repeat;
+    background-position: 5px center;
     font-size: 1.0em;
-    outline:none;
-    background-color: rgba(255, 255, 255, 0.80);
-    padding: 5px;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.85);
+    
+    padding: 5px 5px 5px 30px;
+    -moz-border-radius: 5px;
+    font-weight: bold;
+}
+
+.ds-imageRotator-capture a:hover{
+    background-color: #d5e8b8;
+    border: #96cd7e solid 2px;
+    color: #2d2d2d;
 }
 
 .ds-imageRotator-image{
-    width:300px;
-    height:300px;
+    width: 380px;
+    height: 380px;
     display: table-cell;
-    vertical-align: middle
-    
+    vertical-align: middle;
 }
 
 .ds-imageRotator-image img {
-    max-width:300px;
-    max-height:300px;
+    max-width: 380px;
+    max-height: 380px;
 }
