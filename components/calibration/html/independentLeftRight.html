@@ -53,45 +53,51 @@
         <!-- MAIN PANEL -->
 
         <div class="ds-independentLeftRight dc-independentLeftRight">
-
+            <!-- Title -->
             <h1 class="dc-independentLeftRight-pageHeader">Adjust page rotation and order</h1>
-            
-            <div class="fl-centered ds-left-right-calibration">
-            
-            <div>
-                <a href="#_" class="ds-independentLeftRight-swapButton dc-independentLeftRight-swapButton">swap</a>
-                </div>
 
-                <div class="fl-force-left dc-independentLeftRight-imageColumn ds-independentLeftRight-imageColumn">
-                    <h2 class="dc-independentLeftRight-leftImageHeader">Left Page</h2>
-                    <p class="dc-independentLeftRight-rightCameraID">Right Camera</p>
+            <div class="ds-independentLeftRight-contentWrapper">
+                <div class="ds-independentLeftRight-contentArea">
+                    <!-- Calibration proper -->
+                    <div class="fl-centered ds-left-right-calibration">
+                        <!-- Left rotater -->
+                        <div class="fl-force-left dc-independentLeftRight-imageColumn ds-independentLeftRight-imageColumn">
+                            <h2 class="dc-independentLeftRight-leftImageHeader">Left Page</h2>
+                            <p class="dc-independentLeftRight-rightCameraID">Right Camera</p>
 
-                    <div class="ds-independentLeftRight-cameraImage dc-independentLeftRight-leftCameraRotator dc-independentLeftRight-module">
-                        <div class="fl-force-left"><a href="#_" class="ds-imageRotator-control ds-imageRotator-ccw dc-imageRotator-ccw" title="Rotate image counter-clockwise.">ccw</a></div>
-                        <div><a href="#_" class="ds-imageRotator-control ds-imageRotator-cw dc-imageRotator-cw" title="Rotate image clockwise.">cw</a></div>
-                        <div class="fl-centered ds-imageRotator-image"><img alt="Left page capture" src="" class="dc-imageRotator-image" /></div>
-                        <div class="fl-centered ds-imageRotator-capture"><a href="#_" class="dc-imageRotator-capture">Do another test capture</a></div>
+                            <div class="ds-independentLeftRight-cameraImage dc-independentLeftRight-leftCameraRotator dc-independentLeftRight-module">
+                                <div class="fl-force-left"><a href="#_" class="ds-imageRotator-control ds-imageRotator-ccw dc-imageRotator-ccw" title="Rotate image counter-clockwise.">ccw</a></div>
+                                <div><a href="#_" class="ds-imageRotator-control ds-imageRotator-cw dc-imageRotator-cw" title="Rotate image clockwise.">cw</a></div>
+                                <div class="fl-centered ds-imageRotator-image"><img alt="Left page capture" src="" class="dc-imageRotator-image" /></div>
+                                <div class="fl-centered ds-imageRotator-capture"><a href="#_" class="dc-imageRotator-capture">Do another test capture</a></div>
+                            </div>
+                        </div>
+
+                        <!-- Swap button -->
+                        <a href="#_" class="ds-independentLeftRight-swapButton dc-independentLeftRight-swapButton">swap</a>
+
+                        <!-- Right rotater -->
+                        <div class="fl-force-right dc-independentLeftRight-imageColumn ds-independentLeftRight-imageColumn">
+                            <h2 class="dc-independentLeftRight-rightImageHeader">Right Page</h2>                
+                            <p class="dc-independentLeftRight-leftCameraID">Left Camera</p>
+
+                            <div class="ds-independentLeftRight-cameraImage dc-independentLeftRight-rightCameraRotator dc-independentLeftRight-module">
+                                <div class="fl-force-left"><a href="#_" class="ds-imageRotator-control ds-imageRotator-ccw dc-imageRotator-ccw" title="Rotate image counter-clockwise.">ccw</a></div>
+                                <div><a href="#_" class="ds-imageRotator-control ds-imageRotator-cw dc-imageRotator-cw " title="Rotate image clockwise.">cw</a></div>                       
+                                <div class="fl-centered ds-imageRotator-image"><img alt="Right page capture" src="" class="dc-imageRotator-image" /></div>
+                                <div class="fl-centered ds-imageRotator-capture"><a href="#_" class=" dc-imageRotator-capture">Recapture</a></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
-                <div class="fl-force-right dc-independentLeftRight-imageColumn ds-independentLeftRight-imageColumn">
-                    <h2 class="dc-independentLeftRight-rightImageHeader">Right Page</h2>                
-                    <p class="dc-independentLeftRight-leftCameraID">Left Camera</p>
-
-                    <div class="ds-independentLeftRight-cameraImage dc-independentLeftRight-rightCameraRotator dc-independentLeftRight-module">
-                        <div class="fl-force-left"><a href="#_" class="ds-imageRotator-control ds-imageRotator-ccw dc-imageRotator-ccw" title="Rotate image counter-clockwise.">ccw</a></div>
-                        <div><a href="#_" class="ds-imageRotator-control ds-imageRotator-cw dc-imageRotator-cw " title="Rotate image clockwise.">cw</a></div>                       
-                        <div class="fl-centered ds-imageRotator-image"><img alt="Right page capture" src="" class="dc-imageRotator-image" /></div>
-                        <div class="fl-centered ds-imageRotator-capture"><a href="#_" class=" dc-imageRotator-capture">Recapture</a></div>
-
-                    </div>
-                </div>
-                
-                <a href="../../capture/html/Capture.html" class="dc-independentLeftRight-submitButton fl-force-right ds-calibrationMessage-done">Done! Go to capture.</a>
             </div>
 
+            <!-- Continue -->
+            <div class="ds-calibrationMessage-done">
+                <a href="../../capture/html/Capture.html" class="dc-independentLeftRight-submitButton fl-force-right">Done! Go to capture.</a>
+            </div>
         </div>
+        
         <script type="text/javascript"> 
             decapod.independentLeftRight(".dc-independentLeftRight");
         </script>      
