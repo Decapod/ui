@@ -60,7 +60,6 @@
 .ds-imageRotator-image{
     width: 380px;
     height: 380px;
-    display: table-cell;
     vertical-align: middle;
 }
 
