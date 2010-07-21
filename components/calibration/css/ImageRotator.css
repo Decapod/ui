@@ -11,24 +11,38 @@
 }
 
 .ds-imageRotator-control {
-    text-indent: -10000%; /* This feels evil. */
     width: 42px;
     height: 42px;
     outline: 0px;
 }
 
 .ds-imageRotator-ccw {
+    font-size: 0px;
+    text-indent: 10000%; /* This feels evil. */
     margin-left: 5px;
     margin-top: 5px;
     float: left;
-    background-image: url(./images/rotateCounterClockwise_42x42.png);
+    background-image: url(./images/rotate_42x84.png);
 }
 
 .ds-imageRotator-cw {
+    font-size: 0px;
     margin-right: 5px;
     margin-top: 5px;
     float: right;
-    background-image: url(./images/rotateClockwise_42x42.png);
+    -moz-transform: matrix(-1, 0, 0, 1, 0, 0);
+    background-image: url(./images/rotate_42x84.png);
+}
+
+.ds-imageRotator-ccw:focus {
+    background-image: url(./images/rotate_42x84.png);
+    background-position: 0 -42px;
+}
+
+.ds-imageRotator-cw:focus {
+    -moz-transform: matrix(-1, 0, 0, 1, 0, 0);
+    background-image: url(./images/rotate_42x84.png);
+    background-position: 0 -42px;
 }
 
 .ds-imageRotator-capture {
@@ -51,7 +65,8 @@
     font-weight: bold;
 }
 
-.ds-imageRotator-capture a:hover{
+.ds-imageRotator-capture a:focus, 
+.ds-imageRotator-capture a:hover {
     background-color: #d5e8b8;
     border: #96cd7e solid 2px;
     color: #2d2d2d;

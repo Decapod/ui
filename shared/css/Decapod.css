@@ -12,6 +12,10 @@
   src: local('Droid Sans'), url('../fonts/DroidSans.ttf') format('truetype');
 }
 
+:focus {
+   outline: 2px dotted rgba(0, 148, 68, 0.7);
+}
+
 body {
     font-family: 'Droid Sans', arial, serif;
     background-color: #F8F8F8;

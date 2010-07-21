@@ -1,9 +1,5 @@
 /* GENERAL */
 
-:focus {
-    outline: 0px !important;
-}
-
 body {
 	position:absolute;
 	bottom:0px;
