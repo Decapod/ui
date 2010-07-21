@@ -48,6 +48,7 @@ body {
     font-size: 18px;
     font-weight: bold;
     padding-right: 23px;
+    padding-left: 23px;
 }
 
 a.ds-cameraMessage-choice-retry {
