@@ -4,10 +4,6 @@ body {
     text-align: center;
 }
 
-:focus {
-    outline: 0px dotted #555555;
-}
-
 /* MAIN AREA */
 
 .ds-cameraMessage {
@@ -52,7 +48,6 @@ body {
     font-size: 18px;
     font-weight: bold;
     padding-right: 23px;
-    padding-left: 23px;
 }
 
 a.ds-cameraMessage-choice-retry {

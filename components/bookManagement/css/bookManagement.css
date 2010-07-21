@@ -10,10 +10,6 @@ body {
     top: 0px;
 }
 
-:focus {
-    outline: 0px dotted #555555;
-}
-
 a {
     color: #39b54a;
 }
@@ -51,7 +47,9 @@ a {
     font-weight: normal;   
 }
 
+.ds-circle:focus,
 .ds-circle:hover {
+    outline: none;
     background: #DDE5DC;
     border: 4px solid #39b54a;
 }

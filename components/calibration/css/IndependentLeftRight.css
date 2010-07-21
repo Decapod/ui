@@ -69,7 +69,6 @@
     background-image: url("./images/swap_46x20.png");
     background-repeat: no-repeat;
     background-position: center top;
-    outline: 0px;
     font-weight: bold;
 }
 
@@ -88,6 +87,5 @@
     margin-top: 20px;
     font-size: 18px;
     font-weight: bold;
-    outline: 0px;
 }
 
