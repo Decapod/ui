@@ -9,10 +9,13 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://source.fluidproject.org/svn/LICENSE.txt
 */
 
-/*global jQuery*/
-/*global fluid_1_2*/
+// Declare dependencies
+/*global fluid_1_4:true, jQuery*/
 
-fluid_1_2 = fluid_1_2 || {};
+// JSLint options 
+/*jslint white: true, funcinvoke: true, undef: true, newcap: true, nomen: true, regexp: true, bitwise: true, browser: true, forin: true, maxerr: 100, indent: 4 */
+
+fluid = fluid || {};
 
 (function ($, fluid) {
     
@@ -632,4 +635,4 @@ fluid_1_2 = fluid_1_2 || {};
         }
     });
     
-})(jQuery, fluid_1_2);
+})(jQuery, fluid);
