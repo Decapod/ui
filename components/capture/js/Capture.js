@@ -91,7 +91,7 @@ fluid = fluid || {};
         }
         
         if (that.model.length === 1) { // About to remove the last image.
-            that.locate("imageReorderer").append(that.itemTemplate.clone());
+            that.locate("listReorderer").append(that.itemTemplate.clone());
             that.locate("imagePreview").removeAttr('src');
             that.selectedItemIndex = -1;
             updateElementStates(that);
@@ -113,7 +113,7 @@ fluid = fluid || {};
             prev.focus();
         }
         
-        that.imageReorderer.refresh();
+        that.listReorderer.refresh();
         showMessage(that, "fl-capture-message-success", "Image successfully deleted");
     };
     
@@ -189,7 +189,7 @@ fluid = fluid || {};
             cutpoints: selectorMap
         };
         
-        return fluid.selfRender(that.locate(that.options.selectors.imageReorderer), generateTree(), options);
+        return fluid.selfRender(that.locate(that.options.selectors.listReorderer), generateTree(), options);
     };
     
     /**
@@ -454,9 +454,9 @@ fluid = fluid || {};
             var image = that.locate("thumbImage", clone);
             $(image).attr('src', newItem.thumb);
            
-            that.locate("imageReorderer").append(clone);
+            that.locate("listReorderer").append(clone);
             
-            that.imageReorderer.refresh();
+            that.listReorderer.refresh();
             $(clone).focus();
             var deleteButton = that.locate("deleteButton", clone);
             deleteButton.click(
@@ -512,7 +512,7 @@ fluid = fluid || {};
             }
         });
         
-        that.locate("imageReorderer").keyup(function (event) {
+        that.locate("listReorderer").keyup(function (event) {
             var thumbItems = that.locate('thumbItem');
             if ($.ui.keyCode.PAGE_UP === event.keyCode) {
                 thumbItems.get(0).focus();
@@ -537,7 +537,7 @@ fluid = fluid || {};
     };
     
     /**
-     * Creates a View for the Capture component. Contains an imageReorderer
+     * Creates a View for the Capture component. Contains an listReorderer
      * subcomponent, a preview area for the image, and controls for capturing
      * images and manipulating them.
      * 
@@ -571,8 +571,8 @@ fluid = fluid || {};
         render(that);
         
         var reordererOptions = addReordererListeners(that);
-        fluid.merge(null, reordererOptions, that.options.imageReorderer.options);
-        that.imageReorderer = fluid.initSubcomponent(that, "imageReorderer", [that.locate("imageReorderer"), reordererOptions]);
+        fluid.merge(null, reordererOptions, that.options.listReorderer.options);
+        that.listReorderer = fluid.initSubcomponent(that, "listReorderer", [that.locate("listReorderer"), reordererOptions]);
         
         initDialogs(that);
         bindHandlers(that);
@@ -588,8 +588,8 @@ fluid = fluid || {};
     };
     
     fluid.defaults("fluid.capture", {
-        imageReorderer: {
-            type: "fluid.reorderImages",
+        listReorderer: {
+            type: "fluid.reorderList",
             options: {
                 selectors: {
                     movables: ".flc-capture-thumbItem"
@@ -598,7 +598,7 @@ fluid = fluid || {};
         },
         
         selectors: {
-            imageReorderer: ".flc-capture-reorderer",
+            listReorderer: ".flc-capture-reorderer",
             thumbItem: ".flc-capture-thumbItem",
             imageLabel: ".flc-capture-label-item",
             itemIndex: ".flc-capture-label-index",
