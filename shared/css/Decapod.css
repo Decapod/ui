@@ -110,15 +110,15 @@ a.ds-toolbar-button {
     padding-top: 33px; /*offset the height of the navbar */
     width: 50px;
     height: 25px;
-	color:#000 !important;
-	text-decoration: underline;
+    color:#000 !important;
+    text-decoration: underline;
     text-align: center;
     background-repeat: no-repeat;
     margin-left: 10px;
     margin-right: 10px;
     
 }
-
+    
 a.ds-toolbar-button:hover {
     color: #999999 !important; 
     cursor: pointer;
@@ -126,6 +126,11 @@ a.ds-toolbar-button:hover {
 
 .ui-state-disabled span {
     cursor: default;
+}
+
+/*Main Content Pane */
+.ds-header {
+    padding-left: 30px;
 }
 
 /*Override default style */
