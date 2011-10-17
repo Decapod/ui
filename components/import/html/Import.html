@@ -54,42 +54,51 @@
             </table>
             
             <!-- File Queue body, which is the default container for the FileQueueView component -->
+            
             <table summary="The list of files" class="flc-uploader-queue ds-import-queue">
 				<caption>File Upload Queue:</caption>
 				<tbody>
 					<!-- Template for file row -->
 					<tr class="flc-uploader-file-tmplt flc-uploader-file">
-						<td class="flc-uploader-file-name ds-import-file-name">File Name Placeholder</td>
+						<td class="dc-file-number ds-file-number">2000.</td>
+                        <td class="flc-uploader-file-name ds-import-file-name">File Name Placeholder</td>
+                        <td class="ds-import-file-actions ds-import-file-status">
+							<span class="flc-uploader-file-action" tabindex="-1"></span>
+						</td>
 					</tr>
 
 					<!-- Template for error info row -->
 					<tr class="flc-uploader-file-error-tmplt ds-import-file-error">
 						<td colspan="3" class="flc-uploader-file-error"></td>
 					</tr>
+                    
+                    <!-- Initial instructions -->
+                    <tr><td class="flc-uploader-browse-instructions ds-import-browse-instructions">
+                        <p>Choose <em>Browse files</em> to add images to be imported.</p>
+                    </td>
+                    </tr>
 				</tbody>
 			</table>
             
             <!-- File progress bar template, used to generate progress bars for each file in the queue -->
-            <div class="flc-uploader-file-progressor-tmplt ds-import-file-progress"></div>            
-
-            <!-- Initial instructions -->
-            <div class="flc-uploader-browse-instructions ds-import-browse-instructions">
-                Choose <em>Browse files</em> to add images to be imported. 
-            </div>            
+            <div class="flc-uploader-file-progressor-tmplt ds-import-file-progress"></div>           
 
             <!-- Status footer -->
             <div class="flc-uploader-queue-footer ds-import-queue-footer fl-clearfix">
-                <div class="fl-force-left">
-	                <div class="flc-uploader-total-progress-text ds-import-total-progress-text"></div>
-	                <div class="flc-uploader-upload-limit-text"></div>
-                </div>                
-                <div class="fl-text-align-right fl-force-right">
-                    <span class="flc-uploader-button-browse ds-import-browse">
-                        <span class="flc-uploader-button-browse-text">Browse files</span>
-                    </span>
+                
+                <!-- Add More / Browse Button -->
+                <div class="flc-uploader-button-browse ds-import-browse fl-force-right fl-container-flex">
+                    <div class="flc-uploader-button-browse-text">Browse files</div>
                 </div>
+            
+                <div class="dc-import-remove-all ds-import-remove-all-dim fl-force-right fl-container-flex"><a href="#">Remove all</a></div>
+                
                 <!-- Total progress bar -->
                 <div class="flc-uploader-total-progress ds-import-total-progress-okay"></div>
+                <div class="flc-uploader-total-progress-text ds-import-total-progress-text"></div>
+                <div class="flc-uploader-upload-limit-text ds-import-limit-text"></div>
+                
+                
                 <div class="flc-uploader-errorsPanel ds-import-errorsPanel">
                     <div class="ds-import-errorsPanel-header"><span class="flc-uploader-errorPanel-header">Warnings:</span></div>
 
@@ -123,9 +132,9 @@
             
             <!-- Upload buttons -->
             <div class="ds-import-buttons">
-            	<a href="#" class="dc-import-link-cancel ds-import-link-cancel">Cancel import</a>
+            	<a href="#" class="dc-import-cancel ds-import-cancel">Cancel import</a>
                 <button type="button" class="flc-uploader-button-pause ds-import-button-stop ds-import-hidden">Stop Upload</button>
-                <button type="button" class="flc-uploader-button-upload ds-import-button-upload ds-import-dim">Upload</button>
+                <button type="button" class="flc-uploader-button-upload ds-import-button-upload ds-import-dim">Import selected</button>
             </div>
             
             <div class="flc-uploader-status-region fl-offScreen-hidden"></div>
