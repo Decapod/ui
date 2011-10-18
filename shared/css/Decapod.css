@@ -13,7 +13,7 @@
 }
 
 :focus {
-   outline: 2px dotted rgba(0, 148, 68, 0.7);
+   outline: 1px dotted #1C75BC;
 }
 
 body {
@@ -34,8 +34,16 @@ h1 {
     border-bottom-style: none !important;
 }
 
+.ds-decapod button:hover {
+    cursor: pointer;
+}
+
+header.ds-header {
+    margin-bottom: 15px;
+}
+
 a {
-    color: #39b54a;
+    color: #1C75BC;
 }
 
 /* NAVIGATION BAR */

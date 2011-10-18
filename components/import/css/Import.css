@@ -214,6 +214,7 @@ html > body .ds-import div.ds-import-browse {
 }
 .ds-import div.ds-import-browse:hover {
     /*background-color: #000;*/
+    
 }
 
 .ds-import div.ds-import-browse:focus, .ds-import div.ds-import-browse.focus {
@@ -256,6 +257,7 @@ html > body .ds-import div.ds-import-browse {
     padding: 0;
     width: 9em;
 }
+
 .ds-import-buttons button:focus {
     outline: 2px solid #142B8C;
 }
