@@ -20,131 +20,135 @@
     
     <body>
     
-        <!-- NAVIGATION BAR -->
-        <nav class="ds-navigationBar">
-	        <ul class="ds-navigationBar-flatList">
-	            <li><img alt="" src="../../../shared/images/navigationBar_home.png"><a href="../../bookManagement/html/bookManagement.html">Book Management</a></li>
-	            <span class="ds-navigationBar-chevron">&#x3009</span>
-	            <li><img alt="" src=""><a class="ds-navigationBar-hereElement" href="">Untitled</a></li>
-	            <span class="ds-navigationBar-chevron">&#x3009</span>
-	            <li><img alt="" src=""><a class="ds-navigationBar-hereElement" href="">Import</a></li>
-	        </ul>
-        </nav>
+        <section class="ds-decapod">
+            
+            <!-- NAVIGATION BAR -->
+            <nav class="ds-navigationBar">
+                <ul class="ds-navigationBar-flatList">
+                    <li><img alt="" src="../../../shared/images/navigationBar_home.png"><a href="../../bookManagement/html/bookManagement.html">Book Management</a></li>
+                    <span class="ds-navigationBar-chevron">&#x3009</span>
+                    <li><img alt="" src=""><a class="ds-navigationBar-hereElement" href="">Untitled</a></li>
+                    <span class="ds-navigationBar-chevron">&#x3009</span>
+                    <li><img alt="" src=""><a class="ds-navigationBar-hereElement" href="">Import</a></li>
+                </ul>
+            </nav>
 
-        <section class="dc-import">
-            <header class="ds-header">
-                <h1>Import</h1>
-            </header>
-            
-            <!-- Basic upload controls, used when JavaScript is unavailable -->
-            <form method="post" enctype="multipart/form-data" class="fl-progEnhance-basic">
-                <p>Use the Browse button to add a file, and the Save button to upload it.</p>
-                <input name="fileData" type="file" />
-                <input class="ds-import-basic-save" type="submit" value="Save"/>
-            </form>
-            
-            <!-- Uploader container -->
-        <form class="flc-uploader ds-import fl-progEnhance-enhanced" method="get" enctype="multipart/form-data">
-            
-            <!-- File Queue, which is split up into two separate tables: one for the header and body -->
-            <div class="ds-import-header-border">
-                <table class="ds-import-header">
-                    <tr>
-                        <th class="ds-import-file-name">File Name</th>	
-                    </tr>
-                </table>
-            </div>
-            
-            <!-- File Queue body, which is the default container for the FileQueueView component -->
-            
-            <table summary="The list of files" class="flc-uploader-queue ds-import-queue">
-				<caption>File Upload Queue:</caption>
-				<tbody>
-					<!-- Template for file row -->
-					<tr class="flc-uploader-file-tmplt flc-uploader-file">
-						<td class="dc-file-number ds-file-number">2000.</td>
-                        <td class="flc-uploader-file-name ds-import-file-name">File Name Placeholder</td>
-                        <td class="ds-import-file-actions ds-import-file-status">
-							<span class="flc-uploader-file-action" tabindex="-1"></span>
-						</td>
-					</tr>
-
-					<!-- Template for error info row -->
-					<tr class="flc-uploader-file-error-tmplt ds-import-file-error">
-						<td colspan="3" class="flc-uploader-file-error"></td>
-					</tr>
+            <!-- DECAPOD IMPORT INTERFACE -->
+            <section class="dc-import">
+                <header class="ds-header">
+                    <h1>Import</h1>
+                </header>
+                
+                <!-- Basic upload controls, used when JavaScript is unavailable -->
+                <form method="post" enctype="multipart/form-data" class="fl-progEnhance-basic">
+                    <p>Use the Browse button to add a file, and the Save button to upload it.</p>
+                    <input name="fileData" type="file" />
+                    <input class="ds-import-basic-save" type="submit" value="Save"/>
+                </form>
+                
+                <!-- Uploader container -->
+                <form class="flc-uploader ds-import fl-progEnhance-enhanced" method="get" enctype="multipart/form-data">
+                
+                    <!-- File Queue, which is split up into two separate tables: one for the header and body -->
+                    <div class="ds-import-header-border">
+                        <table class="ds-import-header">
+                            <tr>
+                                <th class="ds-import-file-name">File Name</th>	
+                            </tr>
+                        </table>
+                    </div>
                     
-                    <!-- Initial instructions -->
-                    <tr><td class="flc-uploader-browse-instructions ds-import-browse-instructions">
-                        <p>Choose <em>Browse files</em> to add images to be imported.</p>
-                    </td>
-                    </tr>
-				</tbody>
-			</table>
-            
-            <!-- File progress bar template, used to generate progress bars for each file in the queue -->
-            <div class="flc-uploader-file-progressor-tmplt ds-import-file-progress"></div>           
+                    <!-- File Queue body, which is the default container for the FileQueueView component -->
+                    <table summary="The list of files" class="flc-uploader-queue ds-import-queue">
+                        <caption>File Upload Queue:</caption>
+                        <tbody>
+                            <!-- Template for file row -->
+                            <tr class="flc-uploader-file-tmplt flc-uploader-file">
+                                <td class="dc-file-number ds-file-number">2000.</td>
+                                <td class="flc-uploader-file-name ds-import-file-name">File Name Placeholder</td>
+                                <td class="ds-import-file-status">
+                                    <span class="flc-uploader-file-action" tabindex="-1"></span>
+                                </td>
+                            </tr>
 
-            <!-- Status footer -->
-            <div class="flc-uploader-queue-footer ds-import-queue-footer fl-clearfix">
-                
-                <!-- Add More / Browse Button -->
-                <div class="flc-uploader-button-browse ds-import-browse fl-force-right fl-container-flex">
-                    <div class="flc-uploader-button-browse-text">Browse files</div>
-                </div>
-            
-                <div class="dc-import-remove-all ds-import-remove-all-dim fl-force-right fl-container-flex"><a href="#">Remove all</a></div>
-                
-                <!-- Total progress bar -->
-                <div class="flc-uploader-total-progress ds-import-total-progress-okay"></div>
-                <div class="flc-uploader-total-progress-text ds-import-total-progress-text"></div>
-                <div class="flc-uploader-upload-limit-text ds-import-limit-text"></div>
-                
-                
-                <div class="flc-uploader-errorsPanel ds-import-errorsPanel">
-                    <div class="ds-import-errorsPanel-header"><span class="flc-uploader-errorPanel-header">Warnings:</span></div>
+                            <!-- Template for error info row -->
+                            <tr class="flc-uploader-file-error-tmplt ds-import-file-error">
+                                <td colspan="3" class="flc-uploader-file-error"></td>
+                            </tr>
+                            
+                            <!-- Initial instructions -->
+                            <tr><td class="flc-uploader-browse-instructions ds-import-browse-instructions">
+                                <p>Choose <em>Browse files</em> to add images to be imported.</p>
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- File progress bar template, used to generate progress bars for each file in the queue -->
+                    <div class="flc-uploader-file-progressor-tmplt ds-import-file-progress"></div>           
 
-                    <!-- The markup for each error section will be rendered into these containers. -->
-                    <div class="flc-uploader-errorPanel-section-fileSize"></div>
-                    <div class="flc-uploader-errorPanel-section-numFiles"></div>
-                     
-                     <!-- Error section template.-->
-                     <div class="flc-uploader-errorPanel-section-tmplt ds-import-hidden-templates">
-                        <div class="fl-container-flex">
-                            <div class="flc-uploader-errorPanel-section-title ds-import-errorPanel-section-title fl-force-left">
-                                x files were too y and were not added to the queue.
-                            </div>
-                            <button type="button" class="flc-uploader-errorPanel-section-removeButton ds-import-errorPanel-section-removeButton fl-force-right">
-                                 <span class="flc-uploader-erroredButton-text ds-import-hidden">Remove error</span>
-                            </button>
-                        </div>
+                    <!-- Status footer -->
+                    <div class="flc-uploader-queue-footer ds-import-queue-footer fl-clearfix">
                         
-                        <div class="fl-container-flex">
-                            <div class="flc-uploader-errorPanel-section-details ds-import-errorPanel-section-details">
-                                <p>The following files were not added:</p>
-                                <p class="flc-uploader-errorPanel-section-files">file_1, file_2, file_3, file_4, file_5 </p>
-                            </div>
-                        </div>                        
-                        <div class="fl-container-flex">
-                            <button type="button" class="flc-uploader-errorPanel-section-toggleDetails ds-import-errorPanel-section-toggleDetails">Hide this list</button>
+                        <!-- Add More / Browse Button -->
+                        <div class="flc-uploader-button-browse ds-import-browse fl-force-right fl-container-flex">
+                            <div class="flc-uploader-button-browse-text">Browse files</div>
                         </div>
-                     </div>
-                 </div>                
-            </div>
+                    
+                        <!-- Remove all button -->
+                        <div class="dc-import-remove-all ds-import-remove-all-dim fl-force-right fl-container-flex"><a href="#">Remove all</a></div>
+                        
+                        <!-- Total progress bar -->
+                        <div class="flc-uploader-total-progress ds-import-total-progress-okay"></div>
+                        <div class="flc-uploader-total-progress-text ds-import-total-progress-text"></div>
+                        <div class="flc-uploader-upload-limit-text ds-import-limit-text"></div>
+                        
+                        <!-- Errors panel -->
+                        <div class="flc-uploader-errorsPanel ds-import-errorsPanel">
+                            <div class="ds-import-errorsPanel-header"><span class="flc-uploader-errorPanel-header">Warnings:</span></div>
+
+                            <!-- The markup for each error section will be rendered into these containers. -->
+                            <div class="flc-uploader-errorPanel-section-fileSize"></div>
+                            <div class="flc-uploader-errorPanel-section-numFiles"></div>
+                             
+                             <!-- Error section template.-->
+                             <div class="flc-uploader-errorPanel-section-tmplt ds-import-hidden-templates">
+                                <div class="fl-container-flex">
+                                    <div class="flc-uploader-errorPanel-section-title ds-import-errorPanel-section-title fl-force-left">
+                                        x files were too y and were not added to the queue.
+                                    </div>
+                                    <button type="button" class="flc-uploader-errorPanel-section-removeButton ds-import-errorPanel-section-removeButton fl-force-right">
+                                         <span class="flc-uploader-erroredButton-text ds-import-hidden">Remove error</span>
+                                    </button>
+                                </div>
+                                
+                                <div class="fl-container-flex">
+                                    <div class="flc-uploader-errorPanel-section-details ds-import-errorPanel-section-details">
+                                        <p>The following files were not added:</p>
+                                        <p class="flc-uploader-errorPanel-section-files">file_1, file_2, file_3, file_4, file_5 </p>
+                                    </div>
+                                </div>                        
+                                <div class="fl-container-flex">
+                                    <button type="button" class="flc-uploader-errorPanel-section-toggleDetails ds-import-errorPanel-section-toggleDetails">Hide this list</button>
+                                </div>
+                             </div>
+                         </div>                
+                    </div>
+                    
+                    <!-- Upload buttons -->
+                    <div class="ds-import-buttons">
+                        <a href="#" class="dc-import-cancel ds-import-cancel">Cancel import</a>
+                        <button type="button" class="flc-uploader-button-pause ds-import-button-stop ds-import-hidden">Stop Upload</button>
+                        <button type="button" class="flc-uploader-button-upload ds-import-button-upload ds-import-dim">Import selected</button>
+                    </div>
+                    
+                    <div class="flc-uploader-status-region fl-offScreen-hidden"></div>
+                </form>        
             
-            <!-- Upload buttons -->
-            <div class="ds-import-buttons">
-            	<a href="#" class="dc-import-cancel ds-import-cancel">Cancel import</a>
-                <button type="button" class="flc-uploader-button-pause ds-import-button-stop ds-import-hidden">Stop Upload</button>
-                <button type="button" class="flc-uploader-button-upload ds-import-button-upload ds-import-dim">Import selected</button>
-            </div>
-            
-            <div class="flc-uploader-status-region fl-offScreen-hidden"></div>
-        </form>        
-            
+            </section>
+            <script>
+                decapod.import(".dc-import");
+            </script>
         </section>
-        <script>
-            decapod.import(".dc-import");
-        </script>
     </body>
 </html>
