@@ -1,0 +1,91 @@
+/* MAIN WRAPPER */
+
+.ds-independentLeftRight {
+    border-top: 1px solid #dddddd;
+    height: 90%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Header */
+
+.ds-independentLeftRight h1 {
+    font-size: 42px;
+    text-align: center;
+}
+
+/* Main content */
+
+.ds-independentLeftRight-contentWrapper {
+    display: table;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ds-independentLeftRight-contentArea {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.ds-left-right-calibration {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.ds-independentLeftRight-cameraImage {
+    background-image:url(./images/calibration-background.png);
+    width: 380px;
+    height: 380px;
+    background-color: #fff;
+    text-align: center;
+    -moz-border-radius: 15px;
+    border: 2px dashed #aeaeae;
+}
+
+.ds-independentLeftRight-imageColumn {
+    text-align: center;
+}
+
+.ds-independentLeftRight-imageColumn h2 {
+    margin: 0em 0;
+    font-size: 18px;
+    font-weight: normal;
+    color: #353535;
+}
+
+.ds-independentLeftRight-imageColumn p {
+    font-size: 14px;
+    color: #555555;
+}
+
+.ds-independentLeftRight-swapButton {
+    position: relative;
+    top: 250px;
+    padding-top: 25px;
+    background-image: url("./images/swap_46x20.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+    font-weight: bold;
+}
+
+/* Continue link */
+
+.ds-calibrationMessage-done {
+    margin-top: 40px;
+    margin-right: 40px;
+}
+
+.ds-calibrationMessage-done a {
+    background: url("./images/cameraMessage_forward_17x17.png");
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    padding-right: 23px;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
