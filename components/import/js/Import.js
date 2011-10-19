@@ -32,7 +32,11 @@ var decapod = decapod || {};
                 type: "fluid.uploader",
                 container: ".flc-uploader",
                 options: {
-                    demo: true
+                    //demo: true
+                    queueSettings: {
+                        uploadURL: "/imageImport/",
+                        fileTypes: ["image/jpeg", "image/png", "image/tiff"]
+                    }
                 }
             }
         }
