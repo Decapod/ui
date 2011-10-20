@@ -67,7 +67,7 @@
                                 <td class="dc-file-number ds-file-number">2000.</td>
                                 <td class="flc-uploader-file-name ds-import-file-name">File Name Placeholder</td>
                                 <td class="ds-import-file-status">
-                                    <span class="flc-uploader-file-action" tabindex="-1"></span>
+                                    <button type="button" class="flc-uploader-file-action" tabindex="-1"></button>
                                 </td>
                             </tr>
 
@@ -95,8 +95,11 @@
                             <div class="flc-uploader-button-browse-text">Browse files</div>
                         </div>
                     
-                        <!-- Remove all button -->
-                        <div class="dc-import-remove-all ds-import-remove-all-dim fl-force-right fl-container-flex"><a href="#">Remove all</a></div>
+                        <!-- 
+                            TODO: Wire up remove all button to remove all files from the queue. 
+                            TODO: Need to deside what should happen to uploaded files.
+                            <div class="dc-import-remove-all ds-import-remove-all-dim fl-force-right fl-container-flex"><a href="#">Remove all</a></div>
+                        -->
                         
                         <!-- Total progress bar -->
                         <div class="flc-uploader-total-progress ds-import-total-progress-okay"></div>
@@ -137,7 +140,10 @@
                     
                     <!-- Upload buttons -->
                     <div class="ds-import-buttons">
-                        <a href="#" class="dc-import-cancel ds-import-cancel">Cancel import</a>
+                        <!--
+                            TODO: Wire up the cancel button to cancel upload and remove uploaded files from the server
+                            <a href="#" class="dc-import-cancel ds-import-cancel">Cancel import</a> 
+                        -->
                         <button type="button" class="flc-uploader-button-pause ds-import-button-stop ds-import-hidden">Stop Upload</button>
                         <button type="button" class="flc-uploader-button-upload ds-import-button-upload ds-import-dim">Import selected</button>
                     </div>
