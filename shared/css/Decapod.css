@@ -16,7 +16,7 @@
    outline: 1px dotted #1C75BC;
 }
 
-body {
+.ds-decapod {
     font-family: 'Droid Sans', arial, serif;
     background-color: #F8F8F8;
     position: absolute;
@@ -26,7 +26,7 @@ body {
     top: 0px;
 }
 
-h1 {
+.ds-decapod h1 {
     font-size: 24px;
     font-weight: bold;
     color: #3a3a3a;
