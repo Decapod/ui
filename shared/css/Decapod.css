@@ -13,10 +13,10 @@
 }
 
 :focus {
-   outline: 2px dotted rgba(0, 148, 68, 0.7);
+   outline: 1px dotted #1C75BC;
 }
 
-body {
+.ds-decapod {
     font-family: 'Droid Sans', arial, serif;
     background-color: #F8F8F8;
     position: absolute;
@@ -26,7 +26,7 @@ body {
     top: 0px;
 }
 
-h1 {
+.ds-decapod h1 {
     font-size: 24px;
     font-weight: bold;
     color: #3a3a3a;
@@ -34,24 +34,28 @@ h1 {
     border-bottom-style: none !important;
 }
 
-a {
-    color: #39b54a;
+.ds-decapod button:hover {
+    cursor: pointer;
 }
 
-header {
-	background-color:#333333;
-	background-image:url("../../../infusion/src/webapp/framework/fss/images/themes/coal/widget-bg.png");
+header.ds-header {
+    margin-bottom: 15px;
+}
+
+a {
+    color: #1C75BC;
 }
 
 /* NAVIGATION BAR */
 
 .ds-navigationBar {
     display: table;
-    background: -moz-linear-gradient(top,  #f1f1f1,  #d2d2d2);
+    background: #958D76;
     width: 100%;
     height: 42px;
     text-align: left;
     border-bottom: 1px solid #bbbbbb;
+    color: #fff;
 }
 
 .ds-navigationBar img {
@@ -73,7 +77,7 @@ ul.ds-navigationBar-flatList {
 .ds-navigationBar-flatList a {
     padding-left: 5px;
     padding-right: 5px;
-    color: #000000;
+    color: #fff;
 }
 
 a.ds-navigationBar-hereElement {
@@ -86,10 +90,10 @@ a.ds-navigationBar-hereElement {
     font-size: 20px;
 }
 
-/* Toolbar: toolbar gradient background */
+/* Toolbar: toolbar background */
 .ds-toolbar {
     display: table;
-    background: -moz-linear-gradient(top,  #f7f7f7,  #e2e2e2);
+    background: #D9D0B4;
     width: 100%;
     text-align: right;
     height: 62px;
@@ -114,15 +118,15 @@ a.ds-toolbar-button {
     padding-top: 33px; /*offset the height of the navbar */
     width: 50px;
     height: 25px;
-	color:#000 !important;
-	text-decoration: underline;
+    color:#000 !important;
+    text-decoration: underline;
     text-align: center;
     background-repeat: no-repeat;
     margin-left: 10px;
     margin-right: 10px;
     
 }
-
+    
 a.ds-toolbar-button:hover {
     color: #999999 !important; 
     cursor: pointer;
@@ -130,6 +134,11 @@ a.ds-toolbar-button:hover {
 
 .ui-state-disabled span {
     cursor: default;
+}
+
+/*Main Content Pane */
+.ds-header {
+    padding-left: 30px;
 }
 
 /*Override default style */
