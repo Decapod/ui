@@ -1,319 +1,412 @@
-/* GENERAL */
-
-body {
-	position:absolute;
-	bottom:0px;
-	left:0px;
-	right:0px;
-	top:0px;
-}
-
-.fl-capture-element-hidden {
-    display: none;
-}
-
-.ds-capture {
-	background-color:#FFFFFF;
-	height:100%;
-}
-
-.content {
-	background: none repeat scroll 0 0 #FFFFFF;
-	bottom: 0px;
-	overflow: hidden;
-	position: absolute;
-	top: 107px; /* Top offset by toolbar and navbar height */
-}
-
-/* TOOLBAR */
-
-a.ds-toolbar-button.export {
-    background-image: url(./images/export.png);
-    background-position: center top;
-}
-
-a.ds-toolbar-button.export[disabled] {
-    opacity: 0.25;
-}
-
-a.ds-toolbar-button.recalibrate {
-    display:none;
-     /* !!!!!!!!! NOT IN 0.4 RELEASE */
-    background-image: url(./images/recalibrate.png);
-    background-position: 23px 3px;  
-}
-
-/* MESSAGES */
-.fl-capture-message-success {
-    background-color: #c9eac0;
-    width: 100%;
-    padding-top: 2em;
-    padding-bottom: 2em;
-    position: absolute;
-    top: 0px;
-    text-align: center;
-    font-size: 1.2em;
-    display: none;
-    background-image: url(./images/checkmark.png);
-    background-repeat: no-repeat;
-    background-position: 30% 50%;
-	z-index:100000;
-}
-
-.fl-capture-message-error {
-    background-color: #f2ef98;
-    width: 100%;
-    padding-top: 2em;
-	padding-bottom: 2em;
-    position: absolute;
-    top: 0px;
-    text-align: center;
-    font-size: 1.2em;
-    display: none;
-    background-image: url(./images/info.png);
-    background-repeat: no-repeat;
-    background-position: 30% 50%;
-	z-index:100000;
-}
-
-.ds-capture-progress-content {
-    position: absolute;
-    top: 50%;
-    margin-top: -0.9em;
-    margin-left: 0.8em;
-}
-
-/* THUMBNAIL GRID */
-
-.ds-thumbnailContainer {
-	position: absolute; 
-	top: 0pt; 
-	left: 0pt; 
-	bottom: 0pt; 
-	overflow: auto; 
-	width: 185px; 
-	z-index: 100;
-}
-
-.fl-grid {
-    border: none;
-    padding: 5px;
-    overflow: auto;
-    background-color: #fff;
-}
-
-.fl-grid li {
-    background-color:#fff;
-    width: 150px;
-    height: 140px;
-    margin-bottom: 4px;
-    margin-left: 4px;
-    margin-top: 4px;
-    margin-right: auto;
-    display: block;
+.ds-import {
+    clear: both;
     position: relative;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    border:1px solid #000000;
+    width: 434px;
+    font-weight:normal;
+    margin-left:100px;
 }
 
+/* Import queue header*/
 
-.fl-capture-placeholder { /* what appears before the first capture */
-    background: #fff;
-    border: 1px dotted #778899;
+.ds-import-header-border {
+    border-radius: 6px 6px 0 0;
+    border: solid 1px #99B2B8;
+    background-color: #99B2B8;    
 }
 
-.fl-capture-placeholder-thumbnail { /* what appears before the first capture */
-    width:69px;
-    height: 92px;
-    margin: 4px 2px 0px 2px;
+table.ds-import-header {
+    color: #333333;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: 0;
+    width: 434px;
 }
-
-.ds-capture-label-index {
-    display: block;
-    float: left;
+.ds-import-header tr {
+    width: 100%;
+}
+.ds-import-header th {
     text-align: left;
-    padding-left: 5px;
+    padding-left:46px;
+    border:none;
+}
+.ds-import-header th.ds-import-file-name {
+    width: 27em;
+    font-size: 1.2em;
 }
 
-.ds-capture-label-item {
+/* Import queue actual */
+table.ds-import-queue {
+    margin: 0;
+    width: 100%;
+    height: 325px;
+    border: 1px solid #D1D3D4;
+}
+
+.ds-import-queue td.ds-import-browse-instructions {
+    color: #666666;
+    text-align: center;
+    width: 434px;
+    border:none;
+    font-size: 1.2em;
+}
+
+.ds-import-queue td.ds-import-browse-instructions p{
+    margin-top:5em;
+}
+
+.fl-scrollable-scroller {
     display: block;
-    color: #fff;
-    background-color:#717171;
-    height: 16px;
+    max-height: 325px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+}
+.fl-scrollable-inner {
+    overflow: hidden;
+    position: relative;
+}
+
+.ds-import-queue tr.ds-import-dim {
+    color: #666666;
+}
+.ds-import-queue caption {
+    display: none;
+}
+.ds-import-queue tbody {
+    display: block;
+    font-size: 0.9em;
+    z-index: 6;
+}
+.ds-import-queue tr:focus, .ds-import-queue tr.ds-import-file-state-ready:hover {
+    background-color: #FFF9DC;
+}
+.ds-import-queue td {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color -moz-use-text-color #C5C5C5;
+    border-style: none none solid;
+    border-width: medium medium 1px;
+    margin: 0;
+    padding: 3px 6px;
+    text-align: left;
+}
+
+.ds-import-queue td.ds-file-number {
+    font-weight:bold;
+    width: 30px;
+}
+.ds-import-queue td.ds-import-file-name {
+    font-weight: normal;
+    font-size: 1.2em;
+    overflow: hidden;
+    width: 389px;
+}
+
+.ds-import-queue .ds-import-file-size {
     text-align: right;
+    white-space: nowrap;
+    width: 6em;
+}
+.ds-import-queue .ds-import-file-actions, .ds-import-header .ds-import-file-actions {
+    padding-right: 15px;
+    text-align: center;
+    white-space: nowrap;
+}
+.ds-import-queue .ds-import-file-actions .ds-import-dim {
+    background-color: transparent;
+    border: 1px solid transparent;
+    cursor: auto;
+}
+.ds-import-file-actions button {
+    background-attachment: scroll;
+    background-color: transparent;
+    background-position: 1px 1px;
+    background-repeat: no-repeat;
+    border: 1px solid transparent;
+    height: 22px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 24px;
+}
+.ds-import-file-actions .ds-import-file-action-remove {
+    background-image: url("../images/remove.png");
+    cursor: pointer;
+}
+.ds-import-file-actions .ds-import-file-action-remove:hover, tr:focus .ds-import-file-actions .ds-import-file-action-remove {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+}
+tr.ds-import-file-state-uploaded button {
+    background-image: url("../images/tick.png");
+}
+
+tr.ds-import-file-state-uploaded .ds-import-file-name {
+    color: #C7E09A;    
+}
+.ds-import-queue-footer {
+    font-size: 1.07em;
+    font-weight: bold;
+    padding: 8px 6px;
+    position: relative;
+    vertical-align: middle;
+    z-index: 6;
+    border-left: 1px solid #D1D3D4;
+    border-right: 1px solid #D1D3D4;
+    border-bottom: 1px solid #D1D3D4;
+    border-radius: 0 0 6px 6px;
+}
+
+.ds-import-queue-footer .ds-import-remove-all,
+.ds-import-queue-footer .ds-import-remove-all-dim {
+    text-align:right;
+    padding-right: 10px;
+    font-size: 0.8em;
+    font-weight:normal;    
+    padding-top: 5px;
+}
+
+.ds-import-queue-footer .ds-import-remove-all-dim a{
+    color: #BCBEC0;
+}
+
+
+.ds-import div.ds-import-browse {
+    background-attachment: scroll;
+    background-image: url("../images/add.png");
+    background-position: 0 5px;
+    background-repeat: no-repeat;
+    border: medium none;
+    color: #fff;
+    font-weight: normal;
+    padding: 5px 5px 0 22px;
+    white-space: nowrap;
+    background-color: #1C75BC;
+    box-shadow: 3px 3px 5px -1px #808285;
+}
+
+.ds-import-browse {
+    cursor: default;
+    display: block;
+    height: 1.65em;
+    overflow: hidden;
+    width: 6em;
+    align:right;
+}
+.ds-import-browse.ds-import-browseMore {
+    width: 4.5em;
+}
+.ds-import-browse input {
+    bottom: 2em;
+    float: right;
+    height: 3em;
+    left: 10px;
+    letter-spacing: 5px;
+    opacity: 0;
+    overflow: hidden;
+    position: relative;
+}
+html > body .ds-import div.ds-import-browse {
+    border: 2px solid transparent;
+}
+.ds-import div.ds-import-browse:hover {
+    /*background-color: #000;*/
+    
+}
+
+.ds-import div.ds-import-browse:focus, .ds-import div.ds-import-browse.focus {
+    /*background-color: #000;*/
+    border: 2px solid #142B8C;
+}
+
+.ds-import-browse-overlay {
+    left: 320px;
+    position: absolute;
+    top: 8px;
+    z-index: 7;
+}
+
+.ds-import-flash10-wrapper {
+    float: left;
+    position: relative;
+}
+
+.ds-import-queue-footer .ds-import-total-progress-text {
+    padding-top: 6px;
+}
+
+/* Import buttons */
+.ds-import-buttons {
+    margin-top: 1em;
+    text-align: right;
+}
+.ds-import-buttons button {
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    height: 32px;
+    outline: medium none;
+    padding: 0;
+    width: 9em;
+}
+
+.ds-import-buttons button:focus {
+    outline: 2px solid #142B8C;
+}
+.ds-import-buttons .ds-import-button-upload {
+    background-color: #74B74A;
+    border-color: #006838;
+    box-shadow: 3px 3px 5px -1px #808285;
+}
+.ds-import-buttons .ds-import-button-upload:hover {
+    background-color: #519325;
+    border-color: #142B8C;
+}
+.ds-import-buttons .ds-import-button-stop {
+    background-color: #4F99D3;
+    border-color: #2A3990;
+}
+.ds-import-buttons .ds-import-button-stop:hover {
+    background-color: #115F8F;
+}
+.ds-import-buttons .ds-import-dim, .ds-import-buttons .ds-import-dim:hover {
+    background-color: #D1D3D4;
+    border: none;
+    cursor: auto;
+    box-shadow: none;
+}
+.ds-import-buttons .ds-import-cancel {
     padding-right: 5px;
 }
 
-.ds-capture-button-delete {
-    margin-right: 3px;
-    margin-top: 100px;
-    padding-right: 20px;
-    background-image: url(./images/remove.png);
-    background-repeat: no-repeat;
-    cursor: pointer;
-    background-position: 100% 0;
-}
-
-.ds-capture-button-delete span {
-    color: #fff;
-}
-
-/* THUMBNAIL REORDERING */
-.fl-reorderer-avatar {
-    cursor          : move;
-    list-style-type : none;
-    background-color: #eee;
-    border-width: 1px;
-    filter          : alpha(opacity=75);
-    opacity         : 0.75;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-	z-index:100000;
-}
-
-.fl-reorderer-avatar img {
-    display: block;
-    margin-top: 5px;
-    margin-right: auto;
-    margin-bottom: 5px;
-    margin-left: auto;
-}
-
-.ds-thumbnailContainer ul li.fl-reorderer-movable-dragging{
-	background-color: #eee;
-    margin-right:0px;
-    margin-top:0px;
-    margin: 0 0 0 10px !important;
-    border:5px solid #6dacc6;
-	opacity: .2;
-	filter: alpha(opacity=20);
-    -moz-border-radius:11px 11px 0 0;
-}
-
-.fl-reorderer-movable-default .ds-capture-button-delete {
-    text-align:right;
+.ds-import-file-progress, .ds-import-total-progress-okay, .ds-import-total-progress-errored {
+    background-attachment: scroll;
+    background-position: left bottom;
+    background-repeat: repeat-x;
     display: none;
-}
-
-.ds-thumbnailContainer ul li.fl-reorderer-movable-selected {
-    border:5px solid #6dacc6;
-	margin:0;
-	outline:none;
-    -moz-border-radius:11px 11px 0 0;
-}
-
-.fl-reorderer-dropMarker {
-    background-color:#6E9F62 !important;
-	height:2px !important;
-}
-
-
-/* PREVIEW AREA */
-.ds-capture-previewArea {
-	position:absolute;
-	left:185px; /* indented x pixels as width of thumbnailContainer */
-	right:0;
-    bottom:0;
-    top:0;
-	text-align:center;
-	z-index:0;
-    background-color:#f3f3f3;
-}
-
-.ds-capture-controls {
-	position:absolute;
-	left:185px;
-    right:0;
-	bottom:0;
-    background-color: #aaa;
-    text-align:center;
-    padding:10px;
-}
-
-.fl-container-progress > .ui-dialog-titlebar {
-    display: none;
-}
-
-.ds-capture-image-preview {
-    margin-top: 5px;
-    height: 613px;
-}
-
-a.ds-takePicture {
-	-moz-border-radius:8px 8px 8px 8px;
-	-moz-box-shadow:0 3px 5px rgba(0, 0, 0, 0.25);
-	background-color:#6E9F62;
-	border:2px outset #006838;
-    width: 200px;
-    height: 35px;
-	color:#FFFFFF !important;
-	font-size:1.4em;
-	display:block;
-	text-decoration:none;
-    text-align:center;
-    padding-top: 10px;
-    background-image: url(./images/camera.png);
-    background-repeat: no-repeat;
-    background-position: 2px 1px;
-    margin:auto;
-}
-
-/* DIALOGS */
-
-.ui-dialog {
-    background: rgba(82%, 85%, 80%, 1);
-    -moz-border-radius: 10px;
-    -moz-box-shadow: 0 0 10px #555555;
-}
-
-.ui-dialog-titlebar {
-    background: rgba(90%, 93%, 88%, 1);
-    -moz-border-radius-topleft: 10px;
-    -moz-border-radius-topright: 10px;
-    font-weight: bold;
-    padding: 5px 10px 5px 10px;
-}
-
-.ui-dialog-titlebar-close {
-    float: right;
-    text-align: right;
-}
-
-.ui-dialog-content {
-    padding: 10px 20px 10px 20px;
-}
-
-/* EXPORT BUSY OVERLAY */
-.ds-capture-previewArea .ds-capture-export-busy {
-    position:absolute;
-    cursor:progress;
-    background: rgba(0, 0, 0, 0.8);
-    top: 0;
-    left: 0;
-    width: 100%;
     height: 100%;
+    left: -1px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    z-index: -1;
 }
-
-.ds-capture-previewArea .ds-capture-export-busy img {
-    position: relative;
-    top: 100px;
+.ds-import-file-progress {
+    background-color: #D1D6DD;
+    background-image: url("../images/gradient-file-green.png");
+    border-right: 1px solid #9FCE7F;
 }
-
-.ds-capture-previewArea .ds-capture-export-busy span {
-    top: 100px;
-    color: #ffffff;
-    position: relative;
+.ds-import-queue .ds-import-file-state-error th {
+    background-color: #FCFBE6;
+    border-bottom-width: 0;
+    border-left: 4px solid #F5E392;
 }
-
-.ds-capture-previewArea .ds-capture-export-busy h1 {
-    color: #ffffff;
-    font-size: 36px;
+.ds-import-queue .ds-import-file-state-error td {
+    background-color: #FCFBE6;
+    border-bottom-width: 0;
+}
+.ds-import-queue .ds-import-file-error td {
+    background-color: #FCFBE6;
+    background-image: url("../images/error.png");
+    background-position: 6px 2px;
+    background-repeat: no-repeat;
+    border-left: 4px solid #F5E392;
+    padding-bottom: 8px;
+    padding-left: 32px;
+}
+.ds-import-errorsPanel {
+    border-top: 1px solid #D2D2D2;
+    color: #3DA6E5;
+    float: left;
+    font-size: 0.9em;
+    margin-top: 0.5em;
+    width: 100%;
+}
+.ds-import-errorsPanel-header {
+    background-image: url("../images/error.png");
+    background-position: 1px center;
+    background-repeat: no-repeat;
+    margin-bottom: 10px;
+    padding: 6px 0;
+}
+.ds-import-errorsPanel-header span {
+    color: #000000;
+    font-size: 1.1em;
     font-weight: bold;
+    padding-left: 21px;
 }
-
-.ds-capture-previewArea .ds-capture-export-busy p {
-    padding-top: 25px;
-    font-size: 24px;
-    font-weight: bold;
+.ds-import-errorPanel-section-wrapper {
+    float: left;
+    width: 90%;
+}
+.ds-import-errorPanel-section-title {
+    color: #333333;
+    font-weight: normal;
+    width: 90%;
+}
+.ds-import-errorPanel-section-removeButton {
+    background-color: inherit;
+    background-image: url("../images/grey-4d4d4d-x-button.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-width: 0;
+    height: 18px;
+    margin-right: 9px;
+    padding: 0;
+    width: 18px;
+}
+.ds-import-errorPanel-section-removeButton:hover {
+    background-image: url("../images/grey-999999-x-button.png");
+}
+.ds-import-errorPanel-section-toggleDetails {
+    background-color: #F7F7F7;
+    border: medium none;
+    color: #008BE0;
+    cursor: pointer;
+    height: 1em;
+    margin: 0 0 1.5em;
+    padding: 0;
+    position: relative;
+    text-decoration: underline;
+}
+.ds-import-errorPanel-section-details {
+    clear: both;
+    color: #666666;
+    font-weight: normal;
+}
+.ds-import-errorPanel-section-details p {
+    line-height: 1.7em;
+    margin-bottom: 0;
+    margin-top: 0.5em;
+}
+.ds-import-basic-save {
+    display: block;
+    margin-top: 0.6em;
+}
+.ds-import-hidden {
+    display: none;
+}
+.ds-import div.ds-import-browse.ds-import-dim {
+    background-color: #F7F7F7;
+    background-image: url("../images/add-grey.png");
+    color: #D2D2D2;
+    outline: medium none;
+}
+.ds-import-flash9-container {
+    height: 1px;
+    overflow: hidden;
+    width: 1px;
+}
+.hideUploaderForOpera {
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    visibility: hidden;
+    width: 0;
 }

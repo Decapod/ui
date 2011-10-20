@@ -1,6 +1,6 @@
 /* GENERAL */
 
-body {
+.ds-decapod {
 	position:absolute;
 	bottom:0px;
 	left:0px;
@@ -8,7 +8,7 @@ body {
 	top:0px;
 }
 
-.fl-capture-element-hidden {
+.ds-capture-element-hidden {
     display: none;
 }
 
@@ -17,7 +17,7 @@ body {
 	height:100%;
 }
 
-.content {
+.ds-content {
 	background: none repeat scroll 0 0 #FFFFFF;
 	bottom: 0px;
 	overflow: hidden;
@@ -95,35 +95,30 @@ a.ds-toolbar-button.recalibrate {
 	z-index: 100;
 }
 
-.fl-grid {
+.ds-thumbnail-grid {
     border: none;
     padding: 5px;
     overflow: auto;
     background-color: #fff;
 }
 
-.fl-grid li {
+.ds-thumbnail-grid li {
     background-color:#fff;
     width: 150px;
     height: 140px;
-    margin-bottom: 4px;
-    margin-left: 4px;
-    margin-top: 4px;
-    margin-right: auto;
+    margin: 10px 10px 5px 10px;
     display: block;
     position: relative;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
     border:1px solid #000000;
 }
 
 
-.fl-capture-placeholder { /* what appears before the first capture */
+.ds-capture-placeholder { /* what appears before the first capture */
     background: #fff;
     border: 1px dotted #778899;
 }
 
-.fl-capture-placeholder-thumbnail { /* what appears before the first capture */
+.ds-capture-placeholder-thumbnail { /* what appears before the first capture */
     width:69px;
     height: 92px;
     margin: 4px 2px 0px 2px;
@@ -134,20 +129,29 @@ a.ds-toolbar-button.recalibrate {
     float: left;
     text-align: left;
     padding-left: 5px;
+    font-size: 1.2em;
+    padding-top: 1px;
 }
 
 .ds-capture-label-item {
     display: block;
     color: #fff;
     background-color:#717171;
+    height: 22px;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.ds-capture-label-item-selected {
+    display: block;
+    color: #fff;
+    background-color:#7B6A55;
     height: 16px;
     text-align: right;
     padding-right: 5px;
 }
 
 .ds-capture-button-delete {
-    margin-right: 3px;
-    margin-top: 100px;
     padding-right: 20px;
     background-image: url(./images/remove.png);
     background-repeat: no-repeat;
@@ -155,9 +159,11 @@ a.ds-toolbar-button.recalibrate {
     background-position: 100% 0;
 }
 
+
 .ds-capture-button-delete span {
     color: #fff;
 }
+
 
 /* THUMBNAIL REORDERING */
 .fl-reorderer-avatar {
@@ -181,14 +187,15 @@ a.ds-toolbar-button.recalibrate {
 }
 
 .ds-thumbnailContainer ul li.fl-reorderer-movable-dragging{
-	background-color: #eee;
-    margin-right:0px;
-    margin-top:0px;
-    margin: 0 0 0 10px !important;
-    border:5px solid #6dacc6;
-	opacity: .2;
-	filter: alpha(opacity=20);
-    -moz-border-radius:11px 11px 0 0;
+    background-color:#eee;
+    width: 150px;
+    height: 140px;
+    margin: 10px 10px 5px 10px;
+    display: block;
+    position: relative;
+    border:1px solid #000000;
+    filter: alpha(opacity=20);
+    outline:5px solid #7B6A55;
 }
 
 .fl-reorderer-movable-default .ds-capture-button-delete {
@@ -197,10 +204,8 @@ a.ds-toolbar-button.recalibrate {
 }
 
 .ds-thumbnailContainer ul li.fl-reorderer-movable-selected {
-    border:5px solid #6dacc6;
-	margin:0;
-	outline:none;
-    -moz-border-radius:11px 11px 0 0;
+    outline:5px solid #7B6A55;
+	margin: 10px 10px 5px 10px;
 }
 
 .fl-reorderer-dropMarker {
@@ -218,7 +223,17 @@ a.ds-toolbar-button.recalibrate {
     top:0;
 	text-align:center;
 	z-index:0;
-    background-color:#f3f3f3;
+    background-color:#E6E7E8;
+}
+
+.ds-image-label-index  {
+    font-size: 2em;
+    font-weight:bold;
+    color: #58595B;
+    background-color: #F1F2F2;
+    width: 3em;
+    height: 2em;
+    padding-top: 10px
 }
 
 .ds-capture-controls {
