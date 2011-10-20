@@ -1,0 +1,152 @@
+@font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: bold;
+  src: local('Droid Sans'), url('../fonts/DroidSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Droid Sans'), url('../fonts/DroidSans.ttf') format('truetype');
+}
+
+:focus {
+   outline: 1px dotted #1C75BC;
+}
+
+body {
+    font-family: 'Droid Sans', arial, serif;
+    background-color: #F8F8F8;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3a3a3a;
+    margin-bottom: 0px;
+    border-bottom-style: none !important;
+}
+
+.ds-decapod button:hover {
+    cursor: pointer;
+}
+
+header.ds-header {
+    margin-bottom: 15px;
+}
+
+a {
+    color: #1C75BC;
+}
+
+/* NAVIGATION BAR */
+
+.ds-navigationBar {
+    display: table;
+    background: #958D76;
+    width: 100%;
+    height: 42px;
+    text-align: left;
+    border-bottom: 1px solid #bbbbbb;
+    color: #fff;
+}
+
+.ds-navigationBar img {
+    vertical-align: middle;
+}
+
+ul.ds-navigationBar-flatList {
+    list-style-type: none;
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 20px;
+}
+
+.ds-navigationBar-flatList li {
+    display: inline;
+    list-style-type: none;
+}
+
+.ds-navigationBar-flatList a {
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #fff;
+}
+
+a.ds-navigationBar-hereElement {
+    font-weight: bold;
+}
+
+.ds-navigationBar-chevron {
+    padding-left: 10px;
+    padding-right: 0px;
+    font-size: 20px;
+}
+
+/* Toolbar: toolbar background */
+.ds-toolbar {
+    display: table;
+    background: #D9D0B4;
+    width: 100%;
+    text-align: right;
+    height: 62px;
+
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #bbbbbb;
+}
+
+ul.ds-toolbar-flatList {
+    display: table-cell;
+    list-style-type: none;
+    vertical-align: middle;
+    padding-right: 30px;
+    padding-top: 30px;
+}
+
+.ds-toolbar-flatList li {
+    display: inline;
+}
+
+a.ds-toolbar-button {
+    padding-top: 33px; /*offset the height of the navbar */
+    width: 50px;
+    height: 25px;
+    color:#000 !important;
+    text-decoration: underline;
+    text-align: center;
+    background-repeat: no-repeat;
+    margin-left: 10px;
+    margin-right: 10px;
+    
+}
+    
+a.ds-toolbar-button:hover {
+    color: #999999 !important; 
+    cursor: pointer;
+}
+
+.ui-state-disabled span {
+    cursor: default;
+}
+
+/*Main Content Pane */
+.ds-header {
+    padding-left: 30px;
+}
+
+/*Override default style */
+.fl-theme-coal .ui-dialog {
+    background:#fff;
+}
+
+/*Override default style */
+.fl-theme-coal .ui-dialog .ui-dialog-buttonpane {
+    background:#fff;
+}
