@@ -22,14 +22,24 @@
 
 /* TOOLBAR */
 
-a.ds-toolbar-button.export {
-    background-image: url(./images/export.png);
+a.ds-toolbar-button.ds-toolbar-export {
+    background-image: url(../../../shared/images/toolbar_export.png);
     background-position: center top;
 }
 
-a.ds-toolbar-button.export[disabled] {
+a.ds-toolbar-button.ds-toolbar-export[disabled] {
     opacity: 0.25;
 }
+
+a.ds-toolbar-button.ds-toolbar-import {
+    background-image: url(../../../shared/images/toolbar_import.png);
+    background-position: center top;
+}
+
+a.ds-toolbar-button.ds-toolbar-import[disabled] {
+    opacity: 0.25;
+}
+
 
 a.ds-toolbar-button.recalibrate {
     display:none;
