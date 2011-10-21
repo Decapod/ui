@@ -1,4 +1,4 @@
-.ds-import {
+.ds-import-tables {
     clear: both;
     position: relative;
     width: 434px;
@@ -40,6 +40,7 @@ table.ds-import-queue {
     width: 100%;
     height: 325px;
     border: 1px solid #D1D3D4;
+    background-color: #fff;
 }
 
 .ds-import-queue td.ds-import-browse-instructions {
@@ -80,6 +81,10 @@ table.ds-import-queue {
 .ds-import-queue tr:focus, .ds-import-queue tr.ds-import-file-state-ready:hover {
     background-color: #FFF9DC;
 }
+
+.ds-import-queue tr:nth-child(even) {background: #E6ECE8}
+.ds-import-queue tr:nth-child(odd) {background: #FFF}
+
 .ds-import-queue td {
     -moz-border-bottom-colors: none;
     -moz-border-image: none;
@@ -132,11 +137,11 @@ table.ds-import-queue {
     padding: 0;
     width: 24px;
 }
-.ds-import-file-actions .ds-import-file-action-remove {
+.ds-import-file-actions .fl-uploader-file-action-remove {
     background-image: url("../images/remove.png");
     cursor: pointer;
 }
-.ds-import-file-actions .ds-import-file-action-remove:hover, tr:focus .ds-import-file-actions .ds-import-file-action-remove {
+.ds-import-file-actions .fl-uploader-file-action-remove:hover, tr:focus .ds-import-file-actions .ds-import-file-action-remove {
     background-color: #FFFFFF;
     border: 1px solid #CCCCCC;
 }
@@ -147,6 +152,10 @@ tr.ds-import-file-state-uploaded button {
 tr.ds-import-file-state-uploaded .ds-import-file-name {
     color: #C7E09A;    
 }
+
+
+/** Import Queue Footer **/
+
 .ds-import-queue-footer {
     font-size: 1.07em;
     font-weight: bold;
@@ -158,8 +167,10 @@ tr.ds-import-file-state-uploaded .ds-import-file-name {
     border-right: 1px solid #D1D3D4;
     border-bottom: 1px solid #D1D3D4;
     border-radius: 0 0 6px 6px;
+    background-color: #fff;
 }
 
+/* Currently not used in Decapod 0.5 */
 .ds-import-queue-footer .ds-import-remove-all,
 .ds-import-queue-footer .ds-import-remove-all-dim {
     text-align:right;
@@ -169,20 +180,20 @@ tr.ds-import-file-state-uploaded .ds-import-file-name {
     padding-top: 5px;
 }
 
+/* Currently not used in Decapod 0.5 */
 .ds-import-queue-footer .ds-import-remove-all-dim a{
     color: #BCBEC0;
 }
 
-
-.ds-import div.ds-import-browse {
+.ds-import-tables div.ds-import-browse {
     background-attachment: scroll;
     background-image: url("../images/add.png");
-    background-position: 0 5px;
+    background-position: 5px 5px;
     background-repeat: no-repeat;
     border: medium none;
     color: #fff;
     font-weight: normal;
-    padding: 5px 5px 0 22px;
+    padding: 5px 5px 0 30px;
     white-space: nowrap;
     background-color: #1C75BC;
     box-shadow: 3px 3px 5px -1px #808285;
@@ -209,15 +220,15 @@ tr.ds-import-file-state-uploaded .ds-import-file-name {
     overflow: hidden;
     position: relative;
 }
-html > body .ds-import div.ds-import-browse {
+html > body .ds-import-tables div.ds-import-browse {
     border: 2px solid transparent;
 }
-.ds-import div.ds-import-browse:hover {
+.ds-import-tables div.ds-import-browse:hover {
     /*background-color: #000;*/
     
 }
 
-.ds-import div.ds-import-browse:focus, .ds-import div.ds-import-browse.focus {
+.ds-import-tables div.ds-import-browse:focus, .ds-import div.ds-import-browse.focus {
     /*background-color: #000;*/
     border: 2px solid #142B8C;
 }
@@ -229,16 +240,12 @@ html > body .ds-import div.ds-import-browse {
     z-index: 7;
 }
 
-.ds-import-flash10-wrapper {
-    float: left;
-    position: relative;
-}
 
 .ds-import-queue-footer .ds-import-total-progress-text {
     padding-top: 6px;
 }
 
-/* Import buttons */
+/** Import buttons at the bottom of the UI **/
 .ds-import-buttons {
     margin-top: 1em;
     text-align: right;
@@ -281,9 +288,21 @@ html > body .ds-import div.ds-import-browse {
     cursor: auto;
     box-shadow: none;
 }
+
+.ds-import-tables div.ds-import-browse.ds-import-dim {
+    background-color: #F7F7F7;
+    background-image: url("../images/add-grey.png");
+    color: #D2D2D2;
+    outline: medium none;
+}
+
+/* Not used in Decapod 0.5 */
 .ds-import-buttons .ds-import-cancel {
     padding-right: 5px;
 }
+
+
+/** Progress and status styles per file item **/
 
 .ds-import-file-progress, .ds-import-total-progress-okay, .ds-import-total-progress-errored {
     background-attachment: scroll;
@@ -320,6 +339,10 @@ html > body .ds-import div.ds-import-browse {
     padding-bottom: 8px;
     padding-left: 32px;
 }
+
+
+/** Error panel that appears in the table footer **/
+
 .ds-import-errorsPanel {
     border-top: 1px solid #D2D2D2;
     color: #3DA6E5;
@@ -385,6 +408,8 @@ html > body .ds-import div.ds-import-browse {
     margin-bottom: 0;
     margin-top: 0.5em;
 }
+
+
 .ds-import-basic-save {
     display: block;
     margin-top: 0.6em;
@@ -392,21 +417,4 @@ html > body .ds-import div.ds-import-browse {
 .ds-import-hidden {
     display: none;
 }
-.ds-import div.ds-import-browse.ds-import-dim {
-    background-color: #F7F7F7;
-    background-image: url("../images/add-grey.png");
-    color: #D2D2D2;
-    outline: medium none;
-}
-.ds-import-flash9-container {
-    height: 1px;
-    overflow: hidden;
-    width: 1px;
-}
-.hideUploaderForOpera {
-    height: 0;
-    overflow: hidden;
-    padding: 0;
-    visibility: hidden;
-    width: 0;
-}
+
