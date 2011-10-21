@@ -44,32 +44,33 @@
                 </div>
             </div>
             
-            <div class="flc-capture ds-capture">
+            <div class="flc-capture">
             
                 <!-- MESSAGES (To be deprecated) -->
                 <div class="flc-capture-message"></div>
                 
                 <!-- NAVIGATION BAR -->
-                <div class="ds-navigationBar">
+                <nav class="ds-navigationBar">
                     <ul class="ds-navigationBar-flatList">
                         <li><img alt="" src="../../../shared/images/navigationBar_home.png"><a href="../../bookManagement/html/bookManagement.html">Book Management</a></li>
                         <span class="ds-navigationBar-chevron">&#x3009</span>
                         <li><img alt="" src="../../../shared/images/navigationBar_capture.png"><a class="ds-navigationBar-hereElement" href="../../capture/html/Capture.html">Capture</a></li>
                     </ul>
-                </div>
+                </nav>
                 
                 <!-- CAPTURE TOOLBAR -->
                 <div class="ds-toolbar">
+                    <menu type="toolbar">  
                     <ul class="ds-toolbar-flatList">
                         <li><a class="dc-toolbar-button-recalibrate ds-toolbar-button recalibrate ui-state-disabled" href="../../calibration/html/cameraMessage.html">Recalibrate</a></li>
                         <li><a class="dc-toolbar-button-export ds-toolbar-button export ui-state-disabled" href="#">Export</a></li>
                     </ul>
                 </div>
 
-                <div class="fl-container-flex content">
+                <div class="fl-container-flex ds-content">
                     <!-- THUMBNAIL GRID -->
                     <form class="ds-thumbnailContainer">
-                        <ul class="flc-capture-reorderer fl-grid">
+                        <ul class="flc-capture-reorderer fl-grid ds-thumbnail-grid">
                             <li class="flc-capture-thumbItem">
                                
                                 <span class="ds-capture-label-item flc-capture-label-item">
@@ -79,20 +80,31 @@
                                 </span>
                                 
                                 <div class="flc-capture-thumbItem-empty fl-container-flex">
-                                    <div class="fl-force-left fl-capture-placeholder fl-capture-placeholder-thumbnail">&nbsp;</div>
-                                    <div class="fl-force-right fl-capture-placeholder fl-capture-placeholder-thumbnail">&nbsp;</div>
+                                    <div class="fl-force-left ds-capture-placeholder ds-capture-placeholder-thumbnail">&nbsp;</div>
+                                    <div class="fl-force-right ds-capture-placeholder ds-capture-placeholder-thumbnail">&nbsp;</div>
                                 </div>
                                 
                                 <img class="flc-capture-thumbImage">
                             </li>
+                            
+                            
+                            
                         </ul>
                     </form>
 
                     <!-- PREVIEW AREA -->
                     <div class="flc-capture-previewArea ds-capture-previewArea">
-                        <span class="flc-capture-label-index-left"></span>
-                        <span class="flc-capture-label-index-right"></span>
+                        <div class="dc-image-label-index ds-image-label-index fl-force-left">2000</div>
+                        <span class="flc-capture-label-index-left">1</span>
+                        <span class="flc-capture-label-index-right">2</span>
                         <img class="ds-capture-image-preview flc-capture-image-preview">
+                        
+                        <div class="dc-initial-instructions ds-initial-instructions">
+                            <h2>Title</h2>
+                            <span>
+                                Some initial instructions go here.
+                            </span>
+                        </div>
                         
                         <!-- Export Progress Message -->
                         <div class="ds-capture-export-busy dc-capture-export-busy" style="display:none">
