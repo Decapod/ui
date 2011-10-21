@@ -139,12 +139,3 @@ a.ds-toolbar-button:hover {
     padding-left: 30px;
 }
 
-/*Override default style */
-.fl-theme-coal .ui-dialog {
-    background:#fff;
-}
-
-/*Override default style */
-.fl-theme-coal .ui-dialog .ui-dialog-buttonpane {
-    background:#fff;
-}
