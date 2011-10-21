@@ -221,6 +221,22 @@ a.ds-toolbar-button.recalibrate {
     background-color:#fff;
 }
 
+.ds-capture-previewArea .ds-initial-instructions {
+    text-align: center;
+    position: absolute;
+    top: 25%;
+    width: 100%;
+}
+
+.ds-capture-previewArea .ds-initial-instructions h2{
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.ds-capture-previewArea .ds-initial-instructions span {
+    font-size: 1.2em;
+}
+
 .ds-image-label-index  {
     font-size: 2em;
     font-weight:bold;
@@ -253,11 +269,9 @@ a.ds-toolbar-button.recalibrate {
 }
 
 a.ds-takePicture {
-	-moz-border-radius:8px 8px 8px 8px;
-	-moz-box-shadow:0 3px 5px rgba(0, 0, 0, 0.25);
-	background-color:#6E9F62;
-	border:2px outset #006838;
-    width: 200px;
+    box-shadow: 3px 3px 5px -1px #808285;
+	background-color:#74B74A;
+	width: 200px;
     height: 35px;
 	color:#FFFFFF !important;
 	font-size:1.4em;
