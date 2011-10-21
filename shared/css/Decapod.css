@@ -1,21 +1,3 @@
-@font-face {
-  font-family: 'Droid Sans';
-  font-style: normal;
-  font-weight: bold;
-  src: local('Droid Sans'), url('../fonts/DroidSans-Bold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Droid Sans';
-  font-style: normal;
-  font-weight: normal;
-  src: local('Droid Sans'), url('../fonts/DroidSans.ttf') format('truetype');
-}
-
-:focus {
-   outline: 1px dotted #1C75BC;
-}
-
 .ds-decapod {
     font-family: 'Droid Sans', arial, serif;
     background-color: #F8F8F8;
@@ -24,6 +6,24 @@
     left: 0px;
     right: 0px;
     top: 0px;
+}
+
+.ds-decapod :focus {
+   outline: 1px dotted #1C75BC;
+}
+
+.ds-decapod @font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: bold;
+  src: local('Droid Sans'), url('../fonts/DroidSans-Bold.ttf') format('truetype');
+}
+
+.ds-decapod @font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Droid Sans'), url('../fonts/DroidSans.ttf') format('truetype');
 }
 
 .ds-decapod h1 {
@@ -38,13 +38,15 @@
     cursor: pointer;
 }
 
+.ds-decapod a {
+    color: #1C75BC;
+}
+
 header.ds-header {
     margin-bottom: 15px;
 }
 
-a {
-    color: #1C75BC;
-}
+
 
 /* NAVIGATION BAR */
 
@@ -54,7 +56,6 @@ a {
     width: 100%;
     height: 42px;
     text-align: left;
-    border-bottom: 1px solid #bbbbbb;
     color: #fff;
 }
 
@@ -97,9 +98,6 @@ a.ds-navigationBar-hereElement {
     width: 100%;
     text-align: right;
     height: 62px;
-
-    border-top: 1px solid #dddddd;
-    border-bottom: 1px solid #bbbbbb;
 }
 
 ul.ds-toolbar-flatList {
