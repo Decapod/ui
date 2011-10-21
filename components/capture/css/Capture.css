@@ -12,11 +12,6 @@
     display: none;
 }
 
-.ds-capture {
-	background-color:#FFFFFF;
-	height:100%;
-}
-
 .ds-content {
 	background: none repeat scroll 0 0 #FFFFFF;
 	bottom: 0px;
@@ -93,6 +88,7 @@ a.ds-toolbar-button.recalibrate {
 	overflow: auto; 
 	width: 185px; 
 	z-index: 100;
+	border-right: 1px dotted #afafaf;
 }
 
 .ds-thumbnail-grid {
@@ -159,7 +155,6 @@ a.ds-toolbar-button.recalibrate {
     background-position: 100% 0;
 }
 
-
 .ds-capture-button-delete span {
     color: #fff;
 }
@@ -223,7 +218,7 @@ a.ds-toolbar-button.recalibrate {
     top:0;
 	text-align:center;
 	z-index:0;
-    background-color:#E6E7E8;
+    background-color:#fff;
 }
 
 .ds-image-label-index  {
@@ -233,7 +228,8 @@ a.ds-toolbar-button.recalibrate {
     background-color: #F1F2F2;
     width: 3em;
     height: 2em;
-    padding-top: 10px
+    padding-top: 10px;
+    margin-left: 4px;
 }
 
 .ds-capture-controls {
@@ -241,9 +237,10 @@ a.ds-toolbar-button.recalibrate {
 	left:185px;
     right:0;
 	bottom:0;
-    background-color: #aaa;
     text-align:center;
     padding:10px;
+    
+    background-image: -moz-linear-gradient(bottom, rgb(222,222,222) 20%, rgb(255,255,255) 60%);
 }
 
 .fl-container-progress > .ui-dialog-titlebar {
