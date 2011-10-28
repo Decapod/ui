@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Decapod Image Management</title>
+        
+        <link rel="stylesheet" type="text/css" href="../../../lib/infusion/framework/fss/css/fss-reset.css" />
+        <link rel="stylesheet" type="text/css" href="../../../lib/infusion/framework/fss/css/fss-layout.css" />
+        <link rel="stylesheet" type="text/css" href="../../../shared/css/Decapod.css" />
+        <link rel="stylesheet" type="text/css" href="../css/ImageManagement.css" />
+        
+        <!-- Required JavaScript modules for the Capture component. -->
+        <script src="../../../lib/infusion/MyInfusion.js"></script>
+        
+        <!-- Decapod components -->
+        <script type="text/javascript" src="../../../shared/js/decapodContext.js"></script>
+        <script type="text/javascript" src="../../../shared/js/decapodUtils.js"></script>
+        <script type="text/javascript" src="../js/ImageManagementDemands.js"></script>
+        <script type="text/javascript" src="../js/ImageManagement.js"></script>
+    </head>
+    
+    <body>
+        <section class="ds-decapod">
+        
+            <!-- TODO: message system from caputer, wire up for image management -->
+            <div style="display:none">
+                <!-- Decapod feedback and dialog messages -->
+                <div class="flc-capture-dialog-progress">
+                    <img alt="" src="../../../shared/images/indeterminateProgressSpinner_64x64.png">
+                    <span class="ds-capture-progress-content flc-capture-progress-content"></span>
+                </div>
+                <div class="flc-capture-dialog-confirm">
+                    <span class="flc-capture-confirm-content">Are you sure you want to delete this image?</span>
+                </div>
+            </div>
+            
+            <!-- NAVIGATION BAR -->
+            <nav class="ds-navigationBar">
+                <ul class="ds-navigationBar-flatList">
+                    <li><a class="ds-navigationBar-hereElement" href="../../import/html/Import.html">Import</a></li>
+                </ul>
+            </nav>
+            
+            <div class="dc-imageManagement">
+                
+                <!-- TOOLBAR -->
+                <div class="ds-toolbar">
+                    <menu type="toolbar">  
+                    <ul class="ds-toolbar-flatList">
+                        <li><a class="dc-toolbar-button-import ds-toolbar-button ds-toolbar-import ui-state-disabled" href="../../import/html/Import.html">Import</a></li>
+                        <li><a class="ds-toolbar-button ui-state-disabled" href="#">Delete</a></li>
+                        <li><a class="dc-toolbar-button-export ds-toolbar-button ds-toolbar-export ui-state-disabled" href="#">Export</a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="fl-container-flex ds-content">
+                    <!-- THUMBNAIL GRID -->
+                    <form class="ds-thumbnailContainer">
+                        <ul class="dc-imageManagement-thumbnails fl-grid ds-thumbnail-grid">
+                            <li class="dc-renderThumbs-item">
+                               
+                                <span class="ds-capture-label-item">
+                                    <a class="ds-capture-button-delete dc-renderThumbs-delete"><span>Delete</span></a>
+                                    <span class="ds-capture-label-index dc-renderThumbs-label"></span>
+                                </span>
+                                
+                                <img class="dc-renderThumbs-image">
+                            </li>
+                        </ul>
+                    </form>
+
+                    <!-- PREVIEW AREA -->
+                    <div class="dc-imageManagement-preview ds-capture-previewArea">
+                        <div class="dc-renderPreview-label ds-image-label-index fl-force-left">2000</div>
+                        <img class="ds-capture-image-preview dc-renderPreview-image">
+                        
+                        <div class="dc-initial-instructions ds-initial-instructions">
+                            <h2>Title</h2>
+                            <span>
+                                Some initial instructions go here.
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Export Progress Message -->
+                    <div class="ds-capture-export-busy dc-capture-export-busy" style="display:none">
+                        <img alt="" src="../../../shared/images/indeterminateProgressSpinner_white_240x240.png">
+                        <span>
+                            <h1>Exporting...</h1>
+                            <p>This could take a while.</p>
+                        </span>
+                    </div>  
+                </div>
+                
+            </div>
+        </section>
+        
+        
+        <!-- Initializing the Capture component. -->
+        <script>
+            decapod.imageManagement(".dc-imageManagement");
+        </script>
+    </body>
+</html>
