@@ -22,7 +22,7 @@ var decapod = decapod || {};
      * decapod.dataSource *
      **********************/
     
-    /*
+    /**
      * The dataSource should be used to communicate to the server.
      * 
      * A new dataSource should be specified for each url, or cases where the options to the ajax call vastly differ.
@@ -35,6 +35,14 @@ var decapod = decapod || {};
      */
     fluid.registerNamespace("decapod.dataSource");
     
+    /**
+     * 
+     * @param {object} that, the component
+     * @param {string} type, the ajax method (i.e. GET, POST, PUT)
+     * @param {object} data, the data to send to the server, in the request
+     * @param {object} urlTemplateValues, an optional object containing the key value pairs needed for string templating the url.
+     * To use this, you need to pass in a string template as the URL in the components options.
+     */
     decapod.dataSource.method = function (that, type, data, urlTemplateValues) {
         var url = urlTemplateValues ? fluid.stringTemplate(that.options.url, urlTemplateValues) : that.options.url;
         var ajaxOpts = {
@@ -89,64 +97,143 @@ var decapod = decapod || {};
      * decapod.renderThumbs *
      ************************/
     
-    /*
+    /**
      * Renders out the thumbnails of page images, stored on the server, for the book
      */
     
     fluid.registerNamespace("decapod.renderThumbs");
+
+    /**
+     * Converts a jQuery event into the specified component event. 
+     * It passes along the elPath to the portion of the model that triggered the event,
+     * and the DOM event object.
+     * 
+     * @param {object} componentEvent, the component level event to be fired.
+     * @param {object} modelElPath, the EL Path into the model related to the what triggered the event.
+     * @param {object} DOMEvent, the DOM event that initially triggered the event.
+     */
+    decapod.renderThumbs.activateFn = function (componentEvent, modelELPath, DOMEvent) {
+        componentEvent.fire(modelELPath, DOMEvent);
+    };
     
-    decapod.renderThumbs.produceTree = function (that) {
-        return {
-            expander: {
-                type: "fluid.renderer.repeat",
-                repeatID: "repeateContainer:",
-                controlledBy: "images", // the property in the model that sets the repeat
-                pathAs: "thumbInfo",
-                tree: {
-                    "label": "${{thumbInfo}.index}",
-                    "image": {
-                        target: "${{thumbInfo}.thumbnail}"
-                    },
-                    "delete": {
-                        decorators: {
-                            type: "jQuery",
-                            func: "click",
-                            args: function () {that.events.deleteTriggered.fire();}  //TODO: Need to pass along info about which item triggered the event.
+    /**
+     * The tree generation function to be used by the renderer.
+     * 
+     * TODO: Update to the new proto style. Couldn't at this moment
+     * do to issues with the event bindings and alt text generation.
+     * Couldn't make use of "that.renderer.boundPathForNode(item)" as
+     * images in the renderer, do not produce a bound path. Also the
+     * attrs decorator wouldn't respect the ${} syntax when setting values.
+     */
+    decapod.renderThumbs.generateTree = function (that) {
+        var model = that.model.images;
+
+        var treeMap = function (page, pageIndex) {
+            return {
+                ID: "thumbs:",
+                children: [{
+                    ID: "label",
+                    messagekey: "index",
+                    args: page
+                }, {
+                    ID: "image",
+                    target: page.thumbnail,
+                    decorators: [{
+                        type: "attrs",
+                        attributes: {alt: fluid.stringTemplate(that.options.strings.alt, page)}
+                    }, {
+                        type: "jQuery",
+                        func: "click",
+                        args: function (event) {
+                            that.thumbActivateFn("images." + pageIndex, event);
                         }
-                    }
-                }
-            }
+                    }]
+                }, {
+                    ID: "delete",
+                    messagekey: "delete",
+                    decoratrs: [{
+                        type: "jQuery",
+                        func: "click",
+                        args: function (event) {
+                            that.deleteActivateFn("images." + pageIndex, event);
+                        }
+                    }]
+                }]
+            };
+        };
+
+        return {
+            children: fluid.transform(model, treeMap)
         };
     };
     
+    //TODO: Remove if not being used
+    decapod.renderThumbs.finalInit = function (that) {};
+    
     fluid.defaults("decapod.renderThumbs", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
-        produceTree: "decapod.renderThumbs.produceTree",
+        finalInitFunction: "decapod.renderThumbs.finalInit",
+        produceTree: "decapod.renderThumbs.generateTree",
         selectors: {
-            "repeateContainer": ".dc-renderThumbs-item",
+            "thumbs": ".dc-renderThumbs-thumbs",
             "label": ".dc-renderThumbs-label",
             "image": ".dc-renderThumbs-image",
             "delete": ".dc-renderThumbs-delete"
         },
-        repeatingSelectors: ["repeateContainer"],
+        repeatingSelectors: ["thumbs"],
         model: {}, // format "{images: [{index: 1, thumbnail: "path/to/thumbnail.png"}]}"
-        events: {
-            deleteTriggered: null
+        strings: {
+            "index": "%index",
+            "alt": "Page %index",
+            "delete": "Delete"
         },
-        renderOnInit: true
+        events: {
+            deleteActivated: null,
+            thumbActivated: null
+        },
+        invokers: {
+            deleteActivateFn: {
+                funcName: "decapod.renderThumbs.activateFn",
+                args: ["{renderThumbs}.events.deleteActivated", "@0", "@1"]
+            },
+            thumbActivateFn: {
+                funcName: "decapod.renderThumbs.activateFn",
+                args: ["{renderThumbs}.events.thumbActivated", "@0", "@1"]
+            }
+        },
+        renderOnInit: true,
+        rendererFnOptions: {
+            noexpand: true
+        }
     });
     
     /*************************
      * decapod.renderPreview *
      *************************/
+    
+    /**
+     * Renders out a preview of the selected page
+     */
      
     fluid.registerNamespace("decapod.renderPreview");
-     
+    
+    /**
+     * The prototree used by the renderer to render out the preview image and it's label
+     */
     decapod.renderPreview.produceTree = function (that) {
+        var model = that.model;
         return {
-            "label": that.model.index,
+            "label": {
+                messagekey: "index",
+                args: model
+            },
             "image": {
-                target: that.model.imagePath
+                target: model.imagePath,
+                decorators: [{
+                    type: "attrs",
+                     // the index property is changed to have an object {value: indexNum} instead of just a value of indexNum.
+                    attributes: {alt: fluid.stringTemplate(that.options.strings.alt, {index: model.index.value})}
+                }]
             }
         };
     };
@@ -160,6 +247,10 @@ var decapod = decapod || {};
         },
         repeatingSelectors: ["repeateContainer"],
         model: {}, // format "{index: 1, imagePath: "path/to/thumbnail.png"}"
+        strings: {
+            "index": "%index",
+            "alt": "Page %index"
+        },
         events: {
             deleteTriggered: null
         },
@@ -170,19 +261,36 @@ var decapod = decapod || {};
      * decapod.imageManagement *
      ***************************/
      
-     /*
+     /**
+      * The page level component, handling the image management.
+      * 
       * The model format is "{images: [{index: 1, originalName: "name.png", image: "path/to/image.png", thumbnail: "path/to/thumbnail.png"}]}" 
       */
     
     fluid.registerNamespace("decapod.imageManagement");
 
     decapod.imageManagement.preInit = function (that) {
+        
+        //TODO: remove fluid.setLogging and that.logEvent when proper even handlers have been defined.
+        fluid.setLogging(true);
+        that.logEvent = function (elPath) {
+            var modelValue = fluid.get(that.model, elPath);
+            fluid.log(modelValue);
+        };
+        
+        /**
+         * This is the callback function used to set the model.
+         * It also binds the components modelChanged event to the change appliers
+         * modelChanged event to broadcast it outside of the component.
+         * Note that it does so after the model has been initially set.
+         * 
+         * Any further updates to the model should be done directly through the 
+         * <code>updateModel</code> function.
+         * 
+         * @param {object} data, the data model that will be used by the componet
+         */
         that.setup = function (data) {
-            if (that.model) {
-                that.updateModel(data);
-            } else {
-                that.model = data || {};
-            }
+            that.updateModel(data);
         
             that.applier.modelChanged.addListener("", that.events.modelChanged.fire);
         };
@@ -192,8 +300,26 @@ var decapod = decapod || {};
         that.modelSource.get();
     };
     
+    /**
+     * Updates the components model through requests to the change applier
+     * 
+     * @param {object} newModel, the new model to update to
+     * @param {object} applier, the applier to handle the model change request
+     */
     decapod.imageManagement.updateModel = function (newModel, applier) {
         applier.requestChange("", newModel);
+    };
+    
+    /**
+     * Updates the preview's model and refreshes it's view.
+     * 
+     * @param {object} preview, The preview component to update
+     * @param {object} model, the data model (likely the over all one from the top level component
+     * @param {string} elPath, the EL Path into the model to set the preview's model to.
+     */
+    decapod.imageManagement.updatePreview = function (preview, model, elPath) {
+        preview.model = fluid.get(model, elPath);
+        preview.refreshView();
     };
     
     fluid.defaults("decapod.imageManagement", {
@@ -208,6 +334,10 @@ var decapod = decapod || {};
                     model: "{imageManagement}.model",
                     events: {
                         afterRender: "{imageManagement}.events.afterThumbsRendered"
+                    },
+                    listeners: {
+                        deleteActivated: "{imageManagement}.logEvent", // TODO: Change to real event handler
+                        thumbActivated: "{imageManagement}.updatePreview"
                     }
                 },
                 createOnEvent: "afterModelLoaded"
@@ -242,6 +372,10 @@ var decapod = decapod || {};
             updateModel: {
                 funcName: "decapod.imageManagement.updateModel",
                 args: ["@0", "{imageManagement}.applier"]
+            },
+            updatePreview: {
+                funcName: "decapod.imageManagement.updatePreview",
+                args: ["{imageManagement}.renderPreview", "{imageManagement}.model", "@0"]
             }
         },
         modelDataSource: "",
