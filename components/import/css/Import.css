@@ -190,26 +190,24 @@ tr.ds-import-file-state-uploaded .ds-import-file-name {
     background-image: url("../images/add.png");
     background-position: 5px 5px;
     background-repeat: no-repeat;
-    border: medium none;
     color: #fff;
     font-weight: normal;
     padding: 5px 5px 0 30px;
     white-space: nowrap;
     background-color: #1C75BC;
     box-shadow: 3px 3px 5px -1px #808285;
+    border: 2px solid transparent;
 }
 
+
 .ds-import-browse {
-    cursor: default;
     display: block;
     height: 1.65em;
     overflow: hidden;
     width: 6em;
     align:right;
 }
-.ds-import-browse.ds-import-browseMore {
-    width: 4.5em;
-}
+
 .ds-import-browse input {
     bottom: 2em;
     float: right;
@@ -220,16 +218,13 @@ tr.ds-import-file-state-uploaded .ds-import-file-name {
     overflow: hidden;
     position: relative;
 }
-html > body .ds-import-tables div.ds-import-browse {
-    border: 2px solid transparent;
-}
+
 .ds-import-tables div.ds-import-browse:hover {
-    /*background-color: #000;*/
-    
+    cursor:pointer;
 }
 
-.ds-import-tables div.ds-import-browse:focus, .ds-import div.ds-import-browse.focus {
-    /*background-color: #000;*/
+.ds-import-queue-footer .ds-import-browse.focus, 
+.ds-import-queue-footer div.ds-import-browse:focus {
     border: 2px solid #142B8C;
 }
 
@@ -250,11 +245,11 @@ html > body .ds-import-tables div.ds-import-browse {
     margin-top: 1em;
     text-align: right;
 }
+
 .ds-import-buttons button {
     border-style: solid;
     border-width: 1px;
     color: #FFFFFF;
-    cursor: pointer;
     font-size: 1em;
     font-weight: bold;
     height: 32px;
@@ -264,25 +259,29 @@ html > body .ds-import-tables div.ds-import-browse {
 }
 
 .ds-import-buttons button:focus {
-    outline: 2px solid #142B8C;
+    outline:none;
 }
-.ds-import-buttons .ds-import-button-upload {
-    background-color: #74B74A;
+
+.fl-uploader-button-upload {
+background-color: #74B74A;
     border-color: #006838;
     box-shadow: 3px 3px 5px -1px #808285;
+    border: 4px solid #000;
 }
 .ds-import-buttons .ds-import-button-upload:hover {
     background-color: #519325;
     border-color: #142B8C;
 }
-.ds-import-buttons .ds-import-button-stop {
+.fl-uploader-button-stop {
     background-color: #4F99D3;
     border-color: #2A3990;
 }
-.ds-import-buttons .ds-import-button-stop:hover {
+.fl-uploader-button-stop {
     background-color: #115F8F;
 }
-.ds-import-buttons .ds-import-dim, .ds-import-buttons .ds-import-dim:hover {
+
+.fl-uploader-dim,
+.ds-import-buttons .fl-uploader-dim, .ds-import-buttons .fl-uploader-dim:hover {
     background-color: #D1D3D4;
     border: none;
     cursor: auto;
@@ -414,7 +413,7 @@ html > body .ds-import-tables div.ds-import-browse {
     display: block;
     margin-top: 0.6em;
 }
-.ds-import-hidden {
+.fl-uploader-hidden,
     display: none;
 }
 

@@ -20,6 +20,7 @@
     
     <body>
     
+        
         <section class="ds-decapod">
             
             <!-- NAVIGATION BAR -->
@@ -38,13 +39,15 @@
                 <header class="ds-header">
                     <h1>Import</h1>
                 </header>
-                
+
                 <!-- Basic upload controls, used when JavaScript is unavailable -->
                 <form method="post" enctype="multipart/form-data" class="fl-progEnhance-basic">
                     <p>Use the Browse button to add a file, and the Save button to upload it.</p>
                     <input name="fileData" type="file" />
                     <input class="ds-import-basic-save" type="submit" value="Save"/>
                 </form>
+                
+                    
                 
                 <!-- Uploader container -->
                 <form class="flc-uploader ds-import-tables fl-progEnhance-enhanced" method="get" enctype="multipart/form-data">
@@ -63,7 +66,7 @@
                         <caption>File Upload Queue:</caption>
                         <tbody>
                             <!-- Template for file row -->
-                            <tr class="flc-uploader-file-tmplt flc-uploader-file">
+                            <tr class="flc-uploader-file-tmplt flc-uploader-file ">
                                 <td class="dc-file-number ds-file-number">2000.</td>
                                 <td class="flc-uploader-file-name ds-import-file-name">File Name Placeholder</td>
                                 <td class="ds-import-file-actions">
@@ -86,7 +89,6 @@
                     
                     <!-- File progress bar template, used to generate progress bars for each file in the queue -->
                     <div class="flc-uploader-file-progressor-tmplt ds-import-file-progress"></div>           
-
                     <!-- Status footer -->
                     <div class="flc-uploader-queue-footer ds-import-queue-footer fl-clearfix">
                         
@@ -144,8 +146,9 @@
                             TODO: Wire up the cancel button to cancel upload and remove uploaded files from the server
                             <a href="#" class="dc-import-cancel ds-import-cancel">Cancel import</a> 
                         -->
-                        <button type="button" class="flc-uploader-button-pause ds-import-button-stop ds-import-hidden">Stop Upload</button>
-                        <button type="button" class="flc-uploader-button-upload ds-import-button-upload ds-import-dim">Import selected</button>
+                        
+                        <button type="button" class="flc-uploader-button-pause fl-uploader-button-stop fl-uploader-hidden">Stop Upload</button>
+                        <button type="button" class="flc-uploader-button-upload fl-uploader-button-upload fl-uploader-dim">Upload</button>
                     </div>
                     
                     <div class="flc-uploader-status-region fl-offScreen-hidden"></div>
