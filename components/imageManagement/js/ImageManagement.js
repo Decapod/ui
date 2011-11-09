@@ -36,6 +36,10 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.dataSource");
     
     /**
+     * Performs the ajax operation.
+     * 
+     * It will merge the generated options ontop of those set in the components 
+     * <code>ajaxOpts</code> option.
      * 
      * @param {object} that, the component
      * @param {string} type, the ajax method (i.e. GET, POST, PUT)
@@ -44,7 +48,7 @@ var decapod = decapod || {};
      * To use this, you need to pass in a string template as the URL in the components options.
      */
     decapod.dataSource.method = function (that, type, data, urlTemplateValues) {
-        var url = urlTemplateValues ? fluid.stringTemplate(that.options.url, urlTemplateValues) : that.options.url;
+        var url = that.assembleURL(that.options.url, urlTemplateValues);
         var ajaxOpts = {
             type: type,
             url: url,
@@ -64,6 +68,17 @@ var decapod = decapod || {};
         $.ajax(mergedOpts);
     };
     
+    /**
+     * Assembles a url template into a full url and encodes special characters
+     * 
+     * @param {string} urlTemplate, the url template
+     * @param {object} urlTemplateValues, the key value pairs representing the values to insert into the url template
+     */
+    decapod.dataSource.assembleURL = function (urlTemplate, urlTemplateValues) {
+        var url = fluid.stringTemplate(urlTemplate, urlTemplateValues || {});
+        return encodeURI(url);
+    };
+    
     fluid.defaults("decapod.dataSource", {
         gradeNames: ["fluid.eventedComponent", "autoInit"],
         invokers: {
@@ -78,7 +93,8 @@ var decapod = decapod || {};
             put: {
                 funcName: "decapod.dataSource.method",
                 args: ["{dataSource}", "PUT", "@0", "@1"]
-            }
+            },
+            assembleURL: "decapod.dataSource.assembleURL"
         },
         // Can pass in any options available to jQuery.ajax(), except for url, type, success, and error.
         // For these, you should make use of the components options and functions
