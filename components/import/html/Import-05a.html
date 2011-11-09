@@ -9,6 +9,7 @@
         <link rel="stylesheet" type="text/css" href="../../../lib/infusion/components/uploader/css/Uploader.css" />
         <link rel="stylesheet" type="text/css" href="../../../shared/css/Decapod.css" />
         <link rel="stylesheet" type="text/css" href="../css/Import.css" />
+        <link rel="stylesheet" type="text/css" href="../css/Import-05a.css" />
         
         <!-- Required JavaScript modules for the Import component. -->
         <script type="text/javascript" src="../../../lib/infusion/MyInfusion.js"></script>
@@ -21,30 +22,21 @@
     <body>
     
         
-        <section class="ds-decapod fl-centered">
+        <section class="ds-decapod fl-centered"">
             
             <!-- NAVIGATION BAR -->
             <nav class="ds-navigationBar">
                 <ul class="ds-navigationBar-flatList">
-                    <li><img alt="" src="../../../shared/images/navigationBar_home.png"><a class="ds-navigationBar-hereElement" href="">Decapod</a></li>
+                    <li><img alt="" src="../../../shared/images/navigationBar_home.png"><img alt="" src=""><a class="ds-navigationBar-hereElement" href="">Decapod</a></li>
                 </ul>
             </nav>
 
             <!-- DECAPOD IMPORT INTERFACE -->
             <section class="dc-import">
                 <header class="ds-header">
-                    <h1>Import</h1>
+                    <h1>Make a PDF from Images</h1>
                 </header>
 
-                <!-- Basic upload controls, used when JavaScript is unavailable -->
-                <form method="post" enctype="multipart/form-data" class="fl-progEnhance-basic">
-                    <p>Use the Browse button to add a file, and the Save button to upload it.</p>
-                    <input name="fileData" type="file" />
-                    <input class="ds-import-basic-save" type="submit" value="Save"/>
-                </form>
-                
-                    
-                
                 <!-- Uploader container -->
                 <form class="flc-uploader ds-import-tables fl-progEnhance-enhanced" method="get" enctype="multipart/form-data">
                 
@@ -77,7 +69,7 @@
                             
                             <!-- Initial instructions -->
                             <tr><td class="flc-uploader-browse-instructions ds-import-browse-instructions">
-                                <p>Choose <em>Browse files</em> to add images.</p>
+                                <p>Select <em>Browse files</em> to choose images.</p>
                             </td>
                             </tr>
                         </tbody>
@@ -99,10 +91,7 @@
                             <div class="dc-import-remove-all ds-import-remove-all-dim fl-force-right fl-container-flex"><a href="#">Remove all</a></div>
                         -->
                         
-                        <!-- Total progress bar -->
-                        <div class="flc-uploader-total-progress ds-import-total-progress-okay"></div>
-                        <div class="flc-uploader-total-progress-text ds-import-total-progress-text"></div>
-                        <div class="flc-uploader-upload-limit-text ds-import-limit-text"></div>
+
                         
                         <!-- Errors panel -->
                         <div class="flc-uploader-errorsPanel ds-import-errorsPanel">
@@ -136,6 +125,17 @@
                          </div>                
                     </div>
                     
+                    <!-- Export Progress Table -->
+                    <div class="ds-import-status">
+                        <!-- Total progress bar -->
+                        <div class="flc-uploader-total-progress ds-import-total-progress-okay">Okay</div>
+                        <div class="flc-uploader-total-progress-text ds-import-total-progress-text">Progress</div>
+                        <div class="flc-uploader-upload-limit-text ds-import-limit-text">Limit</div>
+                        <div class="dc-decapod05a-makePDF ds-decapod05a-makePDF dim">Making PDF</div>
+                        <div class="dc-decapod05a-makePDF-done ds-decapod05a-makePDF-done"></div>
+                        <div class="dc-decapod05a-makePDF-error"></div>
+                    </div>
+                    
                     <!-- Upload buttons -->
                     <div class="ds-import-buttons">
                         <!--
@@ -143,8 +143,8 @@
                             <a href="#" class="dc-import-cancel ds-import-cancel">Cancel import</a> 
                         -->
                         
-                        <button type="button" class="flc-uploader-button-pause fl-uploader-button-stop fl-uploader-hidden">Stop importing</button>
-                        <button type="button" class="flc-uploader-button-upload fl-uploader-button-upload fl-uploader-dim">Import</button>
+                        <button type="button" class="flc-uploader-button-pause fl-uploader-button-stop fl-uploader-hidden">Stop Copying</button>
+                        <button type="button" class="flc-uploader-button-upload fl-uploader-button-upload fl-uploader-dim">Make PDF</button>
                     </div>
                     
                     <div class="flc-uploader-status-region fl-offScreen-hidden"></div>

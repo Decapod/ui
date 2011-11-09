@@ -23,7 +23,7 @@ var decapod = decapod || {};
     fluid.demands("fluid.uploader", ["decapod.fileSystem", "decapod.import"], {
         options: {
             demo: true,
-            strings: {
+                strings: {
                 progress: {
                     fileUploadLimitLabel: "%fileUploadLimit %fileLabel maximum",
                     toUploadLabel: "Total files: %fileCount %fileLabel", 
@@ -33,13 +33,16 @@ var decapod = decapod || {};
                     singleFile: "file",
                     pluralFiles: "files",
                     singleError: "error",
+                    pluralErrors: "errors",
+                    makePDF: "Making PDF ...",
+                    makePDFDone: "PDF created"
                 },
                 buttons: {
                     browse: "Browse Files",
                     addMore: "Add More",
-                    stopUpload: "Stop Importing",
-                    cancelRemaning: "Cancel importing remaining files",
-                    resumeUpload: "Resume Importing"
+                    stopUpload: "Stop Copying",
+                    cancelRemaning: "Cancel copying remaining files",
+                    resumeUpload: "Resume Copying"
                 },
                 queue: {
                     emptyQueue: "File list: No files waiting to be copied.",
@@ -47,7 +50,6 @@ var decapod = decapod || {};
                 }
             }
         }
-        
     });
     
     fluid.demands("fluid.uploader", ["decapod.import"], {
@@ -57,6 +59,7 @@ var decapod = decapod || {};
             }
         }
         
-    });    
+    });
+    
 })(jQuery);
 
