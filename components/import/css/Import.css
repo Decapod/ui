@@ -236,9 +236,28 @@ tr.ds-import-file-state-uploaded .ds-import-file-name {
 }
 
 
-.ds-import-queue-footer .ds-import-total-progress-text {
-    padding-top: 6px;
+/** Import Status area below the Uploader table **/
+
+.ds-import-status {
+    margin-top: 10px;
+    height: 6em;
+    font-size: 1.07em;
+    font-weight: normal;
+    border: 1px solid #D1D3D4;
+    border-radius:6px;
+    background-color: #fff;
 }
+
+.ds-import-status div{
+    margin-top: 10px;
+    margin-left: 50px;
+}
+
+.ds-import-status div.dim{
+    color: #D1D3D4;
+    background-image: none; /* Remove any status icons if dimmed */
+}
+
 
 /** Import buttons at the bottom of the UI **/
 .ds-import-buttons {
