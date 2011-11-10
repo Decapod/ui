@@ -236,7 +236,7 @@ tr.ds-import-file-state-uploaded .ds-import-file-name {
 }
 
 
-/** Import Status area below the Uploader table **/
+/** Import area below the Uploader table **/
 
 .ds-import-status {
     margin-top: 10px;
@@ -250,6 +250,9 @@ tr.ds-import-file-state-uploaded .ds-import-file-name {
 
 .ds-import-status div{
     margin-top: 10px;
+    margin-left: 50px;
+    vertical-align: middle;
+
 }
 
 .ds-import-status div.dim{
