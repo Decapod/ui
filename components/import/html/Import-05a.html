@@ -128,16 +128,25 @@
                     <!-- Export Progress Table -->
                     <div class="ds-import-status">
                         <!-- Total progress bar -->
-                        <div class="flc-uploader-total-progress ds-import-total-progress-okay">Okay</div>
-                        <div class="flc-uploader-total-progress-text ds-import-total-progress-text">Progress</div>
-                        <div class="flc-uploader-upload-limit-text ds-import-limit-text">Limit</div>
-                        <div class="dc-decapod05a-makePDF ds-decapod05a-makePDF dim">Making PDF</div>
-                        <div class="dc-decapod05a-makePDF-done ds-decapod05a-makePDF-done"></div>
+                        <div class="flc-uploader-total-progress ds-import-total-progress-okay"><span>Okay</span></div>
+                        <div class="flc-uploader-total-progress-text ds-import-total-progress-text"><span>Progress</span></div>
+                        <div class="flc-uploader-upload-limit-text ds-import-limit-text"><img src="../images/tick.png" /><span>Limit</span></div>
+                        <div class="dc-decapod05a-makePDF ds-decapod05a-makePDF dim"><img src="../../../shared/images/spinner.gif" /><span>Making PDF</span></div>
+                        <div class="dc-decapod05a-makePDF-done ds-decapod05a-makePDF-done"><span>PDF Created</span></div>
                         <div class="dc-decapod05a-makePDF-error"></div>
                     </div>
                     
                     <!-- Upload buttons -->
                     <div class="ds-import-buttons">
+                        <form>
+                            <label for="pdfOptions">PDF Output Options:</label>
+                            <select name="pdfOptions" id="pdfOptions">
+                                <option value="1" selected="selected">Image PDF</option>
+                                <option value="2">Image PDF with text recognition (Experimental)</option>
+                                <option value="3">Computer traced PDF with text recognition (Experimental)</option>
+                            </select>
+                        </form>
+                        
                         <!--
                             TODO: Wire up the cancel button to cancel upload and remove uploaded files from the server
                             <a href="#" class="dc-import-cancel ds-import-cancel">Cancel import</a> 

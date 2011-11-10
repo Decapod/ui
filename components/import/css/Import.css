@@ -250,18 +250,17 @@ tr.ds-import-file-state-uploaded .ds-import-file-name {
 
 .ds-import-status div{
     margin-top: 10px;
-    margin-left: 50px;
 }
 
 .ds-import-status div.dim{
-    color: #D1D3D4;
+    color: #BCBEC0;
     background-image: none; /* Remove any status icons if dimmed */
 }
 
 
 /** Import buttons at the bottom of the UI **/
 .ds-import-buttons {
-    margin-top: 1em;
+    margin-top: 20px;
     text-align: right;
 }
 

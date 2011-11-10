@@ -59,6 +59,7 @@ header.ds-header {
     height: 42px;
     text-align: left;
     color: #fff;
+    box-shadow: 1px 1px 6px 6px #f5f5f5;
 }
 
 .ds-navigationBar img {
