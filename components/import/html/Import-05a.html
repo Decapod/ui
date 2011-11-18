@@ -14,8 +14,14 @@
         <!-- Required JavaScript modules for the Import component. -->
         <script type="text/javascript" src="../../../lib/infusion/MyInfusion.js"></script>
         <script type="text/javascript" src="../../../shared/js/decapodContext.js"></script>
-        <script type="text/javascript" src="../js/ImportDemands-05a.js"></script>
+        <script type="text/javascript" src="../../dataSource/js/DataSource.js"></script>
+        <script type="text/javascript" src="../../dataSource/js/DataSourceDemands.js"></script>
+        <script type="text/javascript" src="../../export/js/Export.js"></script>
+        <script type="text/javascript" src="../../export/js/ExportDemands.js"></script>
+        <script type="text/javascript" src="../../export/js/ExportView.js"></script>
+        <script type="text/javascript" src="../../export/js/ExportViewDemands.js"></script>
         <script type="text/javascript" src="../js/Import.js"></script>
+        <script type="text/javascript" src="../js/ImportDemands-05a.js"></script>
         
     </head>
     
@@ -131,16 +137,22 @@
                         <div class="flc-uploader-total-progress ds-import-total-progress-okay"><img src="../images/tick.png" alt="Status: Okay" />Okay</div>
                         <div class="flc-uploader-total-progress-text ds-import-total-progress-text">Progress</div>
                         <div class="flc-uploader-upload-limit-text ds-import-limit-text"><img src="../images/tick.png" />Limit</div>
-                        <div class="dc-decapod05a-makePDF ds-decapod05a-makePDF dim"><img src="../../../shared/images/spinner.gif" />Making PDF</div>
-                        <div class="dc-decapod05a-makePDF-done ds-decapod05a-makePDF-done">PDF Created</div>
-                        <div class="dc-decapod05a-makePDF-error"></div>
+                        <div class="dc-decapod05a-makePDF ds-decapod05a-makePDF dim"><img src="../../../shared/images/spinner.gif" /><span class="dc-exportView-status">Making PDF</span></div>
+                        <!-- <div class="dc-decapod05a-makePDF-done ds-decapod05a-makePDF-done">PDF Created</div>
+                        <div class="dc-decapod05a-makePDF-error"></div> -->
                     </div>
+                    
+                    <!-- Export download -->
+                    <div class="dc-exportView-download">
+	                   <a class="dc-exportView-downloadLink">Download</a>
+	                   <a class="dc-exportView-restartLink">Restart Export</a>
+	                </div>
                     
                     <!-- Upload buttons -->
                     <div class="ds-import-buttons">
-                        <form>
-                            <label for="pdfOptions">PDF Output Options:</label>
-                            <select name="pdfOptions" id="pdfOptions">
+                        <form class="dc-renderSelect">
+                            <label class="dc-renderSelect-label" for="pdfOptions">PDF Output Options:</label>
+                            <select class="dc-renderSelect-choices dc-exportView-select" name="pdfOptions" id="pdfOptions">
                                 <option value="1" selected="selected">Image PDF</option>
                                 <option value="2">Image PDF with text recognition (Experimental)</option>
                                 <option value="3">Computer traced PDF with text recognition (Experimental)</option>

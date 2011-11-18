@@ -20,22 +20,6 @@ var decapod = decapod || {};
 (function ($) {
     $(document).ready(function () {
         
-        /*******************
-         * dataSourceTests *
-         *******************/
-        
-        var dataSourceTests = jqUnit.testCase("Decapod dataSource");
-        
-        //TODO: Test the decapod.dataSource.method
-        //TODO: Test the calls to the invokers
-        
-        dataSourceTests.test("assembleURL tests", function () {
-            jqUnit.assertEquals("Simple url", "http://testURL.com", decapod.dataSource.assembleURL("http://testURL.com"));
-            jqUnit.assertEquals("Simple url with encoding", "http://testURL.com/test%20encoding", decapod.dataSource.assembleURL("http://testURL.com/test encoding"));
-            jqUnit.assertEquals("URL template", "http://testURL.com/templatePage", decapod.dataSource.assembleURL("http://testURL.com/%page", {page: "templatePage"}));
-            jqUnit.assertEquals("URL template with encoding", "http://testURL.com/template%20page", decapod.dataSource.assembleURL("http://testURL.com/%page", {page: "template page"}))
-        });
-        
         /*********************
          * renderThumbsTests *
          *********************/

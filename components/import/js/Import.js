@@ -19,8 +19,10 @@ var decapod = decapod || {};
 
 (function ($) {
 
+    //TODO: "import" is a reserved word
     fluid.defaults("decapod.import", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
+        finalInitFunction: "decapod.import.finalInit",  //for decapod 0.5a
         components: {
             progressiveEnhancementChecker: {
                 type: "fluid.progressiveCheckerForComponent",
@@ -36,9 +38,20 @@ var decapod = decapod || {};
                         fileTypes: ["image/jpeg", "image/png", "image/tiff"]
                     }
                 }
+            },
+            //for decapod 0.5a
+            exportView: {
+                type: "decapod.exportView",
+                container: "{decapod.import}.container",
+                priority: "first"
             }
         }
     });
+    
+    //for decapod 0.5a
+    decapod["import"].finalInit = function (that) {
+        that.exportView.locate("status").hide();
+    };
     
 })(jQuery);
 

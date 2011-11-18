@@ -19,11 +19,22 @@ var decapod = decapod || {};
 
 (function ($) {
 
+    fluid.demands("decapod.exportView", ["decapod.import", "decapod.exportView"], {
+        options: {
+            model: {
+                status: "",
+                selection: "type1",
+                choices: ["type1", "type2", "type3"],
+                names: ["Image PDF", "Image PDF with text recognition (Experimental)", "Computer traced PDF with text recognition (Experimental)"]
+            }
+        }
+    });
+
     // Run in demo mode if loaded from the local file system
     fluid.demands("fluid.uploader", ["decapod.fileSystem", "decapod.import"], {
         options: {
             demo: true,
-                strings: {
+            strings: {
                 progress: {
                     fileUploadLimitLabel: "%fileUploadLimit %fileLabel maximum",
                     toUploadLabel: "Total files: %fileCount %fileLabel", 
@@ -48,6 +59,9 @@ var decapod = decapod || {};
                     emptyQueue: "File list: No files waiting to be copied.",
                     queueSummary: "File list:  %totalUploaded files copied, %totalInUploadQueue file waiting to be copied." 
                 }
+            },
+            listeners: {
+                afterUploadComplete: "{decapod.import}.exportView.exporter.start"
             }
         }
     });
@@ -56,9 +70,37 @@ var decapod = decapod || {};
         options: {
             queueSettings: {
                 uploadURL: "/imageImport/"
+            },
+            strings: {
+                progress: {
+                    fileUploadLimitLabel: "%fileUploadLimit %fileLabel maximum",
+                    toUploadLabel: "Total files: %fileCount %fileLabel", 
+                    totalProgressLabel: "Copying: %curFileN of %totalFilesN %fileLabel", 
+                    completedLabel: "Copied: %curFileN of %totalFilesN %fileLabel %errorString",
+                    numberOfErrors: ", %errorsN %errorLabel",
+                    singleFile: "file",
+                    pluralFiles: "files",
+                    singleError: "error",
+                    pluralErrors: "errors",
+                    makePDF: "Making PDF ...",
+                    makePDFDone: "PDF created"
+                },
+                buttons: {
+                    browse: "Browse Files",
+                    addMore: "Add More",
+                    stopUpload: "Stop Copying",
+                    cancelRemaning: "Cancel copying remaining files",
+                    resumeUpload: "Resume Copying"
+                },
+                queue: {
+                    emptyQueue: "File list: No files waiting to be copied.",
+                    queueSummary: "File list:  %totalUploaded files copied, %totalInUploadQueue file waiting to be copied." 
+                }
+            },
+            listeners: {
+                afterUploadComplete: "{decapod.import}.exportView.exporter.start"
             }
         }
-        
     });
     
 })(jQuery);
