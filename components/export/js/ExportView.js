@@ -85,7 +85,7 @@ var decapod = decapod || {};
         
         that.locate("download").hide();
         
-        that.locate("resetLink").click(that.events.reset.fire);
+        that.locate("restartLink").click(that.events.reset.fire);
         
         that.applier.modelChanged.addListener("downloadSRC", function (newModel) {
             if (newModel.downloadSRC) {
@@ -156,7 +156,11 @@ var decapod = decapod || {};
         },
         listeners: {
             "afterExportStarted.internal": "{decapod.exportView}.setStartState",
-            "afterExportFinished.internal": "{decapod.exportView}.setFinishedState"
+            "afterExportFinished.internal": "{decapod.exportView}.setFinishedState",
+            "reset.internal": {
+            	listener: "{decapod.exportView}.reset",
+            	priority: "first"
+            }
         },
         selectors: {
             select: ".dc-exportView-select",
