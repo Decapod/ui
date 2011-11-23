@@ -10,7 +10,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
 */
 
 // Declare dependencies
-/*global decapod:true, fluid, jQuery*/
+/*global location, decapod:true, fluid, jQuery*/
 
 // JSLint options 
 /*jslint white: true, funcinvoke: true, undef: true, newcap: true, nomen: true, regexp: true, bitwise: true, browser: true, forin: true, maxerr: 100, indent: 4 */
@@ -18,6 +18,11 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
+	
+	// triggers a page refresh.
+	decapod["import"].refreshPage = function () {
+        location.reload(true);
+	};
 
     fluid.demands("decapod.exportView", ["decapod.import", "decapod.exportView"], {
         options: {
@@ -26,6 +31,9 @@ var decapod = decapod || {};
                 selection: "type1",
                 choices: ["type1", "type2", "type3"],
                 names: ["Image PDF", "Image PDF with text recognition (Experimental)", "Computer traced PDF with text recognition (Experimental)"]
+            },
+            listeners: {
+                reset: "decapod.import.refreshPage"
             }
         }
     });
