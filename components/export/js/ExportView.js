@@ -158,8 +158,8 @@ var decapod = decapod || {};
             "afterExportStarted.internal": "{decapod.exportView}.setStartState",
             "afterExportFinished.internal": "{decapod.exportView}.setFinishedState",
             "reset.internal": {
-            	listener: "{decapod.exportView}.reset",
-            	priority: "first"
+                listener: "{decapod.exportView}.reset",
+                priority: "first"
             }
         },
         selectors: {

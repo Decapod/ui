@@ -99,13 +99,27 @@ var decapod = decapod || {};
             jqUnit.assertEquals("The status should be update", status, exportView.locate("status").text());
         });
         
-        exportViewTests.test("showExport", function () {
+        exportViewTests.test("decapod.exportView.showExport", function () {
             var downloadPath = "../path/to/download";
             
             var exportView = decapod.exportView(EV_CONTAINER);
-            exportView.showExport(downloadPath);
+            decapod.exportView.showExport(exportView, downloadPath);
             
-            jqUnit.assertEquals("The download path should have been set", downloadPath, exportView.locate("downloadLink").attr("src"));
+            jqUnit.assertEquals("The download path should have been set", downloadPath, exportView.locate("downloadLink").attr("href"));
+            jqUnit.assertTrue("The download container should be visible", exportView.locate("download").filter(":visible").length > 0);
+        });
+        
+        exportViewTests.test("showExport", function () {
+            var downloadPath = "../path/to/download";
+            
+            var exportView = decapod.exportView(EV_CONTAINER, {
+                model: {
+                    downloadSRC: downloadPath
+                }
+            });
+            exportView.showExport();
+            
+            jqUnit.assertEquals("The download path should have been set", downloadPath, exportView.locate("downloadLink").attr("href"));
             jqUnit.assertTrue("The download container should be visible", exportView.locate("download").filter(":visible").length > 0);
         });
         
@@ -147,13 +161,19 @@ var decapod = decapod || {};
         
         exportViewTests.asyncTest("pollExport", function () {
             expect(1);
-            decapod.exportView.pollExport({
+            var mockThat = {
+                exporter: {
+                    fetchExport: function () {}
+                },
                 pollExport: function () {
                     jqUnit.assertTrue("The pollExport function should be called", true);
                     start();
                 },
+                poll: true,
                 options: {delay: 500}
-            });
+            };
+            
+            decapod.exportView.pollExport(mockThat);
         });
     });
 })(jQuery);
