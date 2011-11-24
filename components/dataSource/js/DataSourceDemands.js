@@ -28,7 +28,7 @@ var decapod = decapod || {};
         args: ["{dataSource}", "DELETE", "@0", "@1"]
     });
     
-    fluid.demands("decapod.dataSource.get.", ["decapod.dataSource"], {
+    fluid.demands("decapod.dataSource.get", ["decapod.dataSource"], {
         funcName: "decapod.dataSource.method",
         args: ["{dataSource}", "GET", "@0", "@1"]
     });
