@@ -116,7 +116,7 @@ var decapod = decapod || {};
             "serverSuccess.internal": "{decapod.exporter}.handleServerSuccess"
         },
         strings: {
-            inProgress: "Making PDF",
+            inProgress: "Making PDF ... (this can take a while)",
             completed: "Completed",
             error: "%textStatus: %errorThrown"
         }
