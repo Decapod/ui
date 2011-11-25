@@ -60,6 +60,7 @@ var decapod = decapod || {};
     //for decapod 0.5a
     decapod["import"].finalInit = function (that) {
         that.exportView.locate("status").hide();
+        that.importReset();
     };
     
     decapod["import"].preInit = function (that) {
