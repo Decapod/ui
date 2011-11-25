@@ -18,13 +18,12 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
-	
-	// triggers a page refresh.
-	decapod["import"].refreshPage = function () {
-        location.reload(true);
+    decapod["import"].resetImport = function (that) {
+        that.server["delete"]();
+        location.reload(true); //triggers a page refresh
 	};
 
-    fluid.demands("decapod.exportView", ["decapod.import", "decapod.exportView"], {
+    fluid.demands("decapod.exportView", ["decapod.import"], {
         options: {
             model: {
                 status: "",
@@ -33,8 +32,20 @@ var decapod = decapod || {};
                 names: ["Image PDF", "Image PDF with text recognition (Experimental)", "Computer traced PDF with text recognition (Experimental)"]
             },
             listeners: {
-                reset: "decapod.import.refreshPage"
+                reset: {
+                    listener: "{decapod.import}.importResetWrapper"
+                }
             }
+        }
+    });
+    
+    fluid.demands("decapod.import.resetImport", ["decapod.import"], {
+        args: "{decapod.import}"
+    });
+    
+    fluid.demands("decapod.dataSource", ["decapod.import"], {
+        options: {
+            url: "/books/decapod05a/"
         }
     });
 
