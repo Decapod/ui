@@ -108,6 +108,7 @@ table.ds-import-queue {
     font-size: 1.2em;
     overflow: hidden;
     width: 389px;
+    padding-left: 46px; /*For Decapod 0.5a since the file number was removed*/
 }
 
 .ds-import-queue .ds-import-file-size {
