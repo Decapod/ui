@@ -20,8 +20,11 @@ var decapod = decapod || {};
 (function ($) {
     decapod["import"].resetImport = function (that) {
         that.server["delete"]();
-        location.reload(true); //triggers a page refresh
 	};
+	
+    decapod["import"].refreshBrowser = function () {
+        location.reload(true); //triggers a page refresh
+    };
 
     fluid.demands("decapod.exportView", ["decapod.import"], {
         options: {
@@ -32,9 +35,11 @@ var decapod = decapod || {};
                 names: ["Image PDF", "Image PDF with text recognition (Experimental)", "Computer traced PDF with text recognition (Experimental)"]
             },
             listeners: {
-                reset: {
-                    listener: "{decapod.import}.importResetWrapper"
-                }
+                "reset.server": {
+                    listener: "{decapod.import}.importResetWrapper",
+                    priority: "first"
+                },
+                "reset.browser": "decapod.import.refreshBrowser"
             }
         }
     });
