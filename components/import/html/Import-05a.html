@@ -154,14 +154,14 @@
                     
                     <!-- Upload buttons -->
                     <div class="ds-import-buttons">
-                        <form class="dc-renderSelect">
+                        <div class="dc-renderSelect dc-exportView-select">
                             <label class="dc-renderSelect-label" for="pdfOptions">PDF Output Options:</label>
-                            <select class="dc-renderSelect-choices dc-exportView-select" name="pdfOptions" id="pdfOptions">
+                            <select class="dc-renderSelect-choices" name="pdfOptions" id="pdfOptions">
                                 <option value="1" selected="selected">Image PDF</option>
                                 <option value="2">Image PDF with text recognition (Experimental)</option>
                                 <option value="3">Computer traced PDF with text recognition (Experimental)</option>
                             </select>
-                        </form>
+                        </div>
                         
                         <!--
                             TODO: Wire up the cancel button to cancel upload and remove uploaded files from the server
