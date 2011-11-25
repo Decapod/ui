@@ -135,18 +135,22 @@
                     <div class="ds-import-status">
                         <!-- Total progress bar -->
                         <div class="flc-uploader-total-progress ds-import-total-progress-okay"><img src="../images/tick.png" alt="Status: Okay" />Okay</div>
-                        <div class="flc-uploader-total-progress-text ds-import-total-progress-text">Progress</div>
-                        <div class="flc-uploader-upload-limit-text ds-import-limit-text"><img src="../images/tick.png" />Limit</div>
-                        <div class="dc-decapod05a-makePDF ds-decapod05a-makePDF dim"><img src="../../../shared/images/spinner.gif" /><span class="dc-exportView-status">Making PDF</span></div>
-                        <!-- <div class="dc-decapod05a-makePDF-done ds-decapod05a-makePDF-done">PDF Created</div>
+                        <div class="flc-uploader-total-progress-text ds-import-total-progress-text"></div>
+                        <!-- Removed. Not being used in Decapod 0.5a
+			<div class="flc-uploader-upload-limit-text ds-import-limit-text"><img src="../images/tick.png" />Limit</div>
+			-->
+                        <div class="dc-decapod05a-makePDF"><span class="dc-exportView-status"></span></div>
+                        <!-- <div class="dc-decapod05a-makePDF-done ds-decapod05a-makePDF-done"></div>
                         <div class="dc-decapod05a-makePDF-error"></div> -->
+
+			            <!-- Export download -->
+		                <div class="dc-exportView-download">
+			               <a class="dc-exportView-downloadLink">Download</a>
+			               <a class="dc-exportView-restartLink" href="#_">Restart Export</a>
+		                </div>
                     </div>
                     
-                    <!-- Export download -->
-                    <div class="dc-exportView-download">
-	                   <a class="dc-exportView-downloadLink">Download</a>
-	                   <a class="dc-exportView-restartLink" href="#_">Restart Export</a>
-	                </div>
+                    
                     
                     <!-- Upload buttons -->
                     <div class="ds-import-buttons">
