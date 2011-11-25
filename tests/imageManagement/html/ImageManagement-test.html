@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Decapod ImageManagement Tests</title>
+        
+        <!-- Required stylesheets for testing the Capture component. -->
+        <link rel="Stylesheet" media="screen" href="../../../lib/infusion/tests/lib/qunit/css/qunit.css" />
+        <link rel="stylesheet" type="text/css" href="../../../components/capture/css/Capture.css" />
+        
+        <!-- Required JavaScript modules for testing the Capture component. -->
+        <script src="../../../lib/infusion/MyInfusion.js"></script>
+        
+        <!-- jqUnit -->
+        <script src="../../../lib/infusion/tests/lib/qunit/js/qunit.js"></script>
+        <script src="../../../lib/infusion/tests/test-core/jqUnit/js/jqUnit.js"></script>
+        
+        <!-- Tests and tested component -->
+        <script src="../../../components/imageManagement/js/ImageManagement.js"></script>
+        <script src="../js/ImageManagementTests.js"></script>
+        
+    </head>
+    <body>
+        <!-- Markup that jqUnit will look for when running tests and displaying the results. -->
+        <h1 id="qunit-header">Decapod ImageManagement Test Suite</h1>
+        <h2 id="qunit-banner"></h2>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="main">
+        
+            <!-- Integration Test Markup -->
+            <div class="dc-imageManagement">
+                <!-- TOOLBAR -->
+                <div class="ds-toolbar">
+                    <menu type="toolbar">  
+                    <ul class="ds-toolbar-flatList">
+                        <li><a class="dc-toolbar-button-import ds-toolbar-button ds-toolbar-import ui-state-disabled" href="../../import/html/Import.html">Import</a></li>
+                        <li><a class="ds-toolbar-button ui-state-disabled" href="#">Delete</a></li>
+                        <li><a class="dc-toolbar-button-export ds-toolbar-button ds-toolbar-export ui-state-disabled" href="#">Export</a></li>
+                    </ul>
+                </div>
+
+                <div class="fl-container-flex ds-content">
+                
+                    <!-- THUMBNAIL GRID -->
+                    <form class="ds-thumbnailContainer">
+                        <ul class="dc-imageManagement-thumbnails fl-grid ds-thumbnail-grid">
+                            <li class="dc-renderThumbs-thumbs">
+                               
+                                <span class="ds-capture-label-item">
+                                    <a class="ds-capture-button-delete dc-renderThumbs-delete">delete</a>
+                                    <span class="ds-capture-label-index dc-renderThumbs-label"></span>
+                                </span>
+                                
+                                <img class="dc-renderThumbs-image">
+                            </li>
+                        </ul>
+                    </form>
+
+                    <!-- PREVIEW AREA -->
+                    <div class="dc-imageManagement-preview ds-capture-previewArea">
+                        <div class="dc-renderPreview-label ds-image-label-index fl-force-left">2000</div>
+                        <img class="ds-capture-image-preview dc-renderPreview-image">
+                        
+                        <div class="dc-initial-instructions ds-initial-instructions">
+                            <h2>Title</h2>
+                            <span>
+                                Some initial instructions go here.
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Export Progress Message -->
+                    <div class="ds-capture-export-busy dc-capture-export-busy" style="display:none">
+                        <img alt="" src="../../../shared/images/indeterminateProgressSpinner_white_240x240.png">
+                        <span>
+                            <h1>Exporting...</h1>
+                            <p>This could take a while.</p>
+                        </span>
+                    </div>  
+                </div>
+            </div>
+        
+        </div>
+    </body>
+</html>
