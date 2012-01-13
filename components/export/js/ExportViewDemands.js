@@ -32,7 +32,7 @@ var decapod = decapod || {};
     decapod.localGet = function (that) {
         that.events.success.fire({
             status: "complete",
-            downloadSRC: "../../../mock-book/capturedImages/pdf/mockBook.pdf"
+            downloadSRC: "../../../mock-book/images/pdf/mockBook.pdf"
         }, "success", null, "GET");
     };
     
