@@ -33,7 +33,7 @@ var decapod = decapod || {};
     // server
     fluid.demands("decapod.dataSource", ["decapod.exporter"], {
         options: {
-            url: "/books/decapod05a/export/pdf/%type"
+            url: "/library/decapod05a/export/pdf/%type"
         }
     });
     
