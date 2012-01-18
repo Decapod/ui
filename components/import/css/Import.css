@@ -1,0 +1,441 @@
+.ds-import-tables {
+    clear: both;
+    position: relative;
+    width: 434px;
+    font-weight:normal;
+    margin-left:100px;
+}
+
+/* Import queue header*/
+
+.ds-import-header-border {
+    border-radius: 6px 6px 0 0;
+    border: solid 1px #99B2B8;
+    background-color: #99B2B8;    
+}
+
+table.ds-import-header {
+    color: #333333;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: 0;
+    width: 434px;
+}
+.ds-import-header tr {
+    width: 100%;
+}
+.ds-import-header th {
+    text-align: left;
+    padding-left:46px;
+    border:none;
+}
+.ds-import-header th.ds-import-file-name {
+    width: 27em;
+    font-size: 1.2em;
+}
+
+/* Import queue actual */
+table.ds-import-queue {
+    margin: 0;
+    width: 100%;
+    height: 325px;
+    border: 1px solid #D1D3D4;
+    background-color: #fff;
+}
+
+.ds-import-queue td.ds-import-browse-instructions {
+    color: #666666;
+    text-align: center;
+    width: 434px;
+    border:none;
+    font-size: 1.2em;
+}
+
+.ds-import-queue td.ds-import-browse-instructions p{
+    margin-top:5em;
+}
+
+.fl-scrollable-scroller {
+    display: block;
+    max-height: 325px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+}
+.fl-scrollable-inner {
+    overflow: hidden;
+    position: relative;
+}
+
+.ds-import-queue tr.ds-import-dim {
+    color: #666666;
+}
+.ds-import-queue caption {
+    display: none;
+}
+.ds-import-queue tbody {
+    display: block;
+    font-size: 0.9em;
+    z-index: 6;
+}
+.ds-import-queue tr:focus, .ds-import-queue tr.ds-import-file-state-ready:hover {
+    background-color: #FFF9DC;
+}
+
+.ds-import-queue tr:nth-child(even) {background: #E6ECE8}
+.ds-import-queue tr:nth-child(odd) {background: #FFF}
+
+.ds-import-queue td {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color -moz-use-text-color #C5C5C5;
+    border-style: none none solid;
+    border-width: medium medium 1px;
+    margin: 0;
+    padding: 3px 6px;
+    text-align: left;
+}
+
+.ds-import-queue td.ds-file-number {
+    font-weight:bold;
+    width: 30px;
+}
+.ds-import-queue td.ds-import-file-name {
+    font-weight: normal;
+    font-size: 1.2em;
+    overflow: hidden;
+    width: 389px;
+    padding-left: 46px; /*For Decapod 0.5a since the file number was removed*/
+}
+
+.ds-import-queue .ds-import-file-size {
+    text-align: right;
+    white-space: nowrap;
+    width: 6em;
+}
+.ds-import-queue .ds-import-file-actions, .ds-import-header .ds-import-file-actions {
+    padding-right: 15px;
+    text-align: center;
+    white-space: nowrap;
+}
+.ds-import-queue .ds-import-file-actions .ds-import-dim {
+    background-color: transparent;
+    border: 1px solid transparent;
+    cursor: auto;
+}
+.ds-import-file-actions button {
+    background-attachment: scroll;
+    background-color: transparent;
+    background-position: 1px 1px;
+    background-repeat: no-repeat;
+    border: 1px solid transparent;
+    height: 22px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 24px;
+}
+.ds-import-file-actions .fl-uploader-file-action-remove {
+    background-image: url("../images/remove.png");
+    cursor: pointer;
+}
+.ds-import-file-actions .fl-uploader-file-action-remove:hover, tr:focus .ds-import-file-actions .ds-import-file-action-remove {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+}
+tr.ds-import-file-state-uploaded button {
+    background-image: url("../images/tick.png");
+}
+
+tr.ds-import-file-state-uploaded .ds-import-file-name {
+    color: #C7E09A;    
+}
+
+
+/** Import Queue Footer **/
+
+.ds-import-queue-footer {
+    font-size: 1.07em;
+    font-weight: bold;
+    padding: 8px 6px;
+    position: relative;
+    vertical-align: middle;
+    z-index: 6;
+    border-left: 1px solid #D1D3D4;
+    border-right: 1px solid #D1D3D4;
+    border-bottom: 1px solid #D1D3D4;
+    border-radius: 0 0 6px 6px;
+    background-color: #fff;
+}
+
+/* Currently not used in Decapod 0.5 */
+.ds-import-queue-footer .ds-import-remove-all,
+.ds-import-queue-footer .ds-import-remove-all-dim {
+    text-align:right;
+    padding-right: 10px;
+    font-size: 0.8em;
+    font-weight:normal;    
+    padding-top: 5px;
+}
+
+/* Currently not used in Decapod 0.5 */
+.ds-import-queue-footer .ds-import-remove-all-dim a{
+    color: #BCBEC0;
+}
+
+.ds-import-tables div.ds-import-browse {
+    background-attachment: scroll;
+    background-image: url("../images/add.png");
+    background-position: 5px 5px;
+    background-repeat: no-repeat;
+    color: #fff;
+    font-weight: normal;
+    padding: 5px 5px 0 30px;
+    white-space: nowrap;
+    background-color: #1C75BC;
+    box-shadow: 3px 3px 5px -1px #808285;
+    border: 2px solid transparent;
+}
+
+
+.ds-import-browse {
+    display: block;
+    height: 1.65em;
+    overflow: hidden;
+    width: 6em;
+    align:right;
+}
+
+.ds-import-browse input {
+    bottom: 2em;
+    float: right;
+    height: 3em;
+    left: 10px;
+    letter-spacing: 5px;
+    opacity: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.ds-import-tables div.ds-import-browse:hover {
+    cursor:pointer;
+}
+
+.ds-import-queue-footer .ds-import-browse.focus, 
+.ds-import-queue-footer div.ds-import-browse:focus {
+    border: 2px solid #142B8C;
+}
+
+.ds-import-browse-overlay {
+    left: 320px;
+    position: absolute;
+    top: 8px;
+    z-index: 7;
+}
+
+
+/** Import area below the Uploader table **/
+
+.ds-import-status {
+    margin-top: 10px;
+    height: 6.3em;
+    font-size: 1.07em;
+    font-weight: normal;
+    border: 1px solid #D1D3D4;
+    border-radius:6px;
+    background-color: #fff;
+}
+
+.ds-import-status div{
+    margin-top: 10px;
+    margin-left: 50px;
+    vertical-align: middle;
+
+}
+
+.ds-import-status div.dim{
+    color: #BCBEC0;
+    background-image: none; /* Remove any status icons if dimmed */
+}
+
+
+/** Import buttons at the bottom of the UI **/
+.ds-import-buttons {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.ds-import-buttons button {
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF;
+    font-size: 1em;
+    font-weight: bold;
+    height: 32px;
+    outline: medium none;
+    padding: 0;
+    width: 9em;
+}
+
+.ds-import-buttons button:focus {
+    outline:none;
+}
+
+.fl-uploader-button-upload {
+background-color: #74B74A;
+    border-color: #006838;
+    box-shadow: 3px 3px 5px -1px #808285;
+    border: 4px solid #000;
+}
+.ds-import-buttons .ds-import-button-upload:hover {
+    background-color: #519325;
+    border-color: #142B8C;
+}
+.fl-uploader-button-stop {
+    background-color: #4F99D3;
+    border-color: #2A3990;
+}
+.fl-uploader-button-stop {
+    background-color: #115F8F;
+}
+
+.fl-uploader-dim,
+.ds-import-buttons .fl-uploader-dim, .ds-import-buttons .fl-uploader-dim:hover {
+    background-color: #D1D3D4;
+    border: none;
+    cursor: auto;
+    box-shadow: none;
+}
+
+.ds-import-tables div.ds-import-browse.ds-import-dim {
+    background-color: #F7F7F7;
+    background-image: url("../images/add-grey.png");
+    color: #D2D2D2;
+    outline: medium none;
+}
+
+/* Not used in Decapod 0.5 */
+.ds-import-buttons .ds-import-cancel {
+    padding-right: 5px;
+}
+
+
+/** Progress and status styles per file item **/
+
+.ds-import-file-progress, .ds-import-total-progress-okay, .ds-import-total-progress-errored {
+    background-attachment: scroll;
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    display: none;
+    height: 100%;
+    left: -1px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+.ds-import-file-progress {
+    background-color: #D1D6DD;
+    background-image: url("../images/gradient-file-green.png");
+    border-right: 1px solid #9FCE7F;
+}
+.ds-import-queue .ds-import-file-state-error th {
+    background-color: #FCFBE6;
+    border-bottom-width: 0;
+    border-left: 4px solid #F5E392;
+}
+.ds-import-queue .ds-import-file-state-error td {
+    background-color: #FCFBE6;
+    border-bottom-width: 0;
+}
+.ds-import-queue .ds-import-file-error td {
+    background-color: #FCFBE6;
+    background-image: url("../images/error.png");
+    background-position: 6px 2px;
+    background-repeat: no-repeat;
+    border-left: 4px solid #F5E392;
+    padding-bottom: 8px;
+    padding-left: 32px;
+}
+
+
+/** Error panel that appears in the table footer **/
+
+.ds-import-errorsPanel {
+    border-top: 1px solid #D2D2D2;
+    color: #3DA6E5;
+    float: left;
+    font-size: 0.9em;
+    margin-top: 0.5em;
+    width: 100%;
+}
+.ds-import-errorsPanel-header {
+    background-image: url("../images/error.png");
+    background-position: 1px center;
+    background-repeat: no-repeat;
+    margin-bottom: 10px;
+    padding: 6px 0;
+}
+.ds-import-errorsPanel-header span {
+    color: #000000;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding-left: 21px;
+}
+.ds-import-errorPanel-section-wrapper {
+    float: left;
+    width: 90%;
+}
+.ds-import-errorPanel-section-title {
+    color: #333333;
+    font-weight: normal;
+    width: 90%;
+}
+.ds-import-errorPanel-section-removeButton {
+    background-color: inherit;
+    background-image: url("../images/grey-4d4d4d-x-button.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-width: 0;
+    height: 18px;
+    margin-right: 9px;
+    padding: 0;
+    width: 18px;
+}
+.ds-import-errorPanel-section-removeButton:hover {
+    background-image: url("../images/grey-999999-x-button.png");
+}
+.ds-import-errorPanel-section-toggleDetails {
+    background-color: #F7F7F7;
+    border: medium none;
+    color: #008BE0;
+    cursor: pointer;
+    height: 1em;
+    margin: 0 0 1.5em;
+    padding: 0;
+    position: relative;
+    text-decoration: underline;
+}
+.ds-import-errorPanel-section-details {
+    clear: both;
+    color: #666666;
+    font-weight: normal;
+}
+.ds-import-errorPanel-section-details p {
+    line-height: 1.7em;
+    margin-bottom: 0;
+    margin-top: 0.5em;
+}
+
+
+.ds-import-basic-save {
+    display: block;
+    margin-top: 0.6em;
+}
+.fl-uploader-hidden,
+    display: none;
+}
+
