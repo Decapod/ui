@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Decapod Import</title>
+        
+        <link rel="stylesheet" type="text/css" href="../../../lib/infusion/framework/fss/css/fss-reset.css" />
+        <link rel="stylesheet" type="text/css" href="../../../lib/infusion/framework/fss/css/fss-layout.css" />       
+        <link rel="stylesheet" type="text/css" href="../../../shared/css/decapod.css" />
+        <link rel="stylesheet" type="text/css" href="../css/exporter.css" />
+        
+        <!-- TODO: update for Exporter -->
+        <!-- Required JavaScript modules for the Import component. 
+        <script type="text/javascript" src="../../../lib/infusion/MyInfusion.js"></script>
+        <script type="text/javascript" src="../../../shared/js/decapodContext.js"></script>
+        <script type="text/javascript" src="../js/ExportDemands-05a.js"></script>
+        <script type="text/javascript" src="../js/Export.js"></script>
+        -->
+    </head>
+    
+    <body>
+    
+        
+        <section class="ds-shared-decapod">
+            
+            <!-- NAVIGATION BAR -->
+            <nav class="ds-shared-navigationBar">
+                <ul class="ds-shared-navigationBar-flatList">
+                    <li><a class="ds-shared-navigationBar-currentBreadcrumb" href="">Decapod 0.5</a></li>
+                </ul>
+            </nav>
+
+            <!-- FOOTER -->
+            <footer>
+            
+            </footer>
+
+            <!-- DECAPOD EXPORT INTERFACE -->
+            <section class="ds-shared-mainPane ds-exporter">
+                <header>
+                    <h1>The title</h1>
+                </header>
+                
+                <div class="ds-exporter-upload">
+                    <div class="dc-exporter-upload-messages ds-exporter-upload-messages">Instructions go here.<br />
+                    Later replaced by upload status messages.</div>
+                    <a class="dc-exporter-uploadClear" href="">Clear link text</a>
+                    <button class="dc-exporter-uploadBrowse">Browse button here</button>
+                </div>
+                
+                <header>
+                    <h1>Exporter options go below</h1>
+                </header>
+                
+                <div class="dc-exporter-optionsTemplate">
+                    <label class="dc-exporter-exportLabel">Format type label: </label>
+                    <span class="dc-exporter-exportDescription">Description goes here.</span>
+                    <form class="dc-exporter-exportOptions">
+                        Form options go here.
+                    </form>
+                    <button class="dc-exporter-exportButton">Export button</button>
+                    <span class="dc-exporter-exportProgress">Export progress text</span>
+                    <a class="dc-exporter-exportDownload" href="">Download link here</a>
+                    <a class="dc-exporter-exportStartOver" href="">Start over link here</a>
+                </div>
+            
+            </section>
+                        
+            <script>
+                decapod.export(".dc-export");
+            </script>
+        </section>
+    </body>
+</html>
