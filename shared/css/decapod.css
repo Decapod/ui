@@ -1,145 +1,137 @@
-.ds-decapod {
+.ds-shared-decapod {
     font-family: 'Droid Sans', arial, serif;
-    background-color: #F8F8F8;
+    background-color: #FFF;
     position: absolute;
     bottom: 0px;
     left: 0px;
     right: 0px;
     top: 0px;
-    width: 980px;
-    box-shadow: 1px 1px 6px 6px #f5f5f5;
+    width: 100%;
+    min-width: 750px;
 }
 
-.ds-decapod :focus {
-   outline: 1px dotted #1C75BC;
-}
-
-.ds-decapod @font-face {
+.ds-shared-decapod @font-face {
   font-family: 'Droid Sans';
   font-style: normal;
   font-weight: bold;
   src: local('Droid Sans'), url('../fonts/DroidSans-Bold.ttf') format('truetype');
 }
 
-.ds-decapod @font-face {
+.ds-shared-decapod @font-face {
   font-family: 'Droid Sans';
   font-style: normal;
   font-weight: normal;
   src: local('Droid Sans'), url('../fonts/DroidSans.ttf') format('truetype');
 }
 
-.ds-decapod h1 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #3a3a3a;
-    margin-bottom: 0px;
-    border-bottom-style: none !important;
-}
-
-.ds-decapod button:hover {
-    cursor: pointer;
-}
-
-.ds-decapod a {
-    color: #1C75BC;
-}
-
-header.ds-header {
-    margin-bottom: 15px;
-}
-
-
-
 /* NAVIGATION BAR */
 
-.ds-navigationBar {
+.ds-shared-navigationBar {
     display: table;
     background: #958D76;
     width: 100%;
     height: 42px;
     text-align: left;
     color: #fff;
-    box-shadow: 1px 1px 6px 6px #f5f5f5;
 }
 
-.ds-navigationBar img {
-    vertical-align: middle;
-}
-
-ul.ds-navigationBar-flatList {
+ul.ds-shared-navigationBar-flatList {
     list-style-type: none;
     display: table-cell;
     vertical-align: middle;
     padding-left: 20px;
 }
 
-.ds-navigationBar-flatList li {
+.ds-shared-navigationBar-flatList li {
     display: inline;
     list-style-type: none;
 }
 
-.ds-navigationBar-flatList a {
-    padding-left: 5px;
-    padding-right: 5px;
+.ds-shared-navigationBar-flatList a {
     color: #fff;
+    position: relative;
+	padding: 0 0 0 10px;
+	font-size:12pt;
 }
 
-a.ds-navigationBar-hereElement {
+/**
+Create a chevron by using two triangles overlaid each other.
+Triangles are made by taking advantage of border's bevel effect.
+**/
+.ds-shared-navigationBar-flatList a:before,
+.ds-shared-navigationBar-flatList a:after {
+    content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+}
+
+.ds-shared-navigationBar-flatList a:before {
+	border-top: 21px solid transparent;
+	border-bottom: 21px solid transparent;
+	border-left: 12px solid white;
+	
+    left: 125px;
+    top: -14px;
+}
+
+.ds-shared-navigationBar-flatList a:after {
+	border-top: 19px solid transparent;
+	border-bottom: 19px solid transparent;
+	border-left: 10px solid #958D76;
+	
+	left: 125px;
+	top: -12px;
+}
+
+
+a.ds-shared-navigationBar-currentBreadcrumb {
     font-weight: bold;
     text-decoration: none;
 }
 
-.ds-navigationBar-chevron {
-    padding-left: 10px;
-    padding-right: 0px;
-    font-size: 20px;
-}
-
-/* Toolbar: toolbar background */
-.ds-toolbar {
-    display: table;
-    background: #D9D0B4;
+/**
+ FOOTER 
+ */
+ 
+ .ds-shared-decapod footer {
+    background: #958D76;
     width: 100%;
-    text-align: right;
-    height: 62px;
+    height: 30px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display:block;
+ }
+ 
+/**
+ MAIN CONTENT AREA 
+ */
+ 
+.ds-shared-mainPane {
+    background-color: #F8F8F8;
+    position: absolute;
+    bottom: 30px; /*position respect to footer height */
+    top: 42px; /*position respect to navigation bar */
+    left: 0px;
+    right 0px;
 }
 
-ul.ds-toolbar-flatList {
-    display: table-cell;
-    list-style-type: none;
-    vertical-align: middle;
-    padding-right: 30px;
-    padding-top: 30px;
+.ds-shared-mainPane h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3a3a3a;
+    margin: 0px;
+    padding-top:10px;
 }
 
-.ds-toolbar-flatList li {
-    display: inline;
-}
-
-a.ds-toolbar-button {
-    padding-top: 33px; /*offset the height of the navbar */
-    width: 50px;
-    height: 25px;
-    color:#000 !important;
-    text-decoration: underline;
-    text-align: center;
-    background-repeat: no-repeat;
-    margin-left: 10px;
-    margin-right: 10px;
-    
-}
-    
-a.ds-toolbar-button:hover {
-    color: #999999 !important; 
-    cursor: pointer;
-}
-
-.ui-state-disabled span {
-    cursor: default;
-}
-
-/*Main Content Pane */
-.ds-header {
+.ds-shared-mainPane header {
+    margin-bottom: 15px;
     padding-left: 30px;
 }
+
+
+
+
 
