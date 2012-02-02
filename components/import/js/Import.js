@@ -23,6 +23,7 @@ var decapod = decapod || {};
     fluid.defaults("decapod.import", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
         finalInitFunction: "decapod.import.finalInit",  //for decapod 0.5a
+        preInitFunction: "decapod.import.preInit",  //for decapod 0.5a
         components: {
             progressiveEnhancementChecker: {
                 type: "fluid.progressiveCheckerForComponent",
@@ -43,14 +44,29 @@ var decapod = decapod || {};
             exportView: {
                 type: "decapod.exportView",
                 container: "{decapod.import}.container",
-                priority: "first"
+                priority: "2"
+            },
+            server: {
+                type: "decapod.dataSource",
+                priority: "1"
             }
+        },
+        //for decapod 0.5a
+        invokers: {
+            importReset: "decapod.import.resetImport"
         }
     });
     
     //for decapod 0.5a
     decapod["import"].finalInit = function (that) {
         that.exportView.locate("status").hide();
+        that.importReset();
+    };
+    
+    decapod["import"].preInit = function (that) {
+		that.importResetWrapper = function () {
+            that.importReset();
+		};
     };
     
 })(jQuery);
