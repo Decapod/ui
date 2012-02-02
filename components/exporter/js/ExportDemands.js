@@ -31,7 +31,7 @@ var decapod = decapod || {};
     });
     
     // server
-    fluid.demands("decapod.dataSourcer", ["decapod.exporter"], {
+    fluid.demands("decapod.dataSource", ["decapod.exporter"], {
         options: {
             url: "/books/decapod05a/export/pdf/%type"
         }
