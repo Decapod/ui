@@ -1,4 +1,171 @@
 .ds-exporter {
-    width: 690px;
+    width: 600px;
     box-shadow: 3px 2px 4px -3px #919191;
+    overflow-y:auto;
+    overflow-x:visible;
+}
+
+/**
+ * Uploader
+ */
+.ds-exporter-upload-messages{
+    width: 480px;
+    background-color: #F9F9FA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
+    border-radius: 6px 6px 6px 6px;
+    padding: 10px;
+}
+
+
+.ds-exporter-uploadControls {
+    width: 480px;
+    text-align: right;
+    padding: 10px;   
+}
+
+.ds-exporter-uploadControls .ds-exporter-uploadBrowse {
+    padding-left: 26px;
+    background: url("../../../shared/images/folder-icon-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #D1D3D4);
+}
+
+.ds-exporter-uploadControls .ds-exporter-uploadClear {
+    background: url("../../../shared/images/trash-icon-22x22.png") 5px center no-repeat;
+    padding-left: 26px;
+    margin-right: 10px;
+}
+
+/**
+ * Export options.
+ */
+ 
+.ds-exporter-optionGroup {
+    width:790px;
+}
+ 
+.ds-exporter-optionLabel {
+    font-weight: bold;
+    color: #1C75BC;
+    display:block;
+}
+
+.ds-exporter-descriptionBlock {
+    width: 445px;
+    border-bottom: solid 2px #E6E7E8;
+    box-shadow: 0px 0px 1px 0px #fff;
+    margin-bottom: 10px;
+    padding: 10px 25px 10px 10px;
+    position: relative;
+    display: inline-block;
+    
+    -moz-transition: background 0.3s ease;
+    -moz-transition-property: background, border-bottom;
+    
+    border-radius: 6px 6px 6px 6px;
+    /*background: url("./images/option-arrow.png") right center no-repeat;*/
+}
+
+/**
+Create a chevron by using two triangles overlaid each other.
+Triangles are made by taking advantage of border's bevel effect.
+**/
+
+
+.ds-exporter-descriptionBlock:before,
+.ds-exporter-descriptionBlock:after {
+    content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	top:50%;
+}
+
+.ds-exporter-descriptionBlock:before {
+	border-top: 22px solid transparent;
+	border-bottom: 22px solid transparent;
+	border-left: 10px solid #D1D3D4;
+	margin-top:-18px;
+	margin-right: 5px;
+    right: 0px;
+    
+}
+
+.ds-exporter-descriptionBlock:after {
+	border-top: 18px solid transparent;
+	border-bottom: 18px solid transparent;
+	border-left: 7px solid #eff1f4;
+	
+	margin-top: -14px;
+	margin-right: 5px;
+	right: 4px;
+	
+	-moz-transition: border-left 0s ease;
+}
+
+/**
+ * Hover and active transition effects.
+ */
+
+.ds-exporter-descriptionBlock:hover:after {
+	border-left: 7px solid #F9F9FA;
+}
+
+.ds-exporter-descriptionBlock:hover {
+    background-color: #F9F9FA;
+    border-bottom: 2px solid transparent;
+}
+
+.ds-exporter-descriptionBlock:active {
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
+}
+
+.ds-exporter-descriptionBlock:active:after {
+	border-left: none;
+}
+
+.ds-exporter-descriptionBlock:active:before {
+	border-left: none;
+}
+
+
+/**
+ * Export options and controls
+ */
+.ds-exporter-exportOptions {
+    width: 200px;
+    display: inline-block;
+    background-color: #F9F9FA;
+    margin-left: 20px;
+    position: relative;
+    top: 0px;
+    padding: 10px;
+}
+
+.ds-exporter-exportOptions form {
+    margin-bottom: 10px;
+}
+
+.ds-exporter-exportOptions .ds-exporter-exportButton{
+    width: 80%;
+    display:block;
+    background: url("../../../shared/images/export-green-22x22.png") 10px center no-repeat #009444;
+    padding: 7px;
+    margin: 10px auto;
+}
+
+.ds-exporter-exportOptions a {
+    display:block;
+    padding: 5px 0 5px 32px;
+}
+
+.ds-exporter-exportOptions a.ds-exporter-exportDownload {
+    background: url("../../../shared/images/download-icon-18x18.png") 10px center no-repeat;
+    
+}
+
+.ds-exporter-exportOptions a.ds-exporter-exportStartOver {
+    background: url("../../../shared/images/reset-icon-18x18.png") 10px center no-repeat;
+}
+
+.ds-exporter-exportOptions .ds-exporter-exportProgress {
+    background: url("../../../shared/images/indeterminateProgressSpinner_64x64.png") 
 }
