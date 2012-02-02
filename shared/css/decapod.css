@@ -7,7 +7,7 @@
     right: 0px;
     top: 0px;
     width: 100%;
-    min-width: 750px;
+    min-width: 360px;
 }
 
 .ds-shared-decapod @font-face {
@@ -110,7 +110,8 @@ a.ds-shared-navigationBar-currentBreadcrumb {
  */
  
 .ds-shared-mainPane {
-    background-color: #F8F8F8;
+    background-color: #eff1f4;
+    /* background-image: url("../images/background-grain.png"); TODO: remove image file before Decapod 0.5 release.*/
     position: absolute;
     bottom: 30px; /*position respect to footer height */
     top: 42px; /*position respect to navigation bar */
@@ -131,7 +132,84 @@ a.ds-shared-navigationBar-currentBreadcrumb {
     padding-left: 30px;
 }
 
+.ds-shared-indent1 {
+    margin-left: 60px;
+}
 
+.ds-shared-indent2 {
+    margin-left: 80px;
+}
 
+/**
+ UI COMPONENTS
+ */
 
+.ds-shared-disabled-button {
+    background-color: #F1F2F2;
+    border: 2px solid #fff;
+    color: #A7A9AC;
+}
 
+.ds-shared-disabled-text {
+    color: #A7A9AC;    
+}
+
+.ds-shared-grey-button {
+    padding: 4px 4px 4px 4px;
+    border-radius: 4px;
+    border: 1px solid #808285;
+}
+
+.ds-shared-green-button {
+    padding: 4px;
+    background-color: #009444;
+    box-shadow: 3px 3px 5px -1px #808285;
+    border: none;
+    color: #fff;
+}
+
+.ds-shared-spinner {
+    width: 50px;
+    height: 50px;
+    
+}
+
+.ds-shared-spinner div{
+	width: 4px;
+	height: 4px;
+	background: #2BB673;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+}
+
+.ds-shared-spinner-dot-1 {
+    -moz-transform: translate(6px, 0px);
+}
+
+.ds-shared-spinner-dot-2 {
+    -moz-transform: translate(10px, 4px);
+}
+
+.ds-shared-spinner-dot-3 {
+    -moz-transform: translate(6px, 6px);
+}
+
+.ds-shared-spinner-dot-4 {
+    -moz-transform: translate(8px, 8px);
+}
+
+.ds-shared-spinner-dot-5 {
+    -moz-transform: translate(6px, 12px);
+}
+
+.ds-shared-spinner-dot-6 {
+    -moz-transform: translate(4px, 6px);
+}
+
+.ds-shared-spinner-dot-7 {
+    -moz-transform: translate(0px, 6px);
+}
+
+.ds-shared-spinner-dot-8 {
+    -moz-transform: translate(4px, 4px);
+}
