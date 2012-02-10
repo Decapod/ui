@@ -36,9 +36,9 @@
             </footer>
 
             <!-- DECAPOD EXPORT INTERFACE -->
-            <section class="ds-shared-mainPane ds-exporter">
+            <section class="ds-shared-mainPane">
                 <header>
-                    <h1>The title</h1>
+                    <h1>Exporter Title</h1>
                 </header>
                 
                 <div class="ds-exporter-upload ds-shared-indent1">
@@ -49,12 +49,7 @@
                         <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </li>
                         <li>Cras volutpat, lectus eu aliquam consequat, metus nisi aliquam quam,</li>
                         <li>id molestie odio dui non risus. Donec suscipit nunc vitae lectus</li>
-                        <li>vestibulum tincidunt. Aliquam commodo, magna ut posuere facilisis,</li>
-                        <li>leo risus ultricies sapien, vitae suscipit ipsum</li>
-                        <li>libero id dolor. Nullam dolor mauris,</li>
-                        <li>ultricies ornare dapibus ac,</li>
-                        <li>molestie eu nunc. Integer orci </li>
-                        <li>magna, placerat i</li>
+                        </ul>
                         </p>
                     </div>
                     
@@ -65,42 +60,76 @@
                 </div>
                 
                 <header>
-                    <h1>Exporter options go below</h1>
+                    <h1>Exporter format types go below</h1>
                 </header>
                 
-                <div class="dc-exporter-optionGroup ds-exporter-optionGroup">
+                <div class="dc-exporter-formatGroup ds-exporter-formatGroup">
                     <h2 class="ds-shared-indent1">Group</h2>
                     
-                    <div class="dc-exporter-optionsTemplate">                    
-                        <div class="ds-exporter-descriptionBlock ds-shared-indent2">
-                            <label class="dc-exporter-optionLabel ds-exporter-optionLabel">Format type label: </label>
-                            <div class="dc-exporter-exportDescription ds-exporter-exportDescription">Description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                    <div class="dc-exporter-formatTemplate">   
+
+                        <!-- Export format name and description -->
+                        <div class="ds-exporter-formatDescriptionBlock ds-shared-indent2 ds-exporter-formatDescriptionBlock-selected">
+                            <label class="dc-exporter-formatLabel ds-exporter-formatLabel ds-exporter-formatLabel-twiddle">Format type label: </label>
+                            <div class="dc-exporter-formatDescription ds-exporter-formatDescription">Description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
                         </div>
                         
-                        <div class="ds-exporter-exportOptions">
+                        <!-- Export format's options-->
+                        <div class="ds-exporter-exportOptions ds-shared-indent2">
                             <form class="dc-exporter-exportOptions-form ds-exporter-exportOptions-form">
-                                Form options go here.
+                                <ul>
+                                    <!-- List for user selectable options -->
+                                    <li>
+                                        <label for="dc-exporter-field1">Form options go here</label>
+                                        <input id="dc-exporter-field1" name="field1" type=text value="300">dpi
+                                    </li>
+                                    <li>
+                                        <label for="dc-exporter-field2">Choose a fruit:</label>
+                                        <select id="dc-exporter-field2">
+                                          <option value="apples">Apple</option>
+                                          <option value="oranges">Orange</option>
+                                          <option value="pineapple">Pineapple</option>
+                                          <option value="tomato">Tomato</option>
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <label for="dc-exporter-field3">Radio</label>
+                                        <input id="dc-exporter-field3" name="example" type="radio" value="apples" checked="checked" /> Apple 
+                                        <input id="dc-exporter-field3" name="example" type="radio" value="oranges" /> Orange 
+                                    </li>
+                                    
+                                    <li>
+                                        <label for="dc-exporter-field4">Checkbox</label>
+                                        <input id="dc-exporter-field4" type="checkbox" />Apple
+                                        <input id="dc-exporter-field4" type="checkbox" />Orange
+                                    </li>
+                                    
+                                    <li>
+                                        <label for="dc-exporter-field5">Slider</label>
+                                        A slider should go here.
+                                    </li>
+                                </ul>
                             </form>
                         
-                            <button class="dc-exporter-exportButton ds-exporter-exportButton ds-shared-green-button">Export button</button>
-                            <span class="dc-exporter-exportProgress ds-exporter-exportProgress">Export progress text</span>
-                            <a class="dc-exporter-exportDownload ds-exporter-exportDownload" href="">Download link here</a>
-                            <a class="dc-exporter-exportStartOver ds-exporter-exportStartOver" href="">Start over link here</a>
+                            <button class="dc-exporter-exportButton ds-exporter-exportButton ds-shared-grey-button">Export button</button>
+                            <div class="dc-exporter-exportProgress ds-exporter-exportProgress-text">
+                                <div class="ds-shared-spinner ds-exporter-exportProgress-spinner">
+                                    <div class="ds-shared-spinner-outerCircle"></div>
+                                    <div class="ds-shared-spinner-innerCircle"></div>
+                                    <div class="ds-shared-spinner-dot"></div>
+                                </div>
+                                Export progress text
+                            </div>
+                            
+                            <div class="ds-exporter-exportLinks">
+                                <a class="dc-exporter-exportDownload ds-exporter-exportDownload" href="">Download link here</a></li>
+                                <a class="dc-exporter-exportStartOver ds-exporter-exportStartOver" href="">Start over link here</a></li>
+                            </div>
                         </div>
                     </div>
+                                       
                     
-                    <div class="ds-shared-spinner">
-                        <div class="ds-shared-spinner-dot-1"></div>
-                        <div class="ds-shared-spinner-dot-3"></div>
-                        
-                        <!--<div class="ds-shared-spinner-dot-2"></div>
-                        <div class="ds-shared-spinner-dot-4"></div>
-                        <div class="ds-shared-spinner-dot-6"></div>
-                        <div class="ds-shared-spinner-dot-8"></div>-->
-                        
-                        <div class="ds-shared-spinner-dot-5"></div>
-                        <div class="ds-shared-spinner-dot-7"></div>
-                    </div>
+
                 </div>
             
             </section>
