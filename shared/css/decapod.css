@@ -24,6 +24,11 @@
   src: local('Droid Sans'), url('../fonts/DroidSans.ttf') format('truetype');
 }
 
+.ds-shared-decapod a{
+    color: #1C75BC;
+}
+
+
 /* NAVIGATION BAR */
 
 .ds-shared-navigationBar {
@@ -58,32 +63,18 @@ ul.ds-shared-navigationBar-flatList {
 Create a chevron by using two triangles overlaid each other.
 Triangles are made by taking advantage of border's bevel effect.
 **/
-.ds-shared-navigationBar-flatList a:before,
+
 .ds-shared-navigationBar-flatList a:after {
     content: "";
 	position: absolute;
-	width: 0;
-	height: 0;
+	top: -6px;
+    width: 30px;
+    height: 30px;
+    border-top: 1px solid #fff;
+    border-right: 1px solid #fff;
+    -moz-transform: rotate(45deg);
+    transform:rotate(45deg);
 }
-
-.ds-shared-navigationBar-flatList a:before {
-	border-top: 21px solid transparent;
-	border-bottom: 21px solid transparent;
-	border-left: 12px solid white;
-	
-    left: 125px;
-    top: -14px;
-}
-
-.ds-shared-navigationBar-flatList a:after {
-	border-top: 19px solid transparent;
-	border-bottom: 19px solid transparent;
-	border-left: 10px solid #958D76;
-	
-	left: 125px;
-	top: -12px;
-}
-
 
 a.ds-shared-navigationBar-currentBreadcrumb {
     font-weight: bold;
@@ -116,7 +107,7 @@ a.ds-shared-navigationBar-currentBreadcrumb {
     bottom: 30px; /*position respect to footer height */
     top: 42px; /*position respect to navigation bar */
     left: 0px;
-    right 0px;
+    right: 0px;
 }
 
 .ds-shared-mainPane h1 {
@@ -157,7 +148,10 @@ a.ds-shared-navigationBar-currentBreadcrumb {
 .ds-shared-grey-button {
     padding: 4px 4px 4px 4px;
     border-radius: 4px;
-    border: 1px solid #808285;
+    border: 1px solid #B5B5B5;
+    background: -moz-linear-gradient(top,  #fff,  #ececec);
+    background: #eff1f4;
+    
 }
 
 .ds-shared-green-button {
@@ -168,48 +162,54 @@ a.ds-shared-navigationBar-currentBreadcrumb {
     color: #fff;
 }
 
-.ds-shared-spinner {
-    width: 50px;
-    height: 50px;
-    
+@-moz-keyframes decapod-busy-spinner {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
 }
 
-.ds-shared-spinner div{
-	width: 4px;
-	height: 4px;
-	background: #2BB673;
+.ds-shared-spinner {
+    height: 19px;
+    width: 19px;
+    
+    display:inline-block;
+    -moz-transform-origin: 10px 10px; /* so animation properly rotates around center. */    
+    -moz-animation-name: decapod-busy-spinner;
+    -moz-animation-duration: 1s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    transform-origin: 10px 10px;
+}
+
+.ds-shared-spinner-outerCircle {
+    width: 15px;
+	height: 15px;
+	background: #D1D3D4;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
+	position: absolute;
+	-moz-transform: translate(2px, 2px);
 }
 
-.ds-shared-spinner-dot-1 {
-    -moz-transform: translate(6px, 0px);
+.ds-shared-spinner-innerCircle {
+    width: 9px;
+	height: 9px;
+	background: #fff;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	position: absolute;
+	-moz-transform: translate(5px, 5px);
 }
 
-.ds-shared-spinner-dot-2 {
-    -moz-transform: translate(10px, 4px);
-}
-
-.ds-shared-spinner-dot-3 {
-    -moz-transform: translate(6px, 6px);
-}
-
-.ds-shared-spinner-dot-4 {
-    -moz-transform: translate(8px, 8px);
-}
-
-.ds-shared-spinner-dot-5 {
-    -moz-transform: translate(6px, 12px);
-}
-
-.ds-shared-spinner-dot-6 {
-    -moz-transform: translate(4px, 6px);
-}
-
-.ds-shared-spinner-dot-7 {
-    -moz-transform: translate(0px, 6px);
-}
-
-.ds-shared-spinner-dot-8 {
-    -moz-transform: translate(4px, 4px);
+.ds-shared-spinner-dot {
+    width: 5px;
+	height: 5px;
+	background: #2BB673;
+	-moz-transform: translate(7px, 1px);
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	position: absolute;
 }
