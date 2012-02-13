@@ -1,0 +1,226 @@
+/**
+ * Uploader
+ */
+.ds-exporter-upload-messages{
+    width: 600px;
+    background-color: #F9F9FA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
+    border-radius: 6px 6px 6px 6px;
+    padding: 10px;
+}
+
+.ds-exporter-uploadControls {
+    width: 600px;
+    text-align: right;
+    padding: 10px;   
+}
+
+.ds-exporter-uploadControls .ds-exporter-uploadBrowse {
+    padding-left: 26px;
+    background: url("../../../shared/images/folder-icon-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ececec);
+    text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
+}
+
+.ds-exporter-uploadControls .ds-exporter-uploadClear {
+    background: url("../../../shared/images/trash-icon-22x22.png") 5px center no-repeat;
+    padding-left: 26px;
+    margin-right: 10px;
+    padding-top: 5px;
+}
+
+/**
+ * Export Formats
+ */
+ 
+.ds-exporter-formatGroup {
+    width:680px;
+}
+
+.ds-exporter-formatDescriptionBlock {
+    border-bottom: solid 2px #E6E7E8;
+    box-shadow: 0px 0px 1px 0px #fff;
+    padding: 10px 25px 10px 10px;
+    position: relative;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.ds-exporter-formatDescriptionBlock:hover {
+    background-color: #EAEAEA;
+    border-bottom: 2px solid transparent;
+}
+
+/* APPLY this style when format type is selected. */
+.ds-exporter-formatDescriptionBlock-selected {
+    background-color: #EAEAEA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
+    border-bottom: 2px solid transparent;
+}
+
+/* Create a downward arrow by rotating a square 45 deg.*/    
+.ds-exporter-formatDescriptionBlock-selected:after {
+    content: "";
+	position: absolute;
+	bottom: -10px; /* position it */
+    right: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: #EAEAEA; /* Create a square and rotate. */
+    -moz-transform: rotate(45deg); 
+    transform:rotate(45deg);
+    border-right: 4px solid #E8E8E8;
+    border-bottom: 4px solid #E8E8E8;
+    z-index: 1; /* Position on top so the arrow is visible when applied. */
+}
+
+
+/* The name of the export format. */
+.ds-exporter-formatLabel {
+    font-weight: bold;
+    color: #1C75BC;
+    display:block;
+    width: 565px;
+    position:relative
+}
+
+/* A twiddle that animates when revealing the format's options.
+   Twiddle's initial orientation is pointing right (i.e. "closed").
+   APPLY this style when transitions are supported. */
+.ds-exporter-formatLabel-twiddle:after {
+    /* Make a triangle pointing right. */
+    width:0;
+    content:"";
+    position:absolute;
+    border-top: 6px solid  transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid #939598;
+    top: 1px;
+    margin-left:4px;
+ 
+    /* Transition to this style. */
+    -moz-animation: decapod-twiddle 0.2s forwards;
+    animation: decapod-twiddle 0.2s forwards;
+}
+
+/* Animation to rotate twiddle from downward to pointing right.
+   APPLY this style to make a twiddle "close". */
+.ds-exporter-formatLabel-detwiddle:after{
+    -moz-animation: decapod-detwiddle 0.2s forwards;
+    animation: decapod-detwiddle 0.2s forwards;
+}
+
+/* Animations for the twiddle. */
+@-moz-keyframes decapod-twiddle {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(90deg); }
+}
+
+@-moz-keyframes decapod-detwiddle {
+    from { -moz-transform: rotate(90deg); }
+    to { -moz-transform: rotate(0deg); }
+}
+
+/* Export file format options and controls. */
+.ds-exporter-exportOptions {
+    background-color: #F9F9FA;
+    top: -2px; /* Move up 2px to offset disappearance of descriptionBlock bottom border. */
+    padding: 10px;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
+    position: relative;
+
+    -moz-transition: all 0.4s ease; /* Transition to this style. */
+    transition: all 0.4s ease;
+}
+
+/**
+ * Hide the export options.
+ * APPLY this style to hide the export options.
+ */
+.ds-exporter-exportOptions-hidden{
+    overflow: hidden;
+    height: 0px;
+    -moz-transition: all 0.4s ease; /* Transition to this style. */
+    transition: all 0.4s ease;
+    padding:0px;
+}
+
+/* Format export options. */
+.ds-exporter-exportOptions form {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.ds-exporter-exportOptions form ul li {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.ds-exporter-exportOptions form  label{
+    width: 50%;
+    text-align:right;
+    font-weight: bold;
+    display:inline-block;
+    margin-right: 10px;
+}
+
+.ds-exporter-exportOptions form input[type="checkbox"] {
+    margin-right: 3px;
+}
+
+/* Format export controls and status text. */
+.ds-exporter-exportOptions .ds-exporter-exportButton{
+    width: 144px;
+    display:block;
+    background: url("../../../shared/images/export-green-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ececec);
+    padding: 7px;
+    margin: 10px auto;
+    text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
+}
+
+.ds-exporter-exportOptions .ds-exporter-exportProgress-text {
+    text-align:center;
+}
+
+.ds-exporter-exportOptions .ds-exporter-exportProgress-spinner{
+    position:relative;
+    top: 3px;
+}
+
+.ds-exporter-exportOptions .ds-exporter-exportLinks ul {
+    position: relative;
+    width: 40em;
+}
+
+.ds-exporter-exportOptions .ds-exporter-exportLinks li {
+    display:block;
+    padding: 5px 0 5px 0px;
+    text-align:center;
+}
+
+.ds-exporter-exportOptions .ds-exporter-exportLinks {
+    width: 53%;
+    margin: 0 auto;
+}
+
+.ds-exporter-exportOptions .ds-exporter-exportLinks  a{
+    -moz-transition: all 0.2s ease;
+    width: 40%;
+    position: relative;
+    display:inline-block;
+    padding: 3px 0px 3px 26px;
+}
+
+.ds-exporter-exportOptions .ds-exporter-exportLinks  a:hover{
+    border-radius: 6px 6px 6px 6px;
+    background-color: #D3D3D3; 
+}
+
+.ds-exporter-exportOptions .ds-exporter-exportLinks .ds-exporter-exportDownload {
+    background: url("../../../shared/images/download-icon-18x18.png") 5px center no-repeat;
+}
+
+.ds-exporter-exportOptions .ds-exporter-exportLinks .ds-exporter-exportStartOver {
+    background: url("../../../shared/images/reset-icon-18x18.png") 5px center no-repeat;
+    float:right;
+}
+
