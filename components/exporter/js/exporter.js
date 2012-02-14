@@ -53,7 +53,7 @@ var decapod = decapod || {};
                         }
                     },
                     queueSettings: {
-                        fileSizeLimit: 102400
+                        fileSizeLimit: 409600
                     },
                     selectors: {
 			            browseButton: "{exporter}.options.selectors.uploadBrowse"
