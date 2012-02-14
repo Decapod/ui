@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Decapod Import</title>
+        
+        <link rel="stylesheet" type="text/css" href="../../../lib/infusion/framework/fss/css/fss-reset.css" />
+        <link rel="stylesheet" type="text/css" href="../../../lib/infusion/framework/fss/css/fss-layout.css" />       
+        <link rel="stylesheet" type="text/css" href="../../../lib/infusion/components/uploader/css/Uploader.css" />
+        <link rel="stylesheet" type="text/css" href="../../../shared/css/Decapod.css" />
+        <link rel="stylesheet" type="text/css" href="../css/Import.css" />
+        <link rel="stylesheet" type="text/css" href="../css/Import-05a.css" />
+        
+        <!-- Required JavaScript modules for the Import component. -->
+        <script type="text/javascript" src="../../../lib/infusion/MyInfusion.js"></script>
+        <script type="text/javascript" src="../../../shared/js/decapodContext.js"></script>
+        <script type="text/javascript" src="../../dataSource/js/DataSource.js"></script>
+        <script type="text/javascript" src="../../dataSource/js/DataSourceDemands.js"></script>
+        <script type="text/javascript" src="../../export/js/Export.js"></script>
+        <script type="text/javascript" src="../../export/js/ExportDemands.js"></script>
+        <script type="text/javascript" src="../../export/js/ExportView.js"></script>
+        <script type="text/javascript" src="../../export/js/ExportViewDemands.js"></script>
+        <script type="text/javascript" src="../js/Import.js"></script>
+        <script type="text/javascript" src="../js/ImportDemands-05a.js"></script>
+        
+    </head>
+    
+    <body>
+    
+        
+        <section class="ds-decapod fl-centered"">
+            
+            <!-- NAVIGATION BAR -->
+            <nav class="ds-navigationBar">
+                <ul class="ds-navigationBar-flatList">
+                    <li><img alt="" src="../../../shared/images/navigationBar_home.png"><img alt="" src=""><a class="ds-navigationBar-hereElement" href="">Decapod</a></li>
+                </ul>
+            </nav>
+
+            <!-- DECAPOD IMPORT INTERFACE -->
+            <section class="dc-import">
+                <header class="ds-header">
+                    <h1>Make a PDF from Images</h1>
+                </header>
+
+                <!-- Uploader container -->
+                <form class="flc-uploader ds-import-tables fl-progEnhance-enhanced" method="get" enctype="multipart/form-data">
+                
+                    <!-- File Queue, which is split up into two separate tables: one for the header and body -->
+                    <div class="ds-import-header-border">
+                        <table class="ds-import-header">
+                            <tr>
+                                <th class="ds-import-file-name">File Name</th>	
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <!-- File Queue body, which is the default container for the FileQueueView component -->
+                    <table summary="The list of files" class="flc-uploader-queue ds-import-queue">
+                        <caption>File Upload Queue:</caption>
+                        <tbody>
+                            <!-- Template for file row -->
+                            <tr class="flc-uploader-file-tmplt flc-uploader-file ">
+                                <td class="flc-uploader-file-name ds-import-file-name">File Name Placeholder</td>
+                                <td class="ds-import-file-actions">
+                                    <button type="button" class="flc-uploader-file-action" tabindex="-1"></button>
+                                </td>
+                            </tr>
+
+                            <!-- Template for error info row -->
+                            <tr class="flc-uploader-file-error-tmplt ds-import-file-error">
+                                <td colspan="3" class="flc-uploader-file-error"></td>
+                            </tr>
+                            
+                            <!-- Initial instructions -->
+                            <tr><td class="flc-uploader-browse-instructions ds-import-browse-instructions">
+                                <p>Select <em>Browse files</em> to choose images.</p>
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- File progress bar template, used to generate progress bars for each file in the queue -->
+                    <div class="flc-uploader-file-progressor-tmplt ds-import-file-progress"></div>           
+                    <!-- Status footer -->
+                    <div class="flc-uploader-queue-footer ds-import-queue-footer fl-clearfix">
+                        
+                        <!-- Add More / Browse Button -->
+                        <div class="flc-uploader-button-browse ds-import-browse fl-force-right fl-container-flex">
+                            <div class="flc-uploader-button-browse-text">Browse files</div>
+                        </div>
+                    
+                        <!-- 
+                            TODO: Wire up remove all button to remove all files from the queue. 
+                            TODO: Need to deside what should happen to uploaded files.
+                            <div class="dc-import-remove-all ds-import-remove-all-dim fl-force-right fl-container-flex"><a href="#">Remove all</a></div>
+                        -->
+                        
+
+                        
+                        <!-- Errors panel -->
+                        <div class="flc-uploader-errorsPanel ds-import-errorsPanel">
+                            <div class="ds-import-errorsPanel-header"><span class="flc-uploader-errorPanel-header">Warnings:</span></div>
+
+                            <!-- The markup for each error section will be rendered into these containers. -->
+                            <div class="flc-uploader-errorPanel-section-fileSize"></div>
+                            <div class="flc-uploader-errorPanel-section-numFiles"></div>
+                             
+                             <!-- Error section template.-->
+                             <div class="flc-uploader-errorPanel-section-tmplt ds-import-hidden-templates">
+                                <div class="fl-container-flex">
+                                    <div class="flc-uploader-errorPanel-section-title ds-import-errorPanel-section-title fl-force-left">
+                                        x files were too y and were not added to the queue.
+                                    </div>
+                                    <button type="button" class="flc-uploader-errorPanel-section-removeButton ds-import-errorPanel-section-removeButton fl-force-right">
+                                         <span class="flc-uploader-erroredButton-text ds-import-hidden">Remove error</span>
+                                    </button>
+                                </div>
+                                
+                                <div class="fl-container-flex">
+                                    <div class="flc-uploader-errorPanel-section-details ds-import-errorPanel-section-details">
+                                        <p>The following files were not added:</p>
+                                        <p class="flc-uploader-errorPanel-section-files">file_1, file_2, file_3, file_4, file_5 </p>
+                                    </div>
+                                </div>                        
+                                <div class="fl-container-flex">
+                                    <button type="button" class="flc-uploader-errorPanel-section-toggleDetails ds-import-errorPanel-section-toggleDetails">Hide this list</button>
+                                </div>
+                             </div>
+                         </div>                
+                    </div>
+                    
+                    <!-- Export Progress Table -->
+                    <div class="ds-import-status">
+                        <!-- Total progress bar -->
+                        <div class="flc-uploader-total-progress ds-import-total-progress-okay"><img src="../images/tick.png" alt="Status: Okay" />Okay</div>
+                        <div class="flc-uploader-total-progress-text ds-import-total-progress-text"></div>
+                        <!-- Removed. Not being used in Decapod 0.5a
+			<div class="flc-uploader-upload-limit-text ds-import-limit-text"><img src="../images/tick.png" />Limit</div>
+			-->
+                        <div class="dc-decapod05a-makePDF"><span class="dc-exportView-status"></span></div>
+                        <!-- <div class="dc-decapod05a-makePDF-done ds-decapod05a-makePDF-done"></div>
+                        <div class="dc-decapod05a-makePDF-error"></div> -->
+
+			            <!-- Export download -->
+		                <div class="dc-exportView-download">
+			               <a class="dc-exportView-downloadLink">Download</a>
+			               <a class="dc-exportView-restartLink" href="#_">Restart Export</a>
+		                </div>
+                    </div>
+                    
+                    
+                    
+                    <!-- Upload buttons -->
+                    <div class="ds-import-buttons">
+                        <div class="dc-renderSelect dc-exportView-select">
+                            <label class="dc-renderSelect-label" for="pdfOptions">PDF Output Options:</label>
+                            <select class="dc-renderSelect-choices" name="pdfOptions" id="pdfOptions">
+                                <option value="1" selected="selected">Image PDF</option>
+                                <option value="2">Image PDF with text recognition (Experimental)</option>
+                                <option value="3">Computer traced PDF with text recognition (Experimental)</option>
+                            </select>
+                        </div>
+                        
+                        <!--
+                            TODO: Wire up the cancel button to cancel upload and remove uploaded files from the server
+                            <a href="#" class="dc-import-cancel ds-import-cancel">Cancel import</a> 
+                        -->
+                        
+                        <button type="button" class="flc-uploader-button-pause fl-uploader-button-stop fl-uploader-hidden">Stop Copying</button>
+                        <button type="button" class="flc-uploader-button-upload fl-uploader-button-upload fl-uploader-dim">Make PDF</button>
+                    </div>
+                    
+                    <div class="flc-uploader-status-region fl-offScreen-hidden"></div>
+                </form>        
+            
+            </section>
+            <script>
+                decapod.import(".dc-import");
+            </script>
+        </section>
+    </body>
+</html>
