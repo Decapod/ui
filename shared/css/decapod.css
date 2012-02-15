@@ -68,6 +68,7 @@ Triangles are made by taking advantage of border's bevel effect.
     content: "";
 	position: absolute;
 	top: -6px;
+	right: -30px;
     width: 30px;
     height: 30px;
     border-top: 1px solid #fff;
