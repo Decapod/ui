@@ -30,8 +30,8 @@ var decapod = decapod || {};
      * However, since there can be an infinite number of urls, you can speficy a string templat for the url and pass 
      * in optional template values to each of the REST methods.
      * This is useful in cases where you are making requests to specific resources that differ only slightly.
-     * e.g. url: server/book/images/1.png, url: server/book/images/2.png
-     * you would then specify your url string template as url: "server/book/images/%image" and pass in {image: 1.png}
+     * e.g. url: server/library/book/images/1.png, url: server/library/book/images/2.png
+     * you would then specify your url string template as url: "server/library/book/images/%image" and pass in {image: 1.png}
      * as the urlTemplateValues
      */
     fluid.registerNamespace("decapod.dataSource");
