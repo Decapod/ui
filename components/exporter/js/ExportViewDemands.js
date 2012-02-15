@@ -50,7 +50,7 @@ var decapod = decapod || {};
     
     fluid.demands("decapod.dataSource", ["decapod.exportView", "decapod.exporter"], {
         options: {
-            url: "/books/decapod05a/export/pdf/%selection/"
+            url: "/library/decapod05a/export/pdf/%selection/"
         }
     }); 
     

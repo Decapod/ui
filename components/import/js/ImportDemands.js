@@ -53,7 +53,7 @@ var decapod = decapod || {};
     fluid.demands("fluid.uploader", ["decapod.import"], {
         options: {
             queueSettings: {
-                uploadURL: "/books/decapod05a/pages/"
+                uploadURL: "/library/decapod05a/pages/"
             }
         }
         

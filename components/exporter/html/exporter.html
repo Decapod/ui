@@ -9,19 +9,18 @@
         <link rel="stylesheet" type="text/css" href="../../../shared/css/decapod.css" />
         <link rel="stylesheet" type="text/css" href="../css/exporter.css" />
         
-        <!-- TODO: update for Exporter -->
-        <!-- Required JavaScript modules for the Import component. 
+        <!-- Required JavaScript modules for the Import component. -->
         <script type="text/javascript" src="../../../lib/infusion/MyInfusion.js"></script>
         <script type="text/javascript" src="../../../shared/js/decapodContext.js"></script>
-        <script type="text/javascript" src="../js/ExportDemands-05a.js"></script>
-        <script type="text/javascript" src="../js/Export.js"></script>
-        -->
+        <script type="text/javascript" src="../js/exporterDemands.js"></script>
+        <script type="text/javascript" src="../js/exporter.js"></script>
+
     </head>
     
     <body>
     
         
-        <section class="ds-shared-decapod">
+        <section class="dc-exporter ds-shared-decapod">
             
             <!-- NAVIGATION BAR -->
             <nav class="ds-shared-navigationBar">
@@ -41,7 +40,7 @@
                     <h1>Exporter Title</h1>
                 </header>
                 
-                <div class="ds-exporter-upload ds-shared-indent1">
+                <div class="dc-exporter-upload ds-exporter-upload ds-shared-indent1">
                     <div class="dc-exporter-upload-messages ds-exporter-upload-messages">
                         <p>Instructions go here.<br />
                         <ul>
@@ -55,7 +54,9 @@
                     
                     <div class="ds-exporter-uploadControls">
                         <a class="dc-exporter-uploadClear ds-exporter-uploadClear" href="">Clear link text</a>
-                        <button class="dc-exporter-uploadBrowse ds-shared-grey-button ds-exporter-uploadBrowse">Button</button>
+	                    <span class="dc-exporter-uploadBrowse ds-shared-grey-button ds-exporter-uploadBrowse">
+	                        <span class="flc-uploader-button-browse-text ds-exporter-uploadBrowseText">Browse files</span>
+	                    </span>
                     </div>
                 </div>
                 
@@ -135,7 +136,7 @@
             </section>
                         
             <script>
-                decapod.export(".dc-export");
+                decapod.exporter(".dc-exporter");
             </script>
         </section>
     </body>
