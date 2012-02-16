@@ -47,7 +47,18 @@ var decapod = decapod || {};
         });
         
         tests.test("Render status messages", function () {
+        	var exporter = decapod.exporter(CONTAINER);
         	
+        	exporter.uploader.events.onQueueError.fire({}, -100);
+        	exporter.uploader.events.afterFileDialog.fire(10);
+            jqUnit.assertEquals("The error should be added", 1, exporter.importStatus.errors["-100"]);
+            jqUnit.assertEquals("The total number of files should be updated", 11, exporter.importStatus.totalNumFiles);
+            jqUnit.assertEquals("The number of invalid files should be updated", 1, exporter.importStatus.numInvalidFiles);
+            jqUnit.assertEquals("The number of valid files should be updated", 10, exporter.importStatus.numValidFiles);
+            var renderedStatuses = exporter.importStatus.renderer.locate("statusMessages");
+            jqUnit.assertEquals("The statuses should have been rendered", 2, renderedStatuses.length);
+            jqUnit.assertEquals("The total files message should be rendered", "11 files found.", renderedStatuses.eq(0).text());
+            jqUnit.assertEquals("The total files message should be rendered", "1 files exceeded the queue limit", renderedStatuses.eq(1).text());
         });
     });
 })(jQuery);
