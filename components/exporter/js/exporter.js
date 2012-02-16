@@ -1,5 +1,5 @@
 /*
-Copyright 2011 OCAD University
+Copyright 2012 OCAD University
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
 BSD license. You may not use this file except in compliance with one of these
@@ -18,21 +18,35 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
-    
+
     fluid.registerNamespace("decapod.exporter");
     
     fluid.defaults("decapod.exporter", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
         selectors: {
             uploadContainer: ".dc-exporter-upload",
-            uploadBrowse: ".dc-exporter-uploadBrowse"
+            uploadBrowse: ".dc-exporter-uploadBrowse",
+            importStatusContainer: ".dc-exporter-importStatus"
         },
         components: {
             progressiveEnhancementChecker: {
                 type: "fluid.progressiveCheckerForComponent",
+                priority: "fist",
                 options: {
                     componentName: "fluid.uploader"
                 }
+            },
+            importStatus: {
+                type: "decapod.importStatus",
+                container: "{exporter}.options.selectors.importStatusContainer",
+                options: {
+                	events: {
+                		onInvalidFile: null
+                	},
+                	listeners: {
+                		onInvalidFile: console.log
+                	}
+               }
             },
             uploader: {
                 type: "fluid.uploader",
@@ -56,9 +70,20 @@ var decapod = decapod || {};
                         fileSizeLimit: 409600
                     },
                     selectors: {
-			            browseButton: "{exporter}.options.selectors.uploadBrowse"
+                        browseButton: "{exporter}.options.selectors.uploadBrowse"
+                    },
+                    events: {
+                    	onFileError: {
+                    		event: "onQueueError"
+                    	}
+                    },
+                    listeners: {
+                        afterFileDialog: function (numQueued) {
+                            console.log("Number of files in the queue: " + numQueued);
+                        },
+                        onFileError: "{importStatus}.addError"
                     }
-                }
+               }
             }
         }
     });
