@@ -18,7 +18,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
-	var CONTAINER = ".dc-exporter"
+    var CONTAINER = ".dc-exporter"
     $(document).ready(function () {
         
         var tests = jqUnit.testCase("Decapod Export");
@@ -29,28 +29,28 @@ var decapod = decapod || {};
         });
         
         tests.test("Add error", function () {
-        	var exporter = decapod.exporter(CONTAINER);
-        	
-        	exporter.uploader.events.onQueueError.fire({}, -100);
-        	jqUnit.assertEquals("The error should be added", 1, exporter.importStatus.errors["-100"]);
-        	jqUnit.assertEquals("The total number of files should be updated", 1, exporter.importStatus.totalNumFiles);
-        	jqUnit.assertEquals("The number of invalid files should be updated", 1, exporter.importStatus.numInvalidFiles);
+            var exporter = decapod.exporter(CONTAINER);
+        
+            exporter.uploader.events.onQueueError.fire({}, -100);
+            jqUnit.assertEquals("The error should be added", 1, exporter.importStatus.errors["-100"]);
+            jqUnit.assertEquals("The total number of files should be updated", 1, exporter.importStatus.totalNumFiles);
+            jqUnit.assertEquals("The number of invalid files should be updated", 1, exporter.importStatus.numInvalidFiles);
         });
         
         tests.test("Add validFiles", function () {
-        	var numFiles = 10;
-        	var exporter = decapod.exporter(CONTAINER);
-        	
-        	exporter.uploader.events.afterFileDialog.fire(numFiles);
+            var numFiles = 10;
+            var exporter = decapod.exporter(CONTAINER);
+            
+            exporter.uploader.events.afterFileDialog.fire(numFiles);
             jqUnit.assertEquals("The total number of files should be updated", numFiles, exporter.importStatus.totalNumFiles);
             jqUnit.assertEquals("The number of valid files should be updated", numFiles, exporter.importStatus.numValidFiles);
         });
         
         tests.test("Render status messages", function () {
-        	var exporter = decapod.exporter(CONTAINER);
-        	
-        	exporter.uploader.events.onQueueError.fire({}, -100);
-        	exporter.uploader.events.afterFileDialog.fire(10);
+            var exporter = decapod.exporter(CONTAINER);
+        
+            exporter.uploader.events.onQueueError.fire({}, -100);
+            exporter.uploader.events.afterFileDialog.fire(10);
             jqUnit.assertEquals("The error should be added", 1, exporter.importStatus.errors["-100"]);
             jqUnit.assertEquals("The total number of files should be updated", 11, exporter.importStatus.totalNumFiles);
             jqUnit.assertEquals("The number of invalid files should be updated", 1, exporter.importStatus.numInvalidFiles);
