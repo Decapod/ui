@@ -27,6 +27,12 @@
     text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
 }
 
+.ds-exporter-uploadControls .ds-exporter-uploadBrowse-dim {
+    background: url("../../../shared/images/folder-icon-22x22.png") 5px center no-repeat, #F9F9FA;
+    border: 1px solid transparent;
+    opacity: 0.4;
+}
+
 .ds-exporter-uploadControls .ds-exporter-uploadBrowse input {
     position: relative;
     overflow: hidden;
@@ -54,6 +60,13 @@
     
     -moz-transition: all 0.2s ease;
     transition: all 0.2s ease;
+}
+
+.ds-exporter-uploadControls .ds-exporter-uploadClear-dim {
+    color: #000;
+    text-decoration: none;
+    background: url("../../../shared/images/trash-icon-22x22-black.png") 5px center no-repeat;
+    opacity: 0.4;
 }
 
 .ds-exporter-uploadControls .ds-exporter-uploadClear:hover {
