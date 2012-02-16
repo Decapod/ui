@@ -78,7 +78,13 @@ var decapod = decapod || {};
                     	}
                     },
                     listeners: {
-                        afterFileDialog: "{importStatus}.setNumValidFiles",
+                        "afterFileDialog.setValidFiles": {
+                        	listener: "{importStatus}.setNumValidFiles",
+                        	priority: "first"
+                        },
+                        "afterFileDialog.renderStatuses": {
+                            listener: "{importStatus}.renderStatuses"
+                        },
                         onFileError: "{importStatus}.addError"
                     }
                }
