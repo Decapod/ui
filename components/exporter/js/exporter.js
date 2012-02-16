@@ -40,12 +40,12 @@ var decapod = decapod || {};
                 type: "decapod.importStatus",
                 container: "{exporter}.options.selectors.importStatusContainer",
                 options: {
-                	events: {
-                		onInvalidFile: null
-                	},
-                	listeners: {
-                		onInvalidFile: console.log
-                	}
+                    events: {
+                        onInvalidFile: null
+                    },
+                    listeners: {
+                        onInvalidFile: console.log
+                    }
                }
             },
             uploader: {
@@ -73,14 +73,14 @@ var decapod = decapod || {};
                         browseButton: "{exporter}.options.selectors.uploadBrowse"
                     },
                     events: {
-                    	onFileError: {
-                    		event: "onQueueError"
-                    	}
+                        onFileError: {
+                            event: "onQueueError"
+                        }
                     },
                     listeners: {
                         "afterFileDialog.setValidFiles": {
-                        	listener: "{importStatus}.setNumValidFiles",
-                        	priority: "first"
+                            listener: "{importStatus}.setNumValidFiles",
+                            priority: "first"
                         },
                         "afterFileDialog.renderStatuses": {
                             listener: "{importStatus}.renderStatuses"
