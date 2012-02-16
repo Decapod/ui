@@ -38,7 +38,12 @@ var decapod = decapod || {};
         });
         
         tests.test("Add validFiles", function () {
+        	var numFiles = 10;
+        	var exporter = decapod.exporter(CONTAINER);
         	
+        	exporter.uploader.events.afterFileDialog.fire(numFiles);
+            jqUnit.assertEquals("The total number of files should be updated", numFiles, exporter.importStatus.totalNumFiles);
+            jqUnit.assertEquals("The number of valid files should be updated", numFiles, exporter.importStatus.numValidFiles);
         });
         
         tests.test("Render status messages", function () {
