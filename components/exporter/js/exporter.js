@@ -78,9 +78,7 @@ var decapod = decapod || {};
                     	}
                     },
                     listeners: {
-                        afterFileDialog: function (numQueued) {
-                            console.log("Number of files in the queue: " + numQueued);
-                        },
+                        afterFileDialog: "{importStatus}.setNumValidFiles",
                         onFileError: "{importStatus}.addError"
                     }
                }
