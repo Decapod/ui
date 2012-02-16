@@ -23,7 +23,7 @@
     width: 6em;
     cursor: default;
     padding: 6px 4px 0px 22px;
-    background: url("../../../shared/images/folder-icon-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ececec);
+    background: url("../../../shared/images/folder-icon-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #F9F9FA,  #ededed);
     text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
 }
 
@@ -76,7 +76,7 @@
 
 .ds-exporter-formatDescriptionBlock {
     border-bottom: solid 2px #E6E7E8;
-    box-shadow: 0px 0px 1px 0px #fff;
+    /*box-shadow: 0px 0px 1px 0px #fff;*/
     padding: 10px 25px 10px 10px;
     position: relative;
     -moz-transition: all 0.3s ease;
@@ -84,31 +84,41 @@
 }
 
 .ds-exporter-formatDescriptionBlock:hover {
-    background-color: #EAEAEA;
+    background-color: #F9F9FA;
     border-bottom: 2px solid transparent;
+    cursor:pointer;
+    border-radius: 6px;
 }
+
+.ds-exporter-formatDescriptionBlock-selected:hover:after {
+    background-color: #F9F9FA; /* Create a square and rotate. */
+    -moz-transition: all 0.3s ease; /* specify a transition otherwise the hover style doesn't look right */
+    transition: all 0.3s ease;
+}
+
 
 /* APPLY this style when format type is selected. */
 .ds-exporter-formatDescriptionBlock-selected {
-    background-color: #EAEAEA;
-    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
-    border-bottom: 2px solid transparent;
+    /* No styles for this, but there is an after pseudo element style. */
 }
 
 /* Create a downward arrow by rotating a square 45 deg.*/    
 .ds-exporter-formatDescriptionBlock-selected:after {
     content: "";
 	position: absolute;
-	bottom: -10px; /* position it */
+	bottom: -11px; /* position it */
     right: 50%;
     width: 15px;
     height: 15px;
-    background-color: #EAEAEA; /* Create a square and rotate. */
+    background-color: #eceef2; /* Create a square and rotate. */
     -moz-transform: rotate(45deg); 
     transform:rotate(45deg);
-    border-right: 4px solid #E8E8E8;
-    border-bottom: 4px solid #E8E8E8;
+    border-right: 3px solid #E8E8E8;
+    border-bottom: 3px solid #E8E8E8;
     z-index: 1; /* Position on top so the arrow is visible when applied. */
+    
+    -moz-transition: all 0.3s ease; /* specify a transition otherwise the hover style doesn't look right */
+    transition: all 0.3s ease;
 }
 
 
@@ -209,7 +219,7 @@
 .ds-exporter-exportOptions .ds-exporter-exportButton{
     width: 144px;
     display:block;
-    background: url("../../../shared/images/export-green-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ececec);
+    background: url("../../../shared/images/export-green-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ededed);
     padding: 7px;
     margin: 10px auto;
     text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
