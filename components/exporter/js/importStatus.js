@@ -81,7 +81,7 @@ var decapod = decapod || {};
         components: {
             renderer: {
                 type: "decapod.importStatus.renderer",
-                container: "{importStatus}.options.selectors.messageContainer",
+                container: "{importStatus}.container",
                 options: {
                     renderOnInit: false
                 }
@@ -93,9 +93,6 @@ var decapod = decapod || {};
             reset: "decapod.importStatus.reset",
             statusMessages: "decapod.importStatus.statusMessages",
             renderStatuses: "decapod.importStatus.renderStatuses"
-        },
-        selectors: {
-            messageContainer: ".dc-importStatus-messageContainer"
         },
         errorNums: [-100, -110, -120, -130],
         strings: {
