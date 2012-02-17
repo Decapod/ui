@@ -36,13 +36,13 @@
 
 .ds-shared-navigationBar {
     display: table;
-    background: #958D76;
+    background: #D8D8C0;
     width: 100%;
     height: 42px;
     text-align: left;
     color: #fff;
-    box-shadow: 0px 1px 2px #1a1a1a;
-    border-bottom: solid 1px #686253;    
+    box-shadow: 0px 1px 2px #7A8370;
+    border-bottom: solid 1px #7A8370;    
 }
 
 ul.ds-shared-navigationBar-flatList {
@@ -79,8 +79,8 @@ Triangles are made by taking advantage of border's bevel effect.
 	right: -30px;
     width: 30px;
     height: 30px;
-    border-top: 2px solid #7A7262;
-    border-right: 2px solid #686253;
+    border-top: 2px solid #7A8370;
+    border-right: 2px solid #7A8370;
     -moz-transform: rotate(45deg);
     transform:rotate(45deg);
 }
@@ -88,8 +88,8 @@ Triangles are made by taking advantage of border's bevel effect.
 span.ds-shared-navigationBar-currentBreadcrumb {
     font-weight: bold;
     text-decoration: none;
-    color: #3F3C34;
-    text-shadow: 1px 1px #A89F8A;
+    color: #505747;
+    text-shadow: 1px 1px #F0F0D8;
 }
 
 /**
@@ -97,7 +97,7 @@ span.ds-shared-navigationBar-currentBreadcrumb {
  */
  
  .ds-shared-decapod footer {
-    background: #958D76;
+    background: #D8D8C0;
     width: 100%;
     height: 30px;
     position: absolute;
@@ -105,8 +105,8 @@ span.ds-shared-navigationBar-currentBreadcrumb {
     left: 0px;
     right: 0px;
     display:block;
-    border-top: solid 1px #686253;
-    box-shadow: 0px -1px 2px #1a1a1a;
+    border-top: solid 1px #7A8370;
+    box-shadow: 0px -1px 2px #7A8370;
  }
  
 /**
