@@ -273,3 +273,14 @@
     float:right;
 }
 
+/***********************
+* Export Status Toggle *
+************************/
+      
+.ds-exporter-statusToggle-showStatus .ds-exporter-statusToggle-instructions {
+    display: none;
+}
+
+.ds-exporter-statusToggle-showInstructions .ds-exporter-statusToggle-status {
+    display: none;
+}
