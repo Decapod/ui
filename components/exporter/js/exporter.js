@@ -26,7 +26,8 @@ var decapod = decapod || {};
         selectors: {
             uploadContainer: ".dc-exporter-upload",
             uploadBrowse: ".dc-exporter-uploadBrowse",
-            importStatusContainer: ".dc-exporter-importStatus"
+            importStatusContainer: ".dc-exporter-importStatus",
+            importMessages: ".dc-exporter-importMessages"
         },
         components: {
             progressiveEnhancementChecker: {
@@ -36,17 +37,13 @@ var decapod = decapod || {};
                     componentName: "fluid.uploader"
                 }
             },
+            statusToggle: {
+                type: "decapod.exporter.statusToggle",
+                container: "{exporter}.options.selectors.importMessages"
+            },
             importStatus: {
                 type: "decapod.importStatus",
-                container: "{exporter}.options.selectors.importStatusContainer",
-                options: {
-                    events: {
-                        onInvalidFile: null
-                    },
-                    listeners: {
-                        onInvalidFile: console.log
-                    }
-               }
+                container: "{exporter}.options.selectors.importStatusContainer"
             },
             uploader: {
                 type: "fluid.uploader",
@@ -80,15 +77,62 @@ var decapod = decapod || {};
                     listeners: {
                         "afterFileDialog.setValidFiles": {
                             listener: "{importStatus}.setNumValidFiles",
-                            priority: "first"
+                            priority: "2"
                         },
                         "afterFileDialog.renderStatuses": {
-                            listener: "{importStatus}.renderStatuses"
+                            listener: "{importStatus}.renderStatuses",
+                            priority: "1"
+                        },
+                        "afterFileDialog.showStatus": {
+                            listener: "{statusToggle}.showStatus",
+                            priority: "0"
                         },
                         onFileError: "{importStatus}.addError"
                     }
-               }
+                }
             }
+        }
+    });
+    
+    fluid.registerNamespace("decapod.exporter.statusToggle");
+    
+    decapod.exporter.statusToggle.setContainerStyle = function (that, style) {
+        var classes = [];
+        var styles = that.options.styles;
+        for (var styleName in styles) {
+            if (styleName !== style) {
+                classes.push(styles[styleName]);
+            }
+        }
+        that.container.removeClass(classes.join(" "));
+        that.container.addClass(styles[style]);
+    };
+    
+    decapod.exporter.statusToggle.finalInit = function (that) {
+        var styles = that.options.styles;
+        that.setContainerStyle(that.options.styleOnInit);
+        that.locate("status").addClass(styles.status);
+        that.locate("instructions").addClass(styles.instructions);
+    };
+    
+    fluid.defaults("decapod.exporter.statusToggle", {
+        gradeNames: ["fluid.viewComponent", "autoInit"],
+        finalInitFunction: "decapod.exporter.statusToggle.finalInit",
+        selectors: {
+            status: ".dc-exporter-statusToggle-status",
+            instructions: ".dc-exporter-statusToggle-instructions"
+        },
+        styles: {
+            showStatus: "ds-exporter-statusToggle-showStatus",
+            showInstructions: "ds-exporter-statusToggle-showInstructions",
+            status: "ds-exporter-statusToggle-status",
+            instructions: "ds-exporter-statusToggle-instructions"
+        },
+        styleOnInit: "showInstructions",
+        invokers: {
+            setContainerStyle: "decapod.exporter.statusToggle.setContainerStyle",
+            showStatus: "decapod.exporter.statusToggle.showStatus",
+            showInstructions: "decapod.exporter.statusToggle.showInstructions"
         }
     });
     
