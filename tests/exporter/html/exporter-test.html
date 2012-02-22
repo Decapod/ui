@@ -17,8 +17,10 @@
         <!-- Tests and tested component -->
         <script src="../../../components/dataSource/js/DataSource.js"></script>
         <script src="../../../components/dataSource/js/DataSourceDemands.js"></script>
-        <script src="../../../components/exporter/js/exporter.js"></script>
+        <script src="../../../components/exporter/js/importStatusDemands.js"></script>
+        <script src="../../../components/exporter/js/importStatus.js"></script>
         <script src="../../../components/exporter/js/exporterDemands.js"></script>
+        <script src="../../../components/exporter/js/exporter.js"></script>
         <script src="../../shared/js/DecapodTestContext.js"></script>
         <script src="../js/exporterTests.js"></script>
         
@@ -29,7 +31,7 @@
         <h2 id="qunit-banner"></h2>
         <h2 id="qunit-userAgent"></h2>
         <ol id="qunit-tests"></ol>
-        <div id="main">
+        <div id="main" style="display: none">
             <section class="dc-exporter ds-shared-decapod">
                 
                 <!-- NAVIGATION BAR -->
@@ -51,15 +53,20 @@
                     </header>
                     
                     <div class="dc-exporter-upload ds-exporter-upload ds-shared-indent1">
-                        <div class="dc-exporter-upload-messages ds-exporter-upload-messages">
-                            <p>Instructions go here.<br />
-                            <ul>
-                            <li>Later replaced by upload status messages.</li>
-                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </li>
-                            <li>Cras volutpat, lectus eu aliquam consequat, metus nisi aliquam quam,</li>
-                            <li>id molestie odio dui non risus. Donec suscipit nunc vitae lectus</li>
-                            </ul>
-                            </p>
+                        <div class="dc-exporter-importMessages dc-exporterStatusToggle ds-exporter-upload-messages">
+                            <div class="dc-exporter-statusToggle-instructions">
+                                <p>Instructions go here.<br />
+                                    <ul>
+                                        <li>Later replaced by upload status messages.</li>
+                                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </li>
+                                        <li>Cras volutpat, lectus eu aliquam consequat, metus nisi aliquam quam,</li>
+                                        <li>id molestie odio dui non risus. Donec suscipit nunc vitae lectus</li>
+                                    </ul>
+                                </p>
+                            </div>
+                            <div class="dc-exporter-importStatus dc-exporter-statusToggle-status">
+                                <p class="dc-importStatus-renderer-statusMessage">No Statuses</p>
+                            </div>
                         </div>
                         
                         <div class="ds-exporter-uploadControls">
