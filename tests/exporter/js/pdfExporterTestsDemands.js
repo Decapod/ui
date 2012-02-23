@@ -28,11 +28,8 @@ var decapod = decapod || {};
         }
     });
     
-    fluid.demands("testRender", ["decapod.test", "decapod.pdfExporter"], [
-        "{pdfExporter}"
-    ]);
-    fluid.demands("testModel", ["decapod.test", "decapod.pdfExporter"], [
-        "{pdfExporter}", 
+    fluid.demands("testModel", ["decapod.test", "decapod.exportType.pdfOptions"], [
+        "{pdfOptions}", 
         "{arguments}.0"
     ]);
 })(jQuery);
