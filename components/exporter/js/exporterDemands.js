@@ -51,18 +51,10 @@ var decapod = decapod || {};
         }
     });
 
-    // global
+    /*****************
+     *Event Demands *
+     *****************/
     fluid.demands("onFileError", ["decapod.exporter", "fluid.uploader.multiFileUploader"], ["{arguments}.1"]);
-    fluid.demands("decapod.exporter.statusToggle.showStatus", ["decapod.exporter.statusToggle"], {
-        funcName: "decapod.exporter.statusToggle.setContainerStyle",
-        args: ["{statusToggle}", "showStatus"]
-    });
-    fluid.demands("decapod.exporter.statusToggle.showInstructions", ["decapod.exporter.statusToggle"], {
-        funcName: "decapod.exporter.statusToggle.setContainerStyle",
-        args: ["{statusToggle}", "showInstructions"]
-    });
-    fluid.demands("decapod.exporter.statusToggle.setContainerStyle", ["decapod.exporter.statusToggle"], {
-        args: ["{statusToggle}", "{arguments}.0"]
-    });
+    fluid.demands("afterFilesSelected", ["decapod.exporter", "fluid.uploader.multiFileUploader"], ["status"]);
     
 })(jQuery);

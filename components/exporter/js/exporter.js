@@ -29,6 +29,7 @@ var decapod = decapod || {};
             importStatusContainer: ".dc-exporter-importStatus",
             importMessages: ".dc-exporter-importMessages",
             imagePDFContainer: ".dc-exporter-imagePDF",
+            instructions: ".dc-exporter-instructions",
             ocrPDFContainer: ".dc-exporter-ocrPDF",
             tracedPDFContainer: ".dc-exporter-tracedPDF"
         },
@@ -41,8 +42,18 @@ var decapod = decapod || {};
                 }
             },
             statusToggle: {
-                type: "decapod.exporter.statusToggle",
-                container: "{exporter}.options.selectors.importMessages"
+                type: "decapod.visSwitcher",
+                container: "{exporter}.options.selectors.importMessages",
+                options: {
+                    selectors: {
+                        instructions: "{exporter}.options.selectors.instructions",
+                        status: "{exporter}.options.selectors.importStatusContainer"
+                    },
+                    model: {
+                        instructions: true,
+                        status: false
+                    }
+                }
             },
             importStatus: {
                 type: "decapod.importStatus",
@@ -75,6 +86,9 @@ var decapod = decapod || {};
                     events: {
                         onFileError: {
                             event: "onQueueError"
+                        },
+                        afterFilesSelected: {
+                            event: "afterFileDialog"
                         }
                     },
                     listeners: {
@@ -86,8 +100,8 @@ var decapod = decapod || {};
                             listener: "{importStatus}.renderStatuses",
                             priority: "1"
                         },
-                        "afterFileDialog.showStatus": {
-                            listener: "{statusToggle}.showStatus",
+                        "afterFilesSelected.showStatus": {
+                            listener: "{statusToggle}.showOnly",
                             priority: "0"
                         },
                         onFileError: "{importStatus}.addError"
@@ -111,47 +125,4 @@ var decapod = decapod || {};
             }
         }
     });
-    
-    fluid.registerNamespace("decapod.exporter.statusToggle");
-    
-    decapod.exporter.statusToggle.setContainerStyle = function (that, style) {
-        var classes = [];
-        var styles = that.options.styles;
-        for (var styleName in styles) {
-            if (styleName !== style) {
-                classes.push(styles[styleName]);
-            }
-        }
-        that.container.removeClass(classes.join(" "));
-        that.container.addClass(styles[style]);
-    };
-    
-    decapod.exporter.statusToggle.finalInit = function (that) {
-        var styles = that.options.styles;
-        that.setContainerStyle(that.options.styleOnInit);
-        that.locate("status").addClass(styles.status);
-        that.locate("instructions").addClass(styles.instructions);
-    };
-    
-    fluid.defaults("decapod.exporter.statusToggle", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
-        finalInitFunction: "decapod.exporter.statusToggle.finalInit",
-        selectors: {
-            status: ".dc-exporter-statusToggle-status",
-            instructions: ".dc-exporter-statusToggle-instructions"
-        },
-        styles: {
-            showStatus: "ds-exporter-statusToggle-showStatus",
-            showInstructions: "ds-exporter-statusToggle-showInstructions",
-            status: "ds-exporter-statusToggle-status",
-            instructions: "ds-exporter-statusToggle-instructions"
-        },
-        styleOnInit: "showInstructions",
-        invokers: {
-            setContainerStyle: "decapod.exporter.statusToggle.setContainerStyle",
-            showStatus: "decapod.exporter.statusToggle.showStatus",
-            showInstructions: "decapod.exporter.statusToggle.showInstructions"
-        }
-    });
-    
 })(jQuery);
