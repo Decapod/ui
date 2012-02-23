@@ -18,9 +18,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
-    fluid.registerNamespace("decapod.pdfExporter.test")
     var CONTAINER = ".dc-pdfExporter";
-    
     var createPDFExporter = function (container, options) {
         var opts = {
             resources: {
@@ -57,7 +55,7 @@ var decapod = decapod || {};
         });
         
         tests.asyncTest("Rendering", function () {
-            decapod.pdfExporter.test.assertRender = function (that) {
+            var assertRender = function (that) {
                 jqUnit.assertEquals("The format name should have been rendered", "PDF", that.locate("formatName").text());
                 jqUnit.assertEquals("The description should be rendered", "A delectable medley of bits and bytes to satisfy every platform", that.locate("description").text());
                 jqUnit.assertEquals("The resolution label should be rendered", "Output Image resolution:", that.locate("resolutionLabel").text());
@@ -75,7 +73,7 @@ var decapod = decapod || {};
                     }
                 },
                 listeners: {
-                    testRender: decapod.pdfExporter.test.assertRender
+                    testRender: assertRender
                 }
             });
         });
