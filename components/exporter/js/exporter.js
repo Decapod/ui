@@ -27,12 +27,15 @@ var decapod = decapod || {};
             uploadContainer: ".dc-exporter-upload",
             uploadBrowse: ".dc-exporter-uploadBrowse",
             importStatusContainer: ".dc-exporter-importStatus",
-            importMessages: ".dc-exporter-importMessages"
+            importMessages: ".dc-exporter-importMessages",
+            imagePDFContainer: ".dc-exporter-imagePDF",
+            ocrPDFContainer: ".dc-exporter-ocrPDF",
+            tracedPDFContainer: ".dc-exporter-tracedPDF"
         },
         components: {
             progressiveEnhancementChecker: {
                 type: "fluid.progressiveCheckerForComponent",
-                priority: "fist",
+                priority: "first",
                 options: {
                     componentName: "fluid.uploader"
                 }
@@ -90,6 +93,21 @@ var decapod = decapod || {};
                         onFileError: "{importStatus}.addError"
                     }
                 }
+            },
+            imagePDF: {
+                type: "decapod.pdfExporter",
+                container: "{exporter}.options.selectors.imagePDFContainer",
+                options: {}
+            },
+            ocrPDF: {
+                type: "decapod.pdfExporter",
+                container: "{exporter}.options.selectors.ocrPDFContainer",
+                options: {}
+            },
+            tracedPDF: {
+                type: "decapod.pdfExporter",
+                container: "{exporter}.options.selectors.tracedPDFContainer",
+                options: {}
             }
         }
     });
