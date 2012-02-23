@@ -22,7 +22,7 @@ var decapod = decapod || {};
         options: {
             resources: {
                 template: {
-                    url: "../../../components/exporter/html/pdfExporter.html"
+                    url: "../../../components/exporter/html/pdfOptionsTemplate.html"
                 }
             }
         }

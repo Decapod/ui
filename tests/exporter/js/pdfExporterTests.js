@@ -34,7 +34,7 @@ var decapod = decapod || {};
         return fluid.invokeGlobalFunction(component, [container, opts]);
     };
     var createPDFOptions = function (container, options) {
-        return generateComponent("decapod.exportType.pdfOptions", container, "../../../components/exporter/html/pdfExporter.html", options);
+        return generateComponent("decapod.exportType.pdfOptions", container, "../../../components/exporter/html/pdfOptionsTemplate.html", options);
     };
     
     var createControls = function (container, options) {
