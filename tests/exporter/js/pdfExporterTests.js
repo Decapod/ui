@@ -18,67 +18,89 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
-    var CONTAINER = ".dc-pdfExporter";
-    var createPDFExporter = function (container, options) {
+    var CONTAINER = ".dc-exportType";
+    var PDF_OPTS_CONTAINER = ".dc-exportType-pdfOptions";
+    var CONTROLS_CONTAINER = ".dc-exportType-controls";
+    var generateComponent = function (component, container, templateURL, options) {
         var opts = {
             resources: {
                 template: {
-                    url: "../../../components/exporter/html/pdfExporter.html"
+                    url: templateURL
                 }
             }
         };
         
         fluid.merge("replace", opts, options || {});
-        
-        return decapod.pdfExporter(container, opts);
+        return fluid.invokeGlobalFunction(component, [container, opts]);
+    };
+    var createPDFOptions = function (container, options) {
+        return generateComponent("decapod.exportType.pdfOptions", container, "../../../components/exporter/html/pdfExporter.html", options);
+    };
+    
+    var createControls = function (container, options) {
+        return generateComponent("decapod.exportType.controls", container, "../../../components/exporter/html/exportControlsTemplate.html",options);
+    };
+    
+    var assertPDFOptionsRender = function (that) {
+        var str = that.options.strings;
+        jqUnit.assertEquals("The resolution label should be rendered", str.resolutionLabel, that.locate("resolutionLabel").text());
+        jqUnit.assertEquals("The resolution should be set", that.model.dpi, that.locate("resolution").val());
+        jqUnit.assertEquals("The dimensions label should be rendered", str.dimensionsLabel, that.locate("dimensionsLabel").text());
+        jqUnit.assertEquals("The dimensions text should be rendered", str.dimensions, that.locate("dimensions").text());
     };
     
     $(document).ready(function () {
         
-        var tests = jqUnit.testCase("Decapod PDF Export");
+        var exportTypeTests = jqUnit.testCase("Decapod Export Type");
         
-        tests.test("Init tests", function () {
-            var that = createPDFExporter(CONTAINER);
+        exportTypeTests.test("Init tests", function () {
+            var that = decapod.exportType(CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
-        tests.asyncTest("Fetch Resources", function () {
+        exportTypeTests.test("Rendering", function () {
+            var that = decapod.exportType(CONTAINER);
+            var str = that.options.strings;
+            jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
+            jqUnit.assertEquals("The description should be rendered", str.description, that.locate("description").text());
+        });
+        
+        var pdfOptionsTests = jqUnit.testCase("Decapod Export Type PDF Options")
+        
+        pdfOptionsTests.test("Init tests", function () {
+            var that = createPDFOptions(PDF_OPTS_CONTAINER);
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        pdfOptionsTests.asyncTest("Fetch Resources", function () {
+            jqUnit.expect(1);
             var assertFetchResources = function (resourceSpec) {
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
                 start();
             };
-            createPDFExporter(CONTAINER, {
+            createPDFOptions(CONTAINER, {
                 listeners: {
                     afterFetchResources: assertFetchResources
                 }
             });
         });
         
-        tests.asyncTest("Rendering", function () {
+        pdfOptionsTests.asyncTest("Rendering", function () {
+            jqUnit.expect(4);
             var assertRender = function (that) {
-                jqUnit.assertEquals("The format name should have been rendered", "PDF", that.locate("formatName").text());
-                jqUnit.assertEquals("The description should be rendered", "A delectable medley of bits and bytes to satisfy every platform", that.locate("description").text());
-                jqUnit.assertEquals("The resolution label should be rendered", "Output Image resolution:", that.locate("resolutionLabel").text());
-                jqUnit.assertEquals("The resolution should be set", "300", that.locate("resolution").val());
-                jqUnit.assertEquals("The dimensions label should be rendered", "Output dimensions:", that.locate("dimensionsLabel").text());
-                jqUnit.assertEquals("The dimensions text should be rendered", "A4(210 x 297mm / 8.3 x 11.7in.)", that.locate("dimensions").text());
-                jqUnit.assertEquals("The export button should be rendered", "Start Export", that.locate("exportButton").text());
+                assertPDFOptionsRender(that);
                 start();
             };
             
-            createPDFExporter(CONTAINER, {
-                events: {
-                    testRender: {
-                        event: "afterRender"
-                    }
-                },
+            createPDFOptions(CONTAINER, {
                 listeners: {
-                    testRender: assertRender
+                    afterRender: assertRender
                 }
             });
         });
         
-        tests.asyncTest("Model Change", function () {
+        pdfOptionsTests.asyncTest("Model Change", function () {
+            jqUnit.expect(2);
             var dpi = 200;
             var changeVal = function (that) {
                 that.applier.requestChange("dpi", dpi);
@@ -88,18 +110,70 @@ var decapod = decapod || {};
                 jqUnit.assertEquals("The components model should be update with the new dpi", dpi, that.model.dpi);
                 start();
             };
-            createPDFExporter(CONTAINER, {
+            createPDFOptions(CONTAINER, {
                 events: {
-                    testRender: {
-                        event: "afterRender"
-                    },
                     testModel: {
                         event: "afterModelChanged"
                     }
                 },
                 listeners: {
-                    testRender: changeVal,
+                    afterRender: changeVal,
                     testModel: assertModelChange
+                }
+            });
+        });
+        
+        var controlsTests = jqUnit.testCase("Decapod Export Type Controls");
+        
+        controlsTests.test("Init tests", function () {
+            var that = createControls(CONTROLS_CONTAINER);
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        controlsTests.asyncTest("Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createControls(CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Rendering", function () {
+            jqUnit.expect(5);
+            var assertRendering = function (that) {
+                var str = that.options.strings;
+                jqUnit.assertEquals("The export button should be rendered", str.exportControl, that.locate("exportControl").text());
+                jqUnit.assertEquals("The progress text should be rendered", str.progressMessage, that.locate("progressMessage").text());
+                jqUnit.assertEquals("The download text should be rendered", str.download, that.locate("download").text());
+                jqUnit.assertEquals("The download url should be set", that.model.downloadURL, that.locate("download").prop("href"));
+                jqUnit.assertEquals("The restart text should be set", str.restart, that.locate("restart").text());
+                start();
+            };
+            createControls(CONTROLS_CONTAINER, {
+                listeners: {
+                    afterRender: assertRendering
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Export Control Click", function () {
+            jqUnit.expect(1);
+            var fireClick = function (that) {
+                that.locate("exportControl").click();
+            };
+            var assertClick = function () {
+                jqUnit.assertTrue("The afterExportTriggered event should have fired", true);
+                start();
+            };
+            createControls(CONTROLS_CONTAINER, {
+                listeners: {
+                    afterRender: fireClick,
+                    afterExportTriggered: assertClick
                 }
             });
         });

@@ -19,16 +19,32 @@ var decapod = decapod || {};
 
 (function ($) {
 
-    fluid.registerNamespace("decapod.pdfExporter");
+    fluid.registerNamespace("decapod.exportType");
     
-    decapod.pdfExporter.produceTree = function (that) {
+    decapod.exportType.finalInit = function (that) {
+        var str = that.options.strings;
+        that.locate("name").text(str.name);
+        that.locate("description").text(str.description);
+    };
+    
+    fluid.defaults("decapod.exportType", {
+        gradeNames: ["fluid.viewComponent", "autoInit"],
+        finalInitFunction: "decapod.exportType.finalInit",
+        selectors: {
+            name: ".dc-exportType-name",
+            description: ".dc-exportType-description"
+        },
+        strings: {
+            name: "Format type label",
+            description: "A delectable medley of bits and bytes to satisfy every platform",
+        }
+    });
+    
+
+    fluid.registerNamespace("decapod.exportType.pdfOptions");
+    
+    decapod.exportType.pdfOptions.produceTree = function (that) {
         return {
-            formatName: {
-                messagekey: "formatName"
-            },
-            description: {
-                messagekey: "description"
-            },
             resolutionLabel: {
                 messagekey: "resolutionLabel"
             },
@@ -47,7 +63,7 @@ var decapod = decapod || {};
         };
     };
     
-    decapod.pdfExporter.finalInit = function (that) {
+    decapod.exportType.pdfOptions.finalInit = function (that) {
         that.applier.modelChanged.addListener("dpi", that.events.afterModelChanged.fire);
         
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
@@ -57,21 +73,18 @@ var decapod = decapod || {};
         });
     };
     
-    fluid.defaults("decapod.pdfExporter", {
+    fluid.defaults("decapod.exportType.pdfOptions", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
-        finalInitFunction: "decapod.pdfExporter.finalInit",
-        produceTree: "decapod.pdfExporter.produceTree",
+        finalInitFunction: "decapod.exportType.pdfOptions.finalInit",
+        produceTree: "decapod.exportType.pdfOptions.produceTree",
         selectors: {
-            formatName: ".dc-pdfExporter-formatName",
-            description: ".dc-pdfExporter-formatDescription",
-            resolutionLabel: ".dc-pdfExporter-resolutionLabel",
-            resolution: ".dc-pdfExporter-resolution",
-            dimensionsLabel: ".dc-pdfExporter-dimensionsLabel",
-            dimensions: ".dc-pdfExporter-dimensions",
-            exportButton: ".dc-pdfExporter-exportButton"
+            resolutionLabel: ".dc-exportType-pdfOptions-resolutionLabel",
+            resolution: ".dc-exportType-pdfOptions-resolution",
+            dimensionsLabel: ".dc-exportType-pdfOptions-dimensionsLabel",
+            dimensions: ".dc-exportType-pdfOptions-dimensions"
         },
         model: {
-            dpi: 300
+            dpi: "300"
         },
         resources: {
             template: {
@@ -80,17 +93,82 @@ var decapod = decapod || {};
             }
         },
         strings: {
-            formatName: "PDF",
-            description: "A delectable medley of bits and bytes to satisfy every platform",
             resolutionLabel: "Output Image resolution:",
             dimensionsLabel: "Output dimensions:",
-            dimensions: "A4(210 x 297mm / 8.3 x 11.7in.)",
-            exportButton: "Start Export"
+            dimensions: "A4(210 x 297mm / 8.3 x 11.7in.)"
         },
         events: {
             afterFetchResources: null,
             afterModelChanged: null
         }
     });
+    
+    fluid.registerNamespace("decapod.exportType.controls");
+    
+    decapod.exportType.controls.finalInit = function (that) {
+        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.afterFetchResources.fire(resourceSpec);
+            that.refreshView();
+        });
+    };
+    
+    decapod.exportType.controls.produceTree = function (that) {
+        return {
+            exportControl: {
+                messagekey: "exportControl",
+                decorators: [{
+                    type: "jQuery",
+                    func: "click",
+                    args: function() { that.events.afterExportTriggered.fire() }
+                }]
+            },
+            progressMessage: {
+                messagekey: "progressMessage"
+            },
+            download: {
+                linktext: {
+                    messagekey: "download"
+                },
+                target: "${downloadURL}"
+            },
+            restart: {
+                messagekey: "restart"
+            }
+        };
+    };
+    
+    fluid.defaults("decapod.exportType.controls", {
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        finalInitFunction: "decapod.exportType.controls.finalInit",
+        produceTree: "decapod.exportType.controls.produceTree",
+        selectors: {
+            exportControl: ".dc-exportType-controls-exportControl",
+            progressMessage: ".dc-exportType-controls-progressMessage",
+            download: ".dc-exportType-controls-download",
+            restart: ".dc-exportType-controls-restart"
+        },
+        strings: {
+            exportControl: "Start Export",
+            progressMessage: "Export Progress",
+            download: "Download Link",
+            restart: "Start Over"
+        },
+        events: {
+            afterFetchResources: null,
+            afterExportTriggered: null
+        },
+        resources: {
+            template: {
+                url: "../html/exportControlsTemplate.html",
+                forceCache: true
+            }
+        },
+        model: {
+            downloadURL: "downloadURL"
+        }
+    });
+    
+
 
 })(jQuery);
