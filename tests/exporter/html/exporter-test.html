@@ -19,6 +19,8 @@
         <script src="../../../components/dataSource/js/DataSourceDemands.js"></script>
         <script src="../../../components/exporter/js/importStatusDemands.js"></script>
         <script src="../../../components/exporter/js/importStatus.js"></script>
+        <script src="../js/pdfExporterTestsDemands.js"></script>
+        <script src="../../../components/exporter/js/pdfExporter.js"></script>
         <script src="../../../components/exporter/js/exporterDemands.js"></script>
         <script src="../../../components/exporter/js/exporter.js"></script>
         <script src="../../shared/js/DecapodTestContext.js"></script>
@@ -83,68 +85,9 @@
                     
                     <div class="dc-exporter-formatGroup ds-exporter-formatGroup">
                         <h2 class="ds-shared-indent1">Group</h2>
-                        
-                        <div class="dc-exporter-formatTemplate">   
-    
-                            <!-- Export format name and description -->
-                            <div class="ds-exporter-formatDescriptionBlock ds-shared-indent2">
-                                <label class="dc-exporter-formatLabel ds-exporter-formatLabel">Format type label: </label>
-                                <div class="dc-exporter-formatDescription ds-exporter-formatDescription">Description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-                            </div>
-                            
-                            <!-- Export format's options-->
-                            <div class="ds-exporter-exportOptions ds-shared-indent2">
-                                <form class="dc-exporter-exportOptions-form ds-exporter-exportOptions-form">
-                                    <ul>
-                                        <!-- List for user selectable options -->
-                                        <li>
-                                            <label for="dc-exporter-field1">Form options go here</label>
-                                            <input id="dc-exporter-field1" name="field1" type=text value="300">dpi
-                                        </li>
-                                        <li>
-                                            <label for="dc-exporter-field2">Choose a fruit:</label>
-                                            <select id="dc-exporter-field2">
-                                              <option value="apples">Apple</option>
-                                              <option value="oranges">Orange</option>
-                                              <option value="pineapple">Pineapple</option>
-                                              <option value="tomato">Tomato</option>
-                                            </select>
-                                        </li>
-                                        <li>
-                                            <label for="dc-exporter-field3">Radio</label>
-                                            <input id="dc-exporter-field3" name="example" type="radio" value="apples" checked="checked" /> Apple 
-                                            <input id="dc-exporter-field3" name="example" type="radio" value="oranges" /> Orange 
-                                        </li>
-                                        
-                                        <li>
-                                            <label for="dc-exporter-field4">Checkbox</label>
-                                            <input id="dc-exporter-field4" type="checkbox" />Apple
-                                            <input id="dc-exporter-field4" type="checkbox" />Orange
-                                        </li>
-                                        
-                                        <li>
-                                            <label for="dc-exporter-field5">Slider</label>
-                                            A slider should go here.
-                                        </li>
-                                    </ul>
-                                </form>
-                            
-                                <button class="dc-exporter-exportButton ds-exporter-exportButton ds-shared-grey-button">Export button</button>
-                                <div class="dc-exporter-exportProgress ds-exporter-exportProgress-text">
-                                    <div class="ds-shared-spinner ds-exporter-exportProgress-spinner">
-                                        <div class="ds-shared-spinner-outerCircle"></div>
-                                        <div class="ds-shared-spinner-innerCircle"></div>
-                                        <div class="ds-shared-spinner-dot"></div>
-                                    </div>
-                                    Export progress text
-                                </div>
-                                
-                                <div class="ds-exporter-exportLinks">
-                                    <a class="dc-exporter-exportDownload ds-exporter-exportDownload" href="">Download link here</a></li>
-                                    <a class="dc-exporter-exportStartOver ds-exporter-exportStartOver" href="">Start over link here</a></li>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="dc-exporter-imagePDF"></div>
+                        <div class="dc-exporter-ocrPDF"></div>
+                        <div class="dc-exporter-tracedPDF"></div>
                     </div>
                 </section>
             </section>
