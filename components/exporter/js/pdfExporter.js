@@ -88,7 +88,7 @@ var decapod = decapod || {};
         },
         resources: {
             template: {
-                url: "../html/pdfExporter.html",
+                url: "../html/pdfOptionsTemplate.html",
                 forceCache: true
             }
         },
