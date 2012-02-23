@@ -166,6 +166,23 @@ var decapod = decapod || {};
         },
         model: {
             downloadURL: "downloadURL"
+        },
+        renderOnInit: false,
+        components: {
+            controlToggle: {
+                type: "decapod.visSwitcher",
+                createOnEvent: "afterRender",
+                container: "{controls}.container",
+                options: {
+                    selectors: "{controls}.options.selectors",
+                    model: {
+                        exportControl: true,
+                        progressMessage: false,
+                        download: false,
+                        restart: false
+                    }
+                }
+            }
         }
     });
     
