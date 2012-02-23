@@ -26,8 +26,8 @@ var decapod = decapod || {};
         exporterTests.test("Init tests", function () {
             var exporter = decapod.exporter(CONTAINER);
             jqUnit.assertTrue("The component should have initialized", exporter);
-            jqUnit.assertTrue("The instructions are shown", exporter.locate("instructions").is(":visible"));
-            jqUnit.assertFalse("The status messages are not shown", exporter.locate("importStatusContainer").is(":visible"));
+            jqUnit.isVisible("The instructions are shown", exporter.locate("instructions"));
+            jqUnit.notVisible("The status messages are not show", exporter.locate("importStatusContainer"));
         });
         
         exporterTests.test("Add error", function () {
@@ -51,8 +51,8 @@ var decapod = decapod || {};
         exporterTests.asyncTest("Render status messages", function () {
             var exporter = decapod.exporter(CONTAINER);
             var assertVisibility = function () {
-                jqUnit.assertFalse("The instructions should be hidden", exporter.locate("instructions").is(":visible"));
-                jqUnit.assertTrue("The status messages should be shown", exporter.locate("importStatusContainer").is(":visible"));
+                jqUnit.notVisible("The instructions should be hidden", exporter.locate("instructions"));
+                jqUnit.isVisible("The status messages should be shown", exporter.locate("importStatusContainer"));
                 start();
             };
             exporter.statusToggle.events.afterModelChanged.addListener(assertVisibility);

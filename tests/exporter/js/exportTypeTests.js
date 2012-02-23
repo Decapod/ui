@@ -153,10 +153,10 @@ var decapod = decapod || {};
                 jqUnit.assertEquals("The download url should be set", that.model.downloadURL, that.locate("download").prop("href"));
                 jqUnit.assertEquals("The restart text should be set", str.restart, that.locate("restart").text());
                 
-                jqUnit.assertTrue("The export control should be visible", that.locate("exportControl").is(":visible"));
-                jqUnit.assertFalse("The progress message should be hidden", that.locate("progressMessage").is(":visible"));
-                jqUnit.assertFalse("The download link should be hidden", that.locate("download").is(":visible"));
-                jqUnit.assertFalse("The restart link should be hidden", that.locate("restart").is(":visible"));
+                jqUnit.isVisible("The export control should be visible", that.locate("exportControl"));
+                jqUnit.notVisible("The progress message should be hidden", that.locate("progressMessage"));
+                jqUnit.notVisible("The download link should be hidden", that.locate("download"));
+                jqUnit.notVisible("The restart link should be hidden", that.locate("restart"));
                 start();
             };
             createControls(CONTROLS_CONTAINER, {

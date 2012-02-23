@@ -41,15 +41,15 @@ var decapod = decapod || {};
             var that = createVisSwitcher(CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
             jqUnit.assertDeepEq("The default model should be set",  {elmOne: true, elmTwo: false}, that.model);
-            jqUnit.assertTrue("elmOne should be visible", that.locate("elmOne").is(":visible"));
-            jqUnit.assertFalse("elmTwo should be hidden", that.locate("elmTwo").is(":visible"));
+            jqUnit.isVisible("elmOne should be visible", that.locate("elmOne"));
+            jqUnit.notVisible("elmTwo should be hidden", that.locate("elmTwo"));
         });
         
         tests.test("decapod.visSwitcher.hideElement", function () {
             var elm = $(".visible");
             decapod.visSwitcher.hideElement(elm);
             
-            jqUnit.assertFalse("The element should be hidden", elm.is(":visible"));
+            jqUnit.notVisible("The element should be hidden", elm);
         });
         
         tests.test("hideElement", function () {
@@ -57,14 +57,14 @@ var decapod = decapod || {};
             var that = createVisSwitcher(CONTAINER);
             that.hideElement(elm);
             
-            jqUnit.assertFalse("The element should be hidden", elm.is(":visible"));
+            jqUnit.notVisible("The element should be hidden", elm);
         });
         
         tests.test("decapod.visSwitcher.showElement", function () {
             var elm = $(".hidden");
             decapod.visSwitcher.showElement(elm);
             
-            jqUnit.assertTrue("The element should be visible", elm.is(":visible"));
+            jqUnit.isVisible("The element should be visible", elm);
         });
         
         tests.test("showElement", function () {
@@ -73,13 +73,13 @@ var decapod = decapod || {};
             var that = createVisSwitcher(CONTAINER);
             that.showElement(elm);
             
-            jqUnit.assertTrue("The element should be visible", elm.is(":visible"));
+            jqUnit.isVisible("The element should be visible", elm);
         });
         
         tests.asyncTest("show", function () {
             jqUnit.expect(2);
             var assertVisible = function (that) {
-                jqUnit.assertTrue("The element should be visible", that.locate("elmTwo").is(":visible"));
+                jqUnit.isVisible("The element should be visible", that.locate("elmTwo"));
                 jqUnit.assertDeepEq("The model should be updated", {elmOne: true, elmTwo: true}, that.model);
                 start();
             };
@@ -99,8 +99,8 @@ var decapod = decapod || {};
         tests.test("showOnly", function () {
             jqUnit.expect(3);
             var assertVisible = function (that) {
-                jqUnit.assertTrue("The element should be visible", that.locate("elmTwo").is(":visible"));
-                jqUnit.assertFalse("The other element should be hidden", that.locate("elmOne").is(":visible"));
+                jqUnit.isVisible("The element should be visible", that.locate("elmTwo"));
+                jqUnit.notVisible("The other element should be hidden", that.locate("elmOne"));
                 jqUnit.assertDeepEq("The model should be updated", {elmOne: false, elmTwo: true}, that.model);
                 start();
             };
@@ -120,8 +120,8 @@ var decapod = decapod || {};
         tests.test("showAll", function () {
             jqUnit.expect(3);
             var assertVisible = function (that) {
-                jqUnit.assertTrue("The first element should be visible", that.locate("elmTwo").is(":visible"));
-                jqUnit.assertTrue("The second element should be visible", that.locate("elmOne").is(":visible"));
+                jqUnit.isVisible("The first element should be visible", that.locate("elmOne"));
+                jqUnit.isVisible("The second element should be visible", that.locate("elmTwo"));
                 jqUnit.assertDeepEq("The model should be updated", {elmOne: true, elmTwo: true}, that.model);
                 start();
             };
@@ -141,7 +141,7 @@ var decapod = decapod || {};
         tests.test("hide", function () {
             jqUnit.expect(2);
             var assertHidden = function (that) {
-                jqUnit.assertFalse("The element should be hidden", that.locate("elmOne").is(":visible"));
+                jqUnit.notVisible("The element should be hidden", that.locate("elmOne"));
                 jqUnit.assertDeepEq("The model should be updated", {elmOne: false, elmTwo: false}, that.model);
                 start();
             };
@@ -161,8 +161,8 @@ var decapod = decapod || {};
         tests.test("hideAll", function () {
             jqUnit.expect(3);
             var assertVisible = function (that) {
-                jqUnit.assertFalse("The first element should not be visible", that.locate("elmTwo").is(":visible"));
-                jqUnit.assertFalse("The second element not should be visible", that.locate("elmOne").is(":visible"));
+                jqUnit.notVisible("The first element should not be visible", that.locate("elmOne"));
+                jqUnit.notVisible("The second element should not be visible", that.locate("elmTwo"));
                 jqUnit.assertDeepEq("The model should be updated", {elmOne: false, elmTwo: false}, that.model);
                 start();
             };
