@@ -18,9 +18,10 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
-    var CONTAINER = ".dc-exportType";
+    var TYPE_CONTAINER = ".dc-exportType";
     var PDF_OPTS_CONTAINER = ".dc-exportType-pdfOptions";
     var CONTROLS_CONTAINER = ".dc-exportType-controls";
+    var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
     var generateComponent = function (component, container, templateURL, options) {
         var opts = {
             resources: {
@@ -49,17 +50,39 @@ var decapod = decapod || {};
         jqUnit.assertEquals("The dimensions text should be rendered", str.dimensions, that.locate("dimensions").text());
     };
     
+    var assertExportControlsRender = function (that) {
+            var str = that.options.strings;
+            var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
+            jqUnit.assertEquals("The export button should be rendered", str.exportControl, that.locate("exportControl").text());
+            jqUnit.assertEquals("The progress text should be rendered", str.progressMessage, that.locate("progressMessage").text());
+            jqUnit.assertEquals("The download text should be rendered", str.download, that.locate("download").text());
+            jqUnit.assertEquals("The download url should be set", that.model.downloadURL, downloadHREF);
+            jqUnit.assertEquals("The restart text should be set", str.restart, that.locate("restart").text());
+            
+            jqUnit.isVisible("The export control should be visible", that.locate("exportControl"));
+            jqUnit.notVisible("The progress message should be hidden", that.locate("progressMessage"));
+            jqUnit.notVisible("The download link should be hidden", that.locate("download"));
+            jqUnit.notVisible("The restart link should be hidden", that.locate("restart"));
+    };
+    
+    var assertShowProgressControls = function (that) {
+        jqUnit.notVisible("The export control should be hidden", that.locate("exportControl"));
+        jqUnit.isVisible("The progress message should be visible", that.locate("progressMessage"));
+        jqUnit.notVisible("The download link should be hidden", that.locate("download"));
+        jqUnit.notVisible("The restart link should be hidden", that.locate("restart"));
+    };
+    
     $(document).ready(function () {
         
         var exportTypeTests = jqUnit.testCase("Decapod Export Type");
         
         exportTypeTests.test("Init tests", function () {
-            var that = decapod.exportType(CONTAINER);
+            var that = decapod.exportType(TYPE_CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
         exportTypeTests.test("Rendering", function () {
-            var that = decapod.exportType(CONTAINER);
+            var that = decapod.exportType(TYPE_CONTAINER);
             var str = that.options.strings;
             jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
             jqUnit.assertEquals("The description should be rendered", str.description, that.locate("description").text());
@@ -78,7 +101,7 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
                 start();
             };
-            createPDFOptions(CONTAINER, {
+            createPDFOptions(PDF_OPTS_CONTAINER, {
                 listeners: {
                     afterFetchResources: assertFetchResources
                 }
@@ -92,7 +115,7 @@ var decapod = decapod || {};
                 start();
             };
             
-            createPDFOptions(CONTAINER, {
+            createPDFOptions(PDF_OPTS_CONTAINER, {
                 listeners: {
                     afterRender: assertRender
                 }
@@ -110,7 +133,7 @@ var decapod = decapod || {};
                 jqUnit.assertEquals("The components model should be update with the new dpi", dpi, that.model.dpi);
                 start();
             };
-            createPDFOptions(CONTAINER, {
+            createPDFOptions(PDF_OPTS_CONTAINER, {
                 events: {
                     testModel: {
                         event: "afterModelChanged"
@@ -136,7 +159,7 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
                 start();
             };
-            createControls(CONTAINER, {
+            createControls(CONTROLS_CONTAINER, {
                 listeners: {
                     afterFetchResources: assertFetchResources
                 }
@@ -146,18 +169,7 @@ var decapod = decapod || {};
         controlsTests.asyncTest("Rendering", function () {
             jqUnit.expect(9);
             var assertRendering = function (that) {
-                var str = that.options.strings;
-                var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
-                jqUnit.assertEquals("The export button should be rendered", str.exportControl, that.locate("exportControl").text());
-                jqUnit.assertEquals("The progress text should be rendered", str.progressMessage, that.locate("progressMessage").text());
-                jqUnit.assertEquals("The download text should be rendered", str.download, that.locate("download").text());
-                jqUnit.assertEquals("The download url should be set", that.model.downloadURL, downloadHREF);
-                jqUnit.assertEquals("The restart text should be set", str.restart, that.locate("restart").text());
-                
-                jqUnit.isVisible("The export control should be visible", that.locate("exportControl"));
-                jqUnit.notVisible("The progress message should be hidden", that.locate("progressMessage"));
-                jqUnit.notVisible("The download link should be hidden", that.locate("download"));
-                jqUnit.notVisible("The restart link should be hidden", that.locate("restart"));
+                assertExportControlsRender(that);
                 start();
             };
             createControls(CONTROLS_CONTAINER, {
@@ -196,10 +208,7 @@ var decapod = decapod || {};
             var assertRendering = function (that) {
                 that.showProgressControls();
                 
-                jqUnit.notVisible("The export control should be hidden", that.locate("exportControl"));
-                jqUnit.isVisible("The progress message should be visible", that.locate("progressMessage"));
-                jqUnit.notVisible("The download link should be hidden", that.locate("download"));
-                jqUnit.notVisible("The restart link should be hidden", that.locate("restart"));
+                assertShowProgressControls(that);
                 start();
             };
             createControls(CONTROLS_CONTAINER, {
@@ -239,13 +248,69 @@ var decapod = decapod || {};
                 that.locate("exportControl").click();
             };
             var assertClick = function () {
-                jqUnit.assertTrue("The afterExportTriggered event should have fired", true);
+                jqUnit.assertTrue("The onExportTrigger event should have fired", true);
                 start();
             };
             createControls(CONTROLS_CONTAINER, {
                 listeners: {
                     afterRender: fireClick,
-                    afterExportTriggered: assertClick
+                    onExportTrigger: assertClick
+                }
+            });
+        });
+        
+        var pdfExporterTests = jqUnit.testCase("Decapod PDF Exporter");
+        
+        pdfExporterTests.test("Init tests", function () {
+            var that = decapod.pdfExporter(PDF_EXPORTER_CONTAINER);
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        pdfExporterTests.asyncTest("Rendering", function () {
+            var assertRendering = function (that) {
+                assertExportControlsRender(that);
+                start();
+            };
+            var that = decapod.pdfExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterOptionsRendered: assertPDFOptionsRender,
+                    afterControlsRendered: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+            var str = that.options.strings;
+            jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
+            jqUnit.assertEquals("The description should be rendered", str.description, that.locate("description").text());
+        });
+        
+        pdfExporterTests.asyncTest("onStartExport event", function () {
+            jqUnit.expect(5);
+            var triggerEvent = function (that) {
+                that.events.onStartExport.fire(that);
+            };
+            var assertEvent = function (that) {
+                jqUnit.assertTrue("The onStartExportEvent should have fired", true);
+                assertShowProgressControls(that);
+                start();
+            };
+            var that = decapod.pdfExporter(PDF_EXPORTER_CONTAINER, {
+                events: {
+                    afterRender: {
+                        event: "afterControlsRendered",
+                        args: ["{pdfExporter}"]
+                    }
+                },
+                listeners: {
+                    onStartExport: {
+                        listener: assertEvent,
+                        priority: "last"
+                    },
+                    afterRender: {
+                        listener: triggerEvent,
+                        priority: "last"
+                    }
                 }
             });
         });

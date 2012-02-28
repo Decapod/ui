@@ -18,8 +18,31 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
-    fluid.demands("decapod.pdfExporter", ["decapod.test"], {
+    
+    fluid.demands("decapod.exportType.controls", ["decapod.test", "decapod.pdfExporter"], {
         options: {
+            events: {
+                afterRender: "{pdfExporter}.events.afterControlsRendered",
+                onExportTrigger: "{pdfExporter}.events.onStartExport"
+            },
+            listeners: {
+                "{pdfExporter}.events.onStartExport": {
+                    listener: "{controls}.showProgressControls",
+                    priority: "last"
+                }
+            },
+            resources: {
+                template: {
+                    url: "../../../components/exporter/html/exportControlsTemplate.html"
+                }
+            }
+        }
+    });
+    fluid.demands("decapod.exportType.pdfOptions", ["decapod.test", "decapod.pdfExporter"], {
+        options: {
+            events: {
+                afterRender: "{pdfExporter}.events.afterOptionsRendered"
+            },
             resources: {
                 template: {
                     url: "../../../components/exporter/html/pdfOptionsTemplate.html"
