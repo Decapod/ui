@@ -19,6 +19,100 @@ var decapod = decapod || {};
 
 (function ($) {
 
+    fluid.registerNamespace("decapod.pdfExporter");
+    
+    fluid.defaults("decapod.pdfExporter", {
+        gradeNames: ["fluid.viewComponent", "autoInit"],
+        selectors: {
+            typeContainer: ".dc-pdfExporter-type",
+            pdfOptionsContainer: ".dc-pdfExporter-pdfOptions",
+            controlsContainer: ".dc-pdfExporter-controls",
+            name: ".dc-exportType-name",
+            description: ".dc-exportType-description",
+            resolutionLabel: ".dc-exportType-pdfOptions-resolutionLabel",
+            resolution: ".dc-exportType-pdfOptions-resolution",
+            dimensionsLabel: ".dc-exportType-pdfOptions-dimensionsLabel",
+            dimensions: ".dc-exportType-pdfOptions-dimensions",
+            exportControl: ".dc-exportType-controls-exportControl",
+            progressMessage: ".dc-exportType-controls-progressMessage",
+            download: ".dc-exportType-controls-download",
+            restart: ".dc-exportType-controls-restart"
+        },
+        strings: {
+            name: "Format type label",
+            description: "A delectable medley of bits and bytes to satisfy every platform",
+            resolutionLabel: "Output Image resolution:",
+            dimensionsLabel: "Output dimensions:",
+            dimensions: "A4(210 x 297mm / 8.3 x 11.7in.)",
+            exportControl: "Start Export",
+            progressMessage: "Export Progress",
+            download: "Download Link",
+            restart: "Start Over"
+        },
+        events: {
+            afterControlsRendered: null,
+            afterOptionsRendered: null,
+            onStartExport: null
+        },
+        listeners: {
+            "onStartExport.showProgressControls": "{exportControls}.showProgressControls"
+        },
+        components: {
+            exportType: {
+                type: "decapod.exportType",
+                container: "{pdfExporter}.options.selectors.typeContainer",
+                priority: "2",
+                options: {
+                    selectors: {
+                        name: "{pdfExporter}.options.selectors.name",
+                        description: "{pdfExporter}.options.selectors.description"
+                    },
+                    strings: {
+                        name: "{pdfExporter}.options.strings.name",
+                        description: "{pdfExporter}.options.strings.description"
+                    }
+                }
+            },
+            exportOptions: {
+                type: "decapod.exportType.pdfOptions",
+                container: "{pdfExporter}.options.selectors.pdfOptionsContainer",
+                priority: "1",
+                options: {
+                    selectors: {
+                        resolutionLabel: "{pdfExporter}.options.selectors.resolutionLabel",
+                        resolution: "{pdfExporter}.options.selectors.resolution",
+                        dimensionsLabel: "{pdfExporter}.options.selectors.dimensionsLabel",
+                        dimensions: "{pdfExporter}.options.selectors.dimensions"
+                    },
+                    strings: {
+                        resolutionLabel: "{pdfExporter}.options.strings.resolutionLabel",
+                        dimensionsLabel: "{pdfExporter}.options.strings.dimensionsLabel",
+                        dimensions: "{pdfExporter}.options.strings.dimensions"
+                    }
+                }
+            },
+            exportControls: {
+                type: "decapod.exportType.controls",
+                container: "{pdfExporter}.options.selectors.controlsContainer",
+                priority: "0",
+                options: {
+                    selectors: {
+                        exportControl: "{pdfExporter}.options.selectors.exportControl",
+                        progressMessage: "{pdfExporter}.options.selectors.progressMessage",
+                        download: "{pdfExporter}.options.selectors.download",
+                        restart: "{pdfExporter}.options.selectors.restart"
+                    },
+                    strings: {
+                        exportControl: "{pdfExporter}.options.strings.exportControl",
+                        progressMessage: "{pdfExporter}.options.strings.progressMessage",
+                        download: "{pdfExporter}.options.strings.download",
+                        restart: "{pdfExporter}.options.strings.restart"
+                    }
+                }
+            }
+        }
+    });
+
     fluid.registerNamespace("decapod.exportType");
     
     decapod.exportType.finalInit = function (that) {
@@ -124,7 +218,7 @@ var decapod = decapod || {};
                 decorators: [{
                     type: "jQuery",
                     func: "click",
-                    args: function() { that.events.afterExportTriggered.fire() }
+                    args: function() { that.events.onExportTrigger.fire() }
                 }]
             },
             progressMessage: {
@@ -160,7 +254,7 @@ var decapod = decapod || {};
         },
         events: {
             afterFetchResources: null,
-            afterExportTriggered: null
+            onExportTrigger: null
         },
         resources: {
             template: {
