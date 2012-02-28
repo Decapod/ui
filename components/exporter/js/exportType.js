@@ -105,6 +105,10 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.exportType.controls");
     
+    decapod.exportType.controls.showControls = function (controlToggle, selectors) {
+        controlToggle.showOnly(selectors);
+    };
+    
     decapod.exportType.controls.finalInit = function (that) {
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
@@ -167,7 +171,11 @@ var decapod = decapod || {};
         model: {
             downloadURL: "downloadURL"
         },
-        renderOnInit: false,
+        invokers: {
+            showFinishControls: "decapod.exportType.controls.showFinishControls",
+            showProgressControls: "decapod.exportType.controls.showProgressControls",
+            showStartControls: "decapod.exportType.controls.showStartControls"
+        },
         components: {
             controlToggle: {
                 type: "decapod.visSwitcher",
