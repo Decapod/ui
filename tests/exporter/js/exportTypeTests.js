@@ -147,10 +147,11 @@ var decapod = decapod || {};
             jqUnit.expect(9);
             var assertRendering = function (that) {
                 var str = that.options.strings;
+                var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
                 jqUnit.assertEquals("The export button should be rendered", str.exportControl, that.locate("exportControl").text());
                 jqUnit.assertEquals("The progress text should be rendered", str.progressMessage, that.locate("progressMessage").text());
                 jqUnit.assertEquals("The download text should be rendered", str.download, that.locate("download").text());
-                jqUnit.assertEquals("The download url should be set", that.model.downloadURL, that.locate("download").prop("href"));
+                jqUnit.assertEquals("The download url should be set", that.model.downloadURL, downloadHREF);
                 jqUnit.assertEquals("The restart text should be set", str.restart, that.locate("restart").text());
                 
                 jqUnit.isVisible("The export control should be visible", that.locate("exportControl"));
@@ -164,7 +165,70 @@ var decapod = decapod || {};
                     afterRender: {
                         listener: assertRendering,
                         priority: "last"
-                    },
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("showStartControls", function () {
+            jqUnit.expect(4);
+            var assertRendering = function (that) {
+                that.showStartControls();
+                
+                jqUnit.isVisible("The export control should be visible", that.locate("exportControl"));
+                jqUnit.notVisible("The progress message should be hidden", that.locate("progressMessage"));
+                jqUnit.notVisible("The download link should be hidden", that.locate("download"));
+                jqUnit.notVisible("The restart link should be hidden", that.locate("restart"));
+                start();
+            };
+            createControls(CONTROLS_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("showProgressControls", function () {
+            jqUnit.expect(4);
+            var assertRendering = function (that) {
+                that.showProgressControls();
+                
+                jqUnit.notVisible("The export control should be hidden", that.locate("exportControl"));
+                jqUnit.isVisible("The progress message should be visible", that.locate("progressMessage"));
+                jqUnit.notVisible("The download link should be hidden", that.locate("download"));
+                jqUnit.notVisible("The restart link should be hidden", that.locate("restart"));
+                start();
+            };
+            createControls(CONTROLS_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("showFinishControls", function () {
+            jqUnit.expect(4);
+            var assertRendering = function (that) {
+                that.showFinishControls();
+                
+                jqUnit.notVisible("The export control should be hidden", that.locate("exportControl"));
+                jqUnit.notVisible("The progress message should be visible", that.locate("progressMessage"));
+                jqUnit.isVisible("The download link should be hidden", that.locate("download"));
+                jqUnit.isVisible("The restart link should be hidden", that.locate("restart"));
+                start();
+            };
+            createControls(CONTROLS_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
                 }
             });
         });
