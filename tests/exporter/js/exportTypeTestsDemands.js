@@ -60,4 +60,5 @@ var decapod = decapod || {};
         "{arguments}.0"
     ]);
     fluid.demands("testClick", ["decapod.test", "decapod.exportType.controls"], ["{controls}"]);
+    fluid.demands("afterRender", ["decapod.test", "decapod.pdfExporter"], ["{pdfExporter}"]);
 })(jQuery);
