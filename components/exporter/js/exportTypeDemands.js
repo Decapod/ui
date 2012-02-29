@@ -44,15 +44,15 @@ var decapod = decapod || {};
      *******************/
 
     fluid.demands("decapod.exportType.controls.showStartControls", ["decapod.exportType.controls", "decapod.visSwitcher"], {
-        funcName:"decapod.exportType.controls.showControls",
+        funcName: "decapod.exportType.controls.showControls",
         args: ["{controls}.controlToggle", "exportControl"]
     });
     fluid.demands("decapod.exportType.controls.showProgressControls", ["decapod.exportType.controls", "decapod.visSwitcher"], {
-        funcName:"decapod.exportType.controls.showControls",
+        funcName: "decapod.exportType.controls.showControls",
         args: ["{controls}.controlToggle", "progressMessage"]
     });
     fluid.demands("decapod.exportType.controls.showFinishControls", ["decapod.exportType.controls", "decapod.visSwitcher"], {
-        funcName:"decapod.exportType.controls.showControls",
+        funcName: "decapod.exportType.controls.showControls",
         args: ["{controls}.controlToggle", ["download", "restart"]]
     });
 

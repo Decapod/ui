@@ -39,7 +39,7 @@ var decapod = decapod || {};
     };
     
     var createControls = function (container, options) {
-        return generateComponent("decapod.exportType.controls", container, "../../../components/exporter/html/exportControlsTemplate.html",options);
+        return generateComponent("decapod.exportType.controls", container, "../../../components/exporter/html/exportControlsTemplate.html", options);
     };
     
     var assertPDFOptionsRender = function (that) {
@@ -51,18 +51,18 @@ var decapod = decapod || {};
     };
     
     var assertExportControlsRender = function (that) {
-            var str = that.options.strings;
-            var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
-            jqUnit.assertEquals("The export button should be rendered", str.exportControl, that.locate("exportControl").text());
-            jqUnit.assertEquals("The progress text should be rendered", str.progressMessage, that.locate("progressMessage").text());
-            jqUnit.assertEquals("The download text should be rendered", str.download, that.locate("download").text());
-            jqUnit.assertEquals("The download url should be set", that.model.downloadURL, downloadHREF);
-            jqUnit.assertEquals("The restart text should be set", str.restart, that.locate("restart").text());
-            
-            jqUnit.isVisible("The export control should be visible", that.locate("exportControl"));
-            jqUnit.notVisible("The progress message should be hidden", that.locate("progressMessage"));
-            jqUnit.notVisible("The download link should be hidden", that.locate("download"));
-            jqUnit.notVisible("The restart link should be hidden", that.locate("restart"));
+        var str = that.options.strings;
+        var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
+        jqUnit.assertEquals("The export button should be rendered", str.exportControl, that.locate("exportControl").text());
+        jqUnit.assertEquals("The progress text should be rendered", str.progressMessage, that.locate("progressMessage").text());
+        jqUnit.assertEquals("The download text should be rendered", str.download, that.locate("download").text());
+        jqUnit.assertEquals("The download url should be set", that.model.downloadURL, downloadHREF);
+        jqUnit.assertEquals("The restart text should be set", str.restart, that.locate("restart").text());
+        
+        jqUnit.isVisible("The export control should be visible", that.locate("exportControl"));
+        jqUnit.notVisible("The progress message should be hidden", that.locate("progressMessage"));
+        jqUnit.notVisible("The download link should be hidden", that.locate("download"));
+        jqUnit.notVisible("The restart link should be hidden", that.locate("restart"));
     };
     
     var assertShowProgressControls = function (that) {
@@ -88,7 +88,7 @@ var decapod = decapod || {};
             jqUnit.assertEquals("The description should be rendered", str.description, that.locate("description").text());
         });
         
-        var pdfOptionsTests = jqUnit.testCase("Decapod Export Type PDF Options")
+        var pdfOptionsTests = jqUnit.testCase("Decapod Export Type PDF Options");
         
         pdfOptionsTests.test("Init tests", function () {
             var that = createPDFOptions(PDF_OPTS_CONTAINER);
@@ -295,7 +295,7 @@ var decapod = decapod || {};
                 assertShowProgressControls(that);
                 start();
             };
-            var that = decapod.pdfExporter(PDF_EXPORTER_CONTAINER, {
+            decapod.pdfExporter(PDF_EXPORTER_CONTAINER, {
                 events: {
                     afterRender: {
                         event: "afterControlsRendered",
