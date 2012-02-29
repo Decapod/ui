@@ -257,7 +257,7 @@ var decapod = decapod || {};
                     testClick: {
                         event: "onExportTrigger"
                     }
-               },
+                },
                 listeners: {
                     afterRender: fireClick,
                     testClick: assertClick
