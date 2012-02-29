@@ -43,7 +43,7 @@ var decapod = decapod || {};
             },
             statusToggle: {
                 type: "decapod.visSwitcher",
-                container: "{exporter}.options.selectors.importMessages",
+                container: "{exporter}.dom.importMessages",
                 options: {
                     selectors: {
                         instructions: "{exporter}.options.selectors.instructions",
@@ -57,11 +57,11 @@ var decapod = decapod || {};
             },
             importStatus: {
                 type: "decapod.importStatus",
-                container: "{exporter}.options.selectors.importStatusContainer"
+                container: "{exporter}.dom.importStatusContainer"
             },
             uploader: {
                 type: "fluid.uploader",
-                container: "{exporter}.options.selectors.uploadContainer",
+                container: "{exporter}.dom.uploadContainer",
                 options: {
                     components: {
                         fileQueueView: {
@@ -110,17 +110,17 @@ var decapod = decapod || {};
             },
             imagePDF: {
                 type: "decapod.pdfExporter",
-                container: "{exporter}.options.selectors.imagePDFContainer",
+                container: "{exporter}.dom.imagePDFContainer",
                 options: {}
             },
             ocrPDF: {
                 type: "decapod.pdfExporter",
-                container: "{exporter}.options.selectors.ocrPDFContainer",
+                container: "{exporter}.dom.ocrPDFContainer",
                 options: {}
             },
             tracedPDF: {
                 type: "decapod.pdfExporter",
-                container: "{exporter}.options.selectors.tracedPDFContainer",
+                container: "{exporter}.dom.tracedPDFContainer",
                 options: {}
             }
         }
