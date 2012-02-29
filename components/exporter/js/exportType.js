@@ -58,7 +58,7 @@ var decapod = decapod || {};
         components: {
             exportType: {
                 type: "decapod.exportType",
-                container: "{pdfExporter}.options.selectors.typeContainer",
+                container: "{pdfExporter}.dom.typeContainer",
                 priority: "2",
                 options: {
                     selectors: {
@@ -73,7 +73,7 @@ var decapod = decapod || {};
             },
             exportOptions: {
                 type: "decapod.exportType.pdfOptions",
-                container: "{pdfExporter}.options.selectors.pdfOptionsContainer",
+                container: "{pdfExporter}.dom.pdfOptionsContainer",
                 priority: "1",
                 options: {
                     selectors: {
@@ -91,7 +91,7 @@ var decapod = decapod || {};
             },
             exportControls: {
                 type: "decapod.exportType.controls",
-                container: "{pdfExporter}.options.selectors.controlsContainer",
+                container: "{pdfExporter}.dom.controlsContainer",
                 priority: "0",
                 options: {
                     selectors: {
