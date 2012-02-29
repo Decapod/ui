@@ -54,9 +54,6 @@ var decapod = decapod || {};
             afterOptionsRendered: null,
             onStartExport: null
         },
-//        listeners: {
-//            "onStartExport.showProgressControls": "{exportControls}.showProgressControls"
-//        },
         components: {
             exportType: {
                 type: "decapod.exportType",
@@ -107,9 +104,6 @@ var decapod = decapod || {};
                         progressMessage: "{pdfExporter}.options.strings.progressMessage",
                         download: "{pdfExporter}.options.strings.download",
                         restart: "{pdfExporter}.options.strings.restart"
-                    },
-                    listerners: {
-                        "{pdfExporter}.events.onStartExport": function () {console.log("test")}
                     }
                 }
             }
@@ -206,6 +200,13 @@ var decapod = decapod || {};
         controlToggle.showOnly(selectors);
     };
     
+    decapod.exportType.controls.preInit = function (that) {
+        //exposes the showProgressControls invoker to be used as a listerner in the defauls
+        that.showProgressControls = function () {
+            that.showProgressControls();
+        };
+    };
+    
     decapod.exportType.controls.finalInit = function (that) {
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
@@ -241,6 +242,7 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.exportType.controls", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
+        preInitFunction: "decapod.exportType.controls.preInit",
         finalInitFunction: "decapod.exportType.controls.finalInit",
         produceTree: "decapod.exportType.controls.produceTree",
         selectors: {
@@ -258,6 +260,12 @@ var decapod = decapod || {};
         events: {
             afterFetchResources: null,
             onExportTrigger: null
+        },
+        listeners: {
+            "onExportTrigger.showProgressControls": {
+                listener: "{controls}.showProgressControls",
+                priority: "first"
+            }
         },
         resources: {
             template: {

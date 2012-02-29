@@ -51,8 +51,13 @@ var decapod = decapod || {};
         }
     });
     
+    /*****************
+     * Event Demands *
+     *****************/
+    
     fluid.demands("testModel", ["decapod.test", "decapod.exportType.pdfOptions"], [
         "{pdfOptions}", 
         "{arguments}.0"
     ]);
+    fluid.demands("testClick", ["decapod.test", "decapod.exportType.controls"], ["{controls}"]);
 })(jQuery);
