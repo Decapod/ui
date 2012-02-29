@@ -46,7 +46,7 @@ var decapod = decapod || {};
             dimensions: "A4(210 x 297mm / 8.3 x 11.7in.)",
             exportControl: "Start Export",
             progressMessage: "Export Progress",
-            download: "Download Link",
+            download: "Download Link",  
             restart: "Start Over"
         },
         events: {
@@ -54,9 +54,9 @@ var decapod = decapod || {};
             afterOptionsRendered: null,
             onStartExport: null
         },
-        listeners: {
-            "onStartExport.showProgressControls": "{exportControls}.showProgressControls"
-        },
+//        listeners: {
+//            "onStartExport.showProgressControls": "{exportControls}.showProgressControls"
+//        },
         components: {
             exportType: {
                 type: "decapod.exportType",
@@ -107,6 +107,9 @@ var decapod = decapod || {};
                         progressMessage: "{pdfExporter}.options.strings.progressMessage",
                         download: "{pdfExporter}.options.strings.download",
                         restart: "{pdfExporter}.options.strings.restart"
+                    },
+                    listerners: {
+                        "{pdfExporter}.events.onStartExport": function () {console.log("test")}
                     }
                 }
             }
@@ -130,7 +133,7 @@ var decapod = decapod || {};
         },
         strings: {
             name: "Format type label",
-            description: "A delectable medley of bits and bytes to satisfy every platform",
+            description: "A delectable medley of bits and bytes to satisfy every platform"
         }
     });
     
@@ -218,7 +221,7 @@ var decapod = decapod || {};
                 decorators: [{
                     type: "jQuery",
                     func: "click",
-                    args: function() { that.events.onExportTrigger.fire() }
+                    args: function () { that.events.onExportTrigger.fire(); }
                 }]
             },
             progressMessage: {
