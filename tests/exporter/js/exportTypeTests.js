@@ -243,18 +243,24 @@ var decapod = decapod || {};
         });
         
         controlsTests.asyncTest("Export Control Click", function () {
-            jqUnit.expect(1);
+            jqUnit.expect(5);
             var fireClick = function (that) {
                 that.locate("exportControl").click();
             };
-            var assertClick = function () {
+            var assertClick = function (that) {
                 jqUnit.assertTrue("The onExportTrigger event should have fired", true);
+                assertShowProgressControls(that);
                 start();
             };
             createControls(CONTROLS_CONTAINER, {
+                events: {
+                    testClick: {
+                        event: "onExportTrigger"
+                    }
+               },
                 listeners: {
                     afterRender: fireClick,
-                    onExportTrigger: assertClick
+                    testClick: assertClick
                 }
             });
         });
