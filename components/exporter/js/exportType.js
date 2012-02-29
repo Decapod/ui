@@ -52,6 +52,7 @@ var decapod = decapod || {};
         events: {
             afterControlsRendered: null,
             afterOptionsRendered: null,
+            afterExportComplete: null,
             onStartExport: null
         },
         components: {
@@ -104,6 +105,9 @@ var decapod = decapod || {};
                         progressMessage: "{pdfExporter}.options.strings.progressMessage",
                         download: "{pdfExporter}.options.strings.download",
                         restart: "{pdfExporter}.options.strings.restart"
+                    },
+                    listeners: {
+                        "{pdfExporter}.events.afterExportComplete": "{controls}.showFinishControls"
                     }
                 }
             }
@@ -201,9 +205,12 @@ var decapod = decapod || {};
     };
     
     decapod.exportType.controls.preInit = function (that) {
-        //exposes the showProgressControls invoker to be used as a listerner in the defauls
+        //exposes the showProgressControls and showFinishControls invokers to be used as listerners in the defauls
         that.showProgressControls = function () {
             that.showProgressControls();
+        };
+        that.showFinishControls = function () {
+            that.showFinishControls();
         };
     };
     

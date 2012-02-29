@@ -72,6 +72,13 @@ var decapod = decapod || {};
         jqUnit.notVisible("The restart link should be hidden", that.locate("restart"));
     };
     
+    var assertShowFinishControls = function (that) {
+        jqUnit.notVisible("The export control should be hidden", that.locate("exportControl"));
+        jqUnit.notVisible("The progress message should be visible", that.locate("progressMessage"));
+        jqUnit.isVisible("The download link should be hidden", that.locate("download"));
+        jqUnit.isVisible("The restart link should be hidden", that.locate("restart"));
+    };
+    
     $(document).ready(function () {
         
         var exportTypeTests = jqUnit.testCase("Decapod Export Type");
@@ -225,11 +232,7 @@ var decapod = decapod || {};
             jqUnit.expect(4);
             var assertRendering = function (that) {
                 that.showFinishControls();
-                
-                jqUnit.notVisible("The export control should be hidden", that.locate("exportControl"));
-                jqUnit.notVisible("The progress message should be visible", that.locate("progressMessage"));
-                jqUnit.isVisible("The download link should be hidden", that.locate("download"));
-                jqUnit.isVisible("The restart link should be hidden", that.locate("restart"));
+                assertShowFinishControls(that);
                 start();
             };
             createControls(CONTROLS_CONTAINER, {
@@ -304,12 +307,40 @@ var decapod = decapod || {};
             decapod.pdfExporter(PDF_EXPORTER_CONTAINER, {
                 events: {
                     afterRender: {
-                        event: "afterControlsRendered",
-                        args: ["{pdfExporter}"]
+                        event: "afterControlsRendered"
                     }
                 },
                 listeners: {
                     onStartExport: {
+                        listener: assertEvent,
+                        priority: "last"
+                    },
+                    afterRender: {
+                        listener: triggerEvent,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("afterExportComplete", function () {
+            jqUnit.expect(5);
+            var triggerEvent = function (that) {
+                that.events.afterExportComplete.fire(that);
+            };
+            var assertEvent = function (that) {
+                jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
+                assertShowFinishControls(that);
+                start();
+            };
+            decapod.pdfExporter(PDF_EXPORTER_CONTAINER, {
+                events: {
+                    afterRender: {
+                        event: "afterControlsRendered"
+                    }
+                },
+                listeners: {
+                    afterExportComplete: {
                         listener: assertEvent,
                         priority: "last"
                     },
