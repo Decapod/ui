@@ -135,7 +135,7 @@ var decapod = decapod || {};
             var changeVal = function (that) {
                 that.applier.requestChange("dpi", dpi);
             };
-            var assertModelChange = function (that, newModel) {
+            var assertModelChange = function (newModel, that) {
                 jqUnit.assertEquals("The model should be updated with the new dpi", dpi, newModel.dpi);
                 jqUnit.assertEquals("The components model should be update with the new dpi", dpi, that.model.dpi);
                 start();
@@ -306,7 +306,7 @@ var decapod = decapod || {};
             };
             decapod.pdfExporter(PDF_EXPORTER_CONTAINER, {
                 events: {
-                    afterRender: {
+                    afterControls: {
                         event: "afterControlsRendered"
                     }
                 },
@@ -315,7 +315,7 @@ var decapod = decapod || {};
                         listener: assertEvent,
                         priority: "last"
                     },
-                    afterRender: {
+                    afterControls: {
                         listener: triggerEvent,
                         priority: "last"
                     }
@@ -335,7 +335,7 @@ var decapod = decapod || {};
             };
             decapod.pdfExporter(PDF_EXPORTER_CONTAINER, {
                 events: {
-                    afterRender: {
+                    afterControls: {
                         event: "afterControlsRendered"
                     }
                 },
@@ -344,7 +344,7 @@ var decapod = decapod || {};
                         listener: assertEvent,
                         priority: "last"
                     },
-                    afterRender: {
+                    afterControls: {
                         listener: triggerEvent,
                         priority: "last"
                     }
