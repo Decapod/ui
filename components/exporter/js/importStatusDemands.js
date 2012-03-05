@@ -24,7 +24,9 @@ var decapod = decapod || {};
      *******************/
 
     fluid.demands("decapod.importStatus.setNumValidFiles", "decapod.importStatus", ["{importStatus}", "{arguments}.0"]);
-    fluid.demands("decapod.importStatus.addError", "decapod.importStatus", ["{importStatus}", "{arguments}.0"]);
+     // Due to FLUID-4631, have to sort out the arguments here. (See also: exporterDemands.js)
+//     fluid.demands("decapod.importStatus.addError", "decapod.importStatus", ["{importStatus}", "{arguments}.0"]);
+    fluid.demands("decapod.importStatus.addError", "decapod.importStatus", ["{importStatus}", "{arguments}.1"]);
     fluid.demands("decapod.importStatus.reset", "decapod.importStatus", ["{importStatus}"]);
     fluid.demands("decapod.importStatus.statusMessages", "decapod.importStatus", ["{importStatus}", "{arguments}.0"]);
     fluid.demands("decapod.importStatus.renderStatuses", "decapod.importStatus", ["{importStatus}"]);

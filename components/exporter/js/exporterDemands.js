@@ -54,7 +54,8 @@ var decapod = decapod || {};
     /*****************
      *Event Demands *
      *****************/
-    fluid.demands("onFileError", ["decapod.exporter", "fluid.uploader.multiFileUploader"], ["{arguments}.1"]);
+     // Due to FLUID-4631, have to pass in both parameters from onQueueError, instead of just grabbing the second one here
+//    fluid.demands("onFileError", ["decapod.exporter", "fluid.uploader.multiFileUploader"], ["{arguments}.1"]);
     fluid.demands("afterFilesSelected", ["decapod.exporter", "fluid.uploader.multiFileUploader"], ["status"]);
     
 })(jQuery);
