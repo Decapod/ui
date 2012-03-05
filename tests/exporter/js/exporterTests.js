@@ -32,11 +32,14 @@ var decapod = decapod || {};
         
         exporterTests.test("Add error", function () {
             var exporter = decapod.exporter(CONTAINER);
-        
+            
+            exporter.uploader.events.onFileError.addListener(function () {
+                jqUnit.assertEquals("The error should be added", 1, exporter.importStatus.errors["-100"]);
+                jqUnit.assertEquals("The total number of files should be updated", 1, exporter.importStatus.totalNumFiles);
+                jqUnit.assertEquals("The number of invalid files should be updated", 1, exporter.importStatus.numInvalidFiles);
+            });
             exporter.uploader.events.onQueueError.fire({}, -100);
-            jqUnit.assertEquals("The error should be added", 1, exporter.importStatus.errors["-100"]);
-            jqUnit.assertEquals("The total number of files should be updated", 1, exporter.importStatus.totalNumFiles);
-            jqUnit.assertEquals("The number of invalid files should be updated", 1, exporter.importStatus.numInvalidFiles);
+            
         });
         
         exporterTests.test("Add validFiles", function () {
