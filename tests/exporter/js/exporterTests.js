@@ -92,5 +92,47 @@ var decapod = decapod || {};
             exporter.uploader.strategy.remote.uploadNextFile = function () {};
             exporter.events.onExportStart.fire();
         });
+        
+        var testOnExportStartTrigger = function (subComponent) {
+            var triggerEvent = function (pdfExporter) {
+                pdfExporter.locate("exportControl").click();
+            };
+            var opts = {
+                listeners: {
+                    onExportStart: function () {
+                        jqUnit.assertTrue("The onExportStart event fired", true);
+                        start();
+                    }
+                },
+                components: {}
+            };
+            
+            opts.components[subComponent] = {
+                options: {
+                    events: {
+                        afterControls: {
+                            event: "afterControlsRendered"
+                        }
+                    },
+                    listeners: {
+                        afterControls: {
+                            listener: triggerEvent,
+                            priority: "last"
+                        }
+                    }
+                }
+            };
+            var exporter = decapod.exporter(CONTAINER, opts);
+        };
+        
+        exporterTests.asyncTest("imagePDF trigger onExportStart", function () {
+            testOnExportStartTrigger("imagePDF");
+        });
+        exporterTests.asyncTest("ocrPDF trigger onExportStart", function () {
+            testOnExportStartTrigger("ocrPDF");
+        });
+        exporterTests.asyncTest("tracedPDF trigger onExportStart", function () {
+            testOnExportStartTrigger("tracedPDF");
+        });
     });
 })(jQuery);
