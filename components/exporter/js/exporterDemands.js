@@ -23,7 +23,15 @@ var decapod = decapod || {};
      * Sub-componet Demands *
      ************************/
      
-    // local
+     fluid.demands("decapod.pdfExporter", ["decapod.exporter"], {
+        options: {
+            events: {
+                onStartExport: "{exporter}.events.onExportStart"
+            }
+        }
+     });
+     
+    // local only
     fluid.demands("decapod.dataSource", ["decapod.fileSystem", "decapod.exporter"], {
         options: {
             url: "" //local url
@@ -36,7 +44,7 @@ var decapod = decapod || {};
         }
     });
     
-    // server
+    // server only
     fluid.demands("decapod.dataSource", ["decapod.exporter"], {
         options: {
             url: "/library/decapod05a/export/pdf/%type"
