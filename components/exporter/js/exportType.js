@@ -24,7 +24,6 @@ var decapod = decapod || {};
     fluid.defaults("decapod.pdfExporter", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
         selectors: {
-            typeContainer: ".dc-pdfExporter-type",
             pdfOptionsContainer: ".dc-pdfExporter-pdfOptions",
             controlsContainer: ".dc-pdfExporter-controls",
             name: ".dc-exportType-name",
@@ -58,7 +57,7 @@ var decapod = decapod || {};
         components: {
             exportType: {
                 type: "decapod.exportType",
-                container: "{pdfExporter}.dom.typeContainer",
+                container: "{pdfExporter}.container",
                 priority: "2",
                 options: {
                     selectors: {
