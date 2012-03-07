@@ -22,11 +22,11 @@ var decapod = decapod || {};
     /************************
      * Sub-componet Demands *
      ************************/
-     
+
      fluid.demands("decapod.pdfExporter", ["decapod.exporter"], {
         options: {
-            events: {
-                onStartExport: "{exporter}.events.onExportStart"
+            listeners: {
+                "onStartExport.triggerExporter": "{exporter}.events.onExportStart.fire"
             }
         }
      });
