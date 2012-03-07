@@ -33,6 +33,9 @@ var decapod = decapod || {};
             ocrPDFContainer: ".dc-exporter-ocrPDF",
             tracedPDFContainer: ".dc-exporter-tracedPDF"
         },
+        events: {
+            onExportStart: null
+        },
         components: {
             progressiveEnhancementChecker: {
                 type: "fluid.progressiveCheckerForComponent",
@@ -122,7 +125,20 @@ var decapod = decapod || {};
                 type: "decapod.pdfExporter",
                 container: "{exporter}.dom.tracedPDFContainer",
                 options: {}
+            },
+            eventBinder: {
+                type: "decapod.exporter.eventBinder",
+                priority: "last",
+                options: {
+                    listeners: {
+                        "{exporter}.events.onExportStart": "{uploader}.start"
+                    }
+                }
             }
         }
+    });
+    
+    fluid.defaults("decapod.exporter.eventBinder", {
+        gradeNames: ["fluid.eventedComponent", "autoInit"]
     });
 })(jQuery);
