@@ -21,6 +21,13 @@ var decapod = decapod || {};
     var CONTAINER = ".dc-exporter";
     $(document).ready(function () {
         
+        var eventBinderTests = jqUnit.testCase("Decapod Event Binder");
+        
+        eventBinderTests.test("Init tests", function () {
+            var eventBinder = decapod.exporter.eventBinder();
+            jqUnit.assertTrue("The component should have initialized", eventBinder);
+        });
+        
         var exporterTests = jqUnit.testCase("Decapod Export");
         
         exporterTests.test("Init tests", function () {
@@ -69,6 +76,21 @@ var decapod = decapod || {};
             jqUnit.assertEquals("The statuses should have been rendered", 2, renderedStatuses.length);
             jqUnit.assertEquals("The total files message should be rendered", "11 files found.", renderedStatuses.eq(0).text());
             jqUnit.assertEquals("The total files message should be rendered", "1 files exceeded the queue limit", renderedStatuses.eq(1).text());
+        });
+        
+        // TODO: Test what type of upload should be generated
+        exporterTests.asyncTest("Start upload", function () {
+            jqUnit.expect(1);
+            var exporter = decapod.exporter(CONTAINER);
+            
+            exporter.uploader.events.onUploadStart.addListener(function () {
+                jqUnit.assertTrue("The onUploadStart event from the uploader should have fired", true);
+                start();
+            });
+            // hack to prevent the uploader from actually trying to upload anything.
+            // this allows for the testing of just the event without errors being thrown for the empty queue
+            exporter.uploader.strategy.remote.uploadNextFile = function () {};
+            exporter.events.onExportStart.fire();
         });
     });
 })(jQuery);
