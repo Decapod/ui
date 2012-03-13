@@ -60,6 +60,15 @@ var decapod = decapod || {};
             }
         }
     });
+    fluid.demands("decapod.pdfExporter", ["decapod.test"], {
+        options: {
+            resources: {
+                template: {
+                    url: "../../../components/exporter/html/pdfExporterTemplate.html"
+                }
+            }
+        }
+    });
     
     /*****************
      * Event Demands *

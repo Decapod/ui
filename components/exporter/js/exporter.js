@@ -28,8 +28,8 @@ var decapod = decapod || {};
             uploadBrowse: ".dc-exporter-uploadBrowse",
             importStatusContainer: ".dc-exporter-importStatus",
             importMessages: ".dc-exporter-importMessages",
-            imagePDFContainer: ".dc-exporter-imagePDF",
             instructions: ".dc-exporter-instructions",
+            imagePDFContainer: ".dc-exporter-imagePDF",
             ocrPDFContainer: ".dc-exporter-ocrPDF",
             tracedPDFContainer: ".dc-exporter-tracedPDF"
         },

@@ -21,9 +21,18 @@ var decapod = decapod || {};
 
     fluid.registerNamespace("decapod.pdfExporter");
     
+    decapod.pdfExporter.finalInit = function (that) {
+        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.afterFetchResources.fire(resourceSpec);
+        });
+    };
+    
     fluid.defaults("decapod.pdfExporter", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
+        finalInitFunction: "decapod.pdfExporter.finalInit",
         selectors: {
+            exportTypeContainer: ".dc-pdfExporter-exportType",
             pdfOptionsContainer: ".dc-pdfExporter-pdfOptions",
             controlsContainer: ".dc-pdfExporter-controls",
             name: ".dc-exportType-name",
@@ -49,16 +58,24 @@ var decapod = decapod || {};
             restart: "Start Over"
         },
         events: {
+            afterFetchResources: null,
+            afterExportTypeRendered: null,
             afterControlsRendered: null,
             afterOptionsRendered: null,
             afterExportComplete: null,
             onStartExport: null
         },
+        resources: {
+            template: {
+                url: "../html/pdfExporterTemplate.html",
+                forceCache: true
+            }
+        },
         components: {
             exportType: {
                 type: "decapod.exportType",
-                container: "{pdfExporter}.container",
-                priority: "2",
+                container: "{pdfExporter}.dom.exportTypeContainer",
+                createOnEvent: "afterFetchResources",
                 options: {
                     selectors: {
                         name: "{pdfExporter}.options.selectors.name",
@@ -73,7 +90,7 @@ var decapod = decapod || {};
             exportOptions: {
                 type: "decapod.exportType.pdfOptions",
                 container: "{pdfExporter}.dom.pdfOptionsContainer",
-                priority: "1",
+                createOnEvent: "afterFetchResources",
                 options: {
                     selectors: {
                         resolutionLabel: "{pdfExporter}.options.selectors.resolutionLabel",
@@ -91,7 +108,7 @@ var decapod = decapod || {};
             exportControls: {
                 type: "decapod.exportType.controls",
                 container: "{pdfExporter}.dom.controlsContainer",
-                priority: "0",
+                createOnEvent: "afterFetchResources",
                 options: {
                     selectors: {
                         exportControl: "{pdfExporter}.options.selectors.exportControl",
