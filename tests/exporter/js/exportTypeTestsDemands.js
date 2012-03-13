@@ -19,6 +19,16 @@ var decapod = decapod || {};
 
 (function ($) {
     
+    fluid.demands("decapod.exportType", ["decapod.test", "decapod.pdfExporter"], {
+        options: {
+            resources: {
+                template: {
+                    url: "../../../components/exporter/html/exportTypeTemplate.html"
+                }
+            }
+        }
+    });
+    
     fluid.demands("decapod.exportType.controls", ["decapod.test", "decapod.pdfExporter"], {
         options: {
             events: {

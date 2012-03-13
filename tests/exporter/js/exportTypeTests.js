@@ -34,6 +34,11 @@ var decapod = decapod || {};
         fluid.merge("replace", opts, options || {});
         return fluid.invokeGlobalFunction(component, [container, opts]);
     };
+    
+    var createExportType = function (container, options) {
+        return generateComponent("decapod.exportType", container, "../../../components/exporter/html/exportTypeTemplate.html", options);
+    };
+    
     var createPDFOptions = function (container, options) {
         return generateComponent("decapod.exportType.pdfOptions", container, "../../../components/exporter/html/pdfOptionsTemplate.html", options);
     };
@@ -84,12 +89,25 @@ var decapod = decapod || {};
         var exportTypeTests = jqUnit.testCase("Decapod Export Type");
         
         exportTypeTests.test("Init tests", function () {
-            var that = decapod.exportType(TYPE_CONTAINER);
+            var that = createExportType(TYPE_CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
+        exportTypeTests.asyncTest("Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createExportType(TYPE_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
+        });
+        
         exportTypeTests.test("Rendering", function () {
-            var that = decapod.exportType(TYPE_CONTAINER);
+            var that = createExportType(TYPE_CONTAINER);
             var str = that.options.strings;
             jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
             jqUnit.assertEquals("The description should be rendered", str.description, that.locate("description").text());
