@@ -319,7 +319,7 @@ var decapod = decapod || {};
                 assertExportControlsRender(that);
                 start();
             };
-            var that = createPDFExporter(PDF_EXPORTER_CONTAINER, {
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
                 listeners: {
                     afterOptionsRendered: assertPDFOptionsRender,
                     afterExportTypeRendered: assertExportTypeRender,
