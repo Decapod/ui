@@ -114,16 +114,30 @@ var decapod = decapod || {};
     });
 
     fluid.registerNamespace("decapod.exportType");
+
+    decapod.exportType.produceTree = function (that) {
+        return {
+            name: {
+                messagekey: "name"
+            },
+            description: {
+                messagekey: "description"
+            }
+        };
+    };
     
     decapod.exportType.finalInit = function (that) {
-        var str = that.options.strings;
-        that.locate("name").text(str.name);
-        that.locate("description").text(str.description);
+        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.afterFetchResources.fire(resourceSpec);
+            that.refreshView();
+        });
     };
     
     fluid.defaults("decapod.exportType", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
         finalInitFunction: "decapod.exportType.finalInit",
+        produceTree: "decapod.exportType.produceTree",
         selectors: {
             name: ".dc-exportType-name",
             description: ".dc-exportType-description"
@@ -131,10 +145,18 @@ var decapod = decapod || {};
         strings: {
             name: "Format type label",
             description: "A delectable medley of bits and bytes to satisfy every platform"
+        },
+        events: {
+            afterFetchResources: null
+        },
+        resources: {
+            template: {
+                url: "../html/exportTypeTemplate.html",
+                forceCache: true
+            }
         }
     });
     
-
     fluid.registerNamespace("decapod.exportType.pdfOptions");
     
     decapod.exportType.pdfOptions.produceTree = function (that) {
