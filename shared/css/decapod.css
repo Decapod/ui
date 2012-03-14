@@ -1,0 +1,226 @@
+.ds-shared-decapod {
+    font-family: 'Droid Sans', arial, serif;
+    background-color: #FFF;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    width: 100%;
+    min-width: 360px;
+}
+
+.ds-shared-decapod @font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: bold;
+  src: local('Droid Sans'), url('../fonts/DroidSans-Bold.ttf') format('truetype');
+}
+
+.ds-shared-decapod @font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Droid Sans'), url('../fonts/DroidSans.ttf') format('truetype');
+}
+
+.ds-shared-decapod a{
+    color: #1C75BC;
+}
+
+
+
+
+/* NAVIGATION BAR */
+
+.ds-shared-navigationBar {
+    display: table;
+    background: #958D76;
+    width: 100%;
+    height: 42px;
+    text-align: left;
+    color: #fff;
+    box-shadow: 0px 1px 2px #1a1a1a;
+    border-bottom: solid 1px #686253;    
+}
+
+ul.ds-shared-navigationBar-flatList {
+    list-style-type: none;
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 20px;
+}
+
+.ds-shared-navigationBar-flatList li {
+    display: inline;
+    list-style-type: none;
+}
+
+.ds-shared-navigationBar-flatList a {
+    color: #fff;
+    position: relative;
+	padding: 0px 0px 12px 0px;
+	font-size:12pt;
+    height: 42px;
+    
+}
+
+/**
+Create a chevron by using two triangles overlaid each other.
+Triangles are made by taking advantage of border's bevel effect.
+**/
+
+.ds-shared-navigationBar-flatList a:after {
+    content: "";
+	position: absolute;
+	top: -6px;
+	right: -30px;
+    width: 30px;
+    height: 30px;
+    border-top: 2px solid #7A7262;
+    border-right: 2px solid #686253;
+    -moz-transform: rotate(45deg);
+    transform:rotate(45deg);
+}
+
+a.ds-shared-navigationBar-currentBreadcrumb {
+    font-weight: bold;
+    text-decoration: none;
+    color: #3F3C34;
+    text-shadow: 1px 1px #A89F8A;
+}
+
+/**
+ FOOTER 
+ */
+ 
+ .ds-shared-decapod footer {
+    background: #958D76;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display:block;
+    border-top: solid 1px #686253;
+    box-shadow: 0px -1px 2px #1a1a1a;
+ }
+ 
+/**
+ MAIN CONTENT AREA 
+ */
+ 
+.ds-shared-mainPane {
+    background-image: url("../images/background-grain.png");
+    
+    position: absolute;
+    bottom: 32px; /*position respect to footer height */
+    top: 44px; /*position respect to navigation bar */
+    left: 0px;
+    right: 0px;
+}
+
+.ds-shared-mainPane h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3a3a3a;
+    margin: 0px;
+    padding-top:10px;
+}
+
+.ds-shared-mainPane header {
+    margin-bottom: 15px;
+    padding-left: 30px;
+}
+
+.ds-shared-indent1 {
+    margin-left: 60px;
+}
+
+.ds-shared-indent2 {
+    margin-left: 80px;
+}
+
+/**
+ UI COMPONENTS
+ */
+
+.ds-shared-disabled-button {
+    background-color: #F1F2F2;
+    border: 2px solid #fff;
+    color: #A7A9AC;
+}
+
+.ds-shared-disabled-text {
+    color: #A7A9AC;    
+}
+
+.ds-shared-grey-button {
+    padding: 4px 4px 4px 4px;
+    border-radius: 4px;
+    border: 1px solid #B5B5B5;
+    background: -moz-linear-gradient(top,  #fff,  #ececec);
+    background: #eff1f4;
+    
+}
+
+.ds-shared-green-button {
+    padding: 4px;
+    background-color: #009444;
+    box-shadow: 3px 3px 5px -1px #808285;
+    border: none;
+    color: #fff;
+}
+
+@-moz-keyframes decapod-busy-spinner {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+
+.ds-shared-spinner {
+    height: 19px;
+    width: 19px;
+    
+    display:inline-block;
+    -moz-transform-origin: 10px 10px; /* so animation properly rotates around center. */    
+    -moz-animation-name: decapod-busy-spinner;
+    -moz-animation-duration: 1s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    transform-origin: 10px 10px;
+}
+
+.ds-shared-spinner-outerCircle {
+    width: 15px;
+	height: 15px;
+	background: #D1D3D4;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	position: absolute;
+	-moz-transform: translate(2px, 2px);
+}
+
+.ds-shared-spinner-innerCircle {
+    width: 9px;
+	height: 9px;
+	background: #fff;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	position: absolute;
+	-moz-transform: translate(5px, 5px);
+}
+
+.ds-shared-spinner-dot {
+    width: 5px;
+	height: 5px;
+	background: #2BB673;
+	-moz-transform: translate(7px, 1px);
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	position: absolute;
+}

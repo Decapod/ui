@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Decapod Import</title>
+        
+        <link rel="stylesheet" type="text/css" href="../../../lib/infusion/framework/fss/css/fss-reset.css" />
+        <link rel="stylesheet" type="text/css" href="../../../lib/infusion/framework/fss/css/fss-layout.css" />       
+        <link rel="stylesheet" type="text/css" href="../../../shared/css/decapod.css" />
+        <link rel="stylesheet" type="text/css" href="../css/exporter.css" />
+        
+        <!-- Required JavaScript modules for the Import component. -->
+        <script type="text/javascript" src="../../../lib/infusion/MyInfusion.js"></script>
+        <script type="text/javascript" src="../../../shared/js/decapodContext.js"></script>
+        <script type="text/javascript" src="../js/importStatusDemands.js"></script>
+        <script type="text/javascript" src="../js/importStatus.js"></script>
+        <script type="text/javascript" src="../js/exportTypeDemands.js"></script>
+        <script type="text/javascript" src="../js/exportType.js"></script>
+        <script type="text/javascript" src="../../visSwitcher/js/visSwitcherDemands.js"></script>
+        <script type="text/javascript" src="../../visSwitcher/js/visSwitcher.js"></script>
+        <script type="text/javascript" src="../js/exporterDemands.js"></script>
+        <script type="text/javascript" src="../js/exporter.js"></script>
+
+    </head>
+    
+    <body>
+    
+        
+        <section class="dc-exporter ds-shared-decapod">
+            
+            <!-- NAVIGATION BAR -->
+            <nav class="ds-shared-navigationBar">
+                <ul class="ds-shared-navigationBar-flatList">
+                    <li><a class="ds-shared-navigationBar-currentBreadcrumb" href="">Decapod 0.5</a></li>
+                </ul>
+            </nav>
+
+            <!-- FOOTER -->
+            <footer>
+            
+            </footer>
+
+            <!-- DECAPOD EXPORT INTERFACE -->
+            <section class="ds-shared-mainPane">
+                <div class="ds-exporter">
+                
+                    <header>
+                        <h1>Exporter Title</h1>
+                    </header>
+                    
+                    <div class="dc-exporter-upload ds-exporter-upload ds-shared-indent1">
+                        <div class="dc-exporter-importMessages ds-exporter-upload-messages">
+                            <div class="dc-exporter-instructions">
+                                <p>Instructions go here.<br />
+                                    <ul>
+                                        <li>Later replaced by upload status messages.</li>
+                                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </li>
+                                        <li>Cras volutpat, lectus eu aliquam consequat, metus nisi aliquam quam,</li>
+                                        <li>id molestie odio dui non risus. Donec suscipit nunc vitae lectus</li>
+                                    </ul>
+                                </p>
+                            </div>
+                            <div class="dc-exporter-importStatus">
+                                <p class="dc-importStatus-renderer-statusMessage">No Statuses</p>
+                            </div>
+                        </div>
+                        
+                        <div class="ds-exporter-uploadControls">
+                            <a class="dc-exporter-uploadClear ds-exporter-uploadClear ds-exporter-uploadClear-dim" href="">Clear link text</a>
+                            <span class="dc-exporter-uploadBrowse ds-shared-grey-button ds-exporter-uploadBrowse">
+                                <span class="flc-uploader-button-browse-text ds-exporter-uploadBrowseText">Browse files</span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <header>
+                        <h1>Exporter format types go below</h1>
+                    </header>
+                    
+                    <div class="dc-exporter-formatGroup ds-exporter-formatGroup">
+                        <h2 class="ds-shared-indent1">Group</h2>
+                        
+                        <div class="dc-exporter-imagePDF">
+                            <!-- Export format name and description -->
+                            <div class="ds-exporter-formatDescriptionBlock ds-shared-indent2">
+                                <label class="dc-exportType-name ds-exporter-formatLabel">Format type label: </label>
+                                <div class="dc-exportType-description ds-exporter-formatDescription">Description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                            </div>
+                            <!-- Export format's options-->
+                            <div class="dc-exportType-pdfOptions dc-pdfExporter-pdfOptions ds-exporter-exportOptions ds-shared-indent2"></div>
+                            <div class="dc-exportType-controls dc-pdfExporter-controls"></div>
+                        </div>
+                        <div class="dc-exporter-ocrPDF">
+                            <!-- Export format name and description -->
+                            <div class="ds-exporter-formatDescriptionBlock ds-shared-indent2">
+                                <label class="dc-exportType-name ds-exporter-formatLabel">Format type label: </label>
+                                <div class="dc-exportType-description ds-exporter-formatDescription">Description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                            </div>
+                            <!-- Export format's options-->
+                            <div class="dc-exportType-pdfOptions dc-pdfExporter-pdfOptions ds-exporter-exportOptions ds-shared-indent2"></div>
+                            <div class="dc-exportType-controls dc-pdfExporter-controls"></div>
+                        </div>
+                        <div class="dc-exporter-tracedPDF">
+                            <!-- Export format name and description -->
+                            <div class="ds-exporter-formatDescriptionBlock ds-shared-indent2">
+                                <label class="dc-exportType-name ds-exporter-formatLabel">Format type label: </label>
+                                <div class="dc-exportType-description ds-exporter-formatDescription">Description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                            </div>
+                            <!-- Export format's options-->
+                            <div class="dc-exportType-pdfOptions dc-pdfExporter-pdfOptions ds-exporter-exportOptions ds-shared-indent2"></div>
+                            <div class="dc-exportType-controls dc-pdfExporter-controls"></div>
+                        </div>
+
+
+                    </div>
+            
+                </div>
+            </section>
+        </section>
+        <script>
+            decapod.exporter(".dc-exporter");
+        </script>
+    </body>
+</html>

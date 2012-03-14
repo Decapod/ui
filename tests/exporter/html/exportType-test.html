@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Decapod Export Type Tests</title>
+        
+        <!-- Required stylesheets for testing the component. -->
+        <link rel="Stylesheet" media="screen" href="../../../lib/infusion/tests/lib/qunit/css/qunit.css" />
+        
+        <!-- Required JavaScript modules for testing the component. -->
+        <script src="../../../lib/infusion/MyInfusion.js"></script>
+        
+        <!-- jqUnit -->
+        <script src="../../../lib/infusion/tests/lib/qunit/js/qunit.js"></script>
+        <script src="../../../lib/infusion/tests/test-core/jqUnit/js/jqUnit.js"></script>
+        
+        <!-- Tests and tested component -->
+        <script src="../../shared/js/DecapodTestContext.js"></script>
+        <script src="../../../components/dataSource/js/DataSource.js"></script>
+        <script src="../../../components/dataSource/js/DataSourceDemands.js"></script>
+        <script src="../../../components/visSwitcher/js/visSwitcherDemands.js"></script>
+        <script src="../../../components/visSwitcher/js/visSwitcher.js"></script>
+        <script src="../js/exportTypeTestsDemands.js"></script>
+        <script src="../../../components/exporter/js/exportTypeDemands.js"></script>
+        <script src="../../../components/exporter/js/exportType.js"></script>
+        <script src="../js/exportTypeTests.js"></script>
+        
+    </head>
+    <body>
+        <!-- Markup that jqUnit will look for when running tests and displaying the results. -->
+        <h1 id="qunit-header">Decapod Export Type Test Suite</h1>
+        <h2 id="qunit-banner"></h2>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="main" style="display: block">
+            <div class="dc-pdfExporter dc-exportType">
+                <!-- Export format name and description -->
+                <div class="ds-exporter-formatDescriptionBlock ds-shared-indent2">
+                    <label class="dc-exportType-name ds-exporter-formatLabel">Format type label: </label>
+                    <div class="dc-exportType-description ds-exporter-formatDescription">Description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                </div>
+                <!-- Export format's options-->
+                <div class="dc-exportType-pdfOptions dc-pdfExporter-pdfOptions ds-exporter-exportOptions ds-shared-indent2"></div>
+                <div class="dc-exportType-controls dc-pdfExporter-controls"></div>
+            </div>
+        </div>
+    </body>
+</html>
