@@ -34,17 +34,7 @@ var decapod = decapod || {};
         selectors: {
             exportTypeContainer: ".dc-pdfExporter-exportType",
             pdfOptionsContainer: ".dc-pdfExporter-pdfOptions",
-            controlsContainer: ".dc-pdfExporter-controls",
-            name: ".dc-exportType-name",
-            description: ".dc-exportType-description",
-            resolutionLabel: ".dc-exportType-pdfOptions-resolutionLabel",
-            resolution: ".dc-exportType-pdfOptions-resolution",
-            dimensionsLabel: ".dc-exportType-pdfOptions-dimensionsLabel",
-            dimensions: ".dc-exportType-pdfOptions-dimensions",
-            exportControl: ".dc-exportType-controls-exportControl",
-            progressMessage: ".dc-exportType-controls-progressMessage",
-            download: ".dc-exportType-controls-download",
-            restart: ".dc-exportType-controls-restart"
+            controlsContainer: ".dc-pdfExporter-controls"
         },
         strings: {
             name: "Format type label",
@@ -77,10 +67,6 @@ var decapod = decapod || {};
                 container: "{pdfExporter}.dom.exportTypeContainer",
                 createOnEvent: "afterFetchResources",
                 options: {
-                    selectors: {
-                        name: "{pdfExporter}.options.selectors.name",
-                        description: "{pdfExporter}.options.selectors.description"
-                    },
                     strings: {
                         name: "{pdfExporter}.options.strings.name",
                         description: "{pdfExporter}.options.strings.description"
@@ -92,12 +78,6 @@ var decapod = decapod || {};
                 container: "{pdfExporter}.dom.pdfOptionsContainer",
                 createOnEvent: "afterFetchResources",
                 options: {
-                    selectors: {
-                        resolutionLabel: "{pdfExporter}.options.selectors.resolutionLabel",
-                        resolution: "{pdfExporter}.options.selectors.resolution",
-                        dimensionsLabel: "{pdfExporter}.options.selectors.dimensionsLabel",
-                        dimensions: "{pdfExporter}.options.selectors.dimensions"
-                    },
                     strings: {
                         resolutionLabel: "{pdfExporter}.options.strings.resolutionLabel",
                         dimensionsLabel: "{pdfExporter}.options.strings.dimensionsLabel",
@@ -110,12 +90,6 @@ var decapod = decapod || {};
                 container: "{pdfExporter}.dom.controlsContainer",
                 createOnEvent: "afterFetchResources",
                 options: {
-                    selectors: {
-                        exportControl: "{pdfExporter}.options.selectors.exportControl",
-                        progressMessage: "{pdfExporter}.options.selectors.progressMessage",
-                        download: "{pdfExporter}.options.selectors.download",
-                        restart: "{pdfExporter}.options.selectors.restart"
-                    },
                     strings: {
                         exportControl: "{pdfExporter}.options.strings.exportControl",
                         progressMessage: "{pdfExporter}.options.strings.progressMessage",
