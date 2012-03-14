@@ -53,7 +53,7 @@ var decapod = decapod || {};
             afterControlsRendered: null,
             afterOptionsRendered: null,
             afterExportComplete: null,
-            onStartExport: null
+            onExportStart: null
         },
         resources: {
             template: {

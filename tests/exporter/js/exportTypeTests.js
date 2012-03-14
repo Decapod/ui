@@ -331,21 +331,21 @@ var decapod = decapod || {};
             });
         });
 
-        pdfExporterTests.asyncTest("onStartExport event", function () {
+        pdfExporterTests.asyncTest("onExportStart event", function () {
             jqUnit.expect(5);
             var assertEvent = function (that) {
-                jqUnit.assertTrue("The onStartExportEvent should have fired", true);
+                jqUnit.assertTrue("The onExportStart event should have fired", true);
                 assertShowProgressControls(that);
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
                 listeners: {
-                    onStartExport: {
+                    onExportStart: {
                         listener: assertEvent,
                         priority: "last"
                     },
                     afterControlsRendered: {
-                        listener: "{pdfExporter}.events.onStartExport.fire",
+                        listener: "{pdfExporter}.events.onExportStart.fire",
                         priority: "last"
                     }
                 }

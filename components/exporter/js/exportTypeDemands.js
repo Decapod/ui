@@ -33,7 +33,7 @@ var decapod = decapod || {};
         options: {
             events: {
                 afterRender: "{pdfExporter}.events.afterControlsRendered",
-                onExportTrigger: "{pdfExporter}.events.onStartExport"
+                onExportTrigger: "{pdfExporter}.events.onExportStart"
             }
         }
     });
