@@ -22,8 +22,8 @@ var decapod = decapod || {};
     /*******************
      * Invoker Demands *
      *******************/
-      // Due to FLUID-4631, there is a work around implemented in importStatusDemands.js. However, it is only needed for the actual implementation, but not the tests.
-      // This demands block puts back in the proper implementation just for the unit tests.
-     fluid.demands("decapod.importStatus.addError", ["decapod.test", "decapod.importStatus"], ["{importStatus}", "{arguments}.0"]);
+    // Due to FLUID-4631, there is a work around implemented in importStatusDemands.js. However, it is only needed for the actual implementation, but not the tests.
+    // This demands block puts back in the proper implementation just for the unit tests.
+    fluid.demands("decapod.importStatus.addError", ["decapod.test", "decapod.importStatus"], ["{importStatus}", "{arguments}.0"]);
     
 })(jQuery);
