@@ -330,30 +330,22 @@ var decapod = decapod || {};
                 }
             });
         });
-        
+
         pdfExporterTests.asyncTest("onStartExport event", function () {
             jqUnit.expect(5);
-            var triggerEvent = function (that) {
-                that.events.onStartExport.fire(that);
-            };
             var assertEvent = function (that) {
                 jqUnit.assertTrue("The onStartExportEvent should have fired", true);
                 assertShowProgressControls(that);
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
-                events: {
-                    afterControls: {
-                        event: "afterControlsRendered"
-                    }
-                },
                 listeners: {
                     onStartExport: {
                         listener: assertEvent,
                         priority: "last"
                     },
-                    afterControls: {
-                        listener: triggerEvent,
+                    afterControlsRendered: {
+                        listener: "{pdfExporter}.events.onStartExport.fire",
                         priority: "last"
                     }
                 }
@@ -362,27 +354,19 @@ var decapod = decapod || {};
         
         pdfExporterTests.asyncTest("afterExportComplete", function () {
             jqUnit.expect(5);
-            var triggerEvent = function (that) {
-                that.events.afterExportComplete.fire(that);
-            };
             var assertEvent = function (that) {
                 jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
                 assertShowFinishControls(that);
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
-                events: {
-                    afterControls: {
-                        event: "afterControlsRendered"
-                    }
-                },
                 listeners: {
                     afterExportComplete: {
                         listener: assertEvent,
                         priority: "last"
                     },
-                    afterControls: {
-                        listener: triggerEvent,
+                    afterControlsRendered: {
+                        listener: "{pdfExporter}.events.afterExportComplete.fire",
                         priority: "last"
                     }
                 }
