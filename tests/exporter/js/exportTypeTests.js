@@ -21,6 +21,7 @@ var decapod = decapod || {};
     var TYPE_CONTAINER = ".dc-exportType";
     var PDF_OPTS_CONTAINER = ".dc-exportType-pdfOptions";
     var CONTROLS_CONTAINER = ".dc-exportType-controls";
+    var TRIGGER_CONTAINER = ".dc-exportType-controls-trigger";
     var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
     var generateComponent = function (component, container, templateURL, options) {
         var opts = {
@@ -51,6 +52,10 @@ var decapod = decapod || {};
         return generateComponent("decapod.pdfExporter", container, "../../../components/exporter/html/pdfExporterTemplate.html", options);
     };
     
+    var createTrigger = function (container, options) {
+        return generateComponent("decapod.exportType.controls.trigger", container, "../../../components/exporter/html/exportControlsTriggerTemplate.html", options);
+    };
+    
     var assertExportTypeRender = function (that) {
         var str = that.options.strings;
         jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
@@ -65,6 +70,14 @@ var decapod = decapod || {};
         jqUnit.assertEquals("The dimensions text should be rendered", str.documentDimensions, that.locate("documentDimensions").text());
     };
     
+    var assertTriggerRender = function (that) {
+        var str = that.options.strings;
+        var trigger = that.locate("trigger");
+        jqUnit.assertEquals("The export button should be rendered", str.trigger, trigger.text());
+        jqUnit.isVisible("The export control should be visible", trigger);
+    };
+    
+    // todo refector when the exportControls component becomes a parent of individual control components
     var assertExportControlsRender = function (that) {
         var str = that.options.strings;
         var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
@@ -294,6 +307,54 @@ var decapod = decapod || {};
             });
         });
         
+        controlsTests.test("decapod.exportType.controls.hide", function () {
+            var elm = $(".visible");
+            decapod.exportType.controls.hide(elm);
+            
+            jqUnit.notVisible("The element should be hidden", elm);
+        });
+        
+        controlsTests.test("decapod.exportType.controls.show", function () {
+            var elm = $(".hidden");
+            decapod.exportType.controls.show(elm);
+            
+            jqUnit.isVisible("The element should be visible", elm);
+        });
+        
+        controlsTests.test("Trigger - init", function () {
+            var that = createTrigger(TRIGGER_CONTAINER);
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        controlsTests.asyncTest("Trigger - Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createTrigger(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Trigger - Rendering", function () {
+            jqUnit.expect(2);
+            var assertRendering = function (that) {
+                assertTriggerRender(that);
+                start();
+            };
+            createTrigger(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
         var pdfExporterTests = jqUnit.testCase("Decapod PDF Exporter");
         
         pdfExporterTests.test("Init tests", function () {
@@ -307,7 +368,7 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
                 start();
             };
-            createPDFExporter(CONTROLS_CONTAINER, {
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
                 listeners: {
                     afterFetchResources: assertFetchResources
                 }

@@ -72,6 +72,15 @@ var decapod = decapod || {};
             }
         }
     });
+    fluid.demands("decapod.exportType.controls.trigger", ["decapod.test"], {
+        options: {
+            resources: {
+                template: {
+                    url: "../../../components/exporter/html/exportControlsTriggerTemplate.html"
+                }
+            }
+        }
+    });
     
     /*****************
      * Event Demands *
