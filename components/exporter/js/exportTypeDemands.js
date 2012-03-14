@@ -22,7 +22,13 @@ var decapod = decapod || {};
     /*************************
      * Sub Component Demands *
      *************************/
-    
+    fluid.demands("decapod.exportType", ["decapod.pdfExporter"], {
+        options: {
+            events: {
+                afterRender: "{pdfExporter}.events.afterExportTypeRendered"
+            }
+        }
+    });
     fluid.demands("decapod.exportType.controls", ["decapod.pdfExporter"], {
         options: {
             events: {
@@ -42,7 +48,9 @@ var decapod = decapod || {};
     /*******************
      * Invoker Demands *
      *******************/
-
+    fluid.demands("decapod.exportType.renderText", ["decapod.exportType"], {
+        args: ["{decapod.exportType.renderText}"]
+    });
     fluid.demands("decapod.exportType.controls.showStartControls", ["decapod.exportType.controls", "decapod.visSwitcher"], {
         funcName: "decapod.exportType.controls.showControls",
         args: ["{controls}.controlToggle", "exportControl"]
