@@ -18,6 +18,19 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
+
+    fluid.demands("decapod.exportType", ["decapod.test", "decapod.pdfExporter"], {
+        options: {
+            events: {
+                afterRender: "{pdfExporter}.events.afterExportTypeRendered"
+            },
+            resources: {
+                template: {
+                    url: "../../../components/exporter/html/exportTypeTemplate.html"
+                }
+            }
+        }
+    });
     
     fluid.demands("decapod.exportType.controls", ["decapod.test", "decapod.pdfExporter"], {
         options: {
@@ -50,6 +63,15 @@ var decapod = decapod || {};
             }
         }
     });
+    fluid.demands("decapod.pdfExporter", ["decapod.test"], {
+        options: {
+            resources: {
+                template: {
+                    url: "../../../components/exporter/html/pdfExporterTemplate.html"
+                }
+            }
+        }
+    });
     
     /*****************
      * Event Demands *
@@ -60,5 +82,4 @@ var decapod = decapod || {};
         "{pdfOptions}"
     ]);
     fluid.demands("testClick", ["decapod.test", "decapod.exportType.controls"], ["{controls}"]);
-    fluid.demands("afterControls", ["decapod.test", "decapod.pdfExporter"], ["{pdfExporter}"]);
 })(jQuery);

@@ -34,12 +34,27 @@ var decapod = decapod || {};
         fluid.merge("replace", opts, options || {});
         return fluid.invokeGlobalFunction(component, [container, opts]);
     };
+    
+    var createExportType = function (container, options) {
+        return generateComponent("decapod.exportType", container, "../../../components/exporter/html/exportTypeTemplate.html", options);
+    };
+    
     var createPDFOptions = function (container, options) {
         return generateComponent("decapod.exportType.pdfOptions", container, "../../../components/exporter/html/pdfOptionsTemplate.html", options);
     };
     
     var createControls = function (container, options) {
         return generateComponent("decapod.exportType.controls", container, "../../../components/exporter/html/exportControlsTemplate.html", options);
+    };
+    
+    var createPDFExporter = function (container, options) {
+        return generateComponent("decapod.pdfExporter", container, "../../../components/exporter/html/pdfExporterTemplate.html", options);
+    };
+    
+    var assertExportTypeRender = function (that) {
+        var str = that.options.strings;
+        jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
+        jqUnit.assertEquals("The description should be rendered", str.description, that.locate("description").text());
     };
     
     var assertPDFOptionsRender = function (that) {
@@ -84,15 +99,26 @@ var decapod = decapod || {};
         var exportTypeTests = jqUnit.testCase("Decapod Export Type");
         
         exportTypeTests.test("Init tests", function () {
-            var that = decapod.exportType(TYPE_CONTAINER);
+            var that = createExportType(TYPE_CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
+        exportTypeTests.asyncTest("Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createExportType(TYPE_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
+        });
+        
         exportTypeTests.test("Rendering", function () {
-            var that = decapod.exportType(TYPE_CONTAINER);
-            var str = that.options.strings;
-            jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
-            jqUnit.assertEquals("The description should be rendered", str.description, that.locate("description").text());
+            var that = createExportType(TYPE_CONTAINER);
+            assertExportTypeRender(that);
         });
         
         var pdfOptionsTests = jqUnit.testCase("Decapod Export Type PDF Options");
@@ -271,8 +297,21 @@ var decapod = decapod || {};
         var pdfExporterTests = jqUnit.testCase("Decapod PDF Exporter");
         
         pdfExporterTests.test("Init tests", function () {
-            var that = decapod.pdfExporter(PDF_EXPORTER_CONTAINER);
+            var that = createPDFExporter(PDF_EXPORTER_CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        pdfExporterTests.asyncTest("Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createPDFExporter(CONTROLS_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
         });
         
         pdfExporterTests.asyncTest("Rendering", function () {
@@ -280,43 +319,33 @@ var decapod = decapod || {};
                 assertExportControlsRender(that);
                 start();
             };
-            var that = decapod.pdfExporter(PDF_EXPORTER_CONTAINER, {
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
                 listeners: {
                     afterOptionsRendered: assertPDFOptionsRender,
+                    afterExportTypeRendered: assertExportTypeRender,
                     afterControlsRendered: {
                         listener: assertRendering,
                         priority: "last"
                     }
                 }
             });
-            var str = that.options.strings;
-            jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
-            jqUnit.assertEquals("The description should be rendered", str.description, that.locate("description").text());
         });
-        
+
         pdfExporterTests.asyncTest("onStartExport event", function () {
             jqUnit.expect(5);
-            var triggerEvent = function (that) {
-                that.events.onStartExport.fire(that);
-            };
             var assertEvent = function (that) {
                 jqUnit.assertTrue("The onStartExportEvent should have fired", true);
                 assertShowProgressControls(that);
                 start();
             };
-            decapod.pdfExporter(PDF_EXPORTER_CONTAINER, {
-                events: {
-                    afterControls: {
-                        event: "afterControlsRendered"
-                    }
-                },
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
                 listeners: {
                     onStartExport: {
                         listener: assertEvent,
                         priority: "last"
                     },
-                    afterControls: {
-                        listener: triggerEvent,
+                    afterControlsRendered: {
+                        listener: "{pdfExporter}.events.onStartExport.fire",
                         priority: "last"
                     }
                 }
@@ -325,27 +354,19 @@ var decapod = decapod || {};
         
         pdfExporterTests.asyncTest("afterExportComplete", function () {
             jqUnit.expect(5);
-            var triggerEvent = function (that) {
-                that.events.afterExportComplete.fire(that);
-            };
             var assertEvent = function (that) {
                 jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
                 assertShowFinishControls(that);
                 start();
             };
-            decapod.pdfExporter(PDF_EXPORTER_CONTAINER, {
-                events: {
-                    afterControls: {
-                        event: "afterControlsRendered"
-                    }
-                },
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
                 listeners: {
                     afterExportComplete: {
                         listener: assertEvent,
                         priority: "last"
                     },
-                    afterControls: {
-                        listener: triggerEvent,
+                    afterControlsRendered: {
+                        listener: "{pdfExporter}.events.afterExportComplete.fire",
                         priority: "last"
                     }
                 }
