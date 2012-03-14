@@ -127,6 +127,7 @@ a.ds-shared-navigationBar-currentBreadcrumb {
     color: #3a3a3a;
     margin: 0px;
     padding-top:10px;
+    text-shadow: 1px 1px #fff;
 }
 
 .ds-shared-mainPane header {
