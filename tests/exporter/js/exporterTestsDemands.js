@@ -21,7 +21,7 @@ var decapod = decapod || {};
     fluid.demands("decapod.pdfExporter", ["decapod.test", "decapod.exporter"], {
         options: {
             listeners: {
-                "onStartExport.triggerExporter": "{exporter}.events.onExportStart.fire"
+                "onExportStart.triggerExporter": "{exporter}.events.onExportStart.fire"
             },
             resources: {
                 template: {

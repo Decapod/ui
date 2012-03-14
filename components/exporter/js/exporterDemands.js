@@ -26,7 +26,7 @@ var decapod = decapod || {};
      fluid.demands("decapod.pdfExporter", ["decapod.exporter"], {
         options: {
             listeners: {
-                "onStartExport.triggerExporter": "{exporter}.events.onExportStart.fire"
+                "onExportStart.triggerExporter": "{exporter}.events.onExportStart.fire"
             }
         }
      });
