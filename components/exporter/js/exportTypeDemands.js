@@ -63,6 +63,12 @@ var decapod = decapod || {};
         funcName: "decapod.exportType.controls.showControls",
         args: ["{controls}.controlToggle", ["download", "restart"]]
     });
+    fluid.demands("decapod.exportType.controls.hide", ["decapod.exportType.controls.trigger"], {
+        args: ["{trigger}.dom.trigger"]
+    });
+    fluid.demands("decapod.exportType.controls.show", ["decapod.exportType.controls.trigger"], {
+        args: ["{trigger}.dom.trigger"]
+    });
 
     
 })(jQuery);

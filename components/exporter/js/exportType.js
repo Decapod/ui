@@ -363,6 +363,10 @@ var decapod = decapod || {};
             afterFetchResources: null,
             afterTriggered: null
         },
+        invokers: {
+            hide: "decapod.exportType.controls.hide",
+            show: "decapod.exportType.controls.show"
+        },
         resources: {
             template: {
                 url: "../html/exportControlsTriggerTemplate.html",
