@@ -36,13 +36,13 @@ var decapod = decapod || {};
     $(document).ready(function () {
         
         var assertReset = function (importStatus) {
-        	jqUnit.assertEquals("The totalNumFiles should be reset", 0, importStatus.totalNumFiles);
-        	jqUnit.assertEquals("The numValidFiles should be reset", 0, importStatus.numValidFiles);
-        	jqUnit.assertEquals("The numInvalidFiles should be reset", 0, importStatus.numInvalidFiles);
-        	
-        	for (error in importStatus.errors) {
-        		jqUnit.assertEquals("The count for error " + error + " should be reset", 0, importStatus.errors[error]);
-        	}
+            jqUnit.assertEquals("The totalNumFiles should be reset", 0, importStatus.totalNumFiles);
+            jqUnit.assertEquals("The numValidFiles should be reset", 0, importStatus.numValidFiles);
+            jqUnit.assertEquals("The numInvalidFiles should be reset", 0, importStatus.numInvalidFiles);
+            
+            for (var error in importStatus.errors) {
+                jqUnit.assertEquals("The count for error " + error + " should be reset", 0, importStatus.errors[error]);
+            }
         };
         
         var tests = jqUnit.testCase("Decapod Import Status");
@@ -52,61 +52,61 @@ var decapod = decapod || {};
             jqUnit.assertTrue("The importStatus component should have initialized", importStatus);
             jqUnit.assertEquals("Initial number of valid files found", 0, importStatus.numValidFiles);
             jqUnit.assertEquals("Initial number of invalid files found", 0, importStatus.numInvalidFiles);
-            for (error in importStatus.errors) {
-            	jqUnit.assertEquals("The initial number of errors of type " + error, 0, importStatus.errors[error]);
+            for (var error in importStatus.errors) {
+                jqUnit.assertEquals("The initial number of errors of type " + error, 0, importStatus.errors[error]);
             }
             jqUnit.assertEquals("Initial total number of files found", 0, importStatus.totalNumFiles);
         });
         
         tests.test("setNumValidFiles", function () {
-        	var importStatus = decapod.importStatus(CONTAINER);
-        	var numValidFiles = 5;
-        	var mockThat = {
-        		totalNumFiles: 0,
-        		numValidFiles: 0
-        	};
-        	
-        	decapod.importStatus.setNumValidFiles(mockThat, numValidFiles);
-        	jqUnit.assertEquals("numValidFiles is set - global function", numValidFiles, mockThat.numValidFiles);
-        	jqUnit.assertEquals("The totalNumFiles should be updated - through the component", numValidFiles, mockThat.totalNumFiles);
-        	
-        	importStatus.setNumValidFiles(numValidFiles);
-        	jqUnit.assertEquals("numValidFiles is set - through the component", numValidFiles, importStatus.numValidFiles);
-        	jqUnit.assertEquals("The totalNumFiles should be updated - through the component", numValidFiles, importStatus.numValidFiles);
+            var importStatus = decapod.importStatus(CONTAINER);
+            var numValidFiles = 5;
+            var mockThat = {
+                totalNumFiles: 0,
+                numValidFiles: 0
+            };
+            
+            decapod.importStatus.setNumValidFiles(mockThat, numValidFiles);
+            jqUnit.assertEquals("numValidFiles is set - global function", numValidFiles, mockThat.numValidFiles);
+            jqUnit.assertEquals("The totalNumFiles should be updated - through the component", numValidFiles, mockThat.totalNumFiles);
+            
+            importStatus.setNumValidFiles(numValidFiles);
+            jqUnit.assertEquals("numValidFiles is set - through the component", numValidFiles, importStatus.numValidFiles);
+            jqUnit.assertEquals("The totalNumFiles should be updated - through the component", numValidFiles, importStatus.numValidFiles);
         });
         
         tests.test("addError", function () {
-        	var importStatus = decapod.importStatus(CONTAINER);
-        	var mockThat = {
-        		totalNumFiles: 0,
-        		numInvalidFiles: 0,
-        		errors: {
-        			"-100": 0,
-        			"-110": 0,
-        			"-120": 0,
-        			"-130": 0
-        		}
-        	};
-        	for (error in mockThat.errors) {
-        		var eNum = parseInt(error, 10);
-        		decapod.importStatus.addError(mockThat, eNum);
-        		importStatus.addError(eNum)
-        		
-        		jqUnit.assertEquals("A " + eNum + " error should be added - global function", 1, mockThat.errors[eNum]);
+            var importStatus = decapod.importStatus(CONTAINER);
+            var mockThat = {
+                totalNumFiles: 0,
+                numInvalidFiles: 0,
+                errors: {
+                    "-100": 0,
+                    "-110": 0,
+                    "-120": 0,
+                    "-130": 0
+                }
+            };
+            for (var error in mockThat.errors) {
+                var eNum = parseInt(error, 10);
+                decapod.importStatus.addError(mockThat, eNum);
+                importStatus.addError(eNum);
+                
+                jqUnit.assertEquals("A " + eNum + " error should be added - global function", 1, mockThat.errors[eNum]);
                 jqUnit.assertEquals("A " + eNum + " error should be added - through the component", 1, importStatus.errors[eNum]);
-        	}
-        	jqUnit.assertEquals("numInvalidFiles is updated - global function", 4, mockThat.numInvalidFiles);
-        	jqUnit.assertEquals("numInvalidFiles is updated - through the component", 4, importStatus.numInvalidFiles);
-        	
+            }
+            jqUnit.assertEquals("numInvalidFiles is updated - global function", 4, mockThat.numInvalidFiles);
+            jqUnit.assertEquals("numInvalidFiles is updated - through the component", 4, importStatus.numInvalidFiles);
+            
             jqUnit.assertEquals("numValidFiles is set - through the component", 4, importStatus.totalNumFiles);
             jqUnit.assertEquals("The totalNumFiles should be updated - through the component", 4, importStatus.totalNumFiles);
         });
         
         tests.test("decapod.importStatus.reset", function () {
-        	var mockThat = {
-        		options: {
-        			errorNums: [-100, -110, -120, -130]
-        		},
+            var mockThat = {
+                options: {
+                    errorNums: [-100, -110, -120, -130]
+                },
                 totalNumFiles: 11,
                 numInvalidFiles: 6,
                 numValidFiles: 5,
@@ -116,33 +116,33 @@ var decapod = decapod || {};
                     "-120": 1,
                     "-130": 0
                 }
-        	};
-        	
-        	decapod.importStatus.reset(mockThat);
-        	assertReset(mockThat);
+            };
+            
+            decapod.importStatus.reset(mockThat);
+            assertReset(mockThat);
         });
         
         tests.test("reset", function () {
-        	var importStatus = decapod.importStatus(CONTAINER);
-        	importStatus.setNumValidFiles(10);
-        	for (error in importStatus.errors) {
-        		importStatus.addError(error);
-        	}
-        	importStatus.reset();
-        	assertReset(importStatus);
+            var importStatus = decapod.importStatus(CONTAINER);
+            importStatus.setNumValidFiles(10);
+            for (var error in importStatus.errors) {
+                importStatus.addError(error);
+            }
+            importStatus.reset();
+            assertReset(importStatus);
         });
         
         tests.test("decapod.importStatus.statusMessages", function () {
-           var mockThat = {
+            var mockThat = {
                 options: {
                     errorNums: [-100, -110, -120, -130],
-	                strings: {
-	                    "total": "%totalNumFiles files found.",
-	                    "-100": "%-100 files exceeded the queue limit",
-	                    "-110": "%-110 files exceeded the size limit (%sizeLimit)",
-	                    "-120": "%-120 files were empty (0 bytes)",
-	                    "-130": "%-130 files had an invalid file type"
-	                }
+                    strings: {
+                        "total": "%totalNumFiles files found.",
+                        "-100": "%-100 files exceeded the queue limit",
+                        "-110": "%-110 files exceeded the size limit (%sizeLimit)",
+                        "-120": "%-120 files were empty (0 bytes)",
+                        "-130": "%-130 files had an invalid file type"
+                    }
                 },
                 totalNumFiles: 12,
                 numInvalidFiles: 7,
@@ -167,9 +167,9 @@ var decapod = decapod || {};
         });
         
         tests.test("statusMessages", function () {
-        	var importStatus = decapod.importStatus(CONTAINER);
+            var importStatus = decapod.importStatus(CONTAINER);
             importStatus.setNumValidFiles(10);
-            for (error in importStatus.errors) {
+            for (var error in importStatus.errors) {
                 importStatus.addError(error);
             }
             var expectedMessages = [
@@ -185,12 +185,12 @@ var decapod = decapod || {};
         });
         
         tests.test("renderStatuses - 0 files", function () {
-        	var importStatus = decapod.importStatus(CONTAINER);
-        	var expectedMessage = "0 files found.";
-        	importStatus.renderStatuses();
-        	var messages = importStatus.renderer.locate("statusMessages");
-        	jqUnit.assertEquals("Only the 1 status should be rendered", 1, messages.length);
-        	jqUnit.assertEquals("The total status should be rendered", expectedMessage, messages.text());
+            var importStatus = decapod.importStatus(CONTAINER);
+            var expectedMessage = "0 files found.";
+            importStatus.renderStatuses();
+            var messages = importStatus.renderer.locate("statusMessages");
+            jqUnit.assertEquals("Only the 1 status should be rendered", 1, messages.length);
+            jqUnit.assertEquals("The total status should be rendered", expectedMessage, messages.text());
         });
         
         tests.test("renderStatuses - some errors", function () {
@@ -206,7 +206,7 @@ var decapod = decapod || {};
             var messages = importStatus.renderer.locate("statusMessages");
             jqUnit.assertEquals("The statuses should be rendered", 3, messages.length);
             messages.each(function (idx, message) {
-            	jqUnit.assertEquals("The message should be rendered", expectedMessages[idx], $(message).text());
+                jqUnit.assertEquals("The message should be rendered", expectedMessages[idx], $(message).text());
             });
         });
         
@@ -232,38 +232,38 @@ var decapod = decapod || {};
         });
         
         tests.test("Init importStatus.renderer tests", function () {
-        	var renderer = decapod.importStatus.renderer(RENDER_CONTAINER);
-        	jqUnit.assertTrue("The importStatus.renderer component should have initialized", renderer);
+            var renderer = decapod.importStatus.renderer(RENDER_CONTAINER);
+            jqUnit.assertTrue("The importStatus.renderer component should have initialized", renderer);
         });
         
         tests.test("decapod.importStatus.renderer.produceTree - empty model", function () {
-        	var mockThat = {
-		        selectors: {
-		            statusMessages: ".dc-importStatus-renderer-statusMessage" 
-		        },
-		        repeatingSelectors: ["statusMessages"],
-		        model: {
-		            statuses: []
-		        }
-        	};
+            var mockThat = {
+                selectors: {
+                    statusMessages: ".dc-importStatus-renderer-statusMessage" 
+                },
+                repeatingSelectors: ["statusMessages"],
+                model: {
+                    statuses: []
+                }
+            };
 
-        	var producedTree = decapod.importStatus.renderer.produceTree(mockThat);
-        	jqUnit.assertDeepEq("The proto tree should be produced", PROTO_TREE, producedTree);
+            var producedTree = decapod.importStatus.renderer.produceTree(mockThat);
+            jqUnit.assertDeepEq("The proto tree should be produced", PROTO_TREE, producedTree);
         });
         
         tests.test("render - no statuses", function () {
-        	var renderer = decapod.importStatus.renderer(RENDER_CONTAINER);
-        	jqUnit.assertEquals("There should be no statuses rendered", 0, renderer.locate("statusMessages").length);
+            var renderer = decapod.importStatus.renderer(RENDER_CONTAINER);
+            jqUnit.assertEquals("There should be no statuses rendered", 0, renderer.locate("statusMessages").length);
         });
         
         tests.test("renderer - statuses", function () {
-        	var statuses = ["status 1", "status 2"];
-        	
-        	var renderer = decapod.importStatus.renderer(RENDER_CONTAINER, {model: {statuses: statuses}});
-        	jqUnit.assertEquals("The statuses should be rendered", statuses.length, renderer.locate("statusMessages").length);
-        	for (var i = 0; i < statuses.length; i++) {
-        		jqUnit.assertEquals("The status message should be rendered", statuses[i], renderer.locate("statusMessages").eq(i).text());
-        	}
+            var statuses = ["status 1", "status 2"];
+            
+            var renderer = decapod.importStatus.renderer(RENDER_CONTAINER, {model: {statuses: statuses}});
+            jqUnit.assertEquals("The statuses should be rendered", statuses.length, renderer.locate("statusMessages").length);
+            for (var i = 0; i < statuses.length; i++) {
+                jqUnit.assertEquals("The status message should be rendered", statuses[i], renderer.locate("statusMessages").eq(i).text());
+            }
         });
         
       
