@@ -59,10 +59,10 @@ var decapod = decapod || {};
     
     var assertPDFOptionsRender = function (that) {
         var str = that.options.strings;
-        jqUnit.assertEquals("The resolution label should be rendered", str.resolutionLabel, that.locate("resolutionLabel").text());
-        jqUnit.assertEquals("The resolution should be set", that.model.dpi, that.locate("resolution").val());
-        jqUnit.assertEquals("The dimensions label should be rendered", str.dimensionsLabel, that.locate("dimensionsLabel").text());
-        jqUnit.assertEquals("The dimensions text should be rendered", str.dimensions, that.locate("dimensions").text());
+        jqUnit.assertEquals("The resolution label should be rendered", str.documentResolutionLabel, that.locate("documentResolutionLabel").text());
+        jqUnit.assertEquals("The resolution should be set", that.model.dpi, that.locate("documentResolution").val());
+        jqUnit.assertEquals("The dimensions label should be rendered", str.documentDimensionsLabel, that.locate("documentDimensionsLabel").text());
+        jqUnit.assertEquals("The dimensions text should be rendered", str.documentDimensions, that.locate("documentDimensions").text());
     };
     
     var assertExportControlsRender = function (that) {
