@@ -29,6 +29,8 @@
 }
 
 
+
+
 /* NAVIGATION BAR */
 
 .ds-shared-navigationBar {
@@ -39,6 +41,7 @@
     text-align: left;
     color: #fff;
     box-shadow: 0px 1px 2px #1a1a1a;
+    border-bottom: solid 1px #686253;    
 }
 
 ul.ds-shared-navigationBar-flatList {
@@ -56,8 +59,10 @@ ul.ds-shared-navigationBar-flatList {
 .ds-shared-navigationBar-flatList a {
     color: #fff;
     position: relative;
-	padding: 0 0 0 10px;
+	padding: 0px 0px 12px 0px;
 	font-size:12pt;
+    height: 42px;
+    
 }
 
 /**
@@ -72,8 +77,8 @@ Triangles are made by taking advantage of border's bevel effect.
 	right: -30px;
     width: 30px;
     height: 30px;
-    border-top: 1px solid #fff;
-    border-right: 1px solid #fff;
+    border-top: 2px solid #7A7262;
+    border-right: 2px solid #686253;
     -moz-transform: rotate(45deg);
     transform:rotate(45deg);
 }
@@ -81,6 +86,8 @@ Triangles are made by taking advantage of border's bevel effect.
 a.ds-shared-navigationBar-currentBreadcrumb {
     font-weight: bold;
     text-decoration: none;
+    color: #3F3C34;
+    text-shadow: 1px 1px #A89F8A;
 }
 
 /**
@@ -96,6 +103,7 @@ a.ds-shared-navigationBar-currentBreadcrumb {
     left: 0px;
     right: 0px;
     display:block;
+    border-top: solid 1px #686253;
     box-shadow: 0px -1px 2px #1a1a1a;
  }
  
@@ -104,8 +112,8 @@ a.ds-shared-navigationBar-currentBreadcrumb {
  */
  
 .ds-shared-mainPane {
-    background-color: #eff1f4;
     background-image: url("../images/background-grain.png");
+    
     position: absolute;
     bottom: 32px; /*position respect to footer height */
     top: 44px; /*position respect to navigation bar */
