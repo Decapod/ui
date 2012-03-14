@@ -318,6 +318,58 @@ var decapod = decapod || {};
         }
     });
     
+    decapod.exportType.controls.hide = function (selector) {
+        $(selector).hide();
+    };
+    
+    decapod.exportType.controls.show = function (selector) {
+        $(selector).show();
+    };
+    
+    fluid.registerNamespace("decapod.exportType.controls.trigger");
+    
+    decapod.exportType.controls.trigger.produceTree = function (that) {
+        return {
+            trigger: {
+                messagekey: "trigger",
+                decorators: [{
+                    type: "jQuery",
+                    func: "click",
+                    args: function () { that.events.onExportTrigger.fire(); }
+                }]
+            }
+        };
+    };
+    
+    decapod.exportType.controls.trigger.finalInit = function (that) {
+        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.afterFetchResources.fire(resourceSpec);
+            that.refreshView();
+        });
+    };
+    
+    fluid.defaults("decapod.exportType.controls.trigger", {
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        finalInitFunction: "decapod.exportType.controls.trigger.finalInit",
+        produceTree: "decapod.exportType.controls.trigger.produceTree",
+        selectors: {
+            trigger: ".dc-exportType-controls-trigger-exportControl"
+        },
+        strings: {
+            trigger: "Start Export"
+        },
+        events: {
+            afterFetchResources: null,
+            afterTriggered: null
+        },
+        resources: {
+            template: {
+                url: "../html/exportControlsTriggerTemplate.html",
+                forceCache: true
+            }
+        },
+    });
 
 
 })(jQuery);
