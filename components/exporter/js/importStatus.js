@@ -34,12 +34,12 @@ var decapod = decapod || {};
     };
     
     decapod.importStatus.reset = function (that) {
-        var errorNums = that.options.errorNums
+        var errorNums = that.options.errorNums;
         that.totalNumFiles = 0;
         that.numValidFiles = 0;
         that.numInvalidFiles = 0;
         
-        for (var i = 0; i < errorNums.length; i++ ) {
+        for (var i = 0; i < errorNums.length; i++) {
             that.errors[errorNums[i]] = 0;
         }
     };
@@ -48,16 +48,16 @@ var decapod = decapod || {};
         var strings = that.options.strings;
         var messages = [];
         values = values || {};
-        values["totalNumFiles"] = that.totalNumFiles;
-        values["numValidFiles"] = that.numValidFiles;
-        values["numInvalidFiles"] = that.numInvalidFiles;
+        values.totalNumFiles = that.totalNumFiles;
+        values.numValidFiles = that.numValidFiles;
+        values.numInvalidFiles = that.numInvalidFiles;
         fluid.merge("replace", values, that.errors);
         
         messages.push(fluid.stringTemplate(strings.total, values));
-        for (error in that.errors) {
+        for (var error in that.errors) {
             var numErrors = that.errors[error];
-            if (numErrors > 0 ) {
-                messages.push(fluid.stringTemplate(strings[error], values))
+            if (numErrors > 0) {
+                messages.push(fluid.stringTemplate(strings[error], values));
             }
         }
         
@@ -65,12 +65,11 @@ var decapod = decapod || {};
     };
     
     decapod.importStatus.renderStatuses = function (that) {
-        that.renderer.model.statuses = that.statusMessages()
+        that.renderer.model.statuses = that.statusMessages();
         that.renderer.refreshView();
     };
     
     decapod.importStatus.finalInit = function (that) {
-        var errorNums = that.options.errorNums
         that.errors = {};
         that.reset();
     };
@@ -113,7 +112,7 @@ var decapod = decapod || {};
                 repeatID: "statusMessages:",
                 controlledBy: "statuses",
                 pathAs: "statusPath",
-                    tree: {
+                tree: {
                     value: "${{statusPath}}"
                 }
             }

@@ -39,9 +39,9 @@ var decapod = decapod || {};
         strings: {
             name: "Format type label",
             description: "A delectable medley of bits and bytes to satisfy every platform",
-            resolutionLabel: "Output Image resolution:",
-            dimensionsLabel: "Output dimensions:",
-            dimensions: "A4(210 x 297mm / 8.3 x 11.7in.)",
+            documentResolutionLabel: "Output Image resolution:",
+            documentDimensionsLabel: "Output dimensions:",
+            documentDimensions: "A4(210 x 297mm / 8.3 x 11.7in.)",
             exportControl: "Start Export",
             progressMessage: "Export Progress",
             download: "Download Link",  
@@ -53,7 +53,7 @@ var decapod = decapod || {};
             afterControlsRendered: null,
             afterOptionsRendered: null,
             afterExportComplete: null,
-            onStartExport: null
+            onExportStart: null
         },
         resources: {
             template: {
@@ -79,9 +79,9 @@ var decapod = decapod || {};
                 createOnEvent: "afterFetchResources",
                 options: {
                     strings: {
-                        resolutionLabel: "{pdfExporter}.options.strings.resolutionLabel",
-                        dimensionsLabel: "{pdfExporter}.options.strings.dimensionsLabel",
-                        dimensions: "{pdfExporter}.options.strings.dimensions"
+                        documentResolutionLabel: "{pdfExporter}.options.strings.documentResolutionLabel",
+                        documentDimensionsLabel: "{pdfExporter}.options.strings.documentDimensionsLabel",
+                        documentDimensions: "{pdfExporter}.options.strings.documentDimensions"
                     }
                 }
             },
@@ -152,17 +152,17 @@ var decapod = decapod || {};
     
     decapod.exportType.pdfOptions.produceTree = function (that) {
         return {
-            resolutionLabel: {
-                messagekey: "resolutionLabel"
+            documentResolutionLabel: {
+                messagekey: "documentResolutionLabel"
             },
-            resolution: {
+            documentResolution: {
                 value: "${dpi}"
             },
-            dimensionsLabel: {
-                messagekey: "dimensionsLabel"
+            documentDimensionsLabel: {
+                messagekey: "documentDimensionsLabel"
             },
-            dimensions: {
-                messagekey: "dimensions"
+            documentDimensions: {
+                messagekey: "documentDimensions"
             },
             exportButton: {
                 messagekey: "exportButton"
@@ -185,10 +185,10 @@ var decapod = decapod || {};
         finalInitFunction: "decapod.exportType.pdfOptions.finalInit",
         produceTree: "decapod.exportType.pdfOptions.produceTree",
         selectors: {
-            resolutionLabel: ".dc-exportType-pdfOptions-resolutionLabel",
-            resolution: ".dc-exportType-pdfOptions-resolution",
-            dimensionsLabel: ".dc-exportType-pdfOptions-dimensionsLabel",
-            dimensions: ".dc-exportType-pdfOptions-dimensions"
+            documentResolutionLabel: ".dc-exportType-pdfOptions-documentResolutionLabel",
+            documentResolution: ".dc-exportType-pdfOptions-documentResolution",
+            documentDimensionsLabel: ".dc-exportType-pdfOptions-documentDimensionsLabel",
+            documentDimensions: ".dc-exportType-pdfOptions-documentDimensions"
         },
         model: {
             dpi: "300"
@@ -200,9 +200,9 @@ var decapod = decapod || {};
             }
         },
         strings: {
-            resolutionLabel: "Output Image resolution:",
-            dimensionsLabel: "Output dimensions:",
-            dimensions: "A4(210 x 297mm / 8.3 x 11.7in.)"
+            documentResolutionLabel: "Output Image resolution:",
+            documentDimensionsLabel: "Output dimensions:",
+            documentDimensions: "A4(210 x 297mm / 8.3 x 11.7in.)"
         },
         events: {
             afterFetchResources: null,

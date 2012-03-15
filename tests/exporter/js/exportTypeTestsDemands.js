@@ -36,10 +36,10 @@ var decapod = decapod || {};
         options: {
             events: {
                 afterRender: "{pdfExporter}.events.afterControlsRendered",
-                onExportTrigger: "{pdfExporter}.events.onStartExport"
+                onExportTrigger: "{pdfExporter}.events.onExportStart"
             },
             listeners: {
-                "{pdfExporter}.events.onStartExport": {
+                "{pdfExporter}.events.onExportStart": {
                     listener: "{controls}.showProgressControls",
                     priority: "last"
                 }

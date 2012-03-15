@@ -97,6 +97,7 @@ var decapod = decapod || {};
             var triggerEvent = function (pdfExporter) {
                 pdfExporter.locate("exportControl").click();
             };
+            
             var opts = {
                 listeners: {
                     onExportStart: function () {
@@ -109,13 +110,8 @@ var decapod = decapod || {};
             
             opts.components[subComponent] = {
                 options: {
-                    events: {
-                        afterControls: {
-                            event: "afterControlsRendered"
-                        }
-                    },
                     listeners: {
-                        afterControls: {
+                        afterControlsRendered: {
                             listener: triggerEvent,
                             priority: "last"
                         }
@@ -123,6 +119,9 @@ var decapod = decapod || {};
                 }
             };
             var exporter = decapod.exporter(CONTAINER, opts);
+            // hack to prevent the uploader from actually trying to upload anything.
+            // this allows for the testing of just the event without errors being thrown for the empty queue
+            exporter.uploader.strategy.remote.uploadNextFile = function () {};
         };
         
         exporterTests.asyncTest("imagePDF trigger onExportStart", function () {
