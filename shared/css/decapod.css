@@ -8,6 +8,9 @@
     top: 0px;
     width: 100%;
     min-width: 360px;
+    
+    background-image: url("../images/background-grain.png");
+    
 }
 
 .ds-shared-decapod @font-face {
@@ -112,13 +115,16 @@ a.ds-shared-navigationBar-currentBreadcrumb {
  */
  
 .ds-shared-mainPane {
-    background-image: url("../images/background-grain.png");
     
     position: absolute;
     bottom: 32px; /*position respect to footer height */
     top: 44px; /*position respect to navigation bar */
     left: 0px;
     right: 0px;
+    
+    width: 770px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .ds-shared-mainPane h1 {
