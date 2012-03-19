@@ -81,6 +81,24 @@ var decapod = decapod || {};
             }
         }
     });
+    fluid.demands("decapod.exportType.controls.progress", ["decapod.test"], {
+        options: {
+            resources: {
+                template: {
+                    url: "../../../components/exporter/html/exportControlsProgressTemplate.html"
+                }
+            }
+        }
+    });
+    fluid.demands("decapod.exportType.controls.download", ["decapod.test"], {
+        options: {
+            resources: {
+                template: {
+                    url: "../../../components/exporter/html/exportControlsDownloadTemplate.html"
+                }
+            }
+        }
+    });
     
     /*****************
      * Event Demands *
