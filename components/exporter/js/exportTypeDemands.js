@@ -75,6 +75,11 @@ var decapod = decapod || {};
     fluid.demands("decapod.exportType.controls.show", ["decapod.exportType.controls.progress"], {
         args: ["{progress}.container"]
     });
-
+    fluid.demands("decapod.exportType.controls.hide", ["decapod.exportType.controls.download"], {
+        args: ["{download}.container"]
+    });
+    fluid.demands("decapod.exportType.controls.show", ["decapod.exportType.controls.download"], {
+        args: ["{download}.container"]
+    });
     
 })(jQuery);
