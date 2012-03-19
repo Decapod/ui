@@ -380,7 +380,7 @@ var decapod = decapod || {};
         
         controlsTests.asyncTest("Trigger - Show", function () {
             jqUnit.expect(1);
-            var assertRendering = function (that) {
+            var assertShow = function (that) {
                 var trigger = that.locate("trigger");
                 trigger.hide(); // use jQuery to make sure it is hidden first.
                 that.show();
@@ -390,7 +390,7 @@ var decapod = decapod || {};
             createTrigger(TRIGGER_CONTAINER, {
                 listeners: {
                     afterRender: {
-                        listener: assertRendering,
+                        listener: assertShow,
                         priority: "last"
                     }
                 }
@@ -399,7 +399,7 @@ var decapod = decapod || {};
         
         controlsTests.asyncTest("Trigger - Hide", function () {
             jqUnit.expect(1);
-            var assertRendering = function (that) {
+            var assertHide = function (that) {
                 var trigger = that.locate("trigger");
                 trigger.show(); // use jQuery to make sure it is visible first.
                 that.hide();
@@ -409,7 +409,7 @@ var decapod = decapod || {};
             createTrigger(TRIGGER_CONTAINER, {
                 listeners: {
                     afterRender: {
-                        listener: assertRendering,
+                        listener: assertHide,
                         priority: "last"
                     }
                 }
@@ -481,7 +481,7 @@ var decapod = decapod || {};
         
         controlsTests.asyncTest("Progress - Show", function () {
             jqUnit.expect(1);
-            var assertRendering = function (that) {
+            var assertShow = function (that) {
                 var  progress = that.container;
                 progress.hide(); // use jQuery to make sure it is hidden first.
                 that.show();
@@ -491,7 +491,7 @@ var decapod = decapod || {};
             createProgress(TRIGGER_CONTAINER, {
                 listeners: {
                     afterRender: {
-                        listener: assertRendering,
+                        listener: assertShow,
                         priority: "last"
                     }
                 }
@@ -500,7 +500,7 @@ var decapod = decapod || {};
         
         controlsTests.asyncTest("Progress - Hide", function () {
             jqUnit.expect(1);
-            var assertRendering = function (that) {
+            var assertHide = function (that) {
                 var progress = that.container;
                 progress.show(); // use jQuery to make sure it is visible first.
                 that.hide();
@@ -510,7 +510,7 @@ var decapod = decapod || {};
             createProgress(TRIGGER_CONTAINER, {
                 listeners: {
                     afterRender: {
-                        listener: assertRendering,
+                        listener: assertHide,
                         priority: "last"
                     }
                 }
