@@ -385,6 +385,49 @@ var decapod = decapod || {};
                 url: "../html/exportControlsTriggerTemplate.html",
                 forceCache: true
             }
+        }
+    });
+    
+    fluid.registerNamespace("decapod.exportType.controls.progress");
+    
+    decapod.exportType.controls.progress.produceTree = function (that) {
+        return {
+            message: {
+                messagekey: "message"
+            }
+        };
+    };
+    
+    decapod.exportType.controls.progress.finalInit = function (that) {
+        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.afterFetchResources.fire(resourceSpec);
+            that.refreshView();
+        });
+    };
+    
+    fluid.defaults("decapod.exportType.controls.progress", {
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        finalInitFunction: "decapod.exportType.controls.progress.finalInit",
+        produceTree: "decapod.exportType.controls.progress.produceTree",
+        selectors: {
+            message: ".dc-exportType-controls-progress-message"
         },
+        strings: {
+            message: "Export Progress"
+        },
+        events: {
+            afterFetchResources: null
+        },
+        invokers: {
+            hide: "decapod.exportType.controls.hide",
+            show: "decapod.exportType.controls.show"
+        },
+        resources: {
+            template: {
+                url: "../html/exportControlsProgressTemplate.html",
+                forceCache: true
+            }
+        }
     });
 })(jQuery);
