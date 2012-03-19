@@ -31,6 +31,13 @@
     color: #1C75BC;
 }
 
+@media screen and (min-width:1280px) {
+    .ds-shared-mainPane { 
+        width: 1280px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
 
 
 
@@ -52,6 +59,7 @@ ul.ds-shared-navigationBar-flatList {
     display: table-cell;
     vertical-align: middle;
     padding-left: 20px;
+    width:850px;
 }
 
 .ds-shared-navigationBar-flatList li {
@@ -59,13 +67,12 @@ ul.ds-shared-navigationBar-flatList {
     list-style-type: none;
 }
 
-.ds-shared-navigationBar-flatList a {
+.ds-shared-navigationBar-flatList span {
     color: #fff;
     position: relative;
 	padding: 0px 0px 12px 0px;
 	font-size:12pt;
-    height: 42px;
-    
+    height: 42px;    
 }
 
 /**
@@ -73,7 +80,7 @@ Create a chevron by using two triangles overlaid each other.
 Triangles are made by taking advantage of border's bevel effect.
 **/
 
-.ds-shared-navigationBar-flatList a:after {
+.ds-shared-navigationBar-flatList span:after {
     content: "";
 	position: absolute;
 	top: -6px;
@@ -86,7 +93,7 @@ Triangles are made by taking advantage of border's bevel effect.
     transform:rotate(45deg);
 }
 
-a.ds-shared-navigationBar-currentBreadcrumb {
+span.ds-shared-navigationBar-currentBreadcrumb {
     font-weight: bold;
     text-decoration: none;
     color: #3F3C34;
