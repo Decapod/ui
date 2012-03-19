@@ -430,4 +430,58 @@ var decapod = decapod || {};
             }
         }
     });
+    
+    fluid.registerNamespace("decapod.exportType.controls.download");
+    
+    decapod.exportType.controls.download.produceTree = function (that) {
+        return {
+            download: {
+                linktext: {
+                    messagekey: "download"
+                },
+                target: "${downloadURL}"
+            },
+            restart: {
+                messagekey: "restart"
+            }
+        };
+    };
+    
+    decapod.exportType.controls.download.finalInit = function (that) {
+        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.afterFetchResources.fire(resourceSpec);
+            that.refreshView();
+        });
+    };
+    
+    fluid.defaults("decapod.exportType.controls.download", {
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        finalInitFunction: "decapod.exportType.controls.download.finalInit",
+        produceTree: "decapod.exportType.controls.download.produceTree",
+        selectors: {
+            download: ".dc-exportType-controls-download-download",
+            restart: ".dc-exportType-controls-download-restart"
+        },
+        strings: {
+            download: "Download Link",
+            restart: "Start Over"
+        },
+        events: {
+            afterFetchResources: null
+        },
+        model: {
+            downloadURL: "downloadURL"
+        },
+        invokers: {
+            hide: "decapod.exportType.controls.hide",
+            show: "decapod.exportType.controls.show"
+        },
+        resources: {
+            template: {
+                url: "../html/exportControlsProgressTemplate.html",
+                forceCache: true
+            }
+        }
+    });
 })(jQuery);

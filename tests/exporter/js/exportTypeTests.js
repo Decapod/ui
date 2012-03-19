@@ -23,6 +23,7 @@ var decapod = decapod || {};
     var CONTROLS_CONTAINER = ".dc-exportType-controls";
     var TRIGGER_CONTAINER = ".dc-exportType-controls-trigger";
     var PROGRESS_CONTAINER = ".dc-exportType-controls-progress";
+    var DOWNLOAD_CONTAINER = ".dc-exportType-controls-download"
     var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
     var generateComponent = function (component, container, templateURL, options) {
         var opts = {
@@ -61,6 +62,10 @@ var decapod = decapod || {};
         return generateComponent("decapod.exportType.controls.progress", container, "../../../components/exporter/html/exportControlsProgressTemplate.html", options);
     };
     
+    var createDownload = function (container, options) {
+        return generateComponent("decapod.exportType.controls.download", container, "../../../components/exporter/html/exportControlsDownloadTemplate.html", options);
+    };
+    
     var assertExportTypeRender = function (that) {
         var str = that.options.strings;
         jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
@@ -85,6 +90,14 @@ var decapod = decapod || {};
     var assertProgressRender = function (that) {
         var str = that.options.strings;
         jqUnit.assertEquals("The progress text should be rendered", str.message, that.locate("message").text());
+    };
+    
+    var assertDownloadRender = function (that) {
+        var str = that.options.strings;
+        var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
+        jqUnit.assertEquals("The download text should be rendered", str.download, that.locate("download").text());
+        jqUnit.assertEquals("The download url should be set", that.model.downloadURL, downloadHREF);
+        jqUnit.assertEquals("The restart text should be set", str.restart, that.locate("restart").text());
     };
     
     // TODO: refector when the exportControls component becomes a parent of individual control components
@@ -498,6 +511,78 @@ var decapod = decapod || {};
                 listeners: {
                     afterRender: {
                         listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.test("Download - init", function () {
+            var that = createDownload(DOWNLOAD_CONTAINER);
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        controlsTests.asyncTest("Download - Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createDownload(DOWNLOAD_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Download - Rendering", function () {
+            jqUnit.expect(3);
+            var assertRendering = function (that) {
+                assertDownloadRender(that);
+                start();
+            };
+            createDownload(DOWNLOAD_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Download - Show", function () {
+            jqUnit.expect(1);
+            var assertShow = function (that) {
+                var  downloadControls = that.container;
+                downloadControls.hide(); // use jQuery to make sure it is hidden first.
+                that.show();
+                jqUnit.isVisible("The download controls should be visible", downloadControls);
+                start();
+            };
+            createDownload(DOWNLOAD_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertShow,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Download - Hide", function () {
+            jqUnit.expect(1);
+            var assertHide = function (that) {
+                var downloadControls = that.container;
+                downloadControls.show(); // use jQuery to make sure it is visible first.
+                that.hide();
+                jqUnit.notVisible("The download controls should be hidden", downloadControls);
+                start();
+            };
+            createDownload(DOWNLOAD_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertHide,
                         priority: "last"
                     }
                 }
