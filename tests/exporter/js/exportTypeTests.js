@@ -22,6 +22,7 @@ var decapod = decapod || {};
     var PDF_OPTS_CONTAINER = ".dc-exportType-pdfOptions";
     var CONTROLS_CONTAINER = ".dc-exportType-controls";
     var TRIGGER_CONTAINER = ".dc-exportType-controls-trigger";
+    var PROGRESS_CONTAINER = ".dc-exportType-controls-progress";
     var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
     var generateComponent = function (component, container, templateURL, options) {
         var opts = {
@@ -56,6 +57,10 @@ var decapod = decapod || {};
         return generateComponent("decapod.exportType.controls.trigger", container, "../../../components/exporter/html/exportControlsTriggerTemplate.html", options);
     };
     
+    var createProgress = function (container, options) {
+        return generateComponent("decapod.exportType.controls.progress", container, "../../../components/exporter/html/exportControlsProgressTemplate.html", options);
+    };
+    
     var assertExportTypeRender = function (that) {
         var str = that.options.strings;
         jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
@@ -77,7 +82,12 @@ var decapod = decapod || {};
         jqUnit.isVisible("The export control should be visible", trigger);
     };
     
-    // todo refector when the exportControls component becomes a parent of individual control components
+    var assertProgressRender = function (that) {
+        var str = that.options.strings;
+        jqUnit.assertEquals("The progress text should be rendered", str.message, that.locate("message").text());
+    };
+    
+    // TODO: refector when the exportControls component becomes a parent of individual control components
     var assertExportControlsRender = function (that) {
         var str = that.options.strings;
         var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
@@ -417,6 +427,78 @@ var decapod = decapod || {};
                     },
                     triggered: {
                         listener: assertEvent
+                    }
+                }
+            });
+        });
+        
+        controlsTests.test("Progress - init", function () {
+            var that = createProgress(PROGRESS_CONTAINER);
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        controlsTests.asyncTest("Progress - Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createProgress(PROGRESS_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Progress - Rendering", function () {
+            jqUnit.expect(1);
+            var assertRendering = function (that) {
+                assertProgressRender(that);
+                start();
+            };
+            createProgress(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Progress - Show", function () {
+            jqUnit.expect(1);
+            var assertRendering = function (that) {
+                var  progress = that.container;
+                progress.hide(); // use jQuery to make sure it is hidden first.
+                that.show();
+                jqUnit.isVisible("The progress should be visible", progress);
+                start();
+            };
+            createProgress(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Progress - Hide", function () {
+            jqUnit.expect(1);
+            var assertRendering = function (that) {
+                var progress = that.container;
+                progress.show(); // use jQuery to make sure it is visible first.
+                that.hide();
+                jqUnit.notVisible("The progress should be hidden", progress);
+                start();
+            };
+            createProgress(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
                     }
                 }
             });
