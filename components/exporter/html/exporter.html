@@ -2,14 +2,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Decapod Import</title>
+        <title>Decapod PDF Exporter</title>
         
         <link rel="stylesheet" type="text/css" href="../../../lib/infusion/framework/fss/css/fss-reset.css" />
         <link rel="stylesheet" type="text/css" href="../../../lib/infusion/framework/fss/css/fss-layout.css" />       
         <link rel="stylesheet" type="text/css" href="../../../shared/css/decapod.css" />
         <link rel="stylesheet" type="text/css" href="../css/exporter.css" />
         
-        <!-- Required JavaScript modules for the Import component. -->
+        <!-- Required JavaScript modules for the Exporter component. -->
         <script type="text/javascript" src="../../../lib/infusion/MyInfusion.js"></script>
         <script type="text/javascript" src="../../../shared/js/decapodContext.js"></script>
         <script type="text/javascript" src="../js/importStatusDemands.js"></script>
@@ -31,18 +31,12 @@
             <!-- NAVIGATION BAR -->
             <nav class="ds-shared-navigationBar">
                 <ul class="ds-shared-navigationBar-flatList">
-                    <li><a class="ds-shared-navigationBar-currentBreadcrumb" href="">Decapod 0.5</a></li>
+                    <li><span class="ds-shared-navigationBar-currentBreadcrumb" href="" disabled="disabled">Decapod 0.5</span></li>
                 </ul>
             </nav>
 
-            <!-- FOOTER -->
-            <footer>
-            
-            </footer>
-
             <!-- DECAPOD EXPORT INTERFACE -->
             <section class="ds-shared-mainPane">
-                <div class="ds-exporter">
                 
                     <header>
                         <h1>Exporter Title</h1>
@@ -50,18 +44,11 @@
                     
                     <div class="dc-exporter-upload ds-exporter-upload ds-shared-indent1">
                         <div class="dc-exporter-importMessages ds-exporter-upload-messages">
-                            <div class="dc-exporter-instructions">
-                                <p>Instructions go here.<br />
-                                    <ul>
-                                        <li>Later replaced by upload status messages.</li>
-                                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </li>
-                                        <li>Cras volutpat, lectus eu aliquam consequat, metus nisi aliquam quam,</li>
-                                        <li>id molestie odio dui non risus. Donec suscipit nunc vitae lectus</li>
-                                    </ul>
-                                </p>
-                            </div>
+                            <p class="dc-exporter-instructions">Instructions go here.</p>
                             <div class="dc-exporter-importStatus">
-                                <p class="dc-importStatus-renderer-statusMessage">No Statuses</p>
+                                <ul>
+                                    <li class="dc-importStatus-renderer-statusMessage">No Statuses</li>
+                                </ul>
                             </div>
                         </div>
                         
@@ -80,15 +67,18 @@
                     <div class="dc-exporter-formatGroup ds-exporter-formatGroup">
                         <h2 class="ds-shared-indent1">Group</h2>
                         
-                    <div class="dc-exporter-imagePDF"></div>
-                    <div class="dc-exporter-ocrPDF"></div>
-                    <div class="dc-exporter-tracedPDF"></div>
-
-
+                        <div class="dc-exporter-imagePDF"></div>
+                        <div class="dc-exporter-ocrPDF"></div>
+                        <div class="dc-exporter-tracedPDF"></div>
                     </div>
             
                 </div>
             </section>
+            
+            <!-- FOOTER -->
+            <footer>
+            </footer>
+            
         </section>
         <script>
             decapod.exporter(".dc-exporter");
