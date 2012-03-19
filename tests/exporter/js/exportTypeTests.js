@@ -23,7 +23,7 @@ var decapod = decapod || {};
     var CONTROLS_CONTAINER = ".dc-exportType-controls";
     var TRIGGER_CONTAINER = ".dc-exportType-controls-trigger";
     var PROGRESS_CONTAINER = ".dc-exportType-controls-progress";
-    var DOWNLOAD_CONTAINER = ".dc-exportType-controls-download"
+    var DOWNLOAD_CONTAINER = ".dc-exportType-controls-download";
     var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
     var generateComponent = function (component, container, templateURL, options) {
         var opts = {
@@ -424,7 +424,7 @@ var decapod = decapod || {};
             };
             var assertEvent = function (that) {
                 jqUnit.assertTrue("The afterTriggered event should have been fired", true);
-                jqUnit.notVisible("The trigger should be hidden", trigger);
+                jqUnit.notVisible("The trigger should be hidden", that.locate("trigger"));
                 start();
             };
             createTrigger(TRIGGER_CONTAINER, {
