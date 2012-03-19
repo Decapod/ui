@@ -91,4 +91,5 @@ var decapod = decapod || {};
         "{pdfOptions}"
     ]);
     fluid.demands("testClick", ["decapod.test", "decapod.exportType.controls"], ["{controls}"]);
+    fluid.demands("triggered", ["decapod.test", "decapod.exportType.controls.trigger"], ["{trigger}"]);
 })(jQuery);

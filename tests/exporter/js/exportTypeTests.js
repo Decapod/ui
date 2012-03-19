@@ -393,6 +393,35 @@ var decapod = decapod || {};
             });
         });
         
+        controlsTests.asyncTest("Trigger - afterTriggered", function () {
+            jqUnit.expect(2);
+            var clickTrigger = function (that) {
+                var trigger = that.locate("trigger");
+                trigger.click();
+            };
+            var assertEvent = function (that) {
+                jqUnit.assertTrue("The afterTriggered event should have been fired", true);
+                jqUnit.notVisible("The trigger should be hidden", trigger);
+                start();
+            };
+            createTrigger(TRIGGER_CONTAINER, {
+                events: {
+                    triggered: {
+                        event: "afterTriggered"
+                    }
+                },
+                listeners: {
+                    afterRender: {
+                        listener: clickTrigger,
+                        priority: "last"
+                    },
+                    triggered: {
+                        listener: assertEvent
+                    }
+                }
+            });
+        });
+        
         var pdfExporterTests = jqUnit.testCase("Decapod PDF Exporter");
         
         pdfExporterTests.test("Init tests", function () {
