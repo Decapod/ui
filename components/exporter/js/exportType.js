@@ -335,9 +335,18 @@ var decapod = decapod || {};
                 decorators: [{
                     type: "jQuery",
                     func: "click",
-                    args: function () { that.events.onExportTrigger.fire(); }
+                    args: function () { that.events.afterTriggered.fire(); }
                 }]
             }
+        };
+    };
+    
+    decapod.exportType.controls.trigger.preInit = function (that) {
+        that.hide = function () {
+            that.hide();
+        };
+        that.show = function () {
+            that.show();
         };
     };
     
@@ -351,6 +360,7 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.exportType.controls.trigger", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
+        preInitFunction: "decapod.exportType.controls.trigger.preInit",
         finalInitFunction: "decapod.exportType.controls.trigger.finalInit",
         produceTree: "decapod.exportType.controls.trigger.produceTree",
         selectors: {
@@ -363,6 +373,9 @@ var decapod = decapod || {};
             afterFetchResources: null,
             afterTriggered: null
         },
+        listeners: {
+            "afterTriggered.hide": "{trigger}.hide"
+        },
         invokers: {
             hide: "decapod.exportType.controls.hide",
             show: "decapod.exportType.controls.show"
@@ -374,6 +387,4 @@ var decapod = decapod || {};
             }
         },
     });
-
-
 })(jQuery);
