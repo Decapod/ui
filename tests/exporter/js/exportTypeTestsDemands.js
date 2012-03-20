@@ -72,6 +72,33 @@ var decapod = decapod || {};
             }
         }
     });
+    fluid.demands("decapod.exportType.controls.trigger", ["decapod.test"], {
+        options: {
+            resources: {
+                template: {
+                    url: "../../../components/exporter/html/exportControlsTriggerTemplate.html"
+                }
+            }
+        }
+    });
+    fluid.demands("decapod.exportType.controls.progress", ["decapod.test"], {
+        options: {
+            resources: {
+                template: {
+                    url: "../../../components/exporter/html/exportControlsProgressTemplate.html"
+                }
+            }
+        }
+    });
+    fluid.demands("decapod.exportType.controls.download", ["decapod.test"], {
+        options: {
+            resources: {
+                template: {
+                    url: "../../../components/exporter/html/exportControlsDownloadTemplate.html"
+                }
+            }
+        }
+    });
     
     /*****************
      * Event Demands *
@@ -82,4 +109,5 @@ var decapod = decapod || {};
         "{pdfOptions}"
     ]);
     fluid.demands("testClick", ["decapod.test", "decapod.exportType.controls"], ["{controls}"]);
+    fluid.demands("triggered", ["decapod.test", "decapod.exportType.controls.trigger"], ["{trigger}"]);
 })(jQuery);

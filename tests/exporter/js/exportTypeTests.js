@@ -21,6 +21,9 @@ var decapod = decapod || {};
     var TYPE_CONTAINER = ".dc-exportType";
     var PDF_OPTS_CONTAINER = ".dc-exportType-pdfOptions";
     var CONTROLS_CONTAINER = ".dc-exportType-controls";
+    var TRIGGER_CONTAINER = ".dc-exportType-controls-trigger";
+    var PROGRESS_CONTAINER = ".dc-exportType-controls-progress";
+    var DOWNLOAD_CONTAINER = ".dc-exportType-controls-download";
     var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
     var generateComponent = function (component, container, templateURL, options) {
         var opts = {
@@ -51,6 +54,18 @@ var decapod = decapod || {};
         return generateComponent("decapod.pdfExporter", container, "../../../components/exporter/html/pdfExporterTemplate.html", options);
     };
     
+    var createTrigger = function (container, options) {
+        return generateComponent("decapod.exportType.controls.trigger", container, "../../../components/exporter/html/exportControlsTriggerTemplate.html", options);
+    };
+    
+    var createProgress = function (container, options) {
+        return generateComponent("decapod.exportType.controls.progress", container, "../../../components/exporter/html/exportControlsProgressTemplate.html", options);
+    };
+    
+    var createDownload = function (container, options) {
+        return generateComponent("decapod.exportType.controls.download", container, "../../../components/exporter/html/exportControlsDownloadTemplate.html", options);
+    };
+    
     var assertExportTypeRender = function (that) {
         var str = that.options.strings;
         jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
@@ -65,6 +80,27 @@ var decapod = decapod || {};
         jqUnit.assertEquals("The dimensions text should be rendered", str.documentDimensions, that.locate("documentDimensions").text());
     };
     
+    var assertTriggerRender = function (that) {
+        var str = that.options.strings;
+        var trigger = that.locate("trigger");
+        jqUnit.assertEquals("The export button should be rendered", str.trigger, trigger.text());
+        jqUnit.isVisible("The export control should be visible", trigger);
+    };
+    
+    var assertProgressRender = function (that) {
+        var str = that.options.strings;
+        jqUnit.assertEquals("The progress text should be rendered", str.message, that.locate("message").text());
+    };
+    
+    var assertDownloadRender = function (that) {
+        var str = that.options.strings;
+        var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
+        jqUnit.assertEquals("The download text should be rendered", str.download, that.locate("download").text());
+        jqUnit.assertEquals("The download url should be set", that.model.downloadURL, downloadHREF);
+        jqUnit.assertEquals("The restart text should be set", str.restart, that.locate("restart").text());
+    };
+    
+    // TODO: refector when the exportControls component becomes a parent of individual control components
     var assertExportControlsRender = function (that) {
         var str = that.options.strings;
         var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
@@ -294,6 +330,265 @@ var decapod = decapod || {};
             });
         });
         
+        controlsTests.test("decapod.exportType.controls.hide", function () {
+            var elm = $(".visible");
+            decapod.exportType.controls.hide(elm);
+            
+            jqUnit.notVisible("The element should be hidden", elm);
+        });
+        
+        controlsTests.test("decapod.exportType.controls.show", function () {
+            var elm = $(".hidden");
+            decapod.exportType.controls.show(elm);
+            
+            jqUnit.isVisible("The element should be visible", elm);
+        });
+        
+        controlsTests.test("Trigger - init", function () {
+            var that = createTrigger(TRIGGER_CONTAINER);
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        controlsTests.asyncTest("Trigger - Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createTrigger(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Trigger - Rendering", function () {
+            jqUnit.expect(2);
+            var assertRendering = function (that) {
+                assertTriggerRender(that);
+                start();
+            };
+            createTrigger(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Trigger - Show", function () {
+            jqUnit.expect(1);
+            var assertShow = function (that) {
+                var trigger = that.locate("trigger");
+                trigger.hide(); // use jQuery to make sure it is hidden first.
+                that.show();
+                jqUnit.isVisible("The trigger should be visible", trigger);
+                start();
+            };
+            createTrigger(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertShow,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Trigger - Hide", function () {
+            jqUnit.expect(1);
+            var assertHide = function (that) {
+                var trigger = that.locate("trigger");
+                trigger.show(); // use jQuery to make sure it is visible first.
+                that.hide();
+                jqUnit.notVisible("The trigger should be hidden", trigger);
+                start();
+            };
+            createTrigger(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertHide,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Trigger - afterTriggered", function () {
+            jqUnit.expect(2);
+            var clickTrigger = function (that) {
+                var trigger = that.locate("trigger");
+                trigger.click();
+            };
+            var assertEvent = function (that) {
+                jqUnit.assertTrue("The afterTriggered event should have been fired", true);
+                jqUnit.notVisible("The trigger should be hidden", that.locate("trigger"));
+                start();
+            };
+            createTrigger(TRIGGER_CONTAINER, {
+                events: {
+                    triggered: {
+                        event: "afterTriggered"
+                    }
+                },
+                listeners: {
+                    afterRender: {
+                        listener: clickTrigger,
+                        priority: "last"
+                    },
+                    triggered: {
+                        listener: assertEvent
+                    }
+                }
+            });
+        });
+        
+        controlsTests.test("Progress - init", function () {
+            var that = createProgress(PROGRESS_CONTAINER);
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        controlsTests.asyncTest("Progress - Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createProgress(PROGRESS_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Progress - Rendering", function () {
+            jqUnit.expect(1);
+            var assertRendering = function (that) {
+                assertProgressRender(that);
+                start();
+            };
+            createProgress(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Progress - Show", function () {
+            jqUnit.expect(1);
+            var assertShow = function (that) {
+                var  progress = that.container;
+                progress.hide(); // use jQuery to make sure it is hidden first.
+                that.show();
+                jqUnit.isVisible("The progress should be visible", progress);
+                start();
+            };
+            createProgress(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertShow,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Progress - Hide", function () {
+            jqUnit.expect(1);
+            var assertHide = function (that) {
+                var progress = that.container;
+                progress.show(); // use jQuery to make sure it is visible first.
+                that.hide();
+                jqUnit.notVisible("The progress should be hidden", progress);
+                start();
+            };
+            createProgress(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertHide,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.test("Download - init", function () {
+            var that = createDownload(DOWNLOAD_CONTAINER);
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        controlsTests.asyncTest("Download - Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createDownload(DOWNLOAD_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Download - Rendering", function () {
+            jqUnit.expect(3);
+            var assertRendering = function (that) {
+                assertDownloadRender(that);
+                start();
+            };
+            createDownload(DOWNLOAD_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Download - Show", function () {
+            jqUnit.expect(1);
+            var assertShow = function (that) {
+                var  downloadControls = that.container;
+                downloadControls.hide(); // use jQuery to make sure it is hidden first.
+                that.show();
+                jqUnit.isVisible("The download controls should be visible", downloadControls);
+                start();
+            };
+            createDownload(DOWNLOAD_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertShow,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        controlsTests.asyncTest("Download - Hide", function () {
+            jqUnit.expect(1);
+            var assertHide = function (that) {
+                var downloadControls = that.container;
+                downloadControls.show(); // use jQuery to make sure it is visible first.
+                that.hide();
+                jqUnit.notVisible("The download controls should be hidden", downloadControls);
+                start();
+            };
+            createDownload(DOWNLOAD_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertHide,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
         var pdfExporterTests = jqUnit.testCase("Decapod PDF Exporter");
         
         pdfExporterTests.test("Init tests", function () {
@@ -307,7 +602,7 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
                 start();
             };
-            createPDFExporter(CONTROLS_CONTAINER, {
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
                 listeners: {
                     afterFetchResources: assertFetchResources
                 }
