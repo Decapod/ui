@@ -318,6 +318,170 @@ var decapod = decapod || {};
         }
     });
     
-
-
+    decapod.exportType.controls.hide = function (selector) {
+        $(selector).hide();
+    };
+    
+    decapod.exportType.controls.show = function (selector) {
+        $(selector).show();
+    };
+    
+    fluid.registerNamespace("decapod.exportType.controls.trigger");
+    
+    decapod.exportType.controls.trigger.produceTree = function (that) {
+        return {
+            trigger: {
+                messagekey: "trigger",
+                decorators: [{
+                    type: "jQuery",
+                    func: "click",
+                    args: function () { that.events.afterTriggered.fire(); }
+                }]
+            }
+        };
+    };
+    
+    decapod.exportType.controls.trigger.preInit = function (that) {
+        that.hide = function () {
+            that.hide();
+        };
+        that.show = function () {
+            that.show();
+        };
+    };
+    
+    decapod.exportType.controls.trigger.finalInit = function (that) {
+        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.afterFetchResources.fire(resourceSpec);
+            that.refreshView();
+        });
+    };
+    
+    fluid.defaults("decapod.exportType.controls.trigger", {
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        preInitFunction: "decapod.exportType.controls.trigger.preInit",
+        finalInitFunction: "decapod.exportType.controls.trigger.finalInit",
+        produceTree: "decapod.exportType.controls.trigger.produceTree",
+        selectors: {
+            trigger: ".dc-exportType-controls-trigger-exportControl"
+        },
+        strings: {
+            trigger: "Start Export"
+        },
+        events: {
+            afterFetchResources: null,
+            afterTriggered: null
+        },
+        listeners: {
+            "afterTriggered.hide": "{trigger}.hide"
+        },
+        invokers: {
+            hide: "decapod.exportType.controls.hide",
+            show: "decapod.exportType.controls.show"
+        },
+        resources: {
+            template: {
+                url: "../html/exportControlsTriggerTemplate.html",
+                forceCache: true
+            }
+        }
+    });
+    
+    fluid.registerNamespace("decapod.exportType.controls.progress");
+    
+    decapod.exportType.controls.progress.produceTree = function (that) {
+        return {
+            message: {
+                messagekey: "message"
+            }
+        };
+    };
+    
+    decapod.exportType.controls.progress.finalInit = function (that) {
+        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.afterFetchResources.fire(resourceSpec);
+            that.refreshView();
+        });
+    };
+    
+    fluid.defaults("decapod.exportType.controls.progress", {
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        finalInitFunction: "decapod.exportType.controls.progress.finalInit",
+        produceTree: "decapod.exportType.controls.progress.produceTree",
+        selectors: {
+            message: ".dc-exportType-controls-progress-message"
+        },
+        strings: {
+            message: "Export Progress"
+        },
+        events: {
+            afterFetchResources: null
+        },
+        invokers: {
+            hide: "decapod.exportType.controls.hide",
+            show: "decapod.exportType.controls.show"
+        },
+        resources: {
+            template: {
+                url: "../html/exportControlsProgressTemplate.html",
+                forceCache: true
+            }
+        }
+    });
+    
+    fluid.registerNamespace("decapod.exportType.controls.download");
+    
+    decapod.exportType.controls.download.produceTree = function (that) {
+        return {
+            download: {
+                linktext: {
+                    messagekey: "download"
+                },
+                target: "${downloadURL}"
+            },
+            restart: {
+                messagekey: "restart"
+            }
+        };
+    };
+    
+    decapod.exportType.controls.download.finalInit = function (that) {
+        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.afterFetchResources.fire(resourceSpec);
+            that.refreshView();
+        });
+    };
+    
+    fluid.defaults("decapod.exportType.controls.download", {
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        finalInitFunction: "decapod.exportType.controls.download.finalInit",
+        produceTree: "decapod.exportType.controls.download.produceTree",
+        selectors: {
+            download: ".dc-exportType-controls-download-download",
+            restart: ".dc-exportType-controls-download-restart"
+        },
+        strings: {
+            download: "Download Link",
+            restart: "Start Over"
+        },
+        events: {
+            afterFetchResources: null
+        },
+        model: {
+            downloadURL: "downloadURL"
+        },
+        invokers: {
+            hide: "decapod.exportType.controls.hide",
+            show: "decapod.exportType.controls.show"
+        },
+        resources: {
+            template: {
+                url: "../html/exportControlsProgressTemplate.html",
+                forceCache: true
+            }
+        }
+    });
 })(jQuery);
