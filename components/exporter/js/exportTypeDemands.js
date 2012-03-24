@@ -1,0 +1,66 @@
+/*
+Copyright 2012 OCAD University
+
+Licensed under the Educational Community License (ECL), Version 2.0 or the New
+BSD license. You may not use this file except in compliance with one of these
+Licenses.
+
+You may obtain a copy of the ECL 2.0 License and BSD License at
+https://source.fluidproject.org/svn/LICENSE.txt
+*/
+
+// Declare dependencies
+/*global decapod:true, fluid, jQuery*/
+
+// JSLint options 
+/*jslint white: true, funcinvoke: true, undef: true, newcap: true, nomen: true, regexp: true, bitwise: true, browser: true, forin: true, maxerr: 100, indent: 4 */
+
+var decapod = decapod || {};
+
+(function ($) {
+    
+    /*************************
+     * Sub Component Demands *
+     *************************/
+    fluid.demands("decapod.exportType", ["decapod.pdfExporter"], {
+        options: {
+            events: {
+                afterRender: "{pdfExporter}.events.afterExportTypeRendered"
+            }
+        }
+    });
+    fluid.demands("decapod.exportType.controls", ["decapod.pdfExporter"], {
+        options: {
+            events: {
+                afterRender: "{pdfExporter}.events.afterControlsRendered",
+                onExportTrigger: "{pdfExporter}.events.onExportStart"
+            }
+        }
+    });
+    fluid.demands("decapod.exportType.controls.trigger", ["decapod.exportType.controls"], {
+        options: {
+            events: {
+                afterTriggered: "{controls}.events.onExportTrigger"
+            }
+        }
+    });
+    fluid.demands("decapod.exportType.options", ["decapod.pdfExporter"], {
+        options: {
+            events: {
+                afterRender: "{pdfExporter}.events.afterOptionsRendered"
+            }
+        }
+    });
+    
+    /*******************
+     * Invoker Demands *
+     *******************/
+    fluid.demands("decapod.exportType.renderText", ["decapod.exportType"], {
+        args: ["{decapod.exportType.renderText}"]
+    });
+    fluid.demands("decapod.exportType.controls.updateModel", ["decapod.exportType.controls"], {
+        args: ["{controls}", "", "{arguments}.0"]
+    });
+
+    
+})(jQuery);
