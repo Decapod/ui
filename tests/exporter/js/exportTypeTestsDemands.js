@@ -78,6 +78,9 @@ var decapod = decapod || {};
                 template: {
                     url: "../../../components/exporter/html/exportControlsTriggerTemplate.html"
                 }
+            },
+            events: {
+                afterTriggered: "{controls}.events.onExportTrigger"
             }
         }
     });

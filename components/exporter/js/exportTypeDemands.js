@@ -37,6 +37,13 @@ var decapod = decapod || {};
             }
         }
     });
+    fluid.demands("decapod.exportType.controls.trigger", ["decapod.exportType.controls"], {
+        options: {
+            events: {
+                afterTriggered: "{controls}.events.onExportTrigger"
+            }
+        }
+    });
     fluid.demands("decapod.exportType.options", ["decapod.pdfExporter"], {
         options: {
             events: {
@@ -51,35 +58,9 @@ var decapod = decapod || {};
     fluid.demands("decapod.exportType.renderText", ["decapod.exportType"], {
         args: ["{decapod.exportType.renderText}"]
     });
-    fluid.demands("decapod.exportType.controls.showStartControls", ["decapod.exportType.controls", "decapod.visSwitcher"], {
-        funcName: "decapod.exportType.controls.showControls",
-        args: ["{controls}.controlToggle", "exportControl"]
+    fluid.demands("decapod.exportType.controls.updateModel", ["decapod.exportType.controls"], {
+        args: ["{controls}", "", "{arguments}.0"]
     });
-    fluid.demands("decapod.exportType.controls.showProgressControls", ["decapod.exportType.controls", "decapod.visSwitcher"], {
-        funcName: "decapod.exportType.controls.showControls",
-        args: ["{controls}.controlToggle", "progressMessage"]
-    });
-    fluid.demands("decapod.exportType.controls.showFinishControls", ["decapod.exportType.controls", "decapod.visSwitcher"], {
-        funcName: "decapod.exportType.controls.showControls",
-        args: ["{controls}.controlToggle", ["download", "restart"]]
-    });
-    fluid.demands("decapod.exportType.controls.hide", ["decapod.exportType.controls.trigger"], {
-        args: ["{trigger}.dom.trigger"]
-    });
-    fluid.demands("decapod.exportType.controls.show", ["decapod.exportType.controls.trigger"], {
-        args: ["{trigger}.dom.trigger"]
-    });
-    fluid.demands("decapod.exportType.controls.hide", ["decapod.exportType.controls.progress"], {
-        args: ["{progress}.container"]
-    });
-    fluid.demands("decapod.exportType.controls.show", ["decapod.exportType.controls.progress"], {
-        args: ["{progress}.container"]
-    });
-    fluid.demands("decapod.exportType.controls.hide", ["decapod.exportType.controls.download"], {
-        args: ["{download}.container"]
-    });
-    fluid.demands("decapod.exportType.controls.show", ["decapod.exportType.controls.download"], {
-        args: ["{download}.container"]
-    });
+
     
 })(jQuery);
