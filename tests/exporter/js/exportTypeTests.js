@@ -186,6 +186,82 @@ var decapod = decapod || {};
     // Tests
     $(document).ready(function () {
         
+        /********************
+         * eventBinderTests *
+         ********************/
+         
+        var eventBinderTests = jqUnit.testCase("decapod.eventBinder");
+        
+        eventBinderTests.test("Init tests", function () {
+            var that = decapod.eventBinder();
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        /*********************
+         * exportPollerTests *
+         *********************/
+        
+        var exportPollerTests = jqUnit.testCase("decapod.exportPoller");
+        
+        var completeResponse = {
+            status: "complete",
+            url: "http://localhost:8080/library/'bookName'/export/pdf/type1"
+        };
+        
+        var inProgressResponse = {
+            status: "in progress"
+        };
+         
+        exportPollerTests.test("Init tests", function () {
+            var that = decapod.exportPoller();
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        exportPollerTests.asyncTest("Poll", function () {
+            jqUnit.expect(1);
+            var that = decapod.exportPoller();
+            that.events.onPoll.addListener(function () {
+                jqUnit.assertTrue("The onPoll event should have fired", true);
+                start();
+            });
+            that.poll();
+        });
+        
+        exportPollerTests.test("isComplete", function () {
+            var that = decapod.exportPoller();
+            
+            jqUnit.assertTrue("isComplete should return true", that.isComplete(completeResponse));
+            jqUnit.assertFalse("isComplete should return false", that.isComplete(inProgressResponse));
+        });
+        
+        exportPollerTests.asyncTest("handleResponse", function () {
+            jqUnit.expect(4);
+            var that = decapod.exportPoller({delay: 10});
+            that.events.onPoll.addListener(function () {
+                jqUnit.assertTrue("The onPoll event should have fired", true);
+                jqUnit.assertDeepEq("The response should be set", inProgressResponse, that.response);
+            });
+            that.events.pollComplete.addListener(function () {
+                jqUnit.assertTrue("The pollComplete event should have fired", true);
+                jqUnit.assertDeepEq("The response should be set", completeResponse, that.response);
+                start();
+            });
+            that.handleResponse(inProgressResponse);
+            that.handleResponse(completeResponse);
+        });
+        
+        exportPollerTests.asyncTest("Datasource Integration", function () {
+            jqUnit.expect(2);
+            var testResponseHandler = function (response) {
+                jqUnit.assertTrue("The datasource triggered the handleResponse invoker", true);
+                jqUnit.assertDeepEq("A response is returned", completeResponse, response);
+                start();
+            };
+            var that = decapod.exportPoller();
+            that.handleResponse = testResponseHandler;
+            that.dataSource.events.success.fire(completeResponse);
+        });
+        
         /*******************
          * exportInfoTests *
          *******************/

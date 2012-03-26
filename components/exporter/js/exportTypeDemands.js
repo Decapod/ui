@@ -68,6 +68,12 @@ var decapod = decapod || {};
     /*******************
      * Invoker Demands *
      *******************/
+    fluid.demands("decapod.exportPoller.poll", ["decapod.exportPoller"], {
+        args: ["{exportPoller}"]
+    });
+    fluid.demands("decapod.exportPoller.handleResponse", ["decapod.exportPoller"], {
+        args: ["{exportPoller}", "{arguments}.0"]
+    });
     fluid.demands("decapod.exportInfo.renderText", ["decapod.exportInfo"], {
         args: ["{decapod.exportInfo.renderText}"]
     });
