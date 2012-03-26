@@ -36,7 +36,7 @@ var decapod = decapod || {};
         gradeNames: ["fluid.viewComponent", "autoInit"],
         finalInitFunction: "decapod.pdfExporter.finalInit",
         selectors: {
-            exportType: ".dc-pdfExporter-exportType",
+            exportInfo: ".dc-pdfExporter-exportInfo",
             pdfOptions: ".dc-pdfExporter-pdfOptions",
             controls: ".dc-pdfExporter-controls"
         },
@@ -53,7 +53,7 @@ var decapod = decapod || {};
         },
         events: {
             afterFetchResources: null,
-            afterExportTypeRendered: null,
+            afterexportInfoRendered: null,
             afterControlsRendered: null,
             afterOptionsRendered: null,
             afterExportComplete: null,
@@ -64,8 +64,8 @@ var decapod = decapod || {};
                 url: "../html/pdfExporterTemplate.html",
                 forceCache: true
             },
-            exportType: {
-                url: "../html/exportTypeTemplate.html",
+            exportInfo: {
+                url: "../html/exportInfoTemplate.html",
                 forceCache: true
             },
             pdfOptions: {
@@ -90,9 +90,9 @@ var decapod = decapod || {};
             }
         },
         components: {
-            exportType: {
-                type: "decapod.exportType",
-                container: "{pdfExporter}.dom.exportType",
+            exportInfo: {
+                type: "decapod.exportInfo",
+                container: "{pdfExporter}.dom.exportInfo",
                 createOnEvent: "afterFetchResources",
                 options: {
                     strings: {
@@ -100,7 +100,7 @@ var decapod = decapod || {};
                         description: "{pdfExporter}.options.strings.description"
                     },
                     resources: {
-                        template: "{pdfExporter}.options.resources.exportType"
+                        template: "{pdfExporter}.options.resources.exportInfo"
                     }
                 }
             },
@@ -142,12 +142,12 @@ var decapod = decapod || {};
     });
     
     /**********************
-     * decapod.exportType *
+     * decapod.exportInfo *
      **********************/
 
-    fluid.registerNamespace("decapod.exportType");
+    fluid.registerNamespace("decapod.exportInfo");
 
-    decapod.exportType.produceTree = function (that) {
+    decapod.exportInfo.produceTree = function (that) {
         return {
             name: {
                 messagekey: "name"
@@ -158,7 +158,7 @@ var decapod = decapod || {};
         };
     };
     
-    decapod.exportType.finalInit = function (that) {
+    decapod.exportInfo.finalInit = function (that) {
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
@@ -166,13 +166,13 @@ var decapod = decapod || {};
         });
     };
     
-    fluid.defaults("decapod.exportType", {
+    fluid.defaults("decapod.exportInfo", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
-        finalInitFunction: "decapod.exportType.finalInit",
-        produceTree: "decapod.exportType.produceTree",
+        finalInitFunction: "decapod.exportInfo.finalInit",
+        produceTree: "decapod.exportInfo.produceTree",
         selectors: {
-            name: ".dc-exportType-name",
-            description: ".dc-exportType-description"
+            name: ".dc-exportInfo-name",
+            description: ".dc-exportInfo-description"
         },
         strings: {
             name: "Format type label",
@@ -183,7 +183,7 @@ var decapod = decapod || {};
         },
         resources: {
             template: {
-                url: "../html/exportTypeTemplate.html",
+                url: "../html/exportInfoTemplate.html",
                 forceCache: true
             }
         }
