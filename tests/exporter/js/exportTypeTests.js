@@ -54,7 +54,7 @@ var decapod = decapod || {};
         return generateCompositeComponent(component, container, resources, options);
     };
     
-    var createexportInfo = function (container, options) {
+    var createExportInfo = function (container, options) {
         return generateComponent("decapod.exportInfo", container, EXPORT_INFO_TEMPLATE, options);
     };
     
@@ -193,7 +193,7 @@ var decapod = decapod || {};
         var exportInfoTests = jqUnit.testCase("decapod.exportInfo");
         
         exportInfoTests.test("Init tests", function () {
-            var that = createexportInfo(INFO_CONTAINER);
+            var that = createExportInfo(INFO_CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
@@ -203,7 +203,7 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
                 start();
             };
-            createexportInfo(INFO_CONTAINER, {
+            createExportInfo(INFO_CONTAINER, {
                 listeners: {
                     afterFetchResources: assertFetchResources
                 }
@@ -215,7 +215,7 @@ var decapod = decapod || {};
                 assertexportInfoRender(that);
                 start();
             };
-            createexportInfo(INFO_CONTAINER, {
+            createExportInfo(INFO_CONTAINER, {
                 listeners: {
                     afterRender: assertRender
                 }
