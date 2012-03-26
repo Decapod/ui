@@ -27,6 +27,6 @@ var decapod = decapod || {};
         "{arguments}.0",
         "{pdfExportOptions}"
     ]);
-    fluid.demands("testClick", ["decapod.test", "decapod.exportType.controls"], ["{controls}"]);
-    fluid.demands("triggered", ["decapod.test", "decapod.exportType.controls.trigger"], ["{trigger}"]);
+    fluid.demands("testClick", ["decapod.test", "decapod.exportControls"], ["{exportControls}"]);
+    fluid.demands("triggered", ["decapod.test", "decapod.exportControls.trigger"], ["{trigger}"]);
 })(jQuery);
