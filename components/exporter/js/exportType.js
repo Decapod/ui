@@ -36,9 +36,9 @@ var decapod = decapod || {};
         gradeNames: ["fluid.viewComponent", "autoInit"],
         finalInitFunction: "decapod.pdfExporter.finalInit",
         selectors: {
-            exportTypeContainer: ".dc-pdfExporter-exportType",
-            pdfOptionsContainer: ".dc-pdfExporter-pdfOptions",
-            controlsContainer: ".dc-pdfExporter-controls"
+            exportType: ".dc-pdfExporter-exportType",
+            pdfOptions: ".dc-pdfExporter-pdfOptions",
+            controls: ".dc-pdfExporter-controls"
         },
         strings: {
             name: "Format type label",
@@ -92,7 +92,7 @@ var decapod = decapod || {};
         components: {
             exportType: {
                 type: "decapod.exportType",
-                container: "{pdfExporter}.dom.exportTypeContainer",
+                container: "{pdfExporter}.dom.exportType",
                 createOnEvent: "afterFetchResources",
                 options: {
                     strings: {
@@ -106,7 +106,7 @@ var decapod = decapod || {};
             },
             exportOptions: {
                 type: "decapod.exportType.pdfOptions",
-                container: "{pdfExporter}.dom.pdfOptionsContainer",
+                container: "{pdfExporter}.dom.pdfOptions",
                 createOnEvent: "afterFetchResources",
                 options: {
                     strings: {
@@ -121,7 +121,7 @@ var decapod = decapod || {};
             },
             exportControls: {
                 type: "decapod.exportType.controls",
-                container: "{pdfExporter}.dom.controlsContainer",
+                container: "{pdfExporter}.dom.controls",
                 createOnEvent: "afterFetchResources",
                 options: {
                     strings: {
