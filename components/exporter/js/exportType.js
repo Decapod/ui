@@ -53,9 +53,6 @@ var decapod = decapod || {};
         },
         events: {
             afterFetchResources: null,
-            afterexportInfoRendered: null,
-            afterControlsRendered: null,
-            afterOptionsRendered: null,
             afterExportComplete: null,
             onExportStart: null
         },
