@@ -1,5 +1,6 @@
 .ds-shared-decapod {
     font-family: 'Droid Sans', arial, serif;
+    font-size: 11pt;
     background-color: #FFF;
     position: absolute;
     bottom: 0px;
@@ -29,58 +30,68 @@
 }
 
 
+
 /* NAVIGATION BAR */
 
 .ds-shared-navigationBar {
-    display: table;
-    background: #958D76;
+    background: #D8D8C0;
+    background-image: linear-gradient(bottom, rgb(204,204,183) 4%, rgb(216,216,192) 52%);
+    background-image: -moz-linear-gradient(bottom, rgb(204,204,183) 4%, rgb(216,216,192) 52%);
     width: 100%;
     height: 42px;
     text-align: left;
     color: #fff;
-    box-shadow: 0px 1px 2px #1a1a1a;
+    border-bottom: solid 1px #7A8370;  
+    z-index:1;
 }
 
 ul.ds-shared-navigationBar-flatList {
     list-style-type: none;
-    display: table-cell;
     vertical-align: middle;
-    padding-left: 20px;
+    width:850px;
 }
 
 .ds-shared-navigationBar-flatList li {
     display: inline;
-    list-style-type: none;
+    position: absolute;
 }
 
-.ds-shared-navigationBar-flatList a {
+.ds-shared-navigationBar-flatList li:first-child p {
+    font-size: 20px;
+    width: 7em;
+    background-color: #7A8370;
+    border-bottom: 2px solid #7A8370,6px solid #DF8615 ;
+}
+
+.ds-shared-navigationBar-flatList p {
     color: #fff;
     position: relative;
-	padding: 0 0 0 10px;
-	font-size:12pt;
-}
-
-/**
-Create a chevron by using two triangles overlaid each other.
-Triangles are made by taking advantage of border's bevel effect.
-**/
-
-.ds-shared-navigationBar-flatList a:after {
-    content: "";
-	position: absolute;
-	top: -6px;
-	right: -30px;
-    width: 30px;
-    height: 30px;
-    border-top: 1px solid #fff;
-    border-right: 1px solid #fff;
-    -moz-transform: rotate(45deg);
-    transform:rotate(45deg);
-}
-
-a.ds-shared-navigationBar-currentBreadcrumb {
+	padding: 10px 0px 0px 20px;
+	font-size:10pt;    
+    height: 32px;
     font-weight: bold;
     text-decoration: none;
+    background-color: #fff;
+
+}
+
+.ds-shared-navigationBar-flatList li:after {
+    /* Create a chevron by using two triangles overlaid each other.
+    Triangles are made by taking advantage of border's bevel effect.*/
+    content: "";
+	position: absolute;
+	top: 5px;
+	right: -16px;
+    width: 29px;
+    height: 29px;
+    border-top: 2px solid #7A8370;
+    border-right: 2px solid #7A8370;
+    -moz-transform: rotate(45deg);
+    transform:rotate(45deg);
+    background-color: #7A8370;
+}
+
+p.ds-shared-navigationBar-currentBreadcrumb {
 }
 
 /**
@@ -88,7 +99,8 @@ a.ds-shared-navigationBar-currentBreadcrumb {
  */
  
  .ds-shared-decapod footer {
-    background: #958D76;
+    background: #D8D8C0;
+    
     width: 100%;
     height: 30px;
     position: absolute;
@@ -96,7 +108,7 @@ a.ds-shared-navigationBar-currentBreadcrumb {
     left: 0px;
     right: 0px;
     display:block;
-    box-shadow: 0px -1px 2px #1a1a1a;
+    border-top: solid 1px #7A8370;
  }
  
 /**
@@ -104,26 +116,30 @@ a.ds-shared-navigationBar-currentBreadcrumb {
  */
  
 .ds-shared-mainPane {
-    background-color: #eff1f4;
-    background-image: url("../images/background-grain.png");
+    
     position: absolute;
     bottom: 32px; /*position respect to footer height */
     top: 44px; /*position respect to navigation bar */
-    left: 0px;
-    right: 0px;
+    /*margin-left: 220px;
+   */ margin-left: 35%;
+    width: 770px;
+    background-image: url("../images/background-grain.png");
+    border-left: 1px solid rgba(120,132,120,0.2);
+    border-right: 1px solid rgba(120,132,120,0.2);    
+    padding-left: 10px;
 }
 
 .ds-shared-mainPane h1 {
     font-size: 24px;
     font-weight: bold;
-    color: #3a3a3a;
+    color: #575757;
     margin: 0px;
     padding-top:10px;
+    text-shadow: 1px 1px #fff;
 }
 
 .ds-shared-mainPane header {
     margin-bottom: 15px;
-    padding-left: 30px;
 }
 
 .ds-shared-indent1 {
@@ -215,4 +231,28 @@ a.ds-shared-navigationBar-currentBreadcrumb {
 	-moz-border-radius: 50%;
 	border-radius: 50%;
 	position: absolute;
+}
+
+
+/* Change the size of the main content area depending on the size of screen. */
+
+@media screen and (max-width: 1000px) {
+    .ds-shared-mainPane {
+        margin-left: 140px;
+        min-width: 0%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .ds-shared-mainPane {
+        margin-left: 0px;
+        min-width: 0%;
+        max-width: 100%;
+    }
+}
+
+.ds-shared-mainPane {
+     -moz-transition: all .5s linear;
+     transition: all .5s linear;
 }
