@@ -330,6 +330,7 @@ var decapod = decapod || {};
         });
         
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.controls.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
         });
     };
@@ -358,7 +359,7 @@ var decapod = decapod || {};
         },
         listeners: {
             "afterModelChanged.refreshView": "{controls}.refreshView",
-            "onReady.render": "{controls}.initialRender",
+            "afterFetchResources.render": "{controls}.initialRender",
             "onExportTrigger.updateModel": {
                 listener: "{controls}.updateModel",
                 args: [{
@@ -376,21 +377,6 @@ var decapod = decapod || {};
         invokers: {
             updateModel: "decapod.exportType.controls.updateModel"
         },
-        components: {
-            baseRenderer: {
-                type: "decapod.exportType.controls.baseRenderer",
-                createOnEvent: "afterFetchResources",
-                container: "{controls}.container",
-                options: {
-                    resources: {
-                        template: "{controls}.options.resources.controls"
-                    },
-                    events: {
-                        afterFetchResources: "{controls}.events.onReady" 
-                    }
-                }
-            }
-        },
         resources: {
             controls: {
                 url: "../html/exportControlsTemplate.html",
@@ -406,33 +392,6 @@ var decapod = decapod || {};
             },
             download: {
                 url: "../html/exportControlsDownloadTemplate.html",
-                forceCache: true
-            }
-        }
-    });
-    
-    /********************************************
-     * decapod.exportType.controls.baseRenderer *
-     ********************************************/
-    
-    fluid.registerNamespace("decapod.exportType.controls.baseRenderer");
-    
-    decapod.exportType.controls.baseRenderer.finalInit = function (that) {
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
-            that.container.append(that.options.resources.template.resourceText);
-            that.events.afterFetchResources.fire(resourceSpec);
-        });
-    };
-    
-    fluid.defaults("decapod.exportType.controls.baseRenderer", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
-        finalInitFunction: "decapod.exportType.controls.baseRenderer.finalInit",
-        events: {
-            afterFetchResources: null
-        },
-        resources: {
-            template: {
-                url: "../html/exportControlsTemplate.html",
                 forceCache: true
             }
         }
