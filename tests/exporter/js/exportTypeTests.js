@@ -10,7 +10,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
 */
 
 // Declare dependencies
-/*global window, decapod:true, expect, fluid, jQuery, jqUnit, start*/
+/*global decapod:true, fluid, jQuery, jqUnit, start*/
 
 // JSLint options 
 /*jslint white: true, funcinvoke: true, undef: true, newcap: true, nomen: true, regexp: true, bitwise: true, browser: true, forin: true, maxerr: 100, indent: 4 */
@@ -18,6 +18,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
+    // Container Selectors
     var TYPE_CONTAINER = ".dc-exportType";
     var PDF_OPTS_CONTAINER = ".dc-exportType-pdfOptions";
     var CONTROLS_CONTAINER = ".dc-exportType-controls";
@@ -25,73 +26,115 @@ var decapod = decapod || {};
     var PROGRESS_CONTAINER = ".dc-exportType-controls-progress";
     var DOWNLOAD_CONTAINER = ".dc-exportType-controls-download";
     var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
-    var generateComponent = function (component, container, templateURL, options) {
+    
+    // Template URLs
+    var EXPORT_TYPE_TEMPLATE = "../../../components/exporter/html/exportTypeTemplate.html";
+    var PDF_OPTIONS_TEMPLATE = "../../../components/exporter/html/pdfOptionsTemplate.html";
+    var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
+    var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
+    var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
+    var DOWNLOAD_TEMPLATE = "../../../components/exporter/html/exportControlsDownloadTemplate.html";
+    var PDF_EXPORTER_TEMPLATE = "../../../components/exporter/html/pdfExporterTemplate.html";
+    
+    // Convenience Functions: component creators
+    var generateCompositeComponent = function (component, container, resources, options) {
         var opts = {
-            resources: {
-                template: {
-                    url: templateURL
-                }
-            }
+            resources: resources
         };
         
         fluid.merge("replace", opts, options || {});
         return fluid.invokeGlobalFunction(component, [container, opts]);
     };
+    var generateComponent = function (component, container, templateURL, options) {
+        var resources = {
+            template: {
+                url: templateURL
+            }
+        };
+        return generateCompositeComponent(component, container, resources, options);
+    };
     
     var createExportType = function (container, options) {
-        return generateComponent("decapod.exportType", container, "../../../components/exporter/html/exportTypeTemplate.html", options);
+        return generateComponent("decapod.exportType", container, EXPORT_TYPE_TEMPLATE, options);
     };
     
     var createPDFOptions = function (container, options) {
-        return generateComponent("decapod.exportType.pdfOptions", container, "../../../components/exporter/html/pdfOptionsTemplate.html", options);
+        return generateComponent("decapod.exportType.pdfOptions", container, PDF_OPTIONS_TEMPLATE, options);
     };
     
     var createControls = function (container, options) {
-        var opts = {
-            resources: {
-                controls: {
-                    url: "../../../components/exporter/html/exportControlsTemplate.html",
-                    forceCache: true
-                },
-                trigger: {
-                    url: "../../../components/exporter/html/exportControlsTriggerTemplate.html",
-                    forceCache: true
-                },
-                progress: {
-                    url: "../../../components/exporter/html/exportControlsProgressTemplate.html",
-                    forceCache: true
-                },
-                download: {
-                    url: "../../../components/exporter/html/exportControlsDownloadTemplate.html",
-                    forceCache: true
-                }
+        var resources = {
+            controls: {
+                url: CONTROLS_TEMPLATE,
+                forceCache: true
+            },
+            trigger: {
+                url: TRIGGER_TEMPLATE,
+                forceCache: true
+            },
+            progress: {
+                url: PROGRESS_TEMPLATE,
+                forceCache: true
+            },
+            download: {
+                url: DOWNLOAD_TEMPLATE,
+                forceCache: true
             }
         };
-        
-        fluid.merge("replace", opts, options || {});
-        return fluid.invokeGlobalFunction("decapod.exportType.controls", [container, opts]);
+        return generateCompositeComponent("decapod.exportType.controls", container, resources, options);
     };
     
     var createBaseRenderer = function (container, options) {
-        return generateComponent("decapod.exportType.controls.baseRenderer", container, "../../../components/exporter/html/exportControlsTemplate.html", options);
-    };
-    
-    var createPDFExporter = function (container, options) {
-        return generateComponent("decapod.pdfExporter", container, "../../../components/exporter/html/pdfExporterTemplate.html", options);
+        return generateComponent("decapod.exportType.controls.baseRenderer", container, CONTROLS_TEMPLATE, options);
     };
     
     var createTrigger = function (container, options) {
-        return generateComponent("decapod.exportType.controls.trigger", container, "../../../components/exporter/html/exportControlsTriggerTemplate.html", options);
+        return generateComponent("decapod.exportType.controls.trigger", container, TRIGGER_TEMPLATE, options);
     };
     
     var createProgress = function (container, options) {
-        return generateComponent("decapod.exportType.controls.progress", container, "../../../components/exporter/html/exportControlsProgressTemplate.html", options);
+        return generateComponent("decapod.exportType.controls.progress", container, PROGRESS_TEMPLATE, options);
     };
     
     var createDownload = function (container, options) {
-        return generateComponent("decapod.exportType.controls.download", container, "../../../components/exporter/html/exportControlsDownloadTemplate.html", options);
+        return generateComponent("decapod.exportType.controls.download", container, DOWNLOAD_TEMPLATE, options);
     };
     
+    var createPDFExporter = function (container, options) {
+        var resources = {
+            pdfExportTemplate: {
+                url: PDF_EXPORTER_TEMPLATE,
+                forceCache: true
+            },
+            exportType: {
+                url: EXPORT_TYPE_TEMPLATE,
+                forceCache: true
+            },
+            pdfOptions: {
+                url: PDF_OPTIONS_TEMPLATE,
+                forceCache: true
+            },
+            controls: {
+                url: CONTROLS_TEMPLATE,
+                forceCache: true
+            },
+            trigger: {
+                url: TRIGGER_TEMPLATE,
+                forceCache: true
+            },
+            progress: {
+                url: PROGRESS_TEMPLATE,
+                forceCache: true
+            },
+            download: {
+                url: DOWNLOAD_TEMPLATE,
+                forceCache: true
+            }
+        };
+        return generateCompositeComponent("decapod.pdfExporter", container, resources, options);
+    };
+    
+    // Convenience Functions: assertions
     var assertExportTypeRender = function (that) {
         var str = that.options.strings;
         jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
@@ -126,15 +169,6 @@ var decapod = decapod || {};
         jqUnit.assertEquals("The restart text should be set", str.restart, that.locate("restart").text());
     };
     
-    var assertExportControlsRender = function (that) {
-        assertTriggerRender(that.trigger);
-        assertProgressRender(that.progress);
-        assertDownloadRender(that.download);
-        
-        jqUnit.notVisible("The progress message should be hidden", that.progress.container);
-        jqUnit.notVisible("The download controls should be hidden", that.download.container);
-    };
-    
     var assertShowTriggerControls = function (that) {
         jqUnit.assertFalse("The progress shouldn't have initialized", that["**-renderer-progressContainer-0"]);
         jqUnit.assertFalse("The download shouldn't have initialized", that["**-renderer-downloadContainer-0"]);
@@ -153,6 +187,7 @@ var decapod = decapod || {};
         assertDownloadRender(that["**-renderer-downloadContainer-0"]);
     };
     
+    // Tests
     $(document).ready(function () {
         
         /*******************
@@ -184,7 +219,7 @@ var decapod = decapod || {};
                 assertExportTypeRender(that);
                 start();
             };
-            var that = createExportType(TYPE_CONTAINER, {
+            createExportType(TYPE_CONTAINER, {
                 listeners: {
                     afterRender: assertRender
                 }
@@ -260,7 +295,7 @@ var decapod = decapod || {};
         var controlsTests = jqUnit.testCase("Decapod Export Type Controls");
         
         controlsTests.asyncTest("Init tests", function () {
-            var that = createControls(CONTROLS_CONTAINER, {
+            createControls(CONTROLS_CONTAINER, {
                 listeners: {
                     afterFetchResources: {
                         listener: function () {
@@ -318,7 +353,7 @@ var decapod = decapod || {};
             var assertModel = function (newModel) {
                 jqUnit.assertDeepEq("The model should be updated", model, newModel);
             };
-            var that = createControls(CONTROLS_CONTAINER, {
+            createControls(CONTROLS_CONTAINER, {
                 listeners: {
                     afterRender: function (that) {
                         if (that["**-renderer-triggerContainer-0"]) {
@@ -347,7 +382,7 @@ var decapod = decapod || {};
             var assertModel = function (newModel) {
                 jqUnit.assertDeepEq("The model should be updated", model, newModel);
             };
-            var that = createControls(CONTROLS_CONTAINER, {
+            createControls(CONTROLS_CONTAINER, {
                 listeners: {
                     afterRender: function (that) {
                         if (that["**-renderer-triggerContainer-0"]) {
@@ -564,83 +599,105 @@ var decapod = decapod || {};
          * pdfExporterTests *
          ********************/
         
-//        var pdfExporterTests = jqUnit.testCase("Decapod PDF Exporter");
-//        
-//        pdfExporterTests.test("Init tests", function () {
-//            var that = createPDFExporter(PDF_EXPORTER_CONTAINER);
-//            jqUnit.assertTrue("The component should have initialized", that);
-//        });
-//        
-//        pdfExporterTests.asyncTest("Fetch Resources", function () {
-//            jqUnit.expect(1);
-//            var assertFetchResources = function (resourceSpec) {
-//                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
-//                start();
-//            };
-//            createPDFExporter(PDF_EXPORTER_CONTAINER, {
-//                listeners: {
-//                    afterFetchResources: assertFetchResources
-//                }
-//            });
-//        });
-//        
-//        pdfExporterTests.asyncTest("Rendering", function () {
-//            var assertRendering = function (that) {
-//                assertExportControlsRender(that);
-//                start();
-//            };
-//            createPDFExporter(PDF_EXPORTER_CONTAINER, {
-//                listeners: {
-//                    afterOptionsRendered: assertPDFOptionsRender,
-//                    afterExportTypeRendered: assertExportTypeRender,
-//                    afterControlsRendered: {
-//                        listener: assertRendering,
-//                        priority: "last"
-//                    }
-//                }
-//            });
-//        });
-//
-//        pdfExporterTests.asyncTest("onExportStart event", function () {
-//            jqUnit.expect(5);
-//            var assertEvent = function (that) {
-//                jqUnit.assertTrue("The onExportStart event should have fired", true);
-//                assertShowProgressControls(that);
-//                start();
-//            };
-//            createPDFExporter(PDF_EXPORTER_CONTAINER, {
-//                listeners: {
-//                    onExportStart: {
-//                        listener: assertEvent,
-//                        priority: "last"
-//                    },
-//                    afterControlsRendered: {
-//                        listener: "{pdfExporter}.events.onExportStart.fire",
-//                        priority: "last"
-//                    }
-//                }
-//            });
-//        });
-//        
-//        pdfExporterTests.asyncTest("afterExportComplete", function () {
-//            jqUnit.expect(5);
-//            var assertEvent = function (that) {
-//                jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
-//                assertShowFinishControls(that);
-//                start();
-//            };
-//            createPDFExporter(PDF_EXPORTER_CONTAINER, {
-//                listeners: {
-//                    afterExportComplete: {
-//                        listener: assertEvent,
-//                        priority: "last"
-//                    },
-//                    afterControlsRendered: {
-//                        listener: "{pdfExporter}.events.afterExportComplete.fire",
-//                        priority: "last"
-//                    }
-//                }
-//            });
-//        });
+        var pdfExporterTests = jqUnit.testCase("Decapod PDF Exporter");
+        
+        pdfExporterTests.asyncTest("Init tests", function () {
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterFetchResources: {
+                        listener: function () {
+                            jqUnit.assertTrue("The component should have initialized", true);
+                            start();
+                        },
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("Fetch Resources", function () {
+            jqUnit.expect(7);
+            var assertFetchResources = function (resourceSpec) {
+                $.each(resourceSpec, function (idx, spec) {
+                    jqUnit.assertTrue("The resourceText is filled out", spec.resourceText);
+                });
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterFetchResources: {
+                        listener: assertFetchResources,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("Rendering", function () {
+            var assertRendering = function (that) {
+                assertExportTypeRender(that.exportType);
+                assertPDFOptionsRender(that.exportOptions);
+                assertShowTriggerControls(that.exportControls);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterFetchResources: {
+                        listener: function (that) {
+                            // enssures that the exportControls subcompoent has rendered before trying to test it.
+                            that.exportControls.events.afterRender.addListener(function () {
+                                assertRendering(that);
+                            });
+                        },
+                        priority: "last",
+                        args: ["{pdfExporter}"]
+                    }
+                }
+            });
+        });
+
+        pdfExporterTests.asyncTest("onExportStart event", function () {
+            jqUnit.expect(4);
+            var assertEvent = function (that) {
+                jqUnit.assertTrue("The onExportStart event should have fired", true);
+                assertShowProgressControls(that.exportControls);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    onExportStart: {
+                        listener: assertEvent,
+                        priority: "last",
+                        args: ["{pdfExporter}"]
+                    },
+                    afterFetchResources: {
+                        listener: "{pdfExporter}.events.onExportStart.fire",
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("afterExportComplete", function () {
+            jqUnit.expect(6);
+            var assertEvent = function (that) {
+                jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
+                assertShowDownloadControls(that.exportControls);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterExportComplete: {
+                        listener: assertEvent,
+                        priority: "last",
+                        args: ["{pdfExporter}"]
+                    },
+                    afterFetchResources: {
+                        listener: "{pdfExporter}.events.afterExportComplete.fire",
+                        priority: "last"
+                    }
+                }
+            });
+        });
     });
 })(jQuery);

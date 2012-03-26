@@ -22,18 +22,21 @@ var decapod = decapod || {};
     /*************************
      * Sub Component Demands *
      *************************/
-    fluid.demands("decapod.exportType", ["decapod.pdfExporter"], {
-        options: {
-            events: {
-                afterRender: "{pdfExporter}.events.afterExportTypeRendered"
-            }
-        }
-    });
+
     fluid.demands("decapod.exportType.controls", ["decapod.pdfExporter"], {
         options: {
             events: {
-                afterRender: "{pdfExporter}.events.afterControlsRendered",
                 onExportTrigger: "{pdfExporter}.events.onExportStart"
+            },
+            listeners: {
+                "{pdfExporter}.events.afterExportComplete": {
+                    listener: "{controls}.updateModel",
+                    args: [{
+                        showExportStart: false,
+                        showExportProgress: false,
+                        showExportDownload: true
+                    }]
+                }
             }
         }
     });
@@ -41,13 +44,23 @@ var decapod = decapod || {};
         options: {
             events: {
                 afterTriggered: "{controls}.events.onExportTrigger"
+            },
+            resources: {
+                template: "{controls}.options.resources.trigger"
             }
         }
     });
-    fluid.demands("decapod.exportType.options", ["decapod.pdfExporter"], {
+    fluid.demands("decapod.exportType.controls.progress", ["decapod.exportType.controls"], {
         options: {
-            events: {
-                afterRender: "{pdfExporter}.events.afterOptionsRendered"
+            resources: {
+                template: "{controls}.options.resources.progress"
+            }
+        }
+    });
+    fluid.demands("decapod.exportType.controls.download", ["decapod.exportType.controls"], {
+        options: {
+            resources: {
+                template: "{controls}.options.resources.download"
             }
         }
     });

@@ -10,7 +10,7 @@ https://source.fluidproject.org/svn/LICENSE.txt
 */
 
 // Declare dependencies
-/*global window, decapod:true, fluid, jQuery*/
+/*global setTimeout, window, decapod:true, fluid, jQuery*/
 
 // JSLint options 
 /*jslint white: true, funcinvoke: true, undef: true, newcap: true, nomen: true, regexp: true, bitwise: true, browser: true, forin: true, maxerr: 100, indent: 4 */
@@ -27,7 +27,7 @@ var decapod = decapod || {};
     
     decapod.pdfExporter.finalInit = function (that) {
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
-            that.container.append(that.options.resources.template.resourceText);
+            that.container.append(that.options.resources.pdfExportTemplate.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
         });
     };
@@ -60,8 +60,32 @@ var decapod = decapod || {};
             onExportStart: null
         },
         resources: {
-            template: {
+            pdfExportTemplate: {
                 url: "../html/pdfExporterTemplate.html",
+                forceCache: true
+            },
+            exportType: {
+                url: "../html/exportTypeTemplate.html",
+                forceCache: true
+            },
+            pdfOptions: {
+                url: "../html/pdfOptionsTemplate.html",
+                forceCache: true
+            },
+            controls: {
+                url: "../html/exportControlsTemplate.html",
+                forceCache: true
+            },
+            trigger: {
+                url: "../html/exportControlsTriggerTemplate.html",
+                forceCache: true
+            },
+            progress: {
+                url: "../html/exportControlsProgressTemplate.html",
+                forceCache: true
+            },
+            download: {
+                url: "../html/exportControlsDownloadTemplate.html",
                 forceCache: true
             }
         },
@@ -74,6 +98,9 @@ var decapod = decapod || {};
                     strings: {
                         name: "{pdfExporter}.options.strings.name",
                         description: "{pdfExporter}.options.strings.description"
+                    },
+                    resources: {
+                        template: "{pdfExporter}.options.resources.exportType"
                     }
                 }
             },
@@ -86,6 +113,9 @@ var decapod = decapod || {};
                         documentResolutionLabel: "{pdfExporter}.options.strings.documentResolutionLabel",
                         documentDimensionsLabel: "{pdfExporter}.options.strings.documentDimensionsLabel",
                         documentDimensions: "{pdfExporter}.options.strings.documentDimensions"
+                    },
+                    resources: {
+                        template: "{pdfExporter}.options.resources.pdfOptions"
                     }
                 }
             },
@@ -100,8 +130,11 @@ var decapod = decapod || {};
                         download: "{pdfExporter}.options.strings.download",
                         restart: "{pdfExporter}.options.strings.restart"
                     },
-                    listeners: {
-                        "{pdfExporter}.events.afterExportComplete": "{controls}.showFinishControls"
+                    resources: {
+                        controls: "{pdfExporter}.options.resources.controls",
+                        trigger: "{pdfExporter}.options.resources.trigger",
+                        progress: "{pdfExporter}.options.resources.progress",
+                        download: "{pdfExporter}.options.resources.download"
                     }
                 }
             }
@@ -238,12 +271,7 @@ var decapod = decapod || {};
                         triggerContainer: {
                             decorators: {
                                 type: "fluid",
-                                func: "decapod.exportType.controls.trigger",
-                                options: {
-                                    resources: {
-                                        template: that.options.resources.trigger
-                                    }
-                                }
+                                func: "decapod.exportType.controls.trigger"
                             }
                         }
                     }
@@ -255,12 +283,7 @@ var decapod = decapod || {};
                         progressContainer: {
                             decorators: {
                                 type: "fluid",
-                                func: "decapod.exportType.controls.progress",
-                                options: {
-                                    resources: {
-                                        template: that.options.resources.progress
-                                    }
-                                }
+                                func: "decapod.exportType.controls.progress"
                             }
                         }
                     }
@@ -272,12 +295,7 @@ var decapod = decapod || {};
                         downloadContainer: {
                             decorators: {
                                 type: "fluid",
-                                func: "decapod.exportType.controls.download",
-                                options: {
-                                    resources: {
-                                        template: that.options.resources.download
-                                    }
-                                }
+                                func: "decapod.exportType.controls.download"
                             }
                         }
                     }
