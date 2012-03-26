@@ -268,7 +268,7 @@ var decapod = decapod || {};
                     type: "fluid.renderer.condition",
                     condition: that.model.showExportStart,
                     trueTree: {
-                        triggerContainer: {
+                        trigger: {
                             decorators: {
                                 type: "fluid",
                                 func: "decapod.exportType.controls.trigger"
@@ -280,7 +280,7 @@ var decapod = decapod || {};
                     type: "fluid.renderer.condition",
                     condition: that.model.showExportProgress,
                     trueTree: {
-                        progressContainer: {
+                        progress: {
                             decorators: {
                                 type: "fluid",
                                 func: "decapod.exportType.controls.progress"
@@ -292,7 +292,7 @@ var decapod = decapod || {};
                     type: "fluid.renderer.condition",
                     condition: that.model.showExportDownload,
                     trueTree: {
-                        downloadContainer: {
+                        download: {
                             decorators: {
                                 type: "fluid",
                                 func: "decapod.exportType.controls.download"
@@ -341,9 +341,9 @@ var decapod = decapod || {};
         preInitFunction: "decapod.exportType.controls.preInit",
         produceTree: "decapod.exportType.controls.produceTree",
         selectors: {
-            triggerContainer: ".dc-exportType-controls-triggerContainer",
-            progressContainer: ".dc-exportType-controls-progressContainer",
-            downloadContainer: ".dc-exportType-controls-downloadContainer"
+            trigger: ".dc-exportType-controls-trigger",
+            progress: ".dc-exportType-controls-progress",
+            download: ".dc-exportType-controls-download"
         },
         strings: {
             trigger: "Start Export",

@@ -166,21 +166,21 @@ var decapod = decapod || {};
     };
     
     var assertShowTriggerControls = function (that) {
-        jqUnit.assertFalse("The progress shouldn't have initialized", that["**-renderer-progressContainer-0"]);
-        jqUnit.assertFalse("The download shouldn't have initialized", that["**-renderer-downloadContainer-0"]);
-        assertTriggerRender(that["**-renderer-triggerContainer-0"]);
+        jqUnit.assertFalse("The progress shouldn't have initialized", that["**-renderer-progress-0"]);
+        jqUnit.assertFalse("The download shouldn't have initialized", that["**-renderer-download-0"]);
+        assertTriggerRender(that["**-renderer-trigger-0"]);
     };
     
     var assertShowProgressControls = function (that) {
-        jqUnit.assertFalse("The trigger shouldn't have initialized", that["**-renderer-triggerContainer-0"]);
-        jqUnit.assertFalse("The download shouldn't have initialized", that["**-renderer-downloadContainer-0"]);
-        assertProgressRender(that["**-renderer-progressContainer-0"]);
+        jqUnit.assertFalse("The trigger shouldn't have initialized", that["**-renderer-trigger-0"]);
+        jqUnit.assertFalse("The download shouldn't have initialized", that["**-renderer-download-0"]);
+        assertProgressRender(that["**-renderer-progress-0"]);
     };
     
     var assertShowDownloadControls = function (that) {
-        jqUnit.assertFalse("The trigger shouldn't have initialized", that["**-renderer-triggerContainer-0"]);
-        jqUnit.assertFalse("The progress shouldn't have initialized", that["**-renderer-progressContainer-0"]);
-        assertDownloadRender(that["**-renderer-downloadContainer-0"]);
+        jqUnit.assertFalse("The trigger shouldn't have initialized", that["**-renderer-trigger-0"]);
+        jqUnit.assertFalse("The progress shouldn't have initialized", that["**-renderer-progress-0"]);
+        assertDownloadRender(that["**-renderer-download-0"]);
     };
     
     // Tests
@@ -352,7 +352,7 @@ var decapod = decapod || {};
             createControls(CONTROLS_CONTAINER, {
                 listeners: {
                     afterRender: function (that) {
-                        if (that["**-renderer-triggerContainer-0"]) {
+                        if (that["**-renderer-trigger-0"]) {
                             that.events.afterModelChanged.addListener(assertModel);
                             that.updateModel(model);
                         } else {
@@ -381,7 +381,7 @@ var decapod = decapod || {};
             createControls(CONTROLS_CONTAINER, {
                 listeners: {
                     afterRender: function (that) {
-                        if (that["**-renderer-triggerContainer-0"]) {
+                        if (that["**-renderer-trigger-0"]) {
                             that.events.afterModelChanged.addListener(assertModel);
                             that.updateModel(model);
                         } else {
@@ -397,7 +397,7 @@ var decapod = decapod || {};
         controlsTests.asyncTest("Export Control Click", function () {
             jqUnit.expect(4);
             var fireClick = function (that) {
-                var trigger = that["**-renderer-triggerContainer-0"];
+                var trigger = that["**-renderer-trigger-0"];
                 
                 // since this will be triggered after the click, 
                 // this prevents it from being called when the 
