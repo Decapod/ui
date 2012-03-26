@@ -87,6 +87,19 @@ var decapod = decapod || {};
             }
         },
         components: {
+            eventBinder: {
+                type: "decapod.eventBinder",
+                createOnEvent: "afterFetchResources",
+                priority: "last",
+                options: {
+                    listeners: {
+                        "{pdfExporter}.events.onExportStart": "{dataSource}.put"
+                    }
+                }
+            },
+            dataSource: {
+                type: "decapod.dataSource"
+            },
             exportInfo: {
                 type: "decapod.exportInfo",
                 container: "{pdfExporter}.dom.exportInfo",
@@ -132,6 +145,71 @@ var decapod = decapod || {};
                         trigger: "{pdfExporter}.options.resources.trigger",
                         progress: "{pdfExporter}.options.resources.progress",
                         download: "{pdfExporter}.options.resources.download"
+                    }
+                }
+            }
+        }
+    });
+    
+    /************************
+     * decapod.eventBinder *
+     ************************/
+    
+    fluid.defaults("decapod.eventBinder", {
+        gradeNames: ["fluid.eventedComponent", "autoInit"]
+    });
+    
+    /************************
+     * decapod.exportPoller *
+     ************************/
+     
+    fluid.registerNamespace("decapod.exportPoller");
+    
+    decapod.exportPoller.poll = function (that) {
+        that.events.onPoll.fire();
+    };
+    
+    decapod.exportPoller.isComplete = function (response) {
+        return response.status && response.status.toLowerCase() === "complete";
+    };
+    
+    decapod.exportPoller.handleResponse = function (that, response) {
+        that.response = response;
+        if (that.isComplete(response)) {
+            setTimeout(function () {
+                that.events.pollComplete.fire(response);
+            }, that.options.delay);
+        } else {
+            that.poll();
+        }
+    };
+    
+    decapod.exportPoller.preInit = function (that) {
+        that.handleResponse = function (response) {
+            that.handleResponse(response);
+        };
+    };
+     
+    fluid.defaults("decapod.exportPoller", {
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        preInitFunction: "decapod.exportPoller.preInit",
+        invokers: {
+            poll: "decapod.exportPoller.poll",
+            isComplete: "decapod.exportPoller.isComplete",
+            handleResponse: "decapod.exportPoller.handleResponse"
+        },
+        events: {
+            onPoll: null,
+            pollComplete: null
+        },
+        delay: 5000,
+        components: {
+            dataSource: {
+                type: "decapod.dataSource",
+                priority: "first",
+                options: {
+                    listeners: {
+                        "success.handler": "{exportPoller}.handleResponse"
                     }
                 }
             }
