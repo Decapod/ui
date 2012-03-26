@@ -284,11 +284,159 @@ var decapod = decapod || {};
             });
         });
         
+        /****************
+         * triggerTests *
+         ****************/
+        
+        var triggerTests = jqUnit.testCase("decapod.exportControls.trigger");
+        
+        triggerTests.test("init", function () {
+            var that = createTrigger(TRIGGER_CONTAINER);
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        triggerTests.asyncTest("Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createTrigger(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
+        });
+        
+        triggerTests.asyncTest("Rendering", function () {
+            jqUnit.expect(2);
+            var assertRendering = function (that) {
+                assertTriggerRender(that);
+                start();
+            };
+            createTrigger(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        triggerTests.asyncTest("afterTriggered", function () {
+            jqUnit.expect(1);
+            var clickTrigger = function (that) {
+                var trigger = that.locate("trigger");
+                trigger.click();
+            };
+            var assertEvent = function (that) {
+                jqUnit.assertTrue("The afterTriggered event should have been fired", true);
+                start();
+            };
+            createTrigger(TRIGGER_CONTAINER, {
+                events: {
+                    triggered: {
+                        event: "afterTriggered"
+                    }
+                },
+                listeners: {
+                    afterRender: {
+                        listener: clickTrigger,
+                        priority: "last"
+                    },
+                    triggered: {
+                        listener: assertEvent
+                    }
+                }
+            });
+        });
+        
+        /*****************
+         * progressTests *
+         *****************/
+        
+        var progressTests = jqUnit.testCase("decapod.exportControls.progress");
+        
+        progressTests.test("init", function () {
+            var that = createProgress(PROGRESS_CONTAINER);
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        progressTests.asyncTest("Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createProgress(PROGRESS_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
+        });
+        
+        progressTests.asyncTest("Rendering", function () {
+            jqUnit.expect(1);
+            var assertRendering = function (that) {
+                assertProgressRender(that);
+                start();
+            };
+            createProgress(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        /*****************
+         * downloadTests *
+         *****************/
+        
+        var downloadTests = jqUnit.testCase("decapod.exportControls.download");
+        
+        downloadTests.test("init", function () {
+            var that = createDownload(DOWNLOAD_CONTAINER);
+            jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        downloadTests.asyncTest("Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+                start();
+            };
+            createDownload(DOWNLOAD_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources
+                }
+            });
+        });
+        
+        downloadTests.asyncTest("Rendering", function () {
+            jqUnit.expect(3);
+            var assertRendering = function (that) {
+                assertDownloadRender(that);
+                start();
+            };
+            createDownload(DOWNLOAD_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
         /*****************
          * controlsTests *
          *****************/
         
-        var controlsTests = jqUnit.testCase("Decapod Export Type Controls");
+        var controlsTests = jqUnit.testCase("decapod.exportControls");
         
         controlsTests.asyncTest("Init tests", function () {
             createControls(CONTROLS_CONTAINER, {
@@ -427,153 +575,11 @@ var decapod = decapod || {};
             });
         });
         
-        /***************************
-         * controlsTests - Trigger *
-         ***************************/
-        
-        controlsTests.test("Trigger - init", function () {
-            var that = createTrigger(TRIGGER_CONTAINER);
-            jqUnit.assertTrue("The component should have initialized", that);
-        });
-        
-        controlsTests.asyncTest("Trigger - Fetch Resources", function () {
-            jqUnit.expect(1);
-            var assertFetchResources = function (resourceSpec) {
-                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
-                start();
-            };
-            createTrigger(TRIGGER_CONTAINER, {
-                listeners: {
-                    afterFetchResources: assertFetchResources
-                }
-            });
-        });
-        
-        controlsTests.asyncTest("Trigger - Rendering", function () {
-            jqUnit.expect(2);
-            var assertRendering = function (that) {
-                assertTriggerRender(that);
-                start();
-            };
-            createTrigger(TRIGGER_CONTAINER, {
-                listeners: {
-                    afterRender: {
-                        listener: assertRendering,
-                        priority: "last"
-                    }
-                }
-            });
-        });
-        
-        controlsTests.asyncTest("Trigger - afterTriggered", function () {
-            jqUnit.expect(1);
-            var clickTrigger = function (that) {
-                var trigger = that.locate("trigger");
-                trigger.click();
-            };
-            var assertEvent = function (that) {
-                jqUnit.assertTrue("The afterTriggered event should have been fired", true);
-                start();
-            };
-            createTrigger(TRIGGER_CONTAINER, {
-                events: {
-                    triggered: {
-                        event: "afterTriggered"
-                    }
-                },
-                listeners: {
-                    afterRender: {
-                        listener: clickTrigger,
-                        priority: "last"
-                    },
-                    triggered: {
-                        listener: assertEvent
-                    }
-                }
-            });
-        });
-        
-        /****************************
-         * controlsTests - Progress *
-         ****************************/
-        
-        controlsTests.test("Progress - init", function () {
-            var that = createProgress(PROGRESS_CONTAINER);
-            jqUnit.assertTrue("The component should have initialized", that);
-        });
-        
-        controlsTests.asyncTest("Progress - Fetch Resources", function () {
-            jqUnit.expect(1);
-            var assertFetchResources = function (resourceSpec) {
-                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
-                start();
-            };
-            createProgress(PROGRESS_CONTAINER, {
-                listeners: {
-                    afterFetchResources: assertFetchResources
-                }
-            });
-        });
-        
-        controlsTests.asyncTest("Progress - Rendering", function () {
-            jqUnit.expect(1);
-            var assertRendering = function (that) {
-                assertProgressRender(that);
-                start();
-            };
-            createProgress(TRIGGER_CONTAINER, {
-                listeners: {
-                    afterRender: {
-                        listener: assertRendering,
-                        priority: "last"
-                    }
-                }
-            });
-        });
-        
-        /****************************
-         * controlsTests - Download *
-         ****************************/
-        
-        controlsTests.test("Download - init", function () {
-            var that = createDownload(DOWNLOAD_CONTAINER);
-            jqUnit.assertTrue("The component should have initialized", that);
-        });
-        
-        controlsTests.asyncTest("Download - Fetch Resources", function () {
-            jqUnit.expect(1);
-            var assertFetchResources = function (resourceSpec) {
-                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
-                start();
-            };
-            createDownload(DOWNLOAD_CONTAINER, {
-                listeners: {
-                    afterFetchResources: assertFetchResources
-                }
-            });
-        });
-        
-        controlsTests.asyncTest("Download - Rendering", function () {
-            jqUnit.expect(3);
-            var assertRendering = function (that) {
-                assertDownloadRender(that);
-                start();
-            };
-            createDownload(DOWNLOAD_CONTAINER, {
-                listeners: {
-                    afterRender: {
-                        listener: assertRendering,
-                        priority: "last"
-                    }
-                }
-            });
-        });
-        
         /********************
          * pdfExporterTests *
          ********************/
         
-        var pdfExporterTests = jqUnit.testCase("Decapod PDF Exporter");
+        var pdfExporterTests = jqUnit.testCase("decapod.pdfExporter");
         
         pdfExporterTests.asyncTest("Init tests", function () {
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
