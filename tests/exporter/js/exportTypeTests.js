@@ -20,7 +20,7 @@ var decapod = decapod || {};
 (function ($) {
     // Container Selectors
     var INFO_CONTAINER = ".dc-exportInfo";
-    var PDF_EXPORT_OPTIONS_CONTAINER = ".dc-exportType-pdfOptions";
+    var PDF_EXPORT_OPTIONS_CONTAINER = ".dc-pdfExportOptions";
     var CONTROLS_CONTAINER = ".dc-exportType-controls";
     var TRIGGER_CONTAINER = ".dc-exportType-controls-trigger";
     var PROGRESS_CONTAINER = ".dc-exportType-controls-progress";
@@ -28,7 +28,7 @@ var decapod = decapod || {};
     var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
     
     // Template URLs
-    var EXPORT_TYPE_TEMPLATE = "../../../components/exporter/html/exportInfoTemplate.html";
+    var EXPORT_INFO_TEMPLATE = "../../../components/exporter/html/exportInfoTemplate.html";
     var PDF_EXPORT_OPTIONS_TEMPLATE = "../../../components/exporter/html/pdfExportOptionsTemplate.html";
     var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
     var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
@@ -55,7 +55,7 @@ var decapod = decapod || {};
     };
     
     var createexportInfo = function (container, options) {
-        return generateComponent("decapod.exportInfo", container, EXPORT_TYPE_TEMPLATE, options);
+        return generateComponent("decapod.exportInfo", container, EXPORT_INFO_TEMPLATE, options);
     };
     
     var createPDFExportOptions = function (container, options) {
@@ -103,7 +103,7 @@ var decapod = decapod || {};
                 forceCache: true
             },
             exportInfo: {
-                url: EXPORT_TYPE_TEMPLATE,
+                url: EXPORT_INFO_TEMPLATE,
                 forceCache: true
             },
             pdfExportOptions: {
@@ -226,7 +226,7 @@ var decapod = decapod || {};
          * pdfExportOptionsTests *
          *************************/
         
-        var pdfExportOptionsTests = jqUnit.testCase("Decapod Export Type PDF Options");
+        var pdfExportOptionsTests = jqUnit.testCase("decapod.pdfExportOptions");
         
         pdfExportOptionsTests.test("Init tests", function () {
             var that = createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER);
