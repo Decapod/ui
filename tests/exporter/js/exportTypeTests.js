@@ -20,7 +20,7 @@ var decapod = decapod || {};
 (function ($) {
     // Container Selectors
     var INFO_CONTAINER = ".dc-exportInfo";
-    var PDF_OPTS_CONTAINER = ".dc-exportType-pdfOptions";
+    var PDF_EXPORT_OPTIONS_CONTAINER = ".dc-exportType-pdfOptions";
     var CONTROLS_CONTAINER = ".dc-exportType-controls";
     var TRIGGER_CONTAINER = ".dc-exportType-controls-trigger";
     var PROGRESS_CONTAINER = ".dc-exportType-controls-progress";
@@ -29,7 +29,7 @@ var decapod = decapod || {};
     
     // Template URLs
     var EXPORT_TYPE_TEMPLATE = "../../../components/exporter/html/exportInfoTemplate.html";
-    var PDF_OPTIONS_TEMPLATE = "../../../components/exporter/html/pdfOptionsTemplate.html";
+    var PDF_EXPORT_OPTIONS_TEMPLATE = "../../../components/exporter/html/pdfExportOptionsTemplate.html";
     var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
     var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
     var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
@@ -58,8 +58,8 @@ var decapod = decapod || {};
         return generateComponent("decapod.exportInfo", container, EXPORT_TYPE_TEMPLATE, options);
     };
     
-    var createPDFOptions = function (container, options) {
-        return generateComponent("decapod.exportType.pdfOptions", container, PDF_OPTIONS_TEMPLATE, options);
+    var createPDFExportOptions = function (container, options) {
+        return generateComponent("decapod.pdfExportOptions", container, PDF_EXPORT_OPTIONS_TEMPLATE, options);
     };
     
     var createControls = function (container, options) {
@@ -106,8 +106,8 @@ var decapod = decapod || {};
                 url: EXPORT_TYPE_TEMPLATE,
                 forceCache: true
             },
-            pdfOptions: {
-                url: PDF_OPTIONS_TEMPLATE,
+            pdfExportOptions: {
+                url: PDF_EXPORT_OPTIONS_TEMPLATE,
                 forceCache: true
             },
             controls: {
@@ -222,45 +222,45 @@ var decapod = decapod || {};
             });
         });
         
-        /*******************
-         * pdfOptionsTests *
-         *******************/
+        /*************************
+         * pdfExportOptionsTests *
+         *************************/
         
-        var pdfOptionsTests = jqUnit.testCase("Decapod Export Type PDF Options");
+        var pdfExportOptionsTests = jqUnit.testCase("Decapod Export Type PDF Options");
         
-        pdfOptionsTests.test("Init tests", function () {
-            var that = createPDFOptions(PDF_OPTS_CONTAINER);
+        pdfExportOptionsTests.test("Init tests", function () {
+            var that = createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
-        pdfOptionsTests.asyncTest("Fetch Resources", function () {
+        pdfExportOptionsTests.asyncTest("Fetch Resources", function () {
             jqUnit.expect(1);
             var assertFetchResources = function (resourceSpec) {
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
                 start();
             };
-            createPDFOptions(PDF_OPTS_CONTAINER, {
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
                 listeners: {
                     afterFetchResources: assertFetchResources
                 }
             });
         });
         
-        pdfOptionsTests.asyncTest("Rendering", function () {
+        pdfExportOptionsTests.asyncTest("Rendering", function () {
             jqUnit.expect(4);
             var assertRender = function (that) {
                 assertPDFOptionsRender(that);
                 start();
             };
             
-            createPDFOptions(PDF_OPTS_CONTAINER, {
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
                 listeners: {
                     afterRender: assertRender
                 }
             });
         });
         
-        pdfOptionsTests.asyncTest("Model Change", function () {
+        pdfExportOptionsTests.asyncTest("Model Change", function () {
             jqUnit.expect(2);
             var dpi = 200;
             var changeVal = function (that) {
@@ -271,7 +271,7 @@ var decapod = decapod || {};
                 jqUnit.assertEquals("The components model should be update with the new dpi", dpi, that.model.dpi);
                 start();
             };
-            createPDFOptions(PDF_OPTS_CONTAINER, {
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
                 events: {
                     testModel: {
                         event: "afterModelChanged"

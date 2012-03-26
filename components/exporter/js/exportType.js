@@ -21,7 +21,7 @@ var decapod = decapod || {};
 
     /************************
      *  decapod.pdfExporter *
-     *************************/
+     ************************/
     
     fluid.registerNamespace("decapod.pdfExporter");
     
@@ -37,7 +37,7 @@ var decapod = decapod || {};
         finalInitFunction: "decapod.pdfExporter.finalInit",
         selectors: {
             exportInfo: ".dc-pdfExporter-exportInfo",
-            pdfOptions: ".dc-pdfExporter-pdfOptions",
+            pdfExportOptions: ".dc-pdfExporter-pdfExportOptions",
             controls: ".dc-pdfExporter-controls"
         },
         strings: {
@@ -65,8 +65,8 @@ var decapod = decapod || {};
                 url: "../html/exportInfoTemplate.html",
                 forceCache: true
             },
-            pdfOptions: {
-                url: "../html/pdfOptionsTemplate.html",
+            pdfExportOptions: {
+                url: "../html/pdfExportOptionsTemplate.html",
                 forceCache: true
             },
             controls: {
@@ -102,8 +102,8 @@ var decapod = decapod || {};
                 }
             },
             exportOptions: {
-                type: "decapod.exportType.pdfOptions",
-                container: "{pdfExporter}.dom.pdfOptions",
+                type: "decapod.pdfExportOptions",
+                container: "{pdfExporter}.dom.pdfExportOptions",
                 createOnEvent: "afterFetchResources",
                 options: {
                     strings: {
@@ -112,7 +112,7 @@ var decapod = decapod || {};
                         documentDimensions: "{pdfExporter}.options.strings.documentDimensions"
                     },
                     resources: {
-                        template: "{pdfExporter}.options.resources.pdfOptions"
+                        template: "{pdfExporter}.options.resources.pdfExportOptions"
                     }
                 }
             },
@@ -186,13 +186,13 @@ var decapod = decapod || {};
         }
     });
     
-    /*********************************
-     * decapod.exportType.pdfOptions *
-     *********************************/
+    /****************************
+     * decapod.pdfExportOptions *
+     ****************************/
     
-    fluid.registerNamespace("decapod.exportType.pdfOptions");
+    fluid.registerNamespace("decapod.pdfExportOptions");
     
-    decapod.exportType.pdfOptions.produceTree = function (that) {
+    decapod.pdfExportOptions.produceTree = function (that) {
         return {
             documentResolutionLabel: {
                 messagekey: "documentResolutionLabel"
@@ -212,7 +212,7 @@ var decapod = decapod || {};
         };
     };
     
-    decapod.exportType.pdfOptions.finalInit = function (that) {
+    decapod.pdfExportOptions.finalInit = function (that) {
         that.applier.modelChanged.addListener("dpi", that.events.afterModelChanged.fire);
         
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
@@ -222,22 +222,22 @@ var decapod = decapod || {};
         });
     };
     
-    fluid.defaults("decapod.exportType.pdfOptions", {
+    fluid.defaults("decapod.pdfExportOptions", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
-        finalInitFunction: "decapod.exportType.pdfOptions.finalInit",
-        produceTree: "decapod.exportType.pdfOptions.produceTree",
+        finalInitFunction: "decapod.pdfExportOptions.finalInit",
+        produceTree: "decapod.pdfExportOptions.produceTree",
         selectors: {
-            documentResolutionLabel: ".dc-exportType-pdfOptions-documentResolutionLabel",
-            documentResolution: ".dc-exportType-pdfOptions-documentResolution",
-            documentDimensionsLabel: ".dc-exportType-pdfOptions-documentDimensionsLabel",
-            documentDimensions: ".dc-exportType-pdfOptions-documentDimensions"
+            documentResolutionLabel: ".dc-pdfExportOptions-documentResolutionLabel",
+            documentResolution: ".dc-pdfExportOptions-documentResolution",
+            documentDimensionsLabel: ".dc-pdfExportOptions-documentDimensionsLabel",
+            documentDimensions: ".dc-pdfExportOptions-documentDimensions"
         },
         model: {
             dpi: "300"
         },
         resources: {
             template: {
-                url: "../html/pdfOptionsTemplate.html",
+                url: "../html/pdfExportOptionsTemplate.html",
                 forceCache: true
             }
         },
