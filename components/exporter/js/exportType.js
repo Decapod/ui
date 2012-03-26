@@ -117,7 +117,7 @@ var decapod = decapod || {};
                 }
             },
             exportControls: {
-                type: "decapod.exportType.controls",
+                type: "decapod.exportControls",
                 container: "{pdfExporter}.dom.controls",
                 createOnEvent: "afterFetchResources",
                 options: {
@@ -252,13 +252,13 @@ var decapod = decapod || {};
         }
     });
     
-    /*******************************
-     * decapod.exportType.controls *
-     *******************************/
+    /**************************
+     * decapod.exportControls *
+     **************************/
     
-    fluid.registerNamespace("decapod.exportType.controls");
+    fluid.registerNamespace("decapod.exportControls");
 
-    decapod.exportType.controls.produceTree = function (that) {
+    decapod.exportControls.produceTree = function (that) {
         return {
             expander: [
                 {
@@ -268,7 +268,7 @@ var decapod = decapod || {};
                         trigger: {
                             decorators: {
                                 type: "fluid",
-                                func: "decapod.exportType.controls.trigger"
+                                func: "decapod.exportControls.trigger"
                             }
                         }
                     }
@@ -280,7 +280,7 @@ var decapod = decapod || {};
                         progress: {
                             decorators: {
                                 type: "fluid",
-                                func: "decapod.exportType.controls.progress"
+                                func: "decapod.exportControls.progress"
                             }
                         }
                     }
@@ -292,7 +292,7 @@ var decapod = decapod || {};
                         download: {
                             decorators: {
                                 type: "fluid",
-                                func: "decapod.exportType.controls.download"
+                                func: "decapod.exportControls.download"
                             }
                         }
                     }
@@ -301,11 +301,11 @@ var decapod = decapod || {};
         };
     };
     
-    decapod.exportType.controls.updateModel = function (that, modelPath, value) {
+    decapod.exportControls.updateModel = function (that, modelPath, value) {
         that.applier.requestChange(modelPath, value);
     };
     
-    decapod.exportType.controls.preInit = function (that) {
+    decapod.exportControls.preInit = function (that) {
         // expose methods to be used by listeners
         that.refreshView = function () {
             that.refreshView();
@@ -321,7 +321,7 @@ var decapod = decapod || {};
         };
     };
 
-    decapod.exportType.controls.finalInit = function (that) {
+    decapod.exportControls.finalInit = function (that) {
         that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
@@ -332,15 +332,15 @@ var decapod = decapod || {};
         });
     };
     
-    fluid.defaults("decapod.exportType.controls", {
+    fluid.defaults("decapod.exportControls", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
-        finalInitFunction: "decapod.exportType.controls.finalInit",
-        preInitFunction: "decapod.exportType.controls.preInit",
-        produceTree: "decapod.exportType.controls.produceTree",
+        finalInitFunction: "decapod.exportControls.finalInit",
+        preInitFunction: "decapod.exportControls.preInit",
+        produceTree: "decapod.exportControls.produceTree",
         selectors: {
-            trigger: ".dc-exportType-controls-trigger",
-            progress: ".dc-exportType-controls-progress",
-            download: ".dc-exportType-controls-download"
+            trigger: ".dc-exportTypControls-trigger",
+            progress: ".dc-exportTypControls-progress",
+            download: ".dc-exportTypControls-download"
         },
         strings: {
             trigger: "Start Export",
@@ -355,10 +355,10 @@ var decapod = decapod || {};
             onReady: null
         },
         listeners: {
-            "afterModelChanged.refreshView": "{controls}.refreshView",
-            "afterFetchResources.render": "{controls}.initialRender",
+            "afterModelChanged.refreshView": "{exportControls}.refreshView",
+            "afterFetchResources.render": "{exportControls}.initialRender",
             "onExportTrigger.updateModel": {
-                listener: "{controls}.updateModel",
+                listener: "{exportControls}.updateModel",
                 args: [{
                     showExportStart: false,
                     showExportProgress: true,
@@ -372,7 +372,7 @@ var decapod = decapod || {};
             showExportDownload: false
         },
         invokers: {
-            updateModel: "decapod.exportType.controls.updateModel"
+            updateModel: "decapod.exportControls.updateModel"
         },
         resources: {
             controls: {
@@ -394,13 +394,13 @@ var decapod = decapod || {};
         }
     });
     
-    /***************************************
-     * decapod.exportType.controls.trigger *
-     ***************************************/
+    /**********************************
+     * decapod.exportControls.trigger *
+     **********************************/
     
-    fluid.registerNamespace("decapod.exportType.controls.trigger");
+    fluid.registerNamespace("decapod.exportControls.trigger");
     
-    decapod.exportType.controls.trigger.produceTree = function (that) {
+    decapod.exportControls.trigger.produceTree = function (that) {
         return {
             trigger: {
                 messagekey: "trigger",
@@ -413,7 +413,7 @@ var decapod = decapod || {};
         };
     };
     
-    decapod.exportType.controls.trigger.finalInit = function (that) {
+    decapod.exportControls.trigger.finalInit = function (that) {
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
@@ -421,12 +421,12 @@ var decapod = decapod || {};
         });
     };
     
-    fluid.defaults("decapod.exportType.controls.trigger", {
+    fluid.defaults("decapod.exportControls.trigger", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
-        finalInitFunction: "decapod.exportType.controls.trigger.finalInit",
-        produceTree: "decapod.exportType.controls.trigger.produceTree",
+        finalInitFunction: "decapod.exportControls.trigger.finalInit",
+        produceTree: "decapod.exportControls.trigger.produceTree",
         selectors: {
-            trigger: ".dc-exportType-controls-trigger-exportControl"
+            trigger: ".dc-exportTypControls-trigger-exportControl"
         },
         strings: {
             trigger: "Start Export"
@@ -443,13 +443,13 @@ var decapod = decapod || {};
         }
     });
     
-    /****************************************
-     * decapod.exportType.controls.progress *
-     ****************************************/
+    /***********************************
+     * decapod.exportControls.progress *
+     ***********************************/
     
-    fluid.registerNamespace("decapod.exportType.controls.progress");
+    fluid.registerNamespace("decapod.exportControls.progress");
     
-    decapod.exportType.controls.progress.produceTree = function (that) {
+    decapod.exportControls.progress.produceTree = function (that) {
         return {
             message: {
                 messagekey: "message"
@@ -457,7 +457,7 @@ var decapod = decapod || {};
         };
     };
     
-    decapod.exportType.controls.progress.finalInit = function (that) {
+    decapod.exportControls.progress.finalInit = function (that) {
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
@@ -465,12 +465,12 @@ var decapod = decapod || {};
         });
     };
     
-    fluid.defaults("decapod.exportType.controls.progress", {
+    fluid.defaults("decapod.exportControls.progress", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
-        finalInitFunction: "decapod.exportType.controls.progress.finalInit",
-        produceTree: "decapod.exportType.controls.progress.produceTree",
+        finalInitFunction: "decapod.exportControls.progress.finalInit",
+        produceTree: "decapod.exportControls.progress.produceTree",
         selectors: {
-            message: ".dc-exportType-controls-progress-message"
+            message: ".dc-exportTypControls-progress-message"
         },
         strings: {
             message: "Export Progress"
@@ -486,13 +486,13 @@ var decapod = decapod || {};
         }
     });
     
-    /****************************************
-     * decapod.exportType.controls.download *
-     ****************************************/
+    /***********************************
+     * decapod.exportControls.download *
+     ***********************************/
     
-    fluid.registerNamespace("decapod.exportType.controls.download");
+    fluid.registerNamespace("decapod.exportControls.download");
     
-    decapod.exportType.controls.download.produceTree = function (that) {
+    decapod.exportControls.download.produceTree = function (that) {
         return {
             download: {
                 linktext: {
@@ -506,7 +506,7 @@ var decapod = decapod || {};
         };
     };
     
-    decapod.exportType.controls.download.finalInit = function (that) {
+    decapod.exportControls.download.finalInit = function (that) {
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
@@ -514,13 +514,13 @@ var decapod = decapod || {};
         });
     };
     
-    fluid.defaults("decapod.exportType.controls.download", {
+    fluid.defaults("decapod.exportControls.download", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
-        finalInitFunction: "decapod.exportType.controls.download.finalInit",
-        produceTree: "decapod.exportType.controls.download.produceTree",
+        finalInitFunction: "decapod.exportControls.download.finalInit",
+        produceTree: "decapod.exportControls.download.produceTree",
         selectors: {
-            download: ".dc-exportType-controls-download-download",
-            restart: ".dc-exportType-controls-download-restart"
+            download: ".dc-exportTypControls-download-download",
+            restart: ".dc-exportTypControls-download-restart"
         },
         strings: {
             download: "Download Link",

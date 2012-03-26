@@ -21,10 +21,10 @@ var decapod = decapod || {};
     // Container Selectors
     var INFO_CONTAINER = ".dc-exportInfo";
     var PDF_EXPORT_OPTIONS_CONTAINER = ".dc-pdfExportOptions";
-    var CONTROLS_CONTAINER = ".dc-exportType-controls";
-    var TRIGGER_CONTAINER = ".dc-exportType-controls-trigger";
-    var PROGRESS_CONTAINER = ".dc-exportType-controls-progress";
-    var DOWNLOAD_CONTAINER = ".dc-exportType-controls-download";
+    var CONTROLS_CONTAINER = ".dc-exportTypControls";
+    var TRIGGER_CONTAINER = ".dc-exportTypControls-trigger";
+    var PROGRESS_CONTAINER = ".dc-exportTypControls-progress";
+    var DOWNLOAD_CONTAINER = ".dc-exportTypControls-download";
     var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
     
     // Template URLs
@@ -81,19 +81,19 @@ var decapod = decapod || {};
                 forceCache: true
             }
         };
-        return generateCompositeComponent("decapod.exportType.controls", container, resources, options);
+        return generateCompositeComponent("decapod.exportControls", container, resources, options);
     };
     
     var createTrigger = function (container, options) {
-        return generateComponent("decapod.exportType.controls.trigger", container, TRIGGER_TEMPLATE, options);
+        return generateComponent("decapod.exportControls.trigger", container, TRIGGER_TEMPLATE, options);
     };
     
     var createProgress = function (container, options) {
-        return generateComponent("decapod.exportType.controls.progress", container, PROGRESS_TEMPLATE, options);
+        return generateComponent("decapod.exportControls.progress", container, PROGRESS_TEMPLATE, options);
     };
     
     var createDownload = function (container, options) {
-        return generateComponent("decapod.exportType.controls.download", container, DOWNLOAD_TEMPLATE, options);
+        return generateComponent("decapod.exportControls.download", container, DOWNLOAD_TEMPLATE, options);
     };
     
     var createPDFExporter = function (container, options) {

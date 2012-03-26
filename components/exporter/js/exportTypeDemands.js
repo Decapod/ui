@@ -23,14 +23,14 @@ var decapod = decapod || {};
      * Sub Component Demands *
      *************************/
 
-    fluid.demands("decapod.exportType.controls", ["decapod.pdfExporter"], {
+    fluid.demands("decapod.exportControls", ["decapod.pdfExporter"], {
         options: {
             events: {
                 onExportTrigger: "{pdfExporter}.events.onExportStart"
             },
             listeners: {
                 "{pdfExporter}.events.afterExportComplete": {
-                    listener: "{controls}.updateModel",
+                    listener: "{exportControls}.updateModel",
                     args: [{
                         showExportStart: false,
                         showExportProgress: false,
@@ -40,27 +40,27 @@ var decapod = decapod || {};
             }
         }
     });
-    fluid.demands("decapod.exportType.controls.trigger", ["decapod.exportType.controls"], {
+    fluid.demands("decapod.exportControls.trigger", ["decapod.exportControls"], {
         options: {
             events: {
-                afterTriggered: "{controls}.events.onExportTrigger"
+                afterTriggered: "{exportControls}.events.onExportTrigger"
             },
             resources: {
-                template: "{controls}.options.resources.trigger"
+                template: "{exportControls}.options.resources.trigger"
             }
         }
     });
-    fluid.demands("decapod.exportType.controls.progress", ["decapod.exportType.controls"], {
+    fluid.demands("decapod.exportControls.progress", ["decapod.exportControls"], {
         options: {
             resources: {
-                template: "{controls}.options.resources.progress"
+                template: "{exportControls}.options.resources.progress"
             }
         }
     });
-    fluid.demands("decapod.exportType.controls.download", ["decapod.exportType.controls"], {
+    fluid.demands("decapod.exportControls.download", ["decapod.exportControls"], {
         options: {
             resources: {
-                template: "{controls}.options.resources.download"
+                template: "{exportControls}.options.resources.download"
             }
         }
     });
@@ -71,8 +71,8 @@ var decapod = decapod || {};
     fluid.demands("decapod.exportInfo.renderText", ["decapod.exportInfo"], {
         args: ["{decapod.exportInfo.renderText}"]
     });
-    fluid.demands("decapod.exportType.controls.updateModel", ["decapod.exportType.controls"], {
-        args: ["{controls}", "", "{arguments}.0"]
+    fluid.demands("decapod.exportControls.updateModel", ["decapod.exportControls"], {
+        args: ["{exportControls}", "", "{arguments}.0"]
     });
 
     
