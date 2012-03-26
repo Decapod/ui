@@ -84,10 +84,6 @@ var decapod = decapod || {};
         return generateCompositeComponent("decapod.exportType.controls", container, resources, options);
     };
     
-    var createBaseRenderer = function (container, options) {
-        return generateComponent("decapod.exportType.controls.baseRenderer", container, CONTROLS_TEMPLATE, options);
-    };
-    
     var createTrigger = function (container, options) {
         return generateComponent("decapod.exportType.controls.trigger", container, TRIGGER_TEMPLATE, options);
     };
@@ -427,28 +423,6 @@ var decapod = decapod || {};
                         listener: assertClick,
                         priority: "last"
                     }
-                }
-            });
-        });
-        
-        /********************************
-         * controlsTests - BaseRenderer *
-         ********************************/
-
-        controlsTests.test("BaseRenderer - init", function () {
-            var that = createBaseRenderer(CONTROLS_CONTAINER);
-            jqUnit.assertTrue("The component shoudl have initialized", that);
-        });
-        
-        controlsTests.asyncTest("BaseRenderer - Fetch Resources", function () {
-            jqUnit.expect(1);
-            var assertFetchResources = function (resourceSpec) {
-                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
-                start();
-            };
-            createBaseRenderer(CONTROLS_CONTAINER, {
-                listeners: {
-                    afterFetchResources: assertFetchResources
                 }
             });
         });
