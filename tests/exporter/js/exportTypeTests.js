@@ -19,7 +19,7 @@ var decapod = decapod || {};
 
 (function ($) {
     // Container Selectors
-    var TYPE_CONTAINER = ".dc-exportType";
+    var INFO_CONTAINER = ".dc-exportInfo";
     var PDF_OPTS_CONTAINER = ".dc-exportType-pdfOptions";
     var CONTROLS_CONTAINER = ".dc-exportType-controls";
     var TRIGGER_CONTAINER = ".dc-exportType-controls-trigger";
@@ -28,7 +28,7 @@ var decapod = decapod || {};
     var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
     
     // Template URLs
-    var EXPORT_TYPE_TEMPLATE = "../../../components/exporter/html/exportTypeTemplate.html";
+    var EXPORT_TYPE_TEMPLATE = "../../../components/exporter/html/exportInfoTemplate.html";
     var PDF_OPTIONS_TEMPLATE = "../../../components/exporter/html/pdfOptionsTemplate.html";
     var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
     var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
@@ -54,8 +54,8 @@ var decapod = decapod || {};
         return generateCompositeComponent(component, container, resources, options);
     };
     
-    var createExportType = function (container, options) {
-        return generateComponent("decapod.exportType", container, EXPORT_TYPE_TEMPLATE, options);
+    var createexportInfo = function (container, options) {
+        return generateComponent("decapod.exportInfo", container, EXPORT_TYPE_TEMPLATE, options);
     };
     
     var createPDFOptions = function (container, options) {
@@ -102,7 +102,7 @@ var decapod = decapod || {};
                 url: PDF_EXPORTER_TEMPLATE,
                 forceCache: true
             },
-            exportType: {
+            exportInfo: {
                 url: EXPORT_TYPE_TEMPLATE,
                 forceCache: true
             },
@@ -131,7 +131,7 @@ var decapod = decapod || {};
     };
     
     // Convenience Functions: assertions
-    var assertExportTypeRender = function (that) {
+    var assertexportInfoRender = function (that) {
         var str = that.options.strings;
         jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
         jqUnit.assertEquals("The description should be rendered", str.description, that.locate("description").text());
@@ -187,35 +187,35 @@ var decapod = decapod || {};
     $(document).ready(function () {
         
         /*******************
-         * exportTypeTests *
+         * exportInfoTests *
          *******************/
         
-        var exportTypeTests = jqUnit.testCase("Decapod Export Type");
+        var exportInfoTests = jqUnit.testCase("decapod.exportInfo");
         
-        exportTypeTests.test("Init tests", function () {
-            var that = createExportType(TYPE_CONTAINER);
+        exportInfoTests.test("Init tests", function () {
+            var that = createexportInfo(INFO_CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
-        exportTypeTests.asyncTest("Fetch Resources", function () {
+        exportInfoTests.asyncTest("Fetch Resources", function () {
             jqUnit.expect(1);
             var assertFetchResources = function (resourceSpec) {
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
                 start();
             };
-            createExportType(TYPE_CONTAINER, {
+            createexportInfo(INFO_CONTAINER, {
                 listeners: {
                     afterFetchResources: assertFetchResources
                 }
             });
         });
         
-        exportTypeTests.asyncTest("Rendering", function () {
+        exportInfoTests.asyncTest("Rendering", function () {
             var assertRender = function (that) {
-                assertExportTypeRender(that);
+                assertexportInfoRender(that);
                 start();
             };
-            createExportType(TYPE_CONTAINER, {
+            createexportInfo(INFO_CONTAINER, {
                 listeners: {
                     afterRender: assertRender
                 }
@@ -609,7 +609,7 @@ var decapod = decapod || {};
         
         pdfExporterTests.asyncTest("Rendering", function () {
             var assertRendering = function (that) {
-                assertExportTypeRender(that.exportType);
+                assertexportInfoRender(that.exportInfo);
                 assertPDFOptionsRender(that.exportOptions);
                 assertShowTriggerControls(that.exportControls);
                 start();

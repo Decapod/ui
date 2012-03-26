@@ -68,8 +68,8 @@ var decapod = decapod || {};
     /*******************
      * Invoker Demands *
      *******************/
-    fluid.demands("decapod.exportType.renderText", ["decapod.exportType"], {
-        args: ["{decapod.exportType.renderText}"]
+    fluid.demands("decapod.exportInfo.renderText", ["decapod.exportInfo"], {
+        args: ["{decapod.exportInfo.renderText}"]
     });
     fluid.demands("decapod.exportType.controls.updateModel", ["decapod.exportType.controls"], {
         args: ["{controls}", "", "{arguments}.0"]
