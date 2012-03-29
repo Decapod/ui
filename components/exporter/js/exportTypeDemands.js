@@ -23,6 +23,18 @@ var decapod = decapod || {};
      * Sub Component Demands *
      *************************/
 
+    fluid.demands("decapod.dataSource", ["decapod.fileSystem", "decapod.pdfExporter"], {
+        options: {
+            url: "../../../mock-book/mockResponse.json"
+        }
+    });
+    
+    fluid.demands("decapod.dataSource", ["decapod.fileSystem", "decapod.exportPoller"], {
+        options: {
+            url: "../../../mock-book/mockResponse.json"
+        }
+    });
+
     fluid.demands("decapod.exportControls", ["decapod.pdfExporter"], {
         options: {
             events: {

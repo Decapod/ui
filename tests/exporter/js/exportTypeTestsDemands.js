@@ -18,6 +18,11 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
+    fluid.demands("decapod.exportPoller", ["decapod.test"], {
+        options: {
+            delay: 10
+        }
+    });
     
     /*****************
      * Event Demands *
