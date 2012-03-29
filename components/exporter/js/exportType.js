@@ -54,7 +54,8 @@ var decapod = decapod || {};
         events: {
             afterFetchResources: null,
             afterExportComplete: null,
-            onExportStart: null
+            onExportStart: null,
+            onReady: null
         },
         resources: {
             pdfExportTemplate: {
@@ -93,12 +94,21 @@ var decapod = decapod || {};
                 priority: "last",
                 options: {
                     listeners: {
-                        "{pdfExporter}.events.onExportStart": "{dataSource}.put"
+                        "onReady": "{pdfExporter}.events.onReady.fire",
+                        "{pdfExporter}.events.onExportStart": {
+                            listener: "{dataSource}.put",
+                            args: [null]
+                        },
+                        "{dataSource}.events.success": "{exportPoller}.poll",
+                        "{exportPoller}.events.pollComplete": "{pdfExporter}.events.afterExportComplete"
                     }
                 }
             },
             dataSource: {
                 type: "decapod.dataSource"
+            },
+            exportPoller: {
+                type: "decapod.exportPoller"
             },
             exportInfo: {
                 type: "decapod.exportInfo",
@@ -155,8 +165,18 @@ var decapod = decapod || {};
      * decapod.eventBinder *
      ************************/
     
+    fluid.registerNamespace("decapod.eventBinder");
+    
+    decapod.eventBinder.finalInit = function (that) {
+        that.events.onReady.fire();
+    };
+    
     fluid.defaults("decapod.eventBinder", {
-        gradeNames: ["fluid.eventedComponent", "autoInit"]
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        finalInitFunction: "decapod.eventBinder.finalInit",
+        events: {
+            onReady: null
+        }
     });
     
     /************************
@@ -204,6 +224,15 @@ var decapod = decapod || {};
         },
         delay: 5000,
         components: {
+            eventBinder: {
+                type: "decapod.eventBinder",
+                priority: "last",
+                options: {
+                    listeners: {
+                        "{exportPoller}.events.onPoll": "{dataSource}.get"
+                    }
+                }
+            },
             dataSource: {
                 type: "decapod.dataSource",
                 priority: "first",

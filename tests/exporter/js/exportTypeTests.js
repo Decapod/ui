@@ -197,6 +197,18 @@ var decapod = decapod || {};
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
+        eventBinderTests.asyncTest("onReady", function () {
+            jqUnit.expect(1);
+            decapod.eventBinder({
+                listeners: {
+                    onReady: function () {
+                        jqUnit.assertTrue("The onReady event should have fired", true);
+                        start();
+                    }
+                }
+            });
+        });
+        
         /*********************
          * exportPollerTests *
          *********************/
@@ -247,10 +259,21 @@ var decapod = decapod || {};
                 start();
             });
             that.handleResponse(inProgressResponse);
-            that.handleResponse(completeResponse);
         });
         
-        exportPollerTests.asyncTest("Datasource Integration", function () {
+        exportPollerTests.asyncTest("Datasource Integration - onPoll", function () {
+            jqUnit.expect(1);
+            var testEvent = function () {
+                jqUnit.assertTrue("The datasource success event should have fired", true);
+                start();
+            };
+            var that = decapod.exportPoller();
+            that.dataSource.events.success.addListener(testEvent);
+            that.events.onPoll.fire();
+            
+        });
+        
+        exportPollerTests.asyncTest("Datasource Integration - success", function () {
             jqUnit.expect(2);
             var testResponseHandler = function (response) {
                 jqUnit.assertTrue("The datasource triggered the handleResponse invoker", true);
@@ -749,8 +772,76 @@ var decapod = decapod || {};
                         args: ["{pdfExporter}"]
                     },
                     afterFetchResources: {
-                        listener: "{pdfExporter}.events.afterExportComplete.fire",
+                        listener: "{pdfExporter}.events.afterExportComplete",
                         priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("afterExportComplete - pollComplete", function () {
+            jqUnit.expect(6);
+            var assertEvent = function (that) {
+                jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
+                assertShowDownloadControls(that.exportControls);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterExportComplete: {
+                        listener: assertEvent,
+                        priority: "last",
+                        args: ["{pdfExporter}"]
+                    },
+                    onReady: {
+                        listener: "{pdfExporter}.exportPoller.events.pollComplete",
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("afterExportComplete - dataSource success", function () {
+            jqUnit.expect(6);
+            var assertEvent = function (that) {
+                jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
+                assertShowDownloadControls(that.exportControls);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterExportComplete: {
+                        listener: assertEvent,
+                        priority: "last",
+                        args: ["{pdfExporter}"]
+                    },
+                    onReady: {
+                        listener: "{pdfExporter}.dataSource.events.success",
+                        priority: "last",
+                        args: ["{pdfExporter}"]
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("afterExportComplete - onExportStart", function () {
+            jqUnit.expect(6);
+            var assertEvent = function (that) {
+                jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
+                assertShowDownloadControls(that.exportControls);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterExportComplete: {
+                        listener: assertEvent,
+                        priority: "last",
+                        args: ["{pdfExporter}"]
+                    },
+                    onReady: {
+                        listener: "{pdfExporter}.events.onExportStart",
+                        priority: "last",
+                        args: ["{pdfExporter}"]
                     }
                 }
             });
