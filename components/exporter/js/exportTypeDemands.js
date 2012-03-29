@@ -46,7 +46,8 @@ var decapod = decapod || {};
                     args: [{
                         showExportStart: false,
                         showExportProgress: false,
-                        showExportDownload: true
+                        showExportDownload: true,
+                        downloadURL: "{arguments}.0.url"
                     }]
                 }
             }
@@ -73,6 +74,9 @@ var decapod = decapod || {};
         options: {
             resources: {
                 template: "{exportControls}.options.resources.download"
+            },
+            model: {
+                downloadURL: "{exportControls}.model.downloadURL"
             }
         }
     });
