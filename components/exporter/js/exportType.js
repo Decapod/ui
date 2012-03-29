@@ -476,7 +476,8 @@ var decapod = decapod || {};
         model: {
             showExportStart: true,
             showExportProgress: false,
-            showExportDownload: false
+            showExportDownload: false,
+            downloadURL: ""
         },
         invokers: {
             updateModel: "decapod.exportControls.updateModel"

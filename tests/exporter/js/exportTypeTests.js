@@ -838,9 +838,10 @@ var decapod = decapod || {};
         });
         
         pdfExporterTests.asyncTest("afterExportComplete - onExportStart", function () {
-            jqUnit.expect(6);
-            var assertEvent = function (that) {
+            jqUnit.expect(7);
+            var assertEvent = function (that, response) {
                 jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
+                jqUnit.assertEquals("The decapod.exportControls.download model should be updated", response.url, that.exportControls["**-renderer-download-0"].model.downloadURL);
                 assertShowDownloadControls(that.exportControls);
                 start();
             };
@@ -849,7 +850,7 @@ var decapod = decapod || {};
                     afterExportComplete: {
                         listener: assertEvent,
                         priority: "last",
-                        args: ["{pdfExporter}"]
+                        args: ["{pdfExporter}", "{arguments}.0"]
                     },
                     onReady: {
                         listener: "{pdfExporter}.events.onExportStart",
