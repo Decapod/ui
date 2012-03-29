@@ -531,6 +531,19 @@ var decapod = decapod || {};
             });
         });
         
+        downloadTests.asyncTest("modelUpdate", function () {
+            jqUnit.expect(3);
+            var newURL = "http://new.url";
+            var that = createDownload(DOWNLOAD_CONTAINER);
+            that.events.afterModelChanged.addListener(function (newModel) {
+                jqUnit.assertTrue("The afterModelChanged event should have fired", true);
+                jqUnit.assertDeepEq("The newModel should be returned", {downloadURL: newURL}, newModel);
+                jqUnit.assertEquals("The model should be updated with the new url", newURL, that.model.downloadURL);
+                start();
+            });
+            that.updateModel(newURL);
+        });
+        
         /*****************
          * controlsTests *
          *****************/

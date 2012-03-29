@@ -599,6 +599,10 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.exportControls.download");
     
+    decapod.exportControls.download.updateModel = function (that, url) {
+        that.applier.requestChange("downloadURL", url);
+    };
+    
     decapod.exportControls.download.produceTree = function (that) {
         return {
             download: {
@@ -614,6 +618,10 @@ var decapod = decapod || {};
     };
     
     decapod.exportControls.download.finalInit = function (that) {
+        that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
+            that.events.afterModelChanged.fire(newModel, oldModel);
+        });
+        
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
@@ -625,6 +633,9 @@ var decapod = decapod || {};
         gradeNames: ["fluid.rendererComponent", "autoInit"],
         finalInitFunction: "decapod.exportControls.download.finalInit",
         produceTree: "decapod.exportControls.download.produceTree",
+        invokers: {
+            updateModel: "decapod.exportControls.download.updateModel"
+        },
         selectors: {
             download: ".dc-exportTypControls-download-download",
             restart: ".dc-exportTypControls-download-restart"
@@ -634,10 +645,11 @@ var decapod = decapod || {};
             restart: "Start Over"
         },
         events: {
+            afterModelChanged: null,
             afterFetchResources: null
         },
         model: {
-            downloadURL: "downloadURL"
+            downloadURL: ""
         },
         resources: {
             template: {
