@@ -116,6 +116,11 @@ var decapod = decapod || {};
                 container: "{exporter}.dom.imagePDFContainer",
                 options: {
                     components: {
+                        dataSource: {
+                            options: {
+                                url: "http://localhost:8080/library/decapod-export/export/pdf/type1"
+                            }
+                        },
                         exportPoller: {
                             options: {
                                 components: {
@@ -135,6 +140,11 @@ var decapod = decapod || {};
                 container: "{exporter}.dom.ocrPDFContainer",
                 options: {
                     components: {
+                        dataSource: {
+                            options: {
+                                url: "http://localhost:8080/library/decapod-export/export/pdf/type2"
+                            }
+                        },
                         exportPoller: {
                             options: {
                                 components: {
@@ -154,6 +164,11 @@ var decapod = decapod || {};
                 container: "{exporter}.dom.tracedPDFContainer",
                 options: {
                     components: {
+                        dataSource: {
+                            options: {
+                                url: "http://localhost:8080/library/decapod-export/export/pdf/type3"
+                            }
+                        },
                         exportPoller: {
                             options: {
                                 components: {
