@@ -113,18 +113,15 @@ var decapod = decapod || {};
             },
             imagePDF: {
                 type: "decapod.pdfExporter",
-                container: "{exporter}.dom.imagePDFContainer",
-                options: {}
+                container: "{exporter}.dom.imagePDFContainer"
             },
             ocrPDF: {
                 type: "decapod.pdfExporter",
-                container: "{exporter}.dom.ocrPDFContainer",
-                options: {}
+                container: "{exporter}.dom.ocrPDFContainer"
             },
             tracedPDF: {
                 type: "decapod.pdfExporter",
-                container: "{exporter}.dom.tracedPDFContainer",
-                options: {}
+                container: "{exporter}.dom.tracedPDFContainer"
             },
             eventBinder: {
                 type: "decapod.exporter.eventBinder",

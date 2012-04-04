@@ -93,16 +93,45 @@ var decapod = decapod || {};
             exporter.events.onExportStart.fire();
         });
         
+
+        // TODO: Cleanup all the if statements
         var testOnExportStartTrigger = function (subComponent) {
+            jqUnit.expect(3);
             var triggerEvent = function (pdfExporter) {
-                pdfExporter.locate("exportControl").click();
+                pdfExporter.exportControls.events.afterRender.addListener(function () {
+                    var decorators = fluid.renderer.getDecoratorComponents(pdfExporter.exportControls);
+                    for (var key in decorators) {
+                        if (key.indexOf("trigger") > -1) {
+                            var trigger = decorators[key];
+                        }
+                        if (key.indexOf("progress") > -1) {
+                            var progress = decorators[key];
+                        }
+                        if (key.indexOf("download") > -1) {
+                            var download = decorators[key];
+                        }
+                    }
+                    
+                    if (trigger) {
+                        trigger.locate("trigger").click();
+                    }
+                    
+                    if (progress) {
+                        jqUnit.assertTrue("Progress Displayed", progress);
+                    }
+                    
+                    if (download) {
+                        var downloadHREF = download.locate("download").attr("href").replace($(location).attr('href'), '');
+                        jqUnit.assertEquals("The download href should be set", download.model.downloadURL, downloadHREF);
+                        start();
+                    }
+                });
             };
             
             var opts = {
                 listeners: {
                     onExportStart: function () {
                         jqUnit.assertTrue("The onExportStart event fired", true);
-                        start();
                     }
                 },
                 components: {}
@@ -111,8 +140,9 @@ var decapod = decapod || {};
             opts.components[subComponent] = {
                 options: {
                     listeners: {
-                        afterControlsRendered: {
+                        onReady: {
                             listener: triggerEvent,
+                            args: ["{pdfExporter}"],
                             priority: "last"
                         }
                     }

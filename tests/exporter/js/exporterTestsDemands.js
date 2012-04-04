@@ -18,14 +18,48 @@ https://source.fluidproject.org/svn/LICENSE.txt
 var decapod = decapod || {};
 
 (function ($) {
+
+    var EXPORT_INFO_TEMPLATE = "../../../components/exporter/html/exportInfoTemplate.html";
+    var PDF_EXPORT_OPTIONS_TEMPLATE = "../../../components/exporter/html/pdfExportOptionsTemplate.html";
+    var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
+    var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
+    var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
+    var DOWNLOAD_TEMPLATE = "../../../components/exporter/html/exportControlsDownloadTemplate.html";
+    var PDF_EXPORTER_TEMPLATE = "../../../components/exporter/html/pdfExporterTemplate.html";
+
     fluid.demands("decapod.pdfExporter", ["decapod.test", "decapod.exporter"], {
         options: {
             listeners: {
                 "onExportStart.triggerExporter": "{exporter}.events.onExportStart.fire"
             },
             resources: {
-                template: {
-                    url: "../../../components/exporter/html/pdfExporterTemplate.html"
+                pdfExportTemplate: {
+                    url: PDF_EXPORTER_TEMPLATE,
+                    forceCache: true
+                },
+                exportInfo: {
+                    url: EXPORT_INFO_TEMPLATE,
+                    forceCache: true
+                },
+                pdfExportOptions: {
+                    url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                    forceCache: true
+                },
+                controls: {
+                    url: CONTROLS_TEMPLATE,
+                    forceCache: true
+                },
+                trigger: {
+                    url: TRIGGER_TEMPLATE,
+                    forceCache: true
+                },
+                progress: {
+                    url: PROGRESS_TEMPLATE,
+                    forceCache: true
+                },
+                download: {
+                    url: DOWNLOAD_TEMPLATE,
+                    forceCache: true
                 }
             }
         }
