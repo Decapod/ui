@@ -113,15 +113,60 @@ var decapod = decapod || {};
             },
             imagePDF: {
                 type: "decapod.pdfExporter",
-                container: "{exporter}.dom.imagePDFContainer"
+                container: "{exporter}.dom.imagePDFContainer",
+                options: {
+                    components: {
+                        exportPoller: {
+                            options: {
+                                components: {
+                                    dataSource: {
+                                        options: {
+                                            url: "http://localhost:8080/library/decapod-export/export/pdf/type1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             },
             ocrPDF: {
                 type: "decapod.pdfExporter",
-                container: "{exporter}.dom.ocrPDFContainer"
+                container: "{exporter}.dom.ocrPDFContainer",
+                options: {
+                    components: {
+                        exportPoller: {
+                            options: {
+                                components: {
+                                    dataSource: {
+                                        options: {
+                                            url: "http://localhost:8080/library/decapod-export/export/pdf/type2"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             },
             tracedPDF: {
                 type: "decapod.pdfExporter",
-                container: "{exporter}.dom.tracedPDFContainer"
+                container: "{exporter}.dom.tracedPDFContainer",
+                options: {
+                    components: {
+                        exportPoller: {
+                            options: {
+                                components: {
+                                    dataSource: {
+                                        options: {
+                                            url: "http://localhost:8080/library/decapod-export/export/pdf/type3"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             },
             eventBinder: {
                 type: "decapod.exporter.eventBinder",
