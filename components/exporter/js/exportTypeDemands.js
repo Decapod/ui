@@ -81,6 +81,14 @@ var decapod = decapod || {};
         }
     });
     
+    //local
+    
+    fluid.demands("decapod.exportPoller", ["decapod.fileSystem"], {
+        options: {
+            delay: 10
+        }
+    });
+    
     /*******************
      * Invoker Demands *
      *******************/
