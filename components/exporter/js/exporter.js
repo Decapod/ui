@@ -21,8 +21,29 @@ var decapod = decapod || {};
 
     fluid.registerNamespace("decapod.exporter");
     
+    decapod.exporter.startImport = function (that, exportType) {
+        that.exportType = exportType;
+        that.events.onImportStart.fire();
+    };
+    
+    decapod.exporter.startExport = function (that) {
+        that.events.onExportStart.fire();
+        that.exportType.dataSource.put();
+        that.exportType = null;
+    };
+    
+    decapod.exporter.preInit = function (that) {
+        that.startExport = function () {
+            that.startExport();
+        };
+        that.startImport = function (exportType) {
+            that.startImport(exportType);
+        }
+    };
+        
     fluid.defaults("decapod.exporter", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
+        preInitFunction: "decapod.exporter.preInit",
         selectors: {
             uploadContainer: ".dc-exporter-upload",
             uploadBrowse: ".dc-exporter-uploadBrowse",
@@ -34,7 +55,13 @@ var decapod = decapod || {};
             tracedPDFContainer: ".dc-exporter-tracedPDF"
         },
         events: {
-            onExportStart: null
+            onImportStart: null, 
+            onExportStart: null,
+            afterExportComplete: null
+        },
+        invokers: {
+            startExport: "decapod.exporter.startExport",
+            startImport: "decapod.exporter.startImport"
         },
         components: {
             progressiveEnhancementChecker: {
@@ -188,7 +215,8 @@ var decapod = decapod || {};
                 priority: "last",
                 options: {
                     listeners: {
-                        "{exporter}.events.onExportStart": "{uploader}.start"
+                        "{exporter}.events.onImportStart": "{uploader}.start",
+                        "{uploader}.events.afterUploadComplete": "{exporter}.startExport"
                     }
                 }
             }

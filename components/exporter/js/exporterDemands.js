@@ -22,19 +22,16 @@ var decapod = decapod || {};
     /************************
      * Sub-componet Demands *
      ************************/
-
-     fluid.demands("decapod.pdfExporter", ["decapod.exporter"], {
+     
+    fluid.demands("decapod.eventBinder", ["decapod.exporter", "decapod.pdfExporter"], {
         options: {
             listeners: {
-                "onExportStart.triggerExporter": "{exporter}.events.onExportStart.fire"
+                "{pdfExporter}.events.onExportStart": [{
+                    listener: "{exporter}.startImport",
+                    args: ["{pdfExporter}"]
+                }],
+                "{pdfExporter}.events.afterExportComplete": "{exporter}.events.afterExportComplete"
             }
-        }
-     });
-     
-    // local only
-    fluid.demands("decapod.dataSource", ["decapod.fileSystem", "decapod.exporter"], {
-        options: {
-            url: "" //local url
         }
     });
     
@@ -44,19 +41,22 @@ var decapod = decapod || {};
         }
     });
     
-    // server only
-    fluid.demands("decapod.dataSource", ["decapod.exporter"], {
-        options: {
-            url: "/library/decapod05a/export/pdf/%type"
-        }
-    });
-    
     fluid.demands("fluid.uploader", ["decapod.exporter"], {
         options: {
             queueSettings: {
-                uploadURL: "/library/decapod05a/pages/"
+                uploadURL: "/library/decapod-export/pages/"
             }
         }
+    });
+    
+    /*******************
+     * Invoker Demands *
+     *******************/
+    fluid.demands("decapod.exporter.startExport", ["decapod.exporter"], {
+        args: ["{exporter}"]
+    });
+    fluid.demands("decapod.exporter.startImport", ["decapod.exporter"], {
+        args: ["{exporter}", "{arguments}.0"]
     });
 
     /*****************
