@@ -99,7 +99,7 @@ var decapod = decapod || {};
         });
         
         exporterTests.asyncTest("startExport", function () {
-            jqUnit.expect(3);
+            jqUnit.expect(4);
             
             var exporter = decapod.exporter(CONTAINER);
             var exportType = exporter.imagePDF;
@@ -107,6 +107,7 @@ var decapod = decapod || {};
             
             exporter.events.onExportStart.addListener(function () {
                 jqUnit.assertTrue("The onExportStart event should have fired", true);
+                jqUnit.assertDeepEq("The exportType should have been set", exportType, exporter.exportType);
             });
             
             exporter.events.afterExportComplete.addListener(function () {
