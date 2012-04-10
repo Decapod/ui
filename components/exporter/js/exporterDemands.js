@@ -34,14 +34,6 @@ var decapod = decapod || {};
         }
     });
     
-    fluid.demands("decapod.pdfExporter", ["decapod.exporter"], {
-        options: {
-            listeners: {
-                "onExportStart.triggerExporter": "{exporter}.events.onExportStart.fire"
-            }
-        }
-    });
-    
     fluid.demands("fluid.uploader", ["decapod.fileSystem", "decapod.exporter"], {
         options: {
             demo: true
