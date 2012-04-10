@@ -38,10 +38,7 @@ var decapod = decapod || {};
         options: {
             listeners: {
                 "onExportStart.triggerExporter": "{exporter}.events.onExportStart.fire"
-            },
-            events: {
-                afterExportComplete: "{exporter}.events.afterExportComplete"
-            },
+            }
         }
     });
     
@@ -67,6 +64,9 @@ var decapod = decapod || {};
     });
     fluid.demands("decapod.exporter.startImport", ["decapod.exporter"], {
         args: ["{exporter}", "{arguments}.0"]
+    });
+    fluid.demands("decapod.exporter.finishExport", ["decapod.exporter"], {
+        args: ["{exporter}"]
     });
 
     /*****************

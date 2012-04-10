@@ -29,7 +29,11 @@ var decapod = decapod || {};
     decapod.exporter.startExport = function (that) {
         that.events.onExportStart.fire();
         that.exportType.dataSource.put();
+    };
+    
+    decapod.exporter.finishExport = function (that) {
         that.exportType = null;
+        that.events.afterExportComplete.fire();
     };
     
     decapod.exporter.preInit = function (that) {
@@ -38,7 +42,10 @@ var decapod = decapod || {};
         };
         that.startImport = function (exportType) {
             that.startImport(exportType);
-        }
+        };
+        that.finishExport = function () {
+            that.finishExport();
+        };
     };
         
     fluid.defaults("decapod.exporter", {
@@ -61,7 +68,8 @@ var decapod = decapod || {};
         },
         invokers: {
             startExport: "decapod.exporter.startExport",
-            startImport: "decapod.exporter.startImport"
+            startImport: "decapod.exporter.startImport",
+            finishExport: "decapod.exporter.finishExport"
         },
         components: {
             progressiveEnhancementChecker: {
@@ -216,7 +224,8 @@ var decapod = decapod || {};
                 options: {
                     listeners: {
                         "{exporter}.events.onImportStart": "{uploader}.start",
-                        "{uploader}.events.afterUploadComplete": "{exporter}.startExport"
+                        "{uploader}.events.afterUploadComplete": "{exporter}.startExport",
+                        "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport"
                     }
                 }
             }
