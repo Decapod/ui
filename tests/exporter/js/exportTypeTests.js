@@ -217,7 +217,7 @@ var decapod = decapod || {};
         
         var completeResponse = {
             status: "complete",
-            url: "http://localhost:8080/library/'bookName'/export/pdf/type1"
+            url: "../../../mock-book/images/pdf/mockBook.pdf"
         };
         
         var inProgressResponse = {

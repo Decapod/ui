@@ -32,6 +32,9 @@ var decapod = decapod || {};
             listeners: {
                 "onExportStart.triggerExporter": "{exporter}.events.onExportStart.fire"
             },
+            events: {
+                afterExportComplete: "{exporter}.events.afterExportComplete"
+            },
             resources: {
                 pdfExportTemplate: {
                     url: PDF_EXPORTER_TEMPLATE,
