@@ -199,7 +199,7 @@ var decapod = decapod || {};
             that.events.pollComplete.fire(response);
         } else {
             setTimeout(function () {
-               that.poll();
+                that.poll();
             }, that.options.delay);
         }
     };

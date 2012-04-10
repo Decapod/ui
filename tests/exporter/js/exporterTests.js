@@ -125,15 +125,16 @@ var decapod = decapod || {};
             var triggerEvent = function (pdfExporter, exporter) {
                 pdfExporter.exportControls.events.afterRender.addListener(function () {
                     var decorators = fluid.renderer.getDecoratorComponents(pdfExporter.exportControls);
+                    var trigger, progress, download = null;
                     for (var key in decorators) {
                         if (key.indexOf("trigger") > -1) {
-                            var trigger = decorators[key];
+                            trigger = decorators[key];
                         }
                         if (key.indexOf("progress") > -1) {
-                            var progress = decorators[key];
+                            progress = decorators[key];
                         }
                         if (key.indexOf("download") > -1) {
-                            var download = decorators[key];
+                            download = decorators[key];
                         }
                     }
                     
