@@ -122,7 +122,7 @@ var decapod = decapod || {};
         // TODO: Cleanup all the if statements
         var testOnExportStartTrigger = function (subComponent) {
             jqUnit.expect(3);
-            var triggerEvent = function (pdfExporter) {
+            var triggerEvent = function (pdfExporter, exporter) {
                 pdfExporter.exportControls.events.afterRender.addListener(function () {
                     var decorators = fluid.renderer.getDecoratorComponents(pdfExporter.exportControls);
                     for (var key in decorators) {
@@ -143,6 +143,8 @@ var decapod = decapod || {};
                     
                     if (progress) {
                         jqUnit.assertTrue("Progress Displayed", progress);
+                        // trigger the uploader's afterUploadeComplete event
+                        exporter.uploader.events.afterUploadComplete.fire();
                     }
                     
                     if (download) {
@@ -167,7 +169,7 @@ var decapod = decapod || {};
                     listeners: {
                         onReady: {
                             listener: triggerEvent,
-                            args: ["{pdfExporter}"],
+                            args: ["{pdfExporter}", "{exporter}"],
                             priority: "last"
                         }
                     }
@@ -179,14 +181,14 @@ var decapod = decapod || {};
             exporter.uploader.strategy.remote.uploadNextFile = function () {};
         };
         
-//        exporterTests.asyncTest("imagePDF trigger onExportStart", function () {
-//            testOnExportStartTrigger("imagePDF");
-//        });
-//        exporterTests.asyncTest("ocrPDF trigger onExportStart", function () {
-//            testOnExportStartTrigger("ocrPDF");
-//        });
-//        exporterTests.asyncTest("tracedPDF trigger onExportStart", function () {
-//            testOnExportStartTrigger("tracedPDF");
-//        });
+        exporterTests.asyncTest("imagePDF trigger onExportStart", function () {
+            testOnExportStartTrigger("imagePDF");
+        });
+        exporterTests.asyncTest("ocrPDF trigger onExportStart", function () {
+            testOnExportStartTrigger("ocrPDF");
+        });
+        exporterTests.asyncTest("tracedPDF trigger onExportStart", function () {
+            testOnExportStartTrigger("tracedPDF");
+        });
     });
 })(jQuery);
