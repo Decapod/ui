@@ -42,6 +42,7 @@ var decapod = decapod || {};
             },
             listeners: {
                 "{pdfExporter}.events.afterExportComplete": {
+                    priority: "first",
                     listener: "{exportControls}.updateModel",
                     args: [{
                         showExportStart: false,

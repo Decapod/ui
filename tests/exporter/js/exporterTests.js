@@ -78,10 +78,15 @@ var decapod = decapod || {};
             jqUnit.assertEquals("The total files message should be rendered", "1 files exceeded the queue limit", renderedStatuses.eq(1).text());
         });
         
-        // TODO: Test what type of upload should be generated
-        exporterTests.asyncTest("Start upload", function () {
-            jqUnit.expect(1);
+        exporterTests.asyncTest("startImport", function () {
+            jqUnit.expect(3);
             var exporter = decapod.exporter(CONTAINER);
+            var exportType = exporter.imagePDF;
+            
+            exporter.events.onImportStart.addListener(function () {
+                jqUnit.assertTrue("The onImportStart event should have fired", true);
+                jqUnit.assertDeepEq("The exportType should have been set", exportType, exporter.exportType);
+            });
             
             exporter.uploader.events.onUploadStart.addListener(function () {
                 jqUnit.assertTrue("The onUploadStart event from the uploader should have fired", true);
@@ -90,9 +95,28 @@ var decapod = decapod || {};
             // hack to prevent the uploader from actually trying to upload anything.
             // this allows for the testing of just the event without errors being thrown for the empty queue
             exporter.uploader.strategy.remote.uploadNextFile = function () {};
-            exporter.events.onExportStart.fire();
+            exporter.startImport(exportType);
         });
         
+        exporterTests.asyncTest("startExport", function () {
+            jqUnit.expect(3);
+            
+            var exporter = decapod.exporter(CONTAINER);
+            var exportType = exporter.imagePDF;
+            exporter.exportType = exportType;
+            
+            exporter.events.onExportStart.addListener(function () {
+                jqUnit.assertTrue("The onExportStart event should have fired", true);
+            });
+            
+            exporter.events.afterExportComplete.addListener(function () {
+                jqUnit.assertTrue("The afterExportComplete event should have fired", true);
+                jqUnit.assertNull("The exportType should be reset to null", exporter.exportType);
+                start();
+            });
+            
+            exporter.startExport();
+        });
 
         // TODO: Cleanup all the if statements
         var testOnExportStartTrigger = function (subComponent) {
@@ -154,14 +178,14 @@ var decapod = decapod || {};
             exporter.uploader.strategy.remote.uploadNextFile = function () {};
         };
         
-        exporterTests.asyncTest("imagePDF trigger onExportStart", function () {
-            testOnExportStartTrigger("imagePDF");
-        });
-        exporterTests.asyncTest("ocrPDF trigger onExportStart", function () {
-            testOnExportStartTrigger("ocrPDF");
-        });
-        exporterTests.asyncTest("tracedPDF trigger onExportStart", function () {
-            testOnExportStartTrigger("tracedPDF");
-        });
+//        exporterTests.asyncTest("imagePDF trigger onExportStart", function () {
+//            testOnExportStartTrigger("imagePDF");
+//        });
+//        exporterTests.asyncTest("ocrPDF trigger onExportStart", function () {
+//            testOnExportStartTrigger("ocrPDF");
+//        });
+//        exporterTests.asyncTest("tracedPDF trigger onExportStart", function () {
+//            testOnExportStartTrigger("tracedPDF");
+//        });
     });
 })(jQuery);

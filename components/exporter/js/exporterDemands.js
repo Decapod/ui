@@ -29,9 +29,19 @@ var decapod = decapod || {};
                 "{pdfExporter}.events.onExportStart": [{
                     listener: "{exporter}.startImport",
                     args: ["{pdfExporter}"]
-                }],
-                "{pdfExporter}.events.afterExportComplete": "{exporter}.events.afterExportComplete"
+                }]
             }
+        }
+    });
+    
+    fluid.demands("decapod.pdfExporter", ["decapod.exporter"], {
+        options: {
+            listeners: {
+                "onExportStart.triggerExporter": "{exporter}.events.onExportStart.fire"
+            },
+            events: {
+                afterExportComplete: "{exporter}.events.afterExportComplete"
+            },
         }
     });
     

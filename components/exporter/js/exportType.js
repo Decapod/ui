@@ -196,11 +196,11 @@ var decapod = decapod || {};
     decapod.exportPoller.handleResponse = function (that, response) {
         that.response = response;
         if (that.isComplete(response)) {
-            setTimeout(function () {
-                that.events.pollComplete.fire(response);
-            }, that.options.delay);
+            that.events.pollComplete.fire(response);
         } else {
-            that.poll();
+            setTimeout(function () {
+               that.poll();
+            }, that.options.delay);
         }
     };
     
