@@ -120,8 +120,7 @@ p.ds-shared-navigationBar-currentBreadcrumb {
     position: absolute;
     bottom: 32px; /*position respect to footer height */
     top: 44px; /*position respect to navigation bar */
-    /*margin-left: 220px;
-   */ margin-left: 35%;
+    margin-left: 300px;
     width: 770px;
     background-image: url("../images/background-grain.png");
     border-left: 1px solid rgba(120,132,120,0.2);
@@ -236,15 +235,16 @@ p.ds-shared-navigationBar-currentBreadcrumb {
 
 /* Change the size of the main content area depending on the size of screen. */
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1100px) {
     .ds-shared-mainPane {
-        margin-left: 140px;
-        min-width: 0%;
-        max-width: 100%;
+        position: absolute;
+        right: 0px;
+        top:43px;
+        width: 770px;
     }
 }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 840px) {
     .ds-shared-mainPane {
         margin-left: 0px;
         min-width: 0%;
