@@ -748,6 +748,82 @@ var decapod = decapod || {};
             });
         });
 
+        pdfExporterTests.asyncTest("toggleExportDetails - on", function () {
+            jqUnit.expect(1);
+            var assertToggle = function (that) {
+                var exportDetails = that.locate("exportDetails");
+                var hideClass = that.options.styles.hideExportDetails;
+                exportDetails.addClass(hideClass);
+                that.toggleExportDetails();
+                jqUnit.assertFalse("The hideExportDetails style should have been removed", exportDetails.hasClass(hideClass));
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: assertToggle,
+                        priority: "last",
+                        args: ["{pdfExporter}"]
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("toggleExportDetails - off", function () {
+            jqUnit.expect(1);
+            var assertToggle = function (that) {
+                var exportDetails = that.locate("exportDetails");
+                var hideClass = that.options.styles.hideExportDetails;
+                exportDetails.removeClass(hideClass);
+                that.toggleExportDetails();
+                jqUnit.assertTrue("The hideExportDetails style should have been added", exportDetails.hasClass(hideClass));
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: assertToggle,
+                        priority: "last",
+                        args: ["{pdfExporter}"]
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("onToggleExportDetails", function () {
+            jqUnit.expect(2);
+            var triggerClick = function (that) {
+                var exportDetails = that.locate("exportDetails");
+                var hideClass = that.options.styles.hideExportDetails;
+                exportDetails.removeClass(hideClass);
+                that.locate("exportInfo").click();
+            };
+            var assertEvent = function () {
+                jqUnit.assertTrue("The onToggleExportDetails event should have fired", true);
+            };
+            fluid.registerNamespace("decapod.tests.pdfExporterTests");
+            decapod.tests.pdfExporterTests.assertToggle = function () {
+                jqUnit.assertTrue("The toggleExportDetails invoker should have been triggered", true);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: triggerClick,
+                        priority: "last",
+                        args: ["{pdfExporter}"]
+                    },
+                    onToggleExportDetails: {
+                        listener: assertEvent,
+                        priority: "first"
+                    }
+                },
+                invokers: {
+                    toggleExportDetails: "decapod.tests.pdfExporterTests.assertToggle"
+                }
+            });
+        });
+
         pdfExporterTests.asyncTest("onExportStart event", function () {
             jqUnit.expect(4);
             var assertEvent = function (that) {
