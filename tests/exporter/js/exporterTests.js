@@ -33,6 +33,43 @@ var decapod = decapod || {};
             jqUnit.assertTrue("The component should have initialized", eventBinder);
         });
         
+        var serverResetTests = jqUnit.testCase("Decapod Server Reset");
+        
+        serverResetTests.test("Init tests", function () {
+            var serverReset = decapod.exporter.serverReset();
+            jqUnit.assertTrue("The component should have initialized", serverReset);
+        });
+        
+        serverResetTests.test("Delete tests", function () {
+            var URL = "http://localhost/testurl";
+            fluid.registerNamespace("decapod.tests.serverResetTests.mockDataSource");
+            
+            decapod.tests.serverResetTests.mockDataSource.del = function (that) {
+                jqUnit.assertTrue("The delete function should have fired", true);
+                jqUnit.assertEquals("The correct URL should have been passed to the datasource", URL, that.options.url);
+            };
+            
+            fluid.defaults("decpod.tests.serverResetTests.mockDataSource", {
+                gradeNames: ["fluid.littleComponent", "autoInit"],
+                invokers: {
+                    "delete": {
+                        funcName: "decapod.tests.serverResetTests.mockDataSource.del",
+                        args: ["{mockDataSource}"]
+                    }
+                }
+            });
+            var serverReset = decapod.exporter.serverReset({
+                components: {
+                    dataSource: {
+                        type: "decpod.tests.serverResetTests.mockDataSource",
+                        options: {
+                            url: URL
+                        }
+                    }
+                }
+            });
+        });
+        
         var exporterTests = jqUnit.testCase("Decapod Export");
         
         exporterTests.test("Init tests", function () {

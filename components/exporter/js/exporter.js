@@ -240,4 +240,23 @@ var decapod = decapod || {};
     fluid.defaults("decapod.exporter.eventBinder", {
         gradeNames: ["fluid.eventedComponent", "autoInit"]
     });
+    
+    fluid.registerNamespace("decapod.exporter.serverReset");
+    
+    decapod.exporter.serverReset.finalInit = function (that) {
+        that.dataSource.delete();
+    };
+    
+    fluid.defaults("decapod.exporter.serverReset", {
+        gradeNames: ["fluid.littleComponent", "autoInit"],
+        finalInitFunction: "decapod.exporter.serverReset.finalInit",
+        components: {
+            dataSource: {
+                type: "decapod.dataSource",
+                options: {
+                    url: "http://localhost:8080/library/decapod-export/"
+                }
+            }
+        }
+    });
 })(jQuery);
