@@ -25,6 +25,25 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.pdfExporter");
     
+    decapod.pdfExporter.toggleExportDetails = function (that) {
+        that.locate("exportDetails").toggleClass(that.options.styles.hideExportDetails);
+    };
+    
+    decapod.pdfExporter.bindEvents = function (that) {
+        that.locate("exportInfo").click(function () {
+            that.events.onToggleExportDetails.fire();
+        });
+    };
+    
+    decapod.pdfExporter.preInit = function (that) {
+        that.toggleExportDetails = function () {
+            that.toggleExportDetails();
+        };
+        that.bindEvents = function () {
+            that.bindEvents();
+        };
+    };
+    
     decapod.pdfExporter.finalInit = function (that) {
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.pdfExportTemplate.resourceText);
@@ -34,9 +53,11 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.pdfExporter", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
+        preInitFunction: "decapod.pdfExporter.preInit",
         finalInitFunction: "decapod.pdfExporter.finalInit",
         selectors: {
             exportInfo: ".dc-pdfExporter-exportInfo",
+            exportDetails: ".dc-pdfExporter-exportDetails",
             pdfExportOptions: ".dc-pdfExporter-pdfExportOptions",
             controls: ".dc-pdfExporter-controls"
         },
@@ -51,11 +72,23 @@ var decapod = decapod || {};
             download: "Download Link",  
             restart: "Start Over"
         },
+        styles: {
+            hideExportDetails: "ds-exporter-exportOptions-hidden"
+        },
         events: {
             afterFetchResources: null,
             afterExportComplete: null,
             onExportStart: null,
+            onToggleExportDetails: null,
             onReady: null
+        },
+        listeners: {
+            "afterFetchResources.bindEvents": "{pdfExporter}.bindEvents",
+            "onToggleExportDetails.toggleExportDetails": "{pdfExporter}.toggleExportDetails"
+        },
+        invokers: {
+            toggleExportDetails: "decapod.pdfExporter.toggleExportDetails",
+            bindEvents: "decapod.pdfExporter.bindEvents"
         },
         resources: {
             pdfExportTemplate: {
