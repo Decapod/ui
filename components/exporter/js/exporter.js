@@ -26,6 +26,13 @@ var decapod = decapod || {};
 
     fluid.registerNamespace("decapod.exporter");
     
+    decapod.exporter.renderStrings = function (that) {
+        var str = that.options.strings;
+        for (var key in str) {
+            that.locate(key).text(str[key]);
+        }
+    };
+    
     decapod.exporter.startImport = function (that, exportType) {
         that.exportType = exportType;
         that.events.onImportStart.fire();
@@ -61,11 +68,21 @@ var decapod = decapod || {};
             that.validateQueue();
         };
     };
+    
+    decapod.exporter.finalInit = function (that) {
+        that.renderStrings();
+        that.events.onFinalInit.fire();
+    };
         
     fluid.defaults("decapod.exporter", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
+        finalInitFunction: "decapod.exporter.finalInit",
         preInitFunction: "decapod.exporter.preInit",
         selectors: {
+            title: ".dc-exporter-title",
+            formats: ".dc-exporter-formats",
+            groupName: ".dc-exporter-groupName",
+            uploadClear: ".dc-exporter-uploadClear",
             uploadContainer: ".dc-exporter-upload",
             uploadBrowse: ".dc-exporter-uploadBrowse",
             importStatusContainer: ".dc-exporter-importStatus",
@@ -75,14 +92,23 @@ var decapod = decapod || {};
             ocrPDFContainer: ".dc-exporter-ocrPDF",
             tracedPDFContainer: ".dc-exporter-tracedPDF"
         },
+        strings: {
+            title: "",
+            instructions: "",
+            uploadClear: "",
+            formats: "",
+            groupName: ""
+        },
         events: {
             onReady: null,
+            onFinalInit: null,
             onImportStart: null, 
             onExportStart: null,
             afterQueueReady: null,
             afterExportComplete: null
         },
         invokers: {
+            renderStrings: "decapod.exporter.renderStrings",
             startExport: "decapod.exporter.startExport",
             startImport: "decapod.exporter.startImport",
             finishExport: "decapod.exporter.finishExport",
@@ -252,7 +278,7 @@ var decapod = decapod || {};
             },
             eventBinder: {
                 type: "decapod.exporter.eventBinder",
-                priority: "last",
+                createOnEvent: "onFinalInit",
                 options: {
                     listeners: {
                         "onReady.exporter": "{exporter}.events.onReady",
