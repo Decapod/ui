@@ -31,6 +31,12 @@ var decapod = decapod || {};
         that.events.onImportStart.fire();
     };
     
+    decapod.exporter.validateQueue = function (that) {
+        if (that.importStatus.numValidFiles > 0) {
+            that.events.afterQueueReady.fire();
+        }
+    };
+    
     decapod.exporter.startExport = function (that) {
         that.events.onExportStart.fire();
         that.exportType.dataSource.put();
@@ -51,6 +57,9 @@ var decapod = decapod || {};
         that.finishExport = function () {
             that.finishExport();
         };
+        that.validateQueue = function () {
+            that.validateQueue();
+        };
     };
         
     fluid.defaults("decapod.exporter", {
@@ -67,14 +76,17 @@ var decapod = decapod || {};
             tracedPDFContainer: ".dc-exporter-tracedPDF"
         },
         events: {
+            onReady: null,
             onImportStart: null, 
             onExportStart: null,
+            afterQueueReady: null,
             afterExportComplete: null
         },
         invokers: {
             startExport: "decapod.exporter.startExport",
             startImport: "decapod.exporter.startImport",
-            finishExport: "decapod.exporter.finishExport"
+            finishExport: "decapod.exporter.finishExport",
+            validateQueue: "decapod.exporter.validateQueue"
         },
         components: {
             progressiveEnhancementChecker: {
@@ -228,17 +240,29 @@ var decapod = decapod || {};
                 priority: "last",
                 options: {
                     listeners: {
+                        "onReady.exporter": "{exporter}.events.onReady",
                         "{exporter}.events.onImportStart": "{uploader}.start",
                         "{uploader}.events.afterUploadComplete": "{exporter}.startExport",
-                        "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport"
+                        "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                        "{importStatus}.renderer.events.afterRender": "{exporter}.validateQueue"
                     }
                 }
             }
         }
     });
     
+    fluid.registerNamespace("decapod.exporter.eventBinder");
+    
+    decapod.exporter.eventBinder.finalInit = function (that) {
+        that.events.onReady.fire();
+    };
+    
     fluid.defaults("decapod.exporter.eventBinder", {
-        gradeNames: ["fluid.eventedComponent", "autoInit"]
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        finalInitFunction: "decapod.exporter.eventBinder.finalInit",
+        events: {
+            onReady: null
+        }
     });
     
     fluid.registerNamespace("decapod.exporter.serverReset");

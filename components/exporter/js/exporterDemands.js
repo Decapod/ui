@@ -53,6 +53,39 @@ var decapod = decapod || {};
         }
     });
     
+    fluid.demands("decapod.exportControls", ["decapod.exporter", "decapod.pdfExporter"], {
+        options: {
+            model: {
+                showExportStart: false,
+                showExportProgress: false,
+                showExportDownload: false
+            },
+            events: {
+                onExportTrigger: "{pdfExporter}.events.onExportStart"
+            },
+            listeners: {
+                "{pdfExporter}.events.afterExportComplete": {
+                    priority: "first",
+                    listener: "{exportControls}.updateModel",
+                    args: [{
+                        showExportStart: false,
+                        showExportProgress: false,
+                        showExportDownload: true,
+                        downloadURL: "{arguments}.0.url"
+                    }]
+                },
+                "{exporter}.events.afterQueueReady": {
+                    listener: "{exportControls}.updateModel",
+                    args: [{
+                        showExportStart: true,
+                        showExportProgress: false,
+                        showExportDownload: false
+                    }]
+                }
+            }
+        }
+    });
+    
     /*******************
      * Invoker Demands *
      *******************/
@@ -63,6 +96,9 @@ var decapod = decapod || {};
         args: ["{exporter}", "{arguments}.0"]
     });
     fluid.demands("decapod.exporter.finishExport", ["decapod.exporter"], {
+        args: ["{exporter}"]
+    });
+    fluid.demands("decapod.exporter.validateQueue", ["decapod.exporter"], {
         args: ["{exporter}"]
     });
 

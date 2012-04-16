@@ -33,6 +33,19 @@ var decapod = decapod || {};
             jqUnit.assertTrue("The component should have initialized", eventBinder);
         });
         
+        eventBinderTests.asyncTest("onReady", function () {
+            jqUnit.expect(1);
+            var testEvent = function () {
+                jqUnit.assertTrue("The onReady event should have fired", true);
+                start();
+            };
+            decapod.exporter.eventBinder({
+                listeners: {
+                    onReady: testEvent
+                }
+            });
+        });
+        
         var serverResetTests = jqUnit.testCase("Decapod Server Reset");
         
         serverResetTests.test("Init tests", function () {
@@ -77,6 +90,19 @@ var decapod = decapod || {};
             jqUnit.assertTrue("The component should have initialized", exporter);
             jqUnit.isVisible("The instructions are shown", exporter.locate("instructions"));
             jqUnit.notVisible("The status messages are not show", exporter.locate("importStatusContainer"));
+        });
+        
+        exporterTests.asyncTest("onReady", function () {
+            jqUnit.expect(1);
+            var testEvent = function () {
+                jqUnit.assertTrue("The onReady event should have fired", true);
+                start();
+            };
+            decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: testEvent
+                }
+            });
         });
         
         exporterTests.test("Add error", function () {
@@ -160,6 +186,52 @@ var decapod = decapod || {};
             
             exporter.startExport();
         });
+        
+        exporterTests.asyncTest("validateQueue", function () {
+            jqUnit.expect(1);
+            
+            var exporter = decapod.exporter(CONTAINER);
+            exporter.events.afterQueueReady.addListener(function () {
+                jqUnit.assertTrue("The afterQueueReady event should have fired", true);
+                start();
+            });
+            
+            exporter.validateQueue(); // should do nothing
+            exporter.importStatus.numValidFiles = 1;
+            exporter.validateQueue();
+        });
+        
+        exporterTests.asyncTest("afterQueueReady", function () {
+            jqUnit.expect(3);
+            
+            var pdfExporters = ["imagePDF", "ocrPDF", "tracedPDF"];
+            var triggerEvent = function (that) {
+                that.events.afterQueueReady.fire();
+            };
+            var testEvent = function (that) {
+                $.each(pdfExporters, function (idx, pdfExporter) {
+                    var decorators = fluid.renderer.getDecoratorComponents(that[pdfExporter].exportControls);
+                    for (var decorator in decorators) {
+                        jqUnit.assertTrue("The start export button for, " + pdfExporter + ", is rendered", decorator.indexOf("trigger") > -1);
+                    };
+                });
+                start();
+            }
+            decapod.exporter(CONTAINER, {
+                listeners: {
+                    afterQueueReady: {
+                        listener: testEvent,
+                        priority: "last",
+                        args: "{exporter}"
+                    },
+                    onReady: {
+                        listener: triggerEvent,
+                        priority: "last",
+                        args: "{exporter}"
+                    }
+                }
+            });
+        })
 
         // TODO: Cleanup all the if statements
         var testOnExportStartTrigger = function (subComponent) {
@@ -196,6 +268,7 @@ var decapod = decapod || {};
                         start();
                     }
                 });
+                exporter.events.afterQueueReady.fire();
             };
             
             var opts = {
