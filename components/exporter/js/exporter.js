@@ -197,7 +197,7 @@ var decapod = decapod || {};
                 options: {
                     strings: {
                         name: "Image PDF with OCR Text",
-                        description: "OCR is performed on images and text embedded with the image of each page."
+                        description: "OCR is performed on images, and resulting text is embedded in the PDF."
                     },
                     components: {
                         dataSource: {
@@ -225,7 +225,7 @@ var decapod = decapod || {};
                 options: {
                     strings: {
                         name: "Computer Traced PDF with OCR Text",
-                        description: "Contents of each image is traced by the computer, OCR'ed, and output to a PDF. The export process takes longer, but results is a much smaller PDF."
+                        description: "Contents of each image is traced by the computer, OCR'ed, and output to a PDF. The process takes longer, but results is a much smaller PDF."
                     },
                     components: {
                         dataSource: {
