@@ -85,11 +85,26 @@ var decapod = decapod || {};
         
         var exporterTests = jqUnit.testCase("Decapod Export");
         
-        exporterTests.test("Init tests", function () {
-            var exporter = decapod.exporter(CONTAINER);
-            jqUnit.assertTrue("The component should have initialized", exporter);
-            jqUnit.isVisible("The instructions are shown", exporter.locate("instructions"));
-            jqUnit.notVisible("The status messages are not show", exporter.locate("importStatusContainer"));
+        exporterTests.asyncTest("Init tests", function () {
+            decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: function (that) {
+                            var str = that.options.strings;
+                            jqUnit.assertTrue("The component should have initialized", that);
+                            jqUnit.isVisible("The instructions are shown", that.locate("instructions"));
+                            jqUnit.notVisible("The status messages are not show", that.locate("importStatusContainer"));
+                            jqUnit.assertEquals("The title text should be rendered", str.title, that.locate("title").text());
+                            jqUnit.assertEquals("The instructions text should be rendered", str.instructions, that.locate("instructions").text());
+                            jqUnit.assertEquals("The uploadClear text should be rendered", str.uploadClear, that.locate("uploadClear").text());
+                            jqUnit.assertEquals("The formats text should be rendered", str.formats, that.locate("formats").text());
+                            jqUnit.assertEquals("The groupName text should be rendered", str.groupName, that.locate("groupName").text());
+                            start();
+                        },
+                        args: ["{exporter}"]
+                    }
+                }
+            });
         });
         
         exporterTests.asyncTest("onReady", function () {
@@ -105,25 +120,44 @@ var decapod = decapod || {};
             });
         });
         
-        exporterTests.test("Add error", function () {
-            var exporter = decapod.exporter(CONTAINER);
-            
-            exporter.uploader.events.onFileError.addListener(function () {
-                jqUnit.assertEquals("The error should be added", 1, exporter.importStatus.errors["-100"]);
-                jqUnit.assertEquals("The total number of files should be updated", 1, exporter.importStatus.totalNumFiles);
-                jqUnit.assertEquals("The number of invalid files should be updated", 1, exporter.importStatus.numInvalidFiles);
+        exporterTests.asyncTest("Add error", function () {
+            var exporter = decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: function (that) {
+                            that.uploader.events.onFileError.addListener(function () {
+                                jqUnit.assertEquals("The error should be added", 1, that.importStatus.errors["-100"]);
+                                jqUnit.assertEquals("The total number of files should be updated", 1, that.importStatus.totalNumFiles);
+                                jqUnit.assertEquals("The number of invalid files should be updated", 1, that.importStatus.numInvalidFiles);
+                                start();
+                            });
+                            that.uploader.events.onQueueError.fire({}, -100);
+                        },
+                        args: ["{exporter}"]
+                    }
+                }
             });
-            exporter.uploader.events.onQueueError.fire({}, -100);
             
         });
         
-        exporterTests.test("Add validFiles", function () {
+        exporterTests.asyncTest("Add validFiles", function () {
+            jqUnit.expect(2);
             var numFiles = 10;
-            var exporter = decapod.exporter(CONTAINER);
-            
-            exporter.uploader.events.afterFileDialog.fire(numFiles);
-            jqUnit.assertEquals("The total number of files should be updated", numFiles, exporter.importStatus.totalNumFiles);
-            jqUnit.assertEquals("The number of valid files should be updated", numFiles, exporter.importStatus.numValidFiles);
+            var exporter = decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: function (that) {
+                            that.importStatus.renderer.events.afterRender.addListener(function () {
+                                jqUnit.assertEquals("The total number of files should be updated", numFiles, that.importStatus.totalNumFiles);
+                                jqUnit.assertEquals("The number of valid files should be updated", numFiles, that.importStatus.numValidFiles);
+                                start();
+                            });
+                            that.uploader.events.afterFileDialog.fire(numFiles);
+                        },
+                        args: ["{exporter}"]
+                    }
+                }
+            });
         });
         
         exporterTests.asyncTest("Render status messages", function () {
