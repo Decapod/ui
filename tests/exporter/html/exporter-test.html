@@ -44,57 +44,49 @@
                 <!-- NAVIGATION BAR -->
                 <nav class="ds-shared-navigationBar">
                     <ul class="ds-shared-navigationBar-flatList">
-                        <li><a class="ds-shared-navigationBar-currentBreadcrumb" href="">Decapod 0.5</a></li>
+                        <li><p class="ds-shared-navigationBar-currentBreadcrumb">Decapod 0.5</p></li>
                     </ul>
                 </nav>
-    
-                <!-- FOOTER -->
-                <footer>
-                
-                </footer>
     
                 <!-- DECAPOD EXPORT INTERFACE -->
                 <section class="ds-shared-mainPane">
                     <header>
-                        <h1>Exporter Title</h1>
+                        <h1 class="dc-exporter-title">Exporter Title</h1>
                     </header>
                     
-                    <div class="dc-exporter-upload ds-exporter-upload ds-shared-indent1">
-                        <div class="dc-exporter-importMessages dc-exporterStatusToggle ds-exporter-upload-messages">
-                            <div class="dc-exporter-instructions">
-                                <p>Instructions go here.<br />
-                                    <ul>
-                                        <li>Later replaced by upload status messages.</li>
-                                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </li>
-                                        <li>Cras volutpat, lectus eu aliquam consequat, metus nisi aliquam quam,</li>
-                                        <li>id molestie odio dui non risus. Donec suscipit nunc vitae lectus</li>
-                                    </ul>
-                                </p>
-                            </div>
+                    <section class="dc-exporter-upload ds-exporter-upload ds-shared-indent1">
+                        <div class="dc-exporter-importMessages ds-exporter-upload-messages">
+                            <p class="dc-exporter-instructions">Instructions go here.</p>
                             <div class="dc-exporter-importStatus">
-                                <p class="dc-importStatus-renderer-statusMessage">No Statuses</p>
+                                <ul>
+                                    <li class="dc-importStatus-renderer-statusMessage">No Statuses</li>
+                                </ul>
                             </div>
                         </div>
                         
                         <div class="ds-exporter-uploadControls">
-                            <a class="dc-exporter-uploadClear ds-exporter-uploadClear" href="">Clear link text</a>
+                            <a class="dc-exporter-uploadClear ds-exporter-uploadClear ds-exporter-uploadClear-dim" href="">Clear link text</a>
                             <span class="dc-exporter-uploadBrowse ds-shared-grey-button ds-exporter-uploadBrowse">
                                 <span class="flc-uploader-button-browse-text ds-exporter-uploadBrowseText">Browse files</span>
                             </span>
                         </div>
-                    </div>
+                    </section>
                     
-                    <header>
-                        <h1>Exporter format types go below</h1>
-                    </header>
                     
-                    <div class="dc-exporter-formatGroup ds-exporter-formatGroup">
-                        <h2 class="ds-shared-indent1">Group</h2>
+                    <section class="dc-exporter-formatGroup ds-exporter-formatGroup">
+                        <h1 class="dc-exporter-formats">Exporter format types go below</h1>
+                        <h2 class="dc-exporter-groupName ds-shared-indent1">Group</h2>
+                        
                         <div class="dc-exporter-imagePDF"></div>
                         <div class="dc-exporter-ocrPDF"></div>
                         <div class="dc-exporter-tracedPDF"></div>
-                    </div>
+                    </section>
                 </section>
+                
+                <!-- FOOTER -->
+                <footer>
+                </footer>
+                
             </section>
         </div>
     </body>
