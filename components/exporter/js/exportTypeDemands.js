@@ -95,6 +95,12 @@ var decapod = decapod || {};
     fluid.demands("decapod.pdfExporter.toggleExportDetails", ["decapod.pdfExporter"], {
         args: ["{pdfExporter}"]
     });
+    fluid.demands("decapod.pdfExporter.disable", ["decapod.pdfExporter"], {
+        args: ["{pdfExporter}"]
+    });
+    fluid.demands("decapod.pdfExporter.enable", ["decapod.pdfExporter"], {
+        args: ["{pdfExporter}"]
+    });
     fluid.demands("decapod.pdfExporter.bindEvents", ["decapod.pdfExporter"], {
         args: ["{pdfExporter}"]
     });
