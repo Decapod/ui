@@ -89,6 +89,9 @@ var decapod = decapod || {};
     /*******************
      * Invoker Demands *
      *******************/
+    fluid.demands("decapod.exporter.renderStrings", ["decapod.exporter"], {
+        args: ["{exporter}"]
+    });
     fluid.demands("decapod.exporter.startExport", ["decapod.exporter"], {
         args: ["{exporter}"]
     });
