@@ -29,41 +29,8 @@ var decapod = decapod || {};
      ************************/
     
     fluid.registerNamespace("decapod.pdfExporter");
-    
-    decapod.pdfExporter.toggleExportDetails = function (that) {
-        if (that.isEnabled) {
-            that.locate("exportDetails").toggleClass(that.options.styles.hideExportDetails);
-        }
-    };
-    
-    decapod.pdfExporter.disable = function (that) {
-        that.isEnabled = false;
-        that.locate("exportDetails").addClass(that.options.styles.hideExportDetails);
-    };
-    
-    decapod.pdfExporter.enable = function (that) {
-        that.isEnabled = true;
-    };
-    
-    decapod.pdfExporter.bindEvents = function (that) {
-        that.locate("exportInfo").click(function () {
-            if (that.isEnabled) {
-                that.events.onToggleExportDetails.fire();
-            }
-        });
-    };
-    
-    decapod.pdfExporter.preInit = function (that) {
-        that.toggleExportDetails = function () {
-            that.toggleExportDetails();
-        };
-        that.bindEvents = function () {
-            that.bindEvents();
-        };
-    };
-    
+
     decapod.pdfExporter.finalInit = function (that) {
-        that.enable();
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.pdfExportTemplate.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
@@ -72,7 +39,6 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.pdfExporter", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
-        preInitFunction: "decapod.pdfExporter.preInit",
         finalInitFunction: "decapod.pdfExporter.finalInit",
         selectors: {
             exportInfo: ".dc-pdfExporter-exportInfo",
@@ -98,18 +64,7 @@ var decapod = decapod || {};
             afterFetchResources: null,
             afterExportComplete: null,
             onExportStart: null,
-            onToggleExportDetails: null,
             onReady: null
-        },
-        listeners: {
-            "afterFetchResources.bindEvents": "{pdfExporter}.bindEvents",
-            "onToggleExportDetails.toggleExportDetails": "{pdfExporter}.toggleExportDetails"
-        },
-        invokers: {
-            toggleExportDetails: "decapod.pdfExporter.toggleExportDetails",
-            bindEvents: "decapod.pdfExporter.bindEvents",
-            disable: "decapod.pdfExporter.disable",
-            enable: "decapod.pdfExporter.enable"
         },
         resources: {
             pdfExportTemplate: {

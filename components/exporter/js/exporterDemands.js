@@ -86,6 +86,15 @@ var decapod = decapod || {};
         }
     });
     
+    fluid.demands("decapod.accordion", ["decapod.exporter", "decapod.pdfExporter"], {
+        options: {
+            header: "{pdfExporter}.options.selectors.exportInfo",
+            collapsible: true,
+            clearStyle: true,
+            active: false
+        }
+    });
+    
     /*******************
      * Invoker Demands *
      *******************/

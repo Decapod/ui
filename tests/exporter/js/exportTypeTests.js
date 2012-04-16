@@ -699,13 +699,12 @@ var decapod = decapod || {};
         var pdfExporterTests = jqUnit.testCase("decapod.pdfExporter");
         
         pdfExporterTests.asyncTest("Init tests", function () {
-            jqUnit.expect(2);
+            jqUnit.expect(1);
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
                 listeners: {
                     onReady: {
                         listener: function (that) {
                             jqUnit.assertTrue("The component should have initialized", true);
-                            jqUnit.assertTrue("The component should be set to enabled", that.isEnabled);
                             start();
                         },
                         args: ["{pdfExporter}"],
@@ -752,145 +751,6 @@ var decapod = decapod || {};
                         priority: "last",
                         args: ["{pdfExporter}"]
                     }
-                }
-            });
-        });
-        
-        pdfExporterTests.asyncTest("disable", function () {
-            jqUnit.expect(2);
-            createPDFExporter(PDF_EXPORTER_CONTAINER, {
-                listeners: {
-                    onReady: {
-                        listener: function (that) {
-                            that.disable();
-                            jqUnit.assertTrue("The hideExportDetails style should be applied", that.locate("exportDetails").hasClass(that.options.styles.hideExportDetails));
-                            jqUnit.assertFalse("The component should not be set to enabled", that.isEnabled);
-                            start();
-                        },
-                        args: ["{pdfExporter}"],
-                        priority: "last"
-                    }
-                }
-            });
-        });
-        
-        pdfExporterTests.asyncTest("enable", function () {
-            jqUnit.expect(1);
-            createPDFExporter(PDF_EXPORTER_CONTAINER, {
-                listeners: {
-                    onReady: {
-                        listener: function (that) {
-                            that.isEnabled = false;
-                            that.enable();
-                            jqUnit.assertTrue("The component should  be set to enabled", that.isEnabled);
-                            start();
-                        },
-                        args: ["{pdfExporter}"],
-                        priority: "last"
-                    }
-                }
-            });
-        });
-
-        pdfExporterTests.asyncTest("toggleExportDetails - on", function () {
-            jqUnit.expect(1);
-            var assertToggle = function (that) {
-                var exportDetails = that.locate("exportDetails");
-                var hideClass = that.options.styles.hideExportDetails;
-                exportDetails.addClass(hideClass);
-                that.toggleExportDetails();
-                jqUnit.assertFalse("The hideExportDetails style should have been removed", exportDetails.hasClass(hideClass));
-                start();
-            };
-            createPDFExporter(PDF_EXPORTER_CONTAINER, {
-                listeners: {
-                    onReady: {
-                        listener: assertToggle,
-                        priority: "last",
-                        args: ["{pdfExporter}"]
-                    }
-                }
-            });
-        });
-        
-        pdfExporterTests.asyncTest("toggleExportDetails - off", function () {
-            jqUnit.expect(1);
-            var assertToggle = function (that) {
-                var exportDetails = that.locate("exportDetails");
-                var hideClass = that.options.styles.hideExportDetails;
-                exportDetails.removeClass(hideClass);
-                that.toggleExportDetails();
-                jqUnit.assertTrue("The hideExportDetails style should have been added", exportDetails.hasClass(hideClass));
-                start();
-            };
-            createPDFExporter(PDF_EXPORTER_CONTAINER, {
-                listeners: {
-                    onReady: {
-                        listener: assertToggle,
-                        priority: "last",
-                        args: ["{pdfExporter}"]
-                    }
-                }
-            });
-        });
-        
-        pdfExporterTests.asyncTest("toggleExportDetails - disabled", function () {
-            jqUnit.expect(2);
-            var assertToggle = function (that) {
-                that.events.onToggleExportDetails.addListener(function () {
-                    jqUnit.assertFalse("The onToggleExportDetails Event should not have fired", true);
-                });
-                that.disable();
-                var exportDetails = that.locate("exportDetails");
-                var hideClass = that.options.styles.hideExportDetails;
-                exportDetails.removeClass(hideClass);
-                that.locate("exportInfo").click();
-                jqUnit.assertFalse("The hideExportDetails style should not be added", exportDetails.hasClass(hideClass));
-                that.toggleExportDetails();
-                jqUnit.assertFalse("The hideExportDetails style should not be added", exportDetails.hasClass(hideClass));
-                start();
-            };
-            createPDFExporter(PDF_EXPORTER_CONTAINER, {
-                listeners: {
-                    onReady: {
-                        listener: assertToggle,
-                        priority: "last",
-                        args: ["{pdfExporter}"]
-                    }
-                }
-            });
-        });
-        
-        pdfExporterTests.asyncTest("onToggleExportDetails", function () {
-            jqUnit.expect(2);
-            var triggerClick = function (that) {
-                var exportDetails = that.locate("exportDetails");
-                var hideClass = that.options.styles.hideExportDetails;
-                exportDetails.removeClass(hideClass);
-                that.locate("exportInfo").click();
-            };
-            var assertEvent = function () {
-                jqUnit.assertTrue("The onToggleExportDetails event should have fired", true);
-            };
-            fluid.registerNamespace("decapod.tests.pdfExporterTests");
-            decapod.tests.pdfExporterTests.assertToggle = function () {
-                jqUnit.assertTrue("The toggleExportDetails invoker should have been triggered", true);
-                start();
-            };
-            createPDFExporter(PDF_EXPORTER_CONTAINER, {
-                listeners: {
-                    onReady: {
-                        listener: triggerClick,
-                        priority: "last",
-                        args: ["{pdfExporter}"]
-                    },
-                    onToggleExportDetails: {
-                        listener: assertEvent,
-                        priority: "first"
-                    }
-                },
-                invokers: {
-                    toggleExportDetails: "decapod.tests.pdfExporterTests.assertToggle"
                 }
             });
         });

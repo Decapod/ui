@@ -105,7 +105,8 @@ var decapod = decapod || {};
             onImportStart: null, 
             onExportStart: null,
             afterQueueReady: null,
-            afterExportComplete: null
+            afterExportComplete: null, 
+            afterExportersReady: null,
         },
         invokers: {
             renderStrings: "decapod.exporter.renderStrings",
@@ -193,6 +194,9 @@ var decapod = decapod || {};
                 type: "decapod.pdfExporter",
                 container: "{exporter}.dom.imagePDFContainer",
                 options: {
+                    listeners: {
+                        onReady: "{exporter}.events.afterExportersReady"
+                    },
                     components: {
                         dataSource: {
                             options: {
@@ -260,6 +264,12 @@ var decapod = decapod || {};
                         }
                     }
                 }
+            },
+            accordion: {
+                type: "decapod.accordion",
+                container: "{exporter}.container",
+                createOnEvent: "afterExportersReady",
+                priority: "first"
             },
             eventBinder: {
                 type: "decapod.exporter.eventBinder",
