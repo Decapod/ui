@@ -28,12 +28,7 @@ var decapod = decapod || {};
         
         var eventBinderTests = jqUnit.testCase("Decapod Event Binder");
         
-        eventBinderTests.test("Init tests", function () {
-            var eventBinder = decapod.exporter.eventBinder();
-            jqUnit.assertTrue("The component should have initialized", eventBinder);
-        });
-        
-        eventBinderTests.asyncTest("onReady", function () {
+        eventBinderTests.asyncTest("Init tests", function () {
             jqUnit.expect(1);
             var testEvent = function () {
                 jqUnit.assertTrue("The onReady event should have fired", true);
@@ -71,7 +66,7 @@ var decapod = decapod || {};
                     }
                 }
             });
-            var serverReset = decapod.exporter.serverReset({
+            decapod.exporter.serverReset({
                 components: {
                     dataSource: {
                         type: "decpod.tests.serverResetTests.mockDataSource",
@@ -121,7 +116,7 @@ var decapod = decapod || {};
         });
         
         exporterTests.asyncTest("Add error", function () {
-            var exporter = decapod.exporter(CONTAINER, {
+            decapod.exporter(CONTAINER, {
                 listeners: {
                     onReady: {
                         listener: function (that) {
@@ -143,7 +138,7 @@ var decapod = decapod || {};
         exporterTests.asyncTest("Add validFiles", function () {
             jqUnit.expect(2);
             var numFiles = 10;
-            var exporter = decapod.exporter(CONTAINER, {
+            decapod.exporter(CONTAINER, {
                 listeners: {
                     onReady: {
                         listener: function (that) {
@@ -159,80 +154,116 @@ var decapod = decapod || {};
                 }
             });
         });
-        
+
         exporterTests.asyncTest("Render status messages", function () {
-            var exporter = decapod.exporter(CONTAINER);
-            var assertVisibility = function () {
-                jqUnit.notVisible("The instructions should be hidden", exporter.locate("instructions"));
-                jqUnit.isVisible("The status messages should be shown", exporter.locate("importStatusContainer"));
+            jqUnit.expect(9);
+            var assertions = function (that) {
+                var renderedStatuses = that.importStatus.renderer.locate("statusMessages");
+                jqUnit.notVisible("The instructions should be hidden", that.locate("instructions"));
+                jqUnit.isVisible("The status messages should be shown", that.locate("importStatusContainer"));
+                jqUnit.assertEquals("The error should be added", 1, that.importStatus.errors["-100"]);
+                jqUnit.assertEquals("The total number of files should be updated", 11, that.importStatus.totalNumFiles);
+                jqUnit.assertEquals("The number of invalid files should be updated", 1, that.importStatus.numInvalidFiles);
+                jqUnit.assertEquals("The number of valid files should be updated", 10, that.importStatus.numValidFiles);
+                jqUnit.assertEquals("The statuses should have been rendered", 2, renderedStatuses.length);
+                jqUnit.assertEquals("The total files message should be rendered", "11 files found.", renderedStatuses.eq(0).text());
+                jqUnit.assertEquals("The total files message should be rendered", "1 files exceeded the queue limit", renderedStatuses.eq(1).text());
                 start();
             };
-            exporter.statusToggle.events.afterModelChanged.addListener(assertVisibility);
-            exporter.uploader.events.onQueueError.fire({}, -100);
-            exporter.uploader.events.afterFileDialog.fire(10);
-            jqUnit.assertEquals("The error should be added", 1, exporter.importStatus.errors["-100"]);
-            jqUnit.assertEquals("The total number of files should be updated", 11, exporter.importStatus.totalNumFiles);
-            jqUnit.assertEquals("The number of invalid files should be updated", 1, exporter.importStatus.numInvalidFiles);
-            jqUnit.assertEquals("The number of valid files should be updated", 10, exporter.importStatus.numValidFiles);
-            var renderedStatuses = exporter.importStatus.renderer.locate("statusMessages");
-            jqUnit.assertEquals("The statuses should have been rendered", 2, renderedStatuses.length);
-            jqUnit.assertEquals("The total files message should be rendered", "11 files found.", renderedStatuses.eq(0).text());
-            jqUnit.assertEquals("The total files message should be rendered", "1 files exceeded the queue limit", renderedStatuses.eq(1).text());
+            var testCondition = function (that) {
+                that.statusToggle.events.afterModelChanged.addListener(function () {
+                    assertions(that);
+                });
+                that.uploader.events.onQueueError.fire({}, -100);
+                that.uploader.events.afterFileDialog.fire(10);
+            };
+            decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: testCondition,
+                        args: ["{exporter}"]
+                    }
+                }
+            });
         });
         
         exporterTests.asyncTest("startImport", function () {
             jqUnit.expect(3);
-            var exporter = decapod.exporter(CONTAINER);
-            var exportType = exporter.imagePDF;
-            
-            exporter.events.onImportStart.addListener(function () {
-                jqUnit.assertTrue("The onImportStart event should have fired", true);
-                jqUnit.assertDeepEq("The exportType should have been set", exportType, exporter.exportType);
+            var tests = function (that) {
+                var exportType = that.imagePDF;
+                that.events.onImportStart.addListener(function () {
+                    jqUnit.assertTrue("The onImportStart event should have fired", true);
+                    jqUnit.assertDeepEq("The exportType should have been set", exportType, that.exportType);
+                });
+                
+                that.uploader.events.onUploadStart.addListener(function () {
+                    jqUnit.assertTrue("The onUploadStart event from the uploader should have fired", true);
+                    start();
+                });
+                // hack to prevent the uploader from actually trying to upload anything.
+                // this allows for the testing of just the event without errors being thrown for the empty queue
+                that.uploader.strategy.remote.uploadNextFile = function () {};
+                that.startImport(exportType);
+            };
+            decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: tests,
+                        args: ["{exporter}"]
+                    }
+                }
             });
-            
-            exporter.uploader.events.onUploadStart.addListener(function () {
-                jqUnit.assertTrue("The onUploadStart event from the uploader should have fired", true);
-                start();
-            });
-            // hack to prevent the uploader from actually trying to upload anything.
-            // this allows for the testing of just the event without errors being thrown for the empty queue
-            exporter.uploader.strategy.remote.uploadNextFile = function () {};
-            exporter.startImport(exportType);
         });
-        
+
         exporterTests.asyncTest("startExport", function () {
             jqUnit.expect(4);
+            var tests = function (that) {
+                var exportType = that.imagePDF;
+                that.exportType = exportType;
             
-            var exporter = decapod.exporter(CONTAINER);
-            var exportType = exporter.imagePDF;
-            exporter.exportType = exportType;
+                that.events.onExportStart.addListener(function () {
+                    jqUnit.assertTrue("The onExportStart event should have fired", true);
+                    jqUnit.assertDeepEq("The exportType should have been set", exportType, that.exportType);
+                });
             
-            exporter.events.onExportStart.addListener(function () {
-                jqUnit.assertTrue("The onExportStart event should have fired", true);
-                jqUnit.assertDeepEq("The exportType should have been set", exportType, exporter.exportType);
+                that.events.afterExportComplete.addListener(function () {
+                    jqUnit.assertTrue("The afterExportComplete event should have fired", true);
+                    jqUnit.assertNull("The exportType should be reset to null", that.exportType);
+                    start();
+                });
+            
+                that.startExport();
+            };
+            decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: tests,
+                        args: ["{exporter}"]
+                    }
+                }
             });
-            
-            exporter.events.afterExportComplete.addListener(function () {
-                jqUnit.assertTrue("The afterExportComplete event should have fired", true);
-                jqUnit.assertNull("The exportType should be reset to null", exporter.exportType);
-                start();
-            });
-            
-            exporter.startExport();
         });
         
         exporterTests.asyncTest("validateQueue", function () {
             jqUnit.expect(1);
+            var tests = function (that) {
+                that.events.afterQueueReady.addListener(function () {
+                    jqUnit.assertTrue("The afterQueueReady event should have fired", true);
+                    start();
+                });
             
-            var exporter = decapod.exporter(CONTAINER);
-            exporter.events.afterQueueReady.addListener(function () {
-                jqUnit.assertTrue("The afterQueueReady event should have fired", true);
-                start();
+                that.validateQueue(); // should do nothing
+                that.importStatus.numValidFiles = 1;
+                that.validateQueue();
+            };
+            decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: tests,
+                        args: ["{exporter}"]
+                    }
+                }
             });
-            
-            exporter.validateQueue(); // should do nothing
-            exporter.importStatus.numValidFiles = 1;
-            exporter.validateQueue();
         });
         
         exporterTests.asyncTest("afterQueueReady", function () {
@@ -247,10 +278,10 @@ var decapod = decapod || {};
                     var decorators = fluid.renderer.getDecoratorComponents(that[pdfExporter].exportControls);
                     for (var decorator in decorators) {
                         jqUnit.assertTrue("The start export button for, " + pdfExporter + ", is rendered", decorator.indexOf("trigger") > -1);
-                    };
+                    }
                 });
                 start();
-            }
+            };
             decapod.exporter(CONTAINER, {
                 listeners: {
                     afterQueueReady: {
@@ -265,7 +296,7 @@ var decapod = decapod || {};
                     }
                 }
             });
-        })
+        });
 
         // TODO: Cleanup all the if statements
         var testOnExportStartTrigger = function (subComponent) {
