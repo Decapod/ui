@@ -100,6 +100,9 @@ var decapod = decapod || {};
                 type: "decapod.visSwitcher",
                 container: "{exporter}.dom.importMessages",
                 options: {
+                    strings: {
+                        instructions: "Select 'Browse files' to choose images to export."
+                    },
                     selectors: {
                         instructions: "{exporter}.options.selectors.instructions",
                         status: "{exporter}.options.selectors.importStatusContainer"
@@ -225,7 +228,7 @@ var decapod = decapod || {};
                 options: {
                     strings: {
                         name: "Computer Traced PDF with OCR Text",
-                        description: "Contents of each image is traced by the computer, OCR'ed, and output to a PDF. The process takes longer, but results is a much smaller PDF."
+                        description: "Content of each image is traced by the computer, OCR'ed, and output to a PDF. The process takes longer, but results is a much smaller PDF."
                     },
                     components: {
                         dataSource: {
