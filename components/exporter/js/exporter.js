@@ -167,6 +167,10 @@ var decapod = decapod || {};
                 type: "decapod.pdfExporter",
                 container: "{exporter}.dom.imagePDFContainer",
                 options: {
+                    strings: {
+                        name: "Image PDF",
+                        description: "Export each image as a page in a PDF document. Export process is quick and generates a basic PDF."
+                    },
                     components: {
                         dataSource: {
                             options: {
@@ -191,6 +195,10 @@ var decapod = decapod || {};
                 type: "decapod.pdfExporter",
                 container: "{exporter}.dom.ocrPDFContainer",
                 options: {
+                    strings: {
+                        name: "Image PDF with OCR Text",
+                        description: "OCR is performed on images and text embedded with the image of each page."
+                    },
                     components: {
                         dataSource: {
                             options: {
@@ -215,6 +223,10 @@ var decapod = decapod || {};
                 type: "decapod.pdfExporter",
                 container: "{exporter}.dom.tracedPDFContainer",
                 options: {
+                    strings: {
+                        name: "Computer Traced PDF with OCR Text",
+                        description: "Contents of each image is traced by the computer, OCR'ed, and output to a PDF. The export process takes longer, but results is a much smaller PDF."
+                    },
                     components: {
                         dataSource: {
                             options: {
