@@ -147,8 +147,10 @@ var decapod = decapod || {};
                 createOnEvent: "afterFetchResources",
                 priority: "last",
                 options: {
+                    events: {
+                        "onReady": "{pdfExporter}.events.onReady"
+                    },
                     listeners: {
-                        "onReady": "{pdfExporter}.events.onReady.fire",
                         "{pdfExporter}.events.onExportStart": {
                             listener: "{dataSource}.put",
                             args: [null]
