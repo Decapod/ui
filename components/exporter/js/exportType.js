@@ -31,12 +31,25 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.pdfExporter");
     
     decapod.pdfExporter.toggleExportDetails = function (that) {
-        that.locate("exportDetails").toggleClass(that.options.styles.hideExportDetails);
+        if (that.isEnabled) {
+            that.locate("exportDetails").toggleClass(that.options.styles.hideExportDetails);
+        }
+    };
+    
+    decapod.pdfExporter.disable = function (that) {
+        that.isEnabled = false;
+        that.locate("exportDetails").addClass(that.options.styles.hideExportDetails);
+    };
+    
+    decapod.pdfExporter.enable = function (that) {
+        that.isEnabled = true;
     };
     
     decapod.pdfExporter.bindEvents = function (that) {
         that.locate("exportInfo").click(function () {
-            that.events.onToggleExportDetails.fire();
+            if (that.isEnabled) {
+                that.events.onToggleExportDetails.fire();
+            }
         });
     };
     
@@ -50,6 +63,7 @@ var decapod = decapod || {};
     };
     
     decapod.pdfExporter.finalInit = function (that) {
+        that.enable();
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.pdfExportTemplate.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
@@ -93,7 +107,9 @@ var decapod = decapod || {};
         },
         invokers: {
             toggleExportDetails: "decapod.pdfExporter.toggleExportDetails",
-            bindEvents: "decapod.pdfExporter.bindEvents"
+            bindEvents: "decapod.pdfExporter.bindEvents",
+            disable: "decapod.pdfExporter.disable",
+            enable: "decapod.pdfExporter.enable"
         },
         resources: {
             pdfExportTemplate: {
