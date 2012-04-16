@@ -88,7 +88,7 @@ var decapod = decapod || {};
     
     fluid.demands("decapod.accordion", ["decapod.exporter", "decapod.pdfExporter"], {
         options: {
-            header: "{pdfExporter}.options.selectors.exportInfo",
+            header: ".dc-pdfExporter-exportInfo", //TODO:Remove hardcoding of the selector.
             collapsible: true,
             clearStyle: true,
             active: false
