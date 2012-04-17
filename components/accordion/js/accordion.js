@@ -30,6 +30,15 @@ var decapod = decapod || {};
         return that.container.accordion(arguments[1], arguments[2], arguments[3]);
     };
     
+    decapod.accordion.preInit = function (that) {
+        that.disable = function () {
+            that.disable();
+        }
+        that.enable = function () {
+            that.enable();
+        }
+    };
+    
     decapod.accordion.finalInit = function (that) {
         that.container.accordion(that.options);
         that.events.onReady.fire();
@@ -37,6 +46,7 @@ var decapod = decapod || {};
 
     fluid.defaults("decapod.accordion", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
+        preInitFunction: "decapod.accordion.preInit",
         finalInitFunction: "decapod.accordion.finalInit",
         invokers: {
             method: "decapod.accordion.method",
