@@ -84,7 +84,7 @@ var decapod = decapod || {};
             jqUnit.expect(9);
             decapod.exporter(CONTAINER, {
                 listeners: {
-                    onReady: {
+                    afterExportersReady: {
                         listener: function (that) {
                             var str = that.options.strings;
                             jqUnit.assertTrue("The component should have initialized", that);
@@ -98,7 +98,8 @@ var decapod = decapod || {};
                             jqUnit.assertFalse("The accordion should be enabled", that.accordion.container.accordion("option", "disabled"));
                             start();
                         },
-                        args: ["{exporter}"]
+                        args: ["{exporter}"],
+                        priority: "last"
                     }
                 }
             });
@@ -292,10 +293,24 @@ var decapod = decapod || {};
                         priority: "last",
                         args: "{exporter}"
                     },
-                    onReady: {
-                        listener: triggerEvent,
-                        priority: "last",
-                        args: "{exporter}"
+                },
+                components: {
+                    tracedPDF: {
+                        options: {
+                            components: {
+                                exportControls: {
+                                    options: {
+                                        listeners: {
+                                            afterRender: {
+                                                listener: triggerEvent,
+                                                priority: "last",
+                                                args: ["{exporter}"]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             });
