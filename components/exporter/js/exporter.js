@@ -90,7 +90,8 @@ var decapod = decapod || {};
             instructions: ".dc-exporter-instructions",
             imagePDFContainer: ".dc-exporter-imagePDF",
             ocrPDFContainer: ".dc-exporter-ocrPDF",
-            tracedPDFContainer: ".dc-exporter-tracedPDF"
+            tracedPDFContainer: ".dc-exporter-tracedPDF",
+            accordionContainer: ".dc-exporter-accordion"
         },
         strings: {
             title: "Decapod 0.5",
@@ -279,7 +280,7 @@ var decapod = decapod || {};
             },
             accordion: {
                 type: "decapod.accordion",
-                container: "{exporter}.container",
+                container: "{exporter}.dom.accordionContainer",
                 createOnEvent: "afterExportersReady",
                 priority: "first",
                 options: {
