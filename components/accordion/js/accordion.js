@@ -35,10 +35,10 @@ var decapod = decapod || {};
     decapod.accordion.preInit = function (that) {
         that.disable = function () {
             that.disable();
-        }
+        };
         that.enable = function () {
             that.enable();
-        }
+        };
     };
     
     decapod.accordion.finalInit = function (that) {

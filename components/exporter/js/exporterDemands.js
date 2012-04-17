@@ -68,7 +68,7 @@ var decapod = decapod || {};
                         showExportDownload: true,
                         downloadURL: "{arguments}.0.url"
                     }]
-                },
+                }
             }
         }
     });

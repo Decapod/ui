@@ -107,7 +107,7 @@ var decapod = decapod || {};
             onExportStart: null,
             afterQueueReady: null,
             afterExportComplete: null, 
-            afterExportersReady: null,
+            afterExportersReady: null
         },
         invokers: {
             renderStrings: "decapod.exporter.renderStrings",
@@ -322,7 +322,7 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.exporter.serverReset");
     
     decapod.exporter.serverReset.finalInit = function (that) {
-        that.dataSource.delete();
+        that.dataSource["delete"]();
     };
     
     fluid.defaults("decapod.exporter.serverReset", {

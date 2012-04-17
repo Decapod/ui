@@ -292,7 +292,7 @@ var decapod = decapod || {};
                         listener: testEvent,
                         priority: "last",
                         args: "{exporter}"
-                    },
+                    }
                 },
                 components: {
                     tracedPDF: {
