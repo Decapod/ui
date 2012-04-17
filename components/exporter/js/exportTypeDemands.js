@@ -104,6 +104,9 @@ var decapod = decapod || {};
     fluid.demands("decapod.exportControls.updateModel", ["decapod.exportControls"], {
         args: ["{exportControls}", "", "{arguments}.0"]
     });
+    fluid.demands("decapod.exportControls.trigger.updateModel", ["decapod.exportControls.trigger"], {
+        args: ["{trigger}", "{arguments}.0"]
+    });
     fluid.demands("decapod.exportControls.download.updateModel", ["decapod.exportControls.download"], {
         args: ["{download}", "{arguments}.0"]
     });

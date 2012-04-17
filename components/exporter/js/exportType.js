@@ -518,21 +518,61 @@ var decapod = decapod || {};
      **********************************/
     
     fluid.registerNamespace("decapod.exportControls.trigger");
-    
+
     decapod.exportControls.trigger.produceTree = function (that) {
         return {
-            trigger: {
-                messagekey: "trigger",
-                decorators: [{
-                    type: "jQuery",
-                    func: "click",
-                    args: function () { that.events.afterTriggered.fire(); }
-                }]
-            }
+            expander: [
+                {
+                    type: "fluid.renderer.condition",
+                    condition: that.model.disabled,
+                    trueTree: {
+                        trigger: {
+                            messagekey: "trigger",
+                            decorators: [{
+                                type: "jQuery",
+                                func: "click",
+                                args: function () { that.events.afterTriggered.fire(); }
+                            }, {
+                                type: "attrs",
+                                attributes: {
+                                    disabled: "disabled"
+                                }
+                            }]
+                        }
+                    },
+                    falseTree: {
+                        trigger: {
+                            messagekey: "trigger",
+                            decorators: [{
+                                type: "jQuery",
+                                func: "click",
+                                args: function () { that.events.afterTriggered.fire(); }
+                            }]
+                        }
+                    }
+                }
+            ]
+        }
+    };
+    
+    decapod.exportControls.trigger.updateModel = function (that, disabled) {
+        that.applier.requestChange("disabled", disabled);
+    };
+    
+    decapod.exportControls.trigger.preInit = function (that) {
+        that.refreshView = function () {
+            that.refreshView();
+        };
+        that.updateModels = function (disabled) {
+            that.updateModel(disabled);
         };
     };
     
     decapod.exportControls.trigger.finalInit = function (that) {
+        that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
+            that.events.afterModelChanged.fire(newModel, oldModel);
+        });
+        
         fluid.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
@@ -542,6 +582,7 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.exportControls.trigger", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
+        preInitFunction: "decapod.exportControls.trigger.preInit",
         finalInitFunction: "decapod.exportControls.trigger.finalInit",
         produceTree: "decapod.exportControls.trigger.produceTree",
         selectors: {
@@ -552,7 +593,17 @@ var decapod = decapod || {};
         },
         events: {
             afterFetchResources: null,
+            afterModelChanged: null,
             afterTriggered: null
+        },
+        listeners: {
+            "afterModelChanged.internal": "{trigger}.refreshView"
+        },
+        model: {
+            disabled: false
+        },
+        invokers: {
+            updateModel: "decapod.exportControls.trigger.updateModel"
         },
         resources: {
             template: {
