@@ -40,5 +40,23 @@ var decapod = decapod || {};
                 }
             });
         });
+        
+        tests.test("method", function () {
+            var that = decapod.accordion(CONTAINER);
+            jqUnit.assertEquals("The direct and wrapped method calls should return the same value", that.container.accordion("option", "disabled"), that.method("option", "disabled"));
+        });
+        
+        tests.test("disable", function () {
+            var that = decapod.accordion(CONTAINER);
+            that.disable();
+            jqUnit.assertTrue("The accordion should be disabled", that.container.accordion("option", "disabled"));
+        });
+        
+        tests.test("enable", function () {
+            var that = decapod.accordion(CONTAINER);
+            that.container.accordion("options", "disabled", true);
+            that.enable();
+            jqUnit.assertFalse("The accordion should be enabled", that.container.accordion("option", "disabled"));
+        });
     });
 })(jQuery);
