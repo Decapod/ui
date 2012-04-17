@@ -316,48 +316,59 @@ var decapod = decapod || {};
             });
         });
 
+        var componentFromDecorator = function (comp, decorators) {
+            for (var decorator in decorators) {
+                if (decorator.indexOf(comp) > -1) {
+                    return decorators[decorator];
+                }
+            }
+        };
+
         // TODO: Cleanup all the if statements
         var testOnExportStartTrigger = function (subComponent) {
             jqUnit.expect(3);
-            var triggerEvent = function (pdfExporter, exporter) {
-                pdfExporter.exportControls.events.afterRender.addListener(function () {
-                    var decorators = fluid.renderer.getDecoratorComponents(pdfExporter.exportControls);
-                    var trigger, progress, download = null;
-                    for (var key in decorators) {
-                        if (key.indexOf("trigger") > -1) {
-                            trigger = decorators[key];
-                        }
-                        if (key.indexOf("progress") > -1) {
-                            progress = decorators[key];
-                        }
-                        if (key.indexOf("download") > -1) {
-                            download = decorators[key];
-                        }
-                    }
-                    
-                    if (trigger) {
-                        trigger.locate("trigger").click();
-                    }
-                    
-                    if (progress) {
-                        jqUnit.assertTrue("Progress Displayed", progress);
-                        // trigger the uploader's afterUploadeComplete event
-                        exporter.uploader.events.afterUploadComplete.fire();
-                    }
-                    
-                    if (download) {
-                        var downloadHREF = download.locate("download").attr("href").replace($(location).attr('href'), '');
-                        jqUnit.assertEquals("The download href should be set", download.model.downloadURL, downloadHREF);
-                        start();
-                    }
+            var assertions = function (exportControls, exporter) {
+                var decorators = fluid.renderer.getDecoratorComponents(exportControls);
+                var progress = componentFromDecorator("progress", decorators);
+                var download = componentFromDecorator("download", decorators);
+                
+                if (progress) {
+                    jqUnit.assertTrue("Progress Displayed", progress);
+                    // trigger the uploader's afterUploadeComplete event
+                    exporter.uploader.events.afterUploadComplete.fire();
+                }
+                
+                if (download) {
+                    var downloadHREF = download.locate("download").attr("href").replace($(location).attr('href'), '');
+                    jqUnit.assertEquals("The download href should be set", download.model.downloadURL, downloadHREF);
+                    start();
+                }
+            };
+            var setup = function (exporter) {
+                var afterRenderEvent = exporter[subComponent].exportControls.events.afterRender;
+                afterRenderEvent.removeListener("initial");
+                afterRenderEvent.addListener(function (exportControls) {
+                    assertions(exportControls, exporter);
                 });
+                
+                // enables the trigger button
                 exporter.events.afterQueueReady.fire();
+            };
+            var triggerEvent = function (exporter) {
+                var decorators = fluid.renderer.getDecoratorComponents(exporter[subComponent].exportControls);
+                var trigger = componentFromDecorator("trigger", decorators);
+                trigger.locate("trigger").click();
             };
             
             var opts = {
                 listeners: {
                     onExportStart: function () {
                         jqUnit.assertTrue("The onExportStart event fired", true);
+                    },
+                    afterQueueReady: {
+                        listener: triggerEvent,
+                        args: ["{exporter}"],
+                        priority: "last"
                     }
                 },
                 components: {}
@@ -365,11 +376,16 @@ var decapod = decapod || {};
             
             opts.components[subComponent] = {
                 options: {
-                    listeners: {
-                        onReady: {
-                            listener: triggerEvent,
-                            args: ["{pdfExporter}", "{exporter}"],
-                            priority: "last"
+                    components: {
+                        exportControls: {
+                            options: {
+                                listeners: {
+                                    "afterRender.initial": {
+                                        listener: setup,
+                                        args: ["{exporter}"]
+                                    }
+                                }
+                            }
                         }
                     }
                 }

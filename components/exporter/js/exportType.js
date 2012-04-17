@@ -528,16 +528,12 @@ var decapod = decapod || {};
                     trueTree: {
                         trigger: {
                             messagekey: "trigger",
-                            decorators: [{
-                                type: "jQuery",
-                                func: "click",
-                                args: function () { that.events.afterTriggered.fire(); }
-                            }, {
+                            decorators: {
                                 type: "attrs",
                                 attributes: {
                                     disabled: "disabled"
                                 }
-                            }]
+                            }
                         }
                     },
                     falseTree: {
