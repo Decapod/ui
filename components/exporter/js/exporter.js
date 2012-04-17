@@ -93,10 +93,10 @@ var decapod = decapod || {};
             tracedPDFContainer: ".dc-exporter-tracedPDF"
         },
         strings: {
-            title: "",
-            instructions: "",
-            uploadClear: "",
-            formats: "",
+            title: "Decapod 0.5",
+            instructions: "Select 'Browse files' to choose images to export.",
+            uploadClear: "Reset",
+            formats: "Export to PDF",
             groupName: ""
         },
         events: {
@@ -126,9 +126,6 @@ var decapod = decapod || {};
                 type: "decapod.visSwitcher",
                 container: "{exporter}.dom.importMessages",
                 options: {
-                    strings: {
-                        instructions: "Select 'Browse files' to choose images to export."
-                    },
                     selectors: {
                         instructions: "{exporter}.options.selectors.instructions",
                         status: "{exporter}.options.selectors.importStatusContainer"
