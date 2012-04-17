@@ -563,7 +563,7 @@ var decapod = decapod || {};
         that.refreshView = function () {
             that.refreshView();
         };
-        that.updateModels = function (disabled) {
+        that.updateModel = function (disabled) {
             that.updateModel(disabled);
         };
     };
