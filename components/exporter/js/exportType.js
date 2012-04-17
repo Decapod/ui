@@ -351,7 +351,7 @@ var decapod = decapod || {};
             documentDimensions: ".dc-pdfExportOptions-documentDimensions"
         },
         model: {
-            dpi: "300"
+            dpi: "200"
         },
         resources: {
             template: {

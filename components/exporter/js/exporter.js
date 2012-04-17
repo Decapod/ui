@@ -93,10 +93,10 @@ var decapod = decapod || {};
             tracedPDFContainer: ".dc-exporter-tracedPDF"
         },
         strings: {
-            title: "",
-            instructions: "",
-            uploadClear: "",
-            formats: "",
+            title: "Decapod 0.5",
+            instructions: "Select 'Browse files' to choose images to export.",
+            uploadClear: "Reset",
+            formats: "Export to PDF",
             groupName: ""
         },
         events: {
@@ -194,6 +194,10 @@ var decapod = decapod || {};
                 type: "decapod.pdfExporter",
                 container: "{exporter}.dom.imagePDFContainer",
                 options: {
+                    strings: {
+                        name: "Image PDF",
+                        description: "Export each image as a page in a PDF document. Export process is quick and generates a basic PDF."
+                    },
                     listeners: {
                         onReady: "{exporter}.events.afterExportersReady"
                     },
@@ -221,6 +225,10 @@ var decapod = decapod || {};
                 type: "decapod.pdfExporter",
                 container: "{exporter}.dom.ocrPDFContainer",
                 options: {
+                    strings: {
+                        name: "Image PDF with OCR Text",
+                        description: "OCR is performed on images, and resulting text is embedded in the PDF."
+                    },
                     components: {
                         dataSource: {
                             options: {
@@ -245,6 +253,10 @@ var decapod = decapod || {};
                 type: "decapod.pdfExporter",
                 container: "{exporter}.dom.tracedPDFContainer",
                 options: {
+                    strings: {
+                        name: "Computer Traced PDF with OCR Text",
+                        description: "Content of each image is traced by the computer, OCR'ed, and output to a PDF. The process takes longer, but results is a much smaller PDF."
+                    },
                     components: {
                         dataSource: {
                             options: {

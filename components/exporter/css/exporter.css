@@ -144,43 +144,6 @@
     position:relative
 }
 
-/* A twiddle that animates when revealing the format's options.
-   Twiddle's initial orientation is pointing right (i.e. "closed").
-   APPLY this style when transitions are supported. */
-.ds-exporter-formatLabel-twiddle:after {
-    /* Make a triangle pointing right. */
-    width:0;
-    content:"";
-    position:absolute;
-    border-top: 6px solid  transparent;
-    border-bottom: 6px solid transparent;
-    border-left: 6px solid #939598;
-    top: 1px;
-    margin-left:4px;
- 
-    /* Transition to this style. */
-    -moz-animation: decapod-twiddle 0.2s forwards;
-    animation: decapod-twiddle 0.2s forwards;
-}
-
-/* Animation to rotate twiddle from downward to pointing right.
-   APPLY this style to make a twiddle "close". */
-.ds-exporter-formatLabel-detwiddle:after{
-    -moz-animation: decapod-detwiddle 0.2s forwards;
-    animation: decapod-detwiddle 0.2s forwards;
-}
-
-/* Animations for the twiddle. */
-@-moz-keyframes decapod-twiddle {
-    from { -moz-transform: rotate(0deg); }
-    to { -moz-transform: rotate(90deg); }
-}
-
-@-moz-keyframes decapod-detwiddle {
-    from { -moz-transform: rotate(90deg); }
-    to { -moz-transform: rotate(0deg); }
-}
-
 /* Export file format options and controls. */
 .ds-exporter-exportOptions {
     background-color: #F9F9FA;
