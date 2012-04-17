@@ -548,7 +548,7 @@ var decapod = decapod || {};
                     }
                 }
             ]
-        }
+        };
     };
     
     decapod.exportControls.trigger.updateModel = function (that, disabled) {

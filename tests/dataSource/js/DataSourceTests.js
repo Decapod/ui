@@ -38,7 +38,7 @@ var decapod = decapod || {};
             jqUnit.assertEquals("Simple url", "http://testURL.com", decapod.dataSource.assembleURL("http://testURL.com"));
             jqUnit.assertEquals("Simple url with encoding", "http://testURL.com/test%20encoding", decapod.dataSource.assembleURL("http://testURL.com/test encoding"));
             jqUnit.assertEquals("URL template", "http://testURL.com/templatePage", decapod.dataSource.assembleURL("http://testURL.com/%page", {page: "templatePage"}));
-            jqUnit.assertEquals("URL template with encoding", "http://testURL.com/template%20page", decapod.dataSource.assembleURL("http://testURL.com/%page", {page: "template page"}))
+            jqUnit.assertEquals("URL template with encoding", "http://testURL.com/template%20page", decapod.dataSource.assembleURL("http://testURL.com/%page", {page: "template page"}));
         });
     });
 })(jQuery);

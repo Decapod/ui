@@ -437,15 +437,15 @@ var decapod = decapod || {};
                 assertTriggerRender(that);
                 jqUnit.assertTrue("The trigger should be disabled", that.locate("trigger").prop("disabled"));
                 start();
-            } 
+            };
             var assertModelChanged = function (that, newModel) {
                 that.events.afterRender.removeListener("initial");
                 that.events.afterRender.addListener(assertRendering);
                 jqUnit.assertTrue("The afterModelChanged event should have fired", true);
                 jqUnit.assertDeepEq("The new Model should be updated", {disabled: true}, newModel);
-                jqUnit.assertTrue("The model's disabled value should be set to true", that.model.disabled)
+                jqUnit.assertTrue("The model's disabled value should be set to true", that.model.disabled);
             };
-            var that = createTrigger(TRIGGER_CONTAINER, {
+            createTrigger(TRIGGER_CONTAINER, {
                 listeners: {
                     afterModelChanged: {
                         listener: assertModelChanged,
