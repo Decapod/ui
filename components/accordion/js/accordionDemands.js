@@ -29,15 +29,15 @@ var decapod = decapod || {};
      *******************/
     fluid.demands("decapod.accordion.method", ["decapod.accordion"], {
         funcName: "decapod.accordion.methodImp",
-        args: ["{accordion}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
+        args: ["{accordion}", "{arguments}"]
     });
     fluid.demands("decapod.accordion.disable", ["decapod.accordion"], {
         funcName: "decapod.accordion.methodImp",
-        args: ["{accordion}", "disable", "{arguments}.0", "{arguments}.1"]
+        args: ["{accordion}", "disable", "{arguments}"]
     });
     fluid.demands("decapod.accordion.enable", ["decapod.accordion"], {
         funcName: "decapod.accordion.methodImp",
-        args: ["{accordion}", "enable", "{arguments}.0", "{arguments}.1"]
+        args: ["{accordion}", "enable", "{arguments}"]
     });
 
 })(jQuery);

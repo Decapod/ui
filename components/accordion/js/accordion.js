@@ -26,8 +26,10 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.accordion");
     
     decapod.accordion.methodImp = function (that) {
-        //TODO: Find a more robust method for passing the arguments along
-        return that.container.accordion(arguments[1], arguments[2], arguments[3]);
+        var arg1 = arguments[1];
+        var args = $.isArray(arg1) ? arg1 : [arg1];
+        args = args.concat(arguments[2] || []);
+        return that.container.accordion.apply(that.container, args);
     };
     
     decapod.accordion.preInit = function (that) {
