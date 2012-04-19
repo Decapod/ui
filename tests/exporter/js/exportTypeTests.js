@@ -428,6 +428,39 @@ var decapod = decapod || {};
             });
         });
         
+        triggerTests.asyncTest("updateModel", function () {
+            jqUnit.expect(6);
+            var setup = function (that) {
+                that.updateModel(true);
+            };
+            var assertRendering = function (that) {
+                assertTriggerRender(that);
+                jqUnit.assertTrue("The trigger should be disabled", that.locate("trigger").prop("disabled"));
+                start();
+            } 
+            var assertModelChanged = function (that, newModel) {
+                that.events.afterRender.removeListener("initial");
+                that.events.afterRender.addListener(assertRendering);
+                jqUnit.assertTrue("The afterModelChanged event should have fired", true);
+                jqUnit.assertDeepEq("The new Model should be updated", {disabled: true}, newModel);
+                jqUnit.assertTrue("The model's disabled value should be set to true", that.model.disabled)
+            };
+            var that = createTrigger(TRIGGER_CONTAINER, {
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertModelChanged,
+                        args: ["{trigger}", "{arguments}.0"],
+                        priority: "first"
+                    },
+                    "afterRender.initial": {
+                        listener: setup,
+                        args: ["{trigger}"],
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
         triggerTests.asyncTest("afterTriggered", function () {
             jqUnit.expect(1);
             var clickTrigger = function (that) {
