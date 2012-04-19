@@ -25,6 +25,22 @@ var decapod = decapod || {};
 (function ($) {
     fluid.registerNamespace("decapod.accordion");
     
+    decapod.accordion.methodImp = function (that) {
+        var arg1 = arguments[1];
+        var args = $.isArray(arg1) ? arg1 : [arg1];
+        args = args.concat(arguments[2] || []);
+        return that.container.accordion.apply(that.container, args);
+    };
+    
+    decapod.accordion.preInit = function (that) {
+        that.disable = function () {
+            that.disable();
+        }
+        that.enable = function () {
+            that.enable();
+        }
+    };
+    
     decapod.accordion.finalInit = function (that) {
         that.container.accordion(that.options);
         that.events.onReady.fire();
@@ -32,7 +48,13 @@ var decapod = decapod || {};
 
     fluid.defaults("decapod.accordion", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
+        preInitFunction: "decapod.accordion.preInit",
         finalInitFunction: "decapod.accordion.finalInit",
+        invokers: {
+            method: "decapod.accordion.method",
+            disable: "decapod.accordion.disable",
+            enable: "decapod.accordion.enable"
+        },
         events: {
             onReady: null
         }

@@ -55,11 +55,6 @@ var decapod = decapod || {};
     
     fluid.demands("decapod.exportControls", ["decapod.exporter", "decapod.pdfExporter"], {
         options: {
-            model: {
-                showExportStart: false,
-                showExportProgress: false,
-                showExportDownload: false
-            },
             events: {
                 onExportTrigger: "{pdfExporter}.events.onExportStart"
             },
@@ -74,24 +69,36 @@ var decapod = decapod || {};
                         downloadURL: "{arguments}.0.url"
                     }]
                 },
-                "{exporter}.events.afterQueueReady": {
-                    listener: "{exportControls}.updateModel",
-                    args: [{
-                        showExportStart: true,
-                        showExportProgress: false,
-                        showExportDownload: false
-                    }]
-                }
             }
         }
     });
     
     fluid.demands("decapod.accordion", ["decapod.exporter", "decapod.pdfExporter"], {
         options: {
-            header: "{pdfExporter}.options.selectors.exportInfo",
+            header: ".dc-pdfExporter-exportInfo", //TODO:Remove hardcoding of the selector.
             collapsible: true,
             clearStyle: true,
             active: false
+        }
+    });
+    
+    fluid.demands("decapod.exportControls.trigger", ["decapod.exporter", "decapod.exportControls"], {
+        options: {
+            model: {
+                disabled: true
+            },
+            events: {
+                afterTriggered: "{exportControls}.events.onExportTrigger"
+            },
+            listeners: {
+                "{exporter}.events.afterQueueReady": {
+                    listener: "{trigger}.updateModel",
+                    args: [false]
+                }
+            },
+            resources: {
+                template: "{exportControls}.options.resources.trigger"
+            }
         }
     });
     

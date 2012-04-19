@@ -281,7 +281,12 @@ var decapod = decapod || {};
                 type: "decapod.accordion",
                 container: "{exporter}.container",
                 createOnEvent: "afterExportersReady",
-                priority: "first"
+                priority: "first",
+                options: {
+                    listeners: {
+                        "{exporter}.events.onImportStart": "{accordion}.disable"
+                    }
+                }
             },
             eventBinder: {
                 type: "decapod.exporter.eventBinder",

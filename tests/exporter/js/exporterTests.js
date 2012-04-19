@@ -81,9 +81,10 @@ var decapod = decapod || {};
         var exporterTests = jqUnit.testCase("Decapod Export");
         
         exporterTests.asyncTest("Init tests", function () {
+            jqUnit.expect(9);
             decapod.exporter(CONTAINER, {
                 listeners: {
-                    onReady: {
+                    afterExportersReady: {
                         listener: function (that) {
                             var str = that.options.strings;
                             jqUnit.assertTrue("The component should have initialized", that);
@@ -94,9 +95,11 @@ var decapod = decapod || {};
                             jqUnit.assertEquals("The uploadClear text should be rendered", str.uploadClear, that.locate("uploadClear").text());
                             jqUnit.assertEquals("The formats text should be rendered", str.formats, that.locate("formats").text());
                             jqUnit.assertEquals("The groupName text should be rendered", str.groupName, that.locate("groupName").text());
+                            jqUnit.assertFalse("The accordion should be enabled", that.accordion.container.accordion("option", "disabled"));
                             start();
                         },
-                        args: ["{exporter}"]
+                        args: ["{exporter}"],
+                        priority: "last"
                     }
                 }
             });
@@ -188,12 +191,13 @@ var decapod = decapod || {};
         });
         
         exporterTests.asyncTest("startImport", function () {
-            jqUnit.expect(3);
+            jqUnit.expect(4);
             var tests = function (that) {
                 var exportType = that.imagePDF;
                 that.events.onImportStart.addListener(function () {
                     jqUnit.assertTrue("The onImportStart event should have fired", true);
                     jqUnit.assertDeepEq("The exportType should have been set", exportType, that.exportType);
+                    jqUnit.assertTrue("The accordion should be disabled", that.accordion.container.accordion("option", "disabled"));
                 });
                 
                 that.uploader.events.onUploadStart.addListener(function () {
@@ -289,10 +293,24 @@ var decapod = decapod || {};
                         priority: "last",
                         args: "{exporter}"
                     },
-                    onReady: {
-                        listener: triggerEvent,
-                        priority: "last",
-                        args: "{exporter}"
+                },
+                components: {
+                    tracedPDF: {
+                        options: {
+                            components: {
+                                exportControls: {
+                                    options: {
+                                        listeners: {
+                                            afterRender: {
+                                                listener: triggerEvent,
+                                                priority: "last",
+                                                args: ["{exporter}"]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             });
