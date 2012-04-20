@@ -68,10 +68,11 @@
                 <section class="dc-exporter-formatGroup ds-exporter-formatGroup">
                     <h2 class="dc-exporter-formats">Exporter format types go below</h2>
                     <h3 class="dc-exporter-groupName ds-shared-indent1">Group</h3>
-                    
-                    <div class="dc-exporter-imagePDF"></div>
-                    <div class="dc-exporter-ocrPDF"></div>
-                    <div class="dc-exporter-tracedPDF"></div>
+                    <div class="dc-exporter-accordion ds-exporter-accordion ds-shared-indent2">
+                        <div class="dc-exporter-imagePDF"></div>
+                        <div class="dc-exporter-ocrPDF"></div>
+                        <div class="dc-exporter-tracedPDF"></div>
+                    </div>
                 </section>
             </section>
             
@@ -82,7 +83,7 @@
         </section>
         <script>
             decapod.exporter.serverReset();
-            decapod.exporter(".dc-exporter");
+            var b = decapod.exporter(".dc-exporter");
         </script>
     </body>
 </html>
