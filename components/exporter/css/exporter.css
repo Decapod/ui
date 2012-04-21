@@ -1,3 +1,6 @@
+
+
+
 /**
  * Uploader
  */
@@ -125,20 +128,24 @@
     width:485px;
 }
 
+.ds-pdfExporter-exportDetails {
+    background-color: #F9F9FA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
+    position: relative;
 /**
  * Hide the export options.
  * APPLY this style to hide the export options.
  */
 .ds-pdfExporter-pdfExportOptions-hidden{
+
     overflow: hidden;
     height: 0px;
 }
 
 /* Format export options. */
-.ds-pdfExporter-pdfExportOptions form {
+.ds-exporter-exportOptions {
     margin-bottom: 10px;
     margin-top: 10px;
-    padding: 0 0 20px 20px;
 }
 
 .ds-pdfExporter-pdfExportOptions form  label{
@@ -217,8 +224,9 @@
 }
 
 
-/* jQuery overrides */
-
+/**
+ * jQuery overrides 
+ */
 
 .ds-exporter-formatGroup .ui-state-active {
     /* APPLY this style when format type is selected. */
@@ -251,9 +259,10 @@
 }
 
 .ds-exporter-formatGroup .ui-accordion-content {
-    padding: 0px; /* Remove accordion content padding */
+    padding: 20px;
 }
 
 .ds-exporter-formatGroup .ui-state-focus {
     outline: 0; /* Remove the dotten outline from appearing on accordion focus. */
 }
+
