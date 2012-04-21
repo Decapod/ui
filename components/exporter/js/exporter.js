@@ -104,10 +104,10 @@ var decapod = decapod || {};
             accordionContainer: ".dc-exporter-accordion"
         },
         strings: {
-            title: "Decapod 0.5",
+            title: "Export Images to PDF",
             instructions: "Select 'Browse files' to choose images to export.",
             uploadClear: "Reset",
-            formats: "Export to PDF",
+            formats: "Select Export Option",
             groupName: ""
         },
         events: {
@@ -207,7 +207,7 @@ var decapod = decapod || {};
                 container: "{exporter}.dom.imagePDFContainer",
                 options: {
                     strings: {
-                        name: "Image PDF",
+                        name: "1. Image PDF",
                         description: "Export each image as a page in a PDF document. Export process is quick and generates a basic PDF."
                     },
                     listeners: {
@@ -238,7 +238,7 @@ var decapod = decapod || {};
                 container: "{exporter}.dom.ocrPDFContainer",
                 options: {
                     strings: {
-                        name: "Image PDF with OCR Text",
+                        name: "2. Image PDF with OCR Text",
                         description: "OCR is performed on images, and resulting text is embedded in the PDF."
                     },
                     components: {
@@ -266,7 +266,7 @@ var decapod = decapod || {};
                 container: "{exporter}.dom.tracedPDFContainer",
                 options: {
                     strings: {
-                        name: "Computer Traced PDF with OCR Text",
+                        name: "3. Computer Traced PDF with OCR Text",
                         description: "Content of each image is traced by the computer, OCR'ed, and output to a PDF. The process takes longer, but results is a much smaller PDF."
                     },
                     components: {
