@@ -53,23 +53,11 @@
     filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
 }
 
-.ds-exporter-uploadControls .ds-exporter-uploadClear {
-    background: url("../../../shared/images/trash-icon-22x22-blue.png") 5px center no-repeat;
-    padding: 7px 7px 7px 26px;
+.ds-exporter-reset {
+    float:right;
+    position:relative;
+    top: -22px;
     margin-right: 10px;
-    position: relative;
-    top: -10px;
-    height: 1.65em;
-    
-    -moz-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-}
-
-.ds-exporter-uploadControls .ds-exporter-uploadClear-dim {
-    color: #000;
-    text-decoration: none;
-    background: url("../../../shared/images/trash-icon-22x22-black.png") 5px center no-repeat;
-    opacity: 0.4;
 }
 
 .ds-exporter-uploadControls .ds-exporter-uploadClear:hover {
@@ -113,13 +101,13 @@
     font-weight: bold;
     color: #1C75BC;
     display:block;
-    position:relative
+    position:relative;
 }
 
 /* Export file format options and controls. */
 .ds-pdfExporter-pdfExportOptions {
-    background-color: #F9F9FA;
-    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
+    /*background-color: #F9F9FA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);*/
     position: relative;
     padding-top: 10px;
 }
@@ -132,6 +120,8 @@
     background-color: #F9F9FA;
     box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
     position: relative;
+}
+
 /**
  * Hide the export options.
  * APPLY this style to hide the export options.
@@ -159,84 +149,84 @@
 }
 
 /* Format export controls and status text. */
-.ds-pdfExporter-pdfExportOptions .ds-exportControls-trigger-exportControl{
-    width: 144px;
+.ds-exportControls-trigger-exportControl{
+    width: 128px;
     display:block;
     background: url("../../../shared/images/export-green-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ededed);
-    padding: 7px;
+    padding: 7px 7px 7px 25px;
     margin: 10px auto;
     text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
 }
 
-.ds-pdfExporter-pdfExportOptions .ds-exportControls-progress-text {
+.ds-exportControls-trigger-exportControl[disabled]{
+    width: 128px;
+    display:block;
+    background: url("../../../shared/images/export-green-22x22.png") 5px center no-repeat;
+    padding: 7px 7px 7px 25px;
+    margin: 10px auto;
+    text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
+    border: 1px solid #cfcfcf;
+    background-color: #ededed;
+}
+
+
+.ds-exporter-exportControls {
+    padding-top: 10px;
+}
+
+.ds-exportControls-progress-text {
     text-align:center;
 }
 
-.ds-pdfExporter-pdfExportOptions .ds-exportControls-progress-spinner{
+.ds-exportControls-progress-spinner{
     position:relative;
     top: 3px;
 }
 
-.ds-pdfExporter-pdfExportOptions .ds-exportControls-complete-links ul {
-    position: relative;
-    width: 40em;
-}
-
-.ds-pdfExporter-pdfExportOptions .ds-exportControls-complete-links li {
-    display:block;
-    padding: 5px 0 5px 0px;
-    text-align:center;
-}
-
-.ds-pdfExporter-pdfExportOptions .ds-exportControls-complete-links {
-    width: 53%;
+.ds-exportControls-complete-links {
     margin: 0 auto;
+    width: 256px;
 }
 
-.ds-pdfExporter-pdfExportOptions .ds-exportControls-complete-links  a{
+.ds-exportControls-complete-links  a{
     -moz-transition: all 0.2s ease;
-    width: 40%;
+    width: 100px;
     position: relative;
     display:inline-block;
     padding: 3px 0px 3px 26px;
 }
 
-.ds-pdfExporter-pdfExportOptions .ds-exportControls-complete-links  a:hover{
+.ds-exportControls-complete-links  a:hover{
     border-radius: 3px 3px 3px 3px;
     background-color: #EAEAEA;
     box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
 }
 
-.ds-pdfExporter-pdfExportOptions .ds-exportControls-complete-links  a:active{
+.ds-exportControls-complete-links  a:active{
     border-radius: 3px 3px 3px 3px;
     background-color: #000;
     color: #fff;
     box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
 }
 
-.ds-pdfExporter-pdfExportOptions .ds-exportControls-complete-links .ds-exportControls-complete-download {
+.ds-exportControls-complete-download {
     background: url("../../../shared/images/download-icon-18x18.png") 5px center no-repeat;
 }
 
-.ds-pdfExporter-pdfExportOptions .ds-exportControls-complete-links .ds-exportControls-complete-restart {
+.ds-exportControls-complete-restart {
     background: url("../../../shared/images/reset-icon-18x18.png") 5px center no-repeat;
     float:right;
 }
 
 
-/**
+/**	
  * jQuery overrides 
  */
 
-.ds-exporter-formatGroup .ui-state-active {
-    /* APPLY this style when format type is selected. */
-    /* No styles for this, but there is an after pseudo element style. */
-}
-
 /* Create a downward arrow by rotating a square 45 deg.*/    
-.ds-exporter-formatGroup .ui-state-active:after {
-    content: "";
-	position: absolute;
+.ds-pdfExporter-exportInfo.ui-state-active:after {
+    content:"";
+    position: absolute;
 	bottom: -11px; /* position it */
     right: 50%;
     width: 15px;
@@ -252,17 +242,13 @@
     transition: all 0.3s ease;
 }
 
-.ds-exporter-formatGroup .ui-state-active:hover:after {
+.ds-pdfExporter-exportInfo.ui-state-active:hover:after {
     background-color: #F9F9FA; 
     -moz-transition: all 0.3s ease; /* specify a transition otherwise the hover style doesn't look right */
     transition: all 0.3s ease;
 }
 
-.ds-exporter-formatGroup .ui-accordion-content {
-    padding: 20px;
-}
-
-.ds-exporter-formatGroup .ui-state-focus {
+.ui-state-focus {
     outline: 0; /* Remove the dotten outline from appearing on accordion focus. */
 }
 
