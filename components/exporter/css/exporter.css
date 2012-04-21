@@ -1,3 +1,6 @@
+
+
+
 /**
  * Uploader
  */
@@ -113,32 +116,23 @@
     position:relative
 }
 
-/* Export file format options and controls. */
-.ds-exporter-exportOptions {
-    background-color: #F9F9FA;
-    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
-    position: relative;
-    padding-top: 10px;
-}
 
 .ds-exporter-formatGroup .ds-exporter-accordion {
     width:485px;
 }
 
-/**
- * Hide the export options.
- * APPLY this style to hide the export options.
- */
-.ds-exporter-exportOptions-hidden{
-    overflow: hidden;
-    height: 0px;
+.ds-pdfExporter-exportDetails {
+    background-color: #F9F9FA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
+    position: relative;
+    padding-top: 10px;
+
 }
 
 /* Format export options. */
-.ds-exporter-exportOptions form {
+.ds-exporter-exportOptions {
     margin-bottom: 10px;
     margin-top: 10px;
-    padding: 0 0 20px 20px;
 }
 
 .ds-exporter-exportOptions form  label{
@@ -152,7 +146,7 @@
 }
 
 /* Format export controls and status text. */
-.ds-exporter-exportOptions .ds-exporter-exportButton{
+.ds-exporter-exportControls .ds-exporter-exportButton{
     width: 144px;
     display:block;
     background: url("../../../shared/images/export-green-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ededed);
@@ -161,32 +155,32 @@
     text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportProgress-text {
+.ds-exporter-exportControls .ds-exporter-exportProgress-text {
     text-align:center;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportProgress-spinner{
+.ds-exporter-exportControls .ds-exporter-exportProgress-spinner{
     position:relative;
     top: 3px;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks ul {
+.ds-exporter-exportControls .ds-exporter-exportLinks ul {
     position: relative;
     width: 40em;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks li {
+.ds-exporter-exportControls .ds-exporter-exportLinks li {
     display:block;
     padding: 5px 0 5px 0px;
     text-align:center;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks {
+.ds-exporter-exportControls .ds-exporter-exportLinks {
     width: 53%;
     margin: 0 auto;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks  a{
+.ds-exporter-exportControls .ds-exporter-exportLinks  a{
     -moz-transition: all 0.2s ease;
     width: 40%;
     position: relative;
@@ -194,31 +188,32 @@
     padding: 3px 0px 3px 26px;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks  a:hover{
+.ds-exporter-exportControls .ds-exporter-exportLinks  a:hover{
     border-radius: 3px 3px 3px 3px;
     background-color: #EAEAEA;
     box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks  a:active{
+.ds-exporter-exportControls .ds-exporter-exportLinks  a:active{
     border-radius: 3px 3px 3px 3px;
     background-color: #000;
     color: #fff;
     box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks .ds-exporter-exportDownload {
+.ds-exporter-exportControls .ds-exporter-exportLinks .ds-exporter-exportDownload {
     background: url("../../../shared/images/download-icon-18x18.png") 5px center no-repeat;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks .ds-exporter-exportStartOver {
+.ds-exporter-exportControls .ds-exporter-exportLinks .ds-exporter-exportStartOver {
     background: url("../../../shared/images/reset-icon-18x18.png") 5px center no-repeat;
     float:right;
 }
 
 
-/* jQuery overrides */
-
+/**
+ * jQuery overrides 
+ */
 
 .ds-exporter-formatGroup .ui-state-active {
     /* APPLY this style when format type is selected. */
@@ -251,9 +246,10 @@
 }
 
 .ds-exporter-formatGroup .ui-accordion-content {
-    padding: 0px; /* Remove accordion content padding */
+    padding: 20px;
 }
 
 .ds-exporter-formatGroup .ui-state-focus {
     outline: 0; /* Remove the dotten outline from appearing on accordion focus. */
 }
+
