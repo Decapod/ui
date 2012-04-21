@@ -30,7 +30,6 @@
 }
 
 
-
 /* NAVIGATION BAR */
 
 .ds-shared-navigationBar {
@@ -134,6 +133,13 @@ p.ds-shared-navigationBar-currentBreadcrumb {
     color: #575757;
     margin: 0px;
     padding-top:10px;
+    text-shadow: 1px 1px #fff;
+}
+
+.ds-shared-decapod h2 {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #575757;
     text-shadow: 1px 1px #fff;
 }
 
