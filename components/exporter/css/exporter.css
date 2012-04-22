@@ -64,8 +64,9 @@ a.ds-exporter-reset:focus {
     margin: 0px 0px 0px 0px;
 }
 
-.ds-exporter-uploadControls .ds-exporter-uploadBrowse-dim {
-    background: url("../../../shared/images/folder-icon-22x22.png") 5px center no-repeat, #F9F9FA;
+.ds-exporter-uploadControls .ds-exporter-uploadBrowse-dim,
+.ds-exporter-uploadControls .fl-uploader-dim {
+    background: url("../../../shared/images/folder-icon-22x22-grey.png") 5px center no-repeat, #F9F9FA;
     border: 1px solid transparent;
     opacity: 0.4;
 }
