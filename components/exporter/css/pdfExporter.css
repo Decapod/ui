@@ -48,13 +48,27 @@
     border-bottom: 3px solid #989898;
 }
 
-/*Overrides a jQuery UI style. */ 
+
 .ds-pdfExporter-exportInfo.ui-state-active:hover:after {
+    /*Overrides a jQuery UI style. */ 
     background-color: #F9F9FA; 
     -moz-transition: all 0.3s ease; /* specify a transition otherwise the hover style doesn't look right */
     transition: all 0.3s ease;
 }
 
+.ds-pdfExporter-exportDetails {
+    background-color: #F9F9FA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
+    position: relative;
+    height: 8em;
+}
+
+
+.ds-pdfExporter-pdfExportOptions-hidden{
+/* Hide the export options. APPLY this style to hide the export options. */
+    overflow: hidden;
+    height: 0px;
+}	
 
 /* Export file format options and controls. */
 .ds-pdfExporter-pdfExportOptions {
@@ -63,9 +77,3 @@
     position: relative;
     padding-top: 10px;
 }
-
-/* Hide the export options. APPLY this style to hide the export options. */
-.ds-pdfExporter-pdfExportOptions-hidden{
-    overflow: hidden;
-    height: 0px;
-}	

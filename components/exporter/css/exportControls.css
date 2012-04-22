@@ -13,6 +13,7 @@
     margin: 10px auto;
     background: url("../../../shared/images/export-green-22x22.png") 5px center no-repeat;
     background-color: #ededed;
+    opacity: 0.4;
 }
 
 .ds-exporter-exportControls {
