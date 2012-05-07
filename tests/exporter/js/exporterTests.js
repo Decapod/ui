@@ -330,7 +330,7 @@ var decapod = decapod || {};
             var assertions = function (exportControls, exporter) {
                 var decorators = fluid.renderer.getDecoratorComponents(exportControls);
                 var progress = componentFromDecorator("progress", decorators);
-                var download = componentFromDecorator("download", decorators);
+                var complete = componentFromDecorator("complete", decorators);
                 
                 if (progress) {
                     jqUnit.assertTrue("Progress Displayed", progress);
@@ -338,9 +338,9 @@ var decapod = decapod || {};
                     exporter.uploader.events.afterUploadComplete.fire();
                 }
                 
-                if (download) {
-                    var downloadHREF = download.locate("download").attr("href").replace($(location).attr('href'), '');
-                    jqUnit.assertEquals("The download href should be set", download.model.downloadURL, downloadHREF);
+                if (complete) {
+                    var downloadHREF = complete.locate("download").attr("href").replace($(location).attr('href'), '');
+                    jqUnit.assertEquals("The download href should be set", complete.model.downloadURL, downloadHREF);
                     start();
                 }
             };

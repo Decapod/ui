@@ -46,7 +46,7 @@ var decapod = decapod || {};
                     args: [{
                         showExportStart: false,
                         showExportProgress: false,
-                        showExportDownload: true,
+                        showExportComplete: true,
                         downloadURL: "{arguments}.0.url"
                     }]
                 }
@@ -70,10 +70,10 @@ var decapod = decapod || {};
             }
         }
     });
-    fluid.demands("decapod.exportControls.download", ["decapod.exportControls"], {
+    fluid.demands("decapod.exportControls.complete", ["decapod.exportControls"], {
         options: {
             resources: {
-                template: "{exportControls}.options.resources.download"
+                template: "{exportControls}.options.resources.complete"
             },
             model: {
                 downloadURL: "{exportControls}.model.downloadURL"
@@ -107,8 +107,8 @@ var decapod = decapod || {};
     fluid.demands("decapod.exportControls.trigger.updateModel", ["decapod.exportControls.trigger"], {
         args: ["{trigger}", "{arguments}.0"]
     });
-    fluid.demands("decapod.exportControls.download.updateModel", ["decapod.exportControls.download"], {
-        args: ["{download}", "{arguments}.0"]
+    fluid.demands("decapod.exportControls.complete.updateModel", ["decapod.exportControls.complete"], {
+        args: ["{complete}", "{arguments}.0"]
     });
 
     

@@ -65,7 +65,7 @@ var decapod = decapod || {};
                     args: [{
                         showExportStart: false,
                         showExportProgress: false,
-                        showExportDownload: true,
+                        showExportComplete: true,
                         downloadURL: "{arguments}.0.url"
                     }]
                 }
