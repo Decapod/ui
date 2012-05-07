@@ -582,7 +582,7 @@ var decapod = decapod || {};
         finalInitFunction: "decapod.exportControls.trigger.finalInit",
         produceTree: "decapod.exportControls.trigger.produceTree",
         selectors: {
-            trigger: ".dc-exportTypControls-trigger-exportControl"
+            trigger: ".dc-exportControls-trigger-exportControl"
         },
         strings: {
             trigger: "Start Export"
@@ -636,7 +636,7 @@ var decapod = decapod || {};
         finalInitFunction: "decapod.exportControls.progress.finalInit",
         produceTree: "decapod.exportControls.progress.produceTree",
         selectors: {
-            message: ".dc-exportTypControls-progress-message"
+            message: ".dc-exportControls-progress-message"
         },
         strings: {
             message: "Export Progress"
@@ -696,8 +696,8 @@ var decapod = decapod || {};
             updateModel: "decapod.exportControls.download.updateModel"
         },
         selectors: {
-            download: ".dc-exportTypControls-download-download",
-            restart: ".dc-exportTypControls-download-restart"
+            download: ".dc-exportControls-download-download",
+            restart: ".dc-exportControls-download-restart"
         },
         strings: {
             download: "Download Link",
