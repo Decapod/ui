@@ -29,7 +29,7 @@ var decapod = decapod || {};
     var CONTROLS_CONTAINER = ".dc-exportTypControls";
     var TRIGGER_CONTAINER = ".dc-exportTypControls-trigger";
     var PROGRESS_CONTAINER = ".dc-exportTypControls-progress";
-    var DOWNLOAD_CONTAINER = ".dc-exportTypControls-download";
+    var COMPLETE_CONTAINER = ".dc-exportTypControls-complete";
     var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
     
     // Template URLs
@@ -38,7 +38,7 @@ var decapod = decapod || {};
     var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
     var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
     var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
-    var DOWNLOAD_TEMPLATE = "../../../components/exporter/html/exportControlsDownloadTemplate.html";
+    var COMPLETE_TEMPLATE = "../../../components/exporter/html/exportControlsCompleteTemplate.html";
     var PDF_EXPORTER_TEMPLATE = "../../../components/exporter/html/pdfExporterTemplate.html";
     
     // Convenience Functions: component creators
@@ -81,8 +81,8 @@ var decapod = decapod || {};
                 url: PROGRESS_TEMPLATE,
                 forceCache: true
             },
-            download: {
-                url: DOWNLOAD_TEMPLATE,
+            complete: {
+                url: COMPLETE_TEMPLATE,
                 forceCache: true
             }
         };
@@ -97,8 +97,8 @@ var decapod = decapod || {};
         return generateComponent("decapod.exportControls.progress", container, PROGRESS_TEMPLATE, options);
     };
     
-    var createDownload = function (container, options) {
-        return generateComponent("decapod.exportControls.download", container, DOWNLOAD_TEMPLATE, options);
+    var createComplete = function (container, options) {
+        return generateComponent("decapod.exportControls.complete", container, COMPLETE_TEMPLATE, options);
     };
     
     var createPDFExporter = function (container, options) {
@@ -127,8 +127,8 @@ var decapod = decapod || {};
                 url: PROGRESS_TEMPLATE,
                 forceCache: true
             },
-            download: {
-                url: DOWNLOAD_TEMPLATE,
+            complete: {
+                url: COMPLETE_TEMPLATE,
                 forceCache: true
             }
         };
@@ -162,7 +162,7 @@ var decapod = decapod || {};
         jqUnit.assertEquals("The progress text should be rendered", str.message, that.locate("message").text());
     };
     
-    var assertDownloadRender = function (that) {
+    var assertCompleteRender = function (that) {
         var str = that.options.strings;
         var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
         jqUnit.assertEquals("The download text should be rendered", str.download, that.locate("download").text());
@@ -172,20 +172,20 @@ var decapod = decapod || {};
     
     var assertShowTriggerControls = function (that) {
         jqUnit.assertFalse("The progress shouldn't have initialized", that["**-renderer-progress-0"]);
-        jqUnit.assertFalse("The download shouldn't have initialized", that["**-renderer-download-0"]);
+        jqUnit.assertFalse("The complete controls shouldn't have initialized", that["**-renderer-complete-0"]);
         assertTriggerRender(that["**-renderer-trigger-0"]);
     };
     
     var assertShowProgressControls = function (that) {
         jqUnit.assertFalse("The trigger shouldn't have initialized", that["**-renderer-trigger-0"]);
-        jqUnit.assertFalse("The download shouldn't have initialized", that["**-renderer-download-0"]);
+        jqUnit.assertFalse("The complete controls shouldn't have initialized", that["**-renderer-complete-0"]);
         assertProgressRender(that["**-renderer-progress-0"]);
     };
     
-    var assertShowDownloadControls = function (that) {
+    var assertShowCompleteControls = function (that) {
         jqUnit.assertFalse("The trigger shouldn't have initialized", that["**-renderer-trigger-0"]);
         jqUnit.assertFalse("The progress shouldn't have initialized", that["**-renderer-progress-0"]);
-        assertDownloadRender(that["**-renderer-download-0"]);
+        assertCompleteRender(that["**-renderer-complete-0"]);
     };
     
     // Tests
@@ -530,36 +530,36 @@ var decapod = decapod || {};
         });
         
         /*****************
-         * downloadTests *
+         * completeTests *
          *****************/
         
-        var downloadTests = jqUnit.testCase("decapod.exportControls.download");
+        var completeTests = jqUnit.testCase("decapod.exportControls.complete");
         
-        downloadTests.test("init", function () {
-            var that = createDownload(DOWNLOAD_CONTAINER);
+        completeTests.test("init", function () {
+            var that = createComplete(COMPLETE_CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
-        downloadTests.asyncTest("Fetch Resources", function () {
+        completeTests.asyncTest("Fetch Resources", function () {
             jqUnit.expect(1);
             var assertFetchResources = function (resourceSpec) {
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
                 start();
             };
-            createDownload(DOWNLOAD_CONTAINER, {
+            createComplete(COMPLETE_CONTAINER, {
                 listeners: {
                     afterFetchResources: assertFetchResources
                 }
             });
         });
         
-        downloadTests.asyncTest("Rendering", function () {
+        completeTests.asyncTest("Rendering", function () {
             jqUnit.expect(3);
             var assertRendering = function (that) {
-                assertDownloadRender(that);
+                assertCompleteRender(that);
                 start();
             };
-            createDownload(DOWNLOAD_CONTAINER, {
+            createComplete(COMPLETE_CONTAINER, {
                 listeners: {
                     afterRender: {
                         listener: assertRendering,
@@ -569,10 +569,10 @@ var decapod = decapod || {};
             });
         });
         
-        downloadTests.asyncTest("modelUpdate", function () {
+        completeTests.asyncTest("modelUpdate", function () {
             jqUnit.expect(3);
             var newURL = "http://new.url";
-            var that = createDownload(DOWNLOAD_CONTAINER);
+            var that = createComplete(COMPLETE_CONTAINER);
             that.events.afterModelChanged.addListener(function (newModel) {
                 jqUnit.assertTrue("The afterModelChanged event should have fired", true);
                 jqUnit.assertDeepEq("The newModel should be returned", {downloadURL: newURL}, newModel);
@@ -638,7 +638,7 @@ var decapod = decapod || {};
             var model = {
                 showExportStart: false,
                 showExportProgress: true,
-                showExportDownload: false
+                showExportComplete: false
             };
             var assertRender = function (that) {
                 assertShowProgressControls(that);
@@ -662,15 +662,15 @@ var decapod = decapod || {};
             
         });
         
-        controlsTests.asyncTest("Change Model - show download", function () {
+        controlsTests.asyncTest("Change Model - show complete", function () {
             jqUnit.expect(6);
             var model = {
                 showExportStart: false,
                 showExportProgress: false,
-                showExportDownload: true
+                showExportComplete: true
             };
             var assertRender = function (that) {
-                assertShowDownloadControls(that);
+                assertShowCompleteControls(that);
                 start();
             };
             var assertModel = function (newModel) {
@@ -814,7 +814,7 @@ var decapod = decapod || {};
             jqUnit.expect(6);
             var assertEvent = function (that) {
                 jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
-                assertShowDownloadControls(that.exportControls);
+                assertShowCompleteControls(that.exportControls);
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
@@ -836,7 +836,7 @@ var decapod = decapod || {};
             jqUnit.expect(6);
             var assertEvent = function (that) {
                 jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
-                assertShowDownloadControls(that.exportControls);
+                assertShowCompleteControls(that.exportControls);
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
@@ -858,7 +858,7 @@ var decapod = decapod || {};
             jqUnit.expect(6);
             var assertEvent = function (that) {
                 jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
-                assertShowDownloadControls(that.exportControls);
+                assertShowCompleteControls(that.exportControls);
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
@@ -881,8 +881,8 @@ var decapod = decapod || {};
             jqUnit.expect(7);
             var assertEvent = function (that, response) {
                 jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
-                jqUnit.assertEquals("The decapod.exportControls.download model should be updated", response.url, that.exportControls["**-renderer-download-0"].model.downloadURL);
-                assertShowDownloadControls(that.exportControls);
+                jqUnit.assertEquals("The decapod.exportControls.complete model should be updated", response.url, that.exportControls["**-renderer-complete-0"].model.downloadURL);
+                assertShowCompleteControls(that.exportControls);
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {

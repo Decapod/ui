@@ -91,8 +91,8 @@ var decapod = decapod || {};
                 url: "../html/exportControlsProgressTemplate.html",
                 forceCache: true
             },
-            download: {
-                url: "../html/exportControlsDownloadTemplate.html",
+            complete: {
+                url: "../html/exportControlsCompleteTemplate.html",
                 forceCache: true
             }
         },
@@ -165,7 +165,7 @@ var decapod = decapod || {};
                         controls: "{pdfExporter}.options.resources.controls",
                         trigger: "{pdfExporter}.options.resources.trigger",
                         progress: "{pdfExporter}.options.resources.progress",
-                        download: "{pdfExporter}.options.resources.download"
+                        complete: "{pdfExporter}.options.resources.complete"
                     }
                 }
             }
@@ -405,12 +405,12 @@ var decapod = decapod || {};
                 },
                 {
                     type: "fluid.renderer.condition",
-                    condition: that.model.showExportDownload,
+                    condition: that.model.showExportComplete,
                     trueTree: {
-                        download: {
+                        complete: {
                             decorators: {
                                 type: "fluid",
-                                func: "decapod.exportControls.download"
+                                func: "decapod.exportControls.complete"
                             }
                         }
                     }
@@ -458,7 +458,7 @@ var decapod = decapod || {};
         selectors: {
             trigger: ".dc-exportTypControls-trigger",
             progress: ".dc-exportTypControls-progress",
-            download: ".dc-exportTypControls-download"
+            complete: ".dc-exportTypControls-complete"
         },
         strings: {
             trigger: "Start Export",
@@ -480,14 +480,14 @@ var decapod = decapod || {};
                 args: [{
                     showExportStart: false,
                     showExportProgress: true,
-                    showExportDownload: false
+                    showExportComplete: false
                 }]
             }
         },
         model: {
             showExportStart: true,
             showExportProgress: false,
-            showExportDownload: false,
+            showExportComplete: false,
             downloadURL: ""
         },
         invokers: {
@@ -506,8 +506,8 @@ var decapod = decapod || {};
                 url: "../html/exportControlsProgressTemplate.html",
                 forceCache: true
             },
-            download: {
-                url: "../html/exportControlsDownloadTemplate.html",
+            complete: {
+                url: "../html/exportControlsCompleteTemplate.html",
                 forceCache: true
             }
         }
@@ -653,16 +653,16 @@ var decapod = decapod || {};
     });
     
     /***********************************
-     * decapod.exportControls.download *
+     * decapod.exportControls.complete *
      ***********************************/
     
-    fluid.registerNamespace("decapod.exportControls.download");
+    fluid.registerNamespace("decapod.exportControls.complete");
     
-    decapod.exportControls.download.updateModel = function (that, url) {
+    decapod.exportControls.complete.updateModel = function (that, url) {
         that.applier.requestChange("downloadURL", url);
     };
     
-    decapod.exportControls.download.produceTree = function (that) {
+    decapod.exportControls.complete.produceTree = function (that) {
         return {
             download: {
                 linktext: {
@@ -676,7 +676,7 @@ var decapod = decapod || {};
         };
     };
     
-    decapod.exportControls.download.finalInit = function (that) {
+    decapod.exportControls.complete.finalInit = function (that) {
         that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
@@ -688,16 +688,16 @@ var decapod = decapod || {};
         });
     };
     
-    fluid.defaults("decapod.exportControls.download", {
+    fluid.defaults("decapod.exportControls.complete", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
-        finalInitFunction: "decapod.exportControls.download.finalInit",
-        produceTree: "decapod.exportControls.download.produceTree",
+        finalInitFunction: "decapod.exportControls.complete.finalInit",
+        produceTree: "decapod.exportControls.complete.produceTree",
         invokers: {
-            updateModel: "decapod.exportControls.download.updateModel"
+            updateModel: "decapod.exportControls.complete.updateModel"
         },
         selectors: {
-            download: ".dc-exportControls-download-download",
-            restart: ".dc-exportControls-download-restart"
+            download: ".dc-exportControls-complete-download",
+            restart: ".dc-exportControls-complete-restart"
         },
         strings: {
             download: "Download Link",
@@ -712,7 +712,7 @@ var decapod = decapod || {};
         },
         resources: {
             template: {
-                url: "../html/exportControlsDownloadTemplate.html",
+                url: "../html/exportControlsCompleteTemplate.html",
                 forceCache: true
             }
         }

@@ -29,7 +29,7 @@ var decapod = decapod || {};
     var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
     var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
     var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
-    var DOWNLOAD_TEMPLATE = "../../../components/exporter/html/exportControlsDownloadTemplate.html";
+    var COMPLETE_TEMPLATE = "../../../components/exporter/html/exportControlsCompleteTemplate.html";
     var PDF_EXPORTER_TEMPLATE = "../../../components/exporter/html/pdfExporterTemplate.html";
 
     fluid.demands("decapod.pdfExporter", ["decapod.test", "decapod.exporter"], {
@@ -59,8 +59,8 @@ var decapod = decapod || {};
                     url: PROGRESS_TEMPLATE,
                     forceCache: true
                 },
-                download: {
-                    url: DOWNLOAD_TEMPLATE,
+                complete: {
+                    url: COMPLETE_TEMPLATE,
                     forceCache: true
                 }
             }
