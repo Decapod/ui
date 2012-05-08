@@ -57,9 +57,6 @@ var decapod = decapod || {};
             download: "Download Link",  
             restart: "Start Over"
         },
-        styles: {
-            hideExportDetails: "ds-exporter-exportOptions-hidden"
-        },
         events: {
             afterFetchResources: null,
             afterExportComplete: null,
