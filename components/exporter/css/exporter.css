@@ -152,7 +152,7 @@
 }
 
 /* Format export controls and status text. */
-.ds-exporter-exportOptions .ds-exporter-exportButton{
+.ds-exporter-exportOptions .ds-exportControls-trigger-exportControl{
     width: 144px;
     display:block;
     background: url("../../../shared/images/export-green-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ededed);
