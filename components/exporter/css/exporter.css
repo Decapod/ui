@@ -106,7 +106,7 @@
 
 
 /* The name of the export format. */
-.ds-exporter-formatLabel {
+.ds-exportInfo-name {
     font-weight: bold;
     color: #1C75BC;
     display:block;
