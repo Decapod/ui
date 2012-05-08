@@ -456,9 +456,9 @@ var decapod = decapod || {};
         preInitFunction: "decapod.exportControls.preInit",
         produceTree: "decapod.exportControls.produceTree",
         selectors: {
-            trigger: ".dc-exportTypControls-trigger",
-            progress: ".dc-exportTypControls-progress",
-            complete: ".dc-exportTypControls-complete"
+            trigger: ".dc-exportControls-trigger",
+            progress: ".dc-exportControls-progress",
+            complete: ".dc-exportControls-complete"
         },
         strings: {
             trigger: "Start Export",
