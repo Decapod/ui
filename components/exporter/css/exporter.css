@@ -161,7 +161,7 @@
     text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportProgress-text {
+.ds-exporter-exportOptions .ds-exportControls-progress-text {
     text-align:center;
 }
 
@@ -170,23 +170,23 @@
     top: 3px;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks ul {
+.ds-exporter-exportOptions .ds-exportControls-complete-links ul {
     position: relative;
     width: 40em;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks li {
+.ds-exporter-exportOptions .ds-exportControls-complete-links li {
     display:block;
     padding: 5px 0 5px 0px;
     text-align:center;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks {
+.ds-exporter-exportOptions .ds-exportControls-complete-links {
     width: 53%;
     margin: 0 auto;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks  a{
+.ds-exporter-exportOptions .ds-exportControls-complete-links  a{
     -moz-transition: all 0.2s ease;
     width: 40%;
     position: relative;
@@ -194,24 +194,24 @@
     padding: 3px 0px 3px 26px;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks  a:hover{
+.ds-exporter-exportOptions .ds-exportControls-complete-links  a:hover{
     border-radius: 3px 3px 3px 3px;
     background-color: #EAEAEA;
     box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks  a:active{
+.ds-exporter-exportOptions .ds-exportControls-complete-links  a:active{
     border-radius: 3px 3px 3px 3px;
     background-color: #000;
     color: #fff;
     box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks .ds-exportControls-complete-download {
+.ds-exporter-exportOptions .ds-exportControls-complete-links .ds-exportControls-complete-download {
     background: url("../../../shared/images/download-icon-18x18.png") 5px center no-repeat;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks .ds-exportControls-complete-restart {
+.ds-exporter-exportOptions .ds-exportControls-complete-links .ds-exportControls-complete-restart {
     background: url("../../../shared/images/reset-icon-18x18.png") 5px center no-repeat;
     float:right;
 }

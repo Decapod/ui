@@ -26,10 +26,10 @@ var decapod = decapod || {};
     // Container Selectors
     var INFO_CONTAINER = ".dc-exportInfo";
     var PDF_EXPORT_OPTIONS_CONTAINER = ".dc-pdfExportOptions";
-    var CONTROLS_CONTAINER = ".dc-exportTypControls";
-    var TRIGGER_CONTAINER = ".dc-exportTypControls-trigger";
-    var PROGRESS_CONTAINER = ".dc-exportTypControls-progress";
-    var COMPLETE_CONTAINER = ".dc-exportTypControls-complete";
+    var CONTROLS_CONTAINER = ".dc-exportControls";
+    var TRIGGER_CONTAINER = ".dc-exportControls-trigger";
+    var PROGRESS_CONTAINER = ".dc-exportControls-progress";
+    var COMPLETE_CONTAINER = ".dc-exportControls-complete";
     var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
     
     // Template URLs
