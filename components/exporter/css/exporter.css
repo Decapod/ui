@@ -165,7 +165,7 @@
     text-align:center;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportProgress-spinner{
+.ds-exporter-exportOptions .ds-exportControls-progress-spinner{
     position:relative;
     top: 3px;
 }
