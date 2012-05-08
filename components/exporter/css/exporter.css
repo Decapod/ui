@@ -207,11 +207,11 @@
     box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks .ds-exporter-exportDownload {
+.ds-exporter-exportOptions .ds-exporter-exportLinks .ds-exportControls-complete-download {
     background: url("../../../shared/images/download-icon-18x18.png") 5px center no-repeat;
 }
 
-.ds-exporter-exportOptions .ds-exporter-exportLinks .ds-exporter-exportStartOver {
+.ds-exporter-exportOptions .ds-exporter-exportLinks .ds-exportControls-complete-restart {
     background: url("../../../shared/images/reset-icon-18x18.png") 5px center no-repeat;
     float:right;
 }
