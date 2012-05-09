@@ -334,6 +334,8 @@ var decapod = decapod || {};
                 
                 if (progress) {
                     jqUnit.assertTrue("Progress Displayed", progress);
+                    // set the current exportType
+                    exporter.exportType = exporter[subComponent];
                     // trigger the uploader's afterUploadeComplete event
                     exporter.uploader.events.afterUploadComplete.fire();
                 }
