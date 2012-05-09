@@ -31,10 +31,11 @@ var decapod = decapod || {};
     fluid.demands("decapod.eventBinder", ["decapod.exporter", "decapod.pdfExporter"], {
         options: {
             listeners: {
-                "{pdfExporter}.events.onExportStart": [{
+                "{pdfExporter}.events.onExportStart": {
+                    namespace: "start",
                     listener: "{exporter}.startImport",
                     args: ["{pdfExporter}"]
-                }]
+                }
             }
         }
     });

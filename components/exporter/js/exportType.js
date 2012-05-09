@@ -104,6 +104,7 @@ var decapod = decapod || {};
                     },
                     listeners: {
                         "{pdfExporter}.events.onExportStart": {
+                            namespace: "start",
                             listener: "{dataSource}.put",
                             args: [null]
                         },
