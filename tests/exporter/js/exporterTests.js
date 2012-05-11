@@ -263,6 +263,26 @@ var decapod = decapod || {};
             });
         });
         
+        exporterTests.asyncTest("disableImport", function () {
+            jqUnit.expect(2);
+            var tests = function (that) {
+                var uploader = that.uploader;
+                var browseButton = uploader.locate("browseButton");
+                that.disableImport(); 
+                jqUnit.assertTrue("The dim style should be added to the browseButton", browseButton.hasClass(uploader.options.styles.dim));
+                jqUnit.assertTrue("The multifile upload input should be disabled", $("input", browseButton).prop("disabled"));
+                start();
+            };
+            decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: tests,
+                        args: ["{exporter}"]
+                    }
+                }
+            });
+        });
+        
         exporterTests.asyncTest("afterQueueReady", function () {
             jqUnit.expect(3);
             
