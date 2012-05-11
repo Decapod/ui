@@ -24,6 +24,10 @@ var decapod = decapod || {};
 
 (function ($) {
 
+    /********************
+     * decapod.exporter *
+     ********************/
+
     fluid.registerNamespace("decapod.exporter");
     
     decapod.exporter.renderStrings = function (that) {
@@ -305,19 +309,9 @@ var decapod = decapod || {};
         }
     });
     
-    fluid.registerNamespace("decapod.exporter.eventBinder");
-    
-    decapod.exporter.eventBinder.finalInit = function (that) {
-        that.events.onReady.fire();
-    };
-    
-    fluid.defaults("decapod.exporter.eventBinder", {
-        gradeNames: ["fluid.eventedComponent", "autoInit"],
-        finalInitFunction: "decapod.exporter.eventBinder.finalInit",
-        events: {
-            onReady: null
-        }
-    });
+    /********************************
+     * decapod.exporter.serverReset *
+     ********************************/
     
     fluid.registerNamespace("decapod.exporter.serverReset");
     

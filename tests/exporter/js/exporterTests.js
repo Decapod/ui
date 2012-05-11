@@ -26,20 +26,9 @@ var decapod = decapod || {};
     var CONTAINER = ".dc-exporter";
     $(document).ready(function () {
         
-        var eventBinderTests = jqUnit.testCase("Decapod Event Binder");
-        
-        eventBinderTests.asyncTest("Init tests", function () {
-            jqUnit.expect(1);
-            var testEvent = function () {
-                jqUnit.assertTrue("The onReady event should have fired", true);
-                start();
-            };
-            decapod.exporter.eventBinder({
-                listeners: {
-                    onReady: testEvent
-                }
-            });
-        });
+        /********************
+         * serverResetTests *
+         ********************/
         
         var serverResetTests = jqUnit.testCase("Decapod Server Reset");
         
@@ -77,6 +66,10 @@ var decapod = decapod || {};
                 }
             });
         });
+        
+        /*****************
+         * exporterTests *
+         *****************/
         
         var exporterTests = jqUnit.testCase("Decapod Export");
         

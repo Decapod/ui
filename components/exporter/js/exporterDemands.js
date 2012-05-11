@@ -28,7 +28,8 @@ var decapod = decapod || {};
      * Sub-componet Demands *
      ************************/
      
-    fluid.demands("decapod.eventBinder", ["decapod.exporter", "decapod.pdfExporter"], {
+    fluid.demands("decapod.pdfExporter.eventBinder", ["decapod.exporter", "decapod.pdfExporter"], {
+        funcName: "decapod.eventBinder",
         options: {
             listeners: {
                 "{pdfExporter}.events.onExportStart": {
@@ -38,6 +39,10 @@ var decapod = decapod || {};
                 }
             }
         }
+    });
+    
+    fluid.demands("decapod.exporter.eventBinder", ["decapod.exporter"], {
+        funcName: "decapod.eventBinder"
     });
     
     fluid.demands("fluid.uploader", ["decapod.fileSystem", "decapod.exporter"], {

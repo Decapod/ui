@@ -190,30 +190,7 @@ var decapod = decapod || {};
     
     // Tests
     $(document).ready(function () {
-        
-        /********************
-         * eventBinderTests *
-         ********************/
-         
-        var eventBinderTests = jqUnit.testCase("decapod.eventBinder");
-        
-        eventBinderTests.test("Init tests", function () {
-            var that = decapod.eventBinder();
-            jqUnit.assertTrue("The component should have initialized", that);
-        });
-        
-        eventBinderTests.asyncTest("onReady", function () {
-            jqUnit.expect(1);
-            decapod.eventBinder({
-                listeners: {
-                    onReady: function () {
-                        jqUnit.assertTrue("The onReady event should have fired", true);
-                        start();
-                    }
-                }
-            });
-        });
-        
+
         /*********************
          * exportPollerTests *
          *********************/

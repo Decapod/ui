@@ -95,7 +95,7 @@ var decapod = decapod || {};
         },
         components: {
             eventBinder: {
-                type: "decapod.eventBinder",
+                type: "decapod.pdfExporter.eventBinder",
                 createOnEvent: "afterFetchResources",
                 priority: "last",
                 options: {
@@ -171,24 +171,6 @@ var decapod = decapod || {};
     });
     
     /************************
-     * decapod.eventBinder *
-     ************************/
-    
-    fluid.registerNamespace("decapod.eventBinder");
-    
-    decapod.eventBinder.finalInit = function (that) {
-        that.events.onReady.fire();
-    };
-    
-    fluid.defaults("decapod.eventBinder", {
-        gradeNames: ["fluid.eventedComponent", "autoInit"],
-        finalInitFunction: "decapod.eventBinder.finalInit",
-        events: {
-            onReady: null
-        }
-    });
-    
-    /************************
      * decapod.exportPoller *
      ************************/
      
@@ -234,7 +216,7 @@ var decapod = decapod || {};
         delay: 5000,
         components: {
             eventBinder: {
-                type: "decapod.eventBinder",
+                type: "decapod.exportPoller.eventBinder",
                 priority: "last",
                 options: {
                     listeners: {
