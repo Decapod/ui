@@ -126,6 +126,9 @@ var decapod = decapod || {};
     fluid.demands("decapod.exporter.validateQueue", ["decapod.exporter"], {
         args: ["{exporter}"]
     });
+    fluid.demands("decapod.exporter.disableImport", ["decapod.exporter"], {
+        args: ["{exporter}"]
+    });
 
     /*****************
      *Event Demands *

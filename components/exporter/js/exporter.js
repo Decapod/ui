@@ -48,6 +48,12 @@ var decapod = decapod || {};
         }
     };
     
+    decapod.exporter.disableImport = function (that) {
+        var uploader = that.uploader;
+        uploader.strategy.local.disableBrowseButton();
+        uploader.locate("browseButton").addClass(uploader.options.styles.dim);
+    };
+    
     decapod.exporter.startExport = function (that) {
         that.events.onExportStart.fire();
         that.exportType.dataSource.put();
@@ -118,7 +124,8 @@ var decapod = decapod || {};
             startExport: "decapod.exporter.startExport",
             startImport: "decapod.exporter.startImport",
             finishExport: "decapod.exporter.finishExport",
-            validateQueue: "decapod.exporter.validateQueue"
+            validateQueue: "decapod.exporter.validateQueue",
+            disableImport: "decapod.exporter.disableImport"
         },
         components: {
             progressiveEnhancementChecker: {
@@ -300,7 +307,15 @@ var decapod = decapod || {};
                     listeners: {
                         "onReady.exporter": "{exporter}.events.onReady",
                         "{exporter}.events.onImportStart": "{uploader}.start",
-                        "{uploader}.events.afterUploadComplete": "{exporter}.startExport",
+                        "{uploader}.events.afterUploadComplete": [
+                            {
+                                listener: "{exporter}.startExport"
+                            },
+                            {
+                                listener: "{exporter}.disableImport",
+                                priority: "last"
+                            }
+                        ],
                         "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport",
                         "{importStatus}.renderer.events.afterRender": "{exporter}.validateQueue"
                     }
