@@ -1,0 +1,76 @@
+.ds-pdfExporter-exportInfo {
+    border-bottom: solid 2px #E6E7E8;
+    /*box-shadow: 0px 0px 1px 0px #fff;*/
+    padding: 10px 25px 10px 10px;
+    position: relative;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.ds-pdfExporter-exportInfo:hover {
+    background-color: #F9F9FA;
+    border-bottom: 2px solid transparent;
+    cursor:pointer;
+    border-radius: 6px;
+}
+
+/* Create a downward arrow by rotating a square 45 deg.
+   Overrides a jQuery UI style. */    
+.ds-pdfExporter-exportInfo.ui-state-active:after {
+    content:"";
+    position: absolute;
+	bottom: -11px; /* position it */
+    right: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: #eceef2; /* Create a square and rotate. */
+    -moz-transform: rotate(45deg); 
+    transform:rotate(45deg);
+    border-right: 3px solid #E8E8E8;
+    border-bottom: 3px solid #E8E8E8;
+    z-index: 1; /* Position on top so the arrow is visible when applied. */
+    
+    -moz-transition: all 0.3s ease; /* specify a transition otherwise the hover style doesn't look right */
+    transition: all 0.3s ease;
+}
+
+/*Overrides a jQuery UI style. */ 
+.ds-pdfExporter-exportInfo.ui-state-active:hover:after {
+    background-color: #F9F9FA; 
+    -moz-transition: all 0.3s ease; /* specify a transition otherwise the hover style doesn't look right */
+    transition: all 0.3s ease;
+}
+
+.ds-pdfExporter-exportDetails {
+    background-color: #F9F9FA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
+    position: relative;
+}
+
+/**
+ * Hide the export options.
+ * APPLY this style to hide the export options.
+ */
+.ds-pdfExporter-pdfExportOptions-hidden{
+
+    overflow: hidden;
+    height: 0px;
+}	
+
+/* Export file format options and controls. */
+.ds-pdfExporter-pdfExportOptions {
+    /*background-color: #F9F9FA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);*/
+    position: relative;
+    padding-top: 10px;
+}
+
+.ds-pdfExporter-pdfExportOptions form  label{
+    width: 50%;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.ds-pdfExporter-pdfExportOptions form input[type="checkbox"] {
+    margin-right: 3px;
+}

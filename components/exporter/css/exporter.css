@@ -1,0 +1,86 @@
+.ds-exporter-reset {
+    float:right;
+    position:relative;
+    top: -22px;
+    margin-right: 10px;
+}
+
+.ds-exporter-formatGroup {
+    width:680px;
+}
+
+.ds-exporter-formatGroup .ds-exporter-accordion {
+    width:485px;
+}
+
+
+/**	
+ * jQuery overrides 
+ */
+.ui-state-focus {
+    outline: 0; /* Remove the dotten outline from appearing on accordion focus. */
+}
+
+
+/**
+ * Uploader
+ */
+.ds-exporter-importMessages{
+    width: 600px;
+    background-color: #F9F9FA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
+    border-radius: 6px 6px 6px 6px;
+    padding: 10px;
+}
+
+.ds-exporter-uploadControls {
+    width: 600px;
+    text-align: right;
+    padding: 5px;   
+}
+
+
+.ds-exporter-uploadControls .ds-exporter-uploadBrowse {
+    display: inline-block;
+    overflow: hidden;
+    height: 1.65em;
+    width: 6em;
+    cursor: default;
+    padding: 6px 4px 0px 22px;
+    background: url("../../../shared/images/folder-icon-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #F9F9FA,  #ededed);
+    text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
+}
+
+.ds-exporter-uploadControls .ds-exporter-uploadBrowse-dim {
+    background: url("../../../shared/images/folder-icon-22x22.png") 5px center no-repeat, #F9F9FA;
+    border: 1px solid transparent;
+    opacity: 0.4;
+}
+
+.ds-exporter-uploadControls .ds-exporter-uploadBrowse input {
+    position: relative;
+    overflow: hidden;
+    float: right;
+
+    /* Make the real button big enough to cover the fake button */
+    height: 3em;
+    bottom: 2em;
+    letter-spacing: 5px;
+    left: 10px;
+    
+    /* Make the button invisible */
+    opacity: 0;
+    -moz-opacity: 0;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+}
+
+
+.ds-exporter-uploadControls .ds-exporter-uploadClear:hover {
+    border-radius: 3px 3px 3px 3px;
+    background-color: #EAEAEA;
+    box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
+    
+    -moz-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
