@@ -77,6 +77,10 @@ var decapod = decapod || {};
             },
             model: {
                 downloadURL: "{exportControls}.model.downloadURL"
+            },
+            strings: {
+                download: "{exportControls}.options.strings.download",
+                restart: "{exportControls}.options.strings.restart"
             }
         }
     });
