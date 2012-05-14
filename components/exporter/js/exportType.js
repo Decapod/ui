@@ -54,7 +54,7 @@ var decapod = decapod || {};
             documentDimensions: "A4(210 x 297mm / 8.3 x 11.7in.)",
             exportControl: "Start Export",
             progressMessage: "Export Progress",
-            download: "Download Link",  
+            download: "Download PDF",  
             restart: "Start Over"
         },
         events: {
@@ -443,7 +443,7 @@ var decapod = decapod || {};
         strings: {
             trigger: "Start Export",
             progressMessage: "Export Progress",
-            download: "Download Link",
+            download: "Download",
             restart: "Start Over"
         },
         events: {
@@ -680,7 +680,7 @@ var decapod = decapod || {};
             restart: ".dc-exportControls-complete-restart"
         },
         strings: {
-            download: "Download Link",
+            download: "Download",
             restart: "Start Over"
         },
         events: {
