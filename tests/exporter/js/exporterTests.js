@@ -204,9 +204,10 @@ var decapod = decapod || {};
             };
             decapod.exporter(CONTAINER, {
                 listeners: {
-                    onReady: {
+                    afterExportersReady: {
                         listener: tests,
-                        args: ["{exporter}"]
+                        args: ["{exporter}"],
+                        priority: "last"
                     }
                 }
             });
