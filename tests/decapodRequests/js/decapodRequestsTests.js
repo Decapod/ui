@@ -45,7 +45,7 @@ var decapod = decapod || {};
                     resourceText: "resource text"
                 },
                 template2: {
-                    url: "./dataSource-test.html",
+                    url: "./decapodRequests-test.html",
                     forceCache: true
                 },
                 template3: {
