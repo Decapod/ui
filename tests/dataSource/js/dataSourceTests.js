@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Declare dependencies
-/*global window, decapod:true, fluid, jQuery, jqUnit*/
+/*global window, decapod:true, fluid, jQuery, jqUnit, start*/
 
 // JSLint options 
 /*jslint white: true, funcinvoke: true, undef: true, newcap: true, nomen: true, regexp: true, bitwise: true, browser: true, forin: true, maxerr: 100, indent: 4 */
@@ -24,6 +24,39 @@ var decapod = decapod || {};
 
 (function ($) {
     $(document).ready(function () {
+        
+        /***********************
+         * fetchResourcesTests *
+         ***********************/
+        
+        var fetchResourcesTests = jqUnit.testCase("Decapod fetchResources");
+        
+        var assertCallback = function (resourceSpec) {
+            jqUnit.assertTrue("A resourceSpec is returned", resourceSpec);
+            $.each(resourceSpec, function (key, spec) {
+                jqUnit.assertTrue("The " + key + " resource contains resourceText", spec.resourceText);
+            });
+            start();
+        };
+        
+        fetchResourcesTests.asyncTest("No resourceText provided", function () {
+            decapod.fetchResources({
+                template1: {
+                    resourceText: "resource text"
+                },
+                template2: {
+                    url: "./dataSource-test.html",
+                    forceCache: true
+                },
+                template3: {
+                    resourceText: "resource text"
+                }
+            }, assertCallback);
+        });
+        
+        fetchResourcesTests.test("resourceText provided", function () {
+            decapod.fetchResources({template: {resourceText: "resource text"}}, assertCallback);
+        });
         
         /*******************
          * dataSourceTests *

@@ -24,6 +24,25 @@ var decapod = decapod || {};
 
 (function ($) {
     
+    /**************************
+     * decapod.fetchResources *
+     **************************/
+    decapod.fetchResources = function (resourceSpecs, callback, options) {
+        var hasResourceText = false;
+        resourceSpecs = resourceSpecs || {};
+        
+        $.each(resourceSpecs, function (key, spec) {
+            hasResourceText = !!spec.resourceText;
+            return hasResourceText;
+        });
+        
+        if (!hasResourceText) {
+            fluid.fetchResources(resourceSpecs, callback, options);
+        } else {
+            callback(resourceSpecs);
+        }
+    };
+    
     /**********************
      * decapod.dataSource *
      **********************/

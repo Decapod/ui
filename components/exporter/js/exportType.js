@@ -31,7 +31,7 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.pdfExporter");
 
     decapod.pdfExporter.finalInit = function (that) {
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.pdfExportTemplate.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
         });
@@ -254,7 +254,7 @@ var decapod = decapod || {};
     };
     
     decapod.exportInfo.finalInit = function (that) {
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -313,7 +313,7 @@ var decapod = decapod || {};
     decapod.pdfExportOptions.finalInit = function (that) {
         that.applier.modelChanged.addListener("dpi", that.events.afterModelChanged.fire);
         
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -424,7 +424,7 @@ var decapod = decapod || {};
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
         
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.controls.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
         });
@@ -549,7 +549,7 @@ var decapod = decapod || {};
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
         
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -604,7 +604,7 @@ var decapod = decapod || {};
     };
     
     decapod.exportControls.progress.finalInit = function (that) {
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -661,7 +661,7 @@ var decapod = decapod || {};
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
         
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
