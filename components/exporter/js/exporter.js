@@ -180,7 +180,11 @@ var decapod = decapod || {};
                         fileSizeLimit: 409600
                     },
                     selectors: {
-                        browseButton: "{exporter}.options.selectors.uploadBrowse"
+                        browseButton: "{exporter}.options.selectors.uploadBrowse",
+                        lastMultifileInput: ".flc-uploader-html5-input:visible"
+                    },
+                    focusWithEvent: {
+                        afterFileDialog: "lastMultifileInput"
                     },
                     events: {
                         onFileError: {
