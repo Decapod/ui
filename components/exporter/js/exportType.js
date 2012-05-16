@@ -53,7 +53,7 @@ var decapod = decapod || {};
             documentDimensionsLabel: "Output dimensions:",
             documentDimensions: "A4(210 x 297mm / 8.3 x 11.7in.)",
             exportControl: "Start Export",
-            progressMessage: "Export Progress",
+            progressMessage: "Creating PDF",
             download: "Download PDF",  
             restart: "Start Over"
         },
@@ -154,7 +154,7 @@ var decapod = decapod || {};
                 createOnEvent: "afterFetchResources",
                 options: {
                     strings: {
-                        exportControl: "{pdfExporter}.options.strings.exportControl",
+                        trigger: "{pdfExporter}.options.strings.exportControl",
                         progressMessage: "{pdfExporter}.options.strings.progressMessage",
                         download: "{pdfExporter}.options.strings.download",
                         restart: "{pdfExporter}.options.strings.restart"
