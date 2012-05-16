@@ -9,13 +9,9 @@
 }
 
 .ds-exportControls-trigger-exportControl[disabled]{
-    width: 128px;
-    display:block;
-    background: url("../../../shared/images/export-green-22x22.png") 5px center no-repeat;
-    padding: 7px 7px 7px 25px;
-    margin: 10px auto;
-    text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
     border: 1px solid #cfcfcf;
+    margin: 10px auto;
+    background: url("../../../shared/images/export-green-22x22.png") 5px center no-repeat;
     background-color: #ededed;
 }
 
@@ -25,11 +21,7 @@
 
 .ds-exportControls-progress-text {
     text-align:center;
-}
 
-.ds-exportControls-progress-spinner{
-    position:relative;
-    top: 3px;
 }
 
 .ds-exportControls-complete-links {
@@ -38,7 +30,7 @@
 }
 
 .ds-exportControls-complete-links  a{
-    -moz-transition: all 0.2s ease;
+    -moz-transition: background-color 0.2s ease;
     width: 100px;
     position: relative;
     display:inline-block;
@@ -57,6 +49,7 @@
     color: #fff;
     box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
 }
+
 
 .ds-exportControls-complete-download {
     background: url("../../../shared/images/download-icon-18x18.png") 5px center no-repeat;

@@ -196,6 +196,11 @@ var decapod = decapod || {};
     };
     
     decapod.exportPoller.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * This method is overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
         that.handleResponse = function (response) {
             that.handleResponse(response);
         };
@@ -404,9 +409,14 @@ var decapod = decapod || {};
     };
     
     decapod.exportControls.preInit = function (that) {
-        // expose methods to be used by listeners
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        // Similar to the comment above but specifically a work around for FLUID-4334
         that.refreshView = function () {
-            that.refreshView();
+            that.renderer.refreshView();
         };
         
         that.updateModel = function (newModel) {
@@ -536,8 +546,14 @@ var decapod = decapod || {};
     };
     
     decapod.exportControls.trigger.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        // Similar to the comment above but specifically a work around for FLUID-4334
         that.refreshView = function () {
-            that.refreshView();
+            that.renderer.refreshView();
         };
         that.updateModel = function (disabled) {
             that.updateModel(disabled);
