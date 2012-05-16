@@ -60,6 +60,9 @@ var decapod = decapod || {};
             },
             resources: {
                 template: "{exportControls}.options.resources.trigger"
+            },
+            strings: {
+                trigger: "{exportControls}.options.strings.trigger"
             }
         }
     });
@@ -67,6 +70,9 @@ var decapod = decapod || {};
         options: {
             resources: {
                 template: "{exportControls}.options.resources.progress"
+            },
+            strings: {
+                message: "{exportControls}.options.strings.progressMessage"
             }
         }
     });
