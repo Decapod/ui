@@ -104,6 +104,9 @@ var decapod = decapod || {};
             },
             resources: {
                 template: "{exportControls}.options.resources.trigger"
+            },
+            strings: {
+                trigger: "{exportControls}.options.strings.trigger"
             }
         }
     });
