@@ -117,12 +117,12 @@ var decapod = decapod || {};
                     onReady: {
                         listener: function (that) {
                             that.uploader.events.onFileError.addListener(function () {
-                                jqUnit.assertEquals("The error should be added", 1, that.importStatus.errors["-100"]);
-                                jqUnit.assertEquals("The total number of files should be updated", 1, that.importStatus.totalNumFiles);
-                                jqUnit.assertEquals("The number of invalid files should be updated", 1, that.importStatus.numInvalidFiles);
+                                jqUnit.assertEquals("The error should be added", 1, that.importStatus.model.errors["-100"]);
+                                jqUnit.assertEquals("The total number of files should be updated", 1, that.importStatus.totalNumFiles());
+                                jqUnit.assertEquals("The number of errors should be updated", 1, that.importStatus.totalNumErrors());
                                 start();
                             });
-                            that.uploader.events.onQueueError.fire({}, -100);
+                            that.uploader.events.onFileError.fire({}, -100);
                         },
                         args: ["{exporter}"]
                     }
@@ -139,8 +139,8 @@ var decapod = decapod || {};
                     onReady: {
                         listener: function (that) {
                             that.importStatus.renderer.events.afterRender.addListener(function () {
-                                jqUnit.assertEquals("The total number of files should be updated", numFiles, that.importStatus.totalNumFiles);
-                                jqUnit.assertEquals("The number of valid files should be updated", numFiles, that.importStatus.numValidFiles);
+                                jqUnit.assertEquals("The total number of files should be updated", numFiles, that.importStatus.totalNumFiles());
+                                jqUnit.assertEquals("The number of valid files should be updated", numFiles, that.importStatus.model.valid);
                                 start();
                             });
                             that.uploader.events.afterFileDialog.fire(numFiles);
@@ -157,10 +157,10 @@ var decapod = decapod || {};
                 var renderedStatuses = that.importStatus.renderer.locate("statusMessages");
                 jqUnit.notVisible("The instructions should be hidden", that.locate("instructions"));
                 jqUnit.isVisible("The status messages should be shown", that.locate("importStatusContainer"));
-                jqUnit.assertEquals("The error should be added", 1, that.importStatus.errors["-100"]);
-                jqUnit.assertEquals("The total number of files should be updated", 11, that.importStatus.totalNumFiles);
-                jqUnit.assertEquals("The number of invalid files should be updated", 1, that.importStatus.numInvalidFiles);
-                jqUnit.assertEquals("The number of valid files should be updated", 10, that.importStatus.numValidFiles);
+                jqUnit.assertEquals("The error should be added", 1, that.importStatus.model.errors["-100"]);
+                jqUnit.assertEquals("The total number of files should be updated", 11, that.importStatus.totalNumFiles());
+                jqUnit.assertEquals("The number of invalid files should be updated", 1, that.importStatus.totalNumErrors());
+                jqUnit.assertEquals("The number of valid files should be updated", 10, that.importStatus.model.valid);
                 jqUnit.assertEquals("The statuses should have been rendered", 2, renderedStatuses.length);
                 jqUnit.assertEquals("The total files message should be rendered", "11 files found.", renderedStatuses.eq(0).text());
                 jqUnit.assertEquals("The total files message should be rendered", "1 files exceeded the queue limit", renderedStatuses.eq(1).text());
@@ -170,7 +170,7 @@ var decapod = decapod || {};
                 that.statusToggle.events.afterModelChanged.addListener(function () {
                     assertions(that);
                 });
-                that.uploader.events.onQueueError.fire({}, -100);
+                that.uploader.events.onFileError.fire({}, -100);
                 that.uploader.events.afterFileDialog.fire(10);
             };
             decapod.exporter(CONTAINER, {
@@ -204,9 +204,10 @@ var decapod = decapod || {};
             };
             decapod.exporter(CONTAINER, {
                 listeners: {
-                    onReady: {
+                    afterExportersReady: {
                         listener: tests,
-                        args: ["{exporter}"]
+                        args: ["{exporter}"],
+                        priority: "last"
                     }
                 }
             });
@@ -250,7 +251,7 @@ var decapod = decapod || {};
                 });
             
                 that.validateQueue(); // should do nothing
-                that.importStatus.numValidFiles = 1;
+                that.importStatus.model.valid = 1;
                 that.validateQueue();
             };
             decapod.exporter(CONTAINER, {

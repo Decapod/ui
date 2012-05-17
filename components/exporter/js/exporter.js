@@ -43,7 +43,7 @@ var decapod = decapod || {};
     };
     
     decapod.exporter.validateQueue = function (that) {
-        if (that.importStatus.numValidFiles > 0) {
+        if (that.importStatus.model.valid > 0) {
             that.events.afterQueueReady.fire();
         }
     };
@@ -65,6 +65,11 @@ var decapod = decapod || {};
     };
     
     decapod.exporter.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
         that.startExport = function () {
             that.startExport();
         };
@@ -151,7 +156,15 @@ var decapod = decapod || {};
             },
             importStatus: {
                 type: "decapod.importStatus",
-                container: "{exporter}.dom.importStatusContainer"
+                container: "{exporter}.dom.importStatusContainer",
+                options: {
+                    strings: {
+                        "-100": "%numErrors files exceeded the queue limit",
+                        "-110": "%numErrors files exceeded the size limit",
+                        "-120": "%numErrors files were empty (0 bytes)",
+                        "-130": "%numErrors files had an invalid file type"
+                    }
+                }
             },
             uploader: {
                 type: "fluid.uploader",
@@ -175,7 +188,11 @@ var decapod = decapod || {};
                         fileSizeLimit: 409600
                     },
                     selectors: {
-                        browseButton: "{exporter}.options.selectors.uploadBrowse"
+                        browseButton: "{exporter}.options.selectors.uploadBrowse",
+                        lastMultifileInput: ".flc-uploader-html5-input:visible"
+                    },
+                    focusWithEvent: {
+                        afterFileDialog: "lastMultifileInput"
                     },
                     events: {
                         onFileError: {
@@ -187,7 +204,7 @@ var decapod = decapod || {};
                     },
                     listeners: {
                         "afterFileDialog.setValidFiles": {
-                            listener: "{importStatus}.setNumValidFiles",
+                            listener: "{importStatus}.addValid",
                             priority: "2"
                         },
                         "afterFileDialog.renderStatuses": {
@@ -198,7 +215,10 @@ var decapod = decapod || {};
                             listener: "{statusToggle}.showOnly",
                             priority: "0"
                         },
-                        onFileError: "{importStatus}.addError"
+                        onFileError: {
+                            listener: "{importStatus}.addError",
+                            args: ["{arguments}.1"]
+                        }
                     }
                 }
             },

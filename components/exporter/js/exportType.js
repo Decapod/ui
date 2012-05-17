@@ -31,7 +31,7 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.pdfExporter");
 
     decapod.pdfExporter.finalInit = function (that) {
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.pdfExportTemplate.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
         });
@@ -53,8 +53,8 @@ var decapod = decapod || {};
             documentDimensionsLabel: "Output dimensions:",
             documentDimensions: "A4(210 x 297mm / 8.3 x 11.7in.)",
             exportControl: "Start Export",
-            progressMessage: "Export Progress",
-            download: "Download Link",  
+            progressMessage: "Creating PDF",
+            download: "Download PDF",  
             restart: "Start Over"
         },
         events: {
@@ -154,7 +154,7 @@ var decapod = decapod || {};
                 createOnEvent: "afterFetchResources",
                 options: {
                     strings: {
-                        exportControl: "{pdfExporter}.options.strings.exportControl",
+                        trigger: "{pdfExporter}.options.strings.exportControl",
                         progressMessage: "{pdfExporter}.options.strings.progressMessage",
                         download: "{pdfExporter}.options.strings.download",
                         restart: "{pdfExporter}.options.strings.restart"
@@ -196,6 +196,11 @@ var decapod = decapod || {};
     };
     
     decapod.exportPoller.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * This method is overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
         that.handleResponse = function (response) {
             that.handleResponse(response);
         };
@@ -254,7 +259,7 @@ var decapod = decapod || {};
     };
     
     decapod.exportInfo.finalInit = function (that) {
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -313,7 +318,7 @@ var decapod = decapod || {};
     decapod.pdfExportOptions.finalInit = function (that) {
         that.applier.modelChanged.addListener("dpi", that.events.afterModelChanged.fire);
         
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -404,9 +409,14 @@ var decapod = decapod || {};
     };
     
     decapod.exportControls.preInit = function (that) {
-        // expose methods to be used by listeners
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        // Similar to the comment above but specifically a work around for FLUID-4334
         that.refreshView = function () {
-            that.refreshView();
+            that.renderer.refreshView();
         };
         
         that.updateModel = function (newModel) {
@@ -424,7 +434,7 @@ var decapod = decapod || {};
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
         
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.controls.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
         });
@@ -443,7 +453,7 @@ var decapod = decapod || {};
         strings: {
             trigger: "Start Export",
             progressMessage: "Export Progress",
-            download: "Download Link",
+            download: "Download",
             restart: "Start Over"
         },
         events: {
@@ -536,8 +546,14 @@ var decapod = decapod || {};
     };
     
     decapod.exportControls.trigger.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        // Similar to the comment above but specifically a work around for FLUID-4334
         that.refreshView = function () {
-            that.refreshView();
+            that.renderer.refreshView();
         };
         that.updateModel = function (disabled) {
             that.updateModel(disabled);
@@ -549,7 +565,7 @@ var decapod = decapod || {};
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
         
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -604,7 +620,7 @@ var decapod = decapod || {};
     };
     
     decapod.exportControls.progress.finalInit = function (that) {
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -661,7 +677,7 @@ var decapod = decapod || {};
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
         
-        fluid.fetchResources(that.options.resources, function (resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -680,7 +696,7 @@ var decapod = decapod || {};
             restart: ".dc-exportControls-complete-restart"
         },
         strings: {
-            download: "Download Link",
+            download: "Download",
             restart: "Start Over"
         },
         events: {

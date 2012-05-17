@@ -26,62 +26,106 @@ var decapod = decapod || {};
 
     fluid.registerNamespace("decapod.importStatus");
     
-    decapod.importStatus.setNumValidFiles = function (that, numValidFiles) {
-        that.totalNumFiles -= that.numValidFiles;
-        that.numValidFiles = numValidFiles;
-        that.totalNumFiles += numValidFiles;
+    /**
+     * Add the number of valid files
+     * @param that, the component
+     * @param numValidFiles, an integer representing the number of valid files
+     */
+    decapod.importStatus.addValid = function (that, numValidFiles) {
+        that.model.valid += numValidFiles;
     };
     
-    decapod.importStatus.addError = function (that, error) {
-        that.numInvalidFiles += 1;
-        that.errors[error] += 1;
-        that.totalNumFiles += 1;
+    /**
+     * Add the number of files that resulted in an error
+     * @param that, the component
+     * @param errorName, the name of the error
+     * @param numErrors, optionally specify the number of files that had this error, will default to 1
+     */
+    decapod.importStatus.addError = function (that, errorName, numErrors) {
+        numErrors = numErrors || 1;
+        var origNumErrors = fluid.get(that.model.errors, errorName) || 0;
+        fluid.set(that.model.errors, errorName, origNumErrors + numErrors);
     };
     
-    decapod.importStatus.reset = function (that) {
-        var errorNums = that.options.errorNums;
-        that.totalNumFiles = 0;
-        that.numValidFiles = 0;
-        that.numInvalidFiles = 0;
-        
-        for (var i = 0; i < errorNums.length; i++) {
-            that.errors[errorNums[i]] = 0;
-        }
+    /**
+     * Calculates and returns the total number of files that resulted in an error
+     * @param that, the component
+     * @return An integer representing the total number of errors
+     */
+    decapod.importStatus.totalNumErrors = function (that) {
+        var total = 0;
+        $.each(that.model.errors, function (errorName, numFiles) {
+            total += numFiles;
+        });
+        return total;
     };
     
-    decapod.importStatus.statusMessages = function (that, values) {
-        var strings = that.options.strings;
+    /**
+     * Calculates and returns the total number of files both valid and errors
+     * @param that, the component
+     * @return An integer representing the total number of valid and error files
+     */
+    decapod.importStatus.totalNumFiles = function (that) {
+        var total = that.model.valid || 0;
+        total += that.totalNumErrors();
+        return total;
+    };
+    
+    /**
+     * Assembles and returns a status message for the total number of files
+     * @param that, the component
+     * @return A string status message for the total number of files
+     */
+    decapod.importStatus.totalMessage = function (that) {
+        var values = {
+            totalNumFiles: that.totalNumFiles
+        };
+        return fluid.stringTemplate(that.options.strings.total, values);
+    };
+    
+    /**
+     * Assembles and returns a status message for the specified error
+     * @param that, the component
+     * @param errorName, the error to generate the message for
+     * @return A string status message for the specified error
+     */
+    decapod.importStatus.errorMessage = function (that, errorName) {
+        var values = {
+            errorName: errorName,
+            numErrors: that.model.errors[errorName]
+        };
+        return fluid.stringTemplate(that.options.strings[errorName], values);
+    };
+    
+    /**
+     * Returns an array of all the status messages.
+     * The first message is for the total files, the rest for each of the errors.
+     * @param that, the component
+     * @return An aray of strings representing each of the status messges
+     */
+    decapod.importStatus.messages = function (that) {
         var messages = [];
-        values = values || {};
-        values.totalNumFiles = that.totalNumFiles;
-        values.numValidFiles = that.numValidFiles;
-        values.numInvalidFiles = that.numInvalidFiles;
-        fluid.merge("replace", values, that.errors);
         
-        messages.push(fluid.stringTemplate(strings.total, values));
-        for (var error in that.errors) {
-            var numErrors = that.errors[error];
-            if (numErrors > 0) {
-                messages.push(fluid.stringTemplate(strings[error], values));
-            }
-        }
+        messages.push(that.totalMessage());
+        $.each(that.model.errors, function (errorName) {
+            messages.push(that.errorMessage(errorName));
+        });
         
         return messages;
     };
     
+    /**
+     * Passes the status messages to the renderer subcomponent
+     * for rendering them out to the UI.
+     * @param that, the component
+     */
     decapod.importStatus.renderStatuses = function (that) {
-        that.renderer.model.statuses = that.statusMessages();
+        that.renderer.model.statuses = that.messages();
         that.renderer.refreshView();
-    };
-    
-    decapod.importStatus.finalInit = function (that) {
-        that.errors = {};
-        that.reset();
     };
     
     fluid.defaults("decapod.importStatus", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
-        finalInitFunction: "decapod.importStatus.finalInit",
         components: {
             renderer: {
                 type: "decapod.importStatus.renderer",
@@ -92,19 +136,22 @@ var decapod = decapod || {};
             }
         },
         invokers: {
-            setNumValidFiles: "decapod.importStatus.setNumValidFiles",
+            addValid: "decapod.importStatus.addValid",
             addError: "decapod.importStatus.addError",
-            reset: "decapod.importStatus.reset",
-            statusMessages: "decapod.importStatus.statusMessages",
+            totalNumErrors: "decapod.importStatus.totalNumErrors",
+            totalNumFiles: "decapod.importStatus.totalNumFiles",
+            totalMessage: "decapod.importStatus.totalMessage",
+            errorMessage: "decapod.importStatus.errorMessage",
+            messages: "decapod.importStatus.messages",
             renderStatuses: "decapod.importStatus.renderStatuses"
         },
-        errorNums: [-100, -110, -120, -130],
+        model: {
+            valid: 0,
+            errors: {}
+        },
         strings: {
-            "total": "%totalNumFiles files found.",
-            "-100": "%-100 files exceeded the queue limit",
-            "-110": "%-110 files exceeded the size limit",
-            "-120": "%-120 files were empty (0 bytes)",
-            "-130": "%-130 files had an invalid file type"
+            "total": "%totalNumFiles files found."
+            // error messages take use %errorName and %numErrors for the template
         }
     });
     
