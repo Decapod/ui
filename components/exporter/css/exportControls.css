@@ -2,7 +2,7 @@
 .ds-exportControls-trigger-exportControl{
     width: 128px;
     display:block;
-    background: url("../../../shared/images/export-green-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ededed);
+    background: url("../../../shared/images/export-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ededed);
     padding: 7px 7px 7px 25px;
     margin: 10px auto;
     text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
@@ -11,8 +11,9 @@
 .ds-exportControls-trigger-exportControl[disabled]{
     border: 1px solid #cfcfcf;
     margin: 10px auto;
-    background: url("../../../shared/images/export-green-22x22.png") 5px center no-repeat;
+    background: url("../../../shared/images/export-22x22-grey.png") 5px center no-repeat;
     background-color: #ededed;
+    opacity: 0.4;
 }
 
 .ds-exporter-exportControls {
