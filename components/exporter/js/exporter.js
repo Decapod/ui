@@ -43,7 +43,7 @@ var decapod = decapod || {};
     };
     
     decapod.exporter.validateQueue = function (that) {
-        if (that.importStatus.numValidFiles > 0) {
+        if (that.importStatus.model.valid > 0) {
             that.events.afterQueueReady.fire();
         }
     };
@@ -156,7 +156,15 @@ var decapod = decapod || {};
             },
             importStatus: {
                 type: "decapod.importStatus",
-                container: "{exporter}.dom.importStatusContainer"
+                container: "{exporter}.dom.importStatusContainer",
+                options: {
+                    strings: {
+                        "-100": "%numErrors files exceeded the queue limit",
+                        "-110": "%numErrors files exceeded the size limit",
+                        "-120": "%numErrors files were empty (0 bytes)",
+                        "-130": "%numErrors files had an invalid file type"
+                    }
+                }
             },
             uploader: {
                 type: "fluid.uploader",
@@ -196,7 +204,7 @@ var decapod = decapod || {};
                     },
                     listeners: {
                         "afterFileDialog.setValidFiles": {
-                            listener: "{importStatus}.setNumValidFiles",
+                            listener: "{importStatus}.addValid",
                             priority: "2"
                         },
                         "afterFileDialog.renderStatuses": {
@@ -207,7 +215,10 @@ var decapod = decapod || {};
                             listener: "{statusToggle}.showOnly",
                             priority: "0"
                         },
-                        onFileError: "{importStatus}.addError"
+                        onFileError: {
+                            listener: "{importStatus}.addError",
+                            args: ["{arguments}.1"]
+                        }
                     }
                 }
             },
