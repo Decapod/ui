@@ -65,6 +65,11 @@ var decapod = decapod || {};
     };
     
     decapod.exporter.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
         that.startExport = function () {
             that.startExport();
         };
@@ -175,7 +180,11 @@ var decapod = decapod || {};
                         fileSizeLimit: 409600
                     },
                     selectors: {
-                        browseButton: "{exporter}.options.selectors.uploadBrowse"
+                        browseButton: "{exporter}.options.selectors.uploadBrowse",
+                        lastMultifileInput: ".flc-uploader-html5-input:visible"
+                    },
+                    focusWithEvent: {
+                        afterFileDialog: "lastMultifileInput"
                     },
                     events: {
                         onFileError: {
