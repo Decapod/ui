@@ -28,12 +28,14 @@ var decapod = decapod || {};
      * Invoker Demands *
      *******************/
 
-    fluid.demands("decapod.importStatus.setNumValidFiles", "decapod.importStatus", ["{importStatus}", "{arguments}.0"]);
-     // Due to FLUID-4631, have to sort out the arguments here. (See also: exporterDemands.js)
-//     fluid.demands("decapod.importStatus.addError", "decapod.importStatus", ["{importStatus}", "{arguments}.0"]);
-    fluid.demands("decapod.importStatus.addError", "decapod.importStatus", ["{importStatus}", "{arguments}.1"]);
-    fluid.demands("decapod.importStatus.reset", "decapod.importStatus", ["{importStatus}"]);
-    fluid.demands("decapod.importStatus.statusMessages", "decapod.importStatus", ["{importStatus}", "{arguments}.0"]);
+    fluid.demands("decapod.importStatus.addValid", "decapod.importStatus", ["{importStatus}", "{arguments}.0"]);
+    fluid.demands("decapod.importStatus.addError", "decapod.importStatus", ["{importStatus}", "{arguments}.0", "{arguments}.1"]);
+    fluid.demands("decapod.importStatus.totalNumErrors", "decapod.importStatus", ["{importStatus}"]);
+    fluid.demands("decapod.importStatus.totalNumFiles", "decapod.importStatus", ["{importStatus}"]);
+    fluid.demands("decapod.importStatus.totalMessage", "decapod.importStatus", ["{importStatus}"]);
+    fluid.demands("decapod.importStatus.errorMessage", "decapod.importStatus", ["{importStatus}", "{arguments}.0"]);
+    fluid.demands("decapod.importStatus.messages", "decapod.importStatus", ["{importStatus}"]);
     fluid.demands("decapod.importStatus.renderStatuses", "decapod.importStatus", ["{importStatus}"]);
+
     
 })(jQuery);
