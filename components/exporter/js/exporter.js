@@ -185,7 +185,7 @@ var decapod = decapod || {};
                         }
                     },
                     queueSettings: {
-                        fileSizeLimit: 409600
+                        fileSizeLimit: 102401 // Due to FLUID-4713 setting this to 1 Byte larger than 100MB in order to set the max size to 100MB
                     },
                     selectors: {
                         browseButton: "{exporter}.options.selectors.uploadBrowse",
