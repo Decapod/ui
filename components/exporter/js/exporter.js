@@ -110,10 +110,11 @@ var decapod = decapod || {};
         },
         strings: {
             title: "Export Images to PDF",
-            instructions: "Select 'Browse files' to choose images to export.",
+            instructions: "Select 'Browse Files' to choose images to export.",
             uploadClear: "Reset",
             formats: "Select Export Option",
-            groupName: ""
+            groupName: "",
+            uploadBrowse: "Browse Files"
         },
         events: {
             onReady: null,
