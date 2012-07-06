@@ -113,8 +113,7 @@ var decapod = decapod || {};
             instructions: "Select 'Browse Files' to choose images to export.",
             uploadClear: "Reset",
             formats: "Select Export Option",
-            groupName: "",
-            uploadBrowse: "Browse Files"
+            groupName: ""
         },
         events: {
             onReady: null,
