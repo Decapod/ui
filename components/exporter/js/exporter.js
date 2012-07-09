@@ -331,7 +331,8 @@ var decapod = decapod || {};
                 priority: "first",
                 options: {
                     listeners: {
-                        "{exporter}.events.onImportStart": "{accordion}.disable"
+                        "{exporter}.events.onImportStart": "{accordion}.disable",
+                        "onReady.exporter": "{exporter}.events.onReady"
                     }
                 }
             },
@@ -340,7 +341,6 @@ var decapod = decapod || {};
                 createOnEvent: "onFinalInit",
                 options: {
                     listeners: {
-                        "onReady.exporter": "{exporter}.events.onReady",
                         "{exporter}.events.onImportStart": "{uploader}.start",
                         "{uploader}.events.afterUploadComplete": [
                             {
