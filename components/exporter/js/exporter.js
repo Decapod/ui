@@ -64,6 +64,16 @@ var decapod = decapod || {};
         that.events.afterExportComplete.fire();
     };
     
+    decapod.exporter.showInstructions = function (that) {
+        that.locate("importStatusContainer").hide();
+        that.locate("instructions").show();
+    };
+    
+    decapod.exporter.showStatus = function (that) {
+        that.locate("instructions").hide();
+        that.locate("importStatusContainer").show();
+    };
+    
     decapod.exporter.preInit = function (that) {
         /*
          * Work around for FLUID-4709
@@ -82,9 +92,16 @@ var decapod = decapod || {};
         that.validateQueue = function () {
             that.validateQueue();
         };
+        that.showInstructions = function () {
+            that.showInstructions();
+        };
+        that.showStatus = function () {
+            that.showStatus();
+        };
     };
     
     decapod.exporter.finalInit = function (that) {
+        that.showInstructions();
         that.renderStrings();
         that.events.onFinalInit.fire();
     };
@@ -139,7 +156,9 @@ var decapod = decapod || {};
             startImport: "decapod.exporter.startImport",
             finishExport: "decapod.exporter.finishExport",
             validateQueue: "decapod.exporter.validateQueue",
-            disableImport: "decapod.exporter.disableImport"
+            disableImport: "decapod.exporter.disableImport",
+            showInstructions: "decapod.exporter.showInstructions",
+            showStatus: "decapod.exporter.showStatus"
         },
         components: {
             progressiveEnhancementChecker: {
@@ -147,20 +166,6 @@ var decapod = decapod || {};
                 priority: "first",
                 options: {
                     componentName: "fluid.uploader"
-                }
-            },
-            statusToggle: {
-                type: "decapod.visSwitcher",
-                container: "{exporter}.dom.importMessages",
-                options: {
-                    selectors: {
-                        instructions: "{exporter}.options.selectors.instructions",
-                        status: "{exporter}.options.selectors.importStatusContainer"
-                    },
-                    model: {
-                        instructions: true,
-                        status: false
-                    }
                 }
             },
             importStatus: {
@@ -221,7 +226,7 @@ var decapod = decapod || {};
                             priority: "1"
                         },
                         "afterFilesSelected.showStatus": {
-                            listener: "{statusToggle}.showOnly",
+                            listener: "{exporter}.showStatus",
                             priority: "0"
                         },
                         onFileError: {

@@ -73,6 +73,17 @@ var decapod = decapod || {};
         
         var exporterTests = jqUnit.testCase("Decapod Export");
         
+        // assertions
+        var assertShowInstructions = function (that) {
+            jqUnit.isVisible("The instructions should be visible", that.locate("instructions"));
+            jqUnit.notVisible("The status container should not be visible", that.locate("importStatusContainer"));
+        };
+        
+        var assertShowStatus = function (that) {
+            jqUnit.notVisible("The instructions should not be visible", that.locate("instructions"));
+            jqUnit.isVisible("The status container should be visible", that.locate("importStatusContainer"));
+        };
+        
         exporterTests.asyncTest("Init tests", function () {
             jqUnit.expect(9);
             decapod.exporter(CONTAINER, {
@@ -81,8 +92,7 @@ var decapod = decapod || {};
                         listener: function (that) {
                             var str = that.options.strings;
                             jqUnit.assertTrue("The component should have initialized", that);
-                            jqUnit.isVisible("The instructions are shown", that.locate("instructions"));
-                            jqUnit.notVisible("The status messages are not show", that.locate("importStatusContainer"));
+                            assertShowInstructions(that);
                             jqUnit.assertEquals("The title text should be rendered", str.title, that.locate("title").text());
                             jqUnit.assertEquals("The instructions text should be rendered", str.instructions, that.locate("instructions").text());
                             jqUnit.assertEquals("The uploadClear text should be rendered", str.uploadClear, that.locate("uploadClear").text());
@@ -155,8 +165,7 @@ var decapod = decapod || {};
             jqUnit.expect(9);
             var assertions = function (that) {
                 var renderedStatuses = that.importStatus.renderer.locate("statusMessages");
-                jqUnit.notVisible("The instructions should be hidden", that.locate("instructions"));
-                jqUnit.isVisible("The status messages should be shown", that.locate("importStatusContainer"));
+                assertShowStatus(that);
                 jqUnit.assertEquals("The error should be added", 1, that.importStatus.model.errors["-100"]);
                 jqUnit.assertEquals("The total number of files should be updated", 11, that.importStatus.totalNumFiles());
                 jqUnit.assertEquals("The number of invalid files should be updated", 1, that.importStatus.totalNumErrors());
@@ -167,7 +176,7 @@ var decapod = decapod || {};
                 start();
             };
             var testCondition = function (that) {
-                that.statusToggle.events.afterModelChanged.addListener(function () {
+                that.uploader.events.afterFilesSelected.addListener(function () {
                     assertions(that);
                 });
                 that.uploader.events.onFileError.fire({}, -100);
@@ -272,6 +281,44 @@ var decapod = decapod || {};
                 that.disableImport(); 
                 jqUnit.assertTrue("The dim style should be added to the browseButton", browseButton.hasClass(uploader.options.styles.dim));
                 jqUnit.assertTrue("The multifile upload input should be disabled", $("input", browseButton).prop("disabled"));
+                start();
+            };
+            decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: tests,
+                        args: ["{exporter}"]
+                    }
+                }
+            });
+        });
+        
+        exporterTests.asyncTest("showInstructions", function () {
+            jqUnit.expect(2);
+            var tests = function (that) {
+                that.locate("instructions").hide();
+                that.locate("importStatusContainer").show();
+                that.showInstructions();
+                assertShowInstructions(that);
+                start();
+            };
+            decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: tests,
+                        args: ["{exporter}"]
+                    }
+                }
+            });
+        });
+        
+        exporterTests.asyncTest("showStatus", function () {
+            jqUnit.expect(2);
+            var tests = function (that) {
+                that.locate("instructions").show();
+                that.locate("importStatusContainer").hide();
+                that.showStatus();
+                assertShowStatus(that);
                 start();
             };
             decapod.exporter(CONTAINER, {
