@@ -122,7 +122,16 @@ var decapod = decapod || {};
             onExportStart: null,
             afterQueueReady: null,
             afterExportComplete: null, 
-            afterExportersReady: null
+            afterImagePDFRender: null,
+            afterOCRPDFRender: null,
+            afterTracedPDFRender: null,
+            afterExportersRendered: {
+                events: {
+                    imagePDF: "afterImagePDFRender",
+                    ocrPDF: "afterOCRPDFRender",
+                    tracedPDF: "afterTracedPDFRender"
+                }
+            }
         },
         invokers: {
             renderStrings: "decapod.exporter.renderStrings",
@@ -231,7 +240,7 @@ var decapod = decapod || {};
                         description: "Export each image as a page in a PDF document. Export process is quick and generates a basic PDF."
                     },
                     listeners: {
-                        onReady: "{exporter}.events.afterExportersReady"
+                        "afterRender.exporter": "{exporter}.events.afterImagePDFRender"
                     },
                     components: {
                         dataSource: {
@@ -261,6 +270,9 @@ var decapod = decapod || {};
                         name: "2. Image PDF with OCR Text",
                         description: "OCR is performed on images, and resulting text is embedded in the PDF."
                     },
+                    listeners: {
+                        "afterRender.exporter": "{exporter}.events.afterOCRPDFRender"
+                    },
                     components: {
                         dataSource: {
                             options: {
@@ -289,6 +301,9 @@ var decapod = decapod || {};
                         name: "3. Computer Traced PDF with OCR Text",
                         description: "Content of each image is traced by the computer, OCR'ed, and output to a PDF. The process takes longer, but results is a much smaller PDF."
                     },
+                    listeners: {
+                        "afterRender.exporter": "{exporter}.events.afterTracedPDFRender"
+                    },
                     components: {
                         dataSource: {
                             options: {
@@ -312,7 +327,7 @@ var decapod = decapod || {};
             accordion: {
                 type: "decapod.accordion",
                 container: "{exporter}.dom.accordionContainer",
-                createOnEvent: "afterExportersReady",
+                createOnEvent: "afterExportersRendered",
                 priority: "first",
                 options: {
                     listeners: {
