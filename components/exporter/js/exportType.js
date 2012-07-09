@@ -142,7 +142,7 @@ var decapod = decapod || {};
                         template: "{pdfExporter}.options.resources.exportInfo"
                     },
                     events: {
-                    	afterRender: "{pdfExporter}.events.afterExportInfoRender"
+                        afterRender: "{pdfExporter}.events.afterExportInfoRender"
                     }
                 }
             },
@@ -160,7 +160,7 @@ var decapod = decapod || {};
                         template: "{pdfExporter}.options.resources.pdfExportOptions"
                     },
                     events: {
-                    	afterRender: "{pdfExporter}.events.afterExportOptionsRender"
+                        afterRender: "{pdfExporter}.events.afterExportOptionsRender"
                     }
                 }
             },
@@ -182,7 +182,7 @@ var decapod = decapod || {};
                         complete: "{pdfExporter}.options.resources.complete"
                     },
                     events: {
-                    	afterRender: "{pdfExporter}.events.afterExportControlsRender"
+                        afterRender: "{pdfExporter}.events.afterExportControlsRender"
                     }
                 }
             }
