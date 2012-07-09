@@ -77,7 +77,7 @@ var decapod = decapod || {};
             jqUnit.expect(9);
             decapod.exporter(CONTAINER, {
                 listeners: {
-                    afterExportersReady: {
+                    afterExportersRendered: {
                         listener: function (that) {
                             var str = that.options.strings;
                             jqUnit.assertTrue("The component should have initialized", that);
@@ -204,7 +204,7 @@ var decapod = decapod || {};
             };
             decapod.exporter(CONTAINER, {
                 listeners: {
-                    afterExportersReady: {
+                    afterExportersRendered: {
                         listener: tests,
                         args: ["{exporter}"],
                         priority: "last"
