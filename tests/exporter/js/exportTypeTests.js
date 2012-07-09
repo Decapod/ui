@@ -877,5 +877,21 @@ var decapod = decapod || {};
                 }
             });
         });
+        
+        pdfExporterTests.asyncTest("afterRender", function () {
+            jqUnit.expect(1);
+            var assertEvent = function (that, response) {
+                jqUnit.assertTrue("The afterRender event should have fired", true);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertEvent,
+                        priority: "last"
+                    }
+                }
+            });
+        });
     });
 })(jQuery);

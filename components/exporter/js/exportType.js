@@ -60,8 +60,18 @@ var decapod = decapod || {};
         events: {
             afterFetchResources: null,
             afterExportComplete: null,
+            afterExportOptionsRender: null,
+            afterExportControlsRender: null,
+            afterExportInfoRender: null,
             onExportStart: null,
-            onReady: null
+            onReady: null,
+            afterRender: {
+                events: {
+                    exportOptions: "afterExportOptionsRender",
+                    exportControls: "afterExportControlsRender",
+                    exportInfo: "afterExportInfoRender"
+                }
+            }
         },
         resources: {
             pdfExportTemplate: {
@@ -130,6 +140,9 @@ var decapod = decapod || {};
                     },
                     resources: {
                         template: "{pdfExporter}.options.resources.exportInfo"
+                    },
+                    events: {
+                    	afterRender: "{pdfExporter}.events.afterExportInfoRender"
                     }
                 }
             },
@@ -145,6 +158,9 @@ var decapod = decapod || {};
                     },
                     resources: {
                         template: "{pdfExporter}.options.resources.pdfExportOptions"
+                    },
+                    events: {
+                    	afterRender: "{pdfExporter}.events.afterExportOptionsRender"
                     }
                 }
             },
@@ -164,6 +180,9 @@ var decapod = decapod || {};
                         trigger: "{pdfExporter}.options.resources.trigger",
                         progress: "{pdfExporter}.options.resources.progress",
                         complete: "{pdfExporter}.options.resources.complete"
+                    },
+                    events: {
+                    	afterRender: "{pdfExporter}.events.afterExportControlsRender"
                     }
                 }
             }
