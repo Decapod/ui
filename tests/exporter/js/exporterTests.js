@@ -192,6 +192,25 @@ var decapod = decapod || {};
             });
         });
         
+        exporterTests.asyncTest("Disabled browse button", function () {
+            jqUnit.expect(1);
+            decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: function (that) {
+                            that.uploader.events.afterFileDialog.addListener(function () {
+                                var browseBttn = that.uploader.locate("browseButton");
+                                jqUnit.assertTrue("The browsebutton should have the dim class applied", browseBttn.hasClass(that.uploader.options.styles.dim));
+                                start();
+                            }, "test", null, "last");
+                            that.uploader.events.afterFileDialog.fire(2);
+                        },
+                        args: ["{exporter}"]
+                    }
+                }
+            });
+        });
+        
         exporterTests.asyncTest("startImport", function () {
             jqUnit.expect(4);
             var tests = function (that) {

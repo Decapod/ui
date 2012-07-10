@@ -88,11 +88,6 @@ a.ds-exporter-reset:focus {
     filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
 }
 
-
-.ds-exporter-uploadControls .fl-uploader-browseMore .ds-exporter-uploadBrowseText {
-    padding-right: 12px;
-}
-
 /*Override the hover style when the button is disabled. Work around for FLUID-4728*/
 .fl-uploader-dim:hover {
     border: 1px solid #FFFFFF;
