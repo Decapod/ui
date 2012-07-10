@@ -74,6 +74,15 @@ var decapod = decapod || {};
         that.locate("importStatusContainer").show();
     };
     
+    // Since the various uploader functions for setting the state of the buttons
+    // is not public, this function is needed to force the browseButton to be disabled.
+    decapod.exporter.uploaderDisableBrowse = function (uploader) {
+        var browseBttn = uploader.locate("browseButton");
+        browseBttn.prop("disabled", true);
+        browseBttn.addClass(uploader.options.styles.dim);
+        uploader.strategy.local.disableBrowseButton();
+    };
+    
     decapod.exporter.preInit = function (that) {
         /*
          * Work around for FLUID-4709
@@ -205,6 +214,11 @@ var decapod = decapod || {};
                         browseButton: "{exporter}.options.selectors.uploadBrowse",
                         lastMultifileInput: ".flc-uploader-html5-input:visible"
                     },
+                    strings: {
+                        buttons: {
+                            addMore: "Browse Files"
+                        }
+                    },
                     focusWithEvent: {
                         afterFileDialog: "lastMultifileInput"
                     },
@@ -217,6 +231,12 @@ var decapod = decapod || {};
                         }
                     },
                     listeners: {
+                        // forces the browseButton to be disabled
+                        "afterFileDialog.disableBrowse": {
+                            listener: "decapod.exporter.uploaderDisableBrowse",
+                            args: ["{uploader}"],
+                            priority: "-1000"
+                        },
                         "afterFileDialog.setValidFiles": {
                             listener: "{importStatus}.addValid",
                             priority: "2"
