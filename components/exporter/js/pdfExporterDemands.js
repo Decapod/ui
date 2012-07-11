@@ -23,26 +23,39 @@ limitations under the License.
 var decapod = decapod || {};
 
 (function ($) {
-    fluid.demands("decapod.dataSource", ["decapod.fileSystem", "decapod.test"], {
+    
+    /*************************
+     * Sub Component Demands *
+     *************************/
+
+    // local
+    fluid.demands("decapod.dataSource", ["decapod.fileSystem"], {
         options: {
             url: "../../../mock-book/mockResponse.json"
         }
     });
-    
-    fluid.demands("decapod.exportPoller", ["decapod.test"], {
+
+    fluid.demands("decapod.exportControls", ["decapod.pdfExporter"], {
         options: {
-            delay: 10
+            events: {
+                onExportTrigger: "{pdfExporter}.events.onExportStart"
+            },
+            listeners: {
+                "{pdfExporter}.events.afterExportComplete": {
+                    priority: "first",
+                    listener: "{exportControls}.updateModel",
+                    args: [{
+                        showExportStart: false,
+                        showExportProgress: false,
+                        showExportComplete: true,
+                        downloadURL: "{arguments}.0.url"
+                    }]
+                }
+            }
         }
     });
-    
-    /*****************
-     * Event Demands *
-     *****************/
-    fluid.setLogging(true);
-    fluid.demands("testModel", ["decapod.test", "decapod.pdfExportOptions"], [
-        "{arguments}.0",
-        "{pdfExportOptions}"
-    ]);
-    fluid.demands("testClick", ["decapod.test", "decapod.exportControls"], ["{exportControls}"]);
-    fluid.demands("triggered", ["decapod.test", "decapod.exportControls.trigger"], ["{trigger}"]);
+
+    fluid.demands("decapod.pdfExporter.eventBinder", ["decapod.pdfExporter"], {
+        funcName: "decapod.eventBinder"
+    });
 })(jQuery);

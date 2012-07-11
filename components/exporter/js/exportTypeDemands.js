@@ -28,12 +28,6 @@ var decapod = decapod || {};
      * Sub Component Demands *
      *************************/
 
-    fluid.demands("decapod.dataSource", ["decapod.fileSystem", "decapod.test"], {
-        options: {
-            url: "../../../mock-book/mockResponse.json"
-        }
-    });
-
     fluid.demands("decapod.exportControls", ["decapod.pdfExporter"], {
         options: {
             events: {
@@ -106,6 +100,13 @@ var decapod = decapod || {};
             delay: 10
         }
     });
+    
+    fluid.demands("decapod.dataSource", ["decapod.fileSystem"], {
+        options: {
+            url: "../../../mock-book/mockResponse.json"
+        }
+    });
+
     
     /*******************
      * Invoker Demands *
