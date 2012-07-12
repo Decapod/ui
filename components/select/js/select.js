@@ -30,6 +30,18 @@ var decapod = decapod || {};
 
     fluid.registerNamespace("decapod.select");
     
+    decapod.select.enable = function (that) {
+        that.locate("choices").prop("disabled", false);
+    };
+    
+    decapod.select.disable = function (that) {
+        that.locate("choices").prop("disabled", true);
+    };
+    
+    decapod.select.isEnabled = function (that) {
+        return !that.locate("choices").is(":disabled");
+    };
+    
     decapod.select.produceTree = function (that) {
         return {
             label: {
@@ -70,6 +82,11 @@ var decapod = decapod || {};
         events: {
             afterFetchResources: null,
             afterSelectionChanged: null
+        },
+        invokers: {
+            enable: "decapod.select.enable",
+            disable: "decapod.select.disable",
+            isEnabled: "decapod.select.isEnabled"
         },
         resources: {
             template: {

@@ -109,5 +109,55 @@ var decapod = decapod || {};
             });
         });
         
+        tests.asyncTest("disable", function () {
+            jqUnit.expect(1);
+            var testEvent = function (that) {
+                that.disable();
+                jqUnit.assertTrue("The select box should be disabled", that.locate("choices").is(":disabled"));
+                start();
+            };
+            decapod.select(CONTAINER, {
+                model: TEST_MODEL,
+                listeners: {
+                    afterRender: testEvent
+                },
+                resources: RESOURCES
+            });
+        });
+        
+        tests.asyncTest("enable", function () {
+            jqUnit.expect(1);
+            var testEvent = function (that) {
+                that.locate("choices").prop("disable", true);
+                that.enable();
+                jqUnit.assertFalse("The select box should not be disabled", that.locate("choices").is(":disabled"));
+                start();
+            };
+            decapod.select(CONTAINER, {
+                model: TEST_MODEL,
+                listeners: {
+                    afterRender: testEvent
+                },
+                resources: RESOURCES
+            });
+        });
+        
+        tests.asyncTest("isEnabled", function () {
+            jqUnit.expect(2);
+            var testEvent = function (that) {
+                jqUnit.assertTrue("The select box should be enabled", that.isEnabled());
+                that.locate("choices").prop("disabled", true);
+                jqUnit.assertFalse("The select box should be disabled", that.isEnabled());
+                start();
+            };
+            decapod.select(CONTAINER, {
+                model: TEST_MODEL,
+                listeners: {
+                    afterRender: testEvent
+                },
+                resources: RESOURCES
+            });
+        });
+        
     });
 })(jQuery);
