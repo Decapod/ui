@@ -27,6 +27,7 @@ var decapod = decapod || {};
     var EXPORT_INFO_TEMPLATE = "../../../components/exporter/html/exportInfoTemplate.html";
     var PDF_EXPORT_OPTIONS_TEMPLATE = "../../../components/exporter/html/pdfExportOptionsTemplate.html";
     var SELECT_TEMPLATE = "../../../components/select/html/selectTemplate.html";
+    var OUTPUT_SETTINGS_TEMPLATE = "../../../components/exporter/html/outputSettingsTemplate.html";
     var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
     var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
     var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
@@ -50,6 +51,10 @@ var decapod = decapod || {};
                 },
                 select: {
                     url: SELECT_TEMPLATE,
+                    forceCache: true
+                },
+                outputSettings: {
+                    url: OUTPUT_SETTINGS_TEMPLATE,
                     forceCache: true
                 },
                 controls: {

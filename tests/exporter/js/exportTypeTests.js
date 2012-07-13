@@ -239,18 +239,7 @@ var decapod = decapod || {};
             jqUnit.expect(19);
             var assertInit = function (that) {
                 jqUnit.assertTrue("The component should have initialized", that);
-                var labelElms = that.locate("label");
-                var valueElms = that.locate("val");
-                var unitElms = that.locate("unit");
-                $.each(defaultOutputSettingsModel.settings, function (idx, setting) {
-                    var valueElm = valueElms.eq(idx);
-                    jqUnit.assertEquals("The label should be set", setting.name, labelElms.eq(idx).text());
-                    jqUnit.assertEquals("The value should be set", setting.value, valueElm.val());
-                    jqUnit.assertEquals("The unit should be set", setting.unit, unitElms.eq(idx).text());
-                    $.each(setting.attrs, function (attr, val) {
-                        jqUnit.assertEquals("The " + attr + " should be set", val, valueElm.attr(attr));
-                    }); 
-                });
+                decapod.testUtils.exportType.assertOutputSettingsRender(that);
                 start();
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
@@ -269,15 +258,23 @@ var decapod = decapod || {};
         
         var defaultPDFExportOptionsModel = {
             colour: {selection: "colour", choices: ["colour", "grey", "bw"], names: ["True Colour (24 bit)", "Greyscale", "Black and White"]},
-            output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]}
+            output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]},
+            outputSettings: {
+                settings: [
+                    {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
+                    {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
+                    {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600"}}
+                ]
+            }
         };
         
         pdfExportOptionsTests.asyncTest("Init tests", function () {
-            jqUnit.expect(5);
+            jqUnit.expect(6);
             var assertInit = function (that) {
                 jqUnit.assertTrue("The component should have initialized", that);
                 jqUnit.assertDeepEq("The colour model should be set", that.model.colour, that.colour.model);
                 jqUnit.assertDeepEq("The output model should be set", that.model.output, that.output.model);
+                jqUnit.assertDeepEq("The output settings model should be set", that.model.outputSettings, that.outputSettings.model);
                 jqUnit.assertEquals("The colour label string should be set", that.options.strings.colourLabel, that.colour.options.strings.label);
                 jqUnit.assertEquals("The output label string should be set", that.options.strings.outputLabel, that.output.options.strings.label);
                 start();
@@ -294,6 +291,10 @@ var decapod = decapod || {};
                     },
                     select: {
                         url: SELECT_TEMPLATE,
+                        forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
                         forceCache: true
                     }
                 }
@@ -319,13 +320,17 @@ var decapod = decapod || {};
                     select: {
                         url: SELECT_TEMPLATE,
                         forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
         });
         
         pdfExportOptionsTests.asyncTest("Rendering", function () {
-            jqUnit.expect(18);
+            jqUnit.expect(36);
             var assertRender = function (that) {
                 decapod.testUtils.exportType.assertPDFOptionsRender(that);
                 start();
@@ -343,6 +348,10 @@ var decapod = decapod || {};
                     },
                     select: {
                         url: SELECT_TEMPLATE,
+                        forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
                         forceCache: true
                     }
                 }
@@ -376,6 +385,10 @@ var decapod = decapod || {};
                     },
                     select: {
                         url: SELECT_TEMPLATE,
+                        forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
                         forceCache: true
                     }
                 }

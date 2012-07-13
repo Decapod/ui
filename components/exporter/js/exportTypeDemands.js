@@ -93,6 +93,14 @@ var decapod = decapod || {};
         }
     });
     
+    fluid.demands("decapod.outputSettings", ["decapod.pdfExportOptions"], {
+        options: {
+            resources: {
+                template: "{pdfExportOptions}.options.resources.outputSettings"
+            }
+        }
+    });
+    
     fluid.demands("decapod.pdfExporter.eventBinder", ["decapod.pdfExporter"], {
         funcName: "decapod.eventBinder"
     });
