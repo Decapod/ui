@@ -41,6 +41,21 @@ var decapod = decapod || {};
         jqUnit.assertEquals("The correct value for the selection should be set", that.model.selection, selected.val());
     };
     
+    decapod.testUtils.exportType.assertOutputSettingsRender = function (that) {
+        var labelElms = that.locate("label");
+        var valueElms = that.locate("val");
+        var unitElms = that.locate("unit");
+        $.each(that.model.settings, function (idx, setting) {
+            var valueElm = valueElms.eq(idx);
+            jqUnit.assertEquals("The label should be set", setting.name, labelElms.eq(idx).text());
+            jqUnit.assertEquals("The value should be set", setting.value, valueElm.val());
+            jqUnit.assertEquals("The unit should be set", setting.unit, unitElms.eq(idx).text());
+            $.each(setting.attrs, function (attr, val) {
+                jqUnit.assertEquals("The " + attr + " should be set", val, valueElm.attr(attr));
+            }); 
+        });
+    };
+    
     decapod.testUtils.exportType.assertexportInfoRender = function (that) {
         var str = that.options.strings;
         jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
@@ -50,6 +65,7 @@ var decapod = decapod || {};
     decapod.testUtils.exportType.assertPDFOptionsRender = function (that) {
         decapod.testUtils.exportType.assertSelectRender(that.colour);
         decapod.testUtils.exportType.assertSelectRender(that.output);
+        decapod.testUtils.exportType.assertOutputSettingsRender(that.outputSettings);
     };
     
     decapod.testUtils.exportType.assertTriggerRender = function (that) {

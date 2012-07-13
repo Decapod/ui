@@ -166,12 +166,15 @@ var decapod = decapod || {};
         produceTree: "decapod.pdfExportOptions.produceTree",
         selectors: {
             colour: ".dc-pdfExportOptions-colour",
-            output: ".dc-pdfExportOptions-output"
+            output: ".dc-pdfExportOptions-output",
+            outputSettings: ".dc-pdfExportOptions-outputSettings"
         },
         model: {
-            // in the form {selection: "", choices: [], names: []}
-            colour: {},
-            output: {}
+            colour: {}, // in the form {selection: "", choices: [], names: []}
+            output: {}, // in the form {selection: "", choices: [], names: []}
+            outputSettings: {
+                settings: [] //in the form {value: "", name: "", unit: "", attrs: {}}
+            }
         },
         strings: {
             colourLabel: "Colour",
@@ -182,10 +185,12 @@ var decapod = decapod || {};
             afterModelChanged: null,
             afterColourRender: null,
             afterOutputRender: null,
+            afterOutputSettingsRender: null,
             afterRender: {
                 events: {
                     colour: "afterColourRender",
-                    output: "afterOutputRender"
+                    output: "afterOutputRender",
+                    outputSettings: "afterOutputSettingsRender"
                 },
                 args: ["{pdfExportOptions}"]
             }
@@ -218,6 +223,17 @@ var decapod = decapod || {};
                         label: "{pdfExportOptions}.options.strings.outputLabel"
                     }
                 }
+            },
+            outputSettings: {
+                type: "decapod.outputSettings",
+                createOnEvent: "afterFetchResources",
+                container: "{pdfExportOptions}.dom.outputSettings",
+                options: {
+                    model: "{pdfExportOptions}.model.outputSettings",
+                    listeners: {
+                        "afterRender.afterOutputSettingsRender": "{pdfExportOptions}.events.afterOutputSettingsRender"
+                    }
+                }
             }
         },
         resources: {
@@ -227,6 +243,10 @@ var decapod = decapod || {};
             },
             select: {
                 url: "../../select/html/selectTemplate.html",
+                forceCache: true
+            },
+            outputSettings: {
+                url: "../html/outputSettingsTemplate.html",
                 forceCache: true
             }
         }
@@ -284,7 +304,7 @@ var decapod = decapod || {};
         },
         repeatingSelectors: ["settings"],
         model: {
-            settings: [] //in the form {value: 200, name: "resolution", unit: "dpi", attrs: {attr: val}}
+            settings: [] //in the form {value: "", name: "", unit: "", attrs: {}}
         },
         events: {
             afterFetchResources: null,

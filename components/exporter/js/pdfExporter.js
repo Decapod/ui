@@ -75,7 +75,14 @@ var decapod = decapod || {};
         },
         model: {
             colour: {selection: "colour", choices: ["colour", "grey", "bw"], names: ["True Colour (24 bit)", "Greyscale", "Black and White"]},
-            output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]}
+            output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]},
+            outputSettings: {
+                settings: [
+                    {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
+                    {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
+                    {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600"}}
+                ]
+            }
         },
         resources: {
             pdfExportTemplate: {
@@ -92,6 +99,10 @@ var decapod = decapod || {};
             },
             select: {
                 url: "../../select/html/selectTemplate.html",
+                forceCache: true
+            },
+            outputSettings: {
+                url: "../html/outputSettingsTemplate.html",
                 forceCache: true
             },
             controls: {
@@ -167,7 +178,8 @@ var decapod = decapod || {};
                     model: "{pdfExporter}.model",
                     resources: {
                         template: "{pdfExporter}.options.resources.pdfExportOptions",
-                        select: "{pdfExporter}.options.resources.select"
+                        select: "{pdfExporter}.options.resources.select",
+                        outputSettings: "{pdfExporter}.options.resources.outputSettings"
                     },
                     listeners: {
                         "afterRender.afterExportOptionsRender": "{pdfExporter}.events.afterExportOptionsRender"
