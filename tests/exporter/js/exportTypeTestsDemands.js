@@ -38,11 +38,6 @@ var decapod = decapod || {};
     /*****************
      * Event Demands *
      *****************/
-    fluid.setLogging(true);
-    fluid.demands("testModel", ["decapod.test", "decapod.pdfExportOptions"], [
-        "{arguments}.0",
-        "{pdfExportOptions}"
-    ]);
     fluid.demands("testClick", ["decapod.test", "decapod.exportControls"], ["{exportControls}"]);
     fluid.demands("triggered", ["decapod.test", "decapod.exportControls.trigger"], ["{trigger}"]);
 })(jQuery);

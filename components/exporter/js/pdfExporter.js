@@ -73,6 +73,10 @@ var decapod = decapod || {};
                 }
             }
         },
+        model: {
+            colour: {selection: "colour", choices: ["colour", "grey", "bw"], names: ["True Colour (24 bit)", "Greyscale", "Black and White"]},
+            output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]}
+        },
         resources: {
             pdfExportTemplate: {
                 url: "../html/pdfExporterTemplate.html",
@@ -84,6 +88,10 @@ var decapod = decapod || {};
             },
             pdfExportOptions: {
                 url: "../html/pdfExportOptionsTemplate.html",
+                forceCache: true
+            },
+            select: {
+                url: "../../select/html/selectTemplate.html",
                 forceCache: true
             },
             controls: {
@@ -141,8 +149,8 @@ var decapod = decapod || {};
                     resources: {
                         template: "{pdfExporter}.options.resources.exportInfo"
                     },
-                    events: {
-                        afterRender: "{pdfExporter}.events.afterExportInfoRender"
+                    listeners: {
+                        "afterRender.afterExportInfoRender": "{pdfExporter}.events.afterExportInfoRender"
                     }
                 }
             },
@@ -156,11 +164,13 @@ var decapod = decapod || {};
                         documentDimensionsLabel: "{pdfExporter}.options.strings.documentDimensionsLabel",
                         documentDimensions: "{pdfExporter}.options.strings.documentDimensions"
                     },
+                    model: "{pdfExporter}.model",
                     resources: {
-                        template: "{pdfExporter}.options.resources.pdfExportOptions"
+                        template: "{pdfExporter}.options.resources.pdfExportOptions",
+                        select: "{pdfExporter}.options.resources.select"
                     },
-                    events: {
-                        afterRender: "{pdfExporter}.events.afterExportOptionsRender"
+                    listeners: {
+                        "afterRender.afterExportOptionsRender": "{pdfExporter}.events.afterExportOptionsRender"
                     }
                 }
             },
@@ -181,8 +191,8 @@ var decapod = decapod || {};
                         progress: "{pdfExporter}.options.resources.progress",
                         complete: "{pdfExporter}.options.resources.complete"
                     },
-                    events: {
-                        afterRender: "{pdfExporter}.events.afterExportControlsRender"
+                    listeners: {
+                        "afterRender.afterExportControlsRender": "{pdfExporter}.events.afterExportControlsRender"
                     }
                 }
             }
