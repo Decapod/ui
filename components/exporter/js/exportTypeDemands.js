@@ -145,4 +145,10 @@ var decapod = decapod || {};
     fluid.demands("decapod.exportControls.complete.updateModel", ["decapod.exportControls.complete"], {
         args: ["{complete}", "{arguments}.0"]
     });
+    fluid.demands("decapod.pdfExportOptions.hide", ["decapod.pdfExportOptions"], {
+        args: ["{pdfExportOptions}", "{arguments}.0"]
+    });
+    fluid.demands("decapod.pdfExportOptions.show", ["decapod.pdfExportOptions"], {
+        args: ["{pdfExportOptions}", "{arguments}.0"]
+    });
 })(jQuery);

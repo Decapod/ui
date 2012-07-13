@@ -149,6 +149,14 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.pdfExportOptions");
     
+    decapod.pdfExportOptions.hide = function (that, selector) {
+        that.locate(selector).hide();
+    };
+    
+    decapod.pdfExportOptions.show = function (that, selector) {
+        that.locate(selector).show();
+    };
+    
     decapod.pdfExportOptions.finalInit = function (that) {
         that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
@@ -194,6 +202,10 @@ var decapod = decapod || {};
                 },
                 args: ["{pdfExportOptions}"]
             }
+        },
+        invokers: {
+            hide: "decapod.pdfExportOptions.hide",
+            show: "decapod.pdfExportOptions.show"
         },
         components: {
             colour: {

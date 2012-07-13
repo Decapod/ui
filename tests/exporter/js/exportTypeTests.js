@@ -398,6 +398,70 @@ var decapod = decapod || {};
             });
         });
         
+        pdfExportOptionsTests.asyncTest("hide", function () {
+            jqUnit.expect(1);
+            var testHide = function (that) {
+                var sel = "outputSettings";
+                var elm = that.locate(sel);
+                elm.show();
+                that.hide(sel);
+                jqUnit.notVisible("The element should not be visible", elm);
+                start();
+            };
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: testHide
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
+                    }
+                }
+            });
+        });
+        
+        pdfExportOptionsTests.asyncTest("show", function () {
+            jqUnit.expect(1);
+            var testHide = function (that) {
+                var sel = "outputSettings";
+                var elm = that.locate(sel);
+                elm.hide();
+                that.show(sel);
+                jqUnit.isVisible("The element should be visible", elm);
+                start();
+            };
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: testHide
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
+                    }
+                }
+            });
+        });
+        
         pdfExportOptionsTests.asyncTest("Model Change - colour", function () {
             jqUnit.expect(2);
             var colourSelection = "grey";
