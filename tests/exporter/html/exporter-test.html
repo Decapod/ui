@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Decapod Exporter Tests</title>
+        
+        <!-- Required stylesheets for testing the component. -->
+        <link rel="Stylesheet" media="screen" href="../../../lib/infusion/tests/lib/qunit/css/qunit.css" />
+        
+        <!-- Required JavaScript modules for testing the component. -->
+        <script src="../../../lib/infusion/MyInfusion.js"></script>
+        <script src="../../../lib/jquery/js/jquery.ui.accordion.js"></script>
+        
+        <!-- jqUnit -->
+        <script src="../../../lib/infusion/tests/lib/qunit/js/qunit.js"></script>
+        <script src="../../../lib/infusion/tests/test-core/jqUnit/js/jqUnit.js"></script>
+        
+        <!-- Tests and tested component -->
+        <script src="../../../shared/js/decapodContext.js"></script>
+        <script src="../../shared/js/decapodTestContext.js"></script>
+        <script src="../../../components/accordion/js/accordion.js"></script>
+        <script src="../../../components/accordion/js/accordionDemands.js"></script>
+        <script src="../../../components/decapodRequests/js/decapodRequests.js"></script>
+        <script src="../../../components/decapodRequests/js/decapodRequestsDemands.js"></script>
+        <script src="../../../components/eventBinder/js/eventBinder.js"></script>
+        <script src="../../../components/exporter/js/importStatusDemands.js"></script>
+        <script src="../../../components/exporter/js/importStatus.js"></script>
+        <script src="../../../components/exporter/js/exportTypeDemands.js"></script>
+        <script src="../../../components/exporter/js/pdfExporterDemands.js"></script>
+        <script src="../js/exportTypeTestsDemands.js"></script>
+        <script src="../js/pdfExporterTestsDemands.js"></script>
+        <script src="../../../components/select/js/selectDemands.js"></script>
+        <script src="../../../components/select/js/select.js"></script>
+        <script src="../../../components/exporter/js/exportType.js"></script>
+        <script src="../../../components/exporter/js/pdfExporter.js"></script>
+        <script src="../../../components/exporter/js/exporterDemands.js"></script>
+        <script src="../js/exporterTestsDemands.js"></script>
+        <script src="../../../components/exporter/js/exporter.js"></script>
+        <script src="../js/exporterTests.js"></script>
+        
+    </head>
+    <body>
+        <!-- Markup that jqUnit will look for when running tests and displaying the results. -->
+        <h1 id="qunit-header">Decapod Exporter Test Suite</h1>
+        <h2 id="qunit-banner"></h2>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="main">
+            <section class="dc-exporter ds-shared-decapod">
+                
+                <!-- NAVIGATION BAR -->
+                <nav class="ds-shared-navigationBar">
+                    <ul class="ds-shared-navigationBar-flatList">
+                        <li><p class="ds-shared-navigationBar-currentBreadcrumb">Decapod 0.5</p></li>
+                    </ul>
+                </nav>
+    
+                <!-- DECAPOD EXPORT INTERFACE -->
+                <section class="ds-shared-mainPane">
+                    <header>
+                        <h1 class="dc-exporter-title">Exporter Title</h1>
+                    </header>
+                    
+                    <section class="dc-exporter-upload ds-exporter-upload ds-shared-indent1">
+                        <div class="dc-exporter-importMessages ds-exporter-importMessages">
+                            <p class="dc-exporter-instructions">Instructions go here.</p>
+                            <div class="dc-exporter-importStatus">
+                                <ul>
+                                    <li class="dc-importStatus-renderer-statusMessage">No Statuses</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="ds-exporter-uploadControls">
+                            <a class="dc-exporter-uploadClear ds-exporter-uploadClear ds-exporter-uploadClear-dim" href="">Clear link text</a>
+                            <span class="dc-exporter-uploadBrowse ds-shared-grey-button ds-exporter-uploadBrowse">
+                                <span class="flc-uploader-button-browse-text ds-exporter-uploadBrowseText">Browse files</span>
+                            </span>
+                        </div>
+                    </section>
+                    
+                    
+                    <section class="dc-exporter-formatGroup ds-exporter-formatGroup">
+                        <h2 class="dc-exporter-formats">Exporter format types go below</h2>
+                        <h3 class="dc-exporter-groupName ds-shared-indent1">Group</h3>
+                        <div class="dc-exporter-accordion ds-exporter-accordion ds-shared-indent2">
+                            <div class="dc-exporter-imagePDF"></div>
+                            <div class="dc-exporter-ocrPDF"></div>
+                            <div class="dc-exporter-tracedPDF"></div>
+                        </div>
+                    </section>
+                </section>
+                
+                <!-- FOOTER -->
+                <footer>
+                </footer>
+                
+            </section>
+        </div>
+    </body>
+</html>
