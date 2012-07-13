@@ -233,6 +233,72 @@ var decapod = decapod || {};
     });
     
     /**************************
+     * decapod.outputSettings *
+     **************************/
+    
+    fluid.registerNamespace("decapod.outputSettings");
+    
+    decapod.outputSettings.finalInit = function (that) {
+        that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
+            that.events.afterModelChanged.fire(newModel, oldModel);
+        });
+        
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.afterFetchResources.fire(resourceSpec);
+            that.refreshView();
+        });
+    };
+    
+    decapod.outputSettings.produceTree = function (that) {
+        return {
+            expander: {
+                type: "fluid.renderer.repeat",
+                repeatID: "settings:",
+                controlledBy: "settings",
+                pathAs: "setting",
+                tree: {
+                    label: "${{setting}.name}",
+                    val: {
+                        value: "${{setting}.value}",
+                        decorators: {
+                            type: "attrs",
+                            attributes: "${{setting}.attrs}"
+                        }
+                    },
+                    unit: "${{setting}.unit}"
+                }
+            }
+        };
+    };
+    
+    fluid.defaults("decapod.outputSettings", {
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        finalInitFunction: "decapod.outputSettings.finalInit",
+        produceTree: "decapod.outputSettings.produceTree",
+        selectors: {
+            settings: ".dc-outputSettings-settings",
+            label: ".dc-outputSettings-label",
+            val: ".dc-outputSettings-value",
+            unit: ".dc-outputSettings-unit"
+        },
+        repeatingSelectors: ["settings"],
+        model: {
+            settings: [] //in the form {value: 200, name: "resolution", unit: "dpi", attrs: {attr: val}}
+        },
+        events: {
+            afterFetchResources: null,
+            afterModelChanged: null
+        },
+        resources: {
+            template: {
+                url: "../html/outputSettingsTemplate.html",
+                forceCache: true
+            }
+        }
+    });
+    
+    /**************************
      * decapod.exportControls *
      **************************/
     

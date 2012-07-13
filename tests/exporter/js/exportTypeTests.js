@@ -26,6 +26,7 @@ var decapod = decapod || {};
     // Container Selectors
     var INFO_CONTAINER = ".dc-exportInfo";
     var PDF_EXPORT_OPTIONS_CONTAINER = ".dc-pdfExportOptions";
+    var OUTPUT_SETTINGS_CONTAINER = ".dc-outputSettings";
     var CONTROLS_CONTAINER = ".dc-exportControls";
     var TRIGGER_CONTAINER = ".dc-exportControls-trigger";
     var PROGRESS_CONTAINER = ".dc-exportControls-progress";
@@ -34,6 +35,7 @@ var decapod = decapod || {};
     // Template URLs
     var EXPORT_INFO_TEMPLATE = "../../../components/exporter/html/exportInfoTemplate.html";
     var PDF_EXPORT_OPTIONS_TEMPLATE = "../../../components/exporter/html/pdfExportOptionsTemplate.html";
+    var OUTPUT_SETTINGS_TEMPLATE = "../../../components/exporter/html/outputSettingsTemplate.html";
     var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
     var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
     var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
@@ -98,6 +100,10 @@ var decapod = decapod || {};
     
     var createComplete = function (container, options) {
         return generateComponent("decapod.exportControls.complete", container, COMPLETE_TEMPLATE, options);
+    };
+    
+    var createOutputSettings = function (container, options) {
+        return generateComponent("decapod.outputSettings", container, OUTPUT_SETTINGS_TEMPLATE, options);
     };
 
     // Tests
@@ -211,6 +217,46 @@ var decapod = decapod || {};
             createExportInfo(INFO_CONTAINER, {
                 listeners: {
                     afterRender: assertRender
+                }
+            });
+        });
+        
+        /***********************
+         * outputSettingsTests *
+         ***********************/
+        
+        var outputSettingsTests = jqUnit.testCase("decapod.pdfExportOptions.outputSettingsTests");
+        
+        var defaultOutputSettingsModel = {
+            settings: [
+                {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
+                {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
+                {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600"}}
+            ]
+        };
+        
+        outputSettingsTests.asyncTest("Init tests", function () {
+            jqUnit.expect(19);
+            var assertInit = function (that) {
+                jqUnit.assertTrue("The component should have initialized", that);
+                var labelElms = that.locate("label");
+                var valueElms = that.locate("val");
+                var unitElms = that.locate("unit");
+                $.each(defaultOutputSettingsModel.settings, function (idx, setting) {
+                    var valueElm = valueElms.eq(idx);
+                    jqUnit.assertEquals("The label should be set", setting.name, labelElms.eq(idx).text());
+                    jqUnit.assertEquals("The value should be set", setting.value, valueElm.val());
+                    jqUnit.assertEquals("The unit should be set", setting.unit, unitElms.eq(idx).text());
+                    $.each(setting.attrs, function (attr, val) {
+                        jqUnit.assertEquals("The " + attr + " should be set", val, valueElm.attr(attr));
+                    }); 
+                });
+                start();
+            };
+            createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterRender: assertInit
                 }
             });
         });
