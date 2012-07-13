@@ -250,6 +250,46 @@ var decapod = decapod || {};
             });
         });
         
+        outputSettingsTests.asyncTest("Fetch Resources", function () {
+            jqUnit.expect(1);
+            var assertFetch = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+            };
+            createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterFetchResources: {
+                        listener: assertFetch,
+                        priority: "last"
+                    },
+                    afterRender: function () {start();}
+                }
+            });
+        });
+        
+        outputSettingsTests.asyncTest("Model Change", function () {
+            jqUnit.expect();
+            var newWidth = "222";
+            var triggerEvent = function (that) {
+                that.applier.requestChange("output.settings.0.value", newWidth);
+            };
+            var assertChange = function (newModel, that) {
+                jqUnit.assertEquals("The model should be updated with the new width", newWidth, newModel.output.settings[0].value);
+                jqUnit.assertEquals("The components model should be update with the new width", newWidth, newModel.output.settings[0].value);
+                start();
+            };
+            createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertChange,
+                        priority: "last"
+                    },
+                    afterRender: triggerEvent
+                }
+            });
+        });
+        
         /*************************
          * pdfExportOptionsTests *
          *************************/
@@ -367,6 +407,80 @@ var decapod = decapod || {};
             var assertModelChange = function (newModel, that) {
                 jqUnit.assertEquals("The model should be updated with the new colour selection", colourSelection, newModel.colour.selection);
                 jqUnit.assertEquals("The components model should be update with the new colour selection", colourSelection, that.model.colour.selection);
+                start();
+            };
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: changeVal,
+                    afterModelChanged: {
+                        listener: assertModelChange,
+                        args: ["{arguments}.0", "{pdfExportOptions}"]
+                    }
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
+                    }
+                }
+            });
+        });
+        
+        pdfExportOptionsTests.asyncTest("Model Change - output", function () {
+            jqUnit.expect(2);
+            var outputSelection = "a5";
+            var changeVal = function (that) {
+                that.applier.requestChange("output.selection", outputSelection);
+            };
+            var assertModelChange = function (newModel, that) {
+                jqUnit.assertEquals("The model should be updated with the new output selection", outputSelection, newModel.output.selection);
+                jqUnit.assertEquals("The components model should be update with the new output selection", outputSelection, that.model.output.selection);
+                start();
+            };
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: changeVal,
+                    afterModelChanged: {
+                        listener: assertModelChange,
+                        args: ["{arguments}.0", "{pdfExportOptions}"]
+                    }
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
+                    }
+                }
+            });
+        });
+        
+        pdfExportOptionsTests.asyncTest("Model Change - outputSettings", function () {
+            jqUnit.expect(2);
+            var newWidth = "222";
+            var changeVal = function (that) {
+                that.applier.requestChange("outputSettings.settings.0.value", newWidth);
+            };
+            var assertModelChange = function (newModel, that) {
+                jqUnit.assertEquals("The model should be updated with the new width", newWidth, newModel.outputSettings.settings[0].value);
+                jqUnit.assertEquals("The components model should be update with the new width", newWidth, that.model.outputSettings.settings[0].value);
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
