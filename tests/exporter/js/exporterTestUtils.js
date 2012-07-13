@@ -26,6 +26,21 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.testUtils.exportType");
     
     // assertions
+    decapod.testUtils.exportType.assertSelectRender = function (that) {
+        var selected = $(":selected", that.locate("choices"));
+        jqUnit.assertEquals("The text for the label should be set", that.options.strings.label, that.locate("label").text());
+        $("option", that.locate("choices")).each(function (idx, elm) {
+            var opt = $(elm);
+            jqUnit.assertEquals("The text for the " + idx + " option should be set", that.model.names[idx], opt.text());
+            if (idx === that.model.choices.indexOf(that.model.selection)) {
+                jqUnit.assertTrue("The option should be selected", opt.is(":selected"));
+            } else {
+                jqUnit.assertFalse("The option should not be selected", opt.is(":selected"));
+            }
+        });
+        jqUnit.assertEquals("The correct value for the selection should be set", that.model.selection, selected.val());
+    };
+    
     decapod.testUtils.exportType.assertexportInfoRender = function (that) {
         var str = that.options.strings;
         jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
@@ -33,11 +48,8 @@ var decapod = decapod || {};
     };
     
     decapod.testUtils.exportType.assertPDFOptionsRender = function (that) {
-        var str = that.options.strings;
-        jqUnit.assertEquals("The resolution label should be rendered", str.documentResolutionLabel, that.locate("documentResolutionLabel").text());
-        jqUnit.assertEquals("The resolution should be set", that.model.dpi, that.locate("documentResolution").val());
-        jqUnit.assertEquals("The dimensions label should be rendered", str.documentDimensionsLabel, that.locate("documentDimensionsLabel").text());
-        jqUnit.assertEquals("The dimensions text should be rendered", str.documentDimensions, that.locate("documentDimensions").text());
+        decapod.testUtils.exportType.assertSelectRender(that.colour);
+        decapod.testUtils.exportType.assertSelectRender(that.output);
     };
     
     decapod.testUtils.exportType.assertTriggerRender = function (that) {

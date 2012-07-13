@@ -42,19 +42,8 @@ var decapod = decapod || {};
         tests.asyncTest("Init tests", function () {
             jqUnit.expect(9);
             var testEvent = function (that) {
-                var selected = $(":selected", that.locate("choices"));
                 jqUnit.assertTrue("The component should have initialized", that);
-                jqUnit.assertEquals("The text for the label should be set", that.options.strings.label, that.locate("label").text());
-                $("option", that.locate("choices")).each(function (idx, elm) {
-                    var opt = $(elm);
-                    jqUnit.assertEquals("The text for the " + idx + " option should be set", that.model.names[idx], opt.text());
-                    if (idx === that.model.choices.indexOf(that.model.selection)) {
-                        jqUnit.assertTrue("The option should be selected", opt.is(":selected"));
-                    } else {
-                        jqUnit.assertFalse("The option should not be selected", opt.is(":selected"));
-                    }
-                });
-                jqUnit.assertEquals("The correct value for the selection should be set", that.model.selection, selected.val());
+                decapod.testUtils.exportType.assertSelectRender(that);
                 start();
             };
             decapod.select(CONTAINER, {

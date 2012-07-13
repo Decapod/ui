@@ -38,6 +38,7 @@ var decapod = decapod || {};
     var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
     var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
     var COMPLETE_TEMPLATE = "../../../components/exporter/html/exportControlsCompleteTemplate.html";
+    var SELECT_TEMPLATE = "../../../components/select/html/selectTemplate.html";
     
     // Convenience Functions: component creators
     var generateCompositeComponent = function (component, container, resources, options) {
@@ -220,58 +221,117 @@ var decapod = decapod || {};
         
         var pdfExportOptionsTests = jqUnit.testCase("decapod.pdfExportOptions");
         
-        pdfExportOptionsTests.test("Init tests", function () {
-            var that = createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER);
-            jqUnit.assertTrue("The component should have initialized", that);
+        var defaultPDFExportOptionsModel = {
+            colour: {selection: "colour", choices: ["colour", "grey", "bw"], names: ["True Colour (24 bit)", "Greyscale", "Black and White"]},
+            output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]}
+        };
+        
+        pdfExportOptionsTests.asyncTest("Init tests", function () {
+            jqUnit.expect(5);
+            var assertInit = function (that) {
+                jqUnit.assertTrue("The component should have initialized", that);
+                jqUnit.assertDeepEq("The colour model should be set", that.model.colour, that.colour.model);
+                jqUnit.assertDeepEq("The output model should be set", that.model.output, that.output.model);
+                jqUnit.assertEquals("The colour label string should be set", that.options.strings.colourLabel, that.colour.options.strings.label);
+                jqUnit.assertEquals("The output label string should be set", that.options.strings.outputLabel, that.output.options.strings.label);
+                start();
+            };
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: assertInit
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    }
+                }
+            });
         });
         
         pdfExportOptionsTests.asyncTest("Fetch Resources", function () {
             jqUnit.expect(1);
             var assertFetchResources = function (resourceSpec) {
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
-                start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
+                model: defaultPDFExportOptionsModel,
                 listeners: {
-                    afterFetchResources: assertFetchResources
+                    afterFetchResources: assertFetchResources,
+                    afterRender: function () {start();}
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    }
                 }
             });
         });
         
         pdfExportOptionsTests.asyncTest("Rendering", function () {
-            jqUnit.expect(4);
+            jqUnit.expect(18);
             var assertRender = function (that) {
                 decapod.testUtils.exportType.assertPDFOptionsRender(that);
                 start();
             };
             
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
+                model: defaultPDFExportOptionsModel,
                 listeners: {
                     afterRender: assertRender
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    }
                 }
             });
         });
         
-        pdfExportOptionsTests.asyncTest("Model Change", function () {
+        pdfExportOptionsTests.asyncTest("Model Change - colour", function () {
             jqUnit.expect(2);
-            var dpi = 200;
+            var colourSelection = "grey";
             var changeVal = function (that) {
-                that.applier.requestChange("dpi", dpi);
+                that.applier.requestChange("colour.selection", colourSelection);
             };
             var assertModelChange = function (newModel, that) {
-                jqUnit.assertEquals("The model should be updated with the new dpi", dpi, newModel.dpi);
-                jqUnit.assertEquals("The components model should be update with the new dpi", dpi, that.model.dpi);
+                jqUnit.assertEquals("The model should be updated with the new colour selection", colourSelection, newModel.colour.selection);
+                jqUnit.assertEquals("The components model should be update with the new colour selection", colourSelection, that.model.colour.selection);
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                events: {
-                    testModel: {
-                        event: "afterModelChanged"
-                    }
-                },
+                model: defaultPDFExportOptionsModel,
                 listeners: {
                     afterRender: changeVal,
-                    testModel: assertModelChange
+                    afterModelChanged: {
+                        listener: assertModelChange,
+                        args: ["{arguments}.0", "{pdfExportOptions}"]
+                    }
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    }
                 }
             });
         });

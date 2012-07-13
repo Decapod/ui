@@ -149,63 +149,86 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.pdfExportOptions");
     
-    decapod.pdfExportOptions.produceTree = function (that) {
-        return {
-            documentResolutionLabel: {
-                messagekey: "documentResolutionLabel"
-            },
-            documentResolution: {
-                value: "${dpi}"
-            },
-            documentDimensionsLabel: {
-                messagekey: "documentDimensionsLabel"
-            },
-            documentDimensions: {
-                messagekey: "documentDimensions"
-            },
-            exportButton: {
-                messagekey: "exportButton"
-            }
-        };
-    };
-    
     decapod.pdfExportOptions.finalInit = function (that) {
-        that.applier.modelChanged.addListener("dpi", that.events.afterModelChanged.fire);
+        that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
+            that.events.afterModelChanged.fire(newModel, oldModel);
+        });
         
         decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
-            that.refreshView();
         });
     };
     
     fluid.defaults("decapod.pdfExportOptions", {
-        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        gradeNames: ["fluid.viewComponent", "autoInit"],
         finalInitFunction: "decapod.pdfExportOptions.finalInit",
         produceTree: "decapod.pdfExportOptions.produceTree",
         selectors: {
-            documentResolutionLabel: ".dc-pdfExportOptions-documentResolutionLabel",
-            documentResolution: ".dc-pdfExportOptions-documentResolution",
-            documentDimensionsLabel: ".dc-pdfExportOptions-documentDimensionsLabel",
-            documentDimensions: ".dc-pdfExportOptions-documentDimensions"
+            colour: ".dc-pdfExportOptions-colour",
+            output: ".dc-pdfExportOptions-output"
         },
         model: {
-            dpi: "200"
+            // in the form {selection: "", choices: [], names: []}
+            colour: {},
+            output: {}
+        },
+        strings: {
+            colourLabel: "Colour",
+            outputLabel: "Output"
+        },
+        events: {
+            afterFetchResources: null,
+            afterModelChanged: null,
+            afterColourRender: null,
+            afterOutputRender: null,
+            afterRender: {
+                events: {
+                    colour: "afterColourRender",
+                    output: "afterOutputRender"
+                },
+                args: ["{pdfExportOptions}"]
+            }
+        },
+        components: {
+            colour: {
+                type: "decapod.select",
+                container: "{pdfExportOptions}.dom.colour",
+                createOnEvent: "afterFetchResources",
+                options: {
+                    model: "{pdfExportOptions}.model.colour",
+                    listeners: {
+                        "afterRender.afterColourRender": "{pdfExportOptions}.events.afterColourRender"
+                    },
+                    strings: {
+                        label: "{pdfExportOptions}.options.strings.colourLabel"
+                    }
+                }
+            },
+            output: {
+                type: "decapod.select",
+                container: "{pdfExportOptions}.dom.output",
+                createOnEvent: "afterFetchResources",
+                options: {
+                    model: "{pdfExportOptions}.model.output",
+                    listeners: {
+                        "afterRender.afterOutputRender": "{pdfExportOptions}.events.afterOutputRender"
+                    },
+                    strings: {
+                        label: "{pdfExportOptions}.options.strings.outputLabel"
+                    }
+                }
+            }
         },
         resources: {
             template: {
                 url: "../html/pdfExportOptionsTemplate.html",
                 forceCache: true
+            },
+            select: {
+                url: "../../select/html/selectTemplate.html",
+                forceCache: true
             }
-        },
-        strings: {
-            documentResolutionLabel: "Output Image resolution:",
-            documentDimensionsLabel: "Output dimensions:",
-            documentDimensions: "A4(210 x 297mm / 8.3 x 11.7in.)"
-        },
-        events: {
-            afterFetchResources: null,
-            afterModelChanged: null
         }
     });
     
