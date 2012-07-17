@@ -88,3 +88,16 @@
     width: 12em;
     margin-left: 0.5em;
 }
+
+.ds-pdfExportOptions-outputSettings label{
+    width: 6em;
+    display:inline-block;
+    text-align:right;
+    margin-right: 5px;
+}
+
+.ds-pdfExportOptions-outputSettings input {
+    width: 4em;
+}
+
+
