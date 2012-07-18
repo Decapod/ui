@@ -31,6 +31,10 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.pdfExporter");
 
     decapod.pdfExporter.finalInit = function (that) {
+        that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
+            that.events.afterModelChanged.fire(newModel, oldModel);
+        });
+        
         decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.pdfExportTemplate.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
@@ -59,6 +63,7 @@ var decapod = decapod || {};
         },
         events: {
             afterFetchResources: null,
+            afterModelChanged: null,
             afterExportComplete: null,
             afterExportOptionsRender: null,
             afterExportControlsRender: null,
@@ -70,18 +75,21 @@ var decapod = decapod || {};
                     exportOptions: "afterExportOptionsRender",
                     exportControls: "afterExportControlsRender",
                     exportInfo: "afterExportInfoRender"
-                }
+                },
+                args: ["{pdfExporter}"]
             }
         },
         model: {
-            colour: {selection: "colour", choices: ["colour", "grey", "bw"], names: ["True Colour (24 bit)", "Greyscale", "Black and White"]},
-            output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]},
-            outputSettings: {
-                settings: [
-                    {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
-                    {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
-                    {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600"}}
-                ]
+            exportOptions: {
+                colour: {selection: "colour", choices: ["colour", "grey", "bw"], names: ["True Colour (24 bit)", "Greyscale", "Black and White"]},
+                output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]},
+                outputSettings: {
+                    settings: [
+                        {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
+                        {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
+                        {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600"}}
+                    ]
+                }
             }
         },
         resources: {
@@ -175,14 +183,27 @@ var decapod = decapod || {};
                         documentDimensionsLabel: "{pdfExporter}.options.strings.documentDimensionsLabel",
                         documentDimensions: "{pdfExporter}.options.strings.documentDimensions"
                     },
-                    model: "{pdfExporter}.model",
+                    model: "{pdfExporter}.model.exportOptions",
                     resources: {
                         template: "{pdfExporter}.options.resources.pdfExportOptions",
                         select: "{pdfExporter}.options.resources.select",
                         outputSettings: "{pdfExporter}.options.resources.outputSettings"
                     },
                     listeners: {
-                        "afterRender.afterExportOptionsRender": "{pdfExporter}.events.afterExportOptionsRender"
+                        "afterRender.afterExportOptionsRender": "{pdfExporter}.events.afterExportOptionsRender",
+                        "afterFetchResources.outputSettingsOnRender": {
+                            listener: "{pdfExportOptions}.showIfModelValue",
+                            args: ["outputSettings", "output.selection", "custom"]
+                        },
+                        "afterModelChanged.outputSettingsOnModelChange": {
+                            listener: "{pdfExportOptions}.showIfModelValue",
+                            args: ["outputSettings", "output.selection", "custom"]
+                        },
+                        "afterModelChanged.parent": {
+                            listener: "{pdfExporter}.applier.requestChange",
+                            args: ["exportOptions", "{arguments}.0"]
+                        }
+                        
                     }
                 }
             },

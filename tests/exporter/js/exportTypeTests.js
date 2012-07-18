@@ -462,11 +462,75 @@ var decapod = decapod || {};
             });
         });
         
+        pdfExportOptionsTests.asyncTest("showIfModelValue - true", function () {
+            jqUnit.expect(1);
+            var testHide = function (that) {
+                var sel = "outputSettings";
+                var elm = that.locate(sel);
+                elm.hide();
+                that.showIfModelValue(sel, "output.selection", "a4");
+                jqUnit.isVisible("The element should be visible", elm);
+                start();
+            };
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: testHide
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
+                    }
+                }
+            });
+        });
+        
+        pdfExportOptionsTests.asyncTest("showIfModelValue - false", function () {
+            jqUnit.expect(1);
+            var testHide = function (that) {
+                var sel = "outputSettings";
+                var elm = that.locate(sel);
+                elm.show();
+                that.showIfModelValue(sel, "output.selection", "a5");
+                jqUnit.notVisible("The element should not be visible", elm);
+                start();
+            };
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: testHide
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
+                    }
+                }
+            });
+        });
+        
         pdfExportOptionsTests.asyncTest("Model Change - colour", function () {
             jqUnit.expect(2);
             var colourSelection = "grey";
             var changeVal = function (that) {
-                that.applier.requestChange("colour.selection", colourSelection);
+                that.colour.applier.requestChange("selection", colourSelection);
             };
             var assertModelChange = function (newModel, that) {
                 jqUnit.assertEquals("The model should be updated with the new colour selection", colourSelection, newModel.colour.selection);
@@ -503,7 +567,7 @@ var decapod = decapod || {};
             jqUnit.expect(2);
             var outputSelection = "a5";
             var changeVal = function (that) {
-                that.applier.requestChange("output.selection", outputSelection);
+                that.output.applier.requestChange("selection", outputSelection);
             };
             var assertModelChange = function (newModel, that) {
                 jqUnit.assertEquals("The model should be updated with the new output selection", outputSelection, newModel.output.selection);
@@ -540,7 +604,7 @@ var decapod = decapod || {};
             jqUnit.expect(2);
             var newWidth = "222";
             var changeVal = function (that) {
-                that.applier.requestChange("outputSettings.settings.0.value", newWidth);
+                that.outputSettings.applier.requestChange("settings.0.value", newWidth);
             };
             var assertModelChange = function (newModel, that) {
                 jqUnit.assertEquals("The model should be updated with the new width", newWidth, newModel.outputSettings.settings[0].value);

@@ -157,6 +157,31 @@ var decapod = decapod || {};
         that.locate(selector).show();
     };
     
+    decapod.pdfExportOptions.showIfModelValue = function (that, selector, elPath, value) {
+        if (fluid.get(that.model, elPath) === value) {
+            that.show(selector);
+        } else {
+            that.hide(selector);
+        }
+    };
+    
+    decapod.pdfExportOptions.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        that.hide = function (selector) {
+            that.hide(selector);
+        };
+        that.show = function (selector) {
+            that.show(selector);
+        };
+        that.showIfModelValue = function (selector, elPath, value) {
+            that.showIfModelValue(selector, elPath, value);
+        };
+    };
+    
     decapod.pdfExportOptions.finalInit = function (that) {
         that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
@@ -170,6 +195,7 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.pdfExportOptions", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
+        preInitFunction: "decapod.pdfExportOptions.preInit",
         finalInitFunction: "decapod.pdfExportOptions.finalInit",
         produceTree: "decapod.pdfExportOptions.produceTree",
         selectors: {
@@ -205,7 +231,8 @@ var decapod = decapod || {};
         },
         invokers: {
             hide: "decapod.pdfExportOptions.hide",
-            show: "decapod.pdfExportOptions.show"
+            show: "decapod.pdfExportOptions.show",
+            showIfModelValue: "decapod.pdfExportOptions.showIfModelValue"
         },
         components: {
             colour: {
@@ -215,7 +242,11 @@ var decapod = decapod || {};
                 options: {
                     model: "{pdfExportOptions}.model.colour",
                     listeners: {
-                        "afterRender.afterColourRender": "{pdfExportOptions}.events.afterColourRender"
+                        "afterRender.afterColourRender": "{pdfExportOptions}.events.afterColourRender",
+                        "afterSelectionChanged.parent": {
+                            listener: "{pdfExportOptions}.applier.requestChange",
+                            args: ["colour.selection", "{arguments}.0"]
+                        }
                     },
                     strings: {
                         label: "{pdfExportOptions}.options.strings.colourLabel"
@@ -229,7 +260,11 @@ var decapod = decapod || {};
                 options: {
                     model: "{pdfExportOptions}.model.output",
                     listeners: {
-                        "afterRender.afterOutputRender": "{pdfExportOptions}.events.afterOutputRender"
+                        "afterRender.afterOutputRender": "{pdfExportOptions}.events.afterOutputRender",
+                        "afterSelectionChanged.parent": {
+                            listener: "{pdfExportOptions}.applier.requestChange",
+                            args: ["output.selection", "{arguments}.0"]
+                        }
                     },
                     strings: {
                         label: "{pdfExportOptions}.options.strings.outputLabel"
@@ -243,7 +278,11 @@ var decapod = decapod || {};
                 options: {
                     model: "{pdfExportOptions}.model.outputSettings",
                     listeners: {
-                        "afterRender.afterOutputSettingsRender": "{pdfExportOptions}.events.afterOutputSettingsRender"
+                        "afterRender.afterOutputSettingsRender": "{pdfExportOptions}.events.afterOutputSettingsRender",
+                        "afterModelChanged.parent": {
+                            listener: "{pdfExportOptions}.applier.requestChange",
+                            args: ["outputSettings", "{arguments}.0"]
+                        }
                     }
                 }
             }
