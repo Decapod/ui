@@ -130,6 +130,7 @@ var decapod = decapod || {};
                 decapod.testUtils.exportType.assertexportInfoRender(that.exportInfo);
                 decapod.testUtils.exportType.assertPDFOptionsRender(that.exportOptions);
                 decapod.testUtils.exportType.assertShowTriggerControls(that.exportControls);
+                jqUnit.notVisible("The outputSettings container should be hidden", that.exportOptions.locate("outputSettings"));
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
@@ -271,6 +272,56 @@ var decapod = decapod || {};
                 listeners: {
                     afterRender: {
                         listener: assertEvent,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("afterModelChanged", function () {
+            jqUnit.expect(2);
+            var colourSelection = "grey";
+            var trigger = function (that) {
+                that.exportOptions.colour.applier.requestChange("selection", colourSelection);
+            };
+            var assertModelChange = function (newModel, that) {
+                jqUnit.assertEquals("The model should be updated with the new colour selection", colourSelection, newModel.exportOptions.colour.selection);
+                jqUnit.assertEquals("The components model should be update with the new colour selection", colourSelection, that.model.exportOptions.colour.selection);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertModelChange,
+                        args: ["{arguments}.0", "{pdfExporter}"]
+                    },
+                    afterRender: {
+                        listener: trigger,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("showOutputSettings", function () {
+            jqUnit.expect(1);
+            var outputSelection = "custom";
+            var trigger = function (that) {
+                that.exportOptions.applier.requestChange("output.selection", outputSelection);
+            };
+            var assertModelChange = function (that) {
+                jqUnit.isVisible("The outputSettings container should be visible", that.locate("outputSettings"));
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertModelChange,
+                        args: ["{exportOptions}"],
+                        priority: "last"
+                    },
+                    afterRender: {
+                        listener: trigger,
                         priority: "last"
                     }
                 }
