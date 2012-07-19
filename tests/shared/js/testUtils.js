@@ -63,7 +63,6 @@ var decapod = decapod || {};
     };
     
     decapod.testUtils.exportType.assertPDFOptionsRender = function (that) {
-        decapod.testUtils.exportType.assertSelectRender(that.colour);
         decapod.testUtils.exportType.assertSelectRender(that.output);
         decapod.testUtils.exportType.assertOutputSettingsRender(that.outputSettings);
     };

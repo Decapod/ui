@@ -94,7 +94,6 @@ var decapod = decapod || {};
         pdfExporterTests.asyncTest("Init tests", function () {
             jqUnit.expect(2);
             var expected = {
-                colour: "colour",
                 width: 21,
                 height: 29.7
             };
@@ -286,18 +285,17 @@ var decapod = decapod || {};
         
         pdfExporterTests.asyncTest("afterModelChanged", function () {
             jqUnit.expect(3);
-            var colourSelection = "grey";
+            var outputSelection = "a5";
             var expected = {
-                colour: colourSelection,
-                width: 21,
-                height: 29.7
+                width: 14.8,
+                height: 21
             };
             var trigger = function (that) {
-                that.exportOptions.colour.applier.requestChange("selection", colourSelection);
+                that.exportOptions.output.applier.requestChange("selection", outputSelection);
             };
             var assertModelChange = function (newModel, that) {
-                jqUnit.assertEquals("The model should be updated with the new colour selection", colourSelection, newModel.exportOptions.colour.selection);
-                jqUnit.assertEquals("The components model should be update with the new colour selection", colourSelection, that.model.exportOptions.colour.selection);
+                jqUnit.assertEquals("The model should be updated with the new output selection", outputSelection, newModel.exportOptions.output.selection);
+                jqUnit.assertEquals("The components model should be update with the new output selection", outputSelection, that.model.exportOptions.output.selection);
                 jqUnit.assertDeepEq("The assembledExportOptions property is set", expected, that.assembledExportOptions);
                 start();
             };
@@ -366,7 +364,6 @@ var decapod = decapod || {};
         pdfExporterTests.asyncTest("assembleExportOptions", function () {
             jqUnit.expect(2);
             var expected = {
-                colour: "colour",
                 width: 21,
                 height: 29.7
             };
