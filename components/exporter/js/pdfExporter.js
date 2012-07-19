@@ -29,8 +29,52 @@ var decapod = decapod || {};
      ************************/
     
     fluid.registerNamespace("decapod.pdfExporter");
+    
+    decapod.pdfExporter.mapExportOptions = function (that, selection) {
+        var optionsData = {};
+        var mapped = that.options.exportOptionsMap[selection];
+            if (mapped) {
+                optionsData = typeof(mapped) === "string" ? that.assembleCustomSettings(mapped) : mapped;
+            }
+        return optionsData;
+    };
+    
+    decapod.pdfExporter.assembleExportOptions = function (that) {
+        var colourData = that.mapExportOptions(that.model.exportOptions.colour.selection);
+        var outputData = that.mapExportOptions(that.model.exportOptions.output.selection);
+        that.assembledExportOptions = fluid.merge("replace", {}, colourData, outputData);
+        return that.assembledExportOptions;
+    };
+    
+    decapod.pdfExporter.assembleCustomSettings = function (that, elPath, nameMap) {
+        var settings = {};
+        nameMap = nameMap || {};
+        $.each(fluid.get(that.model, elPath), function (idx, setting) {
+            var key = nameMap[setting.name] || setting.name;
+            settings[key] = setting.value;
+        });
+        return settings;
+    };
+    
+    decapod.pdfExporter.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * This method is overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        that.mapExportOptions = function (selection) {
+            that.mapExportOptions(selection);
+        };
+        that.assembleExportOptions = function () {
+            that.assembleExportOptions();
+        };
+        that.assembleCustomSettings = function (elPath) {
+            that.assembleCustomSettings(elPath);
+        };
+    };
 
     decapod.pdfExporter.finalInit = function (that) {
+        that.assembleExportOptions();
         that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
@@ -43,6 +87,7 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.pdfExporter", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
+        preInitFunction: "decapod.pdfExporter.preInit",
         finalInitFunction: "decapod.pdfExporter.finalInit",
         selectors: {
             exportInfo: ".dc-pdfExporter-exportInfo",
@@ -79,6 +124,9 @@ var decapod = decapod || {};
                 args: ["{pdfExporter}"]
             }
         },
+        listeners: {
+            "afterModelChanged.internal": "{pdfExporter}.assembleExportOptions"
+        },
         model: {
             exportOptions: {
                 colour: {selection: "colour", choices: ["colour", "grey", "bw"], names: ["True Colour (24 bit)", "Greyscale", "Black and White"]},
@@ -91,6 +139,32 @@ var decapod = decapod || {};
                     ]
                 }
             }
+        },
+        exportOptionsMap: {
+            "colour": {
+                colour: "colour"
+            },
+            "grey": {
+                colour: "grey"
+            },
+            "bw": {
+                bit: 1
+            },
+            "a4": {
+                width: 21,
+                height: 29.7
+            },
+            "a5": {
+                width: 14.8,
+                height: 21
+            },
+            "letter": {
+                width: 21.6,
+                height: 27.9
+            },
+            //TODO: Implement a better solution for mapping the custom output settings
+            // String into the model for the assembleCustomSettings to act upon
+            "custom": "exportOptions.outputSettings.settings"
         },
         resources: {
             pdfExportTemplate: {
@@ -129,6 +203,11 @@ var decapod = decapod || {};
                 url: "../html/exportControlsCompleteTemplate.html",
                 forceCache: true
             }
+        },
+        invokers: {
+            mapExportOptions: "decapod.pdfExporter.mapExportOptions",
+            assembleExportOptions: "decapod.pdfExporter.assembleExportOptions",
+            assembleCustomSettings: "decapod.pdfExporter.assembleCustomSettings"
         },
         components: {
             eventBinder: {
