@@ -199,19 +199,16 @@ var decapod = decapod || {};
         finalInitFunction: "decapod.pdfExportOptions.finalInit",
         produceTree: "decapod.pdfExportOptions.produceTree",
         selectors: {
-            colour: ".dc-pdfExportOptions-colour",
             output: ".dc-pdfExportOptions-output",
             outputSettings: ".dc-pdfExportOptions-outputSettings"
         },
         model: {
-            colour: {}, // in the form {selection: "", choices: [], names: []}
             output: {}, // in the form {selection: "", choices: [], names: []}
             outputSettings: {
                 settings: [] //in the form {value: "", name: "", unit: "", attrs: {}}
             }
         },
         strings: {
-            colourLabel: "Colour",
             outputLabel: "Output"
         },
         events: {
@@ -222,7 +219,6 @@ var decapod = decapod || {};
             afterOutputSettingsRender: null,
             afterRender: {
                 events: {
-                    colour: "afterColourRender",
                     output: "afterOutputRender",
                     outputSettings: "afterOutputSettingsRender"
                 },
@@ -235,24 +231,6 @@ var decapod = decapod || {};
             showIfModelValue: "decapod.pdfExportOptions.showIfModelValue"
         },
         components: {
-            colour: {
-                type: "decapod.select",
-                container: "{pdfExportOptions}.dom.colour",
-                createOnEvent: "afterFetchResources",
-                options: {
-                    model: "{pdfExportOptions}.model.colour",
-                    listeners: {
-                        "afterRender.afterColourRender": "{pdfExportOptions}.events.afterColourRender",
-                        "afterSelectionChanged.parent": {
-                            listener: "{pdfExportOptions}.applier.requestChange",
-                            args: ["colour.selection", "{arguments}.0"]
-                        }
-                    },
-                    strings: {
-                        label: "{pdfExportOptions}.options.strings.colourLabel"
-                    }
-                }
-            },
             output: {
                 type: "decapod.select",
                 container: "{pdfExportOptions}.dom.output",

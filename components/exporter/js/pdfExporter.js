@@ -40,9 +40,8 @@ var decapod = decapod || {};
     };
     
     decapod.pdfExporter.assembleExportOptions = function (that) {
-        var colourData = that.mapExportOptions(that.model.exportOptions.colour.selection);
         var outputData = that.mapExportOptions(that.model.exportOptions.output.selection);
-        that.assembledExportOptions = fluid.merge("replace", {}, colourData, outputData);
+        that.assembledExportOptions = fluid.merge("replace", {}, outputData);
         return that.assembledExportOptions;
     };
     
@@ -129,7 +128,6 @@ var decapod = decapod || {};
         },
         model: {
             exportOptions: {
-                colour: {selection: "colour", choices: ["colour", "grey", "bw"], names: ["True Colour (24 bit)", "Greyscale", "Black and White"]},
                 output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]},
                 outputSettings: {
                     settings: [
@@ -141,15 +139,6 @@ var decapod = decapod || {};
             }
         },
         exportOptionsMap: {
-            "colour": {
-                colour: "colour"
-            },
-            "grey": {
-                colour: "grey"
-            },
-            "bw": {
-                bit: 1
-            },
             "a4": {
                 width: 21,
                 height: 29.7
