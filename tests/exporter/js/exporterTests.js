@@ -212,14 +212,15 @@ var decapod = decapod || {};
         });
         
         exporterTests.asyncTest("startImport", function () {
-            jqUnit.expect(4);
+            jqUnit.expect(5);
             var tests = function (that) {
                 var exportType = that.imagePDF;
                 that.events.onImportStart.addListener(function () {
                     jqUnit.assertTrue("The onImportStart event should have fired", true);
                     jqUnit.assertDeepEq("The exportType should have been set", exportType, that.exportType);
                     jqUnit.assertTrue("The accordion should be disabled", that.accordion.container.accordion("option", "disabled"));
-                });
+                    jqUnit.assertTrue("The output options should be disabled", that.imagePDF.exportOptions.output.locate("choices").is(":disabled"));
+                }, "test", null, "last");
                 
                 that.uploader.events.onUploadStart.addListener(function () {
                     jqUnit.assertTrue("The onUploadStart event from the uploader should have fired", true);

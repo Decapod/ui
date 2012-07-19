@@ -55,6 +55,23 @@ var decapod = decapod || {};
         };
     };
     
+    decapod.select.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        that.enable = function () {
+            that.enable();
+        };
+        that.disable = function () {
+            that.disable();
+        };
+        that.isEnabled = function () {
+            that.isEnabled();
+        };
+    };
+    
     decapod.select.finalInit = function (that) {
         that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterSelectionChanged.fire(newModel.selection, oldModel.selection);
@@ -69,6 +86,7 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.select", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
+        preInitFunction: "decapod.select.preInit",
         finalInitFunction: "decapod.select.finalInit",
         produceTree: "decapod.select.produceTree",
         selectors: {

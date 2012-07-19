@@ -111,6 +111,17 @@ var decapod = decapod || {};
         }
     });
     
+    fluid.demands("decapod.select", ["decapod.exporter", "decapod.pdfExportOptions"], {
+        options: {
+            listeners: {
+                "{exporter}.events.onImportStart": "{select}.disable"
+            },
+            resources: {
+                template: "{pdfExportOptions}.options.resources.select"
+            }
+        }
+    });
+    
     /*******************
      * Invoker Demands *
      *******************/
