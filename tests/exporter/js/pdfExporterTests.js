@@ -92,12 +92,18 @@ var decapod = decapod || {};
         var pdfExporterTests = jqUnit.testCase("decapod.pdfExporter");
         
         pdfExporterTests.asyncTest("Init tests", function () {
-            jqUnit.expect(1);
+            jqUnit.expect(2);
+            var expected = {
+                colour: "colour",
+                width: 21,
+                height: 29.7
+            };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
                 listeners: {
                     onReady: {
                         listener: function (that) {
                             jqUnit.assertTrue("The component should have initialized", true);
+                            jqUnit.assertDeepEq("The assembledExportOptions property is set", expected, that.assembledExportOptions);
                             start();
                         },
                         args: ["{pdfExporter}"],
@@ -279,14 +285,20 @@ var decapod = decapod || {};
         });
         
         pdfExporterTests.asyncTest("afterModelChanged", function () {
-            jqUnit.expect(2);
+            jqUnit.expect(3);
             var colourSelection = "grey";
+            var expected = {
+                colour: colourSelection,
+                width: 21,
+                height: 29.7
+            };
             var trigger = function (that) {
                 that.exportOptions.colour.applier.requestChange("selection", colourSelection);
             };
             var assertModelChange = function (newModel, that) {
                 jqUnit.assertEquals("The model should be updated with the new colour selection", colourSelection, newModel.exportOptions.colour.selection);
                 jqUnit.assertEquals("The components model should be update with the new colour selection", colourSelection, that.model.exportOptions.colour.selection);
+                jqUnit.assertDeepEq("The assembledExportOptions property is set", expected, that.assembledExportOptions);
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
@@ -320,6 +332,72 @@ var decapod = decapod || {};
                         args: ["{exportOptions}"],
                         priority: "last"
                     },
+                    afterRender: {
+                        listener: trigger,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("mapExportOptions", function () {
+            jqUnit.expect(2);
+            var expectedCustom = {
+                width: "210",
+                height: "297",
+                dpi: "200"
+            };
+            var trigger = function (that) {
+                jqUnit.assertDeepEq("The export options should be mapped correctly", that.options.exportOptionsMap.a4, that.mapExportOptions("a4"));
+                jqUnit.assertDeepEq("The custom export options should be mapped correctly", expectedCustom, that.mapExportOptions("custom"));
+                // TODO: test case where a function is used.
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: trigger,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("assembleExportOptions", function () {
+            jqUnit.expect(2);
+            var expected = {
+                colour: "colour",
+                width: 21,
+                height: 29.7
+            };
+            var trigger = function (that) {
+                jqUnit.assertDeepEq("The export options should be mapped correctly", expected, that.assembleExportOptions());
+                jqUnit.assertDeepEq("The export options should be mapped correctly", expected, that.assembledExportOptions);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: trigger,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("assembleCustomSettings", function () {
+            jqUnit.expect(1);
+            var expected = {
+                width: "210",
+                height: "297",
+                dpi: "200"
+            };
+            var trigger = function (that) {
+                jqUnit.assertDeepEq("The custom settings should be assembled", expected, that.assembleCustomSettings(that.options.exportOptionsMap.custom));
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
                     afterRender: {
                         listener: trigger,
                         priority: "last"
