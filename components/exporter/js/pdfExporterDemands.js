@@ -59,12 +59,10 @@ var decapod = decapod || {};
         funcName: "decapod.eventBinder"
     });
     
-    // for sending the export options to the server as query parameters. Currently genpdf doesn't support all of the 
-    // flags used by the ui.
-    // fluid.demands("decapod.dataSource.put", ["decapod.dataSource", "decapod.pdfExporter"], {
-        // funcName: "decapod.dataSource.method",
-        // args: ["{dataSource}", "PUT", "{pdfExporter}.assembledExportOptions", "{arguments}.1"]
-    // });
+    fluid.demands("decapod.dataSource.put", ["decapod.dataSource", "decapod.pdfExporter"], {
+        funcName: "decapod.dataSource.method",
+        args: ["{dataSource}", "PUT", "{pdfExporter}.assembledExportOptions", "{arguments}.1"]
+    });
     
     /*******************
      * Invoker Demands *

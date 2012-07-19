@@ -141,15 +141,18 @@ var decapod = decapod || {};
         exportOptionsMap: {
             "a4": {
                 width: 21,
-                height: 29.7
+                height: 29.7,
+                dpi: 200
             },
             "a5": {
                 width: 14.8,
-                height: 21
+                height: 21,
+                dpi: 200
             },
             "letter": {
                 width: 21.6,
-                height: 27.9
+                height: 27.9,
+                dpi: 200
             },
             //TODO: Implement a better solution for mapping the custom output settings
             // String into the model for the assembleCustomSettings to act upon

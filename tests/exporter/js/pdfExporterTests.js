@@ -95,7 +95,8 @@ var decapod = decapod || {};
             jqUnit.expect(2);
             var expected = {
                 width: 21,
-                height: 29.7
+                height: 29.7,
+                dpi: 200
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
                 listeners: {
@@ -288,7 +289,8 @@ var decapod = decapod || {};
             var outputSelection = "a5";
             var expected = {
                 width: 14.8,
-                height: 21
+                height: 21,
+                dpi: 200
             };
             var trigger = function (that) {
                 that.exportOptions.output.applier.requestChange("selection", outputSelection);
@@ -365,7 +367,8 @@ var decapod = decapod || {};
             jqUnit.expect(2);
             var expected = {
                 width: 21,
-                height: 29.7
+                height: 29.7,
+                dpi: 200
             };
             var trigger = function (that) {
                 jqUnit.assertDeepEq("The export options should be mapped correctly", expected, that.assembleExportOptions());
