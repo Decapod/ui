@@ -154,4 +154,10 @@ var decapod = decapod || {};
     fluid.demands("decapod.pdfExportOptions.showIfModelValue", ["decapod.pdfExportOptions"], {
         args: ["{pdfExportOptions}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
     });
+    fluid.demands("decapod.outputSettings.disable", ["decapod.outputSettings"], {
+        args: ["{outputSettings}"]
+    });
+    fluid.demands("decapod.outputSettings.enable", ["decapod.outputSettings"], {
+        args: ["{outputSettings}"]
+    });
 })(jQuery);

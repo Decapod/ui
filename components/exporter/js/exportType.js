@@ -287,6 +287,39 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.outputSettings");
     
+    decapod.outputSettings.enable = function (that) {
+        var settings = fluid.copy(that.model.settings);
+        $.each(settings, function (idx, setting) {
+            delete setting.attrs["disabled"];
+        });
+        that.applier.requestChange("settings", settings);
+        that.refreshView();
+    };
+    
+    decapod.outputSettings.disable = function (that) {
+        var settings = fluid.copy(that.model.settings);
+        $.each(settings, function (idx, setting) {
+            setting.attrs["disabled"] = "disabled";
+        });
+        that.applier.requestChange("settings", settings);
+        that.refreshView();
+    };
+    
+    decapod.outputSettings.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        that.enable = function () {
+            that.enable();
+        };
+        
+        that.disable = function () {
+            that.disable();
+        };
+    };
+    
     decapod.outputSettings.finalInit = function (that) {
         that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
@@ -338,6 +371,10 @@ var decapod = decapod || {};
         events: {
             afterFetchResources: null,
             afterModelChanged: null
+        },
+        invokers: {
+            disable: "decapod.outputSettings.disable",
+            enable: "decapod.outputSettings.enable"
         },
         resources: {
             template: {
