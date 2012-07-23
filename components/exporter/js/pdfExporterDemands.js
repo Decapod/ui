@@ -74,7 +74,11 @@ var decapod = decapod || {};
         args: ["{pdfExporter}"]
     });
     fluid.demands("decapod.pdfExporter.assembleCustomSettings", ["decapod.pdfExporter"], {
-        args: ["{pdfExporter}", "{arguments}.0", {resolution: "dpi"}]
+        args: ["{pdfExporter}", {
+            width: "decapod.pdfExporter.convertDimensionSetting",
+            height: "decapod.pdfExporter.convertDimensionSetting",
+            resolution: "decapod.pdfExporter.convertResolutionSetting"
+        }]
     });
     
 })(jQuery);
