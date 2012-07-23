@@ -29,13 +29,12 @@ var decapod = decapod || {};
      ************************/
     
     fluid.registerNamespace("decapod.pdfExporter");
-    
+
     decapod.pdfExporter.mapExportOptions = function (that, selection) {
-        var optionsData = {};
-        var mapped = that.options.exportOptionsMap[selection];
-            if (mapped) {
-                optionsData = typeof(mapped) === "string" ? that.assembleCustomSettings(mapped) : mapped;
-            }
+        var optionsData = that.options.exportOptionsMap[selection] || {};
+        if (typeof(optionsData) === "string") {
+            optionsData = typeof(that[optionsData]) === "function" ? that[optionsData](that) : fluid.invokeGlobalFunction(optionsData, [that]);
+        }
         return optionsData;
     };
     
@@ -45,12 +44,21 @@ var decapod = decapod || {};
         return that.assembledExportOptions;
     };
     
-    decapod.pdfExporter.assembleCustomSettings = function (that, elPath, nameMap) {
+    decapod.pdfExporter.convertDimensionSetting = function (setting) {
+        var converted = {};
+        var val = parseFloat(setting.value) / 10; // converts the size value from mm to cm
+        converted[setting.name] = val;
+        return converted;
+    };
+    
+    decapod.pdfExporter.convertResolutionSetting = function (setting) {
+        return {dpi: setting.value};
+    };
+    
+    decapod.pdfExporter.assembleCustomSettings = function (that, map) {
         var settings = {};
-        nameMap = nameMap || {};
-        $.each(fluid.get(that.model, elPath), function (idx, setting) {
-            var key = nameMap[setting.name] || setting.name;
-            settings[key] = setting.value;
+        $.each(that.model.exportOptions.outputSettings.settings, function (idx, setting) {
+            fluid.merge("replace", settings, fluid.invokeGlobalFunction(map[setting.name], [setting]));
         });
         return settings;
     };
@@ -154,9 +162,7 @@ var decapod = decapod || {};
                 height: 27.9,
                 dpi: 200
             },
-            //TODO: Implement a better solution for mapping the custom output settings
-            // String into the model for the assembleCustomSettings to act upon
-            "custom": "exportOptions.outputSettings.settings"
+            "custom": "assembleCustomSettings" // function to call to map the settings
         },
         resources: {
             pdfExportTemplate: {

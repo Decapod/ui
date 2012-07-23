@@ -340,17 +340,28 @@ var decapod = decapod || {};
             });
         });
         
+        pdfExporterTests.test("decapod.pdfExporter.convertDimensionSetting", function () {
+            var setting = {value: 210, name: "width", unit: "mm", attrs: {type: "number", min: 1, max: 30}};
+            var expected = {width: 21};
+            jqUnit.assertDeepEq("The dimension setting should be converted", expected, decapod.pdfExporter.convertDimensionSetting(setting));
+        });
+        
+        pdfExporterTests.test("decapod.pdfExporter.convertResolutionSetting", function () {
+            var setting = {value: 200, name: "resolution", unit: "dpi", attrs: {type: "number", min: 1, max: 600}};
+            var expected = {dpi: 200};
+            jqUnit.assertDeepEq("The dimension setting should be converted", expected, decapod.pdfExporter.convertResolutionSetting(setting));
+        });
+        
         pdfExporterTests.asyncTest("mapExportOptions", function () {
             jqUnit.expect(2);
             var expectedCustom = {
-                width: "210",
-                height: "297",
+                width: 21,
+                height: 29.7,
                 dpi: "200"
             };
             var trigger = function (that) {
                 jqUnit.assertDeepEq("The export options should be mapped correctly", that.options.exportOptionsMap.a4, that.mapExportOptions("a4"));
                 jqUnit.assertDeepEq("The custom export options should be mapped correctly", expectedCustom, that.mapExportOptions("custom"));
-                // TODO: test case where a function is used.
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
@@ -388,8 +399,8 @@ var decapod = decapod || {};
         pdfExporterTests.asyncTest("assembleCustomSettings", function () {
             jqUnit.expect(1);
             var expected = {
-                width: "210",
-                height: "297",
+                width: 21,
+                height: 29.7,
                 dpi: "200"
             };
             var trigger = function (that) {
