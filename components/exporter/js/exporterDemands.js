@@ -111,13 +111,10 @@ var decapod = decapod || {};
         }
     });
     
-    fluid.demands("decapod.select", ["decapod.exporter", "decapod.pdfExportOptions"], {
+    fluid.demands("decapod.pdfExportOptions", ["decapod.exporter", "decapod.pdfExporter"], {
         options: {
             listeners: {
-                "{exporter}.events.onImportStart": "{select}.disable"
-            },
-            resources: {
-                template: "{pdfExportOptions}.options.resources.select"
+                "{exporter}.events.onImportStart": "{pdfExportOptions}.disable"
             }
         }
     });
