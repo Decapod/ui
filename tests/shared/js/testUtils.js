@@ -56,6 +56,14 @@ var decapod = decapod || {};
         });
     };
     
+    decapod.testUtils.exportType.assertExportOptionsState = function (that, state) {
+        var filter = ":" + state;
+        jqUnit.assertTrue("The output select box should be " + state, that.output.locate("choices").is(filter));
+        that.outputSettings.locate("val").each(function (idx, elm) {
+            jqUnit.assertTrue("The outputSettings " + that.model.outputSettings.settings[idx].name + " form field should be " + state, $(elm).is(filter));
+        });
+    };
+    
     decapod.testUtils.exportType.assertexportInfoRender = function (that) {
         var str = that.options.strings;
         jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());

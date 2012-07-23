@@ -681,10 +681,7 @@ var decapod = decapod || {};
             };
             var assertDisable = function (that) {
                 jqUnit.assertTrue("The onDisable event should have fired", true);
-                jqUnit.assertTrue("The output select box should be disabled", that.output.locate("choices").is(":disabled"));
-                that.outputSettings.locate("val").each(function (idx, elm) {
-                    jqUnit.assertTrue("The outputSettings " + that.model.outputSettings.settings[idx].attrs.name + " form field should be disabled", $(elm).is(":disabled"));
-                });
+                decapod.testUtils.exportType.assertExportOptionsState(that, "disabled");
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
@@ -732,10 +729,7 @@ var decapod = decapod || {};
             };
             var assertEnable = function (that) {
                 jqUnit.assertTrue("The onEnable event should have fired", true);
-                jqUnit.assertTrue("The output select box should be enabled", that.output.locate("choices").is(":enabled"));
-                that.outputSettings.locate("val").each(function (idx, elm) {
-                    jqUnit.assertTrue("The outputSettings " + that.model.outputSettings.settings[idx].attrs.name + " form field should be enabled", $(elm).is(":enabled"));
-                });
+                decapod.testUtils.exportType.assertExportOptionsState(that, "enabled");
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
