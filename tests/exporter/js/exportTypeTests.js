@@ -268,7 +268,7 @@ var decapod = decapod || {};
         });
         
         outputSettingsTests.asyncTest("Model Change", function () {
-            jqUnit.expect();
+            jqUnit.expect(2);
             var newWidth = "222";
             var triggerEvent = function (that) {
                 that.applier.requestChange("output.settings.0.value", newWidth);
@@ -286,6 +286,82 @@ var decapod = decapod || {};
                         priority: "last"
                     },
                     afterRender: triggerEvent
+                }
+            });
+        });
+        
+        outputSettingsTests.asyncTest("disable", function () {
+            jqUnit.expect(27);
+            var triggerEvent = function (that) {
+                that.events.afterRender.removeListener("trigger");
+                that.events.afterRender.addListener(function (that) {
+                    decapod.testUtils.exportType.assertOutputSettingsRender(that);
+                    start();
+                });
+                that.disable();
+            };
+            var assertChange = function (newModel, that) {
+                var assertDisabled = function (settings) {
+                    $.each(settings, function(idx, setting) {
+                        jqUnit.assertEquals("The disabled attrs should be added", "disabled", setting.attrs.disabled);
+                    });
+                };
+                
+                assertDisabled(newModel.settings);
+                assertDisabled(that.model.settings);
+                // start();
+            };
+            createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertChange,
+                        args: ["{arguments}.0", "{outputSettings}"],
+                        priority: "last"
+                    },
+                    "afterRender.trigger": triggerEvent
+                }
+            });
+        });
+        
+        outputSettingsTests.asyncTest("enable", function () {
+            jqUnit.expect(24);
+            
+            var model = {
+                settings: [
+                    {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30", disabled: "disabled"}},
+                    {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30", disabled: "disabled"}},
+                    {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600", disabled: "disabled"}}
+                ]
+            };
+            
+            var triggerEvent = function (that) {
+                that.events.afterRender.removeListener("trigger");
+                that.events.afterRender.addListener(function (that) {
+                    decapod.testUtils.exportType.assertOutputSettingsRender(that);
+                    start();
+                });
+                that.enable();
+            };
+            var assertChange = function (newModel, that) {
+                var assertEnabled = function (settings) {
+                    $.each(settings, function(idx, setting) {
+                        jqUnit.assertUndefined("The disabled attrs should not be added", setting.attrs.disabled);
+                    });
+                };
+                
+                assertEnabled(newModel.settings);
+                assertEnabled(that.model.settings);
+            };
+            createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
+                model: model,
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertChange,
+                        args: ["{arguments}.0", "{outputSettings}"],
+                        priority: "last"
+                    },
+                    "afterRender.trigger": triggerEvent
                 }
             });
         });
