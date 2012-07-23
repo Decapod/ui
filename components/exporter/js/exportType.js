@@ -165,6 +165,14 @@ var decapod = decapod || {};
         }
     };
     
+    decapod.pdfExportOptions.disable = function (that) {
+        that.events.onDisable.fire(that);
+    };
+    
+    decapod.pdfExportOptions.enable = function (that) {
+        that.events.onEnable.fire(that);
+    };
+    
     decapod.pdfExportOptions.preInit = function (that) {
         /*
          * Work around for FLUID-4709
@@ -179,6 +187,12 @@ var decapod = decapod || {};
         };
         that.showIfModelValue = function (selector, elPath, value) {
             that.showIfModelValue(selector, elPath, value);
+        };
+        that.disable = function () {
+            that.disable();
+        };
+        that.enable = function () {
+            that.enable();
         };
     };
     
@@ -223,12 +237,16 @@ var decapod = decapod || {};
                     outputSettings: "afterOutputSettingsRender"
                 },
                 args: ["{pdfExportOptions}"]
-            }
+            },
+            onDisable: null,
+            onEnable: null
         },
         invokers: {
             hide: "decapod.pdfExportOptions.hide",
             show: "decapod.pdfExportOptions.show",
-            showIfModelValue: "decapod.pdfExportOptions.showIfModelValue"
+            showIfModelValue: "decapod.pdfExportOptions.showIfModelValue",
+            disable: "decapod.pdfExportOptions.disable",
+            enable: "decapod.pdfExportOptions.enable"
         },
         components: {
             output: {
@@ -242,7 +260,9 @@ var decapod = decapod || {};
                         "afterSelectionChanged.parent": {
                             listener: "{pdfExportOptions}.applier.requestChange",
                             args: ["output.selection", "{arguments}.0"]
-                        }
+                        },
+                        "{pdfExportOptions}.events.onDisable": "{select}.disable",
+                        "{pdfExportOptions}.events.onEnable": "{select}.enable"
                     },
                     strings: {
                         label: "{pdfExportOptions}.options.strings.outputLabel"
@@ -260,7 +280,9 @@ var decapod = decapod || {};
                         "afterModelChanged.parent": {
                             listener: "{pdfExportOptions}.applier.requestChange",
                             args: ["outputSettings", "{arguments}.0"]
-                        }
+                        },
+                        "{pdfExportOptions}.events.onDisable": "{outputSettings}.disable",
+                        "{pdfExportOptions}.events.onEnable": "{outputSettings}.enable"
                     }
                 }
             }
@@ -356,6 +378,7 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.outputSettings", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
+        preInitFunction: "decapod.outputSettings.preInit",
         finalInitFunction: "decapod.outputSettings.finalInit",
         produceTree: "decapod.outputSettings.produceTree",
         selectors: {

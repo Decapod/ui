@@ -673,6 +673,97 @@ var decapod = decapod || {};
             });
         });
         
+        pdfExportOptionsTests.asyncTest("disable", function () {
+            jqUnit.expect(5);
+            var trigger = function (that) {
+                that.events.afterRender.removeListener("trigger");
+                that.disable();
+            };
+            var assertDisable = function (that) {
+                jqUnit.assertTrue("The onDisable event should have fired", true);
+                jqUnit.assertTrue("The output select box should be disabled", that.output.locate("choices").is(":disabled"));
+                that.outputSettings.locate("val").each(function (idx, elm) {
+                    jqUnit.assertTrue("The outputSettings " + that.model.outputSettings.settings[idx].attrs.name + " form field should be disabled", $(elm).is(":disabled"));
+                });
+                start();
+            };
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    "afterRender.trigger": trigger,
+                    onDisable: {
+                        listener: assertDisable,
+                        priority: "last"
+                    }
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
+                    }
+                }
+            });
+        });
+        
+        pdfExportOptionsTests.asyncTest("enable", function () {
+            jqUnit.expect(5);
+            var model = {
+                output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]},
+                outputSettings: {
+                    settings: [
+                        {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30", disabled: "disabled"}},
+                        {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30", disabled: "disabled"}},
+                        {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600", disabled: "disabled"}}
+                    ]
+                }
+            };
+            var trigger = function (that) {
+                that.output.disable();
+                that.events.afterRender.removeListener("trigger");
+                that.enable();
+            };
+            var assertEnable = function (that) {
+                jqUnit.assertTrue("The onEnable event should have fired", true);
+                jqUnit.assertTrue("The output select box should be enabled", that.output.locate("choices").is(":enabled"));
+                that.outputSettings.locate("val").each(function (idx, elm) {
+                    jqUnit.assertTrue("The outputSettings " + that.model.outputSettings.settings[idx].attrs.name + " form field should be enabled", $(elm).is(":enabled"));
+                });
+                start();
+            };
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
+                model: model,
+                listeners: {
+                    "afterRender.trigger": trigger,
+                    onEnable: {
+                        listener: assertEnable,
+                        priority: "last"
+                    }
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
+                    }
+                }
+            });
+        });
+        
         /****************
          * triggerTests *
          ****************/
