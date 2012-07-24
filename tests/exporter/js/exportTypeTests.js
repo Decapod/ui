@@ -300,26 +300,46 @@ var decapod = decapod || {};
             jqUnit.assertFalse("The changeRequest value '" + mockLowChangeRequest.value + "' should be invalid - below min", decapod.outputSettings.intValidation(mockLowChangeRequest, bounds));
             jqUnit.assertFalse("The changeRequest value '" + mockHighChangeRequest.value + "' should be invalid - above max", decapod.outputSettings.intValidation(mockHighChangeRequest, bounds));
             jqUnit.assertFalse("The changeRequest value '" + mockCharChangeRequest.value + "' should be invalid - not a number", decapod.outputSettings.intValidation(mockCharChangeRequest, bounds));
+            decapod.outputSettings.intValidation(mockCharChangeRequest, bounds, function (cbChangeRequest, cbBounds) {
+                jqUnit.assertDeepEq("The changeRequest should be passed to the callback function", mockCharChangeRequest, cbChangeRequest);
+                jqUnit.assertDeepEq("The bounds object should be passed to the callback function", bounds, cbBounds);
+            });
         });
         
         outputSettingsTests.asyncTest("Requested Change - invalid", function () {
-            jqUnit.expect(1);
+            jqUnit.expect(12);
             var newWidth = "400";
             var newHeight = "400";
             var newDPI = "0";
+            var eventCall = 0;
+            var expected = [
+                {changeRequest: {path: "settings.0.value", value: "400", type: "ADD"}, bounds: {min: "1", max: "300"}},
+                {changeRequest: {path: "settings.1.value", value: "400", type: "ADD"}, bounds: {min: "1", max: "300"}},
+                {changeRequest: {path: "settings.2.value", value: "0", type: "ADD"}, bounds: {min: "1", max: "600"}}
+            ];
+            var origModel;
             
             var triggerEvent = function (that) {
-                var origModel = fluid.copy(that.model);
+                origModel = fluid.copy(that.model);
                 that.applier.requestChange("settings.0.value", newWidth);
                 that.applier.requestChange("settings.1.value", newHeight);
                 that.applier.requestChange("settings.2.value", newDPI);
-                setTimeout(function () {
-                    jqUnit.assertDeepEq("The model shouldn't have changed", origModel, that.model);
-                    start();
-                }, 1000); // add a delay to make sure that any underlying events have a chance to fire.
             };
             var assertChange = function (newModel, that) {
                 jqUnit.assertFalse("The afterModelChanged event shouldn't have fired", true);
+            };
+            var assertValidation = function (changeRequest, bounds, that) {
+                var expChangeRequest = expected[eventCall].changeRequest;
+                var expBounds = expected[eventCall].bounds;
+                jqUnit.assertDeepEq("The changeRequest should be provided", expChangeRequest, changeRequest);
+                jqUnit.assertEquals("The max bound should be provided", expBounds.max, bounds.max);
+                jqUnit.assertEquals("The min bound should be provided", expBounds.min, bounds.min);
+                jqUnit.assertDeepEq("The model shouldn't have changed", origModel, that.model);
+                if (eventCall === (expected.length - 1)) {
+                    start();
+                } else {
+                    eventCall++;
+                }
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
                 model: defaultOutputSettingsModel,
@@ -328,7 +348,11 @@ var decapod = decapod || {};
                         listener: assertChange,
                         priority: "last"
                     },
-                    afterRender: triggerEvent
+                    afterRender: triggerEvent,
+                    onValidationError: {
+                        listener: assertValidation,
+                        args: ["{arguments}.0", "{arguments}.1", "{outputSettings}"]
+                    }
                 }
             });
         });
