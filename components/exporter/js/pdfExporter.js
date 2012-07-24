@@ -139,8 +139,8 @@ var decapod = decapod || {};
                 output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]},
                 outputSettings: {
                     settings: [
-                        {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
-                        {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
+                        {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
+                        {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
                         {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600"}}
                     ]
                 }
