@@ -376,7 +376,6 @@ var decapod = decapod || {};
                 
                 assertDisabled(newModel.settings);
                 assertDisabled(that.model.settings);
-                // start();
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
                 model: defaultOutputSettingsModel,
