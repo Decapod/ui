@@ -330,13 +330,16 @@ var decapod = decapod || {};
     decapod.outputSettings.intValidation = function (changeRequest, bounds, failureCallback) {
         var requestedVal = parseInt(changeRequest.value, 10);
         var isValid = !isNaN(requestedVal) && requestedVal >= parseInt(bounds.min) && requestedVal <= parseInt(bounds.max);
+        if (!isValid && typeof(failureCallback) === "function") {
+            failureCallback(changeRequest, bounds);
+        }
         return isValid;
     };
     
     decapod.outputSettings.bindValidators = function (that) {
         $.each(that.model.settings, function (idx, setting) {
             that.applier.guards.addListener("settings." + idx + ".value", function (model, changeRequest) {
-                return decapod.outputSettings.intValidation(changeRequest, setting.attrs);
+                return decapod.outputSettings.intValidation(changeRequest, setting.attrs, that.events.onValidationError.fire);
             });
         });
     };
@@ -409,7 +412,8 @@ var decapod = decapod || {};
         },
         events: {
             afterFetchResources: null,
-            afterModelChanged: null
+            afterModelChanged: null,
+            onValidationError: null
         },
         invokers: {
             disable: "decapod.outputSettings.disable",
