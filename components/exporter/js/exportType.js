@@ -334,14 +334,10 @@ var decapod = decapod || {};
     };
     
     decapod.outputSettings.bindValidators = function (that) {
-        that.applier.guards.addListener("settings.0.value", function (model, changeRequest) {
-            return decapod.outputSettings.intValidation(changeRequest, model.settings[0].attrs);
-        });
-        that.applier.guards.addListener("settings.1.value", function (model, changeRequest) {
-            return decapod.outputSettings.intValidation(changeRequest, model.settings[1].attrs);
-        });
-        that.applier.guards.addListener("settings.2.value", function (model, changeRequest) {
-            return decapod.outputSettings.intValidation(changeRequest, model.settings[2].attrs);
+        $.each(that.model.settings, function (idx, setting) {
+            that.applier.guards.addListener("settings." + idx + ".value", function (model, changeRequest) {
+                return decapod.outputSettings.intValidation(changeRequest, setting.attrs);
+            });
         });
     };
     
