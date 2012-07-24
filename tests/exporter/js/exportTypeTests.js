@@ -229,8 +229,8 @@ var decapod = decapod || {};
         
         var defaultOutputSettingsModel = {
             settings: [
-                {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
-                {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
+                {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
+                {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
                 {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600"}}
             ]
         };
@@ -289,6 +289,49 @@ var decapod = decapod || {};
                 }
             });
         });
+            
+        outputSettingsTests.test("decapod.outputSettings.intValidation", function () {
+            var bounds = {min: "1", max: "300"};
+            var mockValidChangeRequest = {value: "2"};
+            var mockLowChangeRequest = {value: "0"};
+            var mockHighChangeRequest = {value: "301"};
+            var mockCharChangeRequest = {value: "three"};
+            jqUnit.assertTrue("The changeRequest value '" + mockValidChangeRequest.value + "' should be valid", decapod.outputSettings.intValidation(mockValidChangeRequest, bounds));
+            jqUnit.assertFalse("The changeRequest value '" + mockLowChangeRequest.value + "' should be invalid - below min", decapod.outputSettings.intValidation(mockLowChangeRequest, bounds));
+            jqUnit.assertFalse("The changeRequest value '" + mockHighChangeRequest.value + "' should be invalid - above max", decapod.outputSettings.intValidation(mockHighChangeRequest, bounds));
+            jqUnit.assertFalse("The changeRequest value '" + mockCharChangeRequest.value + "' should be invalid - not a number", decapod.outputSettings.intValidation(mockCharChangeRequest, bounds));
+        });
+        
+        outputSettingsTests.asyncTest("Requested Change - invalid", function () {
+            jqUnit.expect(1);
+            var newWidth = "400";
+            var newHeight = "400";
+            var newDPI = "0";
+            
+            var triggerEvent = function (that) {
+                var origModel = fluid.copy(that.model);
+                that.applier.requestChange("settings.0.value", newWidth);
+                that.applier.requestChange("settings.1.value", newHeight);
+                that.applier.requestChange("settings.2.value", newDPI);
+                setTimeout(function () {
+                    jqUnit.assertDeepEq("The model shouldn't have changed", origModel, that.model);
+                    start();
+                }, 1000); // add a delay to make sure that any underlying events have a chance to fire.
+            };
+            var assertChange = function (newModel, that) {
+                jqUnit.assertFalse("The afterModelChanged event shouldn't have fired", true);
+            };
+            createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertChange,
+                        priority: "last"
+                    },
+                    afterRender: triggerEvent
+                }
+            });
+        });
         
         outputSettingsTests.asyncTest("disable", function () {
             jqUnit.expect(27);
@@ -329,8 +372,8 @@ var decapod = decapod || {};
             
             var model = {
                 settings: [
-                    {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30", disabled: "disabled"}},
-                    {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30", disabled: "disabled"}},
+                    {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300", disabled: "disabled"}},
+                    {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300", disabled: "disabled"}},
                     {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600", disabled: "disabled"}}
                 ]
             };
@@ -376,8 +419,8 @@ var decapod = decapod || {};
             output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]},
             outputSettings: {
                 settings: [
-                    {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
-                    {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30"}},
+                    {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
+                    {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
                     {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600"}}
                 ]
             }

@@ -327,6 +327,24 @@ var decapod = decapod || {};
         that.refreshView();
     };
     
+    decapod.outputSettings.intValidation = function (changeRequest, bounds, failureCallback) {
+        var requestedVal = parseInt(changeRequest.value, 10);
+        var isValid = !isNaN(requestedVal) && requestedVal >= parseInt(bounds.min) && requestedVal <= parseInt(bounds.max);
+        return isValid;
+    };
+    
+    decapod.outputSettings.bindValidators = function (that) {
+        that.applier.guards.addListener("settings.0.value", function (model, changeRequest) {
+            return decapod.outputSettings.intValidation(changeRequest, model.settings[0].attrs);
+        });
+        that.applier.guards.addListener("settings.1.value", function (model, changeRequest) {
+            return decapod.outputSettings.intValidation(changeRequest, model.settings[1].attrs);
+        });
+        that.applier.guards.addListener("settings.2.value", function (model, changeRequest) {
+            return decapod.outputSettings.intValidation(changeRequest, model.settings[2].attrs);
+        });
+    };
+    
     decapod.outputSettings.preInit = function (that) {
         /*
          * Work around for FLUID-4709
@@ -346,6 +364,8 @@ var decapod = decapod || {};
         that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
+        
+        that.bindValidators();
         
         decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
@@ -397,7 +417,8 @@ var decapod = decapod || {};
         },
         invokers: {
             disable: "decapod.outputSettings.disable",
-            enable: "decapod.outputSettings.enable"
+            enable: "decapod.outputSettings.enable",
+            bindValidators: "decapod.outputSettings.bindValidators"
         },
         resources: {
             template: {
