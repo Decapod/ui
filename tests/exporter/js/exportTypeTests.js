@@ -308,7 +308,7 @@ var decapod = decapod || {};
         });
         
         outputSettingsTests.asyncTest("Requested Change - invalid", function () {
-            jqUnit.expect(12);
+            jqUnit.expect(15);
             var newWidth = "400";
             var newHeight = "400";
             var newDPI = "0";
@@ -336,6 +336,7 @@ var decapod = decapod || {};
                 jqUnit.assertEquals("The max bound should be provided", expBounds.max, bounds.max);
                 jqUnit.assertEquals("The min bound should be provided", expBounds.min, bounds.min);
                 jqUnit.assertDeepEq("The model shouldn't have changed", origModel, that.model);
+                jqUnit.assertTrue("The invalidEntry class should be added", that.locate("settings").eq(eventCall).hasClass(that.options.styles.invalidEntry));
                 if (eventCall === (expected.length - 1)) {
                     start();
                 } else {
@@ -352,7 +353,8 @@ var decapod = decapod || {};
                     afterRender: triggerEvent,
                     onValidationError: {
                         listener: assertValidation,
-                        args: ["{arguments}.0", "{arguments}.1", "{outputSettings}"]
+                        args: ["{arguments}.0", "{arguments}.1", "{outputSettings}"],
+                        priority: "last"
                     }
                 }
             });

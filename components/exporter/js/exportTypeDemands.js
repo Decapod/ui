@@ -169,4 +169,7 @@ var decapod = decapod || {};
     fluid.demands("decapod.outputSettings.bindValidators", ["decapod.outputSettings"], {
         args: ["{outputSettings}"]
     });
+    fluid.demands("decapod.outputSettings.setInvalid", ["decapod.outputSettings"], {
+        args: ["{outputSettings}", "{arguments}.0"]
+    });
 })(jQuery);

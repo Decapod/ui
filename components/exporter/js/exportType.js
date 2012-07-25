@@ -344,6 +344,11 @@ var decapod = decapod || {};
         });
     };
     
+    decapod.outputSettings.setInvalid = function (that, changeRequest) {
+        var index = parseInt(changeRequest.path.split(".")[1], 10);
+        that.locate("settings").eq(index).addClass(that.options.styles.invalidEntry);
+    };
+    
     decapod.outputSettings.preInit = function (that) {
         /*
          * Work around for FLUID-4709
@@ -356,6 +361,10 @@ var decapod = decapod || {};
         
         that.disable = function () {
             that.disable();
+        };
+        
+        that.setInvalid = function (changeRequest) {
+            that.setInvalid(changeRequest);
         };
     };
     
@@ -422,15 +431,22 @@ var decapod = decapod || {};
             // Work around for FLUID-4737. Using the array positions instead of %min and %max
             errorMessage: "Enter a value between %0 to %1."
         },
+        styles: {
+            invalidEntry: "ds-outputSettings-invalidEntry"
+        },
         events: {
             afterFetchResources: null,
             afterModelChanged: null,
             onValidationError: null
         },
+        listeners: {
+            "onValidationError.setInvalid": "{outputSettings}.setInvalid"
+        },
         invokers: {
             disable: "decapod.outputSettings.disable",
             enable: "decapod.outputSettings.enable",
-            bindValidators: "decapod.outputSettings.bindValidators"
+            bindValidators: "decapod.outputSettings.bindValidators",
+            setInvalid: "decapod.outputSettings.setInvalid"
         },
         resources: {
             template: {
