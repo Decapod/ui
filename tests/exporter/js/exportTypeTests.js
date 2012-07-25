@@ -397,7 +397,7 @@ var decapod = decapod || {};
             };
             var assertChange = function (newModel, that) {
                 var assertDisabled = function (settings) {
-                    $.each(settings, function(idx, setting) {
+                    $.each(settings, function (idx, setting) {
                         jqUnit.assertEquals("The disabled attrs should be added", "disabled", setting.attrs.disabled);
                     });
                 };
@@ -439,7 +439,7 @@ var decapod = decapod || {};
             };
             var assertChange = function (newModel, that) {
                 var assertEnabled = function (settings) {
-                    $.each(settings, function(idx, setting) {
+                    $.each(settings, function (idx, setting) {
                         jqUnit.assertUndefined("The disabled attrs should not be added", setting.attrs.disabled);
                     });
                 };
