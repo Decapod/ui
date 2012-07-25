@@ -347,7 +347,7 @@ var decapod = decapod || {};
         });
         
         pdfExporterTests.test("decapod.pdfExporter.convertResolutionSetting", function () {
-            var setting = {value: 200, name: "resolution", unit: "dpi", attrs: {type: "number", min: 1, max: 600}};
+            var setting = {value: 200, name: "resolution", unit: "dpi", attrs: {type: "number", min: 50, max: 600}};
             var expected = {dpi: 200};
             jqUnit.assertDeepEq("The dimension setting should be converted", expected, decapod.pdfExporter.convertResolutionSetting(setting));
         });
