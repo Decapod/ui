@@ -1,0 +1,11 @@
+.ds-outputSettings-invalidEntry .ds-outputSettings-value {
+    background-color: #F6EF0C;
+}
+
+.ds-outputSettings-invalidEntry .ds-outputSettings-errorMessage {
+    display: inline;
+}
+
+.ds-outputSettings-errorMessage {
+    display: none;
+}
