@@ -272,11 +272,11 @@ var decapod = decapod || {};
             jqUnit.expect(2);
             var newWidth = "222";
             var triggerEvent = function (that) {
-                that.applier.requestChange("output.settings.0.value", newWidth);
+                that.applier.requestChange("settings.0.value", newWidth);
             };
             var assertChange = function (newModel, that) {
-                jqUnit.assertEquals("The model should be updated with the new width", newWidth, newModel.output.settings[0].value);
-                jqUnit.assertEquals("The components model should be update with the new width", newWidth, newModel.output.settings[0].value);
+                jqUnit.assertEquals("The model should be updated with the new width", newWidth, newModel.settings[0].value);
+                jqUnit.assertEquals("The components model should be update with the new width", newWidth, newModel.settings[0].value);
                 start();
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
@@ -356,6 +356,31 @@ var decapod = decapod || {};
                         args: ["{arguments}.0", "{arguments}.1", "{outputSettings}"],
                         priority: "last"
                     }
+                }
+            });
+        });
+        
+        outputSettingsTests.asyncTest("invalid entry corrected", function () {
+            jqUnit.expect(1);
+            var triggerEvent = function (that) {
+                that.locate("settings").eq(0).addClass(that.options.styles.invalidEntry);
+                that.applier.requestChange("settings.0.value", 20);
+            };
+            
+            var assertChange = function (that) {
+                jqUnit.assertFalse("The invalidEntry class should be removed.", that.locate("settings").eq(0).hasClass(that.options.styles.invalidEntry));
+                start();
+            };
+            
+            createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertChange,
+                        args: ["{outputSettings}"],
+                        priority: "last"
+                    },
+                    afterRender: triggerEvent
                 }
             });
         });
