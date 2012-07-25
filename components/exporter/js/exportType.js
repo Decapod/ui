@@ -312,7 +312,7 @@ var decapod = decapod || {};
     decapod.outputSettings.enable = function (that) {
         var settings = fluid.copy(that.model.settings);
         $.each(settings, function (idx, setting) {
-            delete setting.attrs["disabled"];
+            delete setting.attrs.disabled;
         });
         that.applier.requestChange("settings", settings);
         that.refreshView();
@@ -321,7 +321,7 @@ var decapod = decapod || {};
     decapod.outputSettings.disable = function (that) {
         var settings = fluid.copy(that.model.settings);
         $.each(settings, function (idx, setting) {
-            setting.attrs["disabled"] = "disabled";
+            setting.attrs.disabled = "disabled";
         });
         that.applier.requestChange("settings", settings);
         that.refreshView();
@@ -329,8 +329,8 @@ var decapod = decapod || {};
     
     decapod.outputSettings.intValidation = function (changeRequest, bounds, failureCallback) {
         var requestedVal = parseInt(changeRequest.value, 10);
-        var isValid = !isNaN(requestedVal) && requestedVal >= parseInt(bounds.min) && requestedVal <= parseInt(bounds.max);
-        if (!isValid && typeof(failureCallback) === "function") {
+        var isValid = !isNaN(requestedVal) && requestedVal >= parseInt(bounds.min, 10) && requestedVal <= parseInt(bounds.max, 10);
+        if (!isValid && typeof (failureCallback) === "function") {
             failureCallback(changeRequest, bounds);
         }
         return isValid;
@@ -378,7 +378,7 @@ var decapod = decapod || {};
         
         that.unsetInvalid = function (changeRequest) {
             that.unsetInvalid(changeRequest);
-        }
+        };
     };
     
     decapod.outputSettings.finalInit = function (that) {
