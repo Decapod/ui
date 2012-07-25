@@ -141,7 +141,7 @@ var decapod = decapod || {};
                     settings: [
                         {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
                         {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
-                        {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600"}}
+                        {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "50", max: "600"}}
                     ]
                 }
             }

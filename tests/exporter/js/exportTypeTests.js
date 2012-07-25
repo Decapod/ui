@@ -231,7 +231,7 @@ var decapod = decapod || {};
             settings: [
                 {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
                 {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
-                {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600"}}
+                {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "50", max: "600"}}
             ]
         };
         
@@ -315,7 +315,7 @@ var decapod = decapod || {};
             var expected = [
                 {changeRequest: {path: "settings.0.value", value: "400", type: "ADD"}, bounds: {min: "1", max: "300"}},
                 {changeRequest: {path: "settings.1.value", value: "400", type: "ADD"}, bounds: {min: "1", max: "300"}},
-                {changeRequest: {path: "settings.2.value", value: "0", type: "ADD"}, bounds: {min: "1", max: "600"}}
+                {changeRequest: {path: "settings.2.value", value: "0", type: "ADD"}, bounds: {min: "50", max: "600"}}
             ];
             var origModel;
             
@@ -397,7 +397,7 @@ var decapod = decapod || {};
                 settings: [
                     {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300", disabled: "disabled"}},
                     {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300", disabled: "disabled"}},
-                    {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600", disabled: "disabled"}}
+                    {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "50", max: "600", disabled: "disabled"}}
                 ]
             };
             
@@ -444,7 +444,7 @@ var decapod = decapod || {};
                 settings: [
                     {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
                     {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
-                    {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600"}}
+                    {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "50", max: "600"}}
                 ]
             }
         };
@@ -784,7 +784,7 @@ var decapod = decapod || {};
                     settings: [
                         {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30", disabled: "disabled"}},
                         {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30", disabled: "disabled"}},
-                        {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "1", max: "600", disabled: "disabled"}}
+                        {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "50", max: "600", disabled: "disabled"}}
                     ]
                 }
             };
