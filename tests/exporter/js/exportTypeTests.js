@@ -236,14 +236,15 @@ var decapod = decapod || {};
         };
         
         outputSettingsTests.asyncTest("Init tests", function () {
-            jqUnit.expect(19);
+            jqUnit.expect(23);
             var assertInit = function (that) {
                 jqUnit.assertTrue("The component should have initialized", that);
+                jqUnit.assertDeepEq("The model should be the same", defaultOutputSettingsModel, that.model);
                 decapod.testUtils.exportType.assertOutputSettingsRender(that);
                 start();
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model: defaultOutputSettingsModel,
+                model: fluid.copy(defaultOutputSettingsModel),
                 listeners: {
                     afterRender: assertInit
                 }
@@ -358,7 +359,7 @@ var decapod = decapod || {};
         });
         
         outputSettingsTests.asyncTest("disable", function () {
-            jqUnit.expect(27);
+            jqUnit.expect(30);
             var triggerEvent = function (that) {
                 that.events.afterRender.removeListener("trigger");
                 that.events.afterRender.addListener(function (that) {
@@ -391,7 +392,7 @@ var decapod = decapod || {};
         });
         
         outputSettingsTests.asyncTest("enable", function () {
-            jqUnit.expect(24);
+            jqUnit.expect(27);
             
             var model = {
                 settings: [
@@ -509,7 +510,7 @@ var decapod = decapod || {};
         });
         
         pdfExportOptionsTests.asyncTest("Rendering", function () {
-            jqUnit.expect(28);
+            jqUnit.expect(31);
             var assertRender = function (that) {
                 decapod.testUtils.exportType.assertPDFOptionsRender(that);
                 start();
