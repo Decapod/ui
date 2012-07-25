@@ -344,15 +344,6 @@ var decapod = decapod || {};
         });
     };
     
-    // Work around for FLUID-4737. Manually going through and updating the text for the errorMessage field.
-    // This should be called after rendering.
-    decapod.outputSettings.renderErrorMessage = function (that) {
-        that.locate("errorMessage").each(function (idx, elm) {
-            var message = fluid.stringTemplate(that.options.strings.errorMessage, that.model.settings[idx].attrs);
-            $(elm).text(message);
-        });
-    };
-    
     decapod.outputSettings.preInit = function (that) {
         /*
          * Work around for FLUID-4709
@@ -365,10 +356,6 @@ var decapod = decapod || {};
         
         that.disable = function () {
             that.disable();
-        };
-        
-        that.renderErrorMessage = function () {
-            that.renderErrorMessage();
         };
     };
     
@@ -393,6 +380,7 @@ var decapod = decapod || {};
                 repeatID: "settings:",
                 controlledBy: "settings",
                 pathAs: "setting",
+                valueAs: "settingVal",
                 tree: {
                     label: "${{setting}.name}",
                     val: {
@@ -404,7 +392,10 @@ var decapod = decapod || {};
                     },
                     unit: "${{setting}.unit}",
                     errorMessage: {
-                        messagekey: "errorMessage"
+                        messagekey: "errorMessage",
+                        // Work around for FLUID-4737, passing in the arguments in the array style instead of passing in an object directly
+                        args: ["{settingVal}.attrs.min", "{settingVal}.attrs.max"]
+                        
                     }
                 }
             }
@@ -428,21 +419,18 @@ var decapod = decapod || {};
             settings: [] //in the form {value: "", name: "", unit: "", attrs: {}}
         },
         strings: {
-            errorMessage: "Enter a value between %min to %max."
+            // Work around for FLUID-4737. Using the array positions instead of %min and %max
+            errorMessage: "Enter a value between %0 to %1."
         },
         events: {
             afterFetchResources: null,
             afterModelChanged: null,
             onValidationError: null
         },
-        listeners: {
-            afterRender: "{outputSettings}.renderErrorMessage"
-        },
         invokers: {
             disable: "decapod.outputSettings.disable",
             enable: "decapod.outputSettings.enable",
-            bindValidators: "decapod.outputSettings.bindValidators",
-            renderErrorMessage: "decapod.outputSettings.renderErrorMessage"
+            bindValidators: "decapod.outputSettings.bindValidators"
         },
         resources: {
             template: {
