@@ -344,9 +344,18 @@ var decapod = decapod || {};
         });
     };
     
-    decapod.outputSettings.setInvalid = function (that, changeRequest) {
+    decapod.outputSettings.setInvalidStatus = function (that, changeRequest, isValid) {
+        changeRequest = fluid.isArrayable(changeRequest) ? changeRequest[0] : changeRequest;
         var index = parseInt(changeRequest.path.split(".")[1], 10);
-        that.locate("settings").eq(index).addClass(that.options.styles.invalidEntry);
+        that.locate("settings").eq(index)[isValid ? "removeClass" : "addClass"](that.options.styles.invalidEntry);
+    };
+    
+    decapod.outputSettings.setInvalid = function (that, changeRequest) {
+        decapod.outputSettings.setInvalidStatus(that, changeRequest);
+    };
+    
+    decapod.outputSettings.unsetInvalid = function (that, changeRequest) {
+        decapod.outputSettings.setInvalidStatus(that, changeRequest, true);
     };
     
     decapod.outputSettings.preInit = function (that) {
@@ -366,11 +375,15 @@ var decapod = decapod || {};
         that.setInvalid = function (changeRequest) {
             that.setInvalid(changeRequest);
         };
+        
+        that.unsetInvalid = function (changeRequest) {
+            that.unsetInvalid(changeRequest);
+        }
     };
     
     decapod.outputSettings.finalInit = function (that) {
-        that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
-            that.events.afterModelChanged.fire(newModel, oldModel);
+        that.applier.modelChanged.addListener("settings", function (newModel, oldModel, changeRequest) {
+            that.events.afterModelChanged.fire(newModel, oldModel, changeRequest);
         });
         
         that.bindValidators();
@@ -437,16 +450,22 @@ var decapod = decapod || {};
         events: {
             afterFetchResources: null,
             afterModelChanged: null,
-            onValidationError: null
+            onValidationError: null,
+            onCorrection: null
         },
         listeners: {
-            "onValidationError.setInvalid": "{outputSettings}.setInvalid"
+            "onValidationError.setInvalid": "{outputSettings}.setInvalid",
+            "afterModelChanged.unsetInvalid": {
+                listener: "{outputSettings}.unsetInvalid",
+                args: ["{arguments}.2"]
+            }
         },
         invokers: {
             disable: "decapod.outputSettings.disable",
             enable: "decapod.outputSettings.enable",
             bindValidators: "decapod.outputSettings.bindValidators",
-            setInvalid: "decapod.outputSettings.setInvalid"
+            setInvalid: "decapod.outputSettings.setInvalid",
+            unsetInvalid: "decapod.outputSettings.unsetInvalid"
         },
         resources: {
             template: {
