@@ -344,6 +344,15 @@ var decapod = decapod || {};
         });
     };
     
+    // Work around for FLUID-4737. Manually going through and updating the text for the errorMessage field.
+    // This should be called after rendering.
+    decapod.outputSettings.renderErrorMessage = function (that) {
+        that.locate("errorMessage").each(function (idx, elm) {
+            var message = fluid.stringTemplate(that.options.strings.errorMessage, that.model.settings[idx].attrs);
+            $(elm).text(message);
+        });
+    };
+    
     decapod.outputSettings.preInit = function (that) {
         /*
          * Work around for FLUID-4709
@@ -356,6 +365,10 @@ var decapod = decapod || {};
         
         that.disable = function () {
             that.disable();
+        };
+        
+        that.renderErrorMessage = function () {
+            that.renderErrorMessage();
         };
     };
     
@@ -389,7 +402,10 @@ var decapod = decapod || {};
                             attributes: "${{setting}.attrs}"
                         }
                     },
-                    unit: "${{setting}.unit}"
+                    unit: "${{setting}.unit}",
+                    errorMessage: {
+                        messagekey: "errorMessage"
+                    }
                 }
             }
         };
@@ -404,21 +420,29 @@ var decapod = decapod || {};
             settings: ".dc-outputSettings-settings",
             label: ".dc-outputSettings-label",
             val: ".dc-outputSettings-value",
-            unit: ".dc-outputSettings-unit"
+            unit: ".dc-outputSettings-unit",
+            errorMessage: ".dc-outputSettings-errorMessage"
         },
         repeatingSelectors: ["settings"],
         model: {
             settings: [] //in the form {value: "", name: "", unit: "", attrs: {}}
+        },
+        strings: {
+            errorMessage: "Enter a value between %min to %max."
         },
         events: {
             afterFetchResources: null,
             afterModelChanged: null,
             onValidationError: null
         },
+        listeners: {
+            afterRender: "{outputSettings}.renderErrorMessage"
+        },
         invokers: {
             disable: "decapod.outputSettings.disable",
             enable: "decapod.outputSettings.enable",
-            bindValidators: "decapod.outputSettings.bindValidators"
+            bindValidators: "decapod.outputSettings.bindValidators",
+            renderErrorMessage: "decapod.outputSettings.renderErrorMessage"
         },
         resources: {
             template: {
