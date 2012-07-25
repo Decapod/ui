@@ -51,7 +51,8 @@ var decapod = decapod || {};
             jqUnit.assertEquals("The label should be set", setting.name, labelElms.eq(idx).text());
             jqUnit.assertEquals("The value should be set", setting.value, valueElm.val());
             jqUnit.assertEquals("The unit should be set", setting.unit, unitElms.eq(idx).text());
-            jqUnit.assertEquals("The errorMessage should be set", fluid.stringTemplate(that.options.strings.errorMessage, setting.attrs), errorElms.eq(idx).text());
+            // due to a work around for FLUID-4737, have to adjust the templating to use the array style.
+            jqUnit.assertEquals("The errorMessage should be set", fluid.stringTemplate(that.options.strings.errorMessage, [setting.attrs.min, setting.attrs.max]), errorElms.eq(idx).text());
             $.each(setting.attrs, function (attr, val) {
                 jqUnit.assertEquals("The " + attr + " should be set", val, valueElm.attr(attr));
             }); 
