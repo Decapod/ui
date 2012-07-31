@@ -29,13 +29,13 @@ var decapod = decapod || {};
     // Tests
     $(document).ready(function () {
 
-        /*********************************
-         * viewComponentCustomMergeTests *
-         *********************************/
+        /********************
+         * customMergeTests *
+         ********************/
         
-        var viewComponentCustomMergeTests = jqUnit.testCase("decapod.viewComponentCustomMerge");
+        var customMergeTests = jqUnit.testCase("customMerge");
         
-        viewComponentCustomMergeTests.test("decapod.viewComponentCustomMerge.extend", function () {
+        customMergeTests.test("decapod.customMerge.extend", function () {
             
             var tests = [
                 {name: "Two empty arrays", target: [], source: [], expected: []},
@@ -72,13 +72,13 @@ var decapod = decapod || {};
             ];
             
             $.each(tests, function (idx, test) {
-                var merged = decapod.viewComponentCustomMerge.extend(test.target, test.source);
+                var merged = decapod.customMerge.extend(test.target, test.source);
                 jqUnit.assertDeepEq(test.name, test.expected, merged);
             });
             
         });
         
-        viewComponentCustomMergeTests.test("Override default model", function () {
+        customMergeTests.test("Override view's default model", function () {
             var newModel = {a: "A", b: ["B"]};
             var originalModel = {a: "a", b: ["c", "d"], e: "e"};
             var expectedModel = {a: "A", b: ["B"], e: "e"};
