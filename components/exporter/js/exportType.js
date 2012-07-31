@@ -24,40 +24,6 @@ var decapod = decapod || {};
 
 (function ($) {
     
-    /************************************
-     * decapod.viewComponentCustomMerge *
-     ************************************/
-    
-    fluid.registerNamespace("decapod.viewComponentCustomMerge");
-    
-    decapod.viewComponentCustomMerge.extend = function (target, source) {
-        target = target || {};
-        if (fluid.isArrayable(target) || fluid.isPrimitive(target)) {
-            target = source !== undefined ? source : target;
-        } else if (!fluid.isPrimitive(source)) {
-            for (var key in source) {
-                if (target[key] && typeof(target[key]) === "object") {
-                    target[key] = decapod.viewComponentCustomMerge.extend(target[key], source[key]);
-                } else if (source[key] !== undefined) {
-                    target[key] = source[key];
-                }
-            }
-        }
- 
-        return target;
-    };
-    
-    decapod.viewComponentCustomMerge.mergeModel = function (target, source) {
-        return decapod.viewComponentCustomMerge.extend(target, source);
-    };
-    
-    fluid.defaults("decapod.viewComponentCustomMerge", {
-        gradeNames: ["fluid.viewComponent"],
-        mergePolicy: {
-            model: decapod.viewComponentCustomMerge.mergeModel
-        }
-    });
-    
     /************************
      * decapod.exportPoller *
      ************************/
