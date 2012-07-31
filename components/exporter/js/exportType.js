@@ -208,7 +208,7 @@ var decapod = decapod || {};
     };
     
     fluid.defaults("decapod.pdfExportOptions", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["decapod.viewComponentCustomMerge", "autoInit"],
         preInitFunction: "decapod.pdfExportOptions.preInit",
         finalInitFunction: "decapod.pdfExportOptions.finalInit",
         produceTree: "decapod.pdfExportOptions.produceTree",
