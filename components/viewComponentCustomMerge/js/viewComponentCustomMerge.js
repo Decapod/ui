@@ -36,7 +36,7 @@ var decapod = decapod || {};
             target = source !== undefined ? source : target;
         } else if (!fluid.isPrimitive(source)) {
             for (var key in source) {
-                if (target[key] && typeof(target[key]) === "object") {
+                if (target[key] && typeof (target[key]) === "object") {
                     target[key] = decapod.viewComponentCustomMerge.extend(target[key], source[key]);
                 } else if (source[key] !== undefined) {
                     target[key] = source[key];
