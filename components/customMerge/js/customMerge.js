@@ -24,20 +24,20 @@ var decapod = decapod || {};
 
 (function ($) {
     
-    /************************************
-     * decapod.viewComponentCustomMerge *
-     ************************************/
+    /***********************
+     * decapod.customMerge *
+     ***********************/
     
-    fluid.registerNamespace("decapod.viewComponentCustomMerge");
+    fluid.registerNamespace("decapod.customMerge");
     
-    decapod.viewComponentCustomMerge.extend = function (target, source) {
+    decapod.customMerge.extend = function (target, source) {
         target = target || {};
         if (fluid.isArrayable(target) || fluid.isPrimitive(target)) {
             target = source !== undefined ? source : target;
         } else if (!fluid.isPrimitive(source)) {
             for (var key in source) {
                 if (target[key] && typeof (target[key]) === "object") {
-                    target[key] = decapod.viewComponentCustomMerge.extend(target[key], source[key]);
+                    target[key] = decapod.customMerge.extend(target[key], source[key]);
                 } else if (source[key] !== undefined) {
                     target[key] = source[key];
                 }
@@ -47,14 +47,18 @@ var decapod = decapod || {};
         return target;
     };
     
-    decapod.viewComponentCustomMerge.mergeModel = function (target, source) {
-        return decapod.viewComponentCustomMerge.extend(target, source);
+    decapod.customMerge.mergeModel = function (target, source) {
+        return decapod.customMerge.extend(target, source);
     };
+    
+    /************************************
+     * decapod.viewComponentCustomMerge *
+     ************************************/
     
     fluid.defaults("decapod.viewComponentCustomMerge", {
         gradeNames: ["fluid.viewComponent"],
         mergePolicy: {
-            model: decapod.viewComponentCustomMerge.mergeModel
+            model: decapod.customMerge.mergeModel
         }
     });
 })(jQuery);
