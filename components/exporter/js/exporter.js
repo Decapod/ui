@@ -329,6 +329,16 @@ var decapod = decapod || {};
                     listeners: {
                         "afterRender.exporter": "{exporter}.events.afterTracedPDFRender"
                     },
+                    model: {
+                        exportOptions: {
+                            outputSettings: {
+                                settings: [
+                                    {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
+                                    {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300"}}
+                                ]
+                            }
+                        }
+                    },
                     components: {
                         dataSource: {
                             options: {
