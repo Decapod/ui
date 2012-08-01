@@ -293,16 +293,27 @@ var decapod = decapod || {};
             
         outputSettingsTests.test("decapod.outputSettings.intValidation", function () {
             var bounds = {min: "1", max: "300"};
-            var mockValidChangeRequest = {value: "2"};
-            var mockLowChangeRequest = {value: "0"};
-            var mockHighChangeRequest = {value: "301"};
-            var mockCharChangeRequest = {value: "three"};
-            jqUnit.assertTrue("The changeRequest value '" + mockValidChangeRequest.value + "' should be valid", decapod.outputSettings.intValidation(mockValidChangeRequest, bounds));
-            jqUnit.assertFalse("The changeRequest value '" + mockLowChangeRequest.value + "' should be invalid - below min", decapod.outputSettings.intValidation(mockLowChangeRequest, bounds));
-            jqUnit.assertFalse("The changeRequest value '" + mockHighChangeRequest.value + "' should be invalid - above max", decapod.outputSettings.intValidation(mockHighChangeRequest, bounds));
-            jqUnit.assertFalse("The changeRequest value '" + mockCharChangeRequest.value + "' should be invalid - not a number", decapod.outputSettings.intValidation(mockCharChangeRequest, bounds));
-            decapod.outputSettings.intValidation(mockCharChangeRequest, bounds, function (cbChangeRequest, cbBounds) {
-                jqUnit.assertDeepEq("The changeRequest should be passed to the callback function", mockCharChangeRequest, cbChangeRequest);
+            validChangeRequests = [
+                {value: 2},
+                {value: "2"}
+            ];
+            
+            invalidChangeRequests = [
+                {value: "0"},
+                {value: "301"},
+                {value: "2a"},
+                {value: ";2"},
+                {value: "three"}
+            ];
+            
+            $.each(validChangeRequests, function (idx, changeRequest) {
+                jqUnit.assertTrue("The changeRequest value '" + changeRequest.value + " should be valid", decapod.outputSettings.intValidation(changeRequest, bounds));
+            });
+            $.each(invalidChangeRequests, function (idx, changeRequest) {
+                jqUnit.assertFalse("The changeRequest value '" + changeRequest.value + " should be invalid", decapod.outputSettings.intValidation(changeRequest, bounds));
+            });
+            decapod.outputSettings.intValidation(invalidChangeRequests[0], bounds, function (cbChangeRequest, cbBounds) {
+                jqUnit.assertDeepEq("The changeRequest should be passed to the callback function", invalidChangeRequests[0], cbChangeRequest);
                 jqUnit.assertDeepEq("The bounds object should be passed to the callback function", bounds, cbBounds);
             });
         });
