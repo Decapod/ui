@@ -489,5 +489,8 @@ var decapod = decapod || {};
         exporterTests.asyncTest("tracedPDF trigger onExportStart", function () {
             testOnExportStartTrigger("tracedPDF");
         });
+        exporterTests.asyncTest("fontMatchedPDF trigger onExportStart", function () {
+            testOnExportStartTrigger("fontMatchedPDF");
+        });
     });
 })(jQuery);
