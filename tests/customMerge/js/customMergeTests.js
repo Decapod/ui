@@ -78,12 +78,12 @@ var decapod = decapod || {};
             
         });
         
-        customMergeTests.test("Override view's default model", function () {
+        var assertModelOverride = function (grade) {
             var newModel = {a: "A", b: ["B"]};
             var originalModel = {a: "a", b: ["c", "d"], e: "e"};
             var expectedModel = {a: "A", b: ["B"], e: "e"};
             fluid.defaults("decapod.test.overideModel", {
-                gradeNames: ["decapod.viewComponentCustomMerge", "autoInit"],
+                gradeNames: [grade, "autoInit"],
                 model: originalModel
             });
             
@@ -92,6 +92,14 @@ var decapod = decapod || {};
             });
             
             jqUnit.assertDeepEq("The model should be overridden.", expectedModel, that.model);
+        };
+        
+        customMergeTests.test("Override view's default model", function () {
+            assertModelOverride("decapod.viewComponentCustomMerge");
+        });
+        
+        customMergeTests.test("Override renderer's default model", function () {
+            assertModelOverride("decapod.rendererComponentCustomMerge");
         });
     });
 })(jQuery);

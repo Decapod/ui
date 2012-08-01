@@ -61,4 +61,15 @@ var decapod = decapod || {};
             model: decapod.customMerge.mergeModel
         }
     });
+    
+    /****************************************
+     * decapod.rendererComponentCustomMerge *
+     ****************************************/
+    
+    fluid.defaults("decapod.rendererComponentCustomMerge", {
+        gradeNames: ["fluid.rendererComponent"],
+        mergePolicy: {
+            model: decapod.customMerge.mergeModel
+        }
+    });
 })(jQuery);

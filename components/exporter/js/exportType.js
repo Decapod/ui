@@ -121,7 +121,7 @@ var decapod = decapod || {};
     };
     
     fluid.defaults("decapod.exportInfo", {
-        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
         finalInitFunction: "decapod.exportInfo.finalInit",
         produceTree: "decapod.exportInfo.produceTree",
         selectors: {
@@ -425,7 +425,7 @@ var decapod = decapod || {};
     };
     
     fluid.defaults("decapod.outputSettings", {
-        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
         preInitFunction: "decapod.outputSettings.preInit",
         finalInitFunction: "decapod.outputSettings.finalInit",
         produceTree: "decapod.outputSettings.produceTree",
@@ -561,7 +561,7 @@ var decapod = decapod || {};
     };
     
     fluid.defaults("decapod.exportControls", {
-        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
         finalInitFunction: "decapod.exportControls.finalInit",
         preInitFunction: "decapod.exportControls.preInit",
         produceTree: "decapod.exportControls.produceTree",
@@ -693,7 +693,7 @@ var decapod = decapod || {};
     };
     
     fluid.defaults("decapod.exportControls.trigger", {
-        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
         preInitFunction: "decapod.exportControls.trigger.preInit",
         finalInitFunction: "decapod.exportControls.trigger.finalInit",
         produceTree: "decapod.exportControls.trigger.produceTree",
@@ -748,7 +748,7 @@ var decapod = decapod || {};
     };
     
     fluid.defaults("decapod.exportControls.progress", {
-        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
         finalInitFunction: "decapod.exportControls.progress.finalInit",
         produceTree: "decapod.exportControls.progress.produceTree",
         selectors: {
@@ -805,7 +805,7 @@ var decapod = decapod || {};
     };
     
     fluid.defaults("decapod.exportControls.complete", {
-        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
         finalInitFunction: "decapod.exportControls.complete.finalInit",
         produceTree: "decapod.exportControls.complete.produceTree",
         invokers: {
