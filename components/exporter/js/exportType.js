@@ -328,8 +328,9 @@ var decapod = decapod || {};
     };
     
     decapod.outputSettings.intValidation = function (changeRequest, bounds, failureCallback) {
+        var regexp = /\D/i;
         var requestedVal = parseInt(changeRequest.value, 10);
-        var isValid = !isNaN(requestedVal) && requestedVal >= parseInt(bounds.min, 10) && requestedVal <= parseInt(bounds.max, 10);
+        var isValid = !isNaN(requestedVal) && !regexp.test(changeRequest.value) && requestedVal >= parseInt(bounds.min, 10) && requestedVal <= parseInt(bounds.max, 10);
         if (!isValid && typeof (failureCallback) === "function") {
             failureCallback(changeRequest, bounds);
         }
