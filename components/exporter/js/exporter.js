@@ -132,6 +132,7 @@ var decapod = decapod || {};
             imagePDFContainer: ".dc-exporter-imagePDF",
             ocrPDFContainer: ".dc-exporter-ocrPDF",
             tracedPDFContainer: ".dc-exporter-tracedPDF",
+            fontMatchedPDFContainer: ".dc-exporter-fontMatchedPDF",
             accordionContainer: ".dc-exporter-accordion"
         },
         strings: {
@@ -151,11 +152,13 @@ var decapod = decapod || {};
             afterImagePDFRender: null,
             afterOCRPDFRender: null,
             afterTracedPDFRender: null,
+            afterFontMatchedPDFRender: null,
             afterExportersRendered: {
                 events: {
                     imagePDF: "afterImagePDFRender",
                     ocrPDF: "afterOCRPDFRender",
-                    tracedPDF: "afterTracedPDFRender"
+                    tracedPDF: "afterTracedPDFRender",
+                    fontMatchedPDF: "afterFontMatchedPDFRender"
                 }
             }
         },
@@ -351,6 +354,47 @@ var decapod = decapod || {};
                                     dataSource: {
                                         options: {
                                             url: "http://localhost:8080/library/decapod-export/export/pdf/type3"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            fontMatchedPDF: {
+                type: "decapod.pdfExporter",
+                container: "{exporter}.dom.fontMatchedPDFContainer",
+                options: {
+                    strings: {
+                        name: "4. Font Matched Text with OCR",
+                        description: "Text on image is matched to a True-Type font resulting in a very compact PDF. Works best with Latin script."
+                    },
+                    listeners: {
+                        "afterRender.exporter": "{exporter}.events.afterFontMatchedPDFRender"
+                    },
+                    model: {
+                        exportOptions: {
+                            outputSettings: {
+                                settings: [
+                                    {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
+                                    {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300"}}
+                                ]
+                            }
+                        }
+                    },
+                    components: {
+                        dataSource: {
+                            options: {
+                                url: "http://localhost:8080/library/decapod-export/export/pdf/type4"
+                            }
+                        },
+                        exportPoller: {
+                            options: {
+                                components: {
+                                    dataSource: {
+                                        options: {
+                                            url: "http://localhost:8080/library/decapod-export/export/pdf/type4"
                                         }
                                     }
                                 }
