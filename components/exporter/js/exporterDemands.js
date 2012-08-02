@@ -91,7 +91,7 @@ var decapod = decapod || {};
     fluid.demands("decapod.exportControls.trigger", ["decapod.exporter", "decapod.exportControls"], {
         options: {
             model: {
-                disabled: true
+                "fileQueueReady": false
             },
             events: {
                 afterTriggered: "{exportControls}.events.onExportTrigger"
@@ -99,7 +99,7 @@ var decapod = decapod || {};
             listeners: {
                 "{exporter}.events.afterQueueReady": {
                     listener: "{trigger}.updateModel",
-                    args: [false]
+                    args: ["fileQueueReady", true]
                 }
             },
             resources: {

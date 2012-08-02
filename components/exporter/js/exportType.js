@@ -629,14 +629,30 @@ var decapod = decapod || {};
      **********************************/
     
     fluid.registerNamespace("decapod.exportControls.trigger");
+    
+    decapod.exportControls.trigger.assertState = function (model) {
+        var conditions = true;
+        
+        $.each(model, function (idx, condition) {
+            if (!condition) {
+                conditions = condition;
+                return false;
+            }
+        });
+        
+        return conditions;
+    };
 
     decapod.exportControls.trigger.produceTree = function (that) {
         return {
             expander: [
                 {
                     type: "fluid.renderer.condition",
-                    condition: that.model.disabled,
-                    trueTree: {
+                    condition: {
+                        funcName: "decapod.exportControls.trigger.assertState",
+                        args: [that.model]
+                    },
+                    falseTree: {
                         trigger: {
                             messagekey: "trigger",
                             decorators: {
@@ -647,7 +663,7 @@ var decapod = decapod || {};
                             }
                         }
                     },
-                    falseTree: {
+                    trueTree: {
                         trigger: {
                             messagekey: "trigger",
                             decorators: [{
@@ -662,8 +678,8 @@ var decapod = decapod || {};
         };
     };
     
-    decapod.exportControls.trigger.updateModel = function (that, disabled) {
-        that.applier.requestChange("disabled", disabled);
+    decapod.exportControls.trigger.updateModel = function (that, condition, status) {
+        that.applier.requestChange(condition, status);
     };
     
     decapod.exportControls.trigger.preInit = function (that) {
@@ -676,8 +692,8 @@ var decapod = decapod || {};
         that.refreshView = function () {
             that.renderer.refreshView();
         };
-        that.updateModel = function (disabled) {
-            that.updateModel(disabled);
+        that.updateModel = function (condition, status) {
+            that.updateModel(condition, status);
         };
     };
     
@@ -712,9 +728,7 @@ var decapod = decapod || {};
         listeners: {
             "afterModelChanged.internal": "{trigger}.refreshView"
         },
-        model: {
-            disabled: false
-        },
+        model: {}, // in the form, {condition: boolean} 
         invokers: {
             updateModel: "decapod.exportControls.trigger.updateModel"
         },
