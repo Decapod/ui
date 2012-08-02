@@ -906,7 +906,7 @@ var decapod = decapod || {};
         triggerTests.asyncTest("updateModel", function () {
             jqUnit.expect(6);
             var setup = function (that) {
-                that.updateModel(true);
+                that.updateModel("testCondition", false);
             };
             var assertRendering = function (that) {
                 decapod.testUtils.exportType.assertTriggerRender(that);
@@ -917,10 +917,13 @@ var decapod = decapod || {};
                 that.events.afterRender.removeListener("initial");
                 that.events.afterRender.addListener(assertRendering);
                 jqUnit.assertTrue("The afterModelChanged event should have fired", true);
-                jqUnit.assertDeepEq("The new Model should be updated", {disabled: true}, newModel);
-                jqUnit.assertTrue("The model's disabled value should be set to true", that.model.disabled);
+                jqUnit.assertDeepEq("The new Model should be updated", {testCondition: false}, newModel);
+                jqUnit.assertFalse("The model's 'testCondition' value should be set to false", that.model.test);
             };
             createTrigger(TRIGGER_CONTAINER, {
+                model: {
+                    testCondition: true
+                },
                 listeners: {
                     afterModelChanged: {
                         listener: assertModelChanged,
