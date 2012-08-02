@@ -443,7 +443,7 @@ var decapod = decapod || {};
         },
         strings: {
             // Work around for FLUID-4737. Using the array positions instead of %min and %max
-            errorMessage: "Enter a value between %0 to %1."
+            errorMessage: "Enter value from %0 to %1."
         },
         styles: {
             invalidEntry: "ds-outputSettings-invalidEntry"

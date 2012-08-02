@@ -8,4 +8,26 @@
 
 .ds-outputSettings-errorMessage {
     display: none;
+    background-color: #F6EF0C;
+    width: 140px;
+    font-size: 0.8em;
+    float:right;
+    margin-top: 3px;
+    position:relative;
+    padding-left: 7px;
+    box-shadow: 2px 2px 4px rgba(188,188,188,0.7);
+}
+
+.ds-outputSettings-errorMessage:before {
+ /* Create a chevron by using two triangles overlaid each other.
+    Triangles are made by taking advantage of border's bevel effect.*/
+    content: "";
+	position: absolute;
+	top: 2px;
+	right: 143px;
+    width: 9px;
+    height: 9px;
+    -moz-transform: rotate(-45deg);
+    transform:rotate(-45deg);
+    background-color: #F6EF0C;
 }

@@ -63,6 +63,10 @@
     height: 9em;
 }
 
+.ds-pdfExporter-exportDetails.ui-accordion-content {
+    padding: 1em 0;
+}
+
 
 .ds-pdfExporter-pdfExportOptions-hidden{
 /* Hide the export options. APPLY this style to hide the export options. */
@@ -81,7 +85,7 @@
 .ds-pdfExporter-pdfExportOptions-form {
     margin-right:auto;
     margin-left:auto;
-    width: 65%;
+    width: 73%;
 }
 
 .ds-pdfExporter-pdfExportOptions-form select {
@@ -100,4 +104,7 @@
     width: 4em;
 }
 
+.ds-pdfExportOptions-outputSettings li {
+    padding-top:0.5em;
+}
 
