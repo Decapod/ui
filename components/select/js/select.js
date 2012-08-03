@@ -82,6 +82,8 @@ var decapod = decapod || {};
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
         });
+        
+        that.events.onReady.fire(that);
     };
     
     fluid.defaults("decapod.select", {
@@ -99,7 +101,8 @@ var decapod = decapod || {};
         model: {}, // in the form {selection: "", choices: [], names: []}
         events: {
             afterFetchResources: null,
-            afterSelectionChanged: null
+            afterSelectionChanged: null,
+            onReady: null
         },
         invokers: {
             enable: "decapod.select.enable",

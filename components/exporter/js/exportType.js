@@ -59,10 +59,15 @@ var decapod = decapod || {};
             that.handleResponse(response);
         };
     };
+    
+    decapod.exportPoller.finalInit = function (that) {
+        that.events.onReady.fire();
+    };
      
     fluid.defaults("decapod.exportPoller", {
         gradeNames: ["fluid.eventedComponent", "autoInit"],
         preInitFunction: "decapod.exportPoller.preInit",
+        finalInitFunction: "decapod.exportPoller.finalInit",
         invokers: {
             poll: "decapod.exportPoller.poll",
             isComplete: "decapod.exportPoller.isComplete",
@@ -70,6 +75,7 @@ var decapod = decapod || {};
         },
         events: {
             onPoll: null,
+            onReady: null,
             pollComplete: null
         },
         delay: 5000,
@@ -118,6 +124,8 @@ var decapod = decapod || {};
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
         });
+        
+        that.events.onReady.fire(that);
     };
     
     fluid.defaults("decapod.exportInfo", {
@@ -133,7 +141,8 @@ var decapod = decapod || {};
             description: "A delectable medley of bits and bytes to satisfy every platform"
         },
         events: {
-            afterFetchResources: null
+            afterFetchResources: null,
+            onReady: null
         },
         resources: {
             template: {
@@ -238,6 +247,15 @@ var decapod = decapod || {};
                 },
                 args: ["{pdfExportOptions}"]
             },
+            onOutputReady: null,
+            onOutputSettingsReady: null,
+            onReady: {
+                events: {
+                    output: "onOutputReady",
+                    outputSettings: "onOutputSettingsReady"
+                },
+                args: ["{pdfExportOptions}"]
+            },
             onDisable: null,
             onEnable: null
         },
@@ -256,6 +274,7 @@ var decapod = decapod || {};
                 options: {
                     model: "{pdfExportOptions}.model.output",
                     listeners: {
+                        "onReady.onOutputReady": "{pdfExportOptions}.events.onOutputReady",
                         "afterRender.afterOutputRender": "{pdfExportOptions}.events.afterOutputRender",
                         "afterSelectionChanged.parent": {
                             listener: "{pdfExportOptions}.applier.requestChange",
@@ -276,6 +295,7 @@ var decapod = decapod || {};
                 options: {
                     model: "{pdfExportOptions}.model.outputSettings",
                     listeners: {
+                        "onReady.onOutputSettingsReady": "{pdfExportOptions}.events.onOutputSettingsReady",
                         "afterRender.afterOutputSettingsRender": "{pdfExportOptions}.events.afterOutputSettingsRender",
                         "afterModelChanged.parent": {
                             listener: "{pdfExportOptions}.applier.requestChange",
@@ -394,6 +414,8 @@ var decapod = decapod || {};
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
         });
+        
+        that.events.onReady.fire(that);
     };
     
     decapod.outputSettings.produceTree = function (that) {
@@ -452,7 +474,8 @@ var decapod = decapod || {};
             afterFetchResources: null,
             afterModelChanged: null,
             onValidationError: null,
-            onCorrection: null
+            onCorrection: null,
+            onReady: null
         },
         listeners: {
             "onValidationError.setInvalid": "{outputSettings}.setInvalid",
@@ -559,6 +582,8 @@ var decapod = decapod || {};
             that.container.append(that.options.resources.controls.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
         });
+        
+        that.events.onReady.fire(that);
     };
     
     fluid.defaults("decapod.exportControls", {
@@ -707,6 +732,8 @@ var decapod = decapod || {};
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
         });
+        
+        that.events.onReady.fire(that);
     };
     
     fluid.defaults("decapod.exportControls.trigger", {
@@ -723,7 +750,8 @@ var decapod = decapod || {};
         events: {
             afterFetchResources: null,
             afterModelChanged: null,
-            afterTriggered: null
+            afterTriggered: null,
+            onReady: null
         },
         listeners: {
             "afterModelChanged.internal": "{trigger}.refreshView"
@@ -760,6 +788,8 @@ var decapod = decapod || {};
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
         });
+        
+        that.events.onReady.fire(that);
     };
     
     fluid.defaults("decapod.exportControls.progress", {
@@ -773,7 +803,8 @@ var decapod = decapod || {};
             message: "Export Progress"
         },
         events: {
-            afterFetchResources: null
+            afterFetchResources: null,
+            onReady: null
         },
         resources: {
             template: {
@@ -817,6 +848,8 @@ var decapod = decapod || {};
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
         });
+        
+        that.events.onReady.fire(that);
     };
     
     fluid.defaults("decapod.exportControls.complete", {
@@ -836,7 +869,8 @@ var decapod = decapod || {};
         },
         events: {
             afterModelChanged: null,
-            afterFetchResources: null
+            afterFetchResources: null,
+            onReady: null
         },
         model: {
             downloadURL: ""

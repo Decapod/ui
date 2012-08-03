@@ -141,13 +141,8 @@ var decapod = decapod || {};
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
                 listeners: {
-                    afterFetchResources: {
-                        listener: function (that) {
-                            // enssures that the exportControls subcompoent has rendered before trying to test it.
-                            that.exportControls.events.afterRender.addListener(function () {
-                                assertRendering(that);
-                            });
-                        },
+                    afterRender: {
+                        listener: assertRendering,
                         priority: "last",
                         args: ["{pdfExporter}"]
                     }
@@ -409,6 +404,77 @@ var decapod = decapod || {};
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
                 listeners: {
+                    afterRender: {
+                        listener: trigger,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("valid custom setting", function () {
+            jqUnit.expect(4);
+            var newWidth = "200";
+            var expected = {
+                width: 20,
+                height: 29.7,
+                dpi: "200"
+            };
+            var trigger = function (that) {
+                that.exportOptions.outputSettings.applier.requestChange("settings.0.value", newWidth);
+            };
+            var assertModelChange = function (newModel, that) {
+                jqUnit.assertEquals("The model should be updated with the new output selection", newWidth, newModel.exportOptions.outputSettings.settings[0].value);
+                jqUnit.assertEquals("The components model should be update with the new output selection", newWidth, that.model.exportOptions.outputSettings.settings[0].value);
+                jqUnit.assertDeepEq("The assembledExportOptions property is set", expected, that.assembledExportOptions);
+                jqUnit.isVisible("The export trigger should be visible", $(".dc-exportControls-trigger-exportControl", that.container));
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                model: {
+                    exportOptions: {
+                        output: {selection: "custom"}
+                    }
+                },
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertModelChange,
+                        args: ["{arguments}.0", "{pdfExporter}"]
+                    },
+                    afterRender: {
+                        listener: trigger,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("invalid custom setting", function () {
+            jqUnit.expect(2);
+            var newWidth = "2000";
+            var expected = "210";
+            var trigger = function (that) {
+                that.exportOptions.outputSettings.events.onValidationError.addListener(function () {assertValidationError(that);});
+                that.exportOptions.outputSettings.applier.requestChange("settings.0.value", newWidth);
+            };
+            var assertValidationError = function (that) {
+                jqUnit.assertEquals("The components model should not be update with the new output selection", expected, that.model.exportOptions.outputSettings.settings[0].value);
+                jqUnit.notVisible("The export trigger should not be visible", $(".dc-exportControls-trigger-exportControl", that.container));
+                start();
+            };
+            var assertModelChange = function () {
+                jqUnit.assertFalse("The afterModelChanged event should not have fired.", true);
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                model: {
+                    exportOptions: {
+                        output: {selection: "custom"}
+                    }
+                },
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertModelChange
+                    },
                     afterRender: {
                         listener: trigger,
                         priority: "last"
