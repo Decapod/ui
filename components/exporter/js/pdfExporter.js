@@ -121,7 +121,21 @@ var decapod = decapod || {};
             afterExportControlsRender: null,
             afterExportInfoRender: null,
             onExportStart: null,
-            onReady: null,
+            onEventBinderReady: null,
+            onExportPollerReady: null,
+            onExportInfoReady: null,
+            onExportOptionsReady: null,
+            onExportControlsReady: null,
+            onReady: {
+                events: {
+                    eventBinder: "onEventBinderReady",
+                    exportPoller: "onExportPollerReady",
+                    exportInfo: "onExportInfoReady",
+                    exportOptions: "onExportOptionsReady",
+                    exportControls: "onExportControlsReady"
+                },
+                args: ["{pdfExporter}"]
+            },
             afterRender: {
                 events: {
                     exportOptions: "afterExportOptionsRender",
@@ -213,10 +227,8 @@ var decapod = decapod || {};
                 createOnEvent: "afterFetchResources",
                 priority: "last",
                 options: {
-                    events: {
-                        "onReady": "{pdfExporter}.events.onReady"
-                    },
                     listeners: {
+                        "onReady.onEventBinderReady": "{pdfExporter}.events.onEventBinderReady",
                         "{pdfExporter}.events.onExportStart": {
                             namespace: "start",
                             listener: "{dataSource}.put",
@@ -231,7 +243,12 @@ var decapod = decapod || {};
                 type: "decapod.dataSource"
             },
             exportPoller: {
-                type: "decapod.exportPoller"
+                type: "decapod.exportPoller",
+                options: {
+                    listeners: {
+                        "onReady.onExportPollerReady": "{pdfExporter}.events.onExportPollerReady"
+                    }
+                }
             },
             exportInfo: {
                 type: "decapod.exportInfo",
@@ -246,6 +263,7 @@ var decapod = decapod || {};
                         template: "{pdfExporter}.options.resources.exportInfo"
                     },
                     listeners: {
+                        "onReady.onExportInfoReady": "{pdfExporter}.events.onExportInfoReady",
                         "afterRender.afterExportInfoRender": "{pdfExporter}.events.afterExportInfoRender"
                     }
                 }
@@ -267,6 +285,7 @@ var decapod = decapod || {};
                         outputSettings: "{pdfExporter}.options.resources.outputSettings"
                     },
                     listeners: {
+                        "onReady.onExportOptionsReady": "{pdfExporter}.events.onExportOptionsReady",
                         "afterRender.afterExportOptionsRender": "{pdfExporter}.events.afterExportOptionsRender",
                         "afterFetchResources.outputSettingsOnRender": {
                             listener: "{pdfExportOptions}.showIfModelValue",
@@ -287,7 +306,7 @@ var decapod = decapod || {};
             exportControls: {
                 type: "decapod.exportControls",
                 container: "{pdfExporter}.dom.controls",
-                createOnEvent: "afterFetchResources",
+                createOnEvent: "onExportOptionsReady",
                 options: {
                     strings: {
                         trigger: "{pdfExporter}.options.strings.exportControl",
@@ -302,78 +321,8 @@ var decapod = decapod || {};
                         complete: "{pdfExporter}.options.resources.complete"
                     },
                     listeners: {
+                        "onReady.onExportControlsReady": "{pdfExporter}.events.onExportControlsReady",
                         "afterRender.afterExportControlsRender": "{pdfExporter}.events.afterExportControlsRender"
-                    }
-                }
-            }
-        }
-    });
-    
-    /************************
-     * decapod.exportPoller *
-     ************************/
-     
-    fluid.registerNamespace("decapod.exportPoller");
-    
-    decapod.exportPoller.poll = function (that) {
-        that.events.onPoll.fire();
-    };
-    
-    decapod.exportPoller.isComplete = function (response) {
-        return response.status && response.status.toLowerCase() === "complete";
-    };
-    
-    decapod.exportPoller.handleResponse = function (that, response) {
-        that.response = response;
-        if (that.isComplete(response)) {
-            that.events.pollComplete.fire(response);
-        } else {
-            setTimeout(function () {
-                that.poll();
-            }, that.options.delay);
-        }
-    };
-    
-    decapod.exportPoller.preInit = function (that) {
-        /*
-         * Work around for FLUID-4709
-         * This method is overwritten by the framework after initComponent executes.
-         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
-         */
-        that.handleResponse = function (response) {
-            that.handleResponse(response);
-        };
-    };
-     
-    fluid.defaults("decapod.exportPoller", {
-        gradeNames: ["fluid.eventedComponent", "autoInit"],
-        preInitFunction: "decapod.exportPoller.preInit",
-        invokers: {
-            poll: "decapod.exportPoller.poll",
-            isComplete: "decapod.exportPoller.isComplete",
-            handleResponse: "decapod.exportPoller.handleResponse"
-        },
-        events: {
-            onPoll: null,
-            pollComplete: null
-        },
-        delay: 5000,
-        components: {
-            eventBinder: {
-                type: "decapod.exportPoller.eventBinder",
-                priority: "last",
-                options: {
-                    listeners: {
-                        "{exportPoller}.events.onPoll": "{dataSource}.get"
-                    }
-                }
-            },
-            dataSource: {
-                type: "decapod.dataSource",
-                priority: "first",
-                options: {
-                    listeners: {
-                        "success.handler": "{exportPoller}.handleResponse"
                     }
                 }
             }

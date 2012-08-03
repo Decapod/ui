@@ -64,6 +64,26 @@ var decapod = decapod || {};
         args: ["{dataSource}", "PUT", "{pdfExporter}.assembledExportOptions", "{arguments}.1"]
     });
     
+    fluid.demands("decapod.exportControls.trigger", ["decapod.pdfExporter", "decapod.exportControls", "decapod.outputSettings"], {
+        options: {
+            listeners: {
+                "{outputSettings}.events.onValidationError": {
+                    listener: "{trigger}.updateModel",
+                    args: ["valid", false]
+                }
+            },
+            events: {
+                afterTriggered: "{exportControls}.events.onExportTrigger"
+            },
+            resources: {
+                template: "{exportControls}.options.resources.trigger"
+            },
+            strings: {
+                trigger: "{exportControls}.options.strings.trigger"
+            }
+        }
+    });
+    
     /*******************
      * Invoker Demands *
      *******************/

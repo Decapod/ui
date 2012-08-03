@@ -129,6 +129,19 @@ var decapod = decapod || {};
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
+        exportPollerTests.asyncTest("onReady", function () {
+            jqUnit.expect(1);
+            var assertOnReady = function () {
+                jqUnit.assertTrue("The onReady event should have fired", true);
+                start();
+            };
+            decapod.exportPoller({
+                listeners: {
+                    onReady: assertOnReady
+                }
+            });
+        });
+        
         exportPollerTests.asyncTest("Poll", function () {
             jqUnit.expect(1);
             var that = decapod.exportPoller();
@@ -196,6 +209,19 @@ var decapod = decapod || {};
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
+        exportInfoTests.asyncTest("onReady", function () {
+            jqUnit.expect(1);
+            var assertOnReady = function () {
+                jqUnit.assertTrue("The onReady event should have fired", true);
+            };
+            createExportInfo(INFO_CONTAINER, {
+                listeners: {
+                    onReady: assertOnReady,
+                    afterRender: start
+                }
+            });
+        });
+        
         exportInfoTests.asyncTest("Fetch Resources", function () {
             jqUnit.expect(1);
             var assertFetchResources = function (resourceSpec) {
@@ -236,7 +262,10 @@ var decapod = decapod || {};
         };
         
         outputSettingsTests.asyncTest("Init tests", function () {
-            jqUnit.expect(23);
+            jqUnit.expect(24);
+            var assertOnReady = function () {
+                jqUnit.assertTrue("The onReady event should have fired", true);
+            };
             var assertInit = function (that) {
                 jqUnit.assertTrue("The component should have initialized", that);
                 jqUnit.assertDeepEq("The model should be the same", defaultOutputSettingsModel, that.model);
@@ -246,6 +275,7 @@ var decapod = decapod || {};
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
                 model: fluid.copy(defaultOutputSettingsModel),
                 listeners: {
+                    onReady: assertOnReady,
                     afterRender: assertInit
                 }
             });
@@ -489,7 +519,10 @@ var decapod = decapod || {};
         };
         
         pdfExportOptionsTests.asyncTest("Init tests", function () {
-            jqUnit.expect(4);
+            jqUnit.expect(5);
+            var assertOnReady = function () {
+                jqUnit.assertTrue("The onReady event should have fired", true);
+            };
             var assertInit = function (that) {
                 jqUnit.assertTrue("The component should have initialized", that);
                 jqUnit.assertDeepEq("The output model should be set", that.model.output, that.output.model);
@@ -500,6 +533,7 @@ var decapod = decapod || {};
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
                 model: defaultPDFExportOptionsModel,
                 listeners: {
+                    onReady: assertOnReady,
                     afterRender: assertInit
                 },
                 resources: {
@@ -874,6 +908,22 @@ var decapod = decapod || {};
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
+        triggerTests.asyncTest("onReady", function () {
+            jqUnit.expect(1);
+            var assertOnReady = function () {
+                jqUnit.assertTrue("The onReady event should have fired", true);
+            };
+            createTrigger(TRIGGER_CONTAINER, {
+                listeners: {
+                    onReady: assertOnReady,
+                    afterRender: {
+                        listener: start,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
         triggerTests.asyncTest("Fetch Resources", function () {
             jqUnit.expect(1);
             var assertFetchResources = function (resourceSpec) {
@@ -978,6 +1028,22 @@ var decapod = decapod || {};
             jqUnit.assertTrue("The component should have initialized", that);
         });
         
+        progressTests.asyncTest("onReady", function () {
+            jqUnit.expect(1);
+            var assertOnReady = function () {
+                jqUnit.assertTrue("The onReady event should have fired", true);
+            };
+            createProgress(PROGRESS_CONTAINER, {
+                listeners: {
+                    onReady: assertOnReady,
+                    afterRender: {
+                        listener: start,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
         progressTests.asyncTest("Fetch Resources", function () {
             jqUnit.expect(1);
             var assertFetchResources = function (resourceSpec) {
@@ -1016,6 +1082,22 @@ var decapod = decapod || {};
         completeTests.test("init", function () {
             var that = createComplete(COMPLETE_CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
+        });
+        
+        progressTests.asyncTest("onReady", function () {
+            jqUnit.expect(1);
+            var assertOnReady = function () {
+                jqUnit.assertTrue("The onReady event should have fired", true);
+            };
+            createComplete(COMPLETE_CONTAINER, {
+                listeners: {
+                    onReady: assertOnReady,
+                    afterRender: {
+                        listener: start,
+                        priority: "last"
+                    }
+                }
+            });
         });
         
         completeTests.asyncTest("Fetch Resources", function () {
@@ -1067,8 +1149,13 @@ var decapod = decapod || {};
         var controlsTests = jqUnit.testCase("decapod.exportControls");
         
         controlsTests.asyncTest("Init tests", function () {
+            jqUnit.expect(2);
+            var assertOnReady = function () {
+                jqUnit.assertTrue("The onReady event should have fired", true);
+            };
             createControls(CONTROLS_CONTAINER, {
                 listeners: {
+                    onReady: assertOnReady,
                     afterFetchResources: {
                         listener: function () {
                             jqUnit.assertTrue("The component should have initialized", true);

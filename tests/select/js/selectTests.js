@@ -40,8 +40,11 @@ var decapod = decapod || {};
         var tests = jqUnit.testCase("Decapod Select");
         
         tests.asyncTest("Init tests", function () {
-            jqUnit.expect(9);
-            var testEvent = function (that) {
+            jqUnit.expect(10);
+            var assertOnReady = function () {
+                jqUnit.assertTrue("The onReady event should have fired", true);
+            };
+            var assertInit = function (that) {
                 jqUnit.assertTrue("The component should have initialized", that);
                 decapod.testUtils.exportType.assertSelectRender(that);
                 start();
@@ -49,7 +52,8 @@ var decapod = decapod || {};
             decapod.select(CONTAINER, {
                 model: TEST_MODEL,
                 listeners: {
-                    afterRender: testEvent
+                    onReady: assertOnReady,
+                    afterRender: assertInit
                 },
                 resources: RESOURCES
             });
