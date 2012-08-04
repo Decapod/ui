@@ -365,27 +365,47 @@ var decapod = decapod || {};
         });
     };
     
-    decapod.outputSettings.setInvalidStatus = function (that, changeRequest, isValid) {
+    decapod.outputSettings.setStatus = function (that, changeRequest, status) {
         changeRequest = fluid.isArrayable(changeRequest) ? changeRequest[0] : changeRequest;
         var index = parseInt(changeRequest.path.split(".")[1], 10);
-        var style = that.options.styles.invalidEntry;
-        var elm = that.locate("settings").eq(index);
-        var hasStyle = elm.hasClass(style);
-        if (isValid && hasStyle) {
-            elm.removeClass(style);
-            that.events.onCorrection.fire(changeRequest);
-        } else if (!isValid && !hasStyle) {
-            elm.addClass(style);
+        if (!isNaN(index)) {
+            that.setStatusByIndex(index, status);
+        };
+    };
+    
+    decapod.outputSettings.setStatusByIndex = function (that, index, status) {
+        status = !!status; // forces status to be boolean
+        if(that.isValid(index) !== status) {
+            var elm = that.locate("settings").eq(index);
+            var style = that.options.styles.invalidEntry;
+            that.status[index] = status;
+            if (status) {
+                elm.removeClass(style);
+                that.events.onCorrection.fire(index);
+            } else {
+                elm.addClass(style);
+            }
         }
     };
     
-    decapod.outputSettings.setInvalid = function (that, changeRequest) {
-        decapod.outputSettings.setInvalidStatus(that, changeRequest);
+    decapod.outputSettings.isValid = function (that, index) {
+        if(typeof(index) === "number") {
+            return that.status[index];
+        }
+        var status = true;
+        $.each(that.status, function (idx, isValid) {
+            status = isValid;
+            return status;
+        });
+        
+        return status;
     };
     
-    decapod.outputSettings.unsetInvalid = function (that, changeRequest) {
-        decapod.outputSettings.setInvalidStatus(that, changeRequest, true);
-    };
+    /*
+     * setStatus(that, changeRequest, isValid) -  parses the index from the changerequest and calls setStatusByIndex, if there is a correction will fire the onCorrection event
+     * setStatusByIndex(that, index, isValid) - change the status object and styles
+     * isValid() - returns true if all are true, else false
+     */
     
     decapod.outputSettings.preInit = function (that) {
         /*
@@ -401,18 +421,27 @@ var decapod = decapod || {};
             that.disable();
         };
         
-        that.setInvalid = function (changeRequest) {
-            that.setInvalid(changeRequest);
+        that.setStatus = function (changeRequest, status) {
+            that.setStatus(changeRequest, status);
         };
         
-        that.unsetInvalid = function (changeRequest) {
-            that.unsetInvalid(changeRequest);
+        that.setStatusByIndex = function (index, status) {
+            that.setStatusByIndex(index, status);
+        };
+        
+        that.isValid = function (index) {
+            that.isValid(index);
         };
     };
     
     decapod.outputSettings.finalInit = function (that) {
         that.applier.modelChanged.addListener("settings", function (newModel, oldModel, changeRequest) {
             that.events.afterModelChanged.fire(newModel, oldModel, changeRequest);
+        });
+        
+        that.status = [];
+        $.each(that.model.settings, function (idx) {
+            that.status[idx] = true;
         });
         
         that.bindValidators();
@@ -486,18 +515,22 @@ var decapod = decapod || {};
             onReady: null
         },
         listeners: {
-            "onValidationError.setInvalid": "{outputSettings}.setInvalid",
-            "afterModelChanged.unsetInvalid": {
-                listener: "{outputSettings}.unsetInvalid",
-                args: ["{arguments}.2"]
+            "onValidationError.setStatus": {
+                listener: "{outputSettings}.setStatus",
+                args: ["{arguments}.0", false]
+            },
+            "afterModelChanged.setStatus": {
+                listener: "{outputSettings}.setStatus",
+                args: ["{arguments}.2", true]
             }
         },
         invokers: {
             disable: "decapod.outputSettings.disable",
             enable: "decapod.outputSettings.enable",
             bindValidators: "decapod.outputSettings.bindValidators",
-            setInvalid: "decapod.outputSettings.setInvalid",
-            unsetInvalid: "decapod.outputSettings.unsetInvalid"
+            setStatus: "decapod.outputSettings.setStatus",
+            setStatusByIndex: "decapod.outputSettings.setStatusByIndex",
+            isValid: "decapod.outputSettings.isValid"
         },
         resources: {
             template: {

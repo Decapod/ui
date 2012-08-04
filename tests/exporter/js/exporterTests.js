@@ -468,11 +468,10 @@ var decapod = decapod || {};
             testOnExportStartTrigger("format-3", "pdfExporters");
         });
         
-        //TODO: Use image specific tests as testOnExportStartTrigger has specific tests and setup for pdfExporters
-        exporterTests.asyncTest("Image format-0 trigger onExportStart", function () {
+        exporterTests.asyncTest("Image format-1-0 trigger onExportStart", function () {
             testOnExportStartTrigger("format-1-0", "imageExporters");
         });
-        exporterTests.asyncTest("Image format-1 trigger onExportStart", function () {
+        exporterTests.asyncTest("Image format-1-1 trigger onExportStart", function () {
             testOnExportStartTrigger("format-1-1", "imageExporters");
         });
     });

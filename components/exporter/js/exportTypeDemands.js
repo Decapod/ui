@@ -169,10 +169,13 @@ var decapod = decapod || {};
     fluid.demands("decapod.outputSettings.bindValidators", ["decapod.outputSettings"], {
         args: ["{outputSettings}"]
     });
-    fluid.demands("decapod.outputSettings.setInvalid", ["decapod.outputSettings"], {
-        args: ["{outputSettings}", "{arguments}.0"]
+    fluid.demands("decapod.outputSettings.setStatus", ["decapod.outputSettings"], {
+        args: ["{outputSettings}", "{arguments}.0", "{arguments}.1"]
     });
-    fluid.demands("decapod.outputSettings.unsetInvalid", ["decapod.outputSettings"], {
+    fluid.demands("decapod.outputSettings.setStatusByIndex", ["decapod.outputSettings"], {
+        args: ["{outputSettings}", "{arguments}.0", "{arguments}.1"]
+    });
+    fluid.demands("decapod.outputSettings.isValid", ["decapod.outputSettings"], {
         args: ["{outputSettings}", "{arguments}.0"]
     });
 })(jQuery);
