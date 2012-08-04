@@ -129,6 +129,7 @@ var decapod = decapod || {};
             importMessages: ".dc-exporter-importMessages",
             instructions: ".dc-exporter-instructions",
             pdfs: ".dc-exporter-pdfs",
+            images: ".dc-exporter-images",
             accordionContainer: ".dc-exporter-accordion"
         },
         strings: {
@@ -144,6 +145,13 @@ var decapod = decapod || {};
                     {name: "3. Computer Traced PDF with OCR Text", description: "Content of each image is traced by the computer, OCR'ed, and output to a PDF. The process takes longer, but results is a much smaller PDF."},
                     {name: "4. Font Matched Text with OCR", description: "Text on image is matched to a True-Type font resulting in a very compact PDF. Works best with Latin script."}
                 ]
+            },
+            images: {
+                name: "Image",
+                formatStrings: [
+                    {name: "TIFF"},
+                    {name: "PNG"}
+                ]
             }
         },
         events: {
@@ -152,19 +160,25 @@ var decapod = decapod || {};
             onImportStart: null, 
             onExportStart: null,
             afterQueueReady: null,
-            afterExportComplete: null, 
+            afterExportComplete: null,
+            afterPDFExportersRendered: null, 
             afterImagePDFRender: null,
             afterOCRPDFRender: null,
             afterTracedPDFRender: null,
             afterFontMatchedPDFRender: null,
-            afterPDFExportersRendered: null,
+            afterImageExportersRendered: null,
+            afterPNGRender: null,
+            afterTIFFRender: null,
             afterExportersRendered: {
                 events: {
+                    pdfs: "afterPDFExportersRendered",
                     imagePDF: "afterImagePDFRender",
                     ocrPDF: "afterOCRPDFRender",
                     tracedPDF: "afterTracedPDFRender",
                     fontMatchedPDF: "afterFontMatchedPDFRender",
-                    pdfs: "afterPDFExportersRendered"
+                    images: "afterImageExportersRendered",
+                    tiff: "afterTIFFRender",
+                    png: "afterPNGRender",
                 },
                 args: ["{exporter}"]
             }
@@ -309,6 +323,21 @@ var decapod = decapod || {};
                     },
                     model: {
                         formats: ["decapod.imagePDF.pdfExporter", "decapod.ocrPDF.pdfExporter", "decapod.tracedPDF.pdfExporter", "decapod.fontMatchedPDF.pdfExporter"]
+                    }
+                }
+            },
+            imageExporters: {
+                type: "decapod.images.exportFormatGroup",
+                container: "{exporter}.dom.images",
+                options: {
+                    strings: {
+                        name: "{exporter}.options.strings.images.name"
+                    },
+                    listeners: {
+                        "afterRender.exporter": "{exporter}.events.afterImageExportersRendered"
+                    },
+                    model: {
+                        formats: ["decapod.tiff.imageExporter", "decapod.png.imageExporter"]
                     }
                 }
             }
