@@ -454,12 +454,16 @@ var decapod = decapod || {};
             var newWidth = "2000";
             var expected = "210";
             var trigger = function (that) {
-                that.exportOptions.outputSettings.events.onValidationError.addListener(function () {assertValidationError(that);});
+                that.events.onValidationError.addListener(function () {
+                    var decorators = fluid.renderer.getDecoratorComponents(that.exportControls);
+                    var trigger = decapod.testUtils.componentFromDecorator("trigger", decorators);
+                    assertValidationError(that, trigger);
+                }, "test", null, "last");
                 that.exportOptions.outputSettings.applier.requestChange("settings.0.value", newWidth);
             };
-            var assertValidationError = function (that) {
+            var assertValidationError = function (that, trigger) {
                 jqUnit.assertEquals("The components model should not be update with the new output selection", expected, that.model.exportOptions.outputSettings.settings[0].value);
-                jqUnit.notVisible("The export trigger should not be visible", $(".dc-exportControls-trigger-exportControl", that.container));
+                jqUnit.assertTrue("The export trigger should be disabled", trigger.locate("trigger").is(":disabled"));
                 start();
             };
             var assertModelChange = function () {
@@ -477,6 +481,54 @@ var decapod = decapod || {};
                     },
                     afterRender: {
                         listener: trigger,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("corrected invalid custom setting", function () {
+            jqUnit.expect(3);
+            var newWidth = "2000";
+            var correctedWidth = "200";
+            var triggerError = function (that) {
+                that.exportOptions.outputSettings.applier.requestChange("settings.0.value", newWidth);
+            };
+            var triggerCorrection = function (that) {
+                that.exportOptions.outputSettings.applier.requestChange("settings.0.value", correctedWidth);
+            };
+            var assertCorrection = function (that) {
+                jqUnit.assertTrue("The onCorrection event should fire", true);
+                var decorators = fluid.renderer.getDecoratorComponents(that.exportControls);
+                var trigger = decapod.testUtils.componentFromDecorator("trigger", decorators);
+                jqUnit.assertTrue("The export trigger should be enabled", trigger.locate("trigger").is(":enabled"));
+                start();
+            };
+            var assertModelChange = function () {
+                jqUnit.assertTrue("The afterModelChanged event should fire.", true);
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                model: {
+                    exportOptions: {
+                        output: {selection: "custom"}
+                    }
+                },
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertModelChange
+                    },
+                    afterRender: {
+                        listener: triggerError,
+                        priority: "last"
+                    },
+                    onValidationError: {
+                        listener: triggerCorrection,
+                        args: ["{pdfExporter}"],
+                        priority: "last"
+                    },
+                    onCorrection: {
+                        listener: assertCorrection,
+                        args: ["{pdfExporter}"],
                         priority: "last"
                     }
                 }

@@ -368,7 +368,15 @@ var decapod = decapod || {};
     decapod.outputSettings.setInvalidStatus = function (that, changeRequest, isValid) {
         changeRequest = fluid.isArrayable(changeRequest) ? changeRequest[0] : changeRequest;
         var index = parseInt(changeRequest.path.split(".")[1], 10);
-        that.locate("settings").eq(index)[isValid ? "removeClass" : "addClass"](that.options.styles.invalidEntry);
+        var style = that.options.styles.invalidEntry;
+        var elm = that.locate("settings").eq(index);
+        var hasStyle = elm.hasClass(style);
+        if (isValid && hasStyle) {
+            elm.removeClass(style);
+            that.events.onCorrection.fire(changeRequest);
+        } else if (!isValid && !hasStyle) {
+            elm.addClass(style);
+        }
     };
     
     decapod.outputSettings.setInvalid = function (that, changeRequest) {
