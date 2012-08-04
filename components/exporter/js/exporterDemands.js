@@ -224,7 +224,7 @@ var decapod = decapod || {};
                 description: "{exporter}.options.strings.pdfs.formatStrings.0.description"
             },
             listeners: {
-                "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                "afterExportComplete.finishExport": "{exporter}.finishExport",
                 "afterRender.afterImagePDFRender": "{exporter}.events.afterImagePDFRender"
             },
             components: {
@@ -257,7 +257,7 @@ var decapod = decapod || {};
                 description: "{exporter}.options.strings.pdfs.formatStrings.1.description"
             },
             listeners: {
-                "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                "afterExportComplete.finishExport": "{exporter}.finishExport",
                 "afterRender.afterOCRPDFRender": "{exporter}.events.afterOCRPDFRender"
             },
             components: {
@@ -290,7 +290,7 @@ var decapod = decapod || {};
                 description: "{exporter}.options.strings.pdfs.formatStrings.2.description"
             },
             listeners: {
-                "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                "afterExportComplete.finishExport": "{exporter}.finishExport",
                 "afterRender.afterTracedPDFRender": "{exporter}.events.afterTracedPDFRender"
             },
             components: {
@@ -323,7 +323,7 @@ var decapod = decapod || {};
                 description: "{exporter}.options.strings.pdfs.formatStrings.3.description"
             },
             listeners: {
-                "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                "afterExportComplete.finishExport": "{exporter}.finishExport",
                 "afterRender.afterFontMatchedPDFRender": "{exporter}.events.afterFontMatchedPDFRender"
             },
             components: {
@@ -356,7 +356,7 @@ var decapod = decapod || {};
                 description: ""
             },
             listeners: {
-                "{imageExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                "afterExportComplete.finishExport": "{exporter}.finishExport",
                 "afterRender.afterTIFFRender": "{exporter}.events.afterTIFFRender"
             },
             components: {
@@ -389,7 +389,7 @@ var decapod = decapod || {};
                 description: ""
             },
             listeners: {
-                "{imageExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                "afterExportComplete.finishExport": "{exporter}.finishExport",
                 "afterRender.afterPNGRender": "{exporter}.events.afterPNGRender"
             },
             components: {
