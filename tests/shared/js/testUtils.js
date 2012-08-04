@@ -25,6 +25,15 @@ var decapod = decapod || {};
 (function ($) {
     fluid.registerNamespace("decapod.testUtils.exportType");
     
+    // functions
+    decapod.testUtils.componentFromDecorator = function (comp, decorators) {
+        for (var decorator in decorators) {
+            if (decorator.indexOf(comp) > -1) {
+                return decorators[decorator];
+            }
+        }
+    };
+    
     // assertions
     decapod.testUtils.exportType.assertSelectRender = function (that) {
         var selected = $(":selected", that.locate("choices"));

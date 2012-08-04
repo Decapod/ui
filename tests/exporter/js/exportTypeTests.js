@@ -402,22 +402,31 @@ var decapod = decapod || {};
         });
         
         outputSettingsTests.asyncTest("invalid entry corrected", function () {
-            jqUnit.expect(1);
+            jqUnit.expect(2);
             var triggerEvent = function (that) {
                 that.locate("settings").eq(0).addClass(that.options.styles.invalidEntry);
                 that.applier.requestChange("settings.0.value", 20);
             };
             
-            var assertChange = function (that) {
+            var assertCorrection = function (that) {
                 jqUnit.assertFalse("The invalidEntry class should be removed.", that.locate("settings").eq(0).hasClass(that.options.styles.invalidEntry));
                 start();
+            };
+            
+            var assertChanged = function (that) {
+                jqUnit.assertTrue("The afterModelChanged event should have fired", true);
             };
             
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
                 model: defaultOutputSettingsModel,
                 listeners: {
                     afterModelChanged: {
-                        listener: assertChange,
+                        listener: assertChanged,
+                        args: ["{outputSettings}"],
+                        priority: "last"
+                    },
+                    onCorrection: {
+                        listener: assertCorrection,
                         args: ["{outputSettings}"],
                         priority: "last"
                     },

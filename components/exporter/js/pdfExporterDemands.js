@@ -64,12 +64,28 @@ var decapod = decapod || {};
         args: ["{dataSource}", "PUT", "{pdfExporter}.assembledExportOptions", "{arguments}.1"]
     });
     
-    fluid.demands("decapod.exportControls.trigger", ["decapod.pdfExporter", "decapod.exportControls", "decapod.outputSettings"], {
+    fluid.demands("decapod.outputSettings", ["decapod.pdfExportOptions", "decapod.pdfExporter"], {
         options: {
             listeners: {
-                "{outputSettings}.events.onValidationError": {
+                "onValidationError.pdfExporter": "{pdfExporter}.events.onValidationError",
+                "onCorrection.pdfExporter": "{pdfExporter}.events.onCorrection"
+            },
+            resources: {
+                template: "{pdfExportOptions}.options.resources.outputSettings"
+            }
+        }
+    });
+    
+    fluid.demands("decapod.exportControls.trigger", ["decapod.pdfExporter", "decapod.exportControls"], {
+        options: {
+            listeners: {
+                "{pdfExporter}.events.onValidationError": {
                     listener: "{trigger}.updateModel",
                     args: ["valid", false]
+                },
+                "{pdfExporter}.events.onCorrection": {
+                    listener: "{trigger}.updateModel",
+                    args: ["valid", true]
                 }
             },
             events: {

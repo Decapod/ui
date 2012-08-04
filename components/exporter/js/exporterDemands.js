@@ -208,6 +208,37 @@ var decapod = decapod || {};
         }
     });
     
+    fluid.demands("decapod.exportControls.trigger", ["decapod.exporter", "decapod.pdfExporter", "decapod.exportControls"], {
+        options: {
+            model: {
+                "fileQueueReady": false
+            },
+            listeners: {
+                "{pdfExporter}.events.onValidationError": {
+                    listener: "{trigger}.updateModel",
+                    args: ["valid", false]
+                },
+                "{pdfExporter}.events.onCorrection": {
+                    listener: "{trigger}.updateModel",
+                    args: ["valid", true]
+                },
+                "{exporter}.events.afterQueueReady": {
+                    listener: "{trigger}.updateModel",
+                    args: ["fileQueueReady", true]
+                }
+            },
+            events: {
+                afterTriggered: "{exportControls}.events.onExportTrigger"
+            },
+            resources: {
+                template: "{exportControls}.options.resources.trigger"
+            },
+            strings: {
+                trigger: "{exportControls}.options.strings.trigger"
+            }
+        }
+    });
+    
     fluid.demands("decapod.pdfExportOptions", ["decapod.exporter", "decapod.pdfExporter"], {
         options: {
             listeners: {

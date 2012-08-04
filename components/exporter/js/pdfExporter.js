@@ -121,6 +121,8 @@ var decapod = decapod || {};
             afterExportControlsRender: null,
             afterExportInfoRender: null,
             onExportStart: null,
+            onCorrection: null,
+            onValidationError: null,
             onEventBinderReady: null,
             onExportPollerReady: null,
             onExportInfoReady: null,

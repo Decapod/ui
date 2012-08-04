@@ -73,15 +73,6 @@ var decapod = decapod || {};
         
         var exporterTests = jqUnit.testCase("Decapod Export");
         
-        // functions
-        var componentFromDecorator = function (comp, decorators) {
-            for (var decorator in decorators) {
-                if (decorator.indexOf(comp) > -1) {
-                    return decorators[decorator];
-                }
-            }
-        };
-        
         // assertions
         var assertShowInstructions = function (that) {
             jqUnit.isVisible("The instructions should be visible", that.locate("instructions"));
@@ -223,7 +214,7 @@ var decapod = decapod || {};
             jqUnit.expect(20);
             var tests = function (that) {
                 var decorators = fluid.renderer.getDecoratorComponents(that.pdfExporters);
-                var exportType = componentFromDecorator("formats", decorators); // sets the export type to one of the pdfExporters that is instantiated through the renderer
+                var exportType = decapod.testUtils.componentFromDecorator("formats", decorators); // sets the export type to one of the pdfExporters that is instantiated through the renderer
                 that.events.onImportStart.addListener(function () {
                     jqUnit.assertTrue("The onImportStart event should have fired", true);
                     jqUnit.assertDeepEq("The exportType should have been set", exportType, that.exportType);
@@ -258,7 +249,7 @@ var decapod = decapod || {};
             jqUnit.expect(4);
             var tests = function (that) {
                 var decorators = fluid.renderer.getDecoratorComponents(that.pdfExporters);
-                var exportType = componentFromDecorator("formats", decorators); // sets the export type to one of the pdfExporters that is instantiated through the renderer
+                var exportType = decapod.testUtils.componentFromDecorator("formats", decorators); // sets the export type to one of the pdfExporters that is instantiated through the renderer
                 that.exportType = exportType;
             
                 that.events.onExportStart.addListener(function () {
@@ -376,12 +367,12 @@ var decapod = decapod || {};
                 
                 $.each(pdfExporters, function (idx, pdfExporter) {
                     var controls = fluid.renderer.getDecoratorComponents(pdfExporter.exportControls);
-                    jqUnit.assertTrue("The start export button for the PDF Exporter '" + idx + "', is rendered", componentFromDecorator("trigger", controls));
+                    jqUnit.assertTrue("The start export button for the PDF Exporter '" + idx + "', is rendered", decapod.testUtils.componentFromDecorator("trigger", controls));
                 });
                 
                 $.each(imageExporters, function (idx, imageExporter) {
                     var controls = fluid.renderer.getDecoratorComponents(imageExporter.exportControls);
-                    jqUnit.assertTrue("The start export button for the Image Exporter '" + idx + "', is rendered", componentFromDecorator("trigger", controls));
+                    jqUnit.assertTrue("The start export button for the Image Exporter '" + idx + "', is rendered", decapod.testUtils.componentFromDecorator("trigger", controls));
                 });
                 start();
             };
@@ -406,8 +397,8 @@ var decapod = decapod || {};
             var exportFormat;
             var assertions = function (exportControls, exporter) {
                 var decorators = fluid.renderer.getDecoratorComponents(exportControls);
-                var progress = componentFromDecorator("progress", decorators);
-                var complete = componentFromDecorator("complete", decorators);
+                var progress = decapod.testUtils.componentFromDecorator("progress", decorators);
+                var complete = decapod.testUtils.componentFromDecorator("complete", decorators);
                 
                 if (progress) {
                     jqUnit.assertTrue("Progress Displayed", progress);
@@ -427,7 +418,7 @@ var decapod = decapod || {};
                 // remove the initial afterRender event listener to prevent any possible misfires when listening for the individual afterRender event below.
                 exporter.events.afterExportersRendered.removeListener("initial"); 
                 var decorators = fluid.renderer.getDecoratorComponents(exporter[exportGroup]);
-                exportFormat = componentFromDecorator(subComponent, decorators);
+                exportFormat = decapod.testUtils.componentFromDecorator(subComponent, decorators);
                 
                 exportFormat.exportControls.events.afterRender.addListener(function (exportControls) {
                     assertions(exportControls, exporter);
@@ -438,7 +429,7 @@ var decapod = decapod || {};
             };
             var triggerEvent = function (exporter) {
                 var decorators = fluid.renderer.getDecoratorComponents(exportFormat.exportControls);
-                var trigger = componentFromDecorator("trigger", decorators);
+                var trigger = decapod.testUtils.componentFromDecorator("trigger", decorators);
                 trigger.locate("trigger").click();
             };
             
