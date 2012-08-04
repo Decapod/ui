@@ -455,16 +455,17 @@ var decapod = decapod || {};
             exporter.uploader.strategy.remote.uploadNextFile = function () {};
         };
         
-        exporterTests.asyncTest("format-0 trigger onExportStart", function () {
+        // Since the test environment has to be reset, need to run the tests on each format seperately
+        exporterTests.asyncTest("PDF format-0 trigger onExportStart", function () {
             testOnExportStartTrigger("format-0");
         });
-        exporterTests.asyncTest("format-1 trigger onExportStart", function () {
+        exporterTests.asyncTest("PDF format-1 trigger onExportStart", function () {
             testOnExportStartTrigger("format-1");
         });
-        exporterTests.asyncTest("format-2 trigger onExportStart", function () {
+        exporterTests.asyncTest("PDF format-2 trigger onExportStart", function () {
             testOnExportStartTrigger("format-2");
         });
-        exporterTests.asyncTest("format-3 trigger onExportStart", function () {
+        exporterTests.asyncTest("PDF format-3 trigger onExportStart", function () {
             testOnExportStartTrigger("format-3");
         });
     });
