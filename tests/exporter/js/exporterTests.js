@@ -73,6 +73,15 @@ var decapod = decapod || {};
         
         var exporterTests = jqUnit.testCase("Decapod Export");
         
+        // functions
+        var componentFromDecorator = function (comp, decorators) {
+            for (var decorator in decorators) {
+                if (decorator.indexOf(comp) > -1) {
+                    return decorators[decorator];
+                }
+            }
+        };
+        
         // assertions
         var assertShowInstructions = function (that) {
             jqUnit.isVisible("The instructions should be visible", that.locate("instructions"));
@@ -85,7 +94,7 @@ var decapod = decapod || {};
         };
         
         exporterTests.asyncTest("Init tests", function () {
-            jqUnit.expect(9);
+            jqUnit.expect(8);
             decapod.exporter(CONTAINER, {
                 listeners: {
                     afterExportersRendered: {
@@ -97,13 +106,12 @@ var decapod = decapod || {};
                             jqUnit.assertEquals("The instructions text should be rendered", str.instructions, that.locate("instructions").text());
                             jqUnit.assertEquals("The uploadClear text should be rendered", str.uploadClear, that.locate("uploadClear").text());
                             jqUnit.assertEquals("The formats text should be rendered", str.formats, that.locate("formats").text());
-                            jqUnit.assertEquals("The groupName text should be rendered", str.groupName, that.locate("groupName").text());
                             jqUnit.assertFalse("The accordion should be enabled", that.accordion.container.accordion("option", "disabled"));
-                            start();
                         },
                         args: ["{exporter}"],
                         priority: "last"
-                    }
+                    },
+                    onReady: start
                 }
             });
         });
@@ -212,15 +220,17 @@ var decapod = decapod || {};
         });
         
         exporterTests.asyncTest("startImport", function () {
-            jqUnit.expect(8);
+            jqUnit.expect(20);
             var tests = function (that) {
                 var exportType = that.imagePDF;
                 that.events.onImportStart.addListener(function () {
                     jqUnit.assertTrue("The onImportStart event should have fired", true);
                     jqUnit.assertDeepEq("The exportType should have been set", exportType, that.exportType);
                     jqUnit.assertTrue("The accordion should be disabled", that.accordion.container.accordion("option", "disabled"));
-                    // jqUnit.assertTrue("The output options should be disabled", that.imagePDF.exportOptions.output.locate("choices").is(":disabled"));
-                    decapod.testUtils.exportType.assertExportOptionsState(that.imagePDF.exportOptions, "disabled");
+                    var decorators = fluid.renderer.getDecoratorComponents(that.pdfExporters);
+                    $.each(decorators, function (idx, decorator) {
+                        decapod.testUtils.exportType.assertExportOptionsState(decorator.exportOptions, "disabled");
+                    });
                 }, "test", null, "last");
                 
                 that.uploader.events.onUploadStart.addListener(function () {
@@ -246,7 +256,8 @@ var decapod = decapod || {};
         exporterTests.asyncTest("startExport", function () {
             jqUnit.expect(4);
             var tests = function (that) {
-                var exportType = that.imagePDF;
+                var decorators = fluid.renderer.getDecoratorComponents(that.pdfExporters);
+                var exportType = componentFromDecorator("formats", decorators); // sets the export type to one of the pdfExporters that is instantiated through the renderer
                 that.exportType = exportType;
             
                 that.events.onExportStart.addListener(function () {
@@ -353,18 +364,16 @@ var decapod = decapod || {};
         });
         
         exporterTests.asyncTest("afterQueueReady", function () {
-            jqUnit.expect(3);
+            jqUnit.expect(4);
             
-            var pdfExporters = ["imagePDF", "ocrPDF", "tracedPDF"];
             var triggerEvent = function (that) {
                 that.events.afterQueueReady.fire();
             };
             var testEvent = function (that) {
-                $.each(pdfExporters, function (idx, pdfExporter) {
-                    var decorators = fluid.renderer.getDecoratorComponents(that[pdfExporter].exportControls);
-                    for (var decorator in decorators) {
-                        jqUnit.assertTrue("The start export button for, " + pdfExporter + ", is rendered", decorator.indexOf("trigger") > -1);
-                    }
+                var decorators = fluid.renderer.getDecoratorComponents(that.pdfExporters);
+                $.each(decorators, function (idx, decorator) {
+                    var controls = fluid.renderer.getDecoratorComponents(decorator.exportControls);
+                    jqUnit.assertTrue("The start export button for " + idx + ", is rendered", componentFromDecorator("trigger", controls));
                 });
                 start();
             };
@@ -374,41 +383,19 @@ var decapod = decapod || {};
                         listener: testEvent,
                         priority: "last",
                         args: "{exporter}"
-                    }
-                },
-                components: {
-                    tracedPDF: {
-                        options: {
-                            components: {
-                                exportControls: {
-                                    options: {
-                                        listeners: {
-                                            afterRender: {
-                                                listener: triggerEvent,
-                                                priority: "last",
-                                                args: ["{exporter}"]
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    },
+                    afterExportersRendered: {
+                        listener: triggerEvent,
+                        priority: "last"
                     }
                 }
             });
         });
 
-        var componentFromDecorator = function (comp, decorators) {
-            for (var decorator in decorators) {
-                if (decorator.indexOf(comp) > -1) {
-                    return decorators[decorator];
-                }
-            }
-        };
-
         // TODO: Cleanup all the if statements
         var testOnExportStartTrigger = function (subComponent) {
             jqUnit.expect(3);
+            var pdfExporter;
             var assertions = function (exportControls, exporter) {
                 var decorators = fluid.renderer.getDecoratorComponents(exportControls);
                 var progress = componentFromDecorator("progress", decorators);
@@ -417,7 +404,7 @@ var decapod = decapod || {};
                 if (progress) {
                     jqUnit.assertTrue("Progress Displayed", progress);
                     // set the current exportType
-                    exporter.exportType = exporter[subComponent];
+                    exporter.exportType = pdfExporter;
                     // trigger the uploader's afterUploadeComplete event
                     exporter.uploader.events.afterUploadComplete.fire();
                 }
@@ -429,9 +416,12 @@ var decapod = decapod || {};
                 }
             };
             var setup = function (exporter) {
-                var afterRenderEvent = exporter[subComponent].exportControls.events.afterRender;
-                afterRenderEvent.removeListener("initial");
-                afterRenderEvent.addListener(function (exportControls) {
+                // remove the initial afterRender event listener to prevent any possible misfires when listening for the individual afterRender event below.
+                exporter.events.afterExportersRendered.removeListener("initial"); 
+                var decorators = fluid.renderer.getDecoratorComponents(exporter.pdfExporters);
+                pdfExporter = componentFromDecorator(subComponent, decorators);
+                
+                pdfExporter.exportControls.events.afterRender.addListener(function (exportControls) {
                     assertions(exportControls, exporter);
                 });
                 
@@ -439,12 +429,12 @@ var decapod = decapod || {};
                 exporter.events.afterQueueReady.fire();
             };
             var triggerEvent = function (exporter) {
-                var decorators = fluid.renderer.getDecoratorComponents(exporter[subComponent].exportControls);
+                var decorators = fluid.renderer.getDecoratorComponents(pdfExporter.exportControls);
                 var trigger = componentFromDecorator("trigger", decorators);
                 trigger.locate("trigger").click();
             };
             
-            var opts = {
+            var exporter = decapod.exporter(CONTAINER, {
                 listeners: {
                     onExportStart: function () {
                         jqUnit.assertTrue("The onExportStart event fired", true);
@@ -453,44 +443,29 @@ var decapod = decapod || {};
                         listener: triggerEvent,
                         args: ["{exporter}"],
                         priority: "last"
-                    }
-                },
-                components: {}
-            };
-            
-            opts.components[subComponent] = {
-                options: {
-                    components: {
-                        exportControls: {
-                            options: {
-                                listeners: {
-                                    "afterRender.initial": {
-                                        listener: setup,
-                                        args: ["{exporter}"]
-                                    }
-                                }
-                            }
-                        }
+                    },
+                    "afterExportersRendered.initial": {
+                        listener: setup,
+                        priority: "last"
                     }
                 }
-            };
-            var exporter = decapod.exporter(CONTAINER, opts);
+            });
             // hack to prevent the uploader from actually trying to upload anything.
             // this allows for the testing of just the event without errors being thrown for the empty queue
             exporter.uploader.strategy.remote.uploadNextFile = function () {};
         };
         
-        exporterTests.asyncTest("imagePDF trigger onExportStart", function () {
-            testOnExportStartTrigger("imagePDF");
+        exporterTests.asyncTest("format-0 trigger onExportStart", function () {
+            testOnExportStartTrigger("format-0");
         });
-        exporterTests.asyncTest("ocrPDF trigger onExportStart", function () {
-            testOnExportStartTrigger("ocrPDF");
+        exporterTests.asyncTest("format-1 trigger onExportStart", function () {
+            testOnExportStartTrigger("format-1");
         });
-        exporterTests.asyncTest("tracedPDF trigger onExportStart", function () {
-            testOnExportStartTrigger("tracedPDF");
+        exporterTests.asyncTest("format-2 trigger onExportStart", function () {
+            testOnExportStartTrigger("format-2");
         });
-        exporterTests.asyncTest("fontMatchedPDF trigger onExportStart", function () {
-            testOnExportStartTrigger("fontMatchedPDF");
+        exporterTests.asyncTest("format-3 trigger onExportStart", function () {
+            testOnExportStartTrigger("format-3");
         });
     });
 })(jQuery);

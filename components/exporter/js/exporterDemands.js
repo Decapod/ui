@@ -59,6 +59,53 @@ var decapod = decapod || {};
         }
     });
     
+    fluid.demands("decapod.exportFormatGroup", ["decapod.exporter"], {
+        options: {
+            resources: {
+                exportFormatGroupTemplate: {
+                    url: "../html/exportFormatGroupTemplate.html",
+                    forceCache: true
+                },
+                pdfExportTemplate: {
+                    url: "../html/pdfExporterTemplate.html",
+                    forceCache: true
+                },
+                exportInfo: {
+                    url: "../html/exportInfoTemplate.html",
+                    forceCache: true
+                },
+                pdfExportOptions: {
+                    url: "../html/pdfExportOptionsTemplate.html",
+                    forceCache: true
+                },
+                select: {
+                    url: "../../select/html/selectTemplate.html",
+                    forceCache: true
+                },
+                outputSettings: {
+                    url: "../html/outputSettingsTemplate.html",
+                    forceCache: true
+                },
+                controls: {
+                    url: "../html/exportControlsTemplate.html",
+                    forceCache: true
+                },
+                trigger: {
+                    url: "../html/exportControlsTriggerTemplate.html",
+                    forceCache: true
+                },
+                progress: {
+                    url: "../html/exportControlsProgressTemplate.html",
+                    forceCache: true
+                },
+                complete: {
+                    url: "../html/exportControlsCompleteTemplate.html",
+                    forceCache: true
+                }
+            }
+        }
+    });
+    
     fluid.demands("decapod.exportControls", ["decapod.exporter", "decapod.pdfExporter"], {
         options: {
             events: {
@@ -116,6 +163,138 @@ var decapod = decapod || {};
             listeners: {
                 "{exporter}.events.onImportStart": "{pdfExportOptions}.disable"
             }
+        }
+    });
+    
+    fluid.demands("decapod.imagePDF.pdfExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
+        funcName: "decapod.pdfExporter",
+        options: {
+            strings: {
+                name: "{exporter}.options.strings.pdfs.formatStrings.0.name",
+                description: "{exporter}.options.strings.pdfs.formatStrings.0.description"
+            },
+            listeners: {
+                "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                "afterRender.afterImagePDFRender": "{exporter}.events.afterImagePDFRender"
+            },
+            components: {
+                dataSource: {
+                    options: {
+                        url: "http://localhost:8080/library/decapod-export/export/pdf/type1"
+                    }
+                },
+                exportPoller: {
+                    options: {
+                        components: {
+                            dataSource: {
+                                options: {
+                                    url: "http://localhost:8080/library/decapod-export/export/pdf/type1"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            resources: "{exportFormatGroup}.options.resources"
+        }
+    });
+    
+    fluid.demands("decapod.ocrPDF.pdfExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
+        funcName: "decapod.pdfExporter",
+        options: {
+            strings: {
+                name: "{exporter}.options.strings.pdfs.formatStrings.1.name",
+                description: "{exporter}.options.strings.pdfs.formatStrings.1.description"
+            },
+            listeners: {
+                "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                "afterRender.afterOCRPDFRender": "{exporter}.events.afterOCRPDFRender"
+            },
+            components: {
+                dataSource: {
+                    options: {
+                        url: "http://localhost:8080/library/decapod-export/export/pdf/type2"
+                    }
+                },
+                exportPoller: {
+                    options: {
+                        components: {
+                            dataSource: {
+                                options: {
+                                    url: "http://localhost:8080/library/decapod-export/export/pdf/type2"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            resources: "{exportFormatGroup}.options.resources"
+        }
+    });
+    
+    fluid.demands("decapod.tracedPDF.pdfExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
+        funcName: "decapod.pdfExporter",
+        options: {
+            strings: {
+                name: "{exporter}.options.strings.pdfs.formatStrings.2.name",
+                description: "{exporter}.options.strings.pdfs.formatStrings.2.description"
+            },
+            listeners: {
+                "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                "afterRender.afterTracedPDFRender": "{exporter}.events.afterTracedPDFRender"
+            },
+            components: {
+                dataSource: {
+                    options: {
+                        url: "http://localhost:8080/library/decapod-export/export/pdf/type3"
+                    }
+                },
+                exportPoller: {
+                    options: {
+                        components: {
+                            dataSource: {
+                                options: {
+                                    url: "http://localhost:8080/library/decapod-export/export/pdf/type3"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            resources: "{exportFormatGroup}.options.resources"
+        }
+    });
+    
+    fluid.demands("decapod.fontMatchedPDF.pdfExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
+        funcName: "decapod.pdfExporter",
+        options: {
+            strings: {
+                name: "{exporter}.options.strings.pdfs.formatStrings.3.name",
+                description: "{exporter}.options.strings.pdfs.formatStrings.3.description"
+            },
+            listeners: {
+                "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                "afterRender.afterFontMatchedPDFRender": "{exporter}.events.afterFontMatchedPDFRender"
+            },
+            components: {
+                dataSource: {
+                    options: {
+                        url: "http://localhost:8080/library/decapod-export/export/pdf/type4"
+                    }
+                },
+                exportPoller: {
+                    options: {
+                        components: {
+                            dataSource: {
+                                options: {
+                                    url: "http://localhost:8080/library/decapod-export/export/pdf/type4"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            resources: "{exportFormatGroup}.options.resources"
         }
     });
     

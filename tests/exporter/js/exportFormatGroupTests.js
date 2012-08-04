@@ -94,7 +94,7 @@ var decapod = decapod || {};
                 jqUnit.assertEquals("The name should be rendered", that.options.strings.name, that.locate("name").text());
                 var decorators = fluid.renderer.getDecoratorComponents(that);
                 $.each(decorators, function (idx, decorator) {
-                    jqUnit.assertTrue("The subcomponent should have initialized", true); /*find in the decorators*/
+                    jqUnit.assertTrue("The subcomponent should have initialized", true); 
                 });
                 start();
             };
