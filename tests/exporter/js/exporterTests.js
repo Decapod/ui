@@ -222,7 +222,8 @@ var decapod = decapod || {};
         exporterTests.asyncTest("startImport", function () {
             jqUnit.expect(20);
             var tests = function (that) {
-                var exportType = that.imagePDF;
+                var decorators = fluid.renderer.getDecoratorComponents(that.pdfExporters);
+                var exportType = componentFromDecorator("formats", decorators); // sets the export type to one of the pdfExporters that is instantiated through the renderer
                 that.events.onImportStart.addListener(function () {
                     jqUnit.assertTrue("The onImportStart event should have fired", true);
                     jqUnit.assertDeepEq("The exportType should have been set", exportType, that.exportType);
