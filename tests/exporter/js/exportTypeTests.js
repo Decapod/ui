@@ -262,7 +262,7 @@ var decapod = decapod || {};
         };
         
         outputSettingsTests.asyncTest("Init tests", function () {
-            jqUnit.expect(24);
+            jqUnit.expect(27);
             var assertOnReady = function () {
                 jqUnit.assertTrue("The onReady event should have fired", true);
             };
@@ -270,6 +270,9 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The component should have initialized", that);
                 jqUnit.assertDeepEq("The model should be the same", defaultOutputSettingsModel, that.model);
                 decapod.testUtils.exportType.assertOutputSettingsRender(that);
+                $.each(that.status, function(idx, isValid) {
+                    jqUnit.assertTrue("The setting at index " + idx + " should be valid", isValid);
+                });
                 start();
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
@@ -348,6 +351,134 @@ var decapod = decapod || {};
             });
         });
         
+        outputSettingsTests.asyncTest("setStatusByIndex", function () {
+            jqUnit.expect(1);
+            var idx = 1;
+            var assertStatusChange = function (that) {
+                that.setStatusByIndex(idx, false);
+                jqUnit.assertFalse("The status for the setting at index " + idx + " should be invalid", that.status[idx]);
+                start();
+            };
+            createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterRender: {
+                        listener: assertStatusChange,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        outputSettingsTests.asyncTest("setStatusByIndex - correction", function () {
+            jqUnit.expect(3);
+            var idx = 1;
+            var assertStatusChange = function (that) {
+                that.status[1] = false;
+                that.setStatusByIndex(idx, true);
+                jqUnit.assertTrue("The status for the setting at index " + idx + " should be valid", that.status[idx]);
+                start();
+            };
+            var assertOnCorrection = function (index) {
+                jqUnit.assertTrue("The onCorrection event should have fired", true);
+                jqUnit.assertEquals("The index should be returned", idx, index);
+            };
+            createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterRender: {
+                        listener: assertStatusChange,
+                        priority: "last"
+                    },
+                    onCorrection: {
+                        listener: assertOnCorrection,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        outputSettingsTests.asyncTest("setStatus", function () {
+            jqUnit.expect(1);
+            var idx = 0;
+            var changeRequest = {path: "settings." + idx + ".value", value: "400", type: "ADD"};
+            var assertStatusChange = function (that) {
+                that.setStatus(changeRequest, false);
+                jqUnit.assertFalse("The status for the setting at path " + changeRequest.path + " should be invalid", that.status[idx]);
+                start();
+            };
+            createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterRender: {
+                        listener: assertStatusChange,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        outputSettingsTests.asyncTest("setStatus - correction", function () {
+            jqUnit.expect(3);
+            var idx = 0;
+            var changeRequest = {path: "settings." + idx + ".value", value: "400", type: "ADD"};
+            var assertStatusChange = function (that) {
+                that.status[idx] = false;
+                that.setStatus(changeRequest, true);
+                jqUnit.assertTrue("The status for the setting at path " + changeRequest.path + " should be valid", that.status[idx]);
+                start();
+            };
+            var assertOnCorrection = function (index) {
+                jqUnit.assertTrue("The onCorrection event should have fired", true);
+                jqUnit.assertDeepEq("The changeRequest should be returned", idx, index);
+            };
+            createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterRender: {
+                        listener: assertStatusChange,
+                        priority: "last"
+                    },
+                    onCorrection: {
+                        listener: assertOnCorrection,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        outputSettingsTests.asyncTest("isValid", function () {
+            jqUnit.expect(8);
+            var idx = 1;
+            var assertIsValid = function (that) {
+                $.each(that.status, function (index) {
+                    jqUnit.assertTrue("The status at index " + index + " should be valid", that.isValid(index));
+                });
+                jqUnit.assertTrue("The aggregate status should be valid", that.isValid());
+                
+                that.setStatusByIndex(idx, false);
+                
+                $.each(that.status, function (index) {
+                    if (idx === index) {
+                        jqUnit.assertFalse("The status at index " + index + " should be invalid", that.isValid(index));
+                    } else {
+                        jqUnit.assertTrue("The status at index " + index + " should be valid", that.isValid(index));
+                    }
+                });
+                jqUnit.assertFalse("The aggregate status should be invalid", that.isValid());
+                start();
+            };
+            createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterRender: {
+                        listener: assertIsValid,
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
         outputSettingsTests.asyncTest("Requested Change - invalid", function () {
             jqUnit.expect(15);
             var newWidth = "400";
@@ -402,14 +533,16 @@ var decapod = decapod || {};
         });
         
         outputSettingsTests.asyncTest("invalid entry corrected", function () {
-            jqUnit.expect(2);
+            jqUnit.expect(3);
+            var idx = 0;
             var triggerEvent = function (that) {
-                that.locate("settings").eq(0).addClass(that.options.styles.invalidEntry);
-                that.applier.requestChange("settings.0.value", 20);
+                that.status[idx] = false;
+                that.applier.requestChange("settings." + idx + ".value", 20);
             };
             
             var assertCorrection = function (that) {
-                jqUnit.assertFalse("The invalidEntry class should be removed.", that.locate("settings").eq(0).hasClass(that.options.styles.invalidEntry));
+                jqUnit.assertFalse("The invalidEntry class should be removed.", that.locate("settings").eq(idx).hasClass(that.options.styles.invalidEntry));
+                jqUnit.assertTrue("The status for the setting at index " + idx + " should be valid", that.isValid(idx));
                 start();
             };
             
