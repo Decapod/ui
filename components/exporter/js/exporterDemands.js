@@ -41,6 +41,19 @@ var decapod = decapod || {};
         }
     });
     
+    fluid.demands("decapod.imageExporter.eventBinder", ["decapod.exporter", "decapod.imageExporter"], {
+        funcName: "decapod.eventBinder",
+        options: {
+            listeners: {
+                "{imageExporter}.events.onExportStart": {
+                    namespace: "start",
+                    listener: "{exporter}.startImport",
+                    args: ["{imageExporter}"]
+                }
+            }
+        }
+    });
+    
     fluid.demands("decapod.exporter.eventBinder", ["decapod.exporter"], {
         funcName: "decapod.eventBinder"
     });
@@ -107,6 +120,42 @@ var decapod = decapod || {};
         }
     });
     
+    fluid.demands("decapod.images.exportFormatGroup", ["decapod.exporter"], {
+        funcName: "decapod.exportFormatGroup",
+        options: {
+            resources: {
+                exportFormatGroupTemplate: {
+                    url: "../html/exportFormatGroupTemplate.html",
+                    forceCache: true
+                },
+                imageExporterTemplate: {
+                    url: "../html/imageExporterTemplate.html",
+                    forceCache: true
+                },
+                exportInfo: {
+                    url: "../html/exportInfoTemplate.html",
+                    forceCache: true
+                },
+                controls: {
+                    url: "../html/exportControlsTemplate.html",
+                    forceCache: true
+                },
+                trigger: {
+                    url: "../html/exportControlsTriggerTemplate.html",
+                    forceCache: true
+                },
+                progress: {
+                    url: "../html/exportControlsProgressTemplate.html",
+                    forceCache: true
+                },
+                complete: {
+                    url: "../html/exportControlsCompleteTemplate.html",
+                    forceCache: true
+                }
+            }
+        }
+    });
+    
     fluid.demands("decapod.exportControls", ["decapod.exporter", "decapod.pdfExporter"], {
         options: {
             events: {
@@ -129,7 +178,7 @@ var decapod = decapod || {};
     
     fluid.demands("decapod.accordion", ["decapod.exporter", "decapod.pdfExporter"], {
         options: {
-            header: ".dc-pdfExporter-exportInfo", //TODO:Remove hardcoding of the selector.
+            header: ".dc-accordion-header", //TODO:Remove hardcoding of the selector.
             collapsible: true,
             clearStyle: true,
             active: false
@@ -289,6 +338,72 @@ var decapod = decapod || {};
                             dataSource: {
                                 options: {
                                     url: "http://localhost:8080/library/decapod-export/export/pdf/type4"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            resources: "{exportFormatGroup}.options.resources"
+        }
+    });
+    
+    fluid.demands("decapod.tiff.imageExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
+        funcName: "decapod.imageExporter",
+        options: {
+            strings: {
+                name: "{exporter}.options.strings.images.formatStrings.0.name",
+                description: ""
+            },
+            listeners: {
+                "{imageExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                "afterRender.afterTIFFRender": "{exporter}.events.afterTIFFRender"
+            },
+            components: {
+                dataSource: {
+                    options: {
+                        url: "http://localhost:8080/library/decapod-export/export/image/tiff"
+                    }
+                },
+                exportPoller: {
+                    options: {
+                        components: {
+                            dataSource: {
+                                options: {
+                                    url: "http://localhost:8080/library/decapod-export/export/image/tiff"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            resources: "{exportFormatGroup}.options.resources"
+        }
+    });
+    
+    fluid.demands("decapod.png.imageExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
+        funcName: "decapod.imageExporter",
+        options: {
+            strings: {
+                name: "{exporter}.options.strings.images.formatStrings.1.name",
+                description: ""
+            },
+            listeners: {
+                "{imageExporter}.events.afterExportComplete": "{exporter}.finishExport",
+                "afterRender.afterPNGRender": "{exporter}.events.afterPNGRender"
+            },
+            components: {
+                dataSource: {
+                    options: {
+                        url: "http://localhost:8080/library/decapod-export/export/image/png"
+                    }
+                },
+                exportPoller: {
+                    options: {
+                        components: {
+                            dataSource: {
+                                options: {
+                                    url: "http://localhost:8080/library/decapod-export/export/image/png"
                                 }
                             }
                         }

@@ -33,6 +33,7 @@ var decapod = decapod || {};
     var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
     var COMPLETE_TEMPLATE = "../../../components/exporter/html/exportControlsCompleteTemplate.html";
     var PDF_EXPORTER_TEMPLATE = "../../../components/exporter/html/pdfExporterTemplate.html";
+    var IMAGE_EXPORTER_TEMPLATE = "../../../components/exporter/html/imageExporterTemplate.html";
     var EXPORT_FORMAT_GROUP_TEMPLATE = "../../../components/exporter/html/exportFormatGroupTemplate.html";
 
     fluid.demands("decapod.pdfs.exportFormatGroup", ["decapod.test", "decapod.exporter"], {
@@ -61,6 +62,42 @@ var decapod = decapod || {};
                 },
                 outputSettings: {
                     url: OUTPUT_SETTINGS_TEMPLATE,
+                    forceCache: true
+                },
+                controls: {
+                    url: CONTROLS_TEMPLATE,
+                    forceCache: true
+                },
+                trigger: {
+                    url: TRIGGER_TEMPLATE,
+                    forceCache: true
+                },
+                progress: {
+                    url: PROGRESS_TEMPLATE,
+                    forceCache: true
+                },
+                complete: {
+                    url: COMPLETE_TEMPLATE,
+                    forceCache: true
+                }
+            }
+        }
+    });
+    
+    fluid.demands("decapod.images.exportFormatGroup", ["decapod.test", "decapod.exporter"], {
+        funcName: "decapod.exportFormatGroup",
+        options: {
+            resources: {
+                exportFormatGroupTemplate: {
+                    url: EXPORT_FORMAT_GROUP_TEMPLATE,
+                    forceCache: true
+                },
+                imageExporterTemplate: {
+                    url: IMAGE_EXPORTER_TEMPLATE,
+                    forceCache: true
+                },
+                exportInfo: {
+                    url: EXPORT_INFO_TEMPLATE,
                     forceCache: true
                 },
                 controls: {
