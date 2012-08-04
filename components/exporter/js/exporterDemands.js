@@ -59,7 +59,8 @@ var decapod = decapod || {};
         }
     });
     
-    fluid.demands("decapod.exportFormatGroup", ["decapod.exporter"], {
+    fluid.demands("decapod.pdfs.exportFormatGroup", ["decapod.exporter"], {
+        funcName: "decapod.exportFormatGroup",
         options: {
             resources: {
                 exportFormatGroupTemplate: {

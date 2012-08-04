@@ -35,7 +35,8 @@ var decapod = decapod || {};
     var PDF_EXPORTER_TEMPLATE = "../../../components/exporter/html/pdfExporterTemplate.html";
     var EXPORT_FORMAT_GROUP_TEMPLATE = "../../../components/exporter/html/exportFormatGroupTemplate.html";
 
-    fluid.demands("decapod.exportFormatGroup", ["decapod.test", "decapod.exporter"], {
+    fluid.demands("decapod.pdfs.exportFormatGroup", ["decapod.test", "decapod.exporter"], {
+        funcName: "decapod.exportFormatGroup",
         options: {
             resources: {
                 exportFormatGroupTemplate: {

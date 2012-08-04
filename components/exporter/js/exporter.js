@@ -266,63 +266,6 @@ var decapod = decapod || {};
                     }
                 }
             },
-            pdfExporters: {
-                type: "decapod.exportFormatGroup",
-                container: "{exporter}.dom.pdfs",
-                options: {
-                    strings: {
-                        name: "{exporter}.options.strings.pdfs.name"
-                    },
-                    listeners: {
-                        "afterRender.exporter": "{exporter}.events.afterPDFExportersRendered"
-                    },
-                    model: {
-                        formats: ["decapod.imagePDF.pdfExporter", "decapod.ocrPDF.pdfExporter", "decapod.tracedPDF.pdfExporter", "decapod.fontMatchedPDF.pdfExporter"]
-                    },
-                    resources: {
-                        exportFormatGroupTemplate: {
-                            url: "../html/exportFormatGroupTemplate.html",
-                            forceCache: true
-                        },
-                        pdfExportTemplate: {
-                            url: "../html/pdfExporterTemplate.html",
-                            forceCache: true
-                        },
-                        exportInfo: {
-                            url: "../html/exportInfoTemplate.html",
-                            forceCache: true
-                        },
-                        pdfExportOptions: {
-                            url: "../html/pdfExportOptionsTemplate.html",
-                            forceCache: true
-                        },
-                        select: {
-                            url: "../../select/html/selectTemplate.html",
-                            forceCache: true
-                        },
-                        outputSettings: {
-                            url: "../html/outputSettingsTemplate.html",
-                            forceCache: true
-                        },
-                        controls: {
-                            url: "../html/exportControlsTemplate.html",
-                            forceCache: true
-                        },
-                        trigger: {
-                            url: "../html/exportControlsTriggerTemplate.html",
-                            forceCache: true
-                        },
-                        progress: {
-                            url: "../html/exportControlsProgressTemplate.html",
-                            forceCache: true
-                        },
-                        complete: {
-                            url: "../html/exportControlsCompleteTemplate.html",
-                            forceCache: true
-                        }
-                    }
-                }
-            },
             accordion: {
                 type: "decapod.accordion",
                 container: "{exporter}.dom.accordionContainer",
@@ -351,6 +294,21 @@ var decapod = decapod || {};
                             }
                         ],
                         "{importStatus}.renderer.events.afterRender": "{exporter}.validateQueue"
+                    }
+                }
+            },
+            pdfExporters: {
+                type: "decapod.pdfs.exportFormatGroup",
+                container: "{exporter}.dom.pdfs",
+                options: {
+                    strings: {
+                        name: "{exporter}.options.strings.pdfs.name"
+                    },
+                    listeners: {
+                        "afterRender.exporter": "{exporter}.events.afterPDFExportersRendered"
+                    },
+                    model: {
+                        formats: ["decapod.imagePDF.pdfExporter", "decapod.ocrPDF.pdfExporter", "decapod.tracedPDF.pdfExporter", "decapod.fontMatchedPDF.pdfExporter"]
                     }
                 }
             }
