@@ -33,10 +33,15 @@ var decapod = decapod || {};
     var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
     var COMPLETE_TEMPLATE = "../../../components/exporter/html/exportControlsCompleteTemplate.html";
     var PDF_EXPORTER_TEMPLATE = "../../../components/exporter/html/pdfExporterTemplate.html";
+    var EXPORT_FORMAT_GROUP_TEMPLATE = "../../../components/exporter/html/exportFormatGroupTemplate.html";
 
-    fluid.demands("decapod.pdfExporter", ["decapod.test", "decapod.exporter"], {
+    fluid.demands("decapod.exportFormatGroup", ["decapod.test", "decapod.exporter"], {
         options: {
             resources: {
+                exportFormatGroupTemplate: {
+                    url: EXPORT_FORMAT_GROUP_TEMPLATE,
+                    forceCache: true
+                },
                 pdfExportTemplate: {
                     url: PDF_EXPORTER_TEMPLATE,
                     forceCache: true
@@ -76,5 +81,4 @@ var decapod = decapod || {};
             }
         }
     });
-
 })(jQuery);

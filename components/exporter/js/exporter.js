@@ -122,17 +122,13 @@ var decapod = decapod || {};
         selectors: {
             title: ".dc-exporter-title",
             formats: ".dc-exporter-formats",
-            groupName: ".dc-exporter-groupName",
             uploadClear: ".dc-exporter-uploadClear",
             uploadContainer: ".dc-exporter-upload",
             uploadBrowse: ".dc-exporter-uploadBrowse",
             importStatusContainer: ".dc-exporter-importStatus",
             importMessages: ".dc-exporter-importMessages",
             instructions: ".dc-exporter-instructions",
-            imagePDFContainer: ".dc-exporter-imagePDF",
-            ocrPDFContainer: ".dc-exporter-ocrPDF",
-            tracedPDFContainer: ".dc-exporter-tracedPDF",
-            fontMatchedPDFContainer: ".dc-exporter-fontMatchedPDF",
+            pdfs: ".dc-exporter-pdfs",
             accordionContainer: ".dc-exporter-accordion"
         },
         strings: {
@@ -140,7 +136,15 @@ var decapod = decapod || {};
             instructions: "Select 'Browse Files' to choose images to export.",
             uploadClear: "Reset",
             formats: "Select Export Option",
-            groupName: ""
+            pdfs: {
+                name: "PDF",
+                formatStrings: [
+                    {name: "1. Image PDF", description: "Export each image as a page in a PDF document. Export process is quick and generates a basic PDF."},
+                    {name: "2. Image PDF with OCR Text", description: "OCR is performed on images, and resulting text is embedded in the PDF."},
+                    {name: "3. Computer Traced PDF with OCR Text", description: "Content of each image is traced by the computer, OCR'ed, and output to a PDF. The process takes longer, but results is a much smaller PDF."},
+                    {name: "4. Font Matched Text with OCR", description: "Text on image is matched to a True-Type font resulting in a very compact PDF. Works best with Latin script."}
+                ]
+            }
         },
         events: {
             onReady: null,
@@ -153,13 +157,16 @@ var decapod = decapod || {};
             afterOCRPDFRender: null,
             afterTracedPDFRender: null,
             afterFontMatchedPDFRender: null,
+            afterPDFExportersRendered: null,
             afterExportersRendered: {
                 events: {
                     imagePDF: "afterImagePDFRender",
                     ocrPDF: "afterOCRPDFRender",
                     tracedPDF: "afterTracedPDFRender",
-                    fontMatchedPDF: "afterFontMatchedPDFRender"
-                }
+                    fontMatchedPDF: "afterFontMatchedPDFRender",
+                    pdfs: "afterPDFExportersRendered"
+                },
+                args: ["{exporter}"]
             }
         },
         invokers: {
@@ -259,146 +266,59 @@ var decapod = decapod || {};
                     }
                 }
             },
-            imagePDF: {
-                type: "decapod.pdfExporter",
-                container: "{exporter}.dom.imagePDFContainer",
+            pdfExporters: {
+                type: "decapod.exportFormatGroup",
+                container: "{exporter}.dom.pdfs",
                 options: {
                     strings: {
-                        name: "1. Image PDF",
-                        description: "Export each image as a page in a PDF document. Export process is quick and generates a basic PDF."
+                        name: "{exporter}.options.strings.pdfs.name"
                     },
                     listeners: {
-                        "afterRender.exporter": "{exporter}.events.afterImagePDFRender"
-                    },
-                    components: {
-                        dataSource: {
-                            options: {
-                                url: "http://localhost:8080/library/decapod-export/export/pdf/type1"
-                            }
-                        },
-                        exportPoller: {
-                            options: {
-                                components: {
-                                    dataSource: {
-                                        options: {
-                                            url: "http://localhost:8080/library/decapod-export/export/pdf/type1"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            ocrPDF: {
-                type: "decapod.pdfExporter",
-                container: "{exporter}.dom.ocrPDFContainer",
-                options: {
-                    strings: {
-                        name: "2. Image PDF with OCR Text",
-                        description: "OCR is performed on images, and resulting text is embedded in the PDF."
-                    },
-                    listeners: {
-                        "afterRender.exporter": "{exporter}.events.afterOCRPDFRender"
-                    },
-                    components: {
-                        dataSource: {
-                            options: {
-                                url: "http://localhost:8080/library/decapod-export/export/pdf/type2"
-                            }
-                        },
-                        exportPoller: {
-                            options: {
-                                components: {
-                                    dataSource: {
-                                        options: {
-                                            url: "http://localhost:8080/library/decapod-export/export/pdf/type2"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            tracedPDF: {
-                type: "decapod.pdfExporter",
-                container: "{exporter}.dom.tracedPDFContainer",
-                options: {
-                    strings: {
-                        name: "3. Computer Traced PDF with OCR Text",
-                        description: "Content of each image is traced by the computer, OCR'ed, and output to a PDF. The process takes longer, but results is a much smaller PDF."
-                    },
-                    listeners: {
-                        "afterRender.exporter": "{exporter}.events.afterTracedPDFRender"
+                        "afterRender.exporter": "{exporter}.events.afterPDFExportersRendered"
                     },
                     model: {
-                        exportOptions: {
-                            outputSettings: {
-                                settings: [
-                                    {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
-                                    {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300"}}
-                                ]
-                            }
-                        }
+                        formats: ["decapod.imagePDF.pdfExporter", "decapod.ocrPDF.pdfExporter", "decapod.tracedPDF.pdfExporter", "decapod.fontMatchedPDF.pdfExporter"]
                     },
-                    components: {
-                        dataSource: {
-                            options: {
-                                url: "http://localhost:8080/library/decapod-export/export/pdf/type3"
-                            }
+                    resources: {
+                        exportFormatGroupTemplate: {
+                            url: "../html/exportFormatGroupTemplate.html",
+                            forceCache: true
                         },
-                        exportPoller: {
-                            options: {
-                                components: {
-                                    dataSource: {
-                                        options: {
-                                            url: "http://localhost:8080/library/decapod-export/export/pdf/type3"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            fontMatchedPDF: {
-                type: "decapod.pdfExporter",
-                container: "{exporter}.dom.fontMatchedPDFContainer",
-                options: {
-                    strings: {
-                        name: "4. Font Matched Text with OCR",
-                        description: "Text on image is matched to a True-Type font resulting in a very compact PDF. Works best with Latin script."
-                    },
-                    listeners: {
-                        "afterRender.exporter": "{exporter}.events.afterFontMatchedPDFRender"
-                    },
-                    model: {
-                        exportOptions: {
-                            outputSettings: {
-                                settings: [
-                                    {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
-                                    {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300"}}
-                                ]
-                            }
-                        }
-                    },
-                    components: {
-                        dataSource: {
-                            options: {
-                                url: "http://localhost:8080/library/decapod-export/export/pdf/type4"
-                            }
+                        pdfExportTemplate: {
+                            url: "../html/pdfExporterTemplate.html",
+                            forceCache: true
                         },
-                        exportPoller: {
-                            options: {
-                                components: {
-                                    dataSource: {
-                                        options: {
-                                            url: "http://localhost:8080/library/decapod-export/export/pdf/type4"
-                                        }
-                                    }
-                                }
-                            }
+                        exportInfo: {
+                            url: "../html/exportInfoTemplate.html",
+                            forceCache: true
+                        },
+                        pdfExportOptions: {
+                            url: "../html/pdfExportOptionsTemplate.html",
+                            forceCache: true
+                        },
+                        select: {
+                            url: "../../select/html/selectTemplate.html",
+                            forceCache: true
+                        },
+                        outputSettings: {
+                            url: "../html/outputSettingsTemplate.html",
+                            forceCache: true
+                        },
+                        controls: {
+                            url: "../html/exportControlsTemplate.html",
+                            forceCache: true
+                        },
+                        trigger: {
+                            url: "../html/exportControlsTriggerTemplate.html",
+                            forceCache: true
+                        },
+                        progress: {
+                            url: "../html/exportControlsProgressTemplate.html",
+                            forceCache: true
+                        },
+                        complete: {
+                            url: "../html/exportControlsCompleteTemplate.html",
+                            forceCache: true
                         }
                     }
                 }
@@ -430,7 +350,6 @@ var decapod = decapod || {};
                                 priority: "last"
                             }
                         ],
-                        "{pdfExporter}.events.afterExportComplete": "{exporter}.finishExport",
                         "{importStatus}.renderer.events.afterRender": "{exporter}.validateQueue"
                     }
                 }
