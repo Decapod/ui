@@ -22,6 +22,10 @@ a.ds-exporter-reset:focus {
     width:485px;
 }
 
+.ds-exporter-formatGroup h3 {
+    margin-left: 10px;
+    margin-top: 20px;
+}
 
 /**	
  * jQuery overrides 
