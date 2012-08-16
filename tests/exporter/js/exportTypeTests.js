@@ -1039,6 +1039,38 @@ var decapod = decapod || {};
             });
         });
         
+        pdfExportOptionsTests.asyncTest("isValid", function () {
+            jqUnit.expect(2);
+            var assertIsValid = function (that) {
+                jqUnit.assertTrue("The component should be in a valid state", that.isValid);
+                // puts the component in an invalid state
+                that.model.output.selection = "custom";
+                that.outputSettings.status = [false, false, false];
+                jqUnit.assertFalse("The component should be in an invalid state", that.isValid);
+                start();
+            };
+            createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: assertIsValid
+                },
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
+                    },
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
+                    },
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
+                    }
+                }
+            });
+        });
+        
         /****************
          * triggerTests *
          ****************/

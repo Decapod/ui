@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Declare dependencies
-/*global setTimeout, window, decapod:true, fluid, jQuery*/
+/*global Object, setTimeout, window, decapod:true, fluid, jQuery*/
 
 // JSLint options 
 /*jslint white: true, funcinvoke: true, undef: true, newcap: true, nomen: true, regexp: true, bitwise: true, browser: true, forin: true, maxerr: 100, indent: 4 */
@@ -182,6 +182,10 @@ var decapod = decapod || {};
         that.events.onEnable.fire(that);
     };
     
+    decapod.pdfExportOptions.isValid = function (that, elPath, customSetting) {
+        return fluid.get(that.model, elPath) === customSetting ? that.outputSettings.isValid() : true;
+    };
+    
     decapod.pdfExportOptions.preInit = function (that) {
         /*
          * Work around for FLUID-4709
@@ -206,6 +210,11 @@ var decapod = decapod || {};
     };
     
     decapod.pdfExportOptions.finalInit = function (that) {
+        // creates a property called isValid. Doesn't work for <IE9.
+        Object.defineProperty(that, "isValid", {
+            get: that.isValidImp
+        });
+        
         that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
@@ -264,7 +273,8 @@ var decapod = decapod || {};
             show: "decapod.pdfExportOptions.show",
             showIfModelValue: "decapod.pdfExportOptions.showIfModelValue",
             disable: "decapod.pdfExportOptions.disable",
-            enable: "decapod.pdfExportOptions.enable"
+            enable: "decapod.pdfExportOptions.enable",
+            isValidImp: "decapod.pdfExportOptions.isValid"
         },
         components: {
             output: {

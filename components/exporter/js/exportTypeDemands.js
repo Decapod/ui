@@ -160,6 +160,9 @@ var decapod = decapod || {};
     fluid.demands("decapod.pdfExportOptions.enable", ["decapod.pdfExportOptions"], {
         args: ["{pdfExportOptions}"]
     });
+    fluid.demands("decapod.pdfExportOptions.isValid", ["decapod.pdfExportOptions"], {
+        args: ["{pdfExportOptions}", "output.selection", "custom"]
+    });
     fluid.demands("decapod.outputSettings.disable", ["decapod.outputSettings"], {
         args: ["{outputSettings}"]
     });
