@@ -81,11 +81,15 @@ var decapod = decapod || {};
             listeners: {
                 "{pdfExporter}.events.onValidationError": {
                     listener: "{trigger}.updateModel",
-                    args: ["valid", false]
+                    args: ["validSettings", false]
                 },
                 "{pdfExporter}.events.onCorrection": {
                     listener: "{trigger}.updateModel",
-                    args: ["valid", true]
+                    args: ["validSettings", true]
+                },
+                "{pdfExporter}.events.afterModelChanged": {
+                    listener: "{trigger}.updateModel",
+                    args: ["validSettings", "{pdfExporter}.isInputValid"]
                 }
             },
             events: {
@@ -115,6 +119,9 @@ var decapod = decapod || {};
             height: "decapod.pdfExporter.convertDimensionSetting",
             resolution: "decapod.pdfExporter.convertResolutionSetting"
         }]
+    });
+    fluid.demands("decapod.pdfExporter.isInputValid", ["decapod.pdfExporter"], {
+        args: ["{pdfExporter}"]
     });
     
 })(jQuery);
