@@ -1,4 +1,5 @@
-.ds-pdfExporter-exportInfo {
+.ds-pdfExporter-exportInfo,
+.ds-imageExporter-exportInfo {
     border-bottom: solid 2px #E6E7E8;
     padding: 10px 25px 10px 10px;
     position: relative;
@@ -7,7 +8,8 @@
     padding: 15px 10px 13px 10px;
 }
 
-.ds-pdfExporter-exportInfo:hover {
+.ds-pdfExporter-exportInfo:hover,
+.ds-imageExporter-exportInfo:hover {
     background-color: #F9F9FA;
     border-bottom: 2px solid transparent;
     cursor:pointer;
@@ -15,7 +17,9 @@
 }
 
 .ds-pdfExporter-exportInfo.ui-state-disabled:focus,
-.ds-pdfExporter-exportInfo.ui-state-focus {
+.ds-pdfExporter-exportInfo.ui-state-focus,
+.ds-imageExporter-exportInfo.ui-state-disabled:focus,
+.ds-imageExporter-exportInfo.ui-state-focus {
     border:3px solid #989898;
     border-radius: 6px;
     transition: none;
@@ -23,7 +27,8 @@
     outline: none;
 }
 
-.ds-pdfExporter-exportInfo.ui-state-active:after {
+.ds-pdfExporter-exportInfo.ui-state-active:after,
+.ds-imageExporter-exportInfo.ui-state-active:after {
 /* Create a downward arrow by rotating a square 45 deg.
    Overrides a jQuery UI style. */    
     content:"";
@@ -43,24 +48,26 @@
     transition: all 0.3s ease;
 }
 
-.ds-pdfExporter-exportInfo.ui-state-active:focus:after {
+.ds-pdfExporter-exportInfo.ui-state-active:focus:after,
+.ds-imageExporter-exportInfo.ui-state-active:focus:after {
     border-right: 3px solid #989898;
     border-bottom: 3px solid #989898;
 }
 
 
-.ds-pdfExporter-exportInfo.ui-state-active:hover:after {
+.ds-pdfExporter-exportInfo.ui-state-active:hover:after,
+.ds-imageExporter-exportInfo.ui-state-active:hover:after {
     /*Overrides a jQuery UI style. */ 
     background-color: #F9F9FA; 
     -moz-transition: all 0.3s ease; /* specify a transition otherwise the hover style doesn't look right */
     transition: all 0.3s ease;
 }
 
-.ds-pdfExporter-exportDetails {
+.ds-pdfExporter-exportDetails,
+.ds-imageExporter-exportDetails {
     background-color: #F9F9FA;
     box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
     position: relative;
-    height: 9em;
 }
 
 .ds-pdfExporter-exportDetails.ui-accordion-content {
