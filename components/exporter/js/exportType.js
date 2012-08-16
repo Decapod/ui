@@ -380,12 +380,12 @@ var decapod = decapod || {};
         var index = parseInt(changeRequest.path.split(".")[1], 10);
         if (!isNaN(index)) {
             that.setStatusByIndex(index, status);
-        };
+        }
     };
     
     decapod.outputSettings.setStatusByIndex = function (that, index, status) {
         status = !!status; // forces status to be boolean
-        if(that.isValid(index) !== status) {
+        if (that.isValid(index) !== status) {
             var elm = that.locate("settings").eq(index);
             var style = that.options.styles.invalidEntry;
             that.status[index] = status;
@@ -399,7 +399,7 @@ var decapod = decapod || {};
     };
     
     decapod.outputSettings.isValid = function (that, index) {
-        if(typeof(index) === "number") {
+        if (typeof (index) === "number") {
             return that.status[index];
         }
         var status = true;

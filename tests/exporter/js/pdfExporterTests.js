@@ -450,7 +450,7 @@ var decapod = decapod || {};
         });
         
         pdfExporterTests.asyncTest("invalid custom setting", function () {
-            jqUnit.expect(2);
+            jqUnit.expect(3);
             var newWidth = "2000";
             var expected = "210";
             var trigger = function (that) {
@@ -464,6 +464,7 @@ var decapod = decapod || {};
             var assertValidationError = function (that, trigger) {
                 jqUnit.assertEquals("The components model should not be update with the new output selection", expected, that.model.exportOptions.outputSettings.settings[0].value);
                 jqUnit.assertTrue("The export trigger should be disabled", trigger.locate("trigger").is(":disabled"));
+                jqUnit.assertFalse("isInputValid should be false", that.isInputValid);
                 start();
             };
             var assertModelChange = function () {
@@ -488,7 +489,7 @@ var decapod = decapod || {};
         });
         
         pdfExporterTests.asyncTest("corrected invalid custom setting", function () {
-            jqUnit.expect(3);
+            jqUnit.expect(4);
             var newWidth = "2000";
             var correctedWidth = "200";
             var triggerError = function (that) {
@@ -502,6 +503,7 @@ var decapod = decapod || {};
                 var decorators = fluid.renderer.getDecoratorComponents(that.exportControls);
                 var trigger = decapod.testUtils.componentFromDecorator("trigger", decorators);
                 jqUnit.assertTrue("The export trigger should be enabled", trigger.locate("trigger").is(":enabled"));
+                jqUnit.assertTrue("isInputValid should be true", that.isInputValid);
                 start();
             };
             var assertModelChange = function () {
@@ -529,6 +531,84 @@ var decapod = decapod || {};
                     onCorrection: {
                         listener: assertCorrection,
                         args: ["{pdfExporter}"],
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("corrected invalid custom setting - change output type", function () {
+            jqUnit.expect(3);
+            var newWidth = "2000";
+            var triggerError = function (that) {
+                that.exportOptions.outputSettings.applier.requestChange("settings.0.value", newWidth);
+            };
+            var triggerCorrection = function (that) {
+                that.exportOptions.output.applier.requestChange("selection", "a4");
+            };
+            var assertModelChange = function (that) {
+                jqUnit.assertTrue("The afterModelChanged event should fire.", true);
+                var decorators = fluid.renderer.getDecoratorComponents(that.exportControls);
+                var trigger = decapod.testUtils.componentFromDecorator("trigger", decorators);
+                jqUnit.assertTrue("The export trigger should be enabled", trigger.locate("trigger").is(":enabled"));
+                jqUnit.assertTrue("isInputValid should be true", that.isInputValid);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                model: {
+                    exportOptions: {
+                        output: {selection: "custom"}
+                    }
+                },
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertModelChange,
+                        args: ["{pdfExporter}"],
+                        priority: "last"
+                    },
+                    afterRender: {
+                        listener: triggerError,
+                        priority: "last"
+                    },
+                    onValidationError: {
+                        listener: triggerCorrection,
+                        args: ["{pdfExporter}"],
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("invalid custom setting - change output type", function () {
+            jqUnit.expect(3);
+            var newWidth = "2000";
+            var triggerError = function (that) {
+                // puts the custom setting into an error state
+                that.exportOptions.outputSettings.status = [false, false, false];
+                that.exportOptions.output.applier.requestChange("selection", "custom");
+            };
+            var assertModelChange = function (that) {
+                jqUnit.assertTrue("The afterModelChanged event should fire.", true);
+                var decorators = fluid.renderer.getDecoratorComponents(that.exportControls);
+                var trigger = decapod.testUtils.componentFromDecorator("trigger", decorators);
+                jqUnit.assertTrue("The export trigger should be disabled", trigger.locate("trigger").is(":disabled"));
+                jqUnit.assertFalse("isInputValid should be false", that.isInputValid);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                model: {
+                    exportOptions: {
+                        output: {selection: "a4"}
+                    }
+                },
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertModelChange,
+                        args: ["{pdfExporter}"],
+                        priority: "last"
+                    },
+                    afterRender: {
+                        listener: triggerError,
                         priority: "last"
                     }
                 }

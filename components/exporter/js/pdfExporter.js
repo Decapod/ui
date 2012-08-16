@@ -32,8 +32,8 @@ var decapod = decapod || {};
 
     decapod.pdfExporter.mapExportOptions = function (that, selection) {
         var optionsData = that.options.exportOptionsMap[selection] || {};
-        if (typeof(optionsData) === "string") {
-            optionsData = typeof(that[optionsData]) === "function" ? that[optionsData](that) : fluid.invokeGlobalFunction(optionsData, [that]);
+        if (typeof (optionsData) === "string") {
+            optionsData = typeof (that[optionsData]) === "function" ? that[optionsData](that) : fluid.invokeGlobalFunction(optionsData, [that]);
         }
         return optionsData;
     };
@@ -63,6 +63,10 @@ var decapod = decapod || {};
         return settings;
     };
     
+    decapod.pdfExporter.isInputValid = function (that) {
+        return that.exportOptions.isValid;
+    };
+    
     decapod.pdfExporter.preInit = function (that) {
         /*
          * Work around for FLUID-4709
@@ -81,6 +85,12 @@ var decapod = decapod || {};
     };
 
     decapod.pdfExporter.finalInit = function (that) {
+        // creates a property called isValid. Doesn't work for <IE9.
+        Object.defineProperty(that, "isInputValid", {
+            get: that.isInputValidImp,
+            // enumerable: true
+        });
+        
         that.assembleExportOptions();
         that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
@@ -221,7 +231,8 @@ var decapod = decapod || {};
         invokers: {
             mapExportOptions: "decapod.pdfExporter.mapExportOptions",
             assembleExportOptions: "decapod.pdfExporter.assembleExportOptions",
-            assembleCustomSettings: "decapod.pdfExporter.assembleCustomSettings"
+            assembleCustomSettings: "decapod.pdfExporter.assembleCustomSettings",
+            isInputValidImp: "decapod.pdfExporter.isInputValid"
         },
         components: {
             eventBinder: {
