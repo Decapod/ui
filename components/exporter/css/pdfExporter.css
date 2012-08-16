@@ -1,71 +1,4 @@
-.ds-pdfExporter-exportInfo {
-    border-bottom: solid 2px #E6E7E8;
-    padding: 10px 25px 10px 10px;
-    position: relative;
-    -moz-transition: background-color 0.3s ease;
-    transition: background-color 0.3s ease;
-    padding: 15px 10px 13px 10px;
-}
 
-.ds-pdfExporter-exportInfo:hover {
-    background-color: #F9F9FA;
-    border-bottom: 2px solid transparent;
-    cursor:pointer;
-    border-radius: 6px;
-}
-
-.ds-pdfExporter-exportInfo.ui-state-disabled:focus,
-.ds-pdfExporter-exportInfo.ui-state-focus {
-    border:3px solid #989898;
-    border-radius: 6px;
-    transition: none;
-    padding: 12px 7px 12px 7px;
-    outline: none;
-}
-
-.ds-pdfExporter-exportInfo.ui-state-active:after {
-/* Create a downward arrow by rotating a square 45 deg.
-   Overrides a jQuery UI style. */    
-    content:"";
-    position: absolute;
-	bottom: -11px;
-    right: 50%;
-    width: 15px;
-    height: 15px;
-    background-color: #eceef2;
-    -moz-transform: rotate(45deg); 
-    transform:rotate(45deg);
-    border-right: 3px solid #E8E8E8;
-    border-bottom: 3px solid #E8E8E8;
-    z-index: 1; /* Position on top so the arrow is visible when applied. */
-    
-    -moz-transition: background-color 0.3s ease; /* specify a transition otherwise the hover style doesn't look right */
-    transition: all 0.3s ease;
-}
-
-.ds-pdfExporter-exportInfo.ui-state-active:focus:after {
-    border-right: 3px solid #989898;
-    border-bottom: 3px solid #989898;
-}
-
-
-.ds-pdfExporter-exportInfo.ui-state-active:hover:after {
-    /*Overrides a jQuery UI style. */ 
-    background-color: #F9F9FA; 
-    -moz-transition: all 0.3s ease; /* specify a transition otherwise the hover style doesn't look right */
-    transition: all 0.3s ease;
-}
-
-.ds-pdfExporter-exportDetails {
-    background-color: #F9F9FA;
-    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
-    position: relative;
-    height: 9em;
-}
-
-.ds-pdfExporter-exportDetails.ui-accordion-content {
-    padding: 1em 0;
-}
 
 
 .ds-pdfExporter-pdfExportOptions-hidden{
@@ -85,12 +18,16 @@
 .ds-pdfExporter-pdfExportOptions-form {
     margin-right:auto;
     margin-left:auto;
-    width: 73%;
+    width: 68%;
 }
 
 .ds-pdfExporter-pdfExportOptions-form select {
     width: 12em;
     margin-left: 0.5em;
+}
+
+.ds-pdfExportOptions-output {
+    text-align:center;
 }
 
 .ds-pdfExportOptions-outputSettings label{
@@ -106,5 +43,7 @@
 
 .ds-pdfExportOptions-outputSettings li {
     padding-top:0.5em;
+    padding-left: 1.3em;
+    height: 1.5em;
 }
 
