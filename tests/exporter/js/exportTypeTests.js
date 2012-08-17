@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Declare dependencies
-/*global decapod:true, fluid, jQuery, jqUnit, start*/
+/*global setTimeout, decapod:true, fluid, jQuery, jqUnit, start*/
 
 // JSLint options 
 /*jslint white: true, funcinvoke: true, undef: true, newcap: true, nomen: true, regexp: true, bitwise: true, browser: true, forin: true, maxerr: 100, indent: 4 */
@@ -30,6 +30,7 @@ var decapod = decapod || {};
     var CONTROLS_CONTAINER = ".dc-exportControls";
     var TRIGGER_CONTAINER = ".dc-exportControls-trigger";
     var PROGRESS_CONTAINER = ".dc-exportControls-progress";
+    var DETAILED_PROGRESS_CONTAINER = ".dc-exportControls-detailedProgress";
     var COMPLETE_CONTAINER = ".dc-exportControls-complete";
     
     // Template URLs
@@ -39,6 +40,7 @@ var decapod = decapod || {};
     var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
     var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
     var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
+    var DETAILED_PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsDetailedProgressTemplate.html";
     var COMPLETE_TEMPLATE = "../../../components/exporter/html/exportControlsCompleteTemplate.html";
     var SELECT_TEMPLATE = "../../../components/select/html/selectTemplate.html";
     
@@ -96,6 +98,10 @@ var decapod = decapod || {};
     
     var createProgress = function (container, options) {
         return generateComponent("decapod.exportControls.progress", container, PROGRESS_TEMPLATE, options);
+    };
+    
+    var createDetailedProgress = function (container, options) {
+        return generateComponent("decapod.exportControls.detailedProgress", container, DETAILED_PROGRESS_TEMPLATE, options);
     };
     
     var createComplete = function (container, options) {
@@ -1243,6 +1249,134 @@ var decapod = decapod || {};
                         listener: assertRendering,
                         priority: "last"
                     }
+                }
+            });
+        });
+        
+        /*************************
+         * detailedProgressTests *
+         *************************/
+        
+        var detailedProgressTests = jqUnit.testCase("decapod.exportControls.detailedProgress");
+        
+        detailedProgressTests.asyncTest("init", function () {
+            jqUnit.expect(3);
+            var assertInit = function (that) {
+                jqUnit.assertTrue("The onReady event should have fired", true);
+                jqUnit.assertEquals("The initial progress should be at zero", 0, that.progress.storedPercent);
+                jqUnit.assertEquals("The initial progress label should be", "Creating export...", that.progress.locate("label").text());
+                start();
+            };
+            createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
+                listeners: {
+                    onReady: assertInit
+                }
+            });
+        });
+        
+        detailedProgressTests.asyncTest("fetchResources", function () {
+            jqUnit.expect(1);
+            var assertFetchResources = function (resourceSpec) {
+                jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
+            };
+            createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
+                listeners: {
+                    afterFetchResources: assertFetchResources,
+                    onReady: start
+                }
+            });
+        });
+        
+        detailedProgressTests.asyncTest("setProgress", function () {
+            jqUnit.expect(2);
+            var assertSetProgress = function (that) {
+                that.setProgress();
+                jqUnit.assertEquals("The progress should have updated", 50, that.progress.storedPercent);
+                jqUnit.assertEquals("The progress label should have updated", "Creating export... Step 2 of 2.", that.progress.locate("label").text());
+                start();
+            };
+            createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
+                model: {
+                    stages: ["books2pages", "ocro2pdf.py"],
+                    currentStage: "ocro2pdf.py"
+                },
+                listeners: {
+                    onReady: assertSetProgress
+                }
+            });
+        });
+        
+        detailedProgressTests.asyncTest("update", function () {
+            jqUnit.expect(4);
+            var stage = "books2pages";
+            var triggerUpdate = function (that) {
+                that.update(stage);
+            };
+            var assertUpdate = function (that, newModel, index) {
+                var expectedMessage = "Creating export... Step 1 of 2.";
+                jqUnit.assertEquals("The newModel should have the updated stage", stage, newModel.currentStage);
+                jqUnit.assertEquals("The model should have been udpated", stage, that.model.currentStage);
+                jqUnit.assertEquals("The progress should have updated", 0, that.progress.storedPercent);
+                jqUnit.assertEquals("The progress label should have updated", expectedMessage, that.progress.locate("label").text());
+                start();
+            };
+            createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
+                model: {
+                    stages: ["books2pages", "ocro2pdf.py"],
+                    currentStage: ""
+                },
+                listeners: {
+                    onReady: triggerUpdate,
+                    afterModelChanged: {
+                        listener: assertUpdate,
+                        args: ["{detailedProgress}", "{arguments}.0", "{arguments}.2"],
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        detailedProgressTests.asyncTest("update - invalid", function () {
+            jqUnit.expect(0);
+            var stage = "test";
+            var triggerUpdate = function (that) {
+                that.update(stage);
+                setTimeout(start, 1000); // Delaying a second to give the afterModelEvent a chance to erroneously fire.
+            };
+            var assertUpdate = function (that, newModel, index) {
+                jqUnit.assertTrue("The afterModelChanged event shouldn't have fired", false);
+            };
+            createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
+                model: {
+                    stages: ["books2pages", "ocro2pdf.py"],
+                    currentStage: ""
+                },
+                listeners: {
+                    onReady: triggerUpdate,
+                    afterModelChanged: {
+                        listener: assertUpdate,
+                        args: ["{detailedProgress}", "{arguments}.0", "{arguments}.2"],
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        detailedProgressTests.asyncTest("finish", function () {
+            jqUnit.expect(2);
+            var assertFinish = function (that) {
+                that.finish();
+                jqUnit.assertEquals("The progress should have updated", 100, that.progress.storedPercent);
+                jqUnit.assertEquals("The progress label should have updated", that.options.strings.completeProgressMessage, that.progress.locate("label").text());
+                start();
+            };
+            createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
+                model: {
+                    stages: ["books2pages", "ocro2pdf.py"],
+                    currentStage: ""
+                },
+                listeners: {
+                    onReady: assertFinish
                 }
             });
         });

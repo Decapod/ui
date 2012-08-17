@@ -865,6 +865,123 @@ var decapod = decapod || {};
         }
     });
     
+    /*******************************************
+     * decapod.exportControls.detailedProgress *
+     *******************************************/
+    
+    fluid.registerNamespace("decapod.exportControls.detailedProgress");
+    
+    decapod.exportControls.detailedProgress.update = function (that, stage) {
+        that.applier.requestChange("currentStage", stage);
+    };
+    
+    decapod.exportControls.detailedProgress.setProgress = function (that) {
+        var index = $.inArray(that.model.currentStage, that.model.stages);
+        if (index >= 0) {
+            var numStages = that.model.stages.length;
+            var percentage = (index/numStages) * 100;
+            that.progress.update(percentage, fluid.stringTemplate(that.options.strings.inProgressMessage, {step: ++index, steps: numStages})); // index is incremented to make it start at 1 instead of 0.
+        }
+    };
+    
+    decapod.exportControls.detailedProgress.finish = function (that) {
+        that.progress.update(100, that.options.strings.completeProgressMessage);
+    };
+    
+    decapod.exportControls.detailedProgress.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        that.update = function (stage) {
+            that.update(stage);
+        };
+        
+        that.setProgress = function () {
+            that.setProgress();
+        };
+        
+        that.finish = function () {
+            that.finish();
+        };
+    };
+    
+    decapod.exportControls.detailedProgress.finalInit = function (that) {
+        that.applier.modelChanged.addListener("currentStage", function (newModel, oldModel, index) {
+            that.events.afterModelChanged.fire(newModel, oldModel, $.inArray(newModel.currentStage, newModel.stages));
+        });
+        
+        that.applier.guards.addListener("currentStage", function (model, changeRequest) {
+            return $.inArray(changeRequest.value, model.stages) >= 0;
+        });
+        
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.afterFetchResources.fire(resourceSpec);
+            that.progress.locate("label").text(that.options.strings.initialProgressMessage);
+            that.events.onReady.fire(that);
+        });
+    };
+    
+    fluid.defaults("decapod.exportControls.detailedProgress", {
+        gradeNames: ["decapod.viewComponentCustomMerge", "autoInit"],
+        preInitFunction: "decapod.exportControls.detailedProgress.preInit",
+        finalInitFunction: "decapod.exportControls.detailedProgress.finalInit",
+        selectors: {
+            progress: ".dc-exportControls-detailedProgress-progress"
+        },
+        strings: {
+            initialProgressMessage: "Creating export...",
+            inProgressMessage: "Creating export... Step %step of %steps.",
+            completeProgressMessage: "Creating export... Done!"
+        },
+        events: {
+            afterFetchResources: null,
+            afterModelChanged: null,
+            onReady: null
+        },
+        listeners: {
+            afterModelChanged: {
+                listener: "{detailedProgress}.setProgress"
+            }
+        },
+        model: {
+            stages: [],
+            currentStage: ""
+        },
+        invokers: {
+            update: "decapod.exportControls.detailedProgress.update",
+            setProgress: "decapod.exportControls.detailedProgress.setProgress",
+            finish: "decapod.exportControls.detailedProgress.finish"
+        },
+        components: {
+            progress: {
+                type: "fluid.progress",
+                createOnEvent: "afterFetchResources",
+                container: "{detailedProgress}.dom.progress",
+                options: {
+                    strings: {
+                        ariaDoneText: "{detailedProgress}.options.strings.completeProgressMessage"
+                    },
+                    listeners: {
+                        onProgressBegin: {
+                            listener: "{detailedProgress}.events.onReady",
+                            args: ["{detailedProgress}"]
+                        }
+                    },
+                    initiallyHidden: false
+                }
+            }
+        },
+        resources: {
+            template: {
+                url: "../html/exportControlsDetailedProgressTemplate.html",
+                forceCache: true
+            }
+        }
+    });
+    
     /***********************************
      * decapod.exportControls.complete *
      ***********************************/

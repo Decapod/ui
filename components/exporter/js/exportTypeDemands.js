@@ -145,6 +145,15 @@ var decapod = decapod || {};
     fluid.demands("decapod.exportControls.complete.updateModel", ["decapod.exportControls.complete"], {
         args: ["{complete}", "{arguments}.0"]
     });
+    fluid.demands("decapod.exportControls.detailedProgress.update", ["decapod.exportControls.detailedProgress"], {
+        args: ["{detailedProgress}", "{arguments}.0"]
+    });
+    fluid.demands("decapod.exportControls.detailedProgress.setProgress", ["decapod.exportControls.detailedProgress"], {
+        args: ["{detailedProgress}"]
+    });
+    fluid.demands("decapod.exportControls.detailedProgress.finish", ["decapod.exportControls.detailedProgress"], {
+        args: ["{detailedProgress}"]
+    });
     fluid.demands("decapod.pdfExportOptions.hide", ["decapod.pdfExportOptions"], {
         args: ["{pdfExportOptions}", "{arguments}.0"]
     });
