@@ -28,4 +28,22 @@ var decapod = decapod || {};
             url: "../../../mock-book/mockResponse.json"
         }
     });
+    
+    fluid.demands("decapod.exportControls.detailedProgress", ["decapod.pdfExporter", "decapod.exportControls"], {
+        options: {
+            model: {
+                stages: ["books2pages", "ocro2pdf.py"],
+                currentStage: "ocro2pdf.py"
+            },
+            listeners: {
+                "{pdfExporter}.events.onExportStatusUpdate": {
+                    listener: "{detailedProgress}.update",
+                    args: ["{arguments}.0.stage"]
+                }
+            },
+            resources: {
+                template: "{exportControls}.options.resources.progress"
+            }
+        }
+    });
 })(jQuery);

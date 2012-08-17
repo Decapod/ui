@@ -455,24 +455,24 @@ var decapod = decapod || {};
         };
         
         // Since the test environment has to be reset, need to run the tests on each format seperately
-        exporterTests.asyncTest("PDF format-0 trigger onExportStart", function () {
+        exporterTests.test("PDF format-0 trigger onExportStart", function () {
             testOnExportStartTrigger("format-0", "pdfExporters");
         });
-        exporterTests.asyncTest("PDF format-1 trigger onExportStart", function () {
-            testOnExportStartTrigger("format-1", "pdfExporters");
-        });
-        exporterTests.asyncTest("PDF format-2 trigger onExportStart", function () {
-            testOnExportStartTrigger("format-2", "pdfExporters");
-        });
-        exporterTests.asyncTest("PDF format-3 trigger onExportStart", function () {
-            testOnExportStartTrigger("format-3", "pdfExporters");
-        });
-        
-        exporterTests.asyncTest("Image format-1-0 trigger onExportStart", function () {
-            testOnExportStartTrigger("format-1-0", "imageExporters");
-        });
-        exporterTests.asyncTest("Image format-1-1 trigger onExportStart", function () {
-            testOnExportStartTrigger("format-1-1", "imageExporters");
-        });
+        // exporterTests.asyncTest("PDF format-1 trigger onExportStart", function () {
+            // testOnExportStartTrigger("format-1", "pdfExporters");
+        // });
+        // exporterTests.asyncTest("PDF format-2 trigger onExportStart", function () {
+            // testOnExportStartTrigger("format-2", "pdfExporters");
+        // });
+        // exporterTests.asyncTest("PDF format-3 trigger onExportStart", function () {
+            // testOnExportStartTrigger("format-3", "pdfExporters");
+        // });
+//         
+        // exporterTests.asyncTest("Image format-1-0 trigger onExportStart", function () {
+            // testOnExportStartTrigger("format-1-0", "imageExporters");
+        // });
+        // exporterTests.asyncTest("Image format-1-1 trigger onExportStart", function () {
+            // testOnExportStartTrigger("format-1-1", "imageExporters");
+        // });
     });
 })(jQuery);

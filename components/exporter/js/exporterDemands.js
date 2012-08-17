@@ -109,7 +109,7 @@ var decapod = decapod || {};
                     forceCache: true
                 },
                 progress: {
-                    url: "../html/exportControlsProgressTemplate.html",
+                    url: "../html/exportControlsDetailedProgressTemplate.html",
                     forceCache: true
                 },
                 complete: {

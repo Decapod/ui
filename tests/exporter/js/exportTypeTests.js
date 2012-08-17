@@ -1263,8 +1263,7 @@ var decapod = decapod || {};
             jqUnit.expect(3);
             var assertInit = function (that) {
                 jqUnit.assertTrue("The onReady event should have fired", true);
-                jqUnit.assertEquals("The initial progress should be at zero", 0, that.progress.storedPercent);
-                jqUnit.assertEquals("The initial progress label should be", "Creating export...", that.progress.locate("label").text());
+                decapod.testUtils.exportType.assertFluidProgressState(that.progress, 0, that.options.strings.initialProgressMessage);
                 start();
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
@@ -1291,8 +1290,7 @@ var decapod = decapod || {};
             jqUnit.expect(2);
             var assertSetProgress = function (that) {
                 that.setProgress();
-                jqUnit.assertEquals("The progress should have updated", 50, that.progress.storedPercent);
-                jqUnit.assertEquals("The progress label should have updated", "Creating export... Step 2 of 2.", that.progress.locate("label").text());
+                decapod.testUtils.exportType.assertFluidProgressState(that.progress, 50, "Creating export... Step 2 of 2.");
                 start();
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
@@ -1313,11 +1311,9 @@ var decapod = decapod || {};
                 that.update(stage);
             };
             var assertUpdate = function (that, newModel, index) {
-                var expectedMessage = "Creating export... Step 1 of 2.";
                 jqUnit.assertEquals("The newModel should have the updated stage", stage, newModel.currentStage);
                 jqUnit.assertEquals("The model should have been udpated", stage, that.model.currentStage);
-                jqUnit.assertEquals("The progress should have updated", 0, that.progress.storedPercent);
-                jqUnit.assertEquals("The progress label should have updated", expectedMessage, that.progress.locate("label").text());
+                decapod.testUtils.exportType.assertFluidProgressState(that.progress, 0, "Creating export... Step 1 of 2.");
                 start();
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
@@ -1366,8 +1362,7 @@ var decapod = decapod || {};
             jqUnit.expect(2);
             var assertFinish = function (that) {
                 that.finish();
-                jqUnit.assertEquals("The progress should have updated", 100, that.progress.storedPercent);
-                jqUnit.assertEquals("The progress label should have updated", that.options.strings.completeProgressMessage, that.progress.locate("label").text());
+                decapod.testUtils.exportType.assertFluidProgressState(that.progress, 100, that.options.strings.completeProgressMessage);
                 start();
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
