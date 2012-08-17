@@ -87,8 +87,7 @@ var decapod = decapod || {};
     decapod.pdfExporter.finalInit = function (that) {
         // creates a property called isValid. Doesn't work for <IE9.
         Object.defineProperty(that, "isInputValid", {
-            get: that.isInputValidImp,
-            // enumerable: true
+            get: that.isInputValidImp
         });
         
         that.assembleExportOptions();

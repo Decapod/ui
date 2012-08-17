@@ -276,7 +276,7 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The component should have initialized", that);
                 jqUnit.assertDeepEq("The model should be the same", defaultOutputSettingsModel, that.model);
                 decapod.testUtils.exportType.assertOutputSettingsRender(that);
-                $.each(that.status, function(idx, isValid) {
+                $.each(that.status, function (idx, isValid) {
                     jqUnit.assertTrue("The setting at index " + idx + " should be valid", isValid);
                 });
                 start();
@@ -332,12 +332,12 @@ var decapod = decapod || {};
             
         outputSettingsTests.test("decapod.outputSettings.intValidation", function () {
             var bounds = {min: "1", max: "300"};
-            validChangeRequests = [
+            var validChangeRequests = [
                 {value: 2},
                 {value: "2"}
             ];
             
-            invalidChangeRequests = [
+            var invalidChangeRequests = [
                 {value: "0"},
                 {value: "301"},
                 {value: "2a"},
