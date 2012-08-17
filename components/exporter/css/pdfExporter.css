@@ -18,12 +18,16 @@
 .ds-pdfExporter-pdfExportOptions-form {
     margin-right:auto;
     margin-left:auto;
-    width: 73%;
+    width: 68%;
 }
 
 .ds-pdfExporter-pdfExportOptions-form select {
     width: 12em;
     margin-left: 0.5em;
+}
+
+.ds-pdfExportOptions-output {
+    text-align:center;
 }
 
 .ds-pdfExportOptions-outputSettings label{
@@ -39,5 +43,7 @@
 
 .ds-pdfExportOptions-outputSettings li {
     padding-top:0.5em;
+    padding-left: 1.3em;
+    height: 1.5em;
 }
 
