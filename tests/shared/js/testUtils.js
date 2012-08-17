@@ -99,6 +99,12 @@ var decapod = decapod || {};
         jqUnit.assertEquals("The progress text should be rendered", str.message, that.locate("message").text());
     };
     
+    decapod.testUtils.exportType.assertFluidProgressState = function (that, percent, label) {
+        var str = that.options.strings;
+        jqUnit.assertEquals("The initial progress should be at zero", percent, that.storedPercent);
+        jqUnit.assertEquals("The initial progress label should be", label, that.locate("label").text());
+    };
+    
     decapod.testUtils.exportType.assertCompleteRender = function (that) {
         var str = that.options.strings;
         var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
@@ -117,6 +123,12 @@ var decapod = decapod || {};
         jqUnit.assertFalse("The trigger shouldn't have initialized", that["**-renderer-trigger-0"]);
         jqUnit.assertFalse("The complete controls shouldn't have initialized", that["**-renderer-complete-0"]);
         decapod.testUtils.exportType.assertProgressRender(that["**-renderer-progress-0"]);
+    };
+    
+    decapod.testUtils.exportType.assertShowDetailedProgressControls = function (that) {
+        jqUnit.assertFalse("The trigger shouldn't have initialized", that["**-renderer-trigger-0"]);
+        jqUnit.assertFalse("The complete controls shouldn't have initialized", that["**-renderer-complete-0"]);
+        decapod.testUtils.exportType.assertFluidProgressState(that["**-renderer-progress-0"].progress, 0, that["**-renderer-progress-0"].options.strings.initialProgressMessage);
     };
     
     decapod.testUtils.exportType.assertShowCompleteControls = function (that) {

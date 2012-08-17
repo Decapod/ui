@@ -40,6 +40,7 @@ var decapod = decapod || {};
     
     decapod.exportPoller.handleResponse = function (that, response) {
         that.response = response;
+        that.events.afterPoll.fire(response);
         if (that.isComplete(response)) {
             that.events.pollComplete.fire(response);
         } else {
@@ -74,6 +75,7 @@ var decapod = decapod || {};
             handleResponse: "decapod.exportPoller.handleResponse"
         },
         events: {
+            afterPoll: null,
             onPoll: null,
             onReady: null,
             pollComplete: null

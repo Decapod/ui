@@ -67,6 +67,49 @@ var decapod = decapod || {};
         return that.exportOptions.isValid;
     };
     
+    decapod.pdfExporter.exportControlsProduceTree = function (that) {
+        return {
+            expander: [
+                {
+                    type: "fluid.renderer.condition",
+                    condition: that.model.showExportStart,
+                    trueTree: {
+                        trigger: {
+                            decorators: {
+                                type: "fluid",
+                                func: "decapod.exportControls.trigger"
+                            }
+                        }
+                    }
+                },
+                {
+                    type: "fluid.renderer.condition",
+                    condition: that.model.showExportProgress,
+                    trueTree: {
+                        progress: {
+                            decorators: {
+                                type: "fluid",
+                                func: "decapod.exportControls.detailedProgress"
+                            }
+                        }
+                    }
+                },
+                {
+                    type: "fluid.renderer.condition",
+                    condition: that.model.showExportComplete,
+                    trueTree: {
+                        complete: {
+                            decorators: {
+                                type: "fluid",
+                                func: "decapod.exportControls.complete"
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+    };
+    
     decapod.pdfExporter.preInit = function (that) {
         /*
          * Work around for FLUID-4709
@@ -130,6 +173,7 @@ var decapod = decapod || {};
             afterExportControlsRender: null,
             afterExportInfoRender: null,
             onExportStart: null,
+            onExportStatusUpdate: null,
             onCorrection: null,
             onValidationError: null,
             onEventBinderReady: null,
@@ -219,7 +263,7 @@ var decapod = decapod || {};
                 forceCache: true
             },
             progress: {
-                url: "../html/exportControlsProgressTemplate.html",
+                url: "../html/exportControlsDetailedProgressTemplate.html",
                 forceCache: true
             },
             complete: {
@@ -247,7 +291,8 @@ var decapod = decapod || {};
                             args: [null]
                         },
                         "{dataSource}.events.success": "{exportPoller}.poll",
-                        "{exportPoller}.events.pollComplete": "{pdfExporter}.events.afterExportComplete"
+                        "{exportPoller}.events.pollComplete": "{pdfExporter}.events.afterExportComplete",
+                        "{exportPoller}.events.afterPoll": "{pdfExporter}.events.onExportStatusUpdate"
                     }
                 }
             },
@@ -320,6 +365,7 @@ var decapod = decapod || {};
                 container: "{pdfExporter}.dom.controls",
                 createOnEvent: "onExportOptionsReady",
                 options: {
+                    produceTree: "decapod.pdfExporter.exportControlsProduceTree",
                     strings: {
                         trigger: "{pdfExporter}.options.strings.exportControl",
                         progressMessage: "{pdfExporter}.options.strings.progressMessage",
