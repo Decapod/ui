@@ -879,7 +879,7 @@ var decapod = decapod || {};
         var index = $.inArray(that.model.currentStage, that.model.stages);
         if (index >= 0) {
             var numStages = that.model.stages.length;
-            var percentage = (index/numStages) * 100;
+            var percentage = (index / numStages) * 100;
             that.progress.update(percentage, fluid.stringTemplate(that.options.strings.inProgressMessage, {step: ++index, steps: numStages})); // index is incremented to make it start at 1 instead of 0.
         }
     };
