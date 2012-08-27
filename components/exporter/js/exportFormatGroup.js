@@ -31,7 +31,7 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.exportFormatGroup");
     
     decapod.exportFormatGroup.produceTree = function (that) {
-      return {
+        return {
             name: that.options.strings.name,
             expander: {
                 type: "fluid.renderer.repeat",
@@ -70,7 +70,7 @@ var decapod = decapod || {};
         selectors: {
             name: ".dc-exportFormatGroup-name",
             formats: ".dc-exportFormatGroup-formats",
-            format: ".dc-exportFormatGroup-format",
+            format: ".dc-exportFormatGroup-format"
         },
         repeatingSelectors: ["formats"],
         events: {

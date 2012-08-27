@@ -32,7 +32,7 @@ var decapod = decapod || {};
     
     decapod.exporter.renderStrings = function (that) {
         $.each(that.options.strings, function (key, str) {
-            if (typeof(str) === "string") {
+            if (typeof (str) === "string") {
                 that.locate(key).text(str);
             }
         });
@@ -179,7 +179,7 @@ var decapod = decapod || {};
                     fontMatchedPDF: "afterFontMatchedPDFRender",
                     images: "afterImageExportersRendered",
                     tiff: "afterTIFFRender",
-                    png: "afterPNGRender",
+                    png: "afterPNGRender"
                 },
                 args: ["{exporter}"]
             }

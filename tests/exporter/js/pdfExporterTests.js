@@ -481,6 +481,12 @@ var decapod = decapod || {};
             jqUnit.expect(3);
             var newWidth = "2000";
             var expected = "210";
+            var assertValidationError = function (that, trigger) {
+                jqUnit.assertEquals("The components model should not be update with the new output selection", expected, that.model.exportOptions.outputSettings.settings[0].value);
+                jqUnit.assertTrue("The export trigger should be disabled", trigger.locate("trigger").is(":disabled"));
+                jqUnit.assertFalse("isInputValid should be false", that.isInputValid);
+                start();
+            };
             var trigger = function (that) {
                 that.events.onValidationError.addListener(function () {
                     var decorators = fluid.renderer.getDecoratorComponents(that.exportControls, that.instantiator);
@@ -488,12 +494,6 @@ var decapod = decapod || {};
                     assertValidationError(that, trigger);
                 }, "test", null, "last");
                 that.exportOptions.outputSettings.applier.requestChange("settings.0.value", newWidth);
-            };
-            var assertValidationError = function (that, trigger) {
-                jqUnit.assertEquals("The components model should not be update with the new output selection", expected, that.model.exportOptions.outputSettings.settings[0].value);
-                jqUnit.assertTrue("The export trigger should be disabled", trigger.locate("trigger").is(":disabled"));
-                jqUnit.assertFalse("isInputValid should be false", that.isInputValid);
-                start();
             };
             var assertModelChange = function () {
                 jqUnit.assertFalse("The afterModelChanged event should not have fired.", true);
@@ -618,7 +618,6 @@ var decapod = decapod || {};
         
         pdfExporterTests.asyncTest("invalid custom setting - change output type", function () {
             jqUnit.expect(3);
-            var newWidth = "2000";
             var triggerError = function (that) {
                 // puts the custom setting into an error state
                 that.exportOptions.outputSettings.status = [false, false, false];

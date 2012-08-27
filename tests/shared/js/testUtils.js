@@ -100,7 +100,6 @@ var decapod = decapod || {};
     };
     
     decapod.testUtils.exportType.assertFluidProgressState = function (that, percent, label) {
-        var str = that.options.strings;
         jqUnit.assertEquals("The initial progress should be at zero", percent, that.storedPercent);
         jqUnit.assertEquals("The initial progress label should be", label, that.locate("label").text());
     };
