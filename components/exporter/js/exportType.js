@@ -359,10 +359,10 @@ var decapod = decapod || {};
         that.refreshView();
     };
     
-    decapod.outputSettings.intValidation = function (changeRequest, bounds, failureCallback) {
+    decapod.outputSettings.intValidation = function (value, changeRequest, bounds, failureCallback) {
         var regexp = /\D/i;
-        var requestedVal = parseInt(changeRequest.value, 10);
-        var isValid = !isNaN(requestedVal) && !regexp.test(changeRequest.value) && requestedVal >= parseInt(bounds.min, 10) && requestedVal <= parseInt(bounds.max, 10);
+        var requestedVal = parseInt(value, 10);
+        var isValid = !isNaN(requestedVal) && !regexp.test(value) && requestedVal >= parseInt(bounds.min, 10) && requestedVal <= parseInt(bounds.max, 10);
         if (!isValid && typeof (failureCallback) === "function") {
             failureCallback(changeRequest, bounds);
         }
@@ -371,8 +371,11 @@ var decapod = decapod || {};
     
     decapod.outputSettings.bindValidators = function (that) {
         $.each(that.model.settings, function (idx, setting) {
-            that.applier.guards.addListener("settings." + idx + ".value", function (model, changeRequest) {
-                return decapod.outputSettings.intValidation(changeRequest, setting.attrs, that.events.onValidationError.fire);
+            var guardPath = "settings." + idx + ".value";
+            that.applier.guards.addListener(guardPath, function (model, changeRequest) {
+                var excess = fluid.pathUtil.getExcessPath(changeRequest.path, guardPath);
+                var value = fluid.get(changeRequest.value, excess);
+                return decapod.outputSettings.intValidation(value, changeRequest, setting.attrs, that.events.onValidationError.fire);
             });
         });
     };
@@ -412,12 +415,6 @@ var decapod = decapod || {};
         
         return status;
     };
-    
-    /*
-     * setStatus(that, changeRequest, isValid) -  parses the index from the changerequest and calls setStatusByIndex, if there is a correction will fire the onCorrection event
-     * setStatusByIndex(that, index, isValid) - change the status object and styles
-     * isValid() - returns true if all are true, else false
-     */
     
     decapod.outputSettings.preInit = function (that) {
         /*

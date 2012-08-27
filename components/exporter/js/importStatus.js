@@ -151,7 +151,7 @@ var decapod = decapod || {};
         },
         strings: {
             "total": "%totalNumFiles files found."
-            // error messages take use %errorName and %numErrors for the template
+            // error messages use %errorName and %numErrors for the template
         }
     });
     

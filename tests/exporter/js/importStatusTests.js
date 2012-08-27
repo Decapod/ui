@@ -263,9 +263,19 @@ var decapod = decapod || {};
             });
         });
         
-        tests.test("Init importStatus.renderer tests", function () {
-            var renderer = decapod.importStatus.renderer(RENDER_CONTAINER);
-            jqUnit.assertTrue("The importStatus.renderer component should have initialized", renderer);
+        tests.asyncTest("Init importStatus.renderer tests", function () {
+            var assertInit = function (that) {
+                jqUnit.assertTrue("The importStatus.renderer component should have initialized", that);
+                start();
+            };
+            decapod.importStatus.renderer(RENDER_CONTAINER, {
+                listeners: {
+                    onCreate: {
+                        listener: assertInit,
+                        priority: "last"
+                    }
+                }
+            });
         });
         
         tests.test("decapod.importStatus.renderer.produceTree - empty model", function () {
@@ -283,19 +293,42 @@ var decapod = decapod || {};
             jqUnit.assertDeepEq("The proto tree should be produced", PROTO_TREE, producedTree);
         });
         
-        tests.test("render - no statuses", function () {
-            var renderer = decapod.importStatus.renderer(RENDER_CONTAINER);
-            jqUnit.assertEquals("There should be no statuses rendered", 0, renderer.locate("statusMessages").length);
+        tests.asyncTest("render - no statuses", function () {
+            var assertRender = function (that) {
+                jqUnit.assertEquals("There should be no statuses rendered", 0, that.locate("statusMessages").length);
+                start();
+            };
+            decapod.importStatus.renderer(RENDER_CONTAINER, {
+                listeners: {
+                    afterRender: {
+                        listener: assertRender,
+                        priority: "last"
+                    }
+                }
+            });
+            
         });
         
-        tests.test("renderer - statuses", function () {
+        tests.asyncTest("renderer - statuses", function () {
             var statuses = ["status 1", "status 2"];
-            
-            var renderer = decapod.importStatus.renderer(RENDER_CONTAINER, {model: {statuses: statuses}});
-            jqUnit.assertEquals("The statuses should be rendered", statuses.length, renderer.locate("statusMessages").length);
-            for (var i = 0; i < statuses.length; i++) {
-                jqUnit.assertEquals("The status message should be rendered", statuses[i], renderer.locate("statusMessages").eq(i).text());
-            }
+            var assertRender = function (that) {
+                jqUnit.assertEquals("The statuses should be rendered", statuses.length, that.locate("statusMessages").length);
+                for (var i = 0; i < statuses.length; i++) {
+                    jqUnit.assertEquals("The status message should be rendered", statuses[i], that.locate("statusMessages").eq(i).text());
+                }
+                start();
+            };
+            decapod.importStatus.renderer(RENDER_CONTAINER, {
+                model: {
+                    statuses: statuses
+                },
+                listeners: {
+                    afterRender: {
+                        listener: assertRender,
+                        priority: "last"
+                    }
+                }
+            });
         });
     });
 })(jQuery);

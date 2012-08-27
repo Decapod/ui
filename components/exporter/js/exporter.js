@@ -31,10 +31,11 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.exporter");
     
     decapod.exporter.renderStrings = function (that) {
-        var str = that.options.strings;
-        for (var key in str) {
-            that.locate(key).text(str[key]);
-        }
+        $.each(that.options.strings, function (key, str) {
+            if (typeof(str) === "string") {
+                that.locate(key).text(str);
+            }
+        });
     };
     
     decapod.exporter.startImport = function (that, exportType) {
