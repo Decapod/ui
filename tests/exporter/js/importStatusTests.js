@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Declare dependencies
-/*global window, decapod:true, expect, fluid, jQuery, jqUnit*/
+/*global window, decapod:true, expect, fluid, jQuery, jqUnit, start*/
 
 // JSLint options 
 /*jslint white: true, funcinvoke: true, undef: true, newcap: true, nomen: true, regexp: true, bitwise: true, browser: true, forin: true, maxerr: 100, indent: 4 */
