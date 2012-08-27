@@ -346,12 +346,14 @@ var decapod = decapod || {};
             ];
             
             $.each(validChangeRequests, function (idx, changeRequest) {
-                jqUnit.assertTrue("The changeRequest value '" + changeRequest.value + " should be valid", decapod.outputSettings.intValidation(changeRequest, bounds));
+                var value = changeRequest.value;
+                jqUnit.assertTrue("The changeRequest value '" + value + " should be valid", decapod.outputSettings.intValidation(value, changeRequest, bounds));
             });
             $.each(invalidChangeRequests, function (idx, changeRequest) {
-                jqUnit.assertFalse("The changeRequest value '" + changeRequest.value + " should be invalid", decapod.outputSettings.intValidation(changeRequest, bounds));
+                var value = changeRequest.value;
+                jqUnit.assertFalse("The changeRequest value '" + value + " should be invalid", decapod.outputSettings.intValidation(value, changeRequest, bounds));
             });
-            decapod.outputSettings.intValidation(invalidChangeRequests[0], bounds, function (cbChangeRequest, cbBounds) {
+            decapod.outputSettings.intValidation(invalidChangeRequests[0].value, invalidChangeRequests[0], bounds, function (cbChangeRequest, cbBounds) {
                 jqUnit.assertDeepEq("The changeRequest should be passed to the callback function", invalidChangeRequests[0], cbChangeRequest);
                 jqUnit.assertDeepEq("The bounds object should be passed to the callback function", bounds, cbBounds);
             });
@@ -1003,8 +1005,8 @@ var decapod = decapod || {};
                 output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]},
                 outputSettings: {
                     settings: [
-                        {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "30", disabled: "disabled"}},
-                        {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "30", disabled: "disabled"}},
+                        {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300", disabled: "disabled"}},
+                        {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300", disabled: "disabled"}},
                         {value: "200", name: "resolution", unit: "dpi", attrs: {type: "number", min: "50", max: "600", disabled: "disabled"}}
                     ]
                 }

@@ -483,7 +483,7 @@ var decapod = decapod || {};
             var expected = "210";
             var trigger = function (that) {
                 that.events.onValidationError.addListener(function () {
-                    var decorators = fluid.renderer.getDecoratorComponents(that.exportControls);
+                    var decorators = fluid.renderer.getDecoratorComponents(that.exportControls, that.instantiator);
                     var trigger = decapod.testUtils.componentFromDecorator("trigger", decorators);
                     assertValidationError(that, trigger);
                 }, "test", null, "last");
@@ -503,6 +503,9 @@ var decapod = decapod || {};
                     exportOptions: {
                         output: {selection: "custom"}
                     }
+                },
+                components: {
+                    instantiator: "{instantiator}"
                 },
                 listeners: {
                     afterModelChanged: {
@@ -528,7 +531,7 @@ var decapod = decapod || {};
             };
             var assertCorrection = function (that) {
                 jqUnit.assertTrue("The onCorrection event should fire", true);
-                var decorators = fluid.renderer.getDecoratorComponents(that.exportControls);
+                var decorators = fluid.renderer.getDecoratorComponents(that.exportControls, that.instantiator);
                 var trigger = decapod.testUtils.componentFromDecorator("trigger", decorators);
                 jqUnit.assertTrue("The export trigger should be enabled", trigger.locate("trigger").is(":enabled"));
                 jqUnit.assertTrue("isInputValid should be true", that.isInputValid);
@@ -542,6 +545,9 @@ var decapod = decapod || {};
                     exportOptions: {
                         output: {selection: "custom"}
                     }
+                },
+                components: {
+                    instantiator: "{instantiator}"
                 },
                 listeners: {
                     afterModelChanged: {
@@ -576,7 +582,7 @@ var decapod = decapod || {};
             };
             var assertModelChange = function (that) {
                 jqUnit.assertTrue("The afterModelChanged event should fire.", true);
-                var decorators = fluid.renderer.getDecoratorComponents(that.exportControls);
+                var decorators = fluid.renderer.getDecoratorComponents(that.exportControls, that.instantiator);
                 var trigger = decapod.testUtils.componentFromDecorator("trigger", decorators);
                 jqUnit.assertTrue("The export trigger should be enabled", trigger.locate("trigger").is(":enabled"));
                 jqUnit.assertTrue("isInputValid should be true", that.isInputValid);
@@ -587,6 +593,9 @@ var decapod = decapod || {};
                     exportOptions: {
                         output: {selection: "custom"}
                     }
+                },
+                components: {
+                    instantiator: "{instantiator}"
                 },
                 listeners: {
                     afterModelChanged: {
@@ -617,7 +626,7 @@ var decapod = decapod || {};
             };
             var assertModelChange = function (that) {
                 jqUnit.assertTrue("The afterModelChanged event should fire.", true);
-                var decorators = fluid.renderer.getDecoratorComponents(that.exportControls);
+                var decorators = fluid.renderer.getDecoratorComponents(that.exportControls, that.instantiator);
                 var trigger = decapod.testUtils.componentFromDecorator("trigger", decorators);
                 jqUnit.assertTrue("The export trigger should be disabled", trigger.locate("trigger").is(":disabled"));
                 jqUnit.assertFalse("isInputValid should be false", that.isInputValid);
@@ -628,6 +637,9 @@ var decapod = decapod || {};
                     exportOptions: {
                         output: {selection: "a4"}
                     }
+                },
+                components: {
+                    instantiator: "{instantiator}"
                 },
                 listeners: {
                     afterModelChanged: {

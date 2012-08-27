@@ -74,7 +74,7 @@ var decapod = decapod || {};
                     forceCache: true
                 },
                 progress: {
-                    url: PROGRESS_TEMPLATE,
+                    url: DETAILED_PROGRESS_TEMPLATE,
                     forceCache: true
                 },
                 complete: {

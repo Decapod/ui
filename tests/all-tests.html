@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Decapod UI complete tests runner</title>
+
+    <link rel="stylesheet" href="../lib/infusion/tests/lib/qunit/css/qunit.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="../lib/infusion/tests/lib/qunit/addons/composite/qunit-composite.css">
+    <script src="../lib/infusion/tests/lib/qunit/js/qunit.js"></script>
+    <script src="../lib/infusion/tests/lib/qunit/addons/composite/qunit-composite.js"></script>
+    <script>
+    /*
+     * Escaping rules: 
+     * find . -name "*-test.html" | awk '{print "\""$1"\","}' 
+     */
+    QUnit.testSuites([
+        "./eventBinder/html/eventBinder-test.html",
+        "./decapodRequests/html/decapodRequests-test.html",
+        "./accordion/html/accordion-test.html",
+        "./exporter/html/importStatus-test.html",
+        "./exporter/html/exportType-test.html",
+        "./exporter/html/pdfExporter-test.html",
+        "./exporter/html/exporter-test.html",
+        "./exporter/html/imageExporter-test.html",
+        "./select/html/select-test.html",
+        "./customMerge/html/customMerge-test.html"
+
+    ]);
+    </script>
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+</div>
+</body>
+</html>

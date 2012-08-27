@@ -84,21 +84,26 @@ var decapod = decapod || {};
             });
         });
         
+        fluid.defaults("decapod.tests.view", {
+            gradeNames: ["fluid.viewComponent", "autoInit"]
+        });
+        
         exportFormatGroupTests.asyncTest("Rendering", function () {
             jqUnit.expect(3);
-            fluid.defaults("decapod.tests.view", {
-                gradeNames: ["fluid.viewComponent", "autoInit"]
-            });
+
             var assertRendering = function (that) {
                 jqUnit.assertTrue("The afterRender event should have fired", true);
                 jqUnit.assertEquals("The name should be rendered", that.options.strings.name, that.locate("name").text());
-                var decorators = fluid.renderer.getDecoratorComponents(that);
+                var decorators = fluid.renderer.getDecoratorComponents(that, that.instantiator);
                 $.each(decorators, function (idx, decorator) {
                     jqUnit.assertTrue("The subcomponent should have initialized", true); 
                 });
                 start();
             };
             createExportFormatGroup({
+                components: {
+                    instantiator: "{instantiator}"
+                },
                 listeners: {
                     afterRender: {
                         listener: assertRendering,
