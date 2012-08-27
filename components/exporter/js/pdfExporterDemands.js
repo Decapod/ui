@@ -107,6 +107,9 @@ var decapod = decapod || {};
     //TODO: Pass down strings from the parent to make customization easier.
     fluid.demands("decapod.exportControls.detailedProgress", ["decapod.pdfExporter", "decapod.exportControls"], {
         options: {
+            model: {
+                stages: "{pdfExporter}.model.exportStages"
+            },
             listeners: {
                 "{pdfExporter}.events.onExportStatusUpdate": {
                     listener: "{detailedProgress}.update",

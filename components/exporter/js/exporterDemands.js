@@ -258,6 +258,9 @@ var decapod = decapod || {};
                 name: "{exporter}.options.strings.pdfs.formatStrings.0.name",
                 description: "{exporter}.options.strings.pdfs.formatStrings.0.description"
             },
+            model: {
+                exportStages: ["books2pages", "ocro2pdf.py"]
+            },
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
                 "afterRender.afterImagePDFRender": "{exporter}.events.afterImagePDFRender"
@@ -290,6 +293,9 @@ var decapod = decapod || {};
             strings: {
                 name: "{exporter}.options.strings.pdfs.formatStrings.1.name",
                 description: "{exporter}.options.strings.pdfs.formatStrings.1.description"
+            },
+            model: {
+                exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "ocro2pdf.py"]
             },
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
@@ -324,6 +330,9 @@ var decapod = decapod || {};
                 name: "{exporter}.options.strings.pdfs.formatStrings.2.name",
                 description: "{exporter}.options.strings.pdfs.formatStrings.2.description"
             },
+            model: {
+                exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "binned-inter", "ocro2pdf.py"]
+            },
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
                 "afterRender.afterTracedPDFRender": "{exporter}.events.afterTracedPDFRender"
@@ -356,6 +365,9 @@ var decapod = decapod || {};
             strings: {
                 name: "{exporter}.options.strings.pdfs.formatStrings.3.name",
                 description: "{exporter}.options.strings.pdfs.formatStrings.3.description"
+            },
+            model: {
+                exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "binned-inter", "fontGrouper.py", "ocro2pdf.py"]
             },
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
