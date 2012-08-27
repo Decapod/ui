@@ -204,6 +204,7 @@ var decapod = decapod || {};
             "afterModelChanged.internal": "{pdfExporter}.assembleExportOptions"
         },
         model: {
+            exportStages: [],
             exportOptions: {
                 output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]},
                 outputSettings: {
