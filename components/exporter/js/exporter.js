@@ -150,8 +150,8 @@ var decapod = decapod || {};
             images: {
                 name: "Image",
                 formatStrings: [
-                    {name: "TIFF"},
-                    {name: "PNG"}
+                    {name: "5. TIFF"},
+                    {name: "6. PNG"}
                 ]
             }
         },
