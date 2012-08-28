@@ -30,14 +30,31 @@ var decapod = decapod || {};
 
     fluid.registerNamespace("decapod.select");
     
+    /**
+     * Enables the select component.
+     * Removes the disabled property from the DOM
+     * 
+     * @param {object} that, the component
+     */
     decapod.select.enable = function (that) {
         that.locate("choices").prop("disabled", false);
     };
     
+    /**
+     * Disableds the select component.
+     * Adds the disabled property to the DOM
+     * 
+     * @param {object} that, the component
+     */
     decapod.select.disable = function (that) {
         that.locate("choices").prop("disabled", true);
     };
     
+    /**
+     * Returns a boolean representing whether or not the component is enabled.
+     * 
+     * @param {object} that, the component
+     */
     decapod.select.isEnabled = function (that) {
         return !that.locate("choices").is(":disabled");
     };
@@ -86,6 +103,9 @@ var decapod = decapod || {};
         that.events.onReady.fire(that);
     };
     
+    /**
+     * A simple component for rendering out select boxes
+     */
     fluid.defaults("decapod.select", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
         preInitFunction: "decapod.select.preInit",
