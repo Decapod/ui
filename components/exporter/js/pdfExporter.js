@@ -161,7 +161,9 @@ var decapod = decapod || {};
             documentDimensionsLabel: "Output dimensions:",
             documentDimensions: "A4(210 x 297mm / 8.3 x 11.7in.)",
             exportControl: "Start Export",
-            progressMessage: "Creating PDF",
+            initialProgressMessage: "Creating export...",
+            inProgressMessage: "Creating export... Step %step of %steps.",
+            completeProgressMessage: "Creating export... Done!",
             download: "Download PDF",  
             restart: "Start Over"
         },

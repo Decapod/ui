@@ -254,10 +254,7 @@ var decapod = decapod || {};
     fluid.demands("decapod.imagePDF.pdfExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
         funcName: "decapod.pdfExporter",
         options: {
-            strings: {
-                name: "{exporter}.options.strings.pdfs.formatStrings.0.name",
-                description: "{exporter}.options.strings.pdfs.formatStrings.0.description"
-            },
+            strings: "{exporter}.options.strings.pdfs.formatStrings.0",
             model: {
                 exportStages: ["books2pages", "ocro2pdf.py"]
             },
@@ -290,10 +287,7 @@ var decapod = decapod || {};
     fluid.demands("decapod.ocrPDF.pdfExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
         funcName: "decapod.pdfExporter",
         options: {
-            strings: {
-                name: "{exporter}.options.strings.pdfs.formatStrings.1.name",
-                description: "{exporter}.options.strings.pdfs.formatStrings.1.description"
-            },
+            strings: "{exporter}.options.strings.pdfs.formatStrings.1",
             model: {
                 exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "ocro2pdf.py"]
             },
@@ -326,10 +320,7 @@ var decapod = decapod || {};
     fluid.demands("decapod.tracedPDF.pdfExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
         funcName: "decapod.pdfExporter",
         options: {
-            strings: {
-                name: "{exporter}.options.strings.pdfs.formatStrings.2.name",
-                description: "{exporter}.options.strings.pdfs.formatStrings.2.description"
-            },
+            strings: "{exporter}.options.strings.pdfs.formatStrings.2",
             model: {
                 exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "binned-inter", "ocro2pdf.py"]
             },
@@ -362,10 +353,7 @@ var decapod = decapod || {};
     fluid.demands("decapod.fontMatchedPDF.pdfExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
         funcName: "decapod.pdfExporter",
         options: {
-            strings: {
-                name: "{exporter}.options.strings.pdfs.formatStrings.3.name",
-                description: "{exporter}.options.strings.pdfs.formatStrings.3.description"
-            },
+            strings: "{exporter}.options.strings.pdfs.formatStrings.3",
             model: {
                 exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "binned-inter", "fontGrouper.py", "ocro2pdf.py"]
             },
@@ -398,10 +386,7 @@ var decapod = decapod || {};
     fluid.demands("decapod.tiff.imageExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
         funcName: "decapod.imageExporter",
         options: {
-            strings: {
-                name: "{exporter}.options.strings.images.formatStrings.0.name",
-                description: ""
-            },
+            strings: "{exporter}.options.strings.images.formatStrings.0",
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
                 "afterRender.afterTIFFRender": "{exporter}.events.afterTIFFRender"
@@ -431,10 +416,7 @@ var decapod = decapod || {};
     fluid.demands("decapod.png.imageExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
         funcName: "decapod.imageExporter",
         options: {
-            strings: {
-                name: "{exporter}.options.strings.images.formatStrings.1.name",
-                description: ""
-            },
+            strings: "{exporter}.options.strings.images.formatStrings.1",
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
                 "afterRender.afterPNGRender": "{exporter}.events.afterPNGRender"
