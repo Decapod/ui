@@ -53,10 +53,6 @@ var decapod = decapod || {};
         return target;
     };
     
-    decapod.customMerge.mergeModel = function (target, source) {
-        return decapod.customMerge.extend(target, source);
-    };
-    
     /************************************
      * decapod.viewComponentCustomMerge *
      ************************************/
@@ -67,7 +63,7 @@ var decapod = decapod || {};
     fluid.defaults("decapod.viewComponentCustomMerge", {
         gradeNames: ["fluid.viewComponent"],
         mergePolicy: {
-            model: decapod.customMerge.mergeModel
+            model: decapod.customMerge.extend
         }
     });
     
@@ -82,7 +78,7 @@ var decapod = decapod || {};
     fluid.defaults("decapod.rendererComponentCustomMerge", {
         gradeNames: ["fluid.rendererComponent"],
         mergePolicy: {
-            model: decapod.customMerge.mergeModel
+            model: decapod.customMerge.extend
         }
     });
 })(jQuery);
