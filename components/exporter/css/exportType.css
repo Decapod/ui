@@ -1,0 +1,60 @@
+.ds-outputSettings-invalidEntry .ds-outputSettings-value {
+    background-color: #F6EF0C;
+}
+
+.ds-outputSettings-invalidEntry .ds-outputSettings-errorMessage {
+    display: inline;
+}
+
+.ds-outputSettings-errorMessage {
+    display: none;
+    background-color: #F6EF0C;
+    width: 140px;
+    font-size: 0.8em;
+    float:right;
+    margin-top: 3px;
+    position:relative;
+    padding-left: 7px;
+    box-shadow: 2px 2px 4px rgba(188,188,188,0.7);
+}
+
+.ds-outputSettings-errorMessage:before {
+ /* Create a chevron by using two triangles overlaid each other.
+    Triangles are made by taking advantage of border's bevel effect.*/
+    content: "";
+	position: absolute;
+	top: 2px;
+	right: 143px;
+    width: 9px;
+    height: 9px;
+    -moz-transform: rotate(-45deg);
+    transform:rotate(-45deg);
+    background-color: #F6EF0C;
+}
+
+.progress-bar {
+    text-align: left;
+    background-position: left top;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-color: #FFF;
+    border: 1px solid #000;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    overflow: hidden;
+}
+
+.progress-indicator {
+    height: 16px;
+    width: 5px;
+    border: 1px solid #2D3E76;
+    border-right-width: 2px;
+    border-left-width: 0px;
+    background: #c8cfec; /* Old browsers */
+    background: -moz-linear-gradient(top,  #c8cfec 0%, #6d8acb 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c8cfec), color-stop(100%,#6d8acb)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #c8cfec 0%,#6d8acb 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #c8cfec 0%,#6d8acb 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #c8cfec 0%,#6d8acb 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #c8cfec 0%,#6d8acb 100%); /* W3C */
+}
