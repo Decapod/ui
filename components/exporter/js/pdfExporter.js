@@ -29,7 +29,13 @@ var decapod = decapod || {};
      ************************/
     
     fluid.registerNamespace("decapod.pdfExporter");
-
+    
+    /**
+     * Returns the mapped selection. If it is a function, the function will be exectued with the "that" supplied as an argument
+     * 
+     * @param {object} that, the component
+     * @param {string} selection, the key into the options map. It should be based on the selection in the output select box.
+     */
     decapod.pdfExporter.mapExportOptions = function (that, selection) {
         var optionsData = that.options.exportOptionsMap[selection] || {};
         if (typeof (optionsData) === "string") {
@@ -38,12 +44,22 @@ var decapod = decapod || {};
         return optionsData;
     };
     
+    /**
+     * Assignts the mapped export options to the assembledExportOptions property.
+     * 
+     * @param {object} that, the component
+     */
     decapod.pdfExporter.assembleExportOptions = function (that) {
         var outputData = that.mapExportOptions(that.model.exportOptions.output.selection);
         that.assembledExportOptions = fluid.merge("replace", {}, outputData);
         return that.assembledExportOptions;
     };
     
+    /**
+     * Converts from mm to cm
+     * 
+     * @param {object} setting, the output setting object
+     */
     decapod.pdfExporter.convertDimensionSetting = function (setting) {
         var converted = {};
         var val = parseFloat(setting.value) / 10; // converts the size value from mm to cm
@@ -51,10 +67,21 @@ var decapod = decapod || {};
         return converted;
     };
     
+    /**
+     * Converts the resolution from a setting object to an object containing dpi as the key.
+     * 
+     * @param {object} setting, the output setting object
+     */
     decapod.pdfExporter.convertResolutionSetting = function (setting) {
         return {dpi: setting.value};
     };
     
+    /**
+     * Converts a the customSettings making use of a dictionary of conversion functions.
+     * 
+     * @param {object} that, the component
+     * @param {object} map, a dictionary of conversion functions.
+     */
     decapod.pdfExporter.assembleCustomSettings = function (that, map) {
         var settings = {};
         $.each(that.model.exportOptions.outputSettings.settings, function (idx, setting) {
@@ -63,6 +90,11 @@ var decapod = decapod || {};
         return settings;
     };
     
+    /**
+     * Returns whether the input is in a valid state
+     * 
+     * @param {object} that, the component
+     */
     decapod.pdfExporter.isInputValid = function (that) {
         return that.exportOptions.isValid;
     };
