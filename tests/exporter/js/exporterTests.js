@@ -269,44 +269,6 @@ var decapod = decapod || {};
             });
         });
         
-        //TODO: unit test failing. fix broken test.
-        // exporterTests.asyncTest("onExportStart", function () {
-            // jqUnit.expect(4);
-            // var tests = function (that) {
-                // // hack to prevent the uploader from actually trying to upload anything.
-                // // this allows for the testing of just the event without errors being thrown for the empty queue
-                // that.uploader.strategy.remote.uploadNextFile = function () {};
-//                 
-                // var decorators = fluid.renderer.getDecoratorComponents(that.pdfExporters, that.instantiator);
-                // var exportType = decapod.testUtils.componentFromDecorator("formats", decorators); // sets the export type to one of the pdfExporters that is instantiated through the renderer
-                // that.exportType = exportType;
-//             
-                // that.events.onExportStart.addListener(function () {
-                    // jqUnit.assertTrue("The onExportStart event should have fired", true);
-                    // jqUnit.assertDeepEq("The exportType should have been set", exportType, that.exportType);
-                // });
-//             
-                // that.events.afterExportComplete.addListener(function () {
-                    // jqUnit.assertTrue("The afterExportComplete event should have fired", true);
-                    // jqUnit.assertNull("The exportType should be reset to null", that.exportType);
-                    // start();
-                // });
-//             
-                // that.exportType.events.onExportStart.fire();
-            // };
-            // decapod.exporter(CONTAINER, {
-                // listeners: {
-                    // onReady: {
-                        // listener: tests,
-                        // args: ["{exporter}"]
-                    // }
-                // },
-                // components: {
-                    // instantiator: "{instantiator}"
-                // }
-            // });
-        // });
-        
         exporterTests.asyncTest("validateQueue", function () {
             jqUnit.expect(1);
             var tests = function (that) {
