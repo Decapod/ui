@@ -27,6 +27,14 @@ var decapod = decapod || {};
     /**************************
      * decapod.fetchResources *
      **************************/
+    
+    /**
+     * Wrapper around fluid.fetchResources, but it will not call fetchResources if the resourceText already exists.
+     * 
+     * @param {object} resourceSpecs, an object containing the specs for all the resources to be fetched
+     * @param {function} callback, a function to be called after the resources have been fetched or if they already exist
+     * @param {object} options, any options that can be passed down to fluid.fetchResources
+     */
     decapod.fetchResources = function (resourceSpecs, callback, options) {
         var hasResourceText = false;
         resourceSpecs = resourceSpecs || {};
@@ -47,17 +55,6 @@ var decapod = decapod || {};
      * decapod.dataSource *
      **********************/
     
-    /**
-     * The dataSource should be used to communicate to the server.
-     * 
-     * A new dataSource should be specified for each url, or cases where the options to the ajax call vastly differ.
-     * However, since there can be an infinite number of urls, you can speficy a string templat for the url and pass 
-     * in optional template values to each of the REST methods.
-     * This is useful in cases where you are making requests to specific resources that differ only slightly.
-     * e.g. url: server/library/book/images/1.png, url: server/library/book/images/2.png
-     * you would then specify your url string template as url: "server/library/book/images/%image" and pass in {image: 1.png}
-     * as the urlTemplateValues
-     */
     fluid.registerNamespace("decapod.dataSource");
     
     /**
@@ -104,6 +101,17 @@ var decapod = decapod || {};
         return encodeURI(url);
     };
     
+    /**
+     * The dataSource should be used to communicate to the server.
+     * 
+     * A new dataSource should be specified for each url, or cases where the options to the ajax call vastly differ.
+     * However, since there can be an infinite number of urls, you can speficy a string templat for the url and pass 
+     * in optional template values to each of the REST methods.
+     * This is useful in cases where you are making requests to specific resources that differ only slightly.
+     * e.g. url: server/library/book/images/1.png, url: server/library/book/images/2.png
+     * you would then specify your url string template as url: "server/library/book/images/%image" and pass in {image: 1.png}
+     * as the urlTemplateValues
+     */
     fluid.defaults("decapod.dataSource", {
         gradeNames: ["fluid.eventedComponent", "autoInit"],
         invokers: {

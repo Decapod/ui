@@ -30,7 +30,7 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.accordion");
     
-    /*
+    /**
      * A wrapper to accept any of the accordion method calls.
      * For disable and enable should use the exposed functions.
      * 
@@ -63,7 +63,7 @@ var decapod = decapod || {};
         that.events.onReady.fire();
     };
 
-    /*
+    /**
      * A simple wrapper component around the jQuery UI Accordion.
      * This makes is useable through Fluid Infusion's IoC framework.
      */

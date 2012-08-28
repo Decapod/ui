@@ -30,7 +30,7 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.customMerge");
     
-    /*
+    /**
      * Merges objects, but will replace arrays.
      * 
      * @param {object} target, the target object which be merged onto
@@ -57,7 +57,7 @@ var decapod = decapod || {};
      * decapod.viewComponentCustomMerge *
      ************************************/
     
-    /*
+    /**
      * viewCompoent grade using decapod.customMerge.extend for the model merge policy
      */
     fluid.defaults("decapod.viewComponentCustomMerge", {
@@ -72,7 +72,7 @@ var decapod = decapod || {};
      ****************************************/
     
     
-    /*
+    /**
      * rendererComponent grade using decapod.customMerge.extend for the model merge policy
      */
     fluid.defaults("decapod.rendererComponentCustomMerge", {
