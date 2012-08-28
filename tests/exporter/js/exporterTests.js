@@ -242,7 +242,7 @@ var decapod = decapod || {};
         });
 
         exporterTests.asyncTest("startExport", function () {
-            jqUnit.expect(2);
+            jqUnit.expect(3);
             var tests = function (that) {
                 var decorators = fluid.renderer.getDecoratorComponents(that.pdfExporters, that.instantiator);
                 var exportType = decapod.testUtils.componentFromDecorator("formats", decorators); // sets the export type to one of the pdfExporters that is instantiated through the renderer
@@ -251,6 +251,7 @@ var decapod = decapod || {};
                 that.events.onExportStart.addListener(function () {
                     jqUnit.assertTrue("The onExportStart event should have fired", true);
                     jqUnit.assertDeepEq("The exportType should have been set", exportType, that.exportType);
+                    jqUnit.assertTrue("The busy style should be added", that.container.hasClass(that.options.styles.busy));
                     start();
                 });
             
@@ -265,6 +266,30 @@ var decapod = decapod || {};
                 },
                 components: {
                     instantiator: "{instantiator}"
+                }
+            });
+        });
+        
+        exporterTests.asyncTest("afterExportComplete", function () {
+            jqUnit.expect(1);
+            var trigger = function (that) {
+                that.container.addClass(that.options.styles.busy);
+                that.events.afterExportComplete.fire()
+            }
+            var assertComplete = function (that) {
+                jqUnit.assertFalse("The busy style should be removed", that.container.hasClass(that.options.styles.busy));
+                start();
+            };
+            decapod.exporter(CONTAINER, {
+                listeners: {
+                    onReady: {
+                        listener: trigger,
+                        args: ["{exporter}"]
+                    },
+                    afterExportComplete: {
+                        listener: assertComplete,
+                        args: ["{exporter}"]
+                    }
                 }
             });
         });

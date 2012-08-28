@@ -488,6 +488,9 @@ var decapod = decapod || {};
     fluid.demands("decapod.exporter.showStatus", ["decapod.exporter"], {
         args: ["{exporter}"]
     });
+    fluid.demands("decapod.exporter.setBusy", ["decapod.exporter"], {
+        args: ["{exporter}", "{arguments}.0"]
+    });
 
     /*****************
      *Event Demands *

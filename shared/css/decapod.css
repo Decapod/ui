@@ -36,8 +36,14 @@
     outline: 2px solid #989898;
 }
 
-.ds-shared-busy {
-    cursor: wait;
+.ds-shared-busy,
+.ds-shared-busy * {
+    cursor: wait; 
+}
+
+.ds-shared-busy nav,
+.ds-shared-busy nav * {
+    cursor: default;  /* keep the default cursor type for nav elements */
 }
 
 /* NAVIGATION BAR */

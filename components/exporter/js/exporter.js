@@ -60,6 +60,10 @@ var decapod = decapod || {};
         that.exportType.dataSource.put();
     };
     
+    decapod.exporter.setBusy = function (that, isBusy) {
+        that.container[isBusy ? "addClass" : "removeClass"](that.options.styles.busy);
+    };
+    
     decapod.exporter.finishExport = function (that) {
         that.exportType = null;
         that.events.afterExportComplete.fire();
@@ -108,6 +112,9 @@ var decapod = decapod || {};
         that.showStatus = function () {
             that.showStatus();
         };
+        that.setBusy = function (isBusy) {
+            that.setBusy(isBusy);
+        };
     };
     
     decapod.exporter.finalInit = function (that) {
@@ -155,6 +162,9 @@ var decapod = decapod || {};
                 ]
             }
         },
+        styles: {
+            busy: "ds-shared-busy"
+        },
         events: {
             onReady: null,
             onFinalInit: null,
@@ -184,6 +194,16 @@ var decapod = decapod || {};
                 args: ["{exporter}"]
             }
         },
+        listeners: {
+            "onExportStart.setBusy": {
+                listener: "{exporter}.setBusy",
+                args: [true]
+            },
+            "afterExportComplete.setBusy": {
+                listener: "{exporter}.setBusy",
+                args: [false]
+            } 
+        },
         invokers: {
             renderStrings: "decapod.exporter.renderStrings",
             startExport: "decapod.exporter.startExport",
@@ -192,7 +212,8 @@ var decapod = decapod || {};
             validateQueue: "decapod.exporter.validateQueue",
             disableImport: "decapod.exporter.disableImport",
             showInstructions: "decapod.exporter.showInstructions",
-            showStatus: "decapod.exporter.showStatus"
+            showStatus: "decapod.exporter.showStatus",
+            setBusy: "decapod.exporter.setBusy"
         },
         components: {
             progressiveEnhancementChecker: {
