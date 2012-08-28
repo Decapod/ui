@@ -30,6 +30,13 @@ var decapod = decapod || {};
 
     fluid.registerNamespace("decapod.exporter");
     
+    /**
+     * Renders the strings for the component.
+     * The strings for its sub components are stored in nested objects
+     * within the strings block. These are not used here.
+     * 
+     * @param {object} that, the component
+     */
     decapod.exporter.renderStrings = function (that) {
         $.each(that.options.strings, function (key, str) {
             if (typeof (str) === "string") {
@@ -38,49 +45,97 @@ var decapod = decapod || {};
         });
     };
     
+    /**
+     * Sets the export type and fires the onImportStart event.
+     * 
+     * @param {object} that, the component
+     * @param {object} exportType, the exportType component that should be handling the export.
+     * Typically this is the subComponent which triggered the import/export workflow.
+     */
     decapod.exporter.startImport = function (that, exportType) {
         that.exportType = exportType;
         that.events.onImportStart.fire();
     };
     
+    /**
+     * If there are valid files in the uploader queue it will fire the afterQueueReady event
+     * 
+     * @param {object} that, the component
+     */
     decapod.exporter.validateQueue = function (that) {
         if (that.importStatus.model.valid > 0) {
             that.events.afterQueueReady.fire();
         }
     };
     
+    /**
+     * Forces the uploader's browse button to be disabled and have the disabled styling applied
+     * 
+     * @param {object} that, the component
+     */
     decapod.exporter.disableImport = function (that) {
         var uploader = that.uploader;
         uploader.strategy.local.disableBrowseButton();
         uploader.locate("browseButton").addClass(uploader.options.styles.dim);
     };
     
+    /**
+     * Fires the onExportStart event and triggers the current exportType to start it's export.
+     * 
+     * @param {object} that, the component
+     */
     decapod.exporter.startExport = function (that) {
         that.events.onExportStart.fire();
         that.exportType.dataSource.put();
     };
     
+    /**
+     * Sets if the component is in a busy state or not.
+     * 
+     * @param {object} that, the component
+     * @param {boolean} isBusy, a boolean representing if the component should be in a busy state. 
+     * This is typically used when an export is in progress
+     */
     decapod.exporter.setBusy = function (that, isBusy) {
         that.container[isBusy ? "addClass" : "removeClass"](that.options.styles.busy);
     };
     
+    /**
+     * Sets the current exportType to null and fires the afterExportComplete event.
+     * 
+     * @param {object} that, the component
+     */
     decapod.exporter.finishExport = function (that) {
         that.exportType = null;
         that.events.afterExportComplete.fire();
     };
     
+    /**
+     * Displays the instruction text and hides the status component.
+     * 
+     * @param {object} that, the component
+     */
     decapod.exporter.showInstructions = function (that) {
         that.locate("importStatusContainer").hide();
         that.locate("instructions").show();
     };
     
+    /**
+     * Displays the status component and hides the instruction text.
+     * 
+     * @param {object} that, the component
+     */
     decapod.exporter.showStatus = function (that) {
         that.locate("instructions").hide();
         that.locate("importStatusContainer").show();
     };
     
-    // Since the various uploader functions for setting the state of the buttons
-    // is not public, this function is needed to force the browseButton to be disabled.
+    /**
+     * Since the various uploader functions for setting the state of the buttons
+     * is not public, this function is needed to force the browseButton to be disabled.
+     * 
+     * @param {object} uploader, the uploader component
+     */
     decapod.exporter.uploaderDisableBrowse = function (uploader) {
         var browseBttn = uploader.locate("browseButton");
         browseBttn.prop("disabled", true);
@@ -122,7 +177,12 @@ var decapod = decapod || {};
         that.renderStrings();
         that.events.onFinalInit.fire();
     };
-        
+    
+    /**
+     * Manages the importing of images to a server
+     * and triggering the exporting of those images back to
+     * the user as either a pdf or zipped image bundle.
+     */  
     fluid.defaults("decapod.exporter", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
         finalInitFunction: "decapod.exporter.finalInit",
@@ -376,6 +436,9 @@ var decapod = decapod || {};
         that.dataSource["delete"]();
     };
     
+    /**
+     * A simple component to trigger the server to delete any existing import/export data.
+     */
     fluid.defaults("decapod.exporter.serverReset", {
         gradeNames: ["fluid.littleComponent", "autoInit"],
         finalInitFunction: "decapod.exporter.serverReset.finalInit",
