@@ -126,12 +126,12 @@ var decapod = decapod || {};
         }
     });
     
-    fluid.demands("fluid.progress", ["decapod.pdfExporter", "decapod.exportControls", "decapod.exportControls.detailedProgress"], {
+    fluid.demands("fluid.progress", ["decapod.pdfExporter", "decapod.exportPoller", "decapod.exportControls", "decapod.exportControls.detailedProgress"], {
         options: {
             listeners: {
                 afterProgressHidden: {
                     listener: "{pdfExporter}.events.afterExportComplete",
-                    args: ["{pdfExporter}.response"]
+                    args: ["{exportPoller}.response"]
                 }
             }
         }

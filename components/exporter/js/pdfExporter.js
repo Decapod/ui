@@ -293,16 +293,7 @@ var decapod = decapod || {};
                             args: [null]
                         },
                         "{dataSource}.events.success": "{exportPoller}.poll",
-                        "{exportPoller}.events.pollComplete": [
-                            "{pdfExporter}.events.afterPollComplete",
-                            {
-                                listener: function (that, response) {
-                                    that.response = response;
-                                },
-                                args: ["{pdfExporter}", "{arguments}.0"],
-                                priority: "first"
-                            }
-                        ],
+                        "{exportPoller}.events.pollComplete": "{pdfExporter}.events.afterPollComplete",
                         "{exportPoller}.events.afterPoll": "{pdfExporter}.events.onExportStatusUpdate"
                     }
                 }
