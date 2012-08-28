@@ -34,6 +34,10 @@ var decapod = decapod || {};
         that.events.onReady.fire();
     };
     
+    /**
+     * A simple component that can be used to just bind events of other components in an IoC tree.
+     * Has a single event, onReady which is fired after the finalInit function is run.
+     */
     fluid.defaults("decapod.eventBinder", {
         gradeNames: ["fluid.eventedComponent", "autoInit"],
         finalInitFunction: "decapod.eventBinder.finalInit",
