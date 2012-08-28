@@ -29,7 +29,7 @@ var decapod = decapod || {};
         }
     });
     
-    fluid.demands("decapod.exportControls.detailedProgress", ["decapod.pdfExporter", "decapod.exportControls"], {
+    fluid.demands("decapod.exportControls.detailedProgress", ["decapod.test", "decapod.pdfExporter", "decapod.exportControls"], {
         options: {
             model: {
                 stages: ["books2pages", "ocro2pdf.py"],
@@ -39,6 +39,10 @@ var decapod = decapod || {};
                 "{pdfExporter}.events.onExportStatusUpdate": {
                     listener: "{detailedProgress}.update",
                     args: ["{arguments}.0.stage"]
+                },
+                "{pdfExporter}.events.afterPollComplete": {
+                    listener: "{detailedProgress}.finish",
+                    args: [true]
                 }
             },
             resources: {

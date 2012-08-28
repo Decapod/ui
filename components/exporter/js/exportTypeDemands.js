@@ -152,7 +152,7 @@ var decapod = decapod || {};
         args: ["{detailedProgress}"]
     });
     fluid.demands("decapod.exportControls.detailedProgress.finish", ["decapod.exportControls.detailedProgress"], {
-        args: ["{detailedProgress}"]
+        args: ["{detailedProgress}", "{arguments}.0"]
     });
     fluid.demands("decapod.pdfExportOptions.hide", ["decapod.pdfExportOptions"], {
         args: ["{pdfExportOptions}", "{arguments}.0"]

@@ -199,6 +199,48 @@ var decapod = decapod || {};
             });
         });
         
+        pdfExporterTests.asyncTest("afterPollComplete", function () {
+            jqUnit.expect(1);
+            var assertEvent = function (that) {
+                jqUnit.assertTrue("The afterPollComplete should have fired", true);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterPollComplete: {
+                        listener: assertEvent,
+                        priority: "last"
+                    },
+                    onReady: {
+                        listener: "{pdfExporter}.exportPoller.events.pollComplete",
+                        priority: "last"
+                    }
+                }
+            });
+        });
+        
+        pdfExporterTests.asyncTest("afterPollComplete - dataSource success", function () {
+            jqUnit.expect(1);
+            var assertEvent = function (that) {
+                jqUnit.assertTrue("The afterPollComplete should have fired", true);
+                start();
+            };
+            createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                listeners: {
+                    afterPollComplete: {
+                        listener: assertEvent,
+                        priority: "last",
+                        args: ["{pdfExporter}"]
+                    },
+                    onReady: {
+                        listener: "{pdfExporter}.dataSource.events.success",
+                        priority: "last",
+                        args: ["{pdfExporter}"]
+                    }
+                }
+            });
+        });
+        
         pdfExporterTests.asyncTest("afterExportComplete", function () {
             jqUnit.expect(6);
             var assertEvent = function (that) {
@@ -221,75 +263,43 @@ var decapod = decapod || {};
             });
         });
         
-        pdfExporterTests.asyncTest("afterExportComplete - pollComplete", function () {
-            jqUnit.expect(6);
-            var assertEvent = function (that) {
+        pdfExporterTests.asyncTest("afterExportComplete - onExportStart", function () {
+            jqUnit.expect(10);
+            var assertPollComplete = function (that) {
+                jqUnit.assertTrue("The afterPollComplete should have fired", true);
+                var decorators = fluid.renderer.getDecoratorComponents(that.exportControls, that.instantiator);
+                var progress = decapod.testUtils.componentFromDecorator("progress", decorators);
+                decapod.testUtils.exportType.assertFluidProgressState(progress.progress, 100, progress.options.strings.completeProgressMessage);
+            };
+            var assertExportComplete = function (that, response) {
                 jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
+                jqUnit.assertEquals("The decapod.exportControls.complete model should be updated", response.url, that.exportControls["**-renderer-complete-0"].model.downloadURL);
                 decapod.testUtils.exportType.assertShowCompleteControls(that.exportControls);
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                components: {
+                    instantiator: "{instantiator}"
+                },
                 listeners: {
-                    afterExportComplete: {
-                        listener: assertEvent,
+                    afterPollComplete: {
+                        listener: assertPollComplete,
                         priority: "last",
                         args: ["{pdfExporter}"]
                     },
-                    onReady: {
-                        listener: "{pdfExporter}.exportPoller.events.pollComplete",
-                        priority: "last"
-                    }
-                }
-            });
-        });
-        
-        pdfExporterTests.asyncTest("afterExportComplete - dataSource success", function () {
-            jqUnit.expect(6);
-            var assertEvent = function (that) {
-                jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
-                decapod.testUtils.exportType.assertShowCompleteControls(that.exportControls);
-                start();
-            };
-            createPDFExporter(PDF_EXPORTER_CONTAINER, {
-                listeners: {
                     afterExportComplete: {
-                        listener: assertEvent,
+                        listener: assertExportComplete,
                         priority: "last",
-                        args: ["{pdfExporter}"]
+                        args: ["{pdfExporter}", "{arguments}.0"]
                     },
                     onReady: {
-                        listener: "{pdfExporter}.dataSource.events.success",
+                        listener: "{pdfExporter}.events.onExportStart",
                         priority: "last",
                         args: ["{pdfExporter}"]
                     }
                 }
             });
         });
-        
-        //TODO: There is some bug where the component passed in through the demands to the "decapod.exportControls.detailedProgress.update" invoker is not resolved when the update function is called through the event system.
-        // pdfExporterTests.asyncTest("afterExportComplete - onExportStart", function () {
-            // jqUnit.expect(7);
-            // var assertEvent = function (that, response) {
-                // jqUnit.assertTrue("The afterExportCompleteEvent should have fired", true);
-                // jqUnit.assertEquals("The decapod.exportControls.complete model should be updated", response.url, that.exportControls["**-renderer-complete-0"].model.downloadURL);
-                // decapod.testUtils.exportType.assertShowCompleteControls(that.exportControls);
-                // start();
-            // };
-            // createPDFExporter(PDF_EXPORTER_CONTAINER, {
-                // listeners: {
-                    // afterExportComplete: {
-                        // listener: assertEvent,
-                        // priority: "last",
-                        // args: ["{pdfExporter}", "{arguments}.0"]
-                    // },
-                    // onReady: {
-                        // listener: "{pdfExporter}.events.onExportStart",
-                        // priority: "last",
-                        // args: ["{pdfExporter}"]
-                    // }
-                // }
-            // });
-        // });
         
         pdfExporterTests.asyncTest("afterRender", function () {
             jqUnit.expect(1);
