@@ -36,6 +36,10 @@
     outline: 2px solid #989898;
 }
 
+.ds-shared-busy {
+    cursor: wait;
+}
+
 /* NAVIGATION BAR */
 
 .ds-shared-navigationBar {
@@ -96,8 +100,6 @@ ul.ds-shared-navigationBar-flatList {
     background-color: #7A8370;
 }
 
-p.ds-shared-navigationBar-currentBreadcrumb {
-}
 
 /**
  FOOTER 
