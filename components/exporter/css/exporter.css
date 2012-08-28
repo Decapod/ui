@@ -34,6 +34,10 @@ a.ds-exporter-reset:focus {
     outline: 0; /* Remove the dotten outline from appearing on accordion focus. */
 }
 
+.ds-shared-busy .ui-accordion .ui-accordion-header {
+    cursor: wait; /* Change to a wait cursor when the busy class is added */
+}
+
 
 /**
  * Uploader
