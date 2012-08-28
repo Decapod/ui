@@ -50,8 +50,7 @@ var decapod = decapod || {};
      * @param {object} that, the component
      */
     decapod.pdfExporter.assembleExportOptions = function (that) {
-        var outputData = that.mapExportOptions(that.model.exportOptions.output.selection);
-        that.assembledExportOptions = fluid.merge("replace", {}, outputData);
+        that.assembledExportOptions = that.mapExportOptions(that.model.exportOptions.output.selection);
         return that.assembledExportOptions;
     };
     
