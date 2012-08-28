@@ -274,8 +274,8 @@ var decapod = decapod || {};
             jqUnit.expect(1);
             var trigger = function (that) {
                 that.container.addClass(that.options.styles.busy);
-                that.events.afterExportComplete.fire()
-            }
+                that.events.afterExportComplete.fire();
+            };
             var assertComplete = function (that) {
                 jqUnit.assertFalse("The busy style should be removed", that.container.hasClass(that.options.styles.busy));
                 start();

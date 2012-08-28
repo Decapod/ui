@@ -30,14 +30,32 @@ var decapod = decapod || {};
      
     fluid.registerNamespace("decapod.exportPoller");
     
+    /**
+     * Fires the onPoll event
+     * 
+     * @param {object} that, the component
+     */
     decapod.exportPoller.poll = function (that) {
         that.events.onPoll.fire();
     };
     
+    /**
+     * Determines if the response status indicates a completed export
+     * 
+     * @param {object} response, the response object returned from polling the export
+     */
     decapod.exportPoller.isComplete = function (response) {
         return response.status && response.status.toLowerCase() === "complete";
     };
     
+    /**
+     * Manages the response from a poll. 
+     * If it is complete the poll complete event is fired.
+     * If it is still in progress, another poll will be triggered after the delay set in the options.
+     * 
+     * @param {object} that, the component
+     * @param {object} response, the response object returned from polling the export
+     */
     decapod.exportPoller.handleResponse = function (that, response) {
         that.response = response;
         that.events.afterPoll.fire(response);
@@ -130,6 +148,10 @@ var decapod = decapod || {};
         that.events.onReady.fire(that);
     };
     
+    /**
+     * Renders out the information for an export.
+     * This includes the name and description.
+     */
     fluid.defaults("decapod.exportInfo", {
         gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
         finalInitFunction: "decapod.exportInfo.finalInit",
@@ -160,14 +182,35 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.pdfExportOptions");
     
+    /**
+     * Hides the elements refrenced by the selector
+     * 
+     * @param {object} that, the component
+     * @param {string} selector, one of the selectors from the options.
+     */
     decapod.pdfExportOptions.hide = function (that, selector) {
         that.locate(selector).hide();
     };
     
+    /**
+     * Shows the elements refrenced by the selector
+     * 
+     * @param {object} that, the component
+     * @param {string} selector, one of the selectors from the options.
+     */
     decapod.pdfExportOptions.show = function (that, selector) {
         that.locate(selector).show();
     };
     
+    /**
+     * Will show the selector if the value matches what is stored 
+     * at the EL Path in the model.
+     * 
+     * @param {object} that, the component
+     * @param {string} selector, one of the selectors from the options.
+     * @param {string} elPath, an EL Path into the model
+     * @param {object} value, some value to compare against the value refrenced by the El Path
+     */
     decapod.pdfExportOptions.showIfModelValue = function (that, selector, elPath, value) {
         if (fluid.get(that.model, elPath) === value) {
             that.show(selector);
@@ -176,14 +219,33 @@ var decapod = decapod || {};
         }
     };
     
+    /**
+     * Fires the onDisable event.
+     * Used to disable the options fields
+     * 
+     * @param {object} that, the component
+     */
     decapod.pdfExportOptions.disable = function (that) {
         that.events.onDisable.fire(that);
     };
     
+    /**
+     * Fires the onEnable event.
+     * Used to enable the options fields
+     * 
+     * @param {object} that, the component
+     */
     decapod.pdfExportOptions.enable = function (that) {
         that.events.onEnable.fire(that);
     };
     
+    /**
+     * Determines if the export options are in a valid state.
+     * 
+     * @param {object} that, the component
+     * @param {string} elPath, an EL Path into the model
+     * @param {string} representing the name of the customSetting selection
+     */
     decapod.pdfExportOptions.isValid = function (that, elPath, customSetting) {
         return fluid.get(that.model, elPath) === customSetting ? that.outputSettings.isValid() : true;
     };
@@ -341,6 +403,11 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.outputSettings");
     
+    /**
+     * Enables the output settings by removing the "disabled" attribute
+     * 
+     * @param {object} that, the component
+     */
     decapod.outputSettings.enable = function (that) {
         var settings = fluid.copy(that.model.settings);
         $.each(settings, function (idx, setting) {
@@ -350,6 +417,11 @@ var decapod = decapod || {};
         that.refreshView();
     };
     
+    /**
+     * Disables the output settings by adding the "disabled" attribute
+     * 
+     * @param {object} that, the component
+     */
     decapod.outputSettings.disable = function (that) {
         var settings = fluid.copy(that.model.settings);
         $.each(settings, function (idx, setting) {
@@ -359,6 +431,14 @@ var decapod = decapod || {};
         that.refreshView();
     };
     
+    /**
+     * Validates the input, to make sure that it is a number or string representation of a number and within a given bounds.
+     * 
+     * @param {string, number} value, the value of the output setting should be a number or string representation of a number
+     * @param {object} changeRequest, the change request object from the change applier
+     * @param {object} bounds, the max and min boundary for the value
+     * @param {function} failureCallback, a function to run if the value fails validation
+     */
     decapod.outputSettings.intValidation = function (value, changeRequest, bounds, failureCallback) {
         var regexp = /\D/i;
         var requestedVal = parseInt(value, 10);
@@ -369,6 +449,11 @@ var decapod = decapod || {};
         return isValid;
     };
     
+    /**
+     * Sets up the change applier guards
+     * 
+     * @param {object} that, the component
+     */
     decapod.outputSettings.bindValidators = function (that) {
         $.each(that.model.settings, function (idx, setting) {
             var guardPath = "settings." + idx + ".value";
@@ -380,6 +465,13 @@ var decapod = decapod || {};
         });
     };
     
+    /**
+     * Sets the status of the item located at the path specified in the change request
+     * 
+     * @param {object} that, the component
+     * @param {object} changeRequest, the change request object from the change applier
+     * @param {string} status, a string representing the status of setting in the change request
+     */
     decapod.outputSettings.setStatus = function (that, changeRequest, status) {
         changeRequest = fluid.isArrayable(changeRequest) ? changeRequest[0] : changeRequest;
         var index = parseInt(changeRequest.path.split(".")[1], 10);
@@ -388,6 +480,13 @@ var decapod = decapod || {};
         }
     };
     
+    /**
+     * Sets the status of the item located at the index
+     * 
+     * @param {object} that, the component
+     * @param {number} index, the index of the item to set the status on
+     * @param {string} status, a string representing the status of setting in the change request
+     */
     decapod.outputSettings.setStatusByIndex = function (that, index, status) {
         status = !!status; // forces status to be boolean
         if (that.isValid(index) !== status) {
@@ -403,6 +502,15 @@ var decapod = decapod || {};
         }
     };
     
+    /**
+     * Determines if the outputSettings are in a valid state.
+     * It is only valid, when all the items are in a valid state.
+     * If an index is provided, it will be based only on that particular item,
+     * instead of all of them.
+     * 
+     * @param {object} that, the component
+     * @param {number} index, the index of the item to check the status of
+     */
     decapod.outputSettings.isValid = function (that, index) {
         if (typeof (index) === "number") {
             return that.status[index];
@@ -598,6 +706,13 @@ var decapod = decapod || {};
         };
     };
     
+    /**
+     * Requests a change to the model at the provided path, with the given value.
+     * 
+     * @param {object} that, the component
+     * @param {string} modelPath, an EL Path into the model
+     * @param {object} value, the value to set
+     */
     decapod.exportControls.updateModel = function (that, modelPath, value) {
         that.applier.requestChange(modelPath, value);
     };
@@ -705,6 +820,11 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.exportControls.trigger");
     
+    /**
+     * Determines if the conditions all pass (are all true)
+     * 
+     * @param {object} model, the components model
+     */
     decapod.exportControls.trigger.assertState = function (model) {
         var conditions = true;
         
@@ -753,6 +873,13 @@ var decapod = decapod || {};
         };
     };
     
+    /**
+     * Requests a change to a condition in the model
+     * 
+     * @param {object} that, the component
+     * @param {string} condition, the condition to change the status of in the model
+     * @param {boolean} status, the value to set
+     */
     decapod.exportControls.trigger.updateModel = function (that, condition, status) {
         that.applier.requestChange(condition, status);
     };
@@ -786,6 +913,12 @@ var decapod = decapod || {};
         that.events.onReady.fire(that);
     };
     
+    /**
+     * Displays the exporter trigger control, likely a button, if and only if there are 
+     * no false conditions. Conditions determine whether or not the trigger should be 
+     * enabled. For example there may be a condition for when inputs are invalid or 
+     * requirements not met.
+     */
     fluid.defaults("decapod.exportControls.trigger", {
         gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
         preInitFunction: "decapod.exportControls.trigger.preInit",
@@ -870,10 +1003,22 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.exportControls.detailedProgress");
     
+    /**
+     * Requests a change to the current stage in the model.
+     * 
+     * @param {object} that, the component
+     * @param {string} stage, the stage to set as the currentStage in the model
+     */
     decapod.exportControls.detailedProgress.update = function (that, stage) {
         that.applier.requestChange("currentStage", stage);
     };
     
+    /**
+     * Updates the progress. It will convert the stage name to a number and calculate the percentage complete.
+     * Note that the steps are 1 based indexes.
+     * 
+     * @param {object} that, the component
+     */
     decapod.exportControls.detailedProgress.setProgress = function (that) {
         var index = $.inArray(that.model.currentStage, that.model.stages);
         if (index >= 0) {
@@ -883,6 +1028,12 @@ var decapod = decapod || {};
         }
     };
     
+    /**
+     * Sets the completed state for the progress
+     * 
+     * @param {object} that, the component
+     * @param {boolean}, if truthy, it will trigger the progress to hide.
+     */
     decapod.exportControls.detailedProgress.finish = function (that, hide) {
         that.progress.update(100, that.options.strings.completeProgressMessage);
         if (hide) {
@@ -987,6 +1138,12 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.exportControls.complete");
     
+    /**
+     * Requests a change to the download url in the model.
+     * 
+     * @param {object} that, the component
+     * @param {string} url, the url to set the model's downloadURL to
+     */
     decapod.exportControls.complete.updateModel = function (that, url) {
         that.applier.requestChange("downloadURL", url);
     };

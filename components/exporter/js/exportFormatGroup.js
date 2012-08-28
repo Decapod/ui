@@ -60,6 +60,10 @@ var decapod = decapod || {};
         that.events.onReady.fire(that);
     };
     
+    /**
+     * Renders out groups of exporters.
+     * This is used by the exporter to render out groups of pdf and image exporters.
+     */
     fluid.defaults("decapod.exportFormatGroup", {
         gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
         finalInitFunction: "decapod.exportFormatGroup.finalInit",
