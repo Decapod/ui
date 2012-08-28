@@ -30,6 +30,12 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.customMerge");
     
+    /*
+     * Merges objects, but will replace arrays.
+     * 
+     * @param {object} target, the target object which be merged onto
+     * @param {object} source, the source object to merge onto the target
+     */
     decapod.customMerge.extend = function (target, source) {
         target = target || {};
         if (fluid.isArrayable(target) || fluid.isPrimitive(target)) {
@@ -55,6 +61,9 @@ var decapod = decapod || {};
      * decapod.viewComponentCustomMerge *
      ************************************/
     
+    /*
+     * viewCompoent grade using decapod.customMerge.extend for the model merge policy
+     */
     fluid.defaults("decapod.viewComponentCustomMerge", {
         gradeNames: ["fluid.viewComponent"],
         mergePolicy: {
@@ -66,6 +75,10 @@ var decapod = decapod || {};
      * decapod.rendererComponentCustomMerge *
      ****************************************/
     
+    
+    /*
+     * rendererComponent grade using decapod.customMerge.extend for the model merge policy
+     */
     fluid.defaults("decapod.rendererComponentCustomMerge", {
         gradeNames: ["fluid.rendererComponent"],
         mergePolicy: {
