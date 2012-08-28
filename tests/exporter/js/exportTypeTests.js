@@ -1378,6 +1378,39 @@ var decapod = decapod || {};
             });
         });
         
+        detailedProgressTests.asyncTest("finish - hide", function () {
+            jqUnit.expect(3);
+            var assertFinish = function (that) {
+                that.finish(true);
+                decapod.testUtils.exportType.assertFluidProgressState(that.progress, 100, that.options.strings.completeProgressMessage);
+            };
+            var assertHidden = function (that) {
+                jqUnit.notVisible("The progress indicator should be hidden", that.container);
+                start();
+            };
+            createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
+                model: {
+                    stages: ["books2pages", "ocro2pdf.py"],
+                    currentStage: ""
+                },
+                listeners: {
+                    onReady: assertFinish
+                },
+                components: {
+                    progress: {
+                        options: {
+                            listeners: {
+                                afterProgressHidden: {
+                                    listener: assertHidden,
+                                    args: ["{progress}"]
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+        
         /*****************
          * completeTests *
          *****************/

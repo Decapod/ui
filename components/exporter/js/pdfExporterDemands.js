@@ -114,10 +114,25 @@ var decapod = decapod || {};
                 "{pdfExporter}.events.onExportStatusUpdate": {
                     listener: "{detailedProgress}.update",
                     args: ["{arguments}.0.stage"]
+                },
+                "{pdfExporter}.events.afterPollComplete": {
+                    listener: "{detailedProgress}.finish",
+                    args: [true]
                 }
             },
             resources: {
                 template: "{exportControls}.options.resources.progress"
+            }
+        }
+    });
+    
+    fluid.demands("fluid.progress", ["decapod.pdfExporter", "decapod.exportControls", "decapod.exportControls.detailedProgress"], {
+        options: {
+            listeners: {
+                afterProgressHidden: {
+                    listener: "{pdfExporter}.events.afterExportComplete",
+                    args: ["{pdfExporter}.response"]
+                }
             }
         }
     });

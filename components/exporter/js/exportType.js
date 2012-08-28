@@ -883,8 +883,11 @@ var decapod = decapod || {};
         }
     };
     
-    decapod.exportControls.detailedProgress.finish = function (that) {
+    decapod.exportControls.detailedProgress.finish = function (that, hide) {
         that.progress.update(100, that.options.strings.completeProgressMessage);
+        if (hide) {
+            that.progress.hide();
+        }
     };
     
     decapod.exportControls.detailedProgress.preInit = function (that) {
@@ -901,8 +904,8 @@ var decapod = decapod || {};
             that.setProgress();
         };
         
-        that.finish = function () {
-            that.finish();
+        that.finish = function (hide) {
+            that.finish(hide);
         };
     };
     
@@ -960,14 +963,11 @@ var decapod = decapod || {};
                 createOnEvent: "afterFetchResources",
                 container: "{detailedProgress}.dom.progress",
                 options: {
+                    selectors: {
+                        displayElement: "{detailedProgress}.dom.progress"
+                    },
                     strings: {
                         ariaDoneText: "{detailedProgress}.options.strings.completeProgressMessage"
-                    },
-                    listeners: {
-                        onProgressBegin: {
-                            listener: "{detailedProgress}.events.onReady",
-                            args: ["{detailedProgress}"]
-                        }
                     },
                     initiallyHidden: false
                 }
