@@ -23,8 +23,20 @@ limitations under the License.
 var decapod = decapod || {};
 
 (function ($) {
+    
+    /*********************
+     * decapod.accordion *
+     *********************/
+    
     fluid.registerNamespace("decapod.accordion");
     
+    /*
+     * A wrapper to accept any of the accordion method calls.
+     * For disable and enable should use the exposed functions.
+     * 
+     * @param {object} that, the component
+     * @param {string} any number of strings representing the method name and arguments for the jQuery UI Accordion.
+     */
     decapod.accordion.methodImp = function (that) {
         var arg1 = arguments[1];
         var args = $.isArray(arg1) ? arg1 : [arg1];
@@ -51,6 +63,10 @@ var decapod = decapod || {};
         that.events.onReady.fire();
     };
 
+    /*
+     * A simple wrapper component around the jQuery UI Accordion.
+     * This makes is useable through Fluid Infusion's IoC framework.
+     */
     fluid.defaults("decapod.accordion", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
         preInitFunction: "decapod.accordion.preInit",
