@@ -204,7 +204,7 @@ var decapod = decapod || {};
         });
         
         exporterTests.asyncTest("startImport", function () {
-            jqUnit.expect(20);
+            jqUnit.expect(18);
             var tests = function (that) {
                 var decorators = fluid.renderer.getDecoratorComponents(that.pdfExporters, that.instantiator);
                 var exportType = decapod.testUtils.componentFromDecorator("formats", decorators); // sets the export type to one of the pdfExporters that is instantiated through the renderer

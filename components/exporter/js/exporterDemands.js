@@ -322,7 +322,16 @@ var decapod = decapod || {};
         options: {
             strings: "{exporter}.options.strings.pdfs.formatStrings.2",
             model: {
-                exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "binned-inter", "ocro2pdf.py"]
+                exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "binned-inter", "ocro2pdf.py"],
+                exportOptions: {
+                    outputSettings: {
+                        // Removes the dpi setting
+                        settings: [
+                            {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
+                            {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300"}}
+                        ]
+                    }
+                }
             },
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
@@ -355,7 +364,16 @@ var decapod = decapod || {};
         options: {
             strings: "{exporter}.options.strings.pdfs.formatStrings.3",
             model: {
-                exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "binned-inter", "fontGrouper.py", "ocro2pdf.py"]
+                exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "binned-inter", "fontGrouper.py", "ocro2pdf.py"],
+                exportOptions: {
+                    outputSettings: {
+                        // Removes the dpi setting
+                        settings: [
+                            {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
+                            {value: "297", name: "height", unit: "mm", attrs: {type: "number", min: "1", max: "300"}}
+                        ]
+                    }
+                }
             },
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
