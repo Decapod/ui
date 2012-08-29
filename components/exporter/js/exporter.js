@@ -211,7 +211,7 @@ var decapod = decapod || {};
                     {name: "1. Image PDF", description: "Export each image as a page in a PDF document. Export process is quick and generates a basic PDF."},
                     {name: "2. Image PDF with OCR Text", description: "OCR is performed on images, and resulting text is embedded in the PDF."},
                     {name: "3. Computer Traced PDF with OCR Text", description: "Content of each image is traced by the computer, OCR'ed, and output to a PDF. The process takes longer, but results is a much smaller PDF."},
-                    {name: "4. Font Matched Text with OCR", description: "Text on image is matched to a True-Type font resulting in a very compact PDF. Works best with Latin script."}
+                    {name: "4. Font Matched PDF with OCR Text", description: "Text on image is matched to a True-Type font resulting in a very compact PDF. Works best with Latin script."}
                 ]
             },
             images: {
