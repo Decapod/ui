@@ -64,7 +64,7 @@ a.ds-exporter-reset:focus {
     width: 6em;
     cursor: default;
     padding: 6px 4px 0px 22px;
-    background: url("../../../shared/images/folder-icon-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #F9F9FA,  #ededed);
+    background: url("../../../../core/styles/images/folder-icon-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #F9F9FA,  #ededed);
     text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
 }
 
@@ -74,7 +74,7 @@ a.ds-exporter-reset:focus {
 
 .ds-exporter-uploadControls .ds-exporter-uploadBrowse-dim,
 .ds-exporter-uploadControls .fl-uploader-dim {
-    background: url("../../../shared/images/folder-icon-22x22-grey.png") 5px center no-repeat, #F9F9FA;
+    background: url("../../../core/styles/images/folder-icon-22x22-grey.png") 5px center no-repeat, #F9F9FA;
     border: 1px solid transparent;
     opacity: 0.4;
 }
