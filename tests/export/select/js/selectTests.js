@@ -31,7 +31,7 @@ var decapod = decapod || {};
     };
     var RESOURCES = {
         template: {
-            url: "../../../components/select/html/selectTemplate.html"
+            url: "../../../../export/components/select/html/selectTemplate.html"
         }
     };
     
