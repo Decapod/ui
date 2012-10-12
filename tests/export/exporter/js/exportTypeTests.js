@@ -34,15 +34,15 @@ var decapod = decapod || {};
     var COMPLETE_CONTAINER = ".dc-exportControls-complete";
     
     // Template URLs
-    var EXPORT_INFO_TEMPLATE = "../../../components/exporter/html/exportInfoTemplate.html";
-    var PDF_EXPORT_OPTIONS_TEMPLATE = "../../../components/exporter/html/pdfExportOptionsTemplate.html";
-    var OUTPUT_SETTINGS_TEMPLATE = "../../../components/exporter/html/outputSettingsTemplate.html";
-    var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
-    var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
-    var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
-    var DETAILED_PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsDetailedProgressTemplate.html";
-    var COMPLETE_TEMPLATE = "../../../components/exporter/html/exportControlsCompleteTemplate.html";
-    var SELECT_TEMPLATE = "../../../components/select/html/selectTemplate.html";
+    var EXPORT_INFO_TEMPLATE = "../../../../export/components/exporter/html/exportInfoTemplate.html";
+    var PDF_EXPORT_OPTIONS_TEMPLATE = "../../../../export/components/exporter/html/pdfExportOptionsTemplate.html";
+    var OUTPUT_SETTINGS_TEMPLATE = "../../../../export/components/exporter/html/outputSettingsTemplate.html";
+    var CONTROLS_TEMPLATE = "../../../../export/components/exporter/html/exportControlsTemplate.html";
+    var TRIGGER_TEMPLATE = "../../../../export/components/exporter/html/exportControlsTriggerTemplate.html";
+    var PROGRESS_TEMPLATE = "../../../../export/components/exporter/html/exportControlsProgressTemplate.html";
+    var DETAILED_PROGRESS_TEMPLATE = "../../../../export/components/exporter/html/exportControlsDetailedProgressTemplate.html";
+    var COMPLETE_TEMPLATE = "../../../../export/components/exporter/html/exportControlsCompleteTemplate.html";
+    var SELECT_TEMPLATE = "../../../../export/components/select/html/selectTemplate.html";
     
     // Convenience Functions: component creators
     var generateCompositeComponent = function (component, container, resources, options) {

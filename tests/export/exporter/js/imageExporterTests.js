@@ -27,12 +27,12 @@ var decapod = decapod || {};
     var IMAGE_EXPORTER_CONTAINER = ".dc-imageExporter";
     
     // Template URLs
-    var EXPORT_INFO_TEMPLATE = "../../../components/exporter/html/exportInfoTemplate.html";
-    var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
-    var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
-    var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
-    var COMPLETE_TEMPLATE = "../../../components/exporter/html/exportControlsCompleteTemplate.html";
-    var IMAGE_EXPORTER_TEMPLATE = "../../../components/exporter/html/imageExporterTemplate.html";
+    var EXPORT_INFO_TEMPLATE = "../../../../export/components/exporter/html/exportInfoTemplate.html";
+    var CONTROLS_TEMPLATE = "../../../../export/components/exporter/html/exportControlsTemplate.html";
+    var TRIGGER_TEMPLATE = "../../../../export/components/exporter/html/exportControlsTriggerTemplate.html";
+    var PROGRESS_TEMPLATE = "../../../../export/components/exporter/html/exportControlsProgressTemplate.html";
+    var COMPLETE_TEMPLATE = "../../../../export/components/exporter/html/exportControlsCompleteTemplate.html";
+    var IMAGE_EXPORTER_TEMPLATE = "../../../../export/components/exporter/html/imageExporterTemplate.html";
 
     var createImageExporter = function (container, options) {
         var opts = {
