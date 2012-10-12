@@ -27,7 +27,7 @@ var decapod = decapod || {};
     var CONTAINER = ".dc-exportFormatGroup";
     
     // Template URLs
-    var EXPORT_FORMAT_GROUP_TEMPLATE = "../../../components/exporter/html/exportFormatGroupTemplate.html";
+    var EXPORT_FORMAT_GROUP_TEMPLATE = "../../../../export/components/exporter/html/exportFormatGroupTemplate.html";
 
     var createExportFormatGroup = function (options) {
         var opts = {

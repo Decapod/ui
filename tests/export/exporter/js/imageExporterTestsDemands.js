@@ -25,7 +25,7 @@ var decapod = decapod || {};
 (function ($) {
     fluid.demands("decapod.dataSource", ["decapod.fileSystem", "decapod.test"], {
         options: {
-            url: "../../../mock-book/mockResponse.json"
+            url: "../../../../mock-data/book/mockResponse.json"
         }
     });
 })(jQuery);

@@ -27,15 +27,15 @@ var decapod = decapod || {};
     var PDF_EXPORTER_CONTAINER = ".dc-pdfExporter";
     
     // Template URLs
-    var EXPORT_INFO_TEMPLATE = "../../../components/exporter/html/exportInfoTemplate.html";
-    var PDF_EXPORT_OPTIONS_TEMPLATE = "../../../components/exporter/html/pdfExportOptionsTemplate.html";
-    var SELECT_TEMPLATE = "../../../components/select/html/selectTemplate.html";
-    var OUTPUT_SETTINGS_TEMPLATE = "../../../components/exporter/html/outputSettingsTemplate.html";
-    var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
-    var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
-    var DETAILED_PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsDetailedProgressTemplate.html";
-    var COMPLETE_TEMPLATE = "../../../components/exporter/html/exportControlsCompleteTemplate.html";
-    var PDF_EXPORTER_TEMPLATE = "../../../components/exporter/html/pdfExporterTemplate.html";
+    var EXPORT_INFO_TEMPLATE = "../../../../export/components/exporter/html/exportInfoTemplate.html";
+    var PDF_EXPORT_OPTIONS_TEMPLATE = "../../../../export/components/exporter/html/pdfExportOptionsTemplate.html";
+    var SELECT_TEMPLATE = "../../../../export/components/select/html/selectTemplate.html";
+    var OUTPUT_SETTINGS_TEMPLATE = "../../../../export/components/exporter/html/outputSettingsTemplate.html";
+    var CONTROLS_TEMPLATE = "../../../../export/components/exporter/html/exportControlsTemplate.html";
+    var TRIGGER_TEMPLATE = "../../../../export/components/exporter/html/exportControlsTriggerTemplate.html";
+    var DETAILED_PROGRESS_TEMPLATE = "../../../../export/components/exporter/html/exportControlsDetailedProgressTemplate.html";
+    var COMPLETE_TEMPLATE = "../../../../export/components/exporter/html/exportControlsCompleteTemplate.html";
+    var PDF_EXPORTER_TEMPLATE = "../../../../export/components/exporter/html/pdfExporterTemplate.html";
 
     var createPDFExporter = function (container, options) {
         var opts = {

@@ -24,18 +24,18 @@ var decapod = decapod || {};
 
 (function ($) {
 
-    var EXPORT_INFO_TEMPLATE = "../../../components/exporter/html/exportInfoTemplate.html";
-    var PDF_EXPORT_OPTIONS_TEMPLATE = "../../../components/exporter/html/pdfExportOptionsTemplate.html";
-    var SELECT_TEMPLATE = "../../../components/select/html/selectTemplate.html";
-    var OUTPUT_SETTINGS_TEMPLATE = "../../../components/exporter/html/outputSettingsTemplate.html";
-    var CONTROLS_TEMPLATE = "../../../components/exporter/html/exportControlsTemplate.html";
-    var TRIGGER_TEMPLATE = "../../../components/exporter/html/exportControlsTriggerTemplate.html";
-    var PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsProgressTemplate.html";
-    var DETAILED_PROGRESS_TEMPLATE = "../../../components/exporter/html/exportControlsDetailedProgressTemplate.html";
-    var COMPLETE_TEMPLATE = "../../../components/exporter/html/exportControlsCompleteTemplate.html";
-    var PDF_EXPORTER_TEMPLATE = "../../../components/exporter/html/pdfExporterTemplate.html";
-    var IMAGE_EXPORTER_TEMPLATE = "../../../components/exporter/html/imageExporterTemplate.html";
-    var EXPORT_FORMAT_GROUP_TEMPLATE = "../../../components/exporter/html/exportFormatGroupTemplate.html";
+    var EXPORT_INFO_TEMPLATE = "../../../../export/components/exporter/html/exportInfoTemplate.html";
+    var PDF_EXPORT_OPTIONS_TEMPLATE = "../../../../export/components/exporter/html/pdfExportOptionsTemplate.html";
+    var SELECT_TEMPLATE = "../../../../export/components/select/html/selectTemplate.html";
+    var OUTPUT_SETTINGS_TEMPLATE = "../../../../export/components/exporter/html/outputSettingsTemplate.html";
+    var CONTROLS_TEMPLATE = "../../../../export/components/exporter/html/exportControlsTemplate.html";
+    var TRIGGER_TEMPLATE = "../../../../export/components/exporter/html/exportControlsTriggerTemplate.html";
+    var PROGRESS_TEMPLATE = "../../../../export/components/exporter/html/exportControlsProgressTemplate.html";
+    var DETAILED_PROGRESS_TEMPLATE = "../../../../export/components/exporter/html/exportControlsDetailedProgressTemplate.html";
+    var COMPLETE_TEMPLATE = "../../../../export/components/exporter/html/exportControlsCompleteTemplate.html";
+    var PDF_EXPORTER_TEMPLATE = "../../../../export/components/exporter/html/pdfExporterTemplate.html";
+    var IMAGE_EXPORTER_TEMPLATE = "../../../../export/components/exporter/html/imageExporterTemplate.html";
+    var EXPORT_FORMAT_GROUP_TEMPLATE = "../../../../export/components/exporter/html/exportFormatGroupTemplate.html";
 
     fluid.demands("decapod.pdfs.exportFormatGroup", ["decapod.test", "decapod.exporter"], {
         funcName: "decapod.exportFormatGroup",
