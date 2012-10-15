@@ -52,6 +52,11 @@ var decapod = decapod || {};
         },
         events: {
             onReady: null
+        },
+        components: {
+            dataSource: {
+                type: "decapod.dataSource"
+            }
         }
     });
 })(jQuery);
