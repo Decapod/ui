@@ -30,20 +30,73 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.captureReviewer");
 
+    decapod.captureReviewer.updateModel = function (that, newModel) {
+        that.applier.requestChange("", newModel);
+    };
+
+    decapod.captureReviewer.produceTree = function (that) {
+        return {
+            captureIndex: {
+                messagekey: "captureIndex",
+                args: [that.model.captureIndex]
+            },
+            del: {
+                messagekey: "del",
+                decorators: [{
+                    type: "jQuery",
+                    func: "click",
+                    args: function () { that.events.onDelete.fire(that.model.captureIndex); }
+                }]
+            },
+            expander: {
+                type: "fluid.renderer.repeat",
+                repeatID: "captures:",
+                controlledBy: "captures",
+                pathAs: "captureInfo",
+                tree: {
+                    captureIMG: {
+                        target: "${{captureInfo}}"
+                    }
+                }
+            }
+        };
+    };
+    
+    decapod.captureReviewer.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        // Similar to the comment above but specifically a work around for FLUID-4334
+        that.refreshView = function () {
+            that.renderer.refreshView();
+        };
+        
+        that.updateModel = function (newModel) {
+            that.updateModel(newModel);
+        };
+    };
+
     decapod.captureReviewer.finalInit = function (that) {
+        that.applier.modelChanged.addListener("*", that.events.afterModelChanged.fire);
         that.events.onReady.fire();
     };
     
     fluid.defaults("decapod.captureReviewer", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        preInitFunction: "decapod.captureReviewer.preInit",
         finalInitFunction: "decapod.captureReviewer.finalInit",
+        produceTree: "decapod.captureReviewer.produceTree",
         selectors: {
             captureIndex: ".dc-captureReviewer-captureIndex",
             del: ".dc-captureReviewer-del",
-            captures: ".dc-captureReviewer-captures"
+            captures: ".dc-captureReviewer-captures",
+            captureIMG: ".dc-captureReviewer-captureIMG"
         },
+        repeatingSelectors: ["captures"],
         strings: {
-            captureIndex: "Capture #%captureIndex",
+            captureIndex: "Capture #%0",
             del: "Delete"
         },
         model: {
@@ -51,12 +104,16 @@ var decapod = decapod || {};
             captures: []
         },
         events: {
-            onReady: null
+            onReady: null,
+            onDelete: null,
+            afterModelChanged: null
         },
-        components: {
-            dataSource: {
-                type: "decapod.dataSource"
-            }
+        listeners: {
+            "afterModelChanged.refreshView": "{captureReviewer}.refreshView"
+        },
+        renderOnInit: true,
+        invokers: {
+            updateModel: "decapod.captureReviewer.updateModel"
         }
     });
 })(jQuery);

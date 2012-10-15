@@ -17,9 +17,8 @@
         <!-- Tests and tested component -->
         <script src="../../../core/js/decapodContext.js"></script>
         <script src="../../../utils/js/decapodTestContext.js"></script>
-        <script src="../../../core/js/decapodRequests.js"></script>
-        <script src="../../../core/js/decapodRequestsDemands.js"></script>
         <script src="../../../capture/js/captureReviewer.js"></script>
+        <script src="../../../capture/js/captureReviewerDemands.js"></script>
         <script src="../js/captureReviewerTests.js"></script>
         
     </head>
@@ -31,7 +30,13 @@
         <ol id="qunit-tests"></ol>
         <div id="qunit-fixture" style="display: block">
             <div class="dc-captureReviewer">
-                
+                <span class="dc-captureReviewer-captureIndex"></span>
+                <a class="dc-captureReviewer-del" href=""></a>
+                <ul>
+                    <li class="dc-captureReviewer-captures">
+                        <img src="" class="dc-captureReviewer-captureIMG" />
+                    </li>
+                </ul>
             </div>
         </div>
     </body>
