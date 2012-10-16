@@ -29,7 +29,7 @@ var decapod = decapod || {};
         var assertRender = function (that, currentStatus) {
             var status = that.model[currentStatus];
             jqUnit.assertEquals("The name should be rendered", status.name, that.locate("name").text());
-            jqUnit.assertEquals("The description should be rendered", status.description, that.locate("description").text());
+            jqUnit.assertEquals("The description should be rendered", status.description, that.locate("description").html());
             jqUnit.assertEquals("The refresh text should be rendered", that.options.strings.refresh, that.locate("refresh").text());
             jqUnit.assertTrue("The status style should be applied", that.container.hasClass(status.style));
         };
@@ -59,7 +59,7 @@ var decapod = decapod || {};
             },
             NO_CAPTURE: {
                 name: "Unable to capture",
-                description: "There was a problem with a camera. See Help documentation for possible fixes",
+                description: 'There was a problem with a camera. See <a href="">Help</a> documentation for possible fixes',
                 style: "dc-status-noCapture"
             },
             TOO_MANY_CAMERAS: {
@@ -149,6 +149,37 @@ var decapod = decapod || {};
                     onStatusChangeError: {
                         listener: assertOnStatusChangeError,
                         args: ["{status}", "{arguments}.0"]
+                    },
+                    onReady: {
+                        listener: function (that) {
+                            that.updateStatus(status);
+                        },
+                        args: ["{status}"]
+                    }
+                },
+                model: MODEL
+            });
+        });
+        
+        statusTests.asyncTest("markup description", function () {
+            jqUnit.expect(7);
+            var status = "NO_CAPTURE";
+            var assertAfterRender = function (that) {
+                assertRender(that, that.model.currentStatus);
+                jqUnit.assertEquals("The description should contain a link", 1, $("a", that.locate("description")).length);
+                start();
+            };
+            var assertStatusChanged = function (that, newStatus) {
+                jqUnit.assertDeepEq("The model should be updated", status, that.model.currentStatus);
+                jqUnit.assertDeepEq("The new status should be passed down", status, newStatus);
+                that.events.afterRender.addListener(assertAfterRender);
+            };
+            decapod.status(".dc-status", {
+                listeners: {
+                    afterStatusChanged: {
+                        listener: assertStatusChanged,
+                        args: ["{status}", "{arguments}.0"],
+                        priority: "first"
                     },
                     onReady: {
                         listener: function (that) {

@@ -61,7 +61,9 @@ var decapod = decapod || {};
                 messagekey: "refresh"
             },
             name: status.name,
-            description: status.description
+            description: {
+                markup: status.description
+            }
         };
     };
     
