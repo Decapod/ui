@@ -35,6 +35,13 @@ var decapod = decapod || {};
                 jqUnit.assertEquals("The image at index" + idx + " should have the correct src set", expectedModel.captures[idx], $(elm).attr("src"));
             });
         };
+        
+        var assertDeletedRender = function (that, deletedCaptureIndex) {
+            jqUnit.assertEquals("The deleteIndex is rendered", "Deleted Capture #" + deletedCaptureIndex, that.locate("deletedIndex").text());
+            jqUnit.assertEquals("The delete message should be rendered", that.options.strings.deletedMessage, that.locate("deletedMessage").text());
+            jqUnit.assertTrue("The delete link should be disabled", that.locate("del").attr("disabled"));
+            jqUnit.assertTrue("The delete link should have the disabled class", that.locate("del").hasClass(that.options.styles.disabled));
+        };
 
         /************************
          * captureReviewerTests *
@@ -110,7 +117,63 @@ var decapod = decapod || {};
             });
         });
         
+        captureReviewerTests.asyncTest("setDeleted", function () {
+            jqUnit.expect(4);
+            var model = {
+                captureIndex: 10,
+                captures: ["http://localhost:8080/test/image1.jpg", "http://localhost:8080/test/image2.jpg"]
+            };
+            var assertDelete = function (that) {
+                assertDeletedRender(that, model.captureIndex);
+                start();
+            };
+            decapod.captureReviewer(".dc-captureReviewer", {
+                listeners: {
+                    onReady: {
+                        listener: function (that) {
+                            that.setDeleted();
+                        },
+                        args: ["{captureReviewer}"]
+                    },
+                    afterRender: function (that) {
+                        if (that.model.hasOwnProperty("deleted")) {
+                            assertDelete(that);
+                        }
+                    }
+                },
+                model: model
+            });
+        });
+        
         captureReviewerTests.asyncTest("onDelete", function () {
+            jqUnit.expect(4);
+            var model = {
+                captureIndex: 10,
+                captures: ["http://localhost:8080/test/image1.jpg", "http://localhost:8080/test/image2.jpg"]
+            };
+            var assertDelete = function (that) {
+                assertDeletedRender(that, model.captureIndex);
+                start();
+            };
+            decapod.captureReviewer(".dc-captureReviewer", {
+                listeners: {
+                    onReady: {
+                        listener: function (that) {
+                            that.events.onDelete.fire();
+                        },
+                        args: ["{captureReviewer}"]
+                    },
+                    afterRender: function (that) {
+                        if (that.model.hasOwnProperty("deleted")) {
+                            assertDelete(that);
+                        }
+                    }
+                },
+                model: model
+            });
+        });
+        
+        captureReviewerTests.asyncTest("click triggers onDelete", function () {
             jqUnit.expect(1);
             var assertDelete = function () {
                 jqUnit.assertTrue("The onDelete event should have fired", true);
@@ -118,8 +181,11 @@ var decapod = decapod || {};
             };
             decapod.captureReviewer(".dc-captureReviewer", {
                 listeners: {
-                    afterRender: function (that) {
-                        that.locate("del").click();
+                    onReady: {
+                        listener: function (that) {
+                            that.locate("del").click();
+                        },
+                        args: ["{captureReviewer}"]
                     },
                     onDelete: assertDelete
                 }
