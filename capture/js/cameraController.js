@@ -101,13 +101,13 @@ var decapod = decapod || {};
             disabled: false
         },
         selectors: {
-            captureButton: ".dc-captureButton"
+            captureButton: ".dc-capturer-captureButton"
         },
         strings: {
             atCapture: "Taking picture"
         },
         styles: {
-            disabled: "dc-captureButton-disabled"
+            disabled: "ds-capturer-captureButton-disabled"
         },
         events: {
             onReady: null,
