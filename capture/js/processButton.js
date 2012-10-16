@@ -83,7 +83,6 @@ var decapod = decapod || {};
             dataSource: {
                 type: "decapod.dataSource",
                 options: {
-//                    url: "http://localhost:8081/stereo/process",
                     listeners: {
                         "success.handler": {
                             listener: "decapod.processButton.handleSuccess",
