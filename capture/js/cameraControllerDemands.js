@@ -28,6 +28,8 @@ var decapod = decapod || {};
      * Sub-componet Demands *
      ************************/
      
+    // Uncomment the code below when then top capture component is in place 
+    // and adjust the context to use that component.
 //    fluid.demands("decapod.cameraController", ["decapod.capture"], {
 //        funcName: "decapod.dataSource",
 //        options: {

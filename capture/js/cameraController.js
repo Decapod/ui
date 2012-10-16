@@ -30,15 +30,28 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.cameraController");
 
+    decapod.cameraController.setCaptureState = function (that) {
+        that.applier.requestChange("disabled", true);
+        that.locate("captureButton").html(that.options.strings.atCapture);
+    };
+    
+    decapod.cameraController.removeCaptureState = function (that) {
+        that.applier.requestChange("disabled", false);
+        that.locate("captureButton").html("");
+    };
+    
     decapod.cameraController.capture = function (that) {
+        decapod.cameraController.setCaptureState(that);
         that.dataSource.post();
     };
     
     decapod.cameraController.handleSuccess = function (that, response) {
+        decapod.cameraController.removeCaptureState(that);
         that.events.onCaptureSuccess.fire(response);
     };
     
     decapod.cameraController.handleError = function (that, xhr, response) {
+        decapod.cameraController.removeCaptureState(that);
         that.events.onCaptureError.fire(xhr, response);
     };
     
@@ -50,10 +63,16 @@ var decapod = decapod || {};
             that.events.onCapture.fire();
         });
         
-        that.applier.modelChanged.addListener("buttonEnabled", function (a, b, c) {
-            captureButton.attr("disabled", !that.model.buttonEnabled);
+        that.applier.modelChanged.addListener("disabled", function () {
+            captureButton.attr("disabled", that.model.disabled);
+            
+            if (that.model.disabled) {
+                captureButton.addClass(that.options.styles.disabled);
+            } else {
+                captureButton.removeClass(that.options.styles.disabled);
+            }
         });
-        
+
         that.events.onReady.fire();
     };
     
@@ -79,13 +98,16 @@ var decapod = decapod || {};
             }
         },
         model: {
-            buttonEnabled: true
+            disabled: false
         },
         selectors: {
             captureButton: ".dc-captureButton"
         },
         strings: {
-            capture: "Capture"
+            atCapture: "Taking picture"
+        },
+        styles: {
+            disabled: "dc-captureButton-disabled"
         },
         events: {
             onReady: null,

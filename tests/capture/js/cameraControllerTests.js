@@ -52,12 +52,19 @@ var decapod = decapod || {};
         });
 
         cameraControllerTests.asyncTest("onCapture", function () {
-            jqUnit.expect(1);
+            jqUnit.expect(3);
             var that = decapod.cameraController(".dc-capture", {
                 listeners: {
-                    onCapture: function () {
-                        jqUnit.assertTrue("The onCapture event should have fired.", true);
-                        start();
+                    onCapture: {
+                        listener: function (that) {
+                            jqUnit.assertTrue("The onCapture event should have fired.", true);
+                            
+                            var captureButton = that.locate("captureButton");
+                            jqUnit.assertTrue("The capture button should have been disabled.", captureButton.attr("disabled"));
+                            jqUnit.assertEquals("The capture state should have been set.", captureButton.html(), that.options.strings.atCapture);
+                            start();
+                        },
+                        args: ["{cameraController}"]
                     }
                 }
             });
@@ -65,17 +72,25 @@ var decapod = decapod || {};
         });
         
         cameraControllerTests.asyncTest("onCaptureSuccess", function () {
-            jqUnit.expect(2);
+            jqUnit.expect(4);
             var expected = {
                     "captureIndex": 1,
                     "captures": ["http://locahost:8081/data/images/image-1_0.jpg", "http://locahost:8081/data/images/image-1_1.jpg"]
                 };
+            
             var that = decapod.cameraController(".dc-capture", {
                 listeners: {
-                    onCaptureSuccess: function (response) {
-                        jqUnit.assertTrue("The onCaptureSuccess event should have fired.", true);
-                        jqUnit.assertDeepEq("The response is expected", response, expected);
-                        start();
+                    onCaptureSuccess: {
+                        listener: function (that, response) {
+                            jqUnit.assertTrue("The onCaptureSuccess event should have fired.", true);
+                            jqUnit.assertDeepEq("The response is expected", response, expected);
+
+                            var captureButton = that.locate("captureButton");
+                            jqUnit.assertFalse("The capture button should have been enabled.", captureButton.attr("disabled"));
+                            jqUnit.assertEquals("The capture state should have been removed.", captureButton.html(), "");
+                            start();
+                        },
+                        args: ["{cameraController}", "{arguments}.0"]
                     }
                 }
             });
@@ -83,14 +98,17 @@ var decapod = decapod || {};
             that.locate("captureButton").click();
         });
         
-        cameraControllerTests.test("model change on buttonEnabled", function () {
-            jqUnit.expect(2);
+        cameraControllerTests.test("model change on disabled", function () {
+            jqUnit.expect(4);
             var that = decapod.cameraController(".dc-capture");
             var captureButton = that.locate("captureButton");
             
             jqUnit.assertFalse("The capture button is initially enabled.", captureButton.attr("disabled"));
-            that.applier.requestChange("buttonEnabled", false);
-            jqUnit.assertTrue("The capture button is initially enabled.", captureButton.attr("disabled"));
+            jqUnit.assertFalse("The disabled style is not in place initially.", captureButton.hasClass(that.options.styles.disabled));
+            
+            that.applier.requestChange("disabled", true);
+            jqUnit.assertTrue("The capture button should have been disabled.", captureButton.attr("disabled"));
+            jqUnit.assertTrue("The disabled style should have been applied.", captureButton.hasClass(that.options.styles.disabled));
         });
         
     });
