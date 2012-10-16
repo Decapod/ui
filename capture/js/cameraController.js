@@ -30,11 +30,26 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.cameraController");
 
+    decapod.cameraController.capture = function (that) {
+        that.dataSource.post();
+    };
+    
+    decapod.cameraController.handleSuccess = function (that, response) {
+        that.events.onCaptureSuccess.fire(response);
+    };
+    
+    decapod.cameraController.handleError = function (that, xhr, response) {
+        that.events.onCaptureError.fire(xhr, response);
+    };
+    
     decapod.cameraController.finalInit = function (that) {
-    	captureButton = that.locate("captureButton");
-    	captureButton.attr("role", "button");
-    	captureButton.click(decapod.cameraController.capture);
-    	
+        var captureButton = that.locate("captureButton");
+        captureButton.attr("role", "button");
+        captureButton.click(function () {
+            decapod.cameraController.capture(that);
+            that.events.onCapture.fire();
+        });
+        
         that.applier.modelChanged.addListener("buttonEnabled", function (a, b, c) {
             captureButton.attr("disabled", !that.model.buttonEnabled);
         });
@@ -47,11 +62,24 @@ var decapod = decapod || {};
         finalInitFunction: "decapod.cameraController.finalInit",
         components: {
             dataSource: {
-                type: "decapod.dataSource"
+                type: "decapod.dataSource",
+                options: {
+                    url: "http://localhost:8081/stereo/capture",
+                    listeners: {
+                        "success.handler": {
+                            listener: "decapod.cameraController.handleSuccess",
+                            args: ["{cameraController}", "{arguments}.0"]
+                        },
+                        "error.handler": {
+                            listener: "decapod.cameraController.handleError",
+                            args: ["{cameraController}", "{arguments}.0", "{arguments}.1"]
+                        }
+                    }
+                }
             }
         },
         model: {
-        	buttonEnabled: true
+            buttonEnabled: true
         },
         selectors: {
             captureButton: ".dc-captureButton"
@@ -60,8 +88,10 @@ var decapod = decapod || {};
             capture: "Capture"
         },
         events: {
-        	onReady: null,
-        	onCaptureReady: null
+            onReady: null,
+            onCapture: null,
+            onCaptureSuccess: null,
+            onCaptureError: null
         }
     });
 })(jQuery);

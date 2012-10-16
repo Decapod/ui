@@ -33,29 +33,63 @@ var decapod = decapod || {};
     decapod.captureReviewer.updateModel = function (that, newModel) {
         that.applier.requestChange("", newModel);
     };
+    
+    decapod.captureReviewer.setDeleted = function (that) {
+        that.applier.requestChange("deleted", true);
+    };
 
     decapod.captureReviewer.produceTree = function (that) {
         return {
-            captureIndex: {
-                messagekey: "captureIndex",
-                args: [that.model.captureIndex]
-            },
-            del: {
-                messagekey: "del",
-                decorators: [{
-                    type: "jQuery",
-                    func: "click",
-                    args: function () { that.events.onDelete.fire(that.model.captureIndex); }
-                }]
-            },
             expander: {
-                type: "fluid.renderer.repeat",
-                repeatID: "captures:",
-                controlledBy: "captures",
-                pathAs: "captureInfo",
-                tree: {
-                    captureIMG: {
-                        target: "${{captureInfo}}"
+                type: "fluid.renderer.condition",
+                condition: that.model.hasOwnProperty("deleted"),
+                trueTree: {
+                    deletedIndex: {
+                        messagekey: "deletedIndex",
+                        args: [that.model.captureIndex]
+                    },
+                    deletedMessage: {
+                        messagekey: "deletedMessage"
+                    },
+                    del: {
+                        messagekey: "del",
+                        decorators: [{
+                            type: "attrs",
+                            attributes: {
+                                disabled: "disabled"
+                            }
+                        }, {
+                            type: "addClass",
+                            classes: that.options.styles.disabled
+                        }]
+                    }
+                },
+                falseTree: {
+                    captureIndex: {
+                        messagekey: "captureIndex",
+                        args: [that.model.captureIndex]
+                    },
+                    del: {
+                        messagekey: "del",
+                        decorators: [{
+                            type: "jQuery",
+                            func: "click",
+                            args: function () {
+                                that.events.onDelete.fire(that.model.captureIndex);
+                            }
+                        }]
+                    },
+                    capturesContainer: {}, //forces the captureContainer to render (needed so that it will be removed in the trueTree)
+                    expander: {
+                        type: "fluid.renderer.repeat",
+                        repeatID: "captures:",
+                        controlledBy: "captures",
+                        pathAs: "captureInfo",
+                        tree: {
+                            captureIMG: {
+                                target: "${{captureInfo}}"
+                            }
+                        }
                     }
                 }
             }
@@ -76,6 +110,10 @@ var decapod = decapod || {};
         that.updateModel = function (newModel) {
             that.updateModel(newModel);
         };
+        
+        that.setDeleted = function () {
+            that.setDeleted();
+        };
     };
 
     decapod.captureReviewer.finalInit = function (that) {
@@ -88,15 +126,23 @@ var decapod = decapod || {};
         preInitFunction: "decapod.captureReviewer.preInit",
         finalInitFunction: "decapod.captureReviewer.finalInit",
         produceTree: "decapod.captureReviewer.produceTree",
+        styles: {
+            disabled: ".dc-captureReviewer-disabled"
+        },
         selectors: {
             captureIndex: ".dc-captureReviewer-captureIndex",
+            deletedIndex: ".dc-captureReviewer-deletedIndex",
+            deletedMessage: ".dc-captureReviewer-deletedMessage",
             del: ".dc-captureReviewer-del",
+            capturesContainer: ".dc-captureReviewer-capturesContainer",
             captures: ".dc-captureReviewer-captures",
             captureIMG: ".dc-captureReviewer-captureIMG"
         },
         repeatingSelectors: ["captures"],
         strings: {
             captureIndex: "Capture #%0",
+            deletedIndex: "Deleted Capture #%0",
+            deletedMessage: "",
             del: "Delete"
         },
         model: {
@@ -109,10 +155,12 @@ var decapod = decapod || {};
             afterModelChanged: null
         },
         listeners: {
-            "afterModelChanged.refreshView": "{captureReviewer}.refreshView"
+            "afterModelChanged.refreshView": "{captureReviewer}.refreshView",
+            "onDelete.setDeleted": "{captureReviewer}.setDeleted"
         },
         renderOnInit: true,
         invokers: {
+            setDeleted: "decapod.captureReviewer.setDeleted",
             updateModel: "decapod.captureReviewer.updateModel"
         }
     });

@@ -23,15 +23,29 @@ limitations under the License.
 var decapod = decapod || {};
 
 (function ($) {
-
-    /*******************
-     * Invoker Demands *
-     *******************/
-    fluid.demands("decapod.captureReviewer.updateModel", ["decapod.captureReviewer"], {
-        args: ["{captureReviewer}", "{arguments}.0"]
-    });
-    fluid.demands("decapod.captureReviewer.setDeleted", ["decapod.captureReviewer"], {
-        args: ["{captureReviewer}"]
+    
+    /************************
+     * Sub-componet Demands *
+     ************************/
+     
+//    fluid.demands("decapod.cameraController", ["decapod.capture"], {
+//        funcName: "decapod.dataSource",
+//        options: {
+//            url: "http://localhost:8081/stereo/capture"
+//        }
+//    });
+    
+//    fluid.demands("decapod.cameraController", ["decapod.capture", "decapod.filesystem"], {
+    fluid.demands("decapod.cameraController", ["decapod.filesystem"], {
+        funcName: "decapod.dataSource",
+        options: {
+            
+        }
     });
     
+    fluid.demands("decapod.dataSource", ["decapod.fileSystem"], {
+        options: {
+            url: "../../../mock-data/capture/mockCaptureResponse.json"
+        }
+    });
 })(jQuery);
