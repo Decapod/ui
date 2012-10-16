@@ -1,0 +1,10 @@
+.ds-dewarper-main {
+    width:400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ds-dewarper-main p,
+.ds-dewarper-main div ul {
+    padding: 10px;
+}
