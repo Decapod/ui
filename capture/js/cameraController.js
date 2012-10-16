@@ -32,20 +32,20 @@ var decapod = decapod || {};
 
     decapod.cameraController.capture = function (that) {
         that.dataSource.post();
-    }
+    };
     
     decapod.cameraController.handleSuccess = function (that, response) {
         that.events.onCaptureSuccess.fire(response);
-    }
+    };
     
     decapod.cameraController.handleError = function (that, xhr, response) {
         that.events.onCaptureError.fire(xhr, response);
-    }
+    };
     
     decapod.cameraController.finalInit = function (that) {
-        captureButton = that.locate("captureButton");
+        var captureButton = that.locate("captureButton");
         captureButton.attr("role", "button");
-        captureButton.click(function() {
+        captureButton.click(function () {
             decapod.cameraController.capture(that);
             that.events.onCapture.fire();
         });
