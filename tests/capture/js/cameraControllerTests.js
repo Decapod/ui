@@ -50,8 +50,8 @@ var decapod = decapod || {};
             });
         });
 
-        cameraControllerTests.test("onCapture", function () {
-        	expect(1);
+        cameraControllerTests.asyncTest("onCapture", function () {
+            expect(1);
             var that = decapod.cameraController(".dc-capture", {
                 listeners: {
                     onCapture: function() {
@@ -63,31 +63,34 @@ var decapod = decapod || {};
             that.locate("captureButton").click();
         });
         
-//        cameraControllerTests.test("onCaptureSuccess", function () {
-//        	expect(2);
-//        	var expected = {
-//        		    "captureIndex": 1,
-//        		    "captures": ["http://locahost:8081/data/images/image-1_0.jpg", "http://locahost:8081/data/images/image-1_1.jpg"]
-//        		};
-//            var that = decapod.cameraController(".dc-capture", {
-//                listeners: {
-//	                onReady: {
-//		                listener: function(that) {
-//		                    that.locate("captureButton").click();
-//		                },
-//		                args: ["{cameraController}"]
-//		            },
-//                    onCaptureSuccess: function(response) {
-//                        jqUnit.assertTrue("The onCaptureSuccess event should have fired.", true);
-//                        jqUnit.assertDeepEq("The response is expected", response, expected);
-//                        start();
-//                    }
-//                }
-//            });
-//            
-////            that.locate("captureButton").click();
-//            
-//        });
+        cameraControllerTests.asyncTest("onCaptureSuccess", function () {
+            expect(2);
+            var expected = {
+                    "captureIndex": 1,
+                    "captures": ["http://locahost:8081/data/images/image-1_0.jpg", "http://locahost:8081/data/images/image-1_1.jpg"]
+                };
+            var that = decapod.cameraController(".dc-capture", {
+                listeners: {
+                    onCaptureSuccess: function(response) {
+                        jqUnit.assertTrue("The onCaptureSuccess event should have fired.", true);
+                        jqUnit.assertDeepEq("The response is expected", response, expected);
+                        start();
+                    }
+                }
+            });
+            
+            that.locate("captureButton").click();
+        });
+        
+        cameraControllerTests.test("model change on buttonEnabled", function () {
+            expect(2);
+            var that = decapod.cameraController(".dc-capture");
+            var captureButton = that.locate("captureButton");
+            
+            jqUnit.assertFalse("The capture button is initially enabled.", captureButton.attr("disabled"));
+            that.applier.requestChange("buttonEnabled", false);
+            jqUnit.assertTrue("The capture button is initially enabled.", captureButton.attr("disabled"));
+        });
         
     });
 })(jQuery);
