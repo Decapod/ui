@@ -30,6 +30,8 @@ var decapod = decapod || {};
     fluid.demands("decapod.captureReviewer.updateModel", ["decapod.captureReviewer"], {
         args: ["{captureReviewer}", "{arguments}.0"]
     });
-
- 
+    fluid.demands("decapod.captureReviewer.setDeleted", ["decapod.captureReviewer"], {
+        args: ["{captureReviewer}"]
+    });
+    
 })(jQuery);
