@@ -28,22 +28,13 @@ var decapod = decapod || {};
      * Sub-componet Demands *
      ************************/
      
-    // Uncomment the code below when then top capture component is in place 
-    // and adjust the context to use that component.
+    // The code below is to define the dataSource request URL for components that are based off decapod.processButton.
 //    fluid.demands("decapod.cameraController", ["decapod.capture"], {
 //        funcName: "decapod.dataSource",
 //        options: {
 //            url: "http://localhost:8081/stereo/capture"
 //        }
 //    });
-    
-//    fluid.demands("decapod.cameraController", ["decapod.capture", "decapod.filesystem"], {
-    fluid.demands("decapod.cameraController", ["decapod.filesystem"], {
-        funcName: "decapod.dataSource",
-        options: {
-            
-        }
-    });
     
     fluid.demands("decapod.dataSource", ["decapod.fileSystem"], {
         options: {
