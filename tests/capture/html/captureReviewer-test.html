@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Decapod Capture Reviewer Tests</title>
+        
+        <!-- Required stylesheets for testing the component. -->
+        <link rel="Stylesheet" media="screen" href="../../../lib/infusion/tests/lib/qunit/css/qunit.css" />
+        
+        <!-- Required JavaScript modules for testing the component. -->
+        <script src="../../../lib/infusion/MyInfusion.js"></script>
+        
+        <!-- jqUnit -->
+        <script src="../../../lib/infusion/tests/lib/qunit/js/qunit.js"></script>
+        <script src="../../../lib/infusion/tests/test-core/jqUnit/js/jqUnit.js"></script>
+        
+        <!-- Tests and tested component -->
+        <script src="../../../core/js/decapodContext.js"></script>
+        <script src="../../../utils/js/decapodTestContext.js"></script>
+        <script src="../../../capture/js/captureReviewer.js"></script>
+        <script src="../../../capture/js/captureReviewerDemands.js"></script>
+        <script src="../js/captureReviewerTests.js"></script>
+        
+    </head>
+    <body>
+        <!-- Markup that jqUnit will look for when running tests and displaying the results. -->
+        <h1 id="qunit-header">Decapod Capture Reviewer Test Suite</h1>
+        <h2 id="qunit-banner"></h2>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="qunit-fixture" style="display: block">
+            <div class="dc-captureReviewer">
+                <span class="dc-captureReviewer-captureIndex"></span>
+                <span class="dc-captureReviewer-deletedIndex"></span>
+                <span class="dc-captureReviewer-deletedMessage"></span>
+                <a class="dc-captureReviewer-del" href=""></a>
+                <ul class="dc-captureReviewer-capturesContainer">
+                    <li class="dc-captureReviewer-captures">
+                        <img src="" class="dc-captureReviewer-captureIMG" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>
