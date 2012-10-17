@@ -31,27 +31,45 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.capturer");
 
     decapod.capturer.handleCaptureSucess = function (captureReviewer, status, response) {
-        captureReviewer.show();
-        status.hide();
+        captureReviewer.container.show();
+        status.container.hide();
         
         captureReviewer.applier.requestChange("captureIndex", response.captureIndex);
         captureReviewer.applier.requestChange("captures", response.captures);
     };
     
     decapod.capturer.handleCaptureError = function (captureReviewer, status, xhr, response) {
-        captureReviewer.hide();
-        status.show();
+        captureReviewer.container.hide();
+        status.container.show();
         
-        // TODO
-        status.applier.requestChange();
+        status.applier.requestChange("currentStatus", "NO_CAPTURE");
     };
     
-    fluid.defaults("decapod.processButton", {
-        gradeNames: ["fluid.rendererComponent", "autoInit"],
-        finalInitFunction: "decapod.processButton.finalInit",
+    decapod.capturer.handleExportError = function (captureReviewer, status, xhr, response) {
+        captureReviewer.container.hide();
+        status.container.show();
+        
+        // TODO: Needs to implement "NO_EXPORT" in the status component
+        status.applier.requestChange("currentStatus", "NO_EXPORT");
+    };
+    
+    decapod.capturer.finalInit = function (that) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.onTemplateReady.fire();
+        });
+        
+        that.events.onReady.fire(that);
+    };
+    
+    fluid.defaults("decapod.capturer", {
+        gradeNames: ["fluid.viewComponent", "autoInit"],
+        finalInitFunction: "decapod.capturer.finalInit",
         components: {
             captureControl: {
                 type: "decapod.processButton",
+                createOnEvent: "onTemplateReady",
+                container: "{capturer}.dom.captureButton",
                 options: {
                     selectors: {
                         button: ".dc-capturer-captureButton"
@@ -63,7 +81,7 @@ var decapod = decapod || {};
                         disabled: "ds-capturer-captureButton-disabled"
                     },
                     listeners: {
-                        onProcessSucess: {
+                        onProcessSuccess: {
                             listener: "decapod.capturer.handleCaptureSucess",
                             args: ["{captureReviewer}", "{status}", "{arguments}.0"]
                         },
@@ -76,6 +94,8 @@ var decapod = decapod || {};
             },
             exportControl: {
                 type: "decapod.processButton",
+                createOnEvent: "onTemplateReady",
+                container: "{capturer}.dom.exportButton",
                 options: {
                     selectors: {
                         button: ".dc-capturer-exportButton"
@@ -85,27 +105,80 @@ var decapod = decapod || {};
                     },
                     styles: {
                         disabled: "ds-capturer-exportButton-disabled"
+                    },
+                    listeners: {
+                        onProcessError: {
+                            listener: "decapod.capturer.handleExportError",
+                            args: ["{captureReviewer}", "{status}", "{arguments}.0", "{arguments}.1"]
+                        }
                     }
                 }
             },
             captureReviewer: {
-                type: "decapod.captureReviewer"
+                type: "decapod.captureReviewer",
+                createOnEvent: "onTemplateReady",
+                container: "{capturer}.dom.preview"
             },
             status: {
-                type: "decapod.status"
+                type: "decapod.status",
+                createOnEvent: "onTemplateReady",
+                container: "{capturer}.dom.status",
+                options: {
+                    model: {
+                        currentStatus: "{capturer}.model.status",
+                        READY: {
+                            name: "Ready to Capture",
+                            description: "Press the Camera Button to start.",
+                            style: "dc-status-ready"
+                        },
+                        NO_CAMERAS: {
+                            name: "No camera detected",
+                            description: "",
+                            style: "dc-status-noCameras"
+                        },
+                        CAMERA_DISCONNECTED: {
+                            name: "A camera has been disconnected.",
+                            description: "Check that the camera is plugged in and turned on.",
+                            style: "dc-status-cameraDisconnected"
+                        },
+                        NO_CAPTURE: {
+                            name: "Unable to capture",
+                            description: 'There was a problem with a camera. See <a href="">Help</a> documentation for possible fixes',
+                            style: "dc-status-noCapture"
+                        },
+                        TOO_MANY_CAMERAS: {
+                            name: "Too many cameras detected",
+                            description: "Connect only one or two cameras",
+                            style: "dc-status-tooManyCameras"
+                        }
+                    }
+                }
             },
             serverRequestHandler: {
-                type: "decapod.dataSource"
+                type: "decapod.dataSource",
+                createOnEvent: "onTemplateReady"
             }
         },
         model: {
+            status: "READY"
         },
         selectors: {
+            captureButton: ".dc-capturer-controls",
+            exportButton: ".dc-capturer-controls",
+            status: ".dc-capture-status",
+            preview: ".dc-capturer-preview"
         },
         strings: {
         },
         events: {
-            onReady: null
+            onReady: null,
+            onTemplateReady: null
+        },
+        resources: {
+            template: {
+                url: "../html/capturerTemplate.html",
+                forceCache: true
+            }
         }
     });
 })(jQuery);
