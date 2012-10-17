@@ -42,7 +42,7 @@ var decapod = decapod || {};
     
     decapod.processButton.process = function (that) {
         decapod.processButton.setInProcessState(that);
-        that.dataSource.post();
+        that.captureSource.post();
     };
     
     decapod.processButton.handleSuccess = function (that, response) {
@@ -80,7 +80,7 @@ var decapod = decapod || {};
         gradeNames: ["fluid.viewComponent", "autoInit"],
         finalInitFunction: "decapod.processButton.finalInit",
         components: {
-            dataSource: {
+            captureSource: {
                 type: "decapod.dataSource",
                 options: {
                     listeners: {
