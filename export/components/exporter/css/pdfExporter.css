@@ -1,0 +1,49 @@
+
+
+
+.ds-pdfExporter-pdfExportOptions-hidden{
+/* Hide the export options. APPLY this style to hide the export options. */
+    overflow: hidden;
+    height: 0px;
+}	
+
+/* Export file format options and controls. */
+.ds-pdfExporter-pdfExportOptions {
+    /*background-color: #F9F9FA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);*/
+    position: relative;
+    padding-top: 10px;
+}
+
+.ds-pdfExporter-pdfExportOptions-form {
+    margin-right:auto;
+    margin-left:auto;
+    width: 68%;
+}
+
+.ds-pdfExporter-pdfExportOptions-form select {
+    width: 12em;
+    margin-left: 0.5em;
+}
+
+.ds-pdfExportOptions-output {
+    text-align:center;
+}
+
+.ds-pdfExportOptions-outputSettings label{
+    width: 6em;
+    display:inline-block;
+    text-align:right;
+    margin-right: 5px;
+}
+
+.ds-pdfExportOptions-outputSettings input {
+    width: 4em;
+}
+
+.ds-pdfExportOptions-outputSettings li {
+    padding-top:0.5em;
+    padding-left: 1.3em;
+    height: 1.5em;
+}
+
