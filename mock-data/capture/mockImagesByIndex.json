@@ -1,0 +1,3 @@
+{
+    images: ["http://locahost:8081/data/images/image-1_0.jpg", "http://locahost:8081/data/images/image-1_1.jpg"]
+}
