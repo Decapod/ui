@@ -18,7 +18,7 @@
 
 .ds-exporter-exportControls {
     padding-top: 10px;
-    height: 4em;
+    height: auto;
 }
 
 .ds-exportControls-progress-text {

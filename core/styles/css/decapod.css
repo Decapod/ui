@@ -173,7 +173,7 @@ ul.ds-shared-titleBar-flatList {
 
 .ds-shared-linkButton{
     -moz-transition: background-color 0.2s ease;
-    width: 100px;
+    /*width: 100px;*/
     position: relative;
     display:inline-block;
     padding: 3px;
@@ -213,6 +213,7 @@ ul.ds-shared-titleBar-flatList {
     box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);;
 	border-radius:6px;
     width: 100%;
+    padding: 10px;
 }
 
 /**
@@ -409,7 +410,7 @@ ul.ds-shared-titleBar-flatList {
     width: 6em;
     cursor: default;
     padding: 6px 4px 0px 22px;
-    background: url("../../../shared/images/folder-icon-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #F9F9FA,  #ededed);
+    background: url("../images/folder-icon-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #F9F9FA,  #ededed);
     text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
 }
 
@@ -419,7 +420,7 @@ ul.ds-shared-titleBar-flatList {
 
 .ds-shared-uploadControls .ds-shared-uploadBrowse-dim,
 .ds-shared-uploadControls .fl-uploader-dim {
-    background: url("../../../shared/images/folder-icon-22x22-grey.png") 5px center no-repeat, #F9F9FA;
+    background: url("../images/folder-icon-22x22-grey.png") 5px center no-repeat, #F9F9FA;
     border: 1px solid transparent;
     opacity: 0.4;
 }
