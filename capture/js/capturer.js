@@ -31,24 +31,15 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.capturer");
 
     decapod.capturer.handleCaptureSucess = function (captureReviewer, status, response) {
-        captureReviewer.container.show();
-        status.container.hide();
-        
         captureReviewer.applier.requestChange("captureIndex", response.captureIndex);
         captureReviewer.applier.requestChange("captures", response.captures);
     };
     
     decapod.capturer.handleCaptureError = function (captureReviewer, status, xhr, response) {
-        captureReviewer.container.hide();
-        status.container.show();
-        
         status.applier.requestChange("currentStatus", "NO_CAPTURE");
     };
     
     decapod.capturer.handleExportError = function (captureReviewer, status, xhr, response) {
-        captureReviewer.container.hide();
-        status.container.show();
-        
         // TODO: Needs to implement "NO_EXPORT" in the status component
         status.applier.requestChange("currentStatus", "NO_EXPORT");
     };
@@ -57,9 +48,9 @@ var decapod = decapod || {};
         decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.onTemplateReady.fire();
+            
+            that.cameraStatusSource.get();
         });
-        
-        that.events.onReady.fire(that);
     };
     
     fluid.defaults("decapod.capturer", {
@@ -80,14 +71,33 @@ var decapod = decapod || {};
                     styles: {
                         disabled: "ds-capturer-captureButton-disabled"
                     },
+                    model: {
+                        disabled: true
+                    },
                     listeners: {
-                        onProcessSuccess: {
+                        "onProcessSuccess.handleCaptureSuccess": {
                             listener: "decapod.capturer.handleCaptureSucess",
                             args: ["{captureReviewer}", "{status}", "{arguments}.0"]
                         },
-                        onProcessError: {
+                        "onProcessSuccess.showCaptuerReviewer": {
+                            listener: "{captureReviewer}.container.show",
+                            args: []
+                        },
+                        "onProcessSuccess.hideStatus": {
+                            listener: "{status}.container.hide",
+                            args: []
+                        },
+                        "onProcessError.handleCaptureError": {
                             listener: "decapod.capturer.handleCaptureError",
                             args: ["{captureReviewer}", "{status}", "{arguments}.0", "{arguments}.1"]
+                        },
+                        "onProcessError.hideCaptuerReviewer": {
+                            listener: "{captureReviewer}.container.hide",
+                            args: []
+                        },
+                        "onProcessError.showStatus": {
+                            listener: "{status}.container.show",
+                            args: []
                         }
                     }
                 }
@@ -105,6 +115,9 @@ var decapod = decapod || {};
                     },
                     styles: {
                         disabled: "ds-capturer-exportButton-disabled"
+                    },
+                    model: {
+                        disabled: true
                     },
                     listeners: {
                         onProcessError: {
@@ -154,9 +167,44 @@ var decapod = decapod || {};
                     }
                 }
             },
-            serverRequestHandler: {
+            cameraStatusSource: {
                 type: "decapod.dataSource",
-                createOnEvent: "onTemplateReady"
+                createOnEvent: "onTemplateReady",
+                options: {
+                    url: "../../mock-data/capture/mockCameraStatus.json",
+                    listeners: {
+                        "success.handleCaptureSuccess": {
+                            listener: "decapod.capturer.handleCameraStatusSuccess",
+                            args: ["{captureReviewer}", "{status}", "{arguments}.0"]
+                        },
+                        "success.showCaptuerReviewer": {
+                            listener: "{captureReviewer}.container.show",
+                            args: []
+                        },
+                        "success.hideStatus": {
+                            listener: "{status}.container.hide",
+                            args: []
+                        }//,
+//                        "error.handler": {
+//                            listener: "decapod.processButton.handleCameraStatusError",
+//                            args: ["{captureReviewer}", "{status}", "{arguments}.0", "{arguments}.1"]
+//                        }
+                    }
+                }
+            },
+            captureStatusSource: {
+                type: "decapod.dataSource",
+                createOnEvent: "onTemplateReady",
+                options: {
+                    url: "../../mock-data/capture/mockCaptureStatus.json"
+                }
+            },
+            imageSource: {
+                type: "decapod.dataSource",
+                createOnEvent: "onTemplateReady",
+                options: {
+                    url: "../../mock-data/capture/mockImagesByIndex.json"
+                }
             }
         },
         model: {
