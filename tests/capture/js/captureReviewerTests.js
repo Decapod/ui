@@ -37,7 +37,7 @@ var decapod = decapod || {};
         };
         
         var assertDeletedRender = function (that, deletedCaptureIndex) {
-            jqUnit.assertEquals("The deleteIndex is rendered", "Deleted Capture #" + deletedCaptureIndex, that.locate("deletedIndex").text());
+            jqUnit.assertEquals("The deleteIndex is rendered", "Deleted Capture #" + deletedCaptureIndex, that.locate("captureIndex").text());
             jqUnit.assertEquals("The delete message should be rendered", that.options.strings.deletedMessage, that.locate("deletedMessage").text());
             jqUnit.assertTrue("The delete link should be disabled", that.locate("del").attr("disabled"));
             jqUnit.assertTrue("The delete link should have the disabled class", that.locate("del").hasClass(that.options.styles.disabled));

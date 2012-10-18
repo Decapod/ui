@@ -44,7 +44,7 @@ var decapod = decapod || {};
                 type: "fluid.renderer.condition",
                 condition: that.model.hasOwnProperty("deleted"),
                 trueTree: {
-                    deletedIndex: {
+                    captureIndex: {
                         messagekey: "deletedIndex",
                         args: [that.model.captureIndex]
                     },
@@ -131,7 +131,6 @@ var decapod = decapod || {};
         },
         selectors: {
             captureIndex: ".dc-captureReviewer-captureIndex",
-            deletedIndex: ".dc-captureReviewer-deletedIndex",
             deletedMessage: ".dc-captureReviewer-deletedMessage",
             del: ".dc-captureReviewer-del",
             capturesContainer: ".dc-captureReviewer-capturesContainer",
