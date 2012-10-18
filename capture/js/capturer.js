@@ -30,9 +30,10 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.capturer");
 
-    decapod.capturer.handleCaptureSucess = function (captureReviewer, response) {
-        captureReviewer.applier.requestChange("captureIndex", response.captureIndex);
-        captureReviewer.applier.requestChange("captures", response.captures);
+    decapod.capturer.handleCaptureSucess = function (captureReviewer, status, response) {
+        decapod.capturer.show(captureReviewer);
+        decapod.capturer.hide(status);
+        captureReviewer.updateModel(response);
     };
     
     decapod.capturer.handleCaptureError = function (status, xhr, response) {
@@ -121,7 +122,7 @@ var decapod = decapod || {};
                     listeners: {
                         "onProcessSuccess.handleCaptureSuccess": {
                             listener: "decapod.capturer.handleCaptureSucess",
-                            args: ["{captureReviewer}", "{arguments}.0"]
+                            args: ["{captureReviewer}", "{status}", "{arguments}.0"]
                         },
                         "onProcessSuccess.showCaptuerReviewer": {
                             listener: "decapod.capturer.show",

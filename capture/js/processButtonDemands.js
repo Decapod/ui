@@ -38,7 +38,7 @@ var decapod = decapod || {};
     
     fluid.demands("captureSource", ["decapod.fileSystem"], {
         options: {
-            url: "../../../mock-data/capture/mockCaptureResponse.json"
+            url: "../../mock-data/capture/mockCaptureResponse.json"
         }
     });
 })(jQuery);
