@@ -4,7 +4,6 @@
     margin-right: auto;
 }
 
-.ds-dewarper-main p,
-.ds-dewarper-main div ul {
-    padding: 10px;
+.ds-dewarper-main form.ds-shared-componentControls {
+    height: 75px;
 }
