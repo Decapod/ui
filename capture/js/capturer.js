@@ -165,9 +165,17 @@ var decapod = decapod || {};
                         disabled: true
                     },
                     listeners: {
-                        onProcessError: {
+                        "onProcessError.handleExportError": {
                             listener: "decapod.capturer.handleExportError",
                             args: ["{status}", "{arguments}.0", "{arguments}.1"]
+                        },
+                        "onProcessError.hideCaptuerReviewer": {
+                            listener: "decapod.capturer.hide",
+                            args: ["{captuerReviewer}"]
+                        },
+                        "onProcessError.showStatus": {
+                            listener: "decapod.capturer.show",
+                            args: ["{status}"]
                         }
                     }
                 }
