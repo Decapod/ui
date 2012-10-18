@@ -31,27 +31,57 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.capturer");
 
     decapod.capturer.handleCaptureSucess = function (captureReviewer, status, response) {
-        captureReviewer.show();
-        status.hide();
-        
         captureReviewer.applier.requestChange("captureIndex", response.captureIndex);
         captureReviewer.applier.requestChange("captures", response.captures);
     };
     
     decapod.capturer.handleCaptureError = function (captureReviewer, status, xhr, response) {
-        captureReviewer.hide();
-        status.show();
-        
-        // TODO
-        status.applier.requestChange();
+        status.applier.requestChange("currentStatus", "NO_CAPTURE");
     };
     
-    fluid.defaults("decapod.processButton", {
-        gradeNames: ["fluid.rendererComponent", "autoInit"],
-        finalInitFunction: "decapod.processButton.finalInit",
+    decapod.capturer.handleExportError = function (captureReviewer, status, xhr, response) {
+        // TODO: Needs to implement "NO_EXPORT" in the status component
+        status.applier.requestChange("currentStatus", "NO_EXPORT");
+    };
+    
+    decapod.capturer.cameraStatusSuccess = function (captureReviewer, status, response) {
+    };
+    
+    /**
+     * Show the component
+     */
+    decapod.capturer.show = function (componentInstance) {
+        if (componentInstance && componentInstance.container) {
+            componentInstance.container.show();
+        }
+    }
+        
+    /**
+     * Hide the component
+     */
+    decapod.capturer.hide = function (componentInstance) {
+        if (componentInstance.container) {
+            componentInstance.container.hide();
+        }
+    }
+        
+    decapod.capturer.finalInit = function (that) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
+            that.container.append(that.options.resources.template.resourceText);
+            that.events.onTemplateReady.fire();
+            
+            that.cameraStatusSource.get();
+        });
+    };
+    
+    fluid.defaults("decapod.capturer", {
+        gradeNames: ["fluid.viewComponent", "autoInit"],
+        finalInitFunction: "decapod.capturer.finalInit",
         components: {
             captureControl: {
                 type: "decapod.processButton",
+                createOnEvent: "onTemplateReady",
+                container: "{capturer}.dom.captureButton",
                 options: {
                     selectors: {
                         button: ".dc-capturer-captureButton"
@@ -62,20 +92,41 @@ var decapod = decapod || {};
                     styles: {
                         disabled: "ds-capturer-captureButton-disabled"
                     },
+                    model: {
+                        disabled: true
+                    },
                     listeners: {
-                        onProcessSucess: {
+                        "onProcessSuccess.handleCaptureSuccess": {
                             listener: "decapod.capturer.handleCaptureSucess",
                             args: ["{captureReviewer}", "{status}", "{arguments}.0"]
                         },
-                        onProcessError: {
+                        "onProcessSuccess.showCaptuerReviewer": {
+                            listener: "decapod.capturer.show",
+                            args: ["{capturerReviewer}"]
+                        },
+                        "onProcessSuccess.hideStatus": {
+                            listener: "decapod.capturer.hide",
+                            args: ["{status}"]
+                        },
+                        "onProcessError.handleCaptureError": {
                             listener: "decapod.capturer.handleCaptureError",
                             args: ["{captureReviewer}", "{status}", "{arguments}.0", "{arguments}.1"]
+                        },
+                        "onProcessError.hideCaptuerReviewer": {
+                            listener: "decapod.capturer.hide",
+                            args: ["{capturerReviewer}"]
+                        },
+                        "onProcessError.showStatus": {
+                            listener: "decapod.capturer.show",
+                            args: ["{status}"]
                         }
                     }
                 }
             },
             exportControl: {
                 type: "decapod.processButton",
+                createOnEvent: "onTemplateReady",
+                container: "{capturer}.dom.exportButton",
                 options: {
                     selectors: {
                         button: ".dc-capturer-exportButton"
@@ -85,27 +136,126 @@ var decapod = decapod || {};
                     },
                     styles: {
                         disabled: "ds-capturer-exportButton-disabled"
+                    },
+                    model: {
+                        disabled: true
+                    },
+                    listeners: {
+                        onProcessError: {
+                            listener: "decapod.capturer.handleExportError",
+                            args: ["{captureReviewer}", "{status}", "{arguments}.0", "{arguments}.1"]
+                        }
                     }
                 }
             },
             captureReviewer: {
-                type: "decapod.captureReviewer"
+                type: "decapod.captureReviewer",
+                createOnEvent: "onTemplateReady",
+                container: "{capturer}.dom.preview"
             },
             status: {
-                type: "decapod.status"
+                type: "decapod.status",
+                createOnEvent: "onTemplateReady",
+                container: "{capturer}.dom.status",
+                options: {
+                    model: {
+                        currentStatus: "{capturer}.model.status",
+                        READY: {
+                            name: "Ready to Capture",
+                            description: "Press the Camera Button to start.",
+                            style: "dc-status-ready"
+                        },
+                        NO_CAMERAS: {
+                            name: "No camera detected",
+                            description: "",
+                            style: "dc-status-noCameras"
+                        },
+                        CAMERA_DISCONNECTED: {
+                            name: "A camera has been disconnected.",
+                            description: "Check that the camera is plugged in and turned on.",
+                            style: "dc-status-cameraDisconnected"
+                        },
+                        NO_CAPTURE: {
+                            name: "Unable to capture",
+                            description: 'There was a problem with a camera. See <a href="">Help</a> documentation for possible fixes',
+                            style: "dc-status-noCapture"
+                        },
+                        TOO_MANY_CAMERAS: {
+                            name: "Too many cameras detected",
+                            description: "Connect only one or two cameras",
+                            style: "dc-status-tooManyCameras"
+                        }
+                    }
+                }
             },
-            serverRequestHandler: {
-                type: "decapod.dataSource"
+            cameraStatusSource: {
+                type: "decapod.dataSource",
+                createOnEvent: "onTemplateReady",
+                options: {
+                    url: "../../mock-data/capture/mockCameraStatus.json",
+                    listeners: {
+                        "success.handleCaptureSuccess": {
+                            listener: "decapod.capturer.cameraStatusSuccess",
+                            args: ["{captureReviewer}", "{status}", "{arguments}.0"]
+                        },
+                        "success.showCaptuerReviewer": {
+                            listener: "decapod.capturer.show",
+                            args: ["{captuerReviewer}"]
+                        },
+                        "success.hideStatus": {
+                            listener: "decapod.capturer.hide",
+                            args: ["{status}"]
+                        },
+                        "error.handleCaptureError": {
+                            listener: "decapod.capturer.cameraStatusError",
+                            args: ["{captureReviewer}", "{status}", "{arguments}.0", "{arguments}.1"]
+                        },
+                        "error.hideCaptuerReviewer": {
+                            listener: "decapod.capturer.hide",
+                            args: ["{captuerReviewer}"]
+                        },
+                        "error.showStatus": {
+                            listener: "decapod.capturer.show",
+                            args: ["{status}"]
+                        }
+                    }
+                }
+            },
+            captureStatusSource: {
+                type: "decapod.dataSource",
+                createOnEvent: "onTemplateReady",
+                options: {
+                    url: "../../mock-data/capture/mockCaptureStatus.json"
+                }
+            },
+            imageSource: {
+                type: "decapod.dataSource",
+                createOnEvent: "onTemplateReady",
+                options: {
+                    url: "../../mock-data/capture/mockImagesByIndex.json"
+                }
             }
         },
         model: {
+            status: "READY"
         },
         selectors: {
+            captureButton: ".dc-capturer-controls",
+            exportButton: ".dc-capturer-controls",
+            status: ".dc-capture-status",
+            preview: ".dc-capturer-preview"
         },
         strings: {
         },
         events: {
-            onReady: null
+            onReady: null,
+            onTemplateReady: null
+        },
+        resources: {
+            template: {
+                url: "../html/capturerTemplate.html",
+                forceCache: true
+            }
         }
     });
 })(jQuery);

@@ -8,17 +8,25 @@
 </header>
 
 <section class="ds-capturer-main">
-    <form class="ds-shared-componentControls ds-capturer-controls">
-        <button class="ds-capturer-captureButton">&nbsp</button>
-        <button class="ds-capturer-exportButton">Export All Captures</button>
+    <form class="dc-capturer-controls ds-capturer-controls">
+        <button class="dc-capturer-captureButton ds-shared-grey-button ds-capturer-captureButton">&nbsp</button>
+        <button class="dc-capturer-exportButton ds-shared-grey-button ds-capturer-exportButton">Export All Captures</button>
     </form>
     <div class="ds-shared-insetContentArea ds-capturer-captureStatus">
-        <div class="ds-capturer-errorMessage">Error message goes here.</div>
-        <div class="ds-capturer-preview">
-        <h2>Capture label</h2>
-        <a class="ds-capturer-deleteImage ds-shared-linkButton">Delete</a>
-        <img class="ds-capturer-imagePreview1">
-        <img class="ds-capturer-imagePreview2">
+        <div class="dc-capture-status">
+            <span class="dc-status-name"></span>
+            <p class="dc-status-description"></p>
+            <a class="dc-status-refresh" href=""></a>
+        </div>
+        <div class="dc-capturer-preview ds-capturer-preview">
+            <h2 class="dc-captureReviewer-captureIndex"></h2>
+            <span class="dc-captureReviewer-deletedMessage"></span>
+            <a class="dc-captureReviewer-del ds-capturer-deleteImage ds-shared-linkButton" href=""></a>
+            <ul class="dc-captureReviewer-capturesContainer">
+                <li class="dc-captureReviewer-captures">
+                    <img src="" class="dc-captureReviewer-captureIMG" />
+                </li>
+            </ul>
         </div>
     </div>    
 </section>
