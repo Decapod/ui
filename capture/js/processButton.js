@@ -78,13 +78,13 @@ var decapod = decapod || {};
             that.events.onProcess.fire();
         });
         
-        that.applier.modelChanged.addListener("disabled", function () {
-            button.attr("disabled", that.model.disabled);
-            
-            if (that.model.disabled) {
+        that.applier.modelChanged.addListener("disabled", function (newModel) {
+            if (newModel.disabled) {
                 button.addClass(that.options.styles.disabled);
+                button.attr("disabled", "disabled");
             } else {
                 button.removeClass(that.options.styles.disabled);
+                button.removeAttr("disabled");
             }
         });
 
