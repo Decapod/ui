@@ -2,13 +2,18 @@
 .ds-exportControls-trigger-exportControl{
     width: 128px;
     display:block;
-    background: url("../../../../core/styles/images/export-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ededed);
+    background: url("../../../../core/styles/images/export-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ececec);
     padding: 7px 7px 7px 25px;
     margin: 10px auto;
 }
 
 .ds-exportControls-trigger-exportControl[disabled]{
     background: url("../../../../core/styles/images/export-22x22-grey.png") 5px center no-repeat;
+}
+
+
+.ds-exportControls-trigger-exportControl.ds-shared-grey-button:hover {
+    background: url("../../../../core/styles/images/export-22x22.png") 5px center no-repeat,  #fff;
 }
 
 .ds-exporter-exportControls {
