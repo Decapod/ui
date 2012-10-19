@@ -13,7 +13,8 @@
     background: url("../../core/styles/images/export-22x22.png") 100px center no-repeat, -moz-linear-gradient(top,  #ffffff,  #ececec);
 }
 
-.ds-exportControls-trigger-exportControl[disabled]{
+.ds-shared-dewarpControls .ds-shared-grey-button[disabled],
+.ds-shared-dewarpControls .ds-shared-grey-button[disabled]:hover {
     background: url("../../core/styles/images/export-22x22-grey.png") 100px center no-repeat;
 }
 
@@ -21,3 +22,4 @@
     height: 75px;
     background: url("../../core/styles/images/export-22x22.png") 100px center no-repeat,  #ffffff;
 }
+
