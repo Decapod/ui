@@ -7,7 +7,8 @@
     margin: 10px auto;
 }
 
-.ds-exportControls-trigger-exportControl[disabled]{
+.ds-exportControls-trigger-exportControl.ds-shared-grey-button[disabled],
+.ds-exportControls-trigger-exportControl.ds-shared-grey-button[disabled]:hover{
     background: url("../../../../core/styles/images/export-22x22-grey.png") 5px center no-repeat;
 }
 
