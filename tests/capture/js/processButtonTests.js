@@ -32,10 +32,11 @@ var decapod = decapod || {};
         var processButtonTests = jqUnit.testCase("decapod.processButton");
         
         processButtonTests.test("Init", function () {
-            jqUnit.expect(2);
+            jqUnit.expect(3);
             var that = decapod.processButton(".dc-mainPane");
             jqUnit.assertTrue("The component should have initialized", that);
             jqUnit.assertEquals("The role attribue of the process button is set properly", that.locate("button").attr("role"), "button");
+            jqUnit.assertEquals("The initial dataSource method should have been set to GET", that.options.dataSourceConfig.method, "get");
         });
         
         processButtonTests.asyncTest("onReady", function () {
@@ -53,6 +54,7 @@ var decapod = decapod || {};
 
         processButtonTests.asyncTest("onProcess", function () {
             jqUnit.expect(3);
+            
             var that = decapod.processButton(".dc-mainPane", {
                 listeners: {
                     onProcess: {
@@ -68,17 +70,29 @@ var decapod = decapod || {};
                     }
                 }
             });
-            that.locate("button").click();
+            
+            var button = that.locate("button");
+            originalButtonHTML = button.html();
+            button.click();
         });
         
         processButtonTests.asyncTest("onProcessSuccess", function () {
-            jqUnit.expect(4);
+            jqUnit.expect(5);
+            
+            var originalButtonHTML = "I'm a Button";
+            var inProcessHTML = "in Process";
             var expected = {
                     "captureIndex": 1,
                     "captures": ["../../mock-data/images/capture-10_1.jpg", "../../mock-data/images/capture-10_2.jpg"]
                 };
             
             var that = decapod.processButton(".dc-mainPane", {
+                dataSourceConfig: {
+                    method: "post"
+                },
+                strings: {
+                    inProcess: inProcessHTML
+                },
                 listeners: {
                     onProcessSuccess: {
                         listener: function (that, response) {
@@ -87,7 +101,8 @@ var decapod = decapod || {};
 
                             var button = that.locate("button");
                             jqUnit.assertFalse("The process button should have been enabled.", button.attr("disabled"));
-                            jqUnit.assertEquals("The in process state should have been removed.", button.html(), "");
+                            jqUnit.assertNotEquals("The in process state should have been removed.", button.html(), inProcessHTML);
+                            jqUnit.assertEquals("The original html should have been placed back.", button.html(), originalButtonHTML);
                             start();
                         },
                         args: ["{processButton}", "{arguments}.0"]
@@ -95,7 +110,9 @@ var decapod = decapod || {};
                 }
             });
             
-            that.locate("button").click();
+            var button = that.locate("button");
+            button.html(originalButtonHTML);
+            button.click();
         });
         
         var verifyDisable = function (container, disableFunc) {
@@ -118,7 +135,7 @@ var decapod = decapod || {};
                 that.applier.requestChange("disabled", true);
             };
             
-            verifyDisable(".dc-mainPane", disable)
+            verifyDisable(".dc-mainPane", disable);
         });
         
         processButtonTests.test("updateModel on disabled", function () {
@@ -126,7 +143,7 @@ var decapod = decapod || {};
                 that.updateModel({"disabled": true});
             };
             
-            verifyDisable(".dc-mainPane", disable)
+            verifyDisable(".dc-mainPane", disable);
         });
         
     });
