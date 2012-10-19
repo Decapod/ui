@@ -1,0 +1,13 @@
+.ds-dewarper-main {
+    width:400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ds-shared-dewarpControls {
+    margin-top: 20px;
+}
+
+.ds-shared-dewarpControls button {
+    height: 75px;
+}
