@@ -28,17 +28,9 @@ var decapod = decapod || {};
      * Sub-componet Demands *
      ************************/
      
-    // The code below is to define the dataSource request URL for components that are based off decapod.processButton.
-//    fluid.demands("decapod.cameraController", ["decapod.capture"], {
-//        funcName: "decapod.dataSource",
-//        options: {
-//            url: "http://localhost:8081/stereo/capture"
-//        }
-//    });
-    
     fluid.demands("captureSource", ["decapod.fileSystem"], {
         options: {
-            url: "../../mock-data/capture/mockCaptureResponse.json"
+            url: "../../../mock-data/capture/mockCaptureResponse.json"
         }
     });
 })(jQuery);
