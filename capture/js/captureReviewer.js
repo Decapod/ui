@@ -61,6 +61,12 @@ var decapod = decapod || {};
                         }, {
                             type: "addClass",
                             classes: that.options.styles.disabled
+                        },{
+                            type: "jQuery",
+                            func: "click",
+                            args: function (event) {
+                                event.preventDefault();
+                            }
                         }]
                     }
                 },
@@ -74,7 +80,8 @@ var decapod = decapod || {};
                         decorators: [{
                             type: "jQuery",
                             func: "click",
-                            args: function () {
+                            args: function (event) {
+                                event.preventDefault();
                                 that.events.onDelete.fire(that.model.captureIndex);
                             }
                         }]
