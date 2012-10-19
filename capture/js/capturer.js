@@ -31,20 +31,44 @@ var decapod = decapod || {};
     fluid.registerNamespace("decapod.capturer");
 
     decapod.capturer.handleCaptureSucess = function (captureReviewer, status, response) {
-        captureReviewer.applier.requestChange("captureIndex", response.captureIndex);
-        captureReviewer.applier.requestChange("captures", response.captures);
+        decapod.capturer.show(captureReviewer);
+        decapod.capturer.hide(status);
+        captureReviewer.updateModel(response);
     };
     
-    decapod.capturer.handleCaptureError = function (captureReviewer, status, xhr, response) {
-        status.applier.requestChange("currentStatus", "NO_CAPTURE");
+    decapod.capturer.handleCaptureError = function (status, xhr, response) {
+        status.updateStatus("NO_CAPTURE");
     };
     
-    decapod.capturer.handleExportError = function (captureReviewer, status, xhr, response) {
+    decapod.capturer.handleExportError = function (status, xhr, response) {
         // TODO: Needs to implement "NO_EXPORT" in the status component
-        status.applier.requestChange("currentStatus", "NO_EXPORT");
+        status.updateStatus("NO_EXPORT");
     };
     
-    decapod.capturer.cameraStatusSuccess = function (captureReviewer, status, response) {
+    decapod.capturer.cameraStatusSuccess = function (that, captureReviewer, status, response) {
+        if (response.statusCode === 'READY') {
+            that.captureStatusSource.get();
+        } else {
+            decapod.capturer.show(status);
+            decapod.capturer.hide(captureReviewer);
+            status.applier.requestChange("status", status.statusCode);
+        }
+    };
+    
+    decapod.capturer.captureStatusSuccess = function (that, captureReviewer, status, response) {
+        if (response.captureIndex === 0) {
+            decapod.capturer.show(status);
+            decapod.capturer.hide(captureReviewer);
+            status.updateStatus("READY");
+        } else {
+            that.imageSource.get(null, {captureIndex: response.captureIndex});
+        }
+    };
+
+    decapod.capturer.imageSuccess = function (that, captureReviewer, status, response) {
+        decapod.capturer.show(captureReviewer);
+        decapod.capturer.hide(status);
+        captureReviewer.updateModel(response);
     };
     
     /**
@@ -54,17 +78,17 @@ var decapod = decapod || {};
         if (componentInstance && componentInstance.container) {
             componentInstance.container.show();
         }
-    }
-        
+    };
+    
     /**
      * Hide the component
      */
     decapod.capturer.hide = function (componentInstance) {
-        if (componentInstance.container) {
+        if (componentInstance && componentInstance.container) {
             componentInstance.container.hide();
         }
-    }
-        
+    };
+    
     decapod.capturer.finalInit = function (that) {
         decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
@@ -110,7 +134,7 @@ var decapod = decapod || {};
                         },
                         "onProcessError.handleCaptureError": {
                             listener: "decapod.capturer.handleCaptureError",
-                            args: ["{captureReviewer}", "{status}", "{arguments}.0", "{arguments}.1"]
+                            args: ["{status}", "{arguments}.0", "{arguments}.1"]
                         },
                         "onProcessError.hideCaptuerReviewer": {
                             listener: "decapod.capturer.hide",
@@ -143,7 +167,7 @@ var decapod = decapod || {};
                     listeners: {
                         onProcessError: {
                             listener: "decapod.capturer.handleExportError",
-                            args: ["{captureReviewer}", "{status}", "{arguments}.0", "{arguments}.1"]
+                            args: ["{status}", "{arguments}.0", "{arguments}.1"]
                         }
                     }
                 }
@@ -184,6 +208,11 @@ var decapod = decapod || {};
                             name: "Too many cameras detected",
                             description: "Connect only one or two cameras",
                             style: "dc-status-tooManyCameras"
+                        },
+                        NO_EXPORT: {
+                            name: "Unable to export",
+                            description: 'There was a problem with the export. See <a href="">Help</a> documentation for possible fixes',
+                            style: "dc-status-noExport"
                         }
                     }
                 }
@@ -194,21 +223,13 @@ var decapod = decapod || {};
                 options: {
                     url: "../../mock-data/capture/mockCameraStatus.json",
                     listeners: {
-                        "success.handleCaptureSuccess": {
+                        "success.handleCameraStatusSuccess": {
                             listener: "decapod.capturer.cameraStatusSuccess",
-                            args: ["{captureReviewer}", "{status}", "{arguments}.0"]
+                            args: ["{capturer}", "{captureReviewer}", "{status}", "{arguments}.0"]
                         },
-                        "success.showCaptuerReviewer": {
-                            listener: "decapod.capturer.show",
-                            args: ["{captuerReviewer}"]
-                        },
-                        "success.hideStatus": {
-                            listener: "decapod.capturer.hide",
-                            args: ["{status}"]
-                        },
-                        "error.handleCaptureError": {
-                            listener: "decapod.capturer.cameraStatusError",
-                            args: ["{captureReviewer}", "{status}", "{arguments}.0", "{arguments}.1"]
+                        "error.handleCameraStatusError": {
+                            listener: "decapod.capturer.handleCaptureError",
+                            args: ["{status}", "{arguments}.0", "{arguments}.1"]
                         },
                         "error.hideCaptuerReviewer": {
                             listener: "decapod.capturer.hide",
@@ -225,14 +246,50 @@ var decapod = decapod || {};
                 type: "decapod.dataSource",
                 createOnEvent: "onTemplateReady",
                 options: {
-                    url: "../../mock-data/capture/mockCaptureStatus.json"
+                    url: "../../mock-data/capture/mockCaptureStatus.json",
+                    listeners: {
+                        "success.handleCaptureSuccess": {
+                            listener: "decapod.capturer.captureStatusSuccess",
+                            args: ["{capturer}", "{captureReviewer}", "{status}", "{arguments}.0"]
+                        },
+                        "error.handleCaptureError": {
+                            listener: "decapod.capturer.handleCaptureError",
+                            args: ["{status}", "{arguments}.0", "{arguments}.1"]
+                        },
+                        "error.hideCaptuerReviewer": {
+                            listener: "decapod.capturer.hide",
+                            args: ["{captuerReviewer}"]
+                        },
+                        "error.showStatus": {
+                            listener: "decapod.capturer.show",
+                            args: ["{status}"]
+                        }
+                    }
                 }
             },
             imageSource: {
                 type: "decapod.dataSource",
                 createOnEvent: "onTemplateReady",
                 options: {
-                    url: "../../mock-data/capture/mockImagesByIndex.json"
+                    url: "../../mock-data/capture/mockImagesByIndex.json",
+                    listeners: {
+                        "success.handleImageSuccess": {
+                            listener: "decapod.capturer.imageSuccess",
+                            args: ["{capturer}", "{captureReviewer}", "{status}", "{arguments}.0"]
+                        },
+                        "error.handleImageError": {
+                            listener: "decapod.capturer.handleCaptureError",
+                            args: ["{status}", "{arguments}.0", "{arguments}.1"]
+                        },
+                        "error.hideCaptuerReviewer": {
+                            listener: "decapod.capturer.hide",
+                            args: ["{captuerReviewer}"]
+                        },
+                        "error.showStatus": {
+                            listener: "decapod.capturer.show",
+                            args: ["{status}"]
+                        }
+                    }
                 }
             }
         },

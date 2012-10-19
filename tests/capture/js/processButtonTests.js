@@ -75,7 +75,7 @@ var decapod = decapod || {};
             jqUnit.expect(4);
             var expected = {
                     "captureIndex": 1,
-                    "captures": ["http://locahost:8081/data/images/image-1_0.jpg", "http://locahost:8081/data/images/image-1_1.jpg"]
+                    "captures": ["../../mock-data/images/capture-10_1.jpg", "../../mock-data/images/capture-10_2.jpg"]
                 };
             
             var that = decapod.processButton(".dc-mainPane", {
