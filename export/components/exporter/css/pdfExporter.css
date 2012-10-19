@@ -9,8 +9,6 @@
 
 /* Export file format options and controls. */
 .ds-pdfExporter-pdfExportOptions {
-    /*background-color: #F9F9FA;
-    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);*/
     position: relative;
     padding-top: 10px;
 }
