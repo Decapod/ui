@@ -51,9 +51,9 @@ var decapod = decapod || {};
         if (response.statusCode === 'READY') {
             that.captureStatusSource.get();
         } else {
-            decapod.capturer.show(status);
+            decapod.capturer.show(that.status);
             decapod.capturer.hide(that.captureReviewer);
-            status.applier.requestChange("status", that.status.statusCode);
+            that.status.applier.requestChange("status", that.status.statusCode);
         }
     };
     
