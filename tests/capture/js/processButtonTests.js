@@ -98,17 +98,35 @@ var decapod = decapod || {};
             that.locate("button").click();
         });
         
-        processButtonTests.test("model change on disabled", function () {
+        var verifyDisable = function (container, disableFunc) {
             jqUnit.expect(4);
-            var that = decapod.processButton(".dc-mainPane");
+            
+            var that = decapod.processButton(container);
             var button = that.locate("button");
             
             jqUnit.assertFalse("The process button is initially enabled.", button.attr("disabled"));
             jqUnit.assertFalse("The disabled style is not in place initially.", button.hasClass(that.options.styles.disabled));
             
-            that.applier.requestChange("disabled", true);
+            disableFunc(that);
+            
             jqUnit.assertTrue("The process button should have been disabled.", button.attr("disabled"));
             jqUnit.assertTrue("The disabled style should have been applied.", button.hasClass(that.options.styles.disabled));
+        };
+        
+        processButtonTests.test("model change on disabled", function () {
+            var disable = function (that) {
+                that.applier.requestChange("disabled", true);
+            };
+            
+            verifyDisable(".dc-mainPane", disable)
+        });
+        
+        processButtonTests.test("updateModel on disabled", function () {
+            var disable = function (that) {
+                that.updateModel({"disabled": true});
+            };
+            
+            verifyDisable(".dc-mainPane", disable)
         });
         
     });
