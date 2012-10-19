@@ -4,21 +4,21 @@
     margin-right: auto;
 }
 
-.ds-shared-dewarpControls {
+.ds-dewarper-dewarpControls {
     margin-top: 20px;
 }
 
-.ds-shared-dewarpControls .ds-shared-grey-button {
+.ds-dewarper-dewarpControls .ds-shared-grey-button {
     height: 75px;
     background: url("../../core/styles/images/export-22x22.png") 100px center no-repeat, -moz-linear-gradient(top,  #ffffff,  #ececec);
 }
 
-.ds-shared-dewarpControls .ds-shared-grey-button[disabled],
-.ds-shared-dewarpControls .ds-shared-grey-button[disabled]:hover {
+.ds-dewarper-dewarpControls .ds-shared-grey-button[disabled],
+.ds-dewarper-dewarpControls .ds-shared-grey-button[disabled]:hover {
     background: url("../../core/styles/images/export-22x22-grey.png") 100px center no-repeat;
 }
 
-.ds-shared-dewarpControls .ds-shared-grey-button:hover {
+.ds-dewarper-dewarpControls .ds-shared-grey-button:hover {
     height: 75px;
     background: url("../../core/styles/images/export-22x22.png") 100px center no-repeat,  #ffffff;
 }
