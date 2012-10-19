@@ -35,18 +35,19 @@ var decapod = decapod || {};
     };
     
     decapod.processButton.setInProcessState = function (that) {
+        that.options.originalHTML = that.locate("button").html();
         that.applier.requestChange("disabled", true);
         that.locate("button").html(that.options.strings.inProcess);
     };
     
     decapod.processButton.removeInProcessState = function (that) {
         that.applier.requestChange("disabled", false);
-        that.locate("button").html("");
+        that.locate("button").html(that.options.originalHTML);
     };
     
     decapod.processButton.process = function (that) {
         decapod.processButton.setInProcessState(that);
-        that.processSource.post();
+        that.processSource[that.options.dataSourceConfig.method](that.options.dataSourceConfig.data, that.options.dataSourceConfig.urlTemplateValues);
     };
     
     decapod.processButton.handleSuccess = function (that, response) {
@@ -98,6 +99,7 @@ var decapod = decapod || {};
             processSource: {
                 type: "decapod.dataSource",
                 options: {
+                    url: "{processButton}.options.dataSourceConfig.url",
                     listeners: {
                         "success.handler": {
                             listener: "decapod.processButton.handleSuccess",
@@ -110,6 +112,12 @@ var decapod = decapod || {};
                     }
                 }
             }
+        },
+        dataSourceConfig: {
+            url: null,
+            method: "get",
+            data: null,
+            urlTemplateValues: null
         },
         model: {
             disabled: false
