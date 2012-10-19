@@ -4,7 +4,10 @@
     margin-right: auto;
 }
 
-.ds-dewarper-main p,
-.ds-dewarper-main div ul {
-    padding: 10px;
+.ds-shared-dewarpControls {
+    margin-top: 20px;
+}
+
+.ds-shared-dewarpControls button {
+    height: 75px;
 }
