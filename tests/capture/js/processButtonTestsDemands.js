@@ -28,7 +28,7 @@ var decapod = decapod || {};
      * Sub-componet Demands *
      ************************/
      
-    fluid.demands("captureSource", ["decapod.fileSystem"], {
+    fluid.demands("processSource", ["decapod.fileSystem", "decapod.test"], {
         options: {
             url: "../../../mock-data/capture/mockCaptureResponse.json"
         }

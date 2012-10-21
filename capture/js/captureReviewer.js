@@ -56,12 +56,14 @@ var decapod = decapod || {};
                         decorators: [{
                             type: "attrs",
                             attributes: {
-                                disabled: "disabled"
+                                role: "button",
+                                disabled: "disabled",
+                                "aria-disabled": "true"
                             }
                         }, {
                             type: "addClass",
                             classes: that.options.styles.disabled
-                        },{
+                        }, {
                             type: "jQuery",
                             func: "click",
                             args: function (event) {
@@ -78,6 +80,11 @@ var decapod = decapod || {};
                     del: {
                         messagekey: "del",
                         decorators: [{
+                            type: "attrs",
+                            attributes: {
+                                role: "button"
+                            }
+                        }, {
                             type: "jQuery",
                             func: "click",
                             args: function (event) {

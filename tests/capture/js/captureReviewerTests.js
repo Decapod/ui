@@ -27,7 +27,9 @@ var decapod = decapod || {};
         
         // helper functions
         var assertRender = function (that, expectedModel) {
-            jqUnit.assertEquals("The delete text should be rendered", that.options.strings.del, that.locate("del").text());
+            var del = that.locate("del");
+            jqUnit.assertEquals("The delete link should have the button role set", "button", del.attr("role"));
+            jqUnit.assertEquals("The delete text should be rendered", that.options.strings.del, del.text());
             jqUnit.assertEquals("The capture index should be rendered", "Capture #" + expectedModel.captureIndex, that.locate("captureIndex").text());
             var captures = that.locate("captureIMG");
             jqUnit.assertEquals("There should be two images rendered", expectedModel.captures.length, captures.length);
@@ -37,10 +39,13 @@ var decapod = decapod || {};
         };
         
         var assertDeletedRender = function (that, deletedCaptureIndex) {
+            var del = that.locate("del");
             jqUnit.assertEquals("The deleteIndex is rendered", "Deleted Capture #" + deletedCaptureIndex, that.locate("captureIndex").text());
             jqUnit.assertEquals("The delete message should be rendered", that.options.strings.deletedMessage, that.locate("deletedMessage").text());
-            jqUnit.assertTrue("The delete link should be disabled", that.locate("del").attr("disabled"));
-            jqUnit.assertTrue("The delete link should have the disabled class", that.locate("del").hasClass(that.options.styles.disabled));
+            jqUnit.assertTrue("The delete link should be disabled", del.attr("disabled"));
+            jqUnit.assertTrue("The delete links should have the aria-disabled set", del.attr("aria-disabled"));
+            jqUnit.assertEquals("The delete link should have the button role set", "button", del.attr("role"));
+            jqUnit.assertTrue("The delete link should have the disabled class", del.hasClass(that.options.styles.disabled));
         };
 
         /************************
@@ -68,7 +73,7 @@ var decapod = decapod || {};
         });
         
         captureReviewerTests.asyncTest("afterRender", function () {
-            jqUnit.expect(5);
+            jqUnit.expect(6);
             var model = {
                 captureIndex: 10,
                 captures: ["http://localhost:8080/test/image1.jpg", "http://localhost:8080/test/image2.jpg"]
@@ -86,7 +91,7 @@ var decapod = decapod || {};
         });
         
         captureReviewerTests.asyncTest("afterModelChanged", function () {
-            jqUnit.expect(7);
+            jqUnit.expect(8);
             var model = {
                 captureIndex: 10,
                 captures: ["http://localhost:8080/test/image1.jpg", "http://localhost:8080/test/image2.jpg"]
@@ -118,7 +123,7 @@ var decapod = decapod || {};
         });
         
         captureReviewerTests.asyncTest("setDeleted", function () {
-            jqUnit.expect(4);
+            jqUnit.expect(6);
             var model = {
                 captureIndex: 10,
                 captures: ["http://localhost:8080/test/image1.jpg", "http://localhost:8080/test/image2.jpg"]
@@ -146,7 +151,7 @@ var decapod = decapod || {};
         });
         
         captureReviewerTests.asyncTest("onDelete", function () {
-            jqUnit.expect(4);
+            jqUnit.expect(6);
             var model = {
                 captureIndex: 10,
                 captures: ["http://localhost:8080/test/image1.jpg", "http://localhost:8080/test/image2.jpg"]

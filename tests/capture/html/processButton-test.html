@@ -16,15 +16,16 @@
         
         <!-- Tests and tested component -->
         <script src="../../../core/js/decapodContext.js"></script>
-        <script src="../../../utils/js/decapodTestContext.js"></script>
-        <script src="../../../utils/js/testUtils.js"></script>
+        <script src="../../utils/js/decapodTestContext.js"></script>
+        <script src="../../utils/js/testUtils.js"></script>
         <script src="../../../core/js/decapodRequests.js"></script>
         <script src="../../../core/js/decapodRequestsDemands.js"></script>
         <script src="../../../capture/js/processButton.js"></script>
+        <script src="../../../capture/js/processButtonDemands.js"></script>
         <script src="../js/processButtonTests.js"></script>
         <script src="../js/processButtonTestsDemands.js"></script>
-        
     </head>
+    
     <body>
         <!-- Markup that jqUnit will look for when running tests and displaying the results. -->
         <h1 id="qunit-header">Decapod Process Button Test Suite</h1>
@@ -33,7 +34,7 @@
         <ol id="qunit-tests"></ol>
         <div id="qunit-fixture" style="display: block">
             <div class="dc-mainPane">
-            	<button class="dc-capturer-button"></button>
+            	<button class="dc-capturer-button">Click me</button>
             </div>
         </div>
     </body>
