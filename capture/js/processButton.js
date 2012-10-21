@@ -30,19 +30,24 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.processButton");
 
+    decapod.processButton.updateModel = function (that, newModel) {
+        that.applier.requestChange("", newModel);
+    };
+    
     decapod.processButton.setInProcessState = function (that) {
+        that.options.originalHTML = that.locate("button").html();
         that.applier.requestChange("disabled", true);
         that.locate("button").html(that.options.strings.inProcess);
     };
     
     decapod.processButton.removeInProcessState = function (that) {
         that.applier.requestChange("disabled", false);
-        that.locate("button").html("");
+        that.locate("button").html(that.options.originalHTML);
     };
     
     decapod.processButton.process = function (that) {
         decapod.processButton.setInProcessState(that);
-        that.captureSource.post();
+        that.processSource[that.options.dataSourceConfig.method](that.options.dataSourceConfig.data, that.options.dataSourceConfig.urlTemplateValues);
     };
     
     decapod.processButton.handleSuccess = function (that, response) {
@@ -55,6 +60,17 @@ var decapod = decapod || {};
         that.events.onProcessError.fire(xhr, response);
     };
     
+    decapod.processButton.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        that.updateModel = function (newModel) {
+            that.updateModel(newModel);
+        };
+    };
+
     decapod.processButton.finalInit = function (that) {
         var button = that.locate("button");
         button.attr("role", "button");
@@ -63,13 +79,13 @@ var decapod = decapod || {};
             that.events.onProcess.fire();
         });
         
-        that.applier.modelChanged.addListener("disabled", function () {
-            button.attr("disabled", that.model.disabled);
-            
-            if (that.model.disabled) {
+        that.applier.modelChanged.addListener("disabled", function (newModel) {
+            if (newModel.disabled) {
                 button.addClass(that.options.styles.disabled);
+                button.attr("disabled", "disabled");
             } else {
                 button.removeClass(that.options.styles.disabled);
+                button.removeAttr("disabled");
             }
         });
 
@@ -80,9 +96,10 @@ var decapod = decapod || {};
         gradeNames: ["fluid.viewComponent", "autoInit"],
         finalInitFunction: "decapod.processButton.finalInit",
         components: {
-            captureSource: {
+            processSource: {
                 type: "decapod.dataSource",
                 options: {
+                    url: "{processButton}.options.dataSourceConfig.url",
                     listeners: {
                         "success.handler": {
                             listener: "decapod.processButton.handleSuccess",
@@ -96,6 +113,12 @@ var decapod = decapod || {};
                 }
             }
         },
+        dataSourceConfig: {
+            url: null,
+            method: "get",
+            data: null,
+            urlTemplateValues: null
+        },
         model: {
             disabled: false
         },
@@ -107,6 +130,9 @@ var decapod = decapod || {};
         },
         styles: {
             disabled: "ds-capturer-button-disabled"
+        },
+        invokers: {
+            updateModel: "decapod.processButton.updateModel"
         },
         events: {
             onReady: null,
