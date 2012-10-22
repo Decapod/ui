@@ -40,6 +40,12 @@ var decapod = decapod || {};
         }
     });
     
+    fluid.demands("deleteStatusSource", ["decapod.capturer"], {
+        options: {
+            url: "http://localhost:8081/stereo/"
+        }
+    });
+    
     fluid.demands("imageSource", ["decapod.capturer"], {
         options: {
             url: "http://localhost:8081/stereo/images/%captureIndex"
