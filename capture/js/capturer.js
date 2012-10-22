@@ -48,6 +48,10 @@ var decapod = decapod || {};
         that.captureControl.updateModel({"disabled": true});
     };
     
+    decapod.capturer.handleExportSuccess = function (that, response) {
+        that.locate("downloadFrame").attr("src", response.url);
+    };
+    
     decapod.capturer.handleExportError = function (status, xhr, response) {
         // TODO: Needs to implement "NO_EXPORT" in the status component
         status.updateStatus("NO_EXPORT");
@@ -211,6 +215,10 @@ var decapod = decapod || {};
                         "disabled": true
                     },
                     listeners: {
+                        "onProcessSuccess.handleExportSuccess": {
+                            listener: "decapod.capturer.handleExportSuccess",
+                            args: ["{capturer}", "{arguments}.0"]
+                        },
                         "onProcessError.handleExportError": {
                             listener: "decapod.capturer.handleExportError",
                             args: ["{status}", "{arguments}.0", "{arguments}.1"]
@@ -382,7 +390,8 @@ var decapod = decapod || {};
             restart: ".dc-capturer-restart",
             help: ".dc-capturer-help",
             status: ".dc-capture-status",
-            preview: ".dc-capturer-preview"
+            preview: ".dc-capturer-preview",
+            downloadFrame: ".dc-capturer-download-frame"
         },
         strings: {
             help: "Help",
