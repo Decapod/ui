@@ -46,6 +46,12 @@ var decapod = decapod || {};
         }
     });
     
+    fluid.demands("captureSource", ["decapod.capturer"], {
+        options: {
+            url: "http://localhost:8081/stereo/capture/"
+        }
+    });
+    
     fluid.demands("captureControl", ["decapod.capturer"], {
         options: {
             dataSourceConfig: {
