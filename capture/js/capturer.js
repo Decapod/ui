@@ -38,6 +38,8 @@ var decapod = decapod || {};
     };
     
     decapod.capturer.handleCaptureError = function (that, xhr, response) {
+        decapod.capturer.hide(that.captureReviewer);
+        decapod.capturer.show(that.status);
         that.status.updateStatus("NO_CAPTURE");
         that.captureControl.updateModel({"disabled": true});
     };
@@ -53,18 +55,18 @@ var decapod = decapod || {};
         } else {
             decapod.capturer.show(that.status);
             decapod.capturer.hide(that.captureReviewer);
-            that.status.applier.requestChange("status", that.status.statusCode);
+            that.status.updateStatus(response.statusCode);
         }
     };
     
     decapod.capturer.captureStatusSuccess = function (that, response) {
-        if (response.captureIndex === 0) {
+        if (response.index === 0) {
             decapod.capturer.show(that.status);
             decapod.capturer.hide(that.captureReviewer);
             that.status.updateStatus("READY");
             that.exportControl.updateModel({"disabled": true});
         } else {
-            that.imageSource.get(null, {captureIndex: response.captureIndex});
+            that.imageSource.get(null, {captureIndex: response.index});
             that.exportControl.updateModel({"disabled": false});
         }
     };
@@ -241,7 +243,7 @@ var decapod = decapod || {};
                         },
                         "error.handleCameraStatusError": {
                             listener: "decapod.capturer.handleCaptureError",
-                            args: ["{status}", "{arguments}.0", "{arguments}.1"]
+                            args: ["{capturer}", "{arguments}.0", "{arguments}.1"]
                         },
                         "error.hideCaptuerReviewer": {
                             listener: "decapod.capturer.hide",
@@ -266,7 +268,7 @@ var decapod = decapod || {};
                         },
                         "error.handleCaptureError": {
                             listener: "decapod.capturer.handleCaptureError",
-                            args: ["{status}", "{arguments}.0", "{arguments}.1"]
+                            args: ["{capturer}", "{arguments}.0", "{arguments}.1"]
                         },
                         "error.hideCaptuerReviewer": {
                             listener: "decapod.capturer.hide",
@@ -291,7 +293,7 @@ var decapod = decapod || {};
                         },
                         "error.handleImageError": {
                             listener: "decapod.capturer.handleCaptureError",
-                            args: ["{status}", "{arguments}.0", "{arguments}.1"]
+                            args: ["{capturer}", "{arguments}.0", "{arguments}.1"]
                         },
                         "error.hideCaptuerReviewer": {
                             listener: "decapod.capturer.hide",
