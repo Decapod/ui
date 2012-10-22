@@ -48,7 +48,7 @@ var decapod = decapod || {};
     
     fluid.demands("imageSource", ["decapod.capturer"], {
         options: {
-            url: "http://localhost:8081/stereo/images/%captureIndex"
+            url: "http://localhost:8081/stereo/capture/images/%captureIndex"
         }
     });
     
