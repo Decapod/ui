@@ -37,7 +37,7 @@ var decapod = decapod || {};
     decapod.capturer.handleCaptureSucess = function (that, response) {
         decapod.capturer.show(that.captureReviewer);
         decapod.capturer.hide(that.status);
-        that.captureReviewer.updateModel(response);
+        that.captureReviewer.updateModel({"captureIndex": response.totalCaptures, "captures": response.captures});
         that.exportControl.updateModel({"disabled": false});
     };
     
@@ -65,24 +65,25 @@ var decapod = decapod || {};
     };
     
     decapod.capturer.captureStatusSuccess = function (that, response) {
-        if (response.index === 0) {
+        if (response.totalCaptures === 0) {
             decapod.capturer.show(that.status);
             decapod.capturer.hide(that.captureReviewer);
             that.status.updateStatus("READY");
             that.exportControl.updateModel({"disabled": true});
         } else {
             that.imageSource.get(null, {captureIndex: response.index});
-            that.captureReviewer.updateModel({"captureIndex": response.index});
+            that.captureReviewer.updateModel({"captureIndex": response.totalCaptures});
             that.captureControl.updateModel({"disabled": false});
             that.exportControl.updateModel({"disabled": false});
         }
     };
 
-    decapod.capturer.imageSuccess = function (that, response) {
-        decapod.capturer.show(that.captureReviewer);
-        decapod.capturer.hide(that.status);
-        that.captureReviewer.updateModel({"captures": response.images});
-//        that.captureReviewer.updateModel(response);
+    decapod.capturer.imageSuccess = function (that, response, type) {
+        if (type === "GET") {
+            decapod.capturer.show(that.captureReviewer);
+            decapod.capturer.hide(that.status);
+            that.captureReviewer.updateModel({"captureIndex": that.captureReviewer.model.captureIndex, "captures": response.images});
+        }
     };
     
     decapod.capturer.restart = function (that) {
@@ -333,7 +334,7 @@ var decapod = decapod || {};
                     listeners: {
                         "success.handleImageSuccess": {
                             listener: "decapod.capturer.imageSuccess",
-                            args: ["{capturer}", "{arguments}.0"]
+                            args: ["{capturer}", "{arguments}.0", "{arguments}.3"]
                         },
                         "error.handleImageError": {
                             listener: "decapod.capturer.handleCaptureError",
@@ -366,7 +367,7 @@ var decapod = decapod || {};
                     listeners: {
                         "success.triggerDelete": {
                             listener: "{imageSource}.delete",
-                            args: [null, {captureIndex: "{aguments}.0.index"}]
+                            args: [null, {captureIndex: "{arguments}.0.index"}]
                         }
                     }
                 }
