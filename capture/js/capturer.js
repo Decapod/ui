@@ -77,6 +77,17 @@ var decapod = decapod || {};
         that.captureReviewer.updateModel(response);
     };
     
+    decapod.capturer.restart = function (that) {
+        that.events.onRestart.fire();
+    };
+    
+    decapod.capturer.initCapturerControls = function (that) {
+        that.locate("help").text(that.options.strings.help);
+        var restart = that.locate("restart");
+        restart.text(that.options.strings.restart);
+        restart.click(that.restart);
+    };
+    
     /**
      * Show the component
      */
@@ -95,6 +106,21 @@ var decapod = decapod || {};
         }
     };
     
+    decapod.capturer.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        that.initCapturerControls = function () {
+            that.initCapturerControls();
+        };
+        
+        that.restart = function () {
+            that.restart();
+        };
+    };
+    
     decapod.capturer.finalInit = function (that) {
         decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
@@ -106,6 +132,7 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.capturer", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
+        preInitFunction: "decapod.capturer.preInit",
         finalInitFunction: "decapod.capturer.finalInit",
         components: {
             captureControl: {
@@ -305,6 +332,13 @@ var decapod = decapod || {};
                         }
                     }
                 }
+            },
+            captureSource: {
+                type: "decapod.dataSource",
+                createOnEvent: "onTemplateReady",
+                options: {
+                    url: "../../mock-data/capture/mockImagesByIndex.json"
+                }
             }
         },
         model: {
@@ -313,14 +347,27 @@ var decapod = decapod || {};
         selectors: {
             captureButton: ".dc-capturer-controls",
             exportButton: ".dc-capturer-controls",
+            restart: ".dc-capturer-restart",
+            help: ".dc-capturer-help",
             status: ".dc-capture-status",
             preview: ".dc-capturer-preview"
         },
         strings: {
+            help: "Help",
+            restart: "Restart"
         },
         events: {
             onReady: null,
-            onTemplateReady: null
+            onTemplateReady: null,
+            onRestart: null
+        },
+        listeners: {
+            onRestart: "{captureSource}.delete",
+            onTemplateReady: "{capturer}.initCapturerControls"
+        },
+        invokers: {
+            restart: "decapod.capturer.restart",
+            initCapturerControls: "decapod.capturer.initCapturerControls"
         },
         resources: {
             template: {
