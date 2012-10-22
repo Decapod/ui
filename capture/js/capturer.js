@@ -228,7 +228,12 @@ var decapod = decapod || {};
             captureReviewer: {
                 type: "decapod.captureReviewer",
                 createOnEvent: "onTemplateReady",
-                container: "{capturer}.dom.preview"
+                container: "{capturer}.dom.preview",
+                options: {
+                    listeners: {
+                        onDelete: "{capturer}.events.onDelete"
+                    }
+                }
             },
             status: {
                 type: "decapod.status",
@@ -351,6 +356,20 @@ var decapod = decapod || {};
                 options: {
                     url: "../../mock-data/capture/mockImagesByIndex.json"
                 }
+            },
+            deleteStatusSource: {
+                type: "decapod.dataSource",
+                createOnEvent: "onTemplateReady",
+                priority: "last",
+                options: {
+                    url: "../../mock-data/capture/mockImagesByIndex.json",
+                    listeners: {
+                        "success.triggerDelete": {
+                            listener: "{imageSource}.delete",
+                            args: [null, {captureIndex: "{aguments}.0.index"}]
+                        }
+                    }
+                }
             }
         },
         model: {
@@ -371,11 +390,13 @@ var decapod = decapod || {};
         events: {
             onReady: null,
             onTemplateReady: null,
-            onRestart: null
+            onRestart: null,
+            onDelete: null
         },
         listeners: {
             onRestart: "{captureSource}.delete",
-            onTemplateReady: "{capturer}.initCapturerControls"
+            onTemplateReady: "{capturer}.initCapturerControls",
+            onDelete: "{deleteStatusSource}.get"
         },
         invokers: {
             restart: "decapod.capturer.restart",
