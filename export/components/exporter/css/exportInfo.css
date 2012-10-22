@@ -1,0 +1,7 @@
+/* The label used in the export format's textual description */
+.ds-exportInfo-name {
+    font-weight: bold;
+    color: #1C75BC;
+    display:block;
+    position:relative;
+}
