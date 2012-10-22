@@ -56,6 +56,7 @@ var decapod = decapod || {};
     decapod.capturer.cameraStatusSuccess = function (that, response) {
         if (response.statusCode === 'READY') {
             that.captureStatusSource.get();
+            that.captureControl.updateModel({"disabled": false});
         } else {
             decapod.capturer.show(that.status);
             decapod.capturer.hide(that.captureReviewer);
@@ -71,6 +72,7 @@ var decapod = decapod || {};
             that.exportControl.updateModel({"disabled": true});
         } else {
             that.imageSource.get(null, {captureIndex: response.index});
+            that.captureReviewer.updateModel({"captureIndex": response.index});
             that.captureControl.updateModel({"disabled": false});
             that.exportControl.updateModel({"disabled": false});
         }
@@ -79,7 +81,8 @@ var decapod = decapod || {};
     decapod.capturer.imageSuccess = function (that, response) {
         decapod.capturer.show(that.captureReviewer);
         decapod.capturer.hide(that.status);
-        that.captureReviewer.updateModel(response);
+        that.captureReviewer.updateModel({"captures": response.images});
+//        that.captureReviewer.updateModel(response);
     };
     
     decapod.capturer.restart = function (that) {
