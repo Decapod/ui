@@ -89,6 +89,8 @@ var decapod = decapod || {};
             }
         });
 
+        that.applier.requestChange("disabled", that.model.disabled);
+        
         that.events.onReady.fire();
     };
     
@@ -120,7 +122,7 @@ var decapod = decapod || {};
             urlTemplateValues: null
         },
         model: {
-            disabled: false
+            "disabled": false
         },
         selectors: {
             button: ".dc-capturer-button"

@@ -30,6 +30,10 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.capturer");
 
+    decapod.capturer.handleOnCapture = function (that) {
+        that.exportControl.updateModel({"disabled": true});
+    };
+    
     decapod.capturer.handleCaptureSucess = function (that, response) {
         decapod.capturer.show(that.captureReviewer);
         decapod.capturer.hide(that.status);
@@ -67,6 +71,7 @@ var decapod = decapod || {};
             that.exportControl.updateModel({"disabled": true});
         } else {
             that.imageSource.get(null, {captureIndex: response.index});
+            that.captureControl.updateModel({"disabled": false});
             that.exportControl.updateModel({"disabled": false});
         }
     };
@@ -123,9 +128,13 @@ var decapod = decapod || {};
                         disabled: "ds-capturer-captureButton-disabled"
                     },
                     model: {
-                        disabled: true
+                        "disabled": true
                     },
                     listeners: {
+                        "onProcess": {
+                            listener: "decapod.capturer.handleOnCapture",
+                            args: ["{capturer}"]
+                        },
                         "onProcessSuccess.handleCaptureSuccess": {
                             listener: "decapod.capturer.handleCaptureSucess",
                             args: ["{capturer}", "{arguments}.0"]
@@ -168,7 +177,7 @@ var decapod = decapod || {};
                         disabled: "ds-capturer-exportButton-disabled"
                     },
                     model: {
-                        disabled: true
+                        "disabled": true
                     },
                     listeners: {
                         "onProcessError.handleExportError": {
