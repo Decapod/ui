@@ -34,7 +34,7 @@ var decapod = decapod || {};
         that.exportControl.updateModel({"disabled": true});
     };
     
-    decapod.capturer.handleCaptureSucess = function (that, response) {
+    decapod.capturer.handleCaptureSuccess = function (that, response) {
         decapod.capturer.show(that.captureReviewer);
         decapod.capturer.hide(that.status);
         that.captureReviewer.updateModel({"captureIndex": response.totalCaptures, "captures": response.captures});
@@ -75,7 +75,7 @@ var decapod = decapod || {};
             that.status.updateStatus("READY");
             that.exportControl.updateModel({"disabled": true});
         } else {
-            that.imageSource.get(null, {captureIndex: response.index});
+            that.imageSource.get(null, {captureIndex: response.lastCaptureIndex});
             that.captureReviewer.updateModel({"captureIndex": response.totalCaptures});
             that.captureControl.updateModel({"disabled": false});
             that.exportControl.updateModel({"disabled": false});
@@ -87,6 +87,8 @@ var decapod = decapod || {};
             decapod.capturer.show(that.captureReviewer);
             decapod.capturer.hide(that.status);
             that.captureReviewer.updateModel({"captureIndex": that.captureReviewer.model.captureIndex, "captures": response.images});
+        } else if (type === "DELETE") {
+            that.captureStatusSource.get();
         }
     };
     
@@ -172,7 +174,7 @@ var decapod = decapod || {};
                             args: ["{capturer}"]
                         },
                         "onProcessSuccess.handleCaptureSuccess": {
-                            listener: "decapod.capturer.handleCaptureSucess",
+                            listener: "decapod.capturer.handleCaptureSuccess",
                             args: ["{capturer}", "{arguments}.0"]
                         },
                         "onProcessSuccess.showCaptuerReviewer": {
@@ -376,7 +378,7 @@ var decapod = decapod || {};
                     listeners: {
                         "success.triggerDelete": {
                             listener: "{imageSource}.delete",
-                            args: [null, {captureIndex: "{arguments}.0.index"}]
+                            args: [null, {captureIndex: "{arguments}.0.lastCaptureIndex"}]
                         }
                     }
                 }
