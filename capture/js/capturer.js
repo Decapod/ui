@@ -95,6 +95,7 @@ var decapod = decapod || {};
     };
     
     decapod.capturer.initCapturerControls = function (that) {
+        that.locate("title").text(that.options.strings.title);
         that.locate("help").text(that.options.strings.help);
         var restart = that.locate("restart");
         restart.text(that.options.strings.restart);
@@ -387,6 +388,7 @@ var decapod = decapod || {};
         selectors: {
             captureButton: ".dc-capturer-controls",
             exportButton: ".dc-capturer-controls",
+            title: ".dc-capturer-title",
             restart: ".dc-capturer-restart",
             help: ".dc-capturer-help",
             status: ".dc-capture-status",
@@ -394,6 +396,7 @@ var decapod = decapod || {};
             downloadFrame: ".dc-capturer-download-frame"
         },
         strings: {
+            title: "Capture",
             help: "Help",
             restart: "Restart"
         },
