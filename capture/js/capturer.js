@@ -39,6 +39,8 @@ var decapod = decapod || {};
         decapod.capturer.hide(that.status);
         that.captureReviewer.updateModel({"captureIndex": response.totalCaptures, "captures": response.captures});
         that.exportControl.updateModel({"disabled": false});
+        
+        that.events.onCaptureSuccess.fire();
     };
     
     decapod.capturer.handleCaptureError = function (that, xhr, response) {
@@ -46,15 +48,21 @@ var decapod = decapod || {};
         decapod.capturer.show(that.status);
         that.status.updateStatus("NO_CAPTURE");
         that.captureControl.updateModel({"disabled": true});
+        
+        that.events.onCaptureError.fire();
     };
     
     decapod.capturer.handleExportSuccess = function (that, response) {
         that.locate("downloadFrame").attr("src", response.url);
+        
+        that.events.onExportSuccess.fire();
     };
     
-    decapod.capturer.handleExportError = function (status, xhr, response) {
+    decapod.capturer.handleExportError = function (that, xhr, response) {
         // TODO: Needs to implement "NO_EXPORT" in the status component
-        status.updateStatus("NO_EXPORT");
+        that.status.updateStatus("NO_EXPORT");
+        
+        that.events.onExportError.fire();
     };
     
     decapod.capturer.cameraStatusSuccess = function (that, response) {
@@ -66,6 +74,8 @@ var decapod = decapod || {};
             decapod.capturer.hide(that.captureReviewer);
             that.status.updateStatus(response.statusCode);
         }
+        
+        that.events.onCameraStatusReady.fire();
     };
     
     decapod.capturer.captureStatusSuccess = function (that, response) {
@@ -80,6 +90,8 @@ var decapod = decapod || {};
             that.captureControl.updateModel({"disabled": false});
             that.exportControl.updateModel({"disabled": false});
         }
+        
+        that.events.onCaptureStatusReady.fire();
     };
 
     decapod.capturer.imageSuccess = function (that, response, type) {
@@ -88,6 +100,8 @@ var decapod = decapod || {};
             decapod.capturer.hide(that.status);
             that.captureReviewer.updateModel({"captureIndex": that.captureReviewer.model.captureIndex, "captures": response.images});
         }
+        
+        that.events.onImageProcessedReady.fire();
     };
     
     decapod.capturer.restart = function (that) {
@@ -141,6 +155,8 @@ var decapod = decapod || {};
             that.events.onTemplateReady.fire();
             
             that.cameraStatusSource.get();
+            
+            that.events.onReady.fire();
         });
     };
     
@@ -222,7 +238,7 @@ var decapod = decapod || {};
                         },
                         "onProcessError.handleExportError": {
                             listener: "decapod.capturer.handleExportError",
-                            args: ["{status}", "{arguments}.0", "{arguments}.1"]
+                            args: ["{capturer}", "{arguments}.0", "{arguments}.1"]
                         },
                         "onProcessError.hideCaptuerReviewer": {
                             listener: "decapod.capturer.hide",
@@ -401,10 +417,17 @@ var decapod = decapod || {};
             restart: "Restart"
         },
         events: {
-            onReady: null,
             onTemplateReady: null,
             onRestart: null,
-            onDelete: null
+            onDelete: null,
+            onCaptureSuccess: null,
+            onCaptureError: null,
+            onExportSuccess: null,
+            onExportError: null,
+            onCameraStatusReady: null,
+            onCaptureStatusReady: null,
+            onImageProcessedReady: null,
+            onReady: null
         },
         listeners: {
             onRestart: "{captureSource}.delete",
