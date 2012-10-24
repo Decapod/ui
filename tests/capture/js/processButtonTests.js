@@ -77,14 +77,10 @@ var decapod = decapod || {};
         });
         
         processButtonTests.asyncTest("onProcessSuccess", function () {
-            jqUnit.expect(5);
+            jqUnit.expect(4);
             
             var originalButtonHTML = "I'm a Button";
             var inProcessHTML = "in Process";
-            var expected = {
-                    "captureIndex": 1,
-                    "captures": ["../../mock-data/images/capture-10_1.jpg", "../../mock-data/images/capture-10_2.jpg"]
-                };
             
             var that = decapod.processButton(".dc-mainPane", {
                 dataSourceConfig: {
@@ -97,7 +93,6 @@ var decapod = decapod || {};
                     onProcessSuccess: {
                         listener: function (that, response) {
                             jqUnit.assertTrue("The onProcessSuccess event should have fired.", true);
-                            jqUnit.assertDeepEq("The response is expected", response, expected);
 
                             var button = that.locate("button");
                             jqUnit.assertFalse("The process button should have been enabled.", button.attr("disabled"));
