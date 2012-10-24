@@ -1,4 +1,10 @@
 {
-    "captureIndex": 1,
-    "captures": ["../../mock-data/images/capture-10_1.jpg", "../../mock-data/images/capture-10_2.jpg"]
+    "_comment": "This mock data file is shared by triggering a capture and retrieving an export zip. So the items 'index', 'totalCaptures', 'captures' are required by triggering a capture while 'url' is required by exporting a zip.",
+    "index": 10,
+    "totalCaptures": 1,
+    "captures": [
+        "../../mock-data/images/capture-10_1.jpg",
+        "../../mock-data/images/capture-10_2.jpg"
+    ],
+    "url": "../../mock-data/images/capture.zip"
 }
