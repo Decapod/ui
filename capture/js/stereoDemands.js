@@ -76,4 +76,53 @@ var decapod = decapod || {};
         }
     });
     
+    // local filesystem
+    fluid.demands("cameraStatusSource", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            url: "../../mock-data/capture/mockCameraStatus.json"//"http://localhost:8081/stereo/cameras/"
+        }
+    });
+    
+    fluid.demands("captureStatusSource", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            url: "../../mock-data/capture/mockCaptureStatus.json"//"http://localhost:8081/stereo/"
+        }
+    });
+    
+    fluid.demands("deleteStatusSource", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            url: "../../mock-data/capture/mockCaptureStatus.json"//"http://localhost:8081/stereo/"
+        }
+    });
+    
+    fluid.demands("imageSource", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            url: "../../mock-data/capture/mockImagesByIndex.json"//"http://localhost:8081/stereo/capture/images/%captureIndex"
+        }
+    });
+    
+    fluid.demands("captureSource", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            url: "../../mock-data/capture/mockCaptureResponse.json"//"http://localhost:8081/stereo/capture/"
+        }
+    });
+    
+    fluid.demands("captureControl", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            dataSourceConfig: {
+                url: "../../mock-data/capture/mockCaptureResponse.json",//"http://localhost:8081/stereo/capture/",
+                method: "post"
+            }
+        }
+    });
+    
+    fluid.demands("exportControl", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            dataSourceConfig: {
+                url: "../../mock-data/capture/mockCaptureResponse.json",//"http://localhost:8081/stereo/capture/",
+                method: "get"
+            }
+        }
+    });
+    
 })(jQuery);
