@@ -30,38 +30,38 @@ var decapod = decapod || {};
      
     fluid.demands("cameraStatusSource", ["decapod.capturer"], {
         options: {
-            url: "http://localhost:8081/stereo/cameras/"
+            url: "http://localhost:8081/conventional/cameras/"
         }
     });
     
     fluid.demands("captureStatusSource", ["decapod.capturer"], {
         options: {
-            url: "http://localhost:8081/stereo/"
+            url: "http://localhost:8081/conventional/"
         }
     });
     
     fluid.demands("deleteStatusSource", ["decapod.capturer"], {
         options: {
-            url: "http://localhost:8081/stereo/"
+            url: "http://localhost:8081/conventional/"
         }
     });
     
     fluid.demands("imageSource", ["decapod.capturer"], {
         options: {
-            url: "http://localhost:8081/stereo/capture/images/%captureIndex"
+            url: "http://localhost:8081/conventional/capture/images/%captureIndex"
         }
     });
     
     fluid.demands("captureSource", ["decapod.capturer"], {
         options: {
-            url: "http://localhost:8081/stereo/capture/"
+            url: "http://localhost:8081/conventional/capture/"
         }
     });
     
     fluid.demands("captureControl", ["decapod.capturer"], {
         options: {
             dataSourceConfig: {
-                url: "http://localhost:8081/stereo/capture/",
+                url: "http://localhost:8081/conventional/capture/",
                 method: "post"
             }
         }
@@ -70,7 +70,7 @@ var decapod = decapod || {};
     fluid.demands("exportControl", ["decapod.capturer"], {
         options: {
             dataSourceConfig: {
-                url: "http://localhost:8081/stereo/capture/",
+                url: "http://localhost:8081/conventional/capture/",
                 method: "get"
             }
         }
