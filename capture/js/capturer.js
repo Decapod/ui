@@ -87,8 +87,6 @@ var decapod = decapod || {};
             decapod.capturer.show(that.captureReviewer);
             decapod.capturer.hide(that.status);
             that.captureReviewer.updateModel({"captureIndex": that.captureReviewer.model.captureIndex, "captures": response.images});
-        } else if (type === "DELETE") {
-            that.captureStatusSource.get();
         }
     };
     
