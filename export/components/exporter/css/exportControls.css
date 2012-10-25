@@ -26,17 +26,17 @@
     text-align:center;
 }
 
+
 .ds-exportControls-complete-links {
     margin: 0 auto;
     width: 256px;
 }
 
+
 .ds-exportControls-complete-links  a{
     -moz-transition: background-color 0.2s ease;
     width: 100px;
-    position: relative;
-    display:inline-block;
-    padding: 3px 0px 3px 26px;
+    padding: 8px 8px 8px 33px;
 }
 
 .ds-exportControls-complete-links  a:hover{
@@ -52,12 +52,12 @@
     box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
 }
 
-
 .ds-exportControls-complete-download {
-    background: url("../../../../core/styles/images/download-icon-18x18.png") 5px center no-repeat;
+    background: url("../../../../core/styles/images/download-28x28-blue.png") 5px center no-repeat;
+
 }
 
 .ds-exportControls-complete-restart {
-    background: url("../../../../core/styles/images/reset-icon-18x18.png") 5px center no-repeat;
-    float:right;
+    background: url("../../../../core/styles/images/restart-28x28-blue.png") 5px center no-repeat;
+    width: 100px;
 }

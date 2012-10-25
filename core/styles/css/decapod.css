@@ -186,6 +186,11 @@ ul.ds-shared-titleBar-flatList {
 	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
+/* Status Messages */
+.ds-shared-status-description {
+    margin: 10px 0 10px 0;
+}
+
 /**
  UI COMPONENTS
  */
