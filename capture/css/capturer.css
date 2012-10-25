@@ -20,14 +20,14 @@
     margin-left: 30px;
 }
 
-.ds-capturer-captureStatus {
+.ds-capturer-state {
     display:block;
     width: 360px;
     overflow: auto;
     float: left;
 }
 
-.ds-capturer-captureStatus h2 {
+.ds-capturer-state h2 {
     display: inline;
 }
 
