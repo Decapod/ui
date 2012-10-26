@@ -186,6 +186,11 @@ ul.ds-shared-titleBar-flatList {
 	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
+/* Status Messages */
+.ds-shared-status-description {
+    margin: 10px 0 10px 0;
+}
+
 /**
  UI COMPONENTS
  */
@@ -346,11 +351,9 @@ ul.ds-shared-titleBar-flatList {
 
 .ds-shared-linkButton{
     -moz-transition: background-color 0.2s ease;
-    /*width: 100px;*/
     position: relative;
     display:inline-block;
-    padding: 3px;
-    text-align: center;
+    padding: 3px 3px 3px 28px;
 }
 
 .ds-shared-linkButton:hover {
@@ -362,6 +365,17 @@ ul.ds-shared-titleBar-flatList {
     box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
 }
 
+.ds-shared-helpButton {
+    background: url("../images/help-28x28-blue.png") 5px center no-repeat;
+    background-size: 19px 19px;
+    width:40px;
+}
+
+.ds-shared-restartButton {
+    background: url("../images/restart-28x28-blue.png") 5px center no-repeat;
+    background-size: 19px 19px;
+    width:55px;
+}
 
 .ds-shared-decapod a{
     color: #1C75BC;
@@ -463,7 +477,6 @@ ul.ds-shared-titleBar-flatList {
     -moz-opacity: 0;
     filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
 }
-
 
 /*Override the hover style when the button is disabled. Work around for FLUID-4728*/
 .fl-uploader-dim:hover {
