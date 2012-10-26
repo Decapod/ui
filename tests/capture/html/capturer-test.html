@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Decapod Capturer Tests</title>
+        
+        <!-- Required stylesheets for testing the component. -->
+        <link rel="Stylesheet" media="screen" href="../../../lib/infusion/tests/lib/qunit/css/qunit.css" />
+        
+        <!-- Required JavaScript modules for testing the component. -->
+        <script src="../../../lib/infusion/MyInfusion.js"></script>
+        
+        <!-- jqUnit -->
+        <script src="../../../lib/infusion/tests/lib/qunit/js/qunit.js"></script>
+        <script src="../../../lib/infusion/tests/test-core/jqUnit/js/jqUnit.js"></script>
+        
+        <!-- Tests and tested component -->
+        <script type="text/javascript" src="../../../core/js/decapodContext.js"></script>
+        <script type="text/javascript" src="../../utils/js/decapodTestContext.js"></script>
+        <script type="text/javascript" src="../../utils/js/testUtils.js"></script>
+        <script type="text/javascript" src="../../../core/js/decapodRequests.js"></script>
+        <script type="text/javascript" src="../../../core/js/decapodRequestsDemands.js"></script>
+        <script type="text/javascript" src="../../../capture/js/captureReviewerDemands.js"></script>
+        <script type="text/javascript" src="../../../capture/js/statusDemands.js"></script>
+        <script type="text/javascript" src="../../../capture/js/processButtonDemands.js"></script>
+        <script type="text/javascript" src="../../../capture/js/capturerDemands.js"></script>
+        <script type="text/javascript" src="../../../capture/js/captureReviewer.js"></script>
+        <script type="text/javascript" src="../../../capture/js/processButton.js"></script>
+        <script type="text/javascript" src="../../../capture/js/status.js"></script>
+        <script type="text/javascript" src="../../../capture/js/capturer.js"></script>
+        <script src="../js/capturerTestsDemands.js"></script>
+        <script src="../js/capturerTests.js"></script>
+    </head>
+    
+    <body>
+        <!-- Markup that jqUnit will look for when running tests and displaying the results. -->
+        <h1 id="qunit-header">Decapod Capturer Test Suite</h1>
+        <h2 id="qunit-banner"></h2>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="qunit-fixture" style="display: block">
+            <div class="dc-capturer">
+                <header>
+                    <h1 class="dc-capturer-title">Capture Title</h1>
+                    
+                    <menu class="ds-shared-menuBar">
+                        <a class="dc-capturer-help ds-shared-linkButton" href="">Help link text</a>
+                        <a class="dc-capturer-restart ds-shared-linkButton" href="">Restart link text</a>
+                    </menu>
+                </header>
+                
+                <section class="ds-capturer-main">
+                    <div class="dc-capturer-controls ds-capturer-controls">
+                        <button class="dc-capturer-captureButton ds-shared-grey-button ds-capturer-captureButton">&nbsp</button>
+                        <button class="dc-capturer-exportButton ds-shared-grey-button ds-capturer-exportButton">Export All Captures</button>
+                    </div>
+                    <div class="ds-shared-insetContentArea ds-capturer-captureStatus">
+                        <div class="dc-capture-status">
+                            <h2 class="dc-status-name"></h2>
+                            <p class="dc-status-description"></p>
+                            <a class="dc-status-refresh ds-shared-linkButton" href=""></a>
+                        </div>
+                        <div class="dc-capturer-preview ds-capturer-preview">
+                            <h2 class="dc-captureReviewer-captureIndex"></h2>
+                            <span class="dc-captureReviewer-deletedMessage"></span>
+                            <a class="dc-captureReviewer-del ds-capturer-deleteImage ds-shared-linkButton" href=""></a>
+                            <ul class="dc-captureReviewer-capturesContainer">
+                                <li class="dc-captureReviewer-captures">
+                                    <img src="" class="dc-captureReviewer-captureIMG" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <iframe class="dc-capturer-download-frame ds-capturer-download-frame" src=""></iframe>
+                </section>
+            </div>
+        </div>
+    </body>
+</html>

@@ -76,4 +76,53 @@ var decapod = decapod || {};
         }
     });
     
+    // local filesystem
+    fluid.demands("cameraStatusSource", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            url: "../../mock-data/capture/mockCameraStatus.json"
+        }
+    });
+    
+    fluid.demands("captureStatusSource", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            url: "../../mock-data/capture/mockCaptureStatus.json"
+        }
+    });
+    
+    fluid.demands("deleteStatusSource", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            url: "../../mock-data/capture/mockCaptureStatus.json"
+        }
+    });
+    
+    fluid.demands("imageSource", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            url: "../../mock-data/capture/mockImagesByIndex.json"
+        }
+    });
+    
+    fluid.demands("captureSource", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            url: "../../mock-data/capture/mockCaptureResponse.json"
+        }
+    });
+    
+    fluid.demands("captureControl", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            dataSourceConfig: {
+                url: "../../mock-data/capture/mockCaptureResponse.json",
+                method: "post"
+            }
+        }
+    });
+    
+    fluid.demands("exportControl", ["decapod.fileSystem", "decapod.capturer"], {
+        options: {
+            dataSourceConfig: {
+                url: "../../mock-data/capture/mockCaptureResponse.json",
+                method: "get"
+            }
+        }
+    });
+    
 })(jQuery);
