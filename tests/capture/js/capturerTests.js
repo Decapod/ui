@@ -55,14 +55,7 @@ var decapod = decapod || {};
                             that.captureReviewer.events.afterRender.addListener(start);
                         },
                         args: ["{capturer}"]
-                    }
-                }
-            });
-        });
-
-        capturerTests.asyncTest("Initial page load", function () {
-            decapod.capturer(CONTAINER, {
-                listeners: {
+                    },
                     onImageProcessedReady: {
                         listener: function (that) {
                             jqUnit.assertUndefined("The capture button should have been enabled", that.locate("captureButton").attr("disabled"));
@@ -70,7 +63,6 @@ var decapod = decapod || {};
                             jqUnit.notVisible("The status viewer should have been hidden", that.locate("status"));
                             jqUnit.isVisible("The image viewer should have been shown", that.locate("preview"));
                             jqUnit.assertNotEquals("The image should have been displayed", that.captureReviewer.locate("captureIMG").attr("src"), "");
-                            start();
                         },
                         args: ["{capturer}"]
                     }
