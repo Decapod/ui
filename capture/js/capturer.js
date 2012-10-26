@@ -30,13 +30,10 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.capturer");
     
-    decapod.capturer.handleExportSuccess = function (that, response) {
-        that.locate("downloadFrame").attr("src", response.url);
-        
-        that.events.onExportSuccess.fire();
+    decapod.capturer.download = function (that, url) {
+        that.locate("downloadFrame").attr("src", url);
     };
 
-    
     decapod.capturer.cameraStatusSuccess = function (that, response) {
         if (response.statusCode === 'READY') {
             that.events.onCameraReady.fire();
@@ -121,6 +118,10 @@ var decapod = decapod || {};
         
         that.displayElement = function (element, shouldShow) {
             that.displayElement(element, shouldShow);
+        };
+        
+        that.download = function (url) {
+            that.download(url);
         };
     };
     
@@ -207,8 +208,8 @@ var decapod = decapod || {};
                     listeners: {
                         "onAttach.onExportControllerAttached": "{capturer}.events.onExportControllerAttached",
                         "onProcessSuccess.handleExportSuccess": {
-                            listener: "decapod.capturer.handleExportSuccess",
-                            args: ["{capturer}", "{arguments}.0"]
+                            listener: "{capturer}.download",
+                            args: ["{arguments}.0.url"]
                         },
                         "onProcessError.onError": {
                             listener: "{capturer}.events.onError",
@@ -482,6 +483,7 @@ var decapod = decapod || {};
             }
         },
         invokers: {
+            download: "decapod.capturer.download",
             displayElement: "decapod.capturer.displayElement",
             initCapturerControls: "decapod.capturer.initCapturerControls"
         },
