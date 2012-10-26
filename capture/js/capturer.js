@@ -44,7 +44,7 @@ var decapod = decapod || {};
     
     decapod.capturer.captureStatusSuccess = function (that, response) {
         if (response.totalCaptures === 0) {
-            that.events.onNoCaptures.fire(response);
+            that.events.onNoCaptures.fire(response.statusCode);
         } else {
             that.events.onCapturesRetrieved.fire(response);
         }
@@ -377,7 +377,7 @@ var decapod = decapod || {};
                             args: ["{status}.dom.container", true]
                         }, {
                             listener: "{status}.updateStatus",
-                            args: ["{arguments}.0.statusCode"]
+                            args: ["{arguments}.0"]
                         }, {
                             listener: "{exportControl}.updateModel",
                             args: [{"disabled": true}]
