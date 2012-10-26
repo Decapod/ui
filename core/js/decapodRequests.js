@@ -101,6 +101,29 @@ var decapod = decapod || {};
         return encodeURI(url);
     };
     
+    decapod.dataSource.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        that["delete"] = function (data, urlTemplateValues) {
+            that["delete"](data, urlTemplateValues);
+        };
+        that.get = function (data, urlTemplateValues) {
+            that.get(data, urlTemplateValues);
+        };
+        that.post = function (data, urlTemplateValues) {
+            that.post(data, urlTemplateValues);
+        };
+        that.put = function (data, urlTemplateValues) {
+            that.put(data, urlTemplateValues);
+        };
+        that.assembleURL = function (urlTemplate, urlTemplateValues) {
+            that.assembleURL(urlTemplate, urlTemplateValues);
+        };
+    };
+    
     /**
      * The dataSource should be used to communicate to the server.
      * 
@@ -114,6 +137,7 @@ var decapod = decapod || {};
      */
     fluid.defaults("decapod.dataSource", {
         gradeNames: ["fluid.eventedComponent", "autoInit"],
+        preInitFunction: "decapod.dataSource.preInit",
         invokers: {
             "delete": "decapod.dataSource.delete",
             get: "decapod.dataSource.get",
