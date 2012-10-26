@@ -44,19 +44,10 @@ var decapod = decapod || {};
     
     decapod.capturer.captureStatusSuccess = function (that, response) {
         if (response.totalCaptures === 0) {
-            decapod.capturer.show(that.status);
-            decapod.capturer.hide(that.captureReviewer);
-            that.status.updateStatus("READY");
-            that.exportControl.updateModel({"disabled": true});
-            that.events.onReadyToCapture.fire();
+            that.events.onNoCaptures.fire(response);
         } else {
-            that.imageSource.get(null, {captureIndex: response.lastCaptureIndex});
-            that.captureReviewer.updateModel({"captureIndex": response.totalCaptures});
-            that.captureControl.updateModel({"disabled": false});
-            that.exportControl.updateModel({"disabled": false});
+            that.events.onCapturesRetrieved.fire(response);
         }
-        
-        that.events.onCaptureStatusReady.fire();
     };
 
     decapod.capturer.imageSuccess = function (that, response, type) {
@@ -377,6 +368,32 @@ var decapod = decapod || {};
                         }, {
                             listener: "{captureControl}.updateModel",
                             args: [{"disabled": true}]
+                        }],
+                        "{capturer}.events.onNoCaptures": [{
+                            listener: "{capturer}.displayElement",
+                            args: ["{captureReviewer}.dom.container", false]
+                        }, {
+                            listener: "{capturer}.displayElement",
+                            args: ["{status}.dom.container", true]
+                        }, {
+                            listener: "{status}.updateStatus",
+                            args: ["{arguments}.0.statusCode"]
+                        }, {
+                            listener: "{exportControl}.updateModel",
+                            args: [{"disabled": true}]
+                        }],
+                        "{capturer}.events.onCapturesRetrieved": [{
+                            listener: "{imageSource}.get",
+                            args: [null, {"captureIndex": "{arguments}.0.lastCaptureIndex"}]
+                        }, {
+                            listener: "{captureReviewer}.updateModel",
+                            args: [{"captureIndex": "{arguments}.0.totalCaptures"}]
+                        }, {
+                            listener: "{captureControl}.updateModel",
+                            args: [{"disabled": false}]
+                        }, {
+                            listener: "{exportControl}.updateModel",
+                            args: [{"disabled": false}]
                         }]
                     }
                 }
@@ -404,18 +421,14 @@ var decapod = decapod || {};
             onTemplateReady: null,
             onRestart: null,
             onDelete: null,
-            onCaptureSuccess: null,
-            onCaptureError: null,
-            onExportSuccess: null,
-            onExportError: null,
-            onCameraStatusReady: null,
-            onCaptureStatusReady: null,
             onImageProcessedReady: null,
             onReady: null,
             
             onError: null,
             onReadyToCapture: null,
             onCameraReady: null,
+            onNoCaptures: null,
+            onCapturesRetrieved: null,
             
             onEventBinderAttached: null,
             onDeleteStatusSourceAttached: null,
