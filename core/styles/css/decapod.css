@@ -1,0 +1,490 @@
+.ds-shared-decapod {
+    font-family: 'Droid Sans', arial, serif;
+    font-size: 11pt;
+    background-color: #FFF;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    width: 100%;
+    min-width: 360px;
+}
+
+.ds-shared-decapod @font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: bold;
+  src: local('Droid Sans'), url('../fonts/DroidSans-Bold.ttf') format('truetype');
+}
+
+.ds-shared-decapod @font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Droid Sans'), url('../fonts/DroidSans.ttf') format('truetype');
+}
+
+.ds-shared-busy,
+.ds-shared-busy * {
+    cursor: wait; 
+}
+
+/* TITLE BAR */
+
+.ds-shared-titleBar {
+    background: #D8D8C0;
+    background-image: linear-gradient(bottom, rgb(204,204,183) 4%, rgb(216,216,192) 52%);
+    background-image: -moz-linear-gradient(bottom, rgb(204,204,183) 4%, rgb(216,216,192) 52%);
+    width: 100%;
+    height: 42px;
+    text-align: left;
+    color: #fff;
+    border-bottom: solid 1px #7A8370;  
+    z-index:1;
+}
+
+ul.ds-shared-titleBar-flatList {
+    list-style-type: none;
+    vertical-align: middle;
+    width:850px;
+}
+
+.ds-shared-titleBar-flatList li {
+    display: inline;
+    position: absolute;
+}
+
+.ds-shared-titleBar-flatList li:first-child p {
+    font-size: 20px;
+    width: 7em;
+    background-color: #7A8370;
+    border-bottom: 2px solid #7A8370,6px solid #DF8615 ;
+}
+
+.ds-shared-titleBar-flatList p {
+    color: #fff;
+    position: relative;
+	padding: 10px 0px 0px 20px;
+	font-size:10pt;    
+    height: 32px;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: #fff;
+
+}
+
+.ds-shared-titleBar-flatList li:after {
+    /* Create a chevron by using two triangles overlaid each other.
+    Triangles are made by taking advantage of border's bevel effect.*/
+    content: "";
+	position: absolute;
+	top: 5px;
+	right: -16px;
+    width: 29px;
+    height: 29px;
+    border-top: 2px solid #7A8370;
+    border-right: 2px solid #7A8370;
+    -moz-transform: rotate(45deg);
+    transform:rotate(45deg);
+    background-color: #7A8370;
+}
+
+
+/**
+ FOOTER 
+ */
+ 
+ .ds-shared-decapod footer {
+    background: #D8D8C0;
+    
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display:block;
+    border-top: solid 1px #7A8370;
+ }
+ 
+/**
+ MAIN CONTENT AREA 
+ */
+ 
+.ds-shared-mainPane {
+    
+    position: absolute;
+    bottom: 32px; /*position respect to footer height */
+    top: 44px; /*position respect to navigation bar */
+    margin-left: 300px;
+    width: 770px;
+    background-image: url("../images/background-grain.png");
+    border-left: 1px solid rgba(120,132,120,0.2);
+    border-right: 1px solid rgba(120,132,120,0.2);    
+}
+
+.ds-shared-mainPane h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #575757;
+    margin: 0px;
+    padding-top:10px;
+    text-shadow: 1px 1px #fff;
+    margin-left: 10px;
+}
+
+.ds-shared-decapod h2 {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #575757;
+    text-shadow: 1px 1px #fff;
+}
+
+.ds-shared-decapod h3 {
+    font-size: 11pt;
+    font-weight: bold;
+    color: #575757;
+    text-shadow: 1px 1px #fff;
+}
+
+.ds-shared-mainPane header {
+    margin-bottom: 15px;
+}
+
+.ds-shared-menuBar {
+    float:right;
+    position:relative;
+    top: -30px;
+    margin: 2px 10px 2px 2px;
+    padding: 4px;
+}
+
+
+/* Style for a container that appears inset to the page. */
+.ds-shared-insetContentArea .ds-shared-linkButton:hover {
+    background-color: #E6E7E8;
+    box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
+}
+
+.ds-shared-insetContentArea .ds-shared-linkButton:active,
+.ds-shared-menuBar .ds-shared-linkButton:active{
+    border-radius: 3px 3px 3px 3px;
+    background-color: #939597;
+    color: #fff;
+    box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
+}
+
+.ds-shared-insetContentArea {
+    background-color: #F9F9FA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);;
+	border-radius:6px;
+    width: 100%;
+    padding: 20px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+/* Status Messages */
+.ds-shared-status-description {
+    margin: 1.3em 0 0.7em 0;
+}
+
+/**
+ UI COMPONENTS
+ */
+
+
+
+@-moz-keyframes decapod-busy-spinner {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+
+.ds-shared-spinner {
+    height: 19px;
+    width: 19px;
+    
+    display:inline-block;
+    -moz-transform-origin: 10px 10px; /* so animation properly rotates around center. */    
+    -moz-animation-name: decapod-busy-spinner;
+    -moz-animation-duration: 1s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    transform-origin: 10px 10px;
+}
+
+.ds-shared-spinner-outerCircle {
+    width: 15px;
+	height: 15px;
+	background: #D1D3D4;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	position: absolute;
+	-moz-transform: translate(2px, 2px);
+}
+
+.ds-shared-spinner-innerCircle {
+    width: 9px;
+	height: 9px;
+	background: #fff;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	position: absolute;
+	-moz-transform: translate(5px, 5px);
+}
+
+.ds-shared-spinner-dot {
+    width: 5px;
+	height: 5px;
+	background: #7A8370;
+	-moz-transform: translate(7px, 1px);
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	position: absolute;
+}
+
+
+/* Change the size of the main content area depending on the size of screen. */
+
+@media screen and (max-width: 1100px) {
+    .ds-shared-mainPane {
+        position: absolute;
+        right: 0px;
+        top:43px;
+        width: 770px;
+    }
+}
+
+@media screen and (max-width: 840px) {
+    .ds-shared-mainPane {
+        margin-left: 0px;
+        min-width: 0%;
+        max-width: 100%;
+    }
+}
+
+.ds-shared-mainPane {
+     -moz-transition: all .5s linear;
+     transition: all .5s linear;
+}
+
+/**
+ * Shared Exporter styles.
+ */
+ 
+.ds-shared-exportInfo {
+    border-bottom: solid 2px #E6E7E8;
+    padding: 10px 25px 10px 10px;
+    position: relative;
+    -moz-transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease;
+    padding: 15px 10px 13px 10px;
+}
+
+.ds-shared-exportInfo:hover {
+    background-color: #F9F9FA;
+    border-bottom: 2px solid transparent;
+    cursor:pointer;
+    border-radius: 6px;
+}
+
+.ds-shared-exportInfo.ui-state-disabled:focus,
+.ds-shared-exportInfo.ui-state-focus {
+    border:3px solid #989898;
+    border-radius: 6px;
+    transition: none;
+    padding: 12px 7px 12px 7px;
+    outline: none;
+}
+
+.ds-shared-exportInfo.ui-state-active:after {
+/* Create a downward arrow by rotating a square 45 deg.
+   Overrides a jQuery UI style. */    
+    content:"";
+    position: absolute;
+	bottom: -11px;
+    right: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: #eceef2;
+    -moz-transform: rotate(45deg); 
+    transform:rotate(45deg);
+    border-right: 3px solid #E8E8E8;
+    border-bottom: 3px solid #E8E8E8;
+    z-index: 1; /* Position on top so the arrow is visible when applied. */
+    
+    -moz-transition: background-color 0.3s ease; /* specify a transition otherwise the hover style doesn't look right */
+    transition: all 0.3s ease;
+}
+
+.ds-shared-exportInfo.ui-state-active:focus:after {
+    border-right: 3px solid #989898;
+    border-bottom: 3px solid #989898;
+}
+
+.ds-shared-exportInfo.ui-state-active:hover:after {
+    /*Overrides a jQuery UI style. */ 
+    background-color: #F9F9FA; 
+    -moz-transition: all 0.3s ease; /* specify a transition otherwise the hover style doesn't look right */
+    transition: all 0.3s ease;
+}
+
+.ds-shared-exportDetails {
+    background-color: #F9F9FA;
+    box-shadow: inset 0px 0px 4px rgba(188,188,188,0.7);
+    position: relative;
+}
+
+.ds-shared-exportDetails.ui-accordion-content {
+    padding: 1em 0;
+}
+
+/**
+ * BUTTONS, FORMS and LINKS.
+ */
+
+.ds-shared-linkButton{
+    -moz-transition: background-color 0.2s ease;
+    position: relative;
+    display:inline-block;
+    padding: 3px 3px 3px 28px;
+}
+
+.ds-shared-linkButton:hover {
+    border-radius: 3px 3px 3px 3px;
+}
+
+.ds-shared-menuBar .ds-shared-linkButton:hover{
+    background-color: #ffffff;
+    box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
+}
+
+.ds-shared-helpButton {
+    background: url("../images/help-28x28-blue.png") 5px center no-repeat;
+    background-size: 19px 19px;
+    width:40px;
+}
+
+.ds-shared-restartButton {
+    background: url("../images/restart-28x28-blue.png") 5px center no-repeat;
+    background-size: 19px 19px;
+    width:55px;
+}
+
+.ds-shared-decapod a{
+    color: #1C75BC;
+}
+
+.ds-shared-disabled-button {
+    background-color: #F1F2F2;
+    border: 2px solid #fff;
+    color: #A7A9AC;
+}
+
+.ds-shared-disabled-text {
+    color: #A7A9AC;    
+}
+
+
+.ds-shared-componentControls {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.ds-shared-grey-button {
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid #B5B5B5;
+    background: -moz-linear-gradient(top,  #ffffff,  #ededed);
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    -moz-transition: background-color 0.2s ease;
+}
+
+.ds-shared-grey-button.focus,
+.ds-shared-grey-button:focus,
+.ds-shared-decapod a:focus {
+    -moz-outline-radius: 6px;
+    outline: 2px solid #989898;
+}
+
+.ds-shared-grey-button[disabled] {
+    border: 1px solid #cfcfcf;
+    background-color: #ededed;
+    opacity: 0.4;
+}
+
+.ds-shared-grey-button:hover {
+    background-color: #ececec;
+}
+
+.ds-shared-green-button {
+    padding: 4px;
+    background-color: #009444;
+    box-shadow: 3px 3px 5px -1px #808285;
+    border: none;
+    color: #fff;
+}
+
+.ds-shared-uploadControls {
+    width: 100%;
+    text-align: right;
+    padding: 5px 0 5px 0; 
+}
+
+.ds-shared-uploadControls .ds-shared-uploadBrowse {
+    display: inline-block;
+    overflow: hidden;
+    height: 1.65em;
+    width: 6em;
+    cursor: default;
+    padding: 6px 4px 0px 22px;
+    background: url("../images/folder-icon-22x22.png") 5px center no-repeat, -moz-linear-gradient(top,  #ffffff,  #ececec);
+    text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
+}
+
+.ds-shared-uploadControls .ds-shared-uploadBrowse:hover{
+    cursor:pointer;
+    background: url("../images/folder-icon-22x22.png") 5px center no-repeat, -moz-linear-gradient(top,  #ececec,  #ffffff);
+    
+}
+
+.ds-shared-uploadControls .ds-shared-uploadBrowse.focus {
+    margin: 0px 0px 0px 0px;
+}
+
+.ds-shared-uploadControls .ds-shared-uploadBrowse-dim,
+.ds-shared-uploadControls .fl-uploader-dim {
+    background: url("../images/folder-icon-22x22-grey.png") 5px center no-repeat, #F9F9FA;
+    border: 1px solid transparent;
+    opacity: 0.4;
+}
+
+.ds-shared-uploadControls .ds-shared-uploadBrowse input {
+    position: relative;
+    overflow: hidden;
+    float: right;
+
+    /* Make the real button big enough to cover the fake button */
+    height: 3em;
+    bottom: 2em;
+    letter-spacing: 5px;
+    left: 10px;
+    
+    /* Make the button invisible */
+    opacity: 0;
+    -moz-opacity: 0;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+}
+
+/*Override the hover style when the button is disabled. Work around for FLUID-4728*/
+.fl-uploader-dim:hover {
+    border: 1px solid #FFFFFF;
+}
