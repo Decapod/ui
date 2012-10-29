@@ -53,6 +53,8 @@ var decapod = decapod || {};
     decapod.capturer.initCapturerControls = function (that) {
         that.locate("title").text(that.options.strings.title);
         that.locate("help").text(that.options.strings.help);
+        that.locate("export").text(that.options.strings.export);
+        that.locate("capture").html(that.options.markup.capture);
         var restart = that.locate("restart");
         restart.text(that.options.strings.restart);
         restart.click(function () {
@@ -409,6 +411,8 @@ var decapod = decapod || {};
             exportButton: ".dc-capturer-controls",
             title: ".dc-capturer-title",
             restart: ".dc-capturer-restart",
+            capture: ".dc-capturer-captureButton",
+            export: ".dc-capturer-exportButton",
             help: ".dc-capturer-help",
             status: ".dc-capture-status",
             preview: ".dc-capturer-preview",
@@ -417,7 +421,11 @@ var decapod = decapod || {};
         strings: {
             title: "Capture",
             help: "Help",
-            restart: "Restart"
+            restart: "Restart",
+            export: "Export Captures"
+        },
+        markup: {
+            capture: "Capture<br/><span>(Keyboard shortcut: C)</span>"
         },
         events: {
             onTemplateReady: null,
