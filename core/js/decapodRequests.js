@@ -78,13 +78,13 @@ var decapod = decapod || {};
             url: url,
             data: data,
             success: function (data, textStatus, jqXHR) {
-                that.events.success.fire(data, textStatus, jqXHR, type);
+                successCallback(data, textStatus, jqXHR, type);
             },
             error: function (xhr, textStatus, errorThrown, type) {
                 fluid.log("Error Status: " + textStatus);
                 fluid.log("For url: " + url);
                 fluid.log("ErrorThrown: " + errorThrown);
-                that.events.error.fire(xhr, textStatus, errorThrown, url);
+                errorCallback(xhr, textStatus, errorThrown, url);
             }
         };
         

@@ -49,21 +49,13 @@ var decapod = decapod || {};
             that.events.onCapturesRetrieved.fire(response);
         }
     };
-
-    decapod.capturer.imageSuccess = function (that, response, type) {
-        if (type === "GET") {
-            decapod.capturer.show(that.captureReviewer);
-            decapod.capturer.hide(that.status);
-            that.captureReviewer.updateModel({"captureIndex": that.captureReviewer.model.captureIndex, "captures": response.images});
-            that.events.onReadyToCapture.fire();
-        }
-        
-        that.events.onImageProcessedReady.fire();
-    };
     
     decapod.capturer.initCapturerControls = function (that) {
         that.locate("title").text(that.options.strings.title);
         that.locate("help").text(that.options.strings.help);
+        that.locate("exportButton").text(that.options.strings.exportButton);
+        that.locate("captureButton").html(that.options.markup.captureButton);
+        that.locate("loadMessage").text(that.options.strings.loadMessage);
         var restart = that.locate("restart");
         restart.text(that.options.strings.restart);
         restart.click(function () {
@@ -131,10 +123,10 @@ var decapod = decapod || {};
             captureControl: {
                 type: "decapod.processButton",
                 createOnEvent: "onExportControllerAttached",
-                container: "{capturer}.dom.captureButton",
+                container: "{capturer}.dom.captureControl",
                 options: {
                     selectors: {
-                        button: ".dc-capturer-captureButton"
+                        button: "{capturer}.dom.captureButton"
                     },
                     strings: {
                         inProcess: "Taking picture"
@@ -182,10 +174,10 @@ var decapod = decapod || {};
             exportControl: {
                 type: "decapod.processButton",
                 createOnEvent: "onStateDisplayReady",
-                container: "{capturer}.dom.exportButton",
+                container: "{capturer}.dom.exportControl",
                 options: {
                     selectors: {
-                        button: ".dc-capturer-exportButton"
+                        button: "{capturer}.dom.exportButton"
                     },
                     strings: {
                         inProcess: "Creating archive"
@@ -218,7 +210,11 @@ var decapod = decapod || {};
                     listeners: {
                         onDelete: "{capturer}.events.onDelete",
                         "onAttach.onCaptureReviewerAttached": "{capturer}.events.onCaptureReviewerAttached",
-                        "afterRender.afterCaptureReviewerRendered": "{capturer}.events.afterCaptureReviewerRendered"
+                        "afterRender.afterCaptureReviewerRendered": "{capturer}.events.afterCaptureReviewerRendered",
+                        "{imageSource}.events.getSuccess": {
+                            listener: "{captureReviewer}.updateModel",
+                            args: [{"captureIndex": "{captureReviewer}.model.captureIndex", "captures": "{arguments}.0.images"}]
+                        }
                     }
                 }
             },
@@ -315,9 +311,18 @@ var decapod = decapod || {};
                     url: "../../mock-data/capture/mockImagesByIndex.json",
                     listeners: {
                         "onAttach.onImageSourceAttached": "{capturer}.events.onImageSourceAttached",
-                        "success.handleImageSuccess": {
-                            listener: "decapod.capturer.imageSuccess",
-                            args: ["{capturer}", "{arguments}.0", "{arguments}.3"]
+                        "getSuccess.showCaptureReviewer": {
+                            listener: "{capturer}.displayElement",
+                            args: ["{captureReviewer}.dom.container", true]
+                        },
+                        "getSuccess.hideStatus": {
+                            listener: "{capturer}.displayElement",
+                            args: ["{status}.dom.container", false]
+                        },
+                        "getSuccess.onReadyToCapture": {
+                            listener: "{capturer}.events.onReadyToCapture",
+                            priority: "last",
+                            args: [null]
                         },
                         "error.onError": {
                             listener: "{capturer}.events.onError",
@@ -363,6 +368,9 @@ var decapod = decapod || {};
                             listener: "{capturer}.displayElement",
                             args: ["{status}.dom.container", true]
                         }, {
+                            listener: "{capturer}.displayElement",
+                            args: ["{capturer}.dom.load", false]
+                        }, {
                             listener: "{status}.updateStatus",
                             args: ["{arguments}.1"]
                         }, {
@@ -381,6 +389,10 @@ var decapod = decapod || {};
                         }, {
                             listener: "{exportControl}.updateModel",
                             args: [{"disabled": true}]
+                        }, {
+                            listener: "{capturer}.events.onReadyToCapture",
+                            priority: "last",
+                            args: [null]
                         }],
                         "{capturer}.events.onCapturesRetrieved": [{
                             listener: "{imageSource}.get",
@@ -403,8 +415,12 @@ var decapod = decapod || {};
             status: "READY"
         },
         selectors: {
-            captureButton: ".dc-capturer-controls",
-            exportButton: ".dc-capturer-controls",
+            captureControl: ".dc-capturer-controls",
+            exportControl: ".dc-capturer-controls",
+            captureButton: ".dc-capturer-captureButton",
+            exportButton: ".dc-capturer-exportButton",
+            load: ".dc-capture-load",
+            loadMessage: ".dc-capture-loadMessage",
             title: ".dc-capturer-title",
             restart: ".dc-capturer-restart",
             help: ".dc-capturer-help",
@@ -415,13 +431,17 @@ var decapod = decapod || {};
         strings: {
             title: "Capture",
             help: "Help",
-            restart: "Restart"
+            restart: "Restart",
+            exportButton: "Export Captures",
+            loadMessage: "Checking cameras..."
+        },
+        markup: {
+            captureButton: "Capture<br/><span>(Keyboard shortcut: C)</span>"
         },
         events: {
             onTemplateReady: null,
             onRestart: null,
             onDelete: null,
-            onImageProcessedReady: null,
             onReady: null,
             
             onError: null,
@@ -440,10 +460,12 @@ var decapod = decapod || {};
             onCaptureReviewerAttached: null,
             onExportControllerAttached: null,
             onCaptureControllerAttached: null,
+            
             onCameraStatusSourceSuccess: null,
             onCameraStatusSourceError: null,
             afterCaptureReviewerRendered: null,
             afterStatusRendered: null,
+            
             onStateDisplayReady: {
                 events: {
                     captureReviewer: "onCaptureReviewerAttached",
@@ -485,14 +507,35 @@ var decapod = decapod || {};
             }
         },
         listeners: {
-            onReadySuccess: "{capturer}.events.onReady",
-            onReadyError: "{capturer}.events.onReady",
+            onReadySuccess: {
+                listener: "{capturer}.events.onReady",
+                priority: "last"
+            },
+            onReadyError: {
+                listener: "{capturer}.events.onReady",
+                priority: "last"
+            },
             onRestart: "{captureSource}.delete",
-            onTemplateReady: "{capturer}.initCapturerControls",
+            onTemplateReady: [
+                "{capturer}.initCapturerControls",
+                {
+                    listener: "{capturer}.displayElement",
+                    args: ["{capturer}.dom.status", false]
+                },
+                {
+                    listener: "{capturer}.displayElement",
+                    args: ["{capturer}.dom.preview", false]
+                }
+            ],
             onDelete: "{deleteStatusSource}.get",
             onCameraStatusSourceAttached: {
                 listener: "{cameraStatusSource}.get",
                 args: [null]
+            },
+            onReadyToCapture: {
+                listener: "{capturer}.displayElement",
+                priority: "first",
+                args: ["{capturer}.dom.load", false]
             }
         },
         invokers: {
