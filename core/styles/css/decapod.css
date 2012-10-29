@@ -422,7 +422,7 @@ ul.ds-shared-titleBar-flatList {
 }
 
 .ds-shared-grey-button:hover {
-    background-color: #ececec;
+    background: -moz-linear-gradient(top,  #ededed, #ffffff);
 }
 
 .ds-shared-green-button {
