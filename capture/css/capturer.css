@@ -1,0 +1,42 @@
+.ds-capturer-main {
+    width:600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ds-capturer-controls {
+    float: left;
+    margin-bottom: 15px;
+}
+
+.ds-capturer-controls .ds-capturer-captureButton {
+    width: 360px;
+    height: 75px;
+}
+
+.ds-capturer-controls .ds-capturer-exportButton {
+    width: 145px;
+    height: 75px;
+    margin-left: 30px;
+}
+
+.ds-capturer-state {
+    display:block;
+    width: 360px;
+    overflow: auto;
+    float: left;
+}
+
+.ds-capturer-state h2 {
+    display: inline;
+}
+
+.ds-capturer-deleteImage {
+    float: right;
+}
+
+.ds-capturer-download-frame {
+    display: none;
+    width: 0px;
+    height: 0px;
+}

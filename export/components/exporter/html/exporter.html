@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Decapod PDF Exporter</title>
+        
+        <link rel="stylesheet" type="text/css" href="../../../../lib/infusion/framework/fss/css/fss-reset-global.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../core/styles/css/decapod.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../lib/jquery/css/jquery.ui.accordion.css" />
+        <link rel="stylesheet" type="text/css" href="../css/exporter.css" />
+        <link rel="stylesheet" type="text/css" href="../css/exportControls.css" />
+        <link rel="stylesheet" type="text/css" href="../css/exportInfo.css" />
+        <link rel="stylesheet" type="text/css" href="../css/pdfExporter.css" />
+        <link rel="stylesheet" type="text/css" href="../css/exportType.css" />
+        
+        <!-- Required JavaScript modules for the Exporter component. -->
+        <script type="text/javascript" src="../../../../lib/infusion/MyInfusion.js"></script>
+        <script type="text/javascript" src="../../../../lib/jquery/js/jquery.ui.accordion.js"></script>
+        <script type="text/javascript" src="../../../../core/js/decapodContext.js"></script>
+        <script type="text/javascript" src="../../../../core/js/customMerge.js"></script>
+        <script type="text/javascript" src="../../../../core/js/decapodRequestsDemands.js"></script>
+        <script type="text/javascript" src="../../../../core/js/decapodRequests.js"></script>
+        <script type="text/javascript" src="../../../../core/js/eventBinder.js"></script>
+        <script type="text/javascript" src="../../accordion/js/accordion.js"></script>
+        <script type="text/javascript" src="../../accordion/js/accordionDemands.js"></script>
+        <script type="text/javascript" src="../../select/js/selectDemands.js"></script>
+        <script type="text/javascript" src="../../select/js/select.js"></script>
+        <script type="text/javascript" src="../js/importStatusDemands.js"></script>
+        <script type="text/javascript" src="../js/importStatus.js"></script>
+        <script type="text/javascript" src="../js/exportTypeDemands.js"></script>
+        <script type="text/javascript" src="../js/exportType.js"></script>
+        <script type="text/javascript" src="../js/pdfExporterDemands.js"></script>
+        <script type="text/javascript" src="../js/pdfExporter.js"></script>
+        <script type="text/javascript" src="../js/imageExporterDemands.js"></script>
+        <script type="text/javascript" src="../js/imageExporter.js"></script>
+        <script type="text/javascript" src="../js/exportFormatGroup.js"></script>
+        <script type="text/javascript" src="../js/exporterDemands.js"></script>
+        <script type="text/javascript" src="../js/exporter.js"></script>
+
+    </head>
+    
+    <body>
+    
+        
+        <section class="dc-exporter ds-shared-decapod">
+            
+            <!-- TITLE BAR -->
+            <header class="ds-shared-titleBar">
+                <ul class="ds-shared-titleBar-flatList">
+                    <li><p>Decapod 0.7</p></li>
+                </ul>
+            </header>
+
+            <!-- DECAPOD EXPORT INTERFACE -->
+            <section class="ds-shared-mainPane">
+                <header>
+                    <h1 class="dc-exporter-title">Exporter Title</h1>
+                    <menu class="ds-shared-menuBar">
+                        <a class="ds-shared-linkButton" href="">Help link</a>
+                        <a class="dc-exporter-uploadClear ds-shared-linkButton" href="">Clear link text</a>
+                    </menu>
+                </header>
+                
+                <section class="dc-exporter-upload ds-exporter-upload">
+                    <div class="dc-exporter-importMessages ds-shared-insetContentArea">
+                        <p class="dc-exporter-instructions">Instructions go here.</p>
+                        <div class="dc-exporter-importStatus">
+                            <ul>
+                                <li class="dc-importStatus-renderer-statusMessage">No Statuses</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="ds-shared-uploadControls">
+                        <span class="dc-exporter-uploadBrowse ds-shared-grey-button ds-shared-uploadBrowse">
+                        	<!--Due to FLUID-4726 the browseText, "Browse Files", needs to be set here in the template-->
+                            <span class="flc-uploader-button-browse-text ds-shared-uploadBrowseText">Browse Files</span>
+                        </span>
+                    </div>
+                </section>
+                
+                
+                <section class="dc-exporter-formatGroup dc-exporter-accordion ds-exporter-accordion ds-exporter-formatGroup ds-shared-indent1">
+                    <h2 class="dc-exporter-formats ">Exporter format types go below</h2>
+                    <section class="dc-exporter-pdfs"></section>
+                    <section class="dc-exporter-images"></section>
+                </section>
+            </section>
+            
+            <!-- FOOTER -->
+            <footer>
+            </footer>
+            
+        </section>
+        <script>
+            decapod.exporter.serverReset();
+            decapod.exporter(".dc-exporter");
+        </script>
+    </body>
+</html>

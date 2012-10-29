@@ -1,0 +1,63 @@
+/* Format export controls and status text. */
+.ds-exportControls-trigger-exportControl{
+    width: 128px;
+    display:block;
+    background: url("../../../../core/styles/images/export-22x22.png") 5px center no-repeat,  -moz-linear-gradient(top,  #fff,  #ececec);
+    padding: 7px 7px 7px 25px;
+    margin: 10px auto;
+}
+
+.ds-exportControls-trigger-exportControl.ds-shared-grey-button[disabled],
+.ds-exportControls-trigger-exportControl.ds-shared-grey-button[disabled]:hover{
+    background: url("../../../../core/styles/images/export-22x22-grey.png") 5px center no-repeat;
+}
+
+
+.ds-exportControls-trigger-exportControl.ds-shared-grey-button:hover {
+    background: url("../../../../core/styles/images/export-22x22.png") 5px center no-repeat,  #fff;
+}
+
+.ds-exporter-exportControls {
+    padding-top: 10px;
+    height: auto;
+}
+
+.ds-exportControls-progress-text {
+    text-align:center;
+}
+
+.ds-exportControls-complete-links {
+    margin: 0 auto;
+    width: 256px;
+}
+
+.ds-exportControls-complete-links  a{
+    -moz-transition: background-color 0.2s ease;
+    width: 100px;
+    position: relative;
+    display:inline-block;
+    padding: 3px 0px 3px 26px;
+}
+
+.ds-exportControls-complete-links  a:hover{
+    border-radius: 3px 3px 3px 3px;
+    background-color: #EAEAEA;
+    box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
+}
+
+.ds-exportControls-complete-links  a:active{
+    border-radius: 3px 3px 3px 3px;
+    background-color: #000;
+    color: #fff;
+    box-shadow: inset 0px 0px 1px rgba(188,188,188,0.7);
+}
+
+
+.ds-exportControls-complete-download {
+    background: url("../../../../core/styles/images/download-icon-18x18.png") 5px center no-repeat;
+}
+
+.ds-exportControls-complete-restart {
+    background: url("../../../../core/styles/images/reset-icon-18x18.png") 5px center no-repeat;
+    float:right;
+}
