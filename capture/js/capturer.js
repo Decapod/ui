@@ -368,6 +368,9 @@ var decapod = decapod || {};
                             listener: "{capturer}.displayElement",
                             args: ["{status}.dom.container", true]
                         }, {
+                            listener: "{capturer}.displayElement",
+                            args: ["{capturer}.dom.load", false]
+                        }, {
                             listener: "{status}.updateStatus",
                             args: ["{arguments}.1"]
                         }, {
@@ -504,8 +507,14 @@ var decapod = decapod || {};
             }
         },
         listeners: {
-            onReadySuccess: "{capturer}.events.onReady",
-            onReadyError: "{capturer}.events.onReady",
+            onReadySuccess: {
+                listener: "{capturer}.events.onReady",
+                priority: "last"
+            },
+            onReadyError: {
+                listener: "{capturer}.events.onReady",
+                priority: "last"
+            },
             onRestart: "{captureSource}.delete",
             onTemplateReady: [
                 "{capturer}.initCapturerControls",
@@ -525,6 +534,7 @@ var decapod = decapod || {};
             },
             onReadyToCapture: {
                 listener: "{capturer}.displayElement",
+                priority: "first",
                 args: ["{capturer}.dom.load", false]
             }
         },
