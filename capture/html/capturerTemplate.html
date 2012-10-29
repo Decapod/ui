@@ -2,21 +2,22 @@
     <h1 class="dc-capturer-title">Capture Title</h1>
     
     <menu class="ds-shared-menuBar">
-        <a class="dc-capturer-help ds-shared-linkButton" href="">Help link text</a>
-        <a class="dc-capturer-restart ds-shared-linkButton" href="">Restart link text</a>
+        <a class="dc-capturer-help ds-shared-linkButton ds-shared-helpButton" href="">Help link text</a>
+        <a class="dc-capturer-restart ds-shared-linkButton ds-shared-restartButton" href="">Restart link text</a>
     </menu>
 </header>
 
 <section class="ds-capturer-main">
     <div class="dc-capturer-controls ds-capturer-controls">
-        <button class="dc-capturer-captureButton ds-shared-grey-button ds-capturer-captureButton">&nbsp</button>
-        <button class="dc-capturer-exportButton ds-shared-grey-button ds-capturer-exportButton">Export All Captures</button>
+        <a class="dc-capturer-captureButton ds-shared-grey-button ds-capturer-captureButton">Capture<br/>
+        <span>(Keyboard shortcut: C)</span></a>
+        <a class="dc-capturer-exportButton ds-shared-grey-button ds-capturer-exportButton">Export Captures</a>
     </div>
     <div class="ds-shared-insetContentArea ds-capturer-state">
         <div class="dc-capture-status">
             <h2 class="dc-status-name"></h2>
-            <p class="dc-status-description"></p>
-            <a class="dc-status-refresh ds-shared-linkButton" href=""></a>
+            <p class="dc-status-description ds-shared-status-description"></p>
+            <a class="dc-status-refresh ds-shared-linkButton ds-capturer-refresh" href=""></a>
         </div>
         <div class="dc-capturer-preview ds-capturer-preview">
             <h2 class="dc-captureReviewer-captureIndex"></h2>
