@@ -242,7 +242,7 @@ ul.ds-shared-titleBar-flatList {
 .ds-shared-spinner-dot {
     width: 5px;
 	height: 5px;
-	background: #2BB673;
+	background: #7A8370;
 	-moz-transform: translate(7px, 1px);
 	-moz-border-radius: 50%;
 	border-radius: 50%;
@@ -448,6 +448,12 @@ ul.ds-shared-titleBar-flatList {
     padding: 6px 4px 0px 22px;
     background: url("../images/folder-icon-22x22.png") 5px center no-repeat, -moz-linear-gradient(top,  #ffffff,  #ececec);
     text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
+}
+
+.ds-shared-uploadControls .ds-shared-uploadBrowse:hover{
+    cursor:pointer;
+    background: url("../images/folder-icon-22x22.png") 5px center no-repeat, -moz-linear-gradient(top,  #ececec,  #ffffff);
+    
 }
 
 .ds-shared-uploadControls .ds-shared-uploadBrowse.focus {
