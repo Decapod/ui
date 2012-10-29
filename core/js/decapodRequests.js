@@ -69,7 +69,9 @@ var decapod = decapod || {};
      * @param {object} urlTemplateValues, an optional object containing the key value pairs needed for string templating the url.
      * To use this, you need to pass in a string template as the URL in the components options.
      */
-    decapod.dataSource.method = function (that, type, data, urlTemplateValues) {
+    decapod.dataSource.method = function (that, type, successCallback, errorCallback, data, urlTemplateValues) {
+        successCallback = successCallback || that.events.success.fire;
+        errorCallback = errorCallback || that.events.error.fire;
         var url = that.assembleURL(that.options.url, urlTemplateValues);
         var ajaxOpts = {
             type: type,
@@ -101,6 +103,29 @@ var decapod = decapod || {};
         return encodeURI(url);
     };
     
+    decapod.dataSource.preInit = function (that) {
+        /*
+         * Work around for FLUID-4709
+         * These methods are overwritten by the framework after initComponent executes.
+         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
+         */
+        that["delete"] = function (data, urlTemplateValues) {
+            that["delete"](data, urlTemplateValues);
+        };
+        that.get = function (data, urlTemplateValues) {
+            that.get(data, urlTemplateValues);
+        };
+        that.post = function (data, urlTemplateValues) {
+            that.post(data, urlTemplateValues);
+        };
+        that.put = function (data, urlTemplateValues) {
+            that.put(data, urlTemplateValues);
+        };
+        that.assembleURL = function (urlTemplate, urlTemplateValues) {
+            that.assembleURL(urlTemplate, urlTemplateValues);
+        };
+    };
+    
     /**
      * The dataSource should be used to communicate to the server.
      * 
@@ -114,6 +139,7 @@ var decapod = decapod || {};
      */
     fluid.defaults("decapod.dataSource", {
         gradeNames: ["fluid.eventedComponent", "autoInit"],
+        preInitFunction: "decapod.dataSource.preInit",
         invokers: {
             "delete": "decapod.dataSource.delete",
             get: "decapod.dataSource.get",
@@ -127,8 +153,26 @@ var decapod = decapod || {};
             dataType: "json"
         }, 
         events: {
-            success: null,
-            error: null
+            success: null, 
+            error: null, 
+            deleteSuccess: null,
+            deleteError: null,
+            getSuccess: null,
+            getError: null,
+            postSuccess: null,
+            postError: null,
+            putSuccess: null,
+            putError: null
+        },
+        listeners: {
+            "deleteSuccess.success": "{dataSource}.events.success",
+            "deleteError.error": "{dataSource}.events.error",
+            "getSuccess.success": "{dataSource}.events.success",
+            "getError.error": "{dataSource}.events.error",
+            "postSuccess.success": "{dataSource}.events.success",
+            "postError.error": "{dataSource}.events.error",
+            "putSuccess.success": "{dataSource}.events.success",
+            "putError.error": "{dataSource}.events.error"
         },
         url: "" // can be a string template for the url, with template values being supplied to the various REST methods
         
