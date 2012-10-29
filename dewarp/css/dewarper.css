@@ -19,7 +19,6 @@
 }
 
 .ds-dewarper-dewarpControls .ds-shared-grey-button:hover {
-    height: 75px;
-    background: url("../../core/styles/images/export-22x22.png") 100px center no-repeat,  #ffffff;
+    background: url("../../core/styles/images/export-22x22.png") 100px center no-repeat, -moz-linear-gradient(top,  #ececec, #ffffff);
 }
 
