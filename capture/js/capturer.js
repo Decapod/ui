@@ -55,6 +55,7 @@ var decapod = decapod || {};
         that.locate("help").text(that.options.strings.help);
         that.locate("exportButton").text(that.options.strings.exportButton);
         that.locate("captureButton").html(that.options.markup.captureButton);
+        that.locate("loadMessage").text(that.options.strings.loadMessage);
         var restart = that.locate("restart");
         restart.text(that.options.strings.restart);
         restart.click(function () {
@@ -415,6 +416,8 @@ var decapod = decapod || {};
             exportControl: ".dc-capturer-controls",
             captureButton: ".dc-capturer-captureButton",
             exportButton: ".dc-capturer-exportButton",
+            load: ".dc-capture-load",
+            loadMessage: ".dc-capture-loadMessage",
             title: ".dc-capturer-title",
             restart: ".dc-capturer-restart",
             help: ".dc-capturer-help",
@@ -426,7 +429,8 @@ var decapod = decapod || {};
             title: "Capture",
             help: "Help",
             restart: "Restart",
-            exportButton: "Export Captures"
+            exportButton: "Export Captures",
+            loadMessage: "Checking cameras..."
         },
         markup: {
             captureButton: "Capture<br/><span>(Keyboard shortcut: C)</span>"
@@ -503,11 +507,25 @@ var decapod = decapod || {};
             onReadySuccess: "{capturer}.events.onReady",
             onReadyError: "{capturer}.events.onReady",
             onRestart: "{captureSource}.delete",
-            onTemplateReady: "{capturer}.initCapturerControls",
+            onTemplateReady: [
+                "{capturer}.initCapturerControls",
+                {
+                    listener: "{capturer}.displayElement",
+                    args: ["{capturer}.dom.status", false]
+                },
+                {
+                    listener: "{capturer}.displayElement",
+                    args: ["{capturer}.dom.preview", false]
+                }
+            ],
             onDelete: "{deleteStatusSource}.get",
             onCameraStatusSourceAttached: {
                 listener: "{cameraStatusSource}.get",
                 args: [null]
+            },
+            onReadyToCapture: {
+                listener: "{capturer}.displayElement",
+                args: ["{capturer}.dom.load", false]
             }
         },
         invokers: {
