@@ -49,17 +49,6 @@ var decapod = decapod || {};
             that.events.onCapturesRetrieved.fire(response);
         }
     };
-
-    decapod.capturer.imageSuccess = function (that, response, type) {
-        if (type === "GET") {
-            decapod.capturer.show(that.captureReviewer);
-            decapod.capturer.hide(that.status);
-            that.captureReviewer.updateModel({"captureIndex": that.captureReviewer.model.captureIndex, "captures": response.images});
-            that.events.onReadyToCapture.fire();
-        }
-        
-        that.events.onImageProcessedReady.fire();
-    };
     
     decapod.capturer.initCapturerControls = function (that) {
         that.locate("title").text(that.options.strings.title);
@@ -218,7 +207,11 @@ var decapod = decapod || {};
                     listeners: {
                         onDelete: "{capturer}.events.onDelete",
                         "onAttach.onCaptureReviewerAttached": "{capturer}.events.onCaptureReviewerAttached",
-                        "afterRender.afterCaptureReviewerRendered": "{capturer}.events.afterCaptureReviewerRendered"
+                        "afterRender.afterCaptureReviewerRendered": "{capturer}.events.afterCaptureReviewerRendered",
+                        "{imageSource}.events.getSuccess": {
+                            listener: "{captureReviewer}.updateModel",
+                            args: [{"captureIndex": "{captureReviewer}.model.captureIndex", "captures": "{arguments}.0.images"}]
+                        }
                     }
                 }
             },
@@ -315,9 +308,18 @@ var decapod = decapod || {};
                     url: "../../mock-data/capture/mockImagesByIndex.json",
                     listeners: {
                         "onAttach.onImageSourceAttached": "{capturer}.events.onImageSourceAttached",
-                        "success.handleImageSuccess": {
-                            listener: "decapod.capturer.imageSuccess",
-                            args: ["{capturer}", "{arguments}.0", "{arguments}.3"]
+                        "getSuccess.showCaptureReviewer": {
+                            listener: "{capturer}.displayElement",
+                            args: ["{captureReviewer}.dom.container", true]
+                        },
+                        "getSuccess.hideStatus": {
+                            listener: "{capturer}.displayElement",
+                            args: ["{status}.dom.container", false]
+                        },
+                        "getSuccess.onReadyToCapture": {
+                            listener: "{capturer}.events.onReadyToCapture",
+                            priority: "last",
+                            args: [null]
                         },
                         "error.onError": {
                             listener: "{capturer}.events.onError",
