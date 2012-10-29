@@ -96,6 +96,7 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.processButton", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
+        preInitFunction: "decapod.processButton.preInit",
         finalInitFunction: "decapod.processButton.finalInit",
         components: {
             processSource: {

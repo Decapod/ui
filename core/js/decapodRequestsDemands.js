@@ -30,22 +30,22 @@ var decapod = decapod || {};
     
     fluid.demands("decapod.dataSource.delete", ["decapod.dataSource"], {
         funcName: "decapod.dataSource.method",
-        args: ["{dataSource}", "DELETE", "{arguments}.0", "{arguments}.1"]
+        args: ["{dataSource}", "DELETE", "{dataSource}.events.deleteSuccess.fire", "{dataSource}.events.deleteError.fire", "{arguments}.0", "{arguments}.1"]
     });
     
     fluid.demands("decapod.dataSource.get", ["decapod.dataSource"], {
         funcName: "decapod.dataSource.method",
-        args: ["{dataSource}", "GET", "{arguments}.0", "{arguments}.1"]
+        args: ["{dataSource}", "GET", "{dataSource}.events.getSuccess.fire", "{dataSource}.events.getError.fire", "{arguments}.0", "{arguments}.1"]
     });
     
     fluid.demands("decapod.dataSource.post", ["decapod.dataSource"], {
         funcName: "decapod.dataSource.method",
-        args: ["{dataSource}", "POST", "{arguments}.0", "{arguments}.1"]
+        args: ["{dataSource}", "POST", "{dataSource}.events.postSuccess.fire", "{dataSource}.events.postError.fire", "{arguments}.0", "{arguments}.1"]
     });
     
     fluid.demands("decapod.dataSource.put", ["decapod.dataSource"], {
         funcName: "decapod.dataSource.method",
-        args: ["{dataSource}", "PUT", "{arguments}.0", "{arguments}.1"]
+        args: ["{dataSource}", "PUT", "{dataSource}.events.putSuccess.fire", "{dataSource}.events.putError.fire", "{arguments}.0", "{arguments}.1"]
     });
     
 })(jQuery);

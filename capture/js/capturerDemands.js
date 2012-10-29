@@ -27,11 +27,12 @@ var decapod = decapod || {};
     /*******************
      * Invoker Demands *
      *******************/
-    fluid.demands("decapod.capturer.restart", ["decapod.capturer"], {
-        args: ["{capturer}"]
-    });
+
     fluid.demands("decapod.capturer.initCapturerControls", ["decapod.capturer"], {
         args: ["{capturer}"]
+    });
+    fluid.demands("decapod.capturer.download", ["decapod.capturer"], {
+        args: ["{capturer}", "{arguments}.0"]
     });
     
 })(jQuery);
