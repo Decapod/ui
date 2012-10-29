@@ -385,6 +385,10 @@ var decapod = decapod || {};
                         }, {
                             listener: "{exportControl}.updateModel",
                             args: [{"disabled": true}]
+                        }, {
+                            listener: "{capturer}.events.onReadyToCapture",
+                            priority: "last",
+                            args: [null]
                         }],
                         "{capturer}.events.onCapturesRetrieved": [{
                             listener: "{imageSource}.get",
@@ -431,7 +435,6 @@ var decapod = decapod || {};
             onTemplateReady: null,
             onRestart: null,
             onDelete: null,
-            onImageProcessedReady: null,
             onReady: null,
             
             onError: null,
@@ -450,10 +453,12 @@ var decapod = decapod || {};
             onCaptureReviewerAttached: null,
             onExportControllerAttached: null,
             onCaptureControllerAttached: null,
+            
             onCameraStatusSourceSuccess: null,
             onCameraStatusSourceError: null,
             afterCaptureReviewerRendered: null,
             afterStatusRendered: null,
+            
             onStateDisplayReady: {
                 events: {
                     captureReviewer: "onCaptureReviewerAttached",
