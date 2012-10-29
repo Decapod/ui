@@ -53,8 +53,8 @@ var decapod = decapod || {};
     decapod.capturer.initCapturerControls = function (that) {
         that.locate("title").text(that.options.strings.title);
         that.locate("help").text(that.options.strings.help);
-        that.locate("export").text(that.options.strings.export);
-        that.locate("capture").html(that.options.markup.capture);
+        that.locate("exportButton").text(that.options.strings.exportButton);
+        that.locate("captureButton").html(that.options.markup.captureButton);
         var restart = that.locate("restart");
         restart.text(that.options.strings.restart);
         restart.click(function () {
@@ -122,10 +122,10 @@ var decapod = decapod || {};
             captureControl: {
                 type: "decapod.processButton",
                 createOnEvent: "onExportControllerAttached",
-                container: "{capturer}.dom.captureButton",
+                container: "{capturer}.dom.captureControl",
                 options: {
                     selectors: {
-                        button: ".dc-capturer-captureButton"
+                        button: "{capturer}.dom.captureButton"
                     },
                     strings: {
                         inProcess: "Taking picture"
@@ -173,10 +173,10 @@ var decapod = decapod || {};
             exportControl: {
                 type: "decapod.processButton",
                 createOnEvent: "onStateDisplayReady",
-                container: "{capturer}.dom.exportButton",
+                container: "{capturer}.dom.exportControl",
                 options: {
                     selectors: {
-                        button: ".dc-capturer-exportButton"
+                        button: "{capturer}.dom.exportButton"
                     },
                     strings: {
                         inProcess: "Creating archive"
@@ -411,12 +411,12 @@ var decapod = decapod || {};
             status: "READY"
         },
         selectors: {
-            captureButton: ".dc-capturer-controls",
-            exportButton: ".dc-capturer-controls",
+            captureControl: ".dc-capturer-controls",
+            exportControl: ".dc-capturer-controls",
+            captureButton: ".dc-capturer-captureButton",
+            exportButton: ".dc-capturer-exportButton",
             title: ".dc-capturer-title",
             restart: ".dc-capturer-restart",
-            capture: ".dc-capturer-captureButton",
-            export: ".dc-capturer-exportButton",
             help: ".dc-capturer-help",
             status: ".dc-capture-status",
             preview: ".dc-capturer-preview",
@@ -426,10 +426,10 @@ var decapod = decapod || {};
             title: "Capture",
             help: "Help",
             restart: "Restart",
-            export: "Export Captures"
+            exportButton: "Export Captures"
         },
         markup: {
-            capture: "Capture<br/><span>(Keyboard shortcut: C)</span>"
+            captureButton: "Capture<br/><span>(Keyboard shortcut: C)</span>"
         },
         events: {
             onTemplateReady: null,
