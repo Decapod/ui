@@ -1,15 +1,15 @@
 .ds-calibrator-main {
-    width:400px;
+    width:27em;
     margin-left: auto;
     margin-right: auto;
 }
 
 .ds-calibrator-dewarpControls {
-    margin-top: 20px;
+    margin-top: 1.25em;
 }
 
 .ds-calibrator-dewarpControls .ds-shared-grey-button {
-    height: 75px;
+    height: 4.7em;
     background: url("../../core/styles/images/export-22x22.png") 100px center no-repeat, -moz-linear-gradient(top,  #ffffff,  #ececec);
 }
 
@@ -19,7 +19,6 @@
 }
 
 .ds-calibrator-dewarpControls .ds-shared-grey-button:hover {
-    height: 75px;
     background: url("../../core/styles/images/export-22x22.png") 100px center no-repeat,  #ffffff;
 }
 
