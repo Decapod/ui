@@ -1,0 +1,29 @@
+.ds-exporter-upload, .ds-exporter-formatGroup {
+    width:600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ds-exporter-formatGroup .ds-exporter-accordion {
+    width:485px;
+}
+
+.ds-exporter-formatGroup h3 {
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+/**	
+ * jQuery overrides 
+ */
+.ui-state-focus {
+    outline: 0; /* Remove the dotten outline from appearing on accordion focus. */
+}
+
+.ds-shared-busy .ui-accordion .ui-accordion-header {
+    cursor: wait; /* Change to a wait cursor when the busy class is added */
+}
+
+
+
+

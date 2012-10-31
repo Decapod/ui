@@ -1,0 +1,72 @@
+.ds-capturer-main {
+    width:40em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ds-capturer-controls {
+    float: left;
+    margin-bottom: 1em;
+    height:6em;
+}
+
+.ds-capturer-controls .ds-capturer-captureButton {
+    width: 23em;
+    height: 100%;
+    background: url("../../../../core/styles/images/camera.png") center 1em no-repeat,  #fff;
+    display: inline-block;
+    padding: 3.3em 0 0 0;
+    text-align:center;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+
+.ds-capturer-controls .ds-capturer-exportButton {
+    width: 10em;
+    margin-left: 2em;
+    height: 100%;
+    display: inline-block;
+    padding: 3.3em 0 0;
+    float: right;
+    text-align: center;
+    background: url("../../../../core/styles/images/export-22x22.png") center 1em no-repeat,  #fff;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.ds-capturer-refresh {
+    background: url("../../../../core/styles/images/refresh-28x28-blue.png") 0.4em center no-repeat;
+    background-size: 19px 19px;
+    width: 4.5em;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+
+.ds-capturer-controls span {
+    font-size: 0.8em;
+}
+
+.ds-capturer-state {
+    display:block;
+    width: 23em;
+    overflow: auto;
+    float: left;
+}
+
+.ds-capturer-state h2 {
+    display: inline;
+}
+
+.ds-capturer-deleteImage {
+    float: right;
+}
+
+.ds-capturer-download-frame {
+    display: none;
+    width: 0px;
+    height: 0px;
+}
