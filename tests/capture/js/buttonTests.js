@@ -56,6 +56,7 @@ var decapod = decapod || {};
         });
        
         processButtonTests.asyncTest("Init with enabled state", function () {
+            jqUnit.expect(4);
             var assertAfterEnabled = function (that) {
                 assertEnabled(that);
                 start();
@@ -74,6 +75,7 @@ var decapod = decapod || {};
         });
 
         processButtonTests.asyncTest("Init with disabled state", function () {
+            jqUnit.expect(4);
             var assertAfterDisabled = function (that) {
                 assertDisabled(that);
                 start();
@@ -92,6 +94,7 @@ var decapod = decapod || {};
         });
 
         processButtonTests.asyncTest("onClick with enabled state", function () {
+            jqUnit.expect(1);
             var assertOnClick = function (that) {
                 jqUnit.assertTrue("The onClick event should have been fired", true);
                 start();
@@ -110,6 +113,7 @@ var decapod = decapod || {};
         });
 
         processButtonTests.test("onClick with disabled state", function () {
+            jqUnit.expect(1);
             var onClickFired = false;
             var assertOnClick = function (that) {
                 onClickFired = true;
@@ -127,7 +131,8 @@ var decapod = decapod || {};
             jqUnit.assertFalse("The onClick event should have not been fired", onClickFired);
         });
 
-        processButtonTests.asyncTest("setState", function () {
+        processButtonTests.asyncTest("setState - disabled", function () {
+            jqUnit.expect(4);
             var assertAfterDisabled = function (that) {
                 assertDisabled(that);
                 start();
@@ -145,6 +150,27 @@ var decapod = decapod || {};
             });
             
             that.setState("disabled");
+        });
+        
+        processButtonTests.asyncTest("setState - enabled", function () {
+            jqUnit.expect(4);
+            var assertAfterEnabled = function (that) {
+                assertEnabled(that);
+                start();
+            };
+            var that = decapod.button(CONTAINER, {
+                listeners: {
+                    afterEnabled: {
+                        listener: assertAfterEnabled,
+                        args: ["{button}"]
+                    }
+                },
+                model: {
+                    "state": "disabled"
+                }
+            });
+            
+            that.setState("enabled");
         });
 
     });
