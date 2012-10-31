@@ -4,21 +4,22 @@
     margin-right: auto;
 }
 
-.ds-calibrator-dewarpControls {
+.ds-calibrator-calibrateControls {
     margin-top: 1.25em;
+    height: 4.7em;
 }
 
-.ds-calibrator-dewarpControls .ds-shared-grey-button {
+.ds-calibrator-calibrateControls .ds-shared-grey-button {
     height: 4.7em;
     background: url("../../core/styles/images/export-22x22.png") 100px center no-repeat, -moz-linear-gradient(top,  #ffffff,  #ececec);
 }
 
-.ds-calibrator-dewarpControls .ds-shared-grey-button[disabled],
-.ds-calibrator-dewarpControls .ds-shared-grey-button[disabled]:hover {
+.ds-calibrator-calibrateControls .ds-shared-grey-button[disabled],
+.ds-calibrator-calibrateControls .ds-shared-grey-button[disabled]:hover {
     background: url("../../core/styles/images/export-22x22-grey.png") 100px center no-repeat;
 }
 
-.ds-calibrator-dewarpControls .ds-shared-grey-button:hover {
+.ds-calibrator-calibrateControls .ds-shared-grey-button:hover {
     background: url("../../core/styles/images/export-22x22.png") 100px center no-repeat,  #ffffff;
 }
 
