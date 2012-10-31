@@ -62,12 +62,12 @@ var decapod = decapod || {};
          * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
          */
         // Similar to the comment above but specifically a work around for FLUID-4334
-        that.setState = function () {
-            that.setState();
+        that.setState = function (state) {
+            that.setState(state);
         };
 
-        that.handleState = function () {
-            that.handleState();
+        that.handleState = function (state) {
+            that.handleState(state);
         };
     };
 
@@ -108,9 +108,7 @@ var decapod = decapod || {};
         },
         listeners: {
             onStateChanged: {
-                listener: "{button}.handleState",
-//                listener: function (a) {console.log(a);},
-                args: ["{arguments}.0"]
+                listener: "{button}.handleState"
             }
         }
     });
