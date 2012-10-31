@@ -34,6 +34,10 @@ var decapod = decapod || {};
         that.locate("downloadFrame").attr("src", url);
     };
 
+    decapod.capturer.setLabel = function (container, label) {
+        container.html(label);
+    };
+
     decapod.capturer.cameraStatusSuccess = function (that, response) {
         if (response.statusCode === 'READY') {
             that.events.onCameraReady.fire();
@@ -106,6 +110,10 @@ var decapod = decapod || {};
         that.download = function (url) {
             that.download(url);
         };
+        
+        that.setLabel = function (container, label) {
+            that.setLabel(container, label);
+        };
     };
     
     decapod.capturer.finalInit = function (that) {
@@ -121,80 +129,102 @@ var decapod = decapod || {};
         finalInitFunction: "decapod.capturer.finalInit",
         components: {
             captureControl: {
-                type: "decapod.processButton",
+                type: "decapod.button",
                 createOnEvent: "onExportControllerAttached",
-                container: "{capturer}.dom.captureControl",
+                container: "{capturer}.dom.captureButton",
                 options: {
-                    selectors: {
-                        button: "{capturer}.dom.captureButton"
-                    },
                     strings: {
-                        inProcess: "Taking picture"
+                        label: "{capturer}.options.markup.captureButton"
                     },
                     styles: {
                         disabled: "ds-capturer-captureButton-disabled"
                     },
                     model: {
-                        "disabled": true
+                        "state": "disabled"
                     },
                     listeners: {
                         "onAttach.onCaptureControllerAttached": "{capturer}.events.onCaptureControllerAttached",
-                        "onProcess": {
-                            listener: "{exportControl}.updateModel",
-                            args: [{"disabled": true}]
+                        "onClick.Capture": {
+                            listener: "{captureSource}.post",
+                            args: [null]
                         },
-                        "onProcessSuccess.showCaptureReviewer": {
+                        "onClick.disableCaptureControl": {
+                            listener: "{captureControl}.setState",
+                            args: ["disabled"]
+                        },
+                        "onClick.setProgress": {
+                            listener: "{capturer}.setLabel",
+                            args: ["{captureControl}.container", "{capturer}.options.strings.captureInProgress"]
+                        },
+                        "{captureSource}.events.postSuccess": [{
+                            listener: "{captureControl}.setState",
+                            args: ["enabled"]
+                        }, {
+                            listener: "{capturer}.setLabel",
+                            args: ["{captureControl}.container", "{capturer}.options.markup.captureButton"]
+                        }, {
                             listener: "{capturer}.displayElement",
                             args: ["{captureReviewer}.dom.container", true]
-                        },
-                        "onProcessSuccess.hideCaptureReviewer": {
+                        }, {
                             listener: "{capturer}.displayElement",
                             args: ["{status}.dom.container", false]
-                        },
-                        "onProcessSuccess.captureReviewerUpdateModel": {
+                        }, {
                             listener: "{captureReviewer}.updateModel",
                             args: [{"captureIndex": "{arguments}.0.totalCaptures", "captures": "{arguments}.0.captures"}]
-                        },
-                        "onProcessSuccess.exportControlUpdateModel": {
-                            listener: "{exportControl}.updateModel",
-                            args: [{"disabled": false}]
-                        },
-                        "{capturer}.events.onCameraReady": {
-                            listener: "{captureControl}.updateModel",
-                            args: [{"disabled": false}]
-                        },              
-
-                        "onProcessError.onError": {
+                        }, {
+                            listener: "{exportControl}.setState",
+                            args: ["enabled"]
+                        }],
+                        "{captureSource}.events.postError": {
                             listener: "{capturer}.events.onError",
                             args: ["{arguments}.0", "NO_CAPTURE"]
+                        },
+                        "{capturer}.events.onCameraReady": {
+                            listener: "{captureControl}.setState",
+                            args: ["enabled"]
                         }
                     }
                 }
             },
             exportControl: {
-                type: "decapod.processButton",
+                type: "decapod.button",
                 createOnEvent: "onStateDisplayReady",
-                container: "{capturer}.dom.exportControl",
+                container: "{capturer}.dom.exportButton",
                 options: {
-                    selectors: {
-                        button: "{capturer}.dom.exportButton"
-                    },
                     strings: {
-                        inProcess: "Creating archive"
+                        label: "{capturer}.options.strings.exportButton"
                     },
                     styles: {
                         disabled: "ds-capturer-exportButton-disabled"
                     },
                     model: {
-                        "disabled": true
+                        "state": "disabled"
                     },
                     listeners: {
                         "onAttach.onExportControllerAttached": "{capturer}.events.onExportControllerAttached",
-                        "onProcessSuccess.handleExportSuccess": {
+                        "onClick.fetchCaptures": {
+                            listener: "{captureSource}.get",
+                            args: [null]
+                        },
+                        "onClick.disableExportControl": {
+                            listener: "{exportControl}.setState",
+                            args: ["disabled"]
+                        },
+                        "onClick.setProgress": {
+                            listener: "{capturer}.setLabel",
+                            args: ["{exportControl}.container", "{capturer}.options.strings.exportInProgress"]
+                        },
+                        "{captureSource}.events.getSuccess": [{
+                            listener: "{exportControl}.setState",
+                            args: ["enabled"]
+                        }, {
+                            listener: "{capturer}.setLabel",
+                            args: ["{exportControl}.container", "{capturer}.options.strings.exportButton"]
+                        }, {
                             listener: "{capturer}.download",
                             args: ["{arguments}.0.url"]
-                        },
-                        "onProcessError.onError": {
+                        }],
+                        "{captureSource}.events.getError": {
                             listener: "{capturer}.events.onError",
                             // TODO: Needs to implement "NO_EXPORT" in the status component
                             args: ["{arguments}.0", "NO_EXPORT"]
@@ -374,8 +404,8 @@ var decapod = decapod || {};
                             listener: "{status}.updateStatus",
                             args: ["{arguments}.1"]
                         }, {
-                            listener: "{captureControl}.updateModel",
-                            args: [{"disabled": true}]
+                            listener: "{captureControl}.setState",
+                            args: ["disabled"]
                         }],
                         "{capturer}.events.onNoCaptures": [{
                             listener: "{capturer}.displayElement",
@@ -387,8 +417,8 @@ var decapod = decapod || {};
                             listener: "{status}.updateStatus",
                             args: ["{arguments}.0"]
                         }, {
-                            listener: "{exportControl}.updateModel",
-                            args: [{"disabled": true}]
+                            listener: "{exportControl}.setState",
+                            args: ["disabled"]
                         }, {
                             listener: "{capturer}.events.onReadyToCapture",
                             priority: "last",
@@ -401,11 +431,11 @@ var decapod = decapod || {};
                             listener: "{captureReviewer}.updateModel",
                             args: [{"captureIndex": "{arguments}.0.totalCaptures"}]
                         }, {
-                            listener: "{captureControl}.updateModel",
-                            args: [{"disabled": false}]
+                            listener: "{captureControl}.setState",
+                            args: ["enabled"]
                         }, {
-                            listener: "{exportControl}.updateModel",
-                            args: [{"disabled": false}]
+                            listener: "{exportControl}.setState",
+                            args: ["enabled"]
                         }]
                     }
                 }
@@ -415,8 +445,6 @@ var decapod = decapod || {};
             status: "READY"
         },
         selectors: {
-            captureControl: ".dc-capturer-controls",
-            exportControl: ".dc-capturer-controls",
             captureButton: ".dc-capturer-captureButton",
             exportButton: ".dc-capturer-exportButton",
             load: ".dc-capture-load",
@@ -433,6 +461,8 @@ var decapod = decapod || {};
             help: "Help",
             restart: "Restart",
             exportButton: "Export Captures",
+            exportInProgress: "Creating Archive...",
+            captureInProgress: "Taking Picture...",
             loadMessage: "Checking cameras..."
         },
         markup: {
@@ -541,7 +571,8 @@ var decapod = decapod || {};
         invokers: {
             download: "decapod.capturer.download",
             displayElement: "decapod.capturer.displayElement",
-            initCapturerControls: "decapod.capturer.initCapturerControls"
+            initCapturerControls: "decapod.capturer.initCapturerControls",
+            setLabel: "decapod.capturer.setLabel"
         },
         resources: {
             template: {

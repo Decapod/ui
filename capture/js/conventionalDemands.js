@@ -58,24 +58,6 @@ var decapod = decapod || {};
         }
     });
     
-    fluid.demands("captureControl", ["decapod.capturer"], {
-        options: {
-            dataSourceConfig: {
-                url: "http://localhost:8081/conventional/capture/",
-                method: "post"
-            }
-        }
-    });
-    
-    fluid.demands("exportControl", ["decapod.capturer"], {
-        options: {
-            dataSourceConfig: {
-                url: "http://localhost:8081/conventional/capture/",
-                method: "get"
-            }
-        }
-    });
-    
     // local filesystem
     fluid.demands("cameraStatusSource", ["decapod.fileSystem", "decapod.capturer"], {
         options: {
@@ -104,24 +86,6 @@ var decapod = decapod || {};
     fluid.demands("captureSource", ["decapod.fileSystem", "decapod.capturer"], {
         options: {
             url: "../../mock-data/capture/mockCaptureResponse.json"
-        }
-    });
-    
-    fluid.demands("captureControl", ["decapod.fileSystem", "decapod.capturer"], {
-        options: {
-            dataSourceConfig: {
-                url: "../../mock-data/capture/mockCaptureResponse.json",
-                method: "post"
-            }
-        }
-    });
-    
-    fluid.demands("exportControl", ["decapod.fileSystem", "decapod.capturer"], {
-        options: {
-            dataSourceConfig: {
-                url: "../../mock-data/capture/mockCaptureResponse.json",
-                method: "get"
-            }
         }
     });
     

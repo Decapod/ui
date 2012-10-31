@@ -74,10 +74,14 @@ var decapod = decapod || {};
     decapod.button.finalInit = function (that) {
         var button = that.container;
         button.attr("role", "button");
-        button.text(that.options.strings.label);
+        button.html(that.options.strings.label);
 
         that.applier.modelChanged.addListener("state", function (newModel) {
             that.events.onStateChanged.fire(newModel.state);
+        });
+
+        that.applier.guards.addListener("state", function (model, changeRequest) {
+            return changeRequest.value !== model.state;
         });
 
         that.handleState(that.model.state);

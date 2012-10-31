@@ -45,9 +45,9 @@ var decapod = decapod || {};
             jqUnit.assertFalse("The disabled attribute should have not been applied", $(CONTAINER).attr("disabled"));
         };
         
-        var processButtonTests = jqUnit.testCase("decapod.button");
+        var buttonTests = jqUnit.testCase("decapod.button");
         
-        processButtonTests.test("Init", function () {
+        buttonTests.test("Init", function () {
             jqUnit.expect(3);
             var that = decapod.button(CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
@@ -55,7 +55,7 @@ var decapod = decapod || {};
             jqUnit.assertEquals("The initial button text should have been set", $(CONTAINER).text(), that.options.strings.label);
         });
        
-        processButtonTests.asyncTest("Init with enabled state", function () {
+        buttonTests.asyncTest("Init with enabled state", function () {
             jqUnit.expect(4);
             var assertAfterEnabled = function (that) {
                 assertEnabled(that);
@@ -74,7 +74,7 @@ var decapod = decapod || {};
             });
         });
 
-        processButtonTests.asyncTest("Init with disabled state", function () {
+        buttonTests.asyncTest("Init with disabled state", function () {
             jqUnit.expect(4);
             var assertAfterDisabled = function (that) {
                 assertDisabled(that);
@@ -93,7 +93,7 @@ var decapod = decapod || {};
             });
         });
 
-        processButtonTests.asyncTest("onClick with enabled state", function () {
+        buttonTests.asyncTest("onClick with enabled state", function () {
             jqUnit.expect(1);
             var assertOnClick = function (that) {
                 jqUnit.assertTrue("The onClick event should have been fired", true);
@@ -112,7 +112,7 @@ var decapod = decapod || {};
             });
         });
 
-        processButtonTests.test("onClick with disabled state", function () {
+        buttonTests.test("onClick with disabled state", function () {
             jqUnit.expect(1);
             var onClickFired = false;
             var assertOnClick = function (that) {
@@ -131,7 +131,7 @@ var decapod = decapod || {};
             jqUnit.assertFalse("The onClick event should have not been fired", onClickFired);
         });
 
-        processButtonTests.asyncTest("setState - disabled", function () {
+        buttonTests.asyncTest("setState - disabled", function () {
             jqUnit.expect(4);
             var assertAfterDisabled = function (that) {
                 assertDisabled(that);
@@ -152,7 +152,7 @@ var decapod = decapod || {};
             that.setState("disabled");
         });
         
-        processButtonTests.asyncTest("setState - enabled", function () {
+        buttonTests.asyncTest("setState - enabled", function () {
             jqUnit.expect(4);
             var assertAfterEnabled = function (that) {
                 assertEnabled(that);
