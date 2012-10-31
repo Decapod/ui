@@ -50,7 +50,12 @@ var decapod = decapod || {};
             button.removeClass(that.options.styles.disabled);
             button.removeAttr("aria-disabled disabled");
 
-            button.bind("click.decapodButton", that.events.onClick.fire);
+            button.bind("click.decapodButton", function (event) {
+                if (that.options.preventDefault) {
+                    event.preventDefault();
+                }
+                that.events.onClick.fire(event);
+            });
             that.events.afterEnabled.fire();
         }
     };
@@ -110,7 +115,8 @@ var decapod = decapod || {};
             onStateChanged: {
                 listener: "{button}.handleState"
             }
-        }
+        },
+        preventDefault: true // prevent the default action of the underlying element (e.g. activing the href on a anchor tag) 
     });
     
 })(jQuery);
