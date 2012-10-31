@@ -45,7 +45,6 @@ var decapod = decapod || {};
             jqUnit.assertTrue("The delete link should be disabled", del.attr("disabled"));
             jqUnit.assertTrue("The delete links should have the aria-disabled set", del.attr("aria-disabled"));
             jqUnit.assertEquals("The delete link should have the button role set", "button", del.attr("role"));
-            jqUnit.assertTrue("The delete link should have the disabled class", del.hasClass(that.options.styles.disabled));
         };
 
         /************************
@@ -123,7 +122,7 @@ var decapod = decapod || {};
         });
         
         captureReviewerTests.asyncTest("setDeleted", function () {
-            jqUnit.expect(6);
+            jqUnit.expect(5);
             var model = {
                 captureIndex: 10,
                 captures: ["http://localhost:8080/test/image1.jpg", "http://localhost:8080/test/image2.jpg"]
@@ -151,7 +150,7 @@ var decapod = decapod || {};
         });
         
         captureReviewerTests.asyncTest("onDelete", function () {
-            jqUnit.expect(6);
+            jqUnit.expect(5);
             var model = {
                 captureIndex: 10,
                 captures: ["http://localhost:8080/test/image1.jpg", "http://localhost:8080/test/image2.jpg"]

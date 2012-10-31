@@ -37,12 +37,33 @@ var decapod = decapod || {};
     decapod.captureReviewer.setDeleted = function (that) {
         that.applier.requestChange("deleted", true);
     };
-
+    
     decapod.captureReviewer.produceTree = function (that) {
+        var isDeleted = !!that.model.deleted;
         return {
+            del: {
+                decorators: {
+                    type: "fluid",
+                    func: "decapod.button",
+                    options: {
+                        strings: {
+                            label: that.options.strings.del
+                        },
+                        model: {
+                            state: isDeleted ? "disabled" : "enabled"
+                        },
+                        listeners: {
+                            "onClick.delete": {
+                                listener: that.events.onDelete,
+                                args: [that.model.captureIndex]
+                            }
+                        }
+                    }
+                }
+            },
             expander: {
                 type: "fluid.renderer.condition",
-                condition: that.model.hasOwnProperty("deleted"),
+                condition: isDeleted,
                 trueTree: {
                     captureIndex: {
                         messagekey: "deletedIndex",
@@ -50,48 +71,12 @@ var decapod = decapod || {};
                     },
                     deletedMessage: {
                         messagekey: "deletedMessage"
-                    },
-                    del: {
-                        messagekey: "del",
-                        decorators: [{
-                            type: "attrs",
-                            attributes: {
-                                role: "button",
-                                disabled: "disabled",
-                                "aria-disabled": "true"
-                            }
-                        }, {
-                            type: "addClass",
-                            classes: that.options.styles.disabled
-                        }, {
-                            type: "jQuery",
-                            func: "click",
-                            args: function (event) {
-                                event.preventDefault();
-                            }
-                        }]
                     }
                 },
                 falseTree: {
                     captureIndex: {
                         messagekey: "captureIndex",
                         args: [that.model.captureIndex]
-                    },
-                    del: {
-                        messagekey: "del",
-                        decorators: [{
-                            type: "attrs",
-                            attributes: {
-                                role: "button"
-                            }
-                        }, {
-                            type: "jQuery",
-                            func: "click",
-                            args: function (event) {
-                                event.preventDefault();
-                                that.events.onDelete.fire(that.model.captureIndex);
-                            }
-                        }]
                     },
                     capturesContainer: {}, //forces the captureContainer to render (needed so that it will be removed in the trueTree)
                     expander: {
@@ -140,9 +125,6 @@ var decapod = decapod || {};
         preInitFunction: "decapod.captureReviewer.preInit",
         finalInitFunction: "decapod.captureReviewer.finalInit",
         produceTree: "decapod.captureReviewer.produceTree",
-        styles: {
-            disabled: ".dc-captureReviewer-disabled"
-        },
         selectors: {
             captureIndex: ".dc-captureReviewer-captureIndex",
             deletedMessage: ".dc-captureReviewer-deletedMessage",
