@@ -160,6 +160,9 @@ var decapod = decapod || {};
                             listener: "{captureControl}.setState",
                             args: ["enabled"]
                         }, {
+                            listener: "{exportControl}.setState",
+                            args: ["enabled"]
+                        }, {
                             listener: "{capturer}.setLabel",
                             args: ["{captureControl}.container", "{capturer}.options.markup.captureButton"]
                         }, {
@@ -172,8 +175,8 @@ var decapod = decapod || {};
                             listener: "{captureReviewer}.updateModel",
                             args: [{"captureIndex": "{arguments}.0.totalCaptures", "captures": "{arguments}.0.captures"}]
                         }, {
-                            listener: "{exportControl}.setState",
-                            args: ["enabled"]
+                            listener: "{capturer}.events.onCaptureSuccess",
+                            priority: "last"
                         }],
                         "{captureSource}.events.postError": {
                             listener: "{capturer}.events.onError",
@@ -223,10 +226,12 @@ var decapod = decapod || {};
                         }, {
                             listener: "{capturer}.download",
                             args: ["{arguments}.0.url"]
+                        }, {
+                            listener: "{capturer}.events.onExportSuccess",
+                            priority: "last"
                         }],
                         "{captureSource}.events.getError": {
                             listener: "{capturer}.events.onError",
-                            // TODO: Needs to implement "NO_EXPORT" in the status component
                             args: ["{arguments}.0", "NO_EXPORT"]
                         }
                     }
@@ -304,12 +309,10 @@ var decapod = decapod || {};
                             priority: "1",
                             args: ["{capturer}", "{arguments}.0"]
                         },
-                        "success.onCameraStatusSourceSuccess": "{capturer}.events.onCameraStatusSourceSuccess",
                         "error.onError": {
                             listener: "{capturer}.events.onError",
                             args: ["{arguments}.0", "NO_CAPTURE"]
-                        },
-                        "error.onCameraStatusSourceError": "{capturer}.events.onCameraStatusSourceError"
+                        }
                     }
                 }
             },
@@ -466,35 +469,24 @@ var decapod = decapod || {};
             loadMessage: "Checking cameras..."
         },
         markup: {
-            captureButton: "Capture<br/><span>(Keyboard shortcut: C)</span>"
+            captureButton: "Capture<br /><span>(Keyboard shortcut: C)</span>"
         },
         events: {
-            onTemplateReady: null,
             onRestart: null,
             onDelete: null,
-            onReady: null,
-            
-            onError: null,
             onReadyToCapture: null,
             onCameraReady: null,
             onNoCaptures: null,
             onCapturesRetrieved: null,
+            onError: null,
+            onExportSuccess: null,
+            onCaptureSuccess: null,
             
-            onEventBinderAttached: null,
-            onDeleteStatusSourceAttached: null,
-            onCaptureSourceAttached: null,
-            onImageSourceAttached: null,
-            onCaptureStatusSourceAttached: null,
-            onCameraStatusSourceAttached: null,
-            onStatusAttached: null,
-            onCaptureReviewerAttached: null,
-            onExportControllerAttached: null,
-            onCaptureControllerAttached: null,
-            
-            onCameraStatusSourceSuccess: null,
-            onCameraStatusSourceError: null,
             afterCaptureReviewerRendered: null,
             afterStatusRendered: null,
+
+            onTemplateReady: null,
+            onReady: null,
             
             onStateDisplayReady: {
                 events: {
@@ -534,7 +526,18 @@ var decapod = decapod || {};
                     "captureController": "onCaptureControllerAttached",
                     "onError": "onError"
                 }
-            }
+            },
+            
+            onEventBinderAttached: null,
+            onDeleteStatusSourceAttached: null,
+            onCaptureSourceAttached: null,
+            onImageSourceAttached: null,
+            onCaptureStatusSourceAttached: null,
+            onCameraStatusSourceAttached: null,
+            onStatusAttached: null,
+            onCaptureReviewerAttached: null,
+            onExportControllerAttached: null,
+            onCaptureControllerAttached: null,
         },
         listeners: {
             onReadySuccess: {
