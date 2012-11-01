@@ -61,7 +61,7 @@ var decapod = decapod || {};
     
     fluid.demands("decapod.dataSource.put", ["decapod.dataSource", "decapod.pdfExporter"], {
         funcName: "decapod.dataSource.method",
-        args: ["{dataSource}", "PUT", "{pdfExporter}.assembledExportOptions", "{arguments}.1"]
+        args: ["{dataSource}", "PUT", null, null, "{pdfExporter}.assembledExportOptions", "{arguments}.1"]
     });
     
     fluid.demands("decapod.outputSettings", ["decapod.pdfExportOptions", "decapod.pdfExporter"], {
