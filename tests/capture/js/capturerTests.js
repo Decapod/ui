@@ -33,6 +33,20 @@ var decapod = decapod || {};
         
         var CONTAINER = ".dc-capturer";
         
+        var initCapturer = function (options) {
+            var opts = {
+                resources: {
+                    template: {
+                        url: "../../../capture/html/capturerTemplate.html"
+                    }
+                }
+            };
+            
+            fluid.merge("replace", opts, options);
+            
+            return decapod.capturer(CONTAINER, opts);
+        };
+        
         capturerTests.asyncTest("Init", function () {
             jqUnit.expect(15);
             var expectedStrings = {
@@ -46,7 +60,7 @@ var decapod = decapod || {};
                 captureButton: "<span>Test Capture</span><span>(Test Keyboard shortcut: C)</span>"
             };
 
-            decapod.capturer(CONTAINER, {
+            var options = {
                 strings: expectedStrings,
                 markup: expectedMarkup,
                 listeners: {
@@ -55,11 +69,11 @@ var decapod = decapod || {};
                             jqUnit.assertEquals("The title text should have been set properly", expectedStrings.title, that.locate("title").text());
                             jqUnit.assertEquals("The help link text should have been set properly", expectedStrings.help, that.locate("help").text());
                             jqUnit.assertEquals("The restart link text should have been set properly", expectedStrings.restart, that.locate("restart").text());
-                            jqUnit.assertEquals("The export button text should have been set properly", expectedStrings.exportButton, that.locate("exportButton").text())
-                            jqUnit.assertEquals("The export button text should have been set properly", expectedMarkup.captureButton, that.locate("captureButton").html())
+                            jqUnit.assertEquals("The export button text should have been set properly", expectedStrings.exportButton, that.locate("exportButton").text());
+                            jqUnit.assertEquals("The export button text should have been set properly", expectedMarkup.captureButton, that.locate("captureButton").html());
                             
-                            jqUnit.assertTrue("The capture button should have been enabled", that.locate("captureButton").is(":enabled"));
-                            jqUnit.assertTrue("The export button should have been enabled", that.locate("exportButton").is(":enabled"));
+                            jqUnit.assertFalse("The capture button should have been enabled", that.locate("captureButton").attr("aria-disabled"));
+                            jqUnit.assertFalse("The export button should have been enabled", that.locate("exportButton").attr("aria-disabled"));
                             jqUnit.notVisible("The load indicator should have been hidden", that.locate("load"));
                             jqUnit.notVisible("The status viewer should have been hidden", that.locate("status"));
                             jqUnit.isVisible("The image viewer should have been shown", that.locate("preview"));
@@ -78,56 +92,107 @@ var decapod = decapod || {};
                         },
                         args: ["{capturer}"]
                     }
-                },
-                resources: {
-                    template: {
-                        url: "../../../capture/html/capturerTemplate.html"
-                    }
                 }
-            });
+            };
+            
+            initCapturer(options);
         });
 
-        // capturerTests.asyncTest("Export", function () {
-            // decapod.capturer(CONTAINER, {
-                // listeners: {
-                    // onExportSuccess: {
-                        // listener: function (that) {
-                            // jqUnit.assertNotEquals("The href of the download iframe should have been set", that.locate("downloadFrame").attr("src"), "");
-                            // that.captureReviewer.events.afterRender.addListener(start);
-                        // },
-                        // args: ["{capturer}"]
-                    // },
-                    // onReady: {
-                        // listener: function (that) {
-                            // that.exportControl.locate("button").click();
-                        // },
-                        // args: ["{capturer}"]
-                    // }
-                // }
-            // });
-        // });
-// 
-        // capturerTests.asyncTest("Delete", function () {
-            // decapod.capturer(CONTAINER, {
-                // listeners: {
-                    // onDelete: {
-                        // listener: function (that) {
-//                             
-                            // jqUnit.assertUndefined("No images should have been displayed", that.captureReviewer.locate("captureIMG").attr("src"));
-                            // jqUnit.assertEquals("The deleted message should have been displayed", fluid.stringTemplate(that.captureReviewer.options.strings.deletedIndex, {0: ""}), that.captureReviewer.locate("captureIndex").text());
-                            // that.captureReviewer.events.afterRender.addListener(start);
-                        // },
-                        // args: ["{capturer}"]
-                    // },
-                    // onReady: {
-                        // listener: function (that) {
-                            // that.captureReviewer.locate("del").click();
-                        // },
-                        // args: ["{capturer}"]
-                    // }
-                // }
-            // });
-        // });
+        capturerTests.asyncTest("Capture", function () {
+            var options = {
+                listeners: {
+                    onCaptureSuccess: {
+                        listener: function (that) {
+                            jqUnit.assertFalse("The capture button should have been enabled", that.locate("captureButton").attr("aria-disabled"));
+                            jqUnit.assertFalse("The export button should have been enabled", that.locate("exportButton").attr("aria-disabled"));
+                            jqUnit.assertEquals("The capture button text should have been set back", $("<a>").html(that.options.markup.captureButton).text(), that.locate("captureButton").text());
+                            jqUnit.notVisible("The status viewer should have been hidden", that.locate("status"));
+                            jqUnit.isVisible("The image viewer should have been shown", that.locate("preview"));
+                            jqUnit.assertTrue("The image src should have been set", that.captureReviewer.locate("captureIMG").attr("src"));
+                            start();
+                        },
+                        args: ["{capturer}"]
+                    },
+                    onReady: {
+                        listener: function (that) {
+                            that.locate("captureButton").click();
+                        },
+                        args: ["{capturer}"]
+                    }
+                }
+            };
+            
+            initCapturer(options);
+        });
+ 
+        capturerTests.asyncTest("Export", function () {
+            var options = {
+                listeners: {
+                    onExportSuccess: {
+                        listener: function (that) {
+                            jqUnit.assertNotEquals("The href of the download iframe should have been set", that.locate("downloadFrame").attr("src"), "");
+                            jqUnit.assertFalse("The export button should have been enabled", that.locate("exportButton").attr("aria-disabled"));
+                            jqUnit.assertEquals("The export button text should have been set back", that.options.strings.exportButton, that.locate("exportButton").text());
+                            start();
+                        },
+                        args: ["{capturer}"]
+                    },
+                    onReady: {
+                        listener: function (that) {
+                            that.locate("exportButton").click();
+                        },
+                        args: ["{capturer}"]
+                    }
+                }
+            };
+            
+            initCapturer(options);
+        });
+ 
+        capturerTests.asyncTest("Delete", function () {
+            var options = {
+                listeners: {
+                    onDelete: {
+                        listener: function (that) {
+                            jqUnit.assertUndefined("No images should have been displayed", that.captureReviewer.locate("captureIMG").attr("src"));
+                            jqUnit.assertEquals("The deleted message should have been displayed", fluid.stringTemplate(that.captureReviewer.options.strings.deletedIndex, {0: "1"}), that.captureReviewer.locate("captureIndex").text());
+                            start();
+                        },
+                        args: ["{capturer}"],
+                        priority: "last"
+                    },
+                    onReady: {
+                        listener: function (that) {
+                            that.captureReviewer.locate("del").click();
+                        },
+                        args: ["{capturer}"]
+                    }
+                }
+            };
+            
+            initCapturer(options);
+        });
+
+        capturerTests.asyncTest("onRestart", function () {
+            var options = {
+                listeners: {
+                    onRestart: {
+                        listener: function (that) {
+                            jqUnit.assertTrue("onRestart event should have been fired", true);
+                            start();
+                        }
+                    },
+                    onReady: {
+                        listener: function (that) {
+                            that.locate("restart").click();
+                        },
+                        args: ["{capturer}"]
+                    }
+                }
+            };
+            
+            initCapturer(options);
+        });
 
     });
 })(jQuery);
