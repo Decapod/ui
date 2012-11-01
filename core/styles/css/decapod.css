@@ -419,20 +419,12 @@ ul.ds-shared-titleBar-flatList {
     border: 1px solid #cfcfcf;
     background-color: #ededed;
     opacity: 0.4;
+    cursor: default;
 }
 
 .ds-shared-grey-button:hover {
     background: -moz-linear-gradient(top,  #ededed, #ffffff);
 }
-
-.ds-shared-green-button {
-    padding: 4px;
-    background-color: #009444;
-    box-shadow: 3px 3px 5px -1px #808285;
-    border: none;
-    color: #fff;
-}
-
 .ds-shared-uploadControls {
     width: 100%;
     text-align: right;
@@ -462,7 +454,6 @@ ul.ds-shared-titleBar-flatList {
 
 .ds-shared-uploadControls .ds-shared-uploadBrowse-dim,
 .ds-shared-uploadControls .fl-uploader-dim {
-    background: url("../images/folder-icon-22x22-grey.png") 5px center no-repeat, #F9F9FA;
     border: 1px solid transparent;
     opacity: 0.4;
 }
