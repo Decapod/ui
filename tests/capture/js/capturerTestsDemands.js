@@ -48,7 +48,7 @@ var decapod = decapod || {};
     
     fluid.demands("captureSource", ["decapod.fileSystem", "decapod.test"], {
         options: {
-            url: "../../../mock-data/capture/mockImagesByIndex.json"
+            url: "../../../mock-data/capture/mockCaptureResponse.json"
         }
     });
     
