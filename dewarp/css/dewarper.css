@@ -1,0 +1,25 @@
+.ds-dewarper-main {
+    width:27em;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.ds-dewarper-dewarpControls {
+    margin-top: 1.25em;
+}
+
+.ds-dewarper-dewarpControls .ds-shared-grey-button {
+    height: 4.7em;
+    background: url("../../core/styles/images/export-22x22.png") 100px center no-repeat, -moz-linear-gradient(top,  #ffffff,  #ececec);
+}
+
+.ds-dewarper-dewarpControls .ds-shared-grey-button[disabled],
+.ds-dewarper-dewarpControls .ds-shared-grey-button[disabled]:hover {
+    background: url("../../core/styles/images/export-22x22-grey.png") 100px center no-repeat;
+}
+
+.ds-dewarper-dewarpControls .ds-shared-grey-button:hover {
+    background: url("../../core/styles/images/export-22x22.png") 100px center no-repeat, -moz-linear-gradient(top,  #ececec, #ffffff);
+}
+
