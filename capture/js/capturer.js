@@ -39,7 +39,7 @@ var decapod = decapod || {};
     };
 
     decapod.capturer.cameraStatusSuccess = function (that, response) {
-        if (response.statusCode === 'READY') {
+        if (response.statusCode === 'READY_FOR_CONVENTIONAL' || response.statusCode === 'READY_FOR_STEREO') {
             that.events.onCameraReady.fire();
         } else {
             that.events.onError.fire(response, response.statusCode);
@@ -264,9 +264,14 @@ var decapod = decapod || {};
                     },
                     model: {
                         currentStatus: "{capturer}.model.status",
-                        READY: {
-                            name: "Ready to Capture",
-                            description: "Press the Camera Button to start.",
+                        READY_FOR_CONVENTIONAL: {
+                            name: "Ready for conventional Capture",
+                            description: "3D stereo capture is unavailable. <br /> Press the Camera Button to start.",
+                            style: "dc-status-ready"
+                        },
+                        READY_FOR_STEREO: {
+                            name: "Ready for stereo Capture",
+                            description: "Capable of capturing in stereo. <br />Press the Camera Button to start.",
                             style: "dc-status-ready"
                         },
                         NO_CAMERAS: {
@@ -445,7 +450,7 @@ var decapod = decapod || {};
             }
         },
         model: {
-            status: "READY"
+            status: "READY_FOR_CONVENTIONAL"
         },
         selectors: {
             captureButton: ".dc-capturer-captureButton",
