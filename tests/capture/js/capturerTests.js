@@ -99,6 +99,7 @@ var decapod = decapod || {};
         });
 
         capturerTests.asyncTest("Capture", function () {
+            jqUnit.expect(6);
             var options = {
                 listeners: {
                     onCaptureSuccess: {
@@ -126,6 +127,7 @@ var decapod = decapod || {};
         });
  
         capturerTests.asyncTest("Export", function () {
+            jqUnit.expect(3);
             var options = {
                 listeners: {
                     onExportSuccess: {
@@ -150,6 +152,7 @@ var decapod = decapod || {};
         });
  
         capturerTests.asyncTest("Delete", function () {
+            jqUnit.expect(2);
             var options = {
                 listeners: {
                     onDelete: {
@@ -174,10 +177,11 @@ var decapod = decapod || {};
         });
 
         capturerTests.asyncTest("onRestart", function () {
+            jqUnit.expect(1);
             var options = {
                 listeners: {
                     onRestart: {
-                        listener: function (that) {
+                        listener: function () {
                             jqUnit.assertTrue("onRestart event should have been fired", true);
                             start();
                         }
@@ -193,6 +197,146 @@ var decapod = decapod || {};
             
             initCapturer(options);
         });
+        
+        capturerTests.asyncTest("onReadyToCapture", function () {
+            jqUnit.expect(2);
+            var options = {
+                listeners: {
+                    "onReady.test": {
+                        listener: function (that) {
+                            that.events.onReady.removeListener("test")
+                            that.events.onReadyToCapture.addListener(function () {
+                                jqUnit.assertTrue("onReadyToCapture event should have been fired", true);
+                                jqUnit.notVisible("The load element should not be visible", that.locate("load"));
+                                start();
+                            });
+                            that.events.onReadyToCapture.fire();
+                        },
+                        args: ["{capturer}"]
+                    }
+                }
+            };
+            
+            initCapturer(options);
+        });
+        
+        capturerTests.asyncTest("onCameraReady", function () {
+            jqUnit.expect(2);
+            var options = {
+                listeners: {
+                    "onReady.test": {
+                        listener: function (that) {
+                            that.events.onReady.removeListener("test")
+                            that.events.onReadyToCapture.addListener(function () {
+                                start();
+                            });
+                            that.captureStatusSource.events.getSuccess.addListener(function () {
+                                jqUnit.assertTrue("captureStatusSource success event should have been fired", true);
+                            });
+                            that.events.onCameraReady.addListener(function () {
+                                jqUnit.assertEquals("The captureControl should be enabled", "enabled",that.captureControl.model.state);
+                            }, null, null, "last");
+                            that.events.onCameraReady.fire();
+                        },
+                        args: ["{capturer}"]
+                    }
+                }
+            };
+            
+            initCapturer(options);
+        });
+        
+        capturerTests.asyncTest("onNoCaptures", function () {
+            jqUnit.expect(4);
+            var statusCode = "NO_CAPTURE";
+            var options = {
+                listeners: {
+                    onNoCaptures: {
+                        listener: function (that) {
+                            jqUnit.notVisible("The capturerReviewer should be hidden", that.captureReviewer.container);
+                            jqUnit.isVisible("The status should be visible", that.status.container);
+                            jqUnit.assertEquals("The status should have updated", statusCode, that.status.model.currentStatus);
+                            start();
+                        },
+                        priority: "last",
+                        args: ["{capturer}"]
+                    },
+                    "onReady.test": {
+                        listener: function (that) {
+                            that.events.onReady.removeListener("test")
+                            that.events.onReadyToCapture.addListener(function () {
+                                jqUnit.assertTrue("onReadyToCapture event should have been fired", true);
+                            });
+                            that.events.onNoCaptures.fire(statusCode);
+                        },
+                        args: ["{capturer}"]
+                    }
+                }
+            };
+            
+            initCapturer(options);
+        });
 
+        capturerTests.asyncTest("onCapturesRetrieved", function () {
+            jqUnit.expect(3);
+            var response = {"totalCaptures": 1, "lastCaptureIndex": 1};
+            var count = 0;
+            var options = {
+                listeners: {
+                    "onReady.test": {
+                        listener: function (that) {
+                            that.events.onReady.removeListener("test");
+                            that.events.onReadyToCapture.addListener(function () {
+                                start();
+                            });
+                            // TODO: test that the imageSource event is fired. Currently the application works, but this test listener never gets triggered.
+                            // that.imageSource.events.getSuccess.addListener(function () {
+                                // jqUnit.assertTrue("imageSource getSuccess event should have been fired", true);
+                            // });
+                            that.events.onCapturesRetrieved.addListener(function () {
+                                jqUnit.assertEquals("The captureControl should be enabled", "enabled",that.captureControl.model.state);
+                                jqUnit.assertEquals("The exportControl should be enabled", "enabled",that.exportControl.model.state);
+                                jqUnit.assertEquals("The caputreReviewer model should have been updated", response.totalCaptures, that.captureReviewer.model.captureIndex);
+                            }, null, null, "last");
+                            that.events.onCapturesRetrieved.fire(response);
+                        },
+                        args: ["{capturer}"]
+                    }
+                }
+            };
+            
+            initCapturer(options);
+        });
+
+        capturerTests.asyncTest("onError", function () {
+            jqUnit.expect(5);
+            var statusCode = "NO_CAMERAS";
+            var count = 0;
+            var options = {
+                listeners: {
+                    "onError": {
+                        listener: function (that) {
+                            jqUnit.notVisible("The captureReviewer should not be visible", that.captureReviewer.container);
+                            jqUnit.isVisible("The status should be visible", that.status.container);
+                            jqUnit.notVisible("The load should not be visible", that.locate("load"));
+                            jqUnit.assertEquals("The status should have been upated", statusCode, that.status.model.currentStatus);
+                            jqUnit.assertEquals("The captureControl should be disabled", "disabled", that.captureControl.model.state);
+                            start();
+                        },
+                        priority: "last",
+                        args: ["{capturer}"]
+                    },
+                    "onReady.test": {
+                        listener: function (that) {
+                            that.events.onReady.removeListener("test");
+                            that.events.onError.fire(null, statusCode);
+                        },
+                        args: ["{capturer}"]
+                    }
+                }
+            };
+            
+            initCapturer(options);
+        });
     });
 })(jQuery);
