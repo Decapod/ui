@@ -48,7 +48,7 @@ var decapod = decapod || {};
         };
         
         capturerTests.asyncTest("Init", function () {
-            jqUnit.expect(15);
+            jqUnit.expect(17);
             var expectedStrings = {
                 title: "Test Capture",
                 help: "Test Help Link",
@@ -70,12 +70,13 @@ var decapod = decapod || {};
                             jqUnit.assertEquals("The help link text should have been set properly", expectedStrings.help, that.locate("help").text());
                             jqUnit.assertEquals("The restart link text should have been set properly", expectedStrings.restart, that.locate("restart").text());
                             jqUnit.assertEquals("The export button text should have been set properly", expectedStrings.exportButton, that.locate("exportButton").text());
-                            jqUnit.assertEquals("The export button text should have been set properly", expectedMarkup.captureButton, that.locate("captureButton").html());
+                            jqUnit.assertEquals("The capture button text should have been set properly", expectedMarkup.captureButton, that.locate("captureButton").html());
                             
                             jqUnit.assertFalse("The capture button should have been enabled", that.locate("captureButton").attr("aria-disabled"));
                             jqUnit.assertFalse("The export button should have been enabled", that.locate("exportButton").attr("aria-disabled"));
                             jqUnit.notVisible("The load indicator should have been hidden", that.locate("load"));
                             jqUnit.notVisible("The status viewer should have been hidden", that.locate("status"));
+                            jqUnit.notVisible("The export description should have been hidden", that.locate("exportDesc"));
                             jqUnit.isVisible("The image viewer should have been shown", that.locate("preview"));
                             jqUnit.assertTrue("The image src should have been set", that.captureReviewer.locate("captureIMG").attr("src"));
                             
@@ -89,6 +90,7 @@ var decapod = decapod || {};
                             jqUnit.isVisible("The load indicator should be visible", that.locate("load"));
                             jqUnit.notVisible("The status should not be visible", that.locate("status"));
                             jqUnit.notVisible("The preview should not be visible", that.locate("preview"));
+                            jqUnit.notVisible("The export description should have been hidden", that.locate("exportDesc"));
                         },
                         args: ["{capturer}"]
                     }
@@ -99,7 +101,7 @@ var decapod = decapod || {};
         });
 
         capturerTests.asyncTest("Capture", function () {
-            jqUnit.expect(6);
+            jqUnit.expect(7);
             var options = {
                 listeners: {
                     onCaptureSuccess: {
@@ -110,6 +112,7 @@ var decapod = decapod || {};
                             jqUnit.notVisible("The status viewer should have been hidden", that.locate("status"));
                             jqUnit.isVisible("The image viewer should have been shown", that.locate("preview"));
                             jqUnit.assertTrue("The image src should have been set", that.captureReviewer.locate("captureIMG").attr("src"));
+                            jqUnit.notVisible("The export description should have been hidden", that.locate("exportDesc"));
                             start();
                         },
                         args: ["{capturer}"]
@@ -127,7 +130,7 @@ var decapod = decapod || {};
         });
  
         capturerTests.asyncTest("Export", function () {
-            jqUnit.expect(3);
+            jqUnit.expect(4);
             var options = {
                 listeners: {
                     onExportSuccess: {
@@ -135,6 +138,7 @@ var decapod = decapod || {};
                             jqUnit.assertNotEquals("The href of the download iframe should have been set", that.locate("downloadFrame").attr("src"), "");
                             jqUnit.assertFalse("The export button should have been enabled", that.locate("exportButton").attr("aria-disabled"));
                             jqUnit.assertEquals("The export button text should have been set back", that.options.strings.exportButton, that.locate("exportButton").text());
+                            jqUnit.isVisible("The export description should have been visible", that.locate("exportDesc"));
                             start();
                         },
                         args: ["{capturer}"]
@@ -152,13 +156,14 @@ var decapod = decapod || {};
         });
  
         capturerTests.asyncTest("Delete", function () {
-            jqUnit.expect(2);
+            jqUnit.expect(3);
             var options = {
                 listeners: {
                     onDelete: {
                         listener: function (that) {
                             jqUnit.assertUndefined("No images should have been displayed", that.captureReviewer.locate("captureIMG").attr("src"));
                             jqUnit.assertEquals("The deleted message should have been displayed", fluid.stringTemplate(that.captureReviewer.options.strings.deletedIndex, {0: "1"}), that.captureReviewer.locate("captureIndex").text());
+                            jqUnit.notVisible("The export description should have been hidden", that.locate("exportDesc"));
                             start();
                         },
                         args: ["{capturer}"],
@@ -177,14 +182,16 @@ var decapod = decapod || {};
         });
 
         capturerTests.asyncTest("onRestart", function () {
-            jqUnit.expect(1);
+            jqUnit.expect(2);
             var options = {
                 listeners: {
                     onRestart: {
-                        listener: function () {
+                        listener: function (that) {
                             jqUnit.assertTrue("onRestart event should have been fired", true);
+                            jqUnit.notVisible("The export description should have been hidden", that.locate("exportDesc"));
                             start();
-                        }
+                        },
+                        args: ["{capturer}"]
                     },
                     onReady: {
                         listener: function (that) {

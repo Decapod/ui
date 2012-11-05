@@ -128,3 +128,10 @@
 
 .ds-capturer-stereoUnavailable h2 {
 }
+
+.ds-capturer-export-description {
+    float: right;
+    width: 11em;
+    margin-right: 4em;
+    padding-top: 1em;
+}
