@@ -126,6 +126,10 @@ var decapod = decapod || {};
             url: "../../../mock-book/images/pdf/mockBook.pdf"
         };
         
+        var errorResponse = {
+            status: "error"
+        };
+        
         var inProgressResponse = {
             status: "in progress"
         };
@@ -165,6 +169,13 @@ var decapod = decapod || {};
             jqUnit.assertFalse("isComplete should return false", that.isComplete(inProgressResponse));
         });
         
+        exportPollerTests.test("isError", function () {
+            var that = decapod.exportPoller();
+            
+            jqUnit.assertTrue("isComplete should return true", that.isError(errorResponse));
+            jqUnit.assertFalse("isComplete should return false", that.isError(inProgressResponse));
+        });
+        
         exportPollerTests.asyncTest("handleResponse", function () {
             jqUnit.expect(4);
             var that = decapod.exportPoller({delay: 10});
@@ -178,6 +189,17 @@ var decapod = decapod || {};
                 start();
             });
             that.handleResponse(inProgressResponse);
+        });
+        
+        exportPollerTests.asyncTest("handleResponse - error", function () {
+            jqUnit.expect(2);
+            var that = decapod.exportPoller({delay: 10});
+            that.events.onError.addListener(function () {
+                jqUnit.assertTrue("The onError event should have fired", true);
+                jqUnit.assertDeepEq("The response should be set", errorResponse, that.response);
+                start();
+            });
+            that.handleResponse(errorResponse);
         });
         
         exportPollerTests.asyncTest("Datasource Integration - onPoll", function () {
