@@ -1562,6 +1562,7 @@ var decapod = decapod || {};
             jqUnit.expect(4);
             var model = {
                 showExportStart: false,
+                showExportError: false,
                 showExportProgress: true,
                 showExportComplete: false
             };
@@ -1591,6 +1592,7 @@ var decapod = decapod || {};
             jqUnit.expect(6);
             var model = {
                 showExportStart: false,
+                showExportError: false,
                 showExportProgress: false,
                 showExportComplete: true
             };
@@ -1616,6 +1618,38 @@ var decapod = decapod || {};
             
         });
         
+        controlsTests.asyncTest("Change Model - show error message", function () {
+            jqUnit.expect(3);
+            var model = {
+                showExportStart: false,
+                showExportError: true,
+                showExportProgress: false,
+                showExportComplete: false
+            };
+            var assertRender = function (that) {
+                var name = $(".dc-status-name");
+                var desc = $(".dc-status-description");
+                jqUnit.assertEquals("The status name should be rendered", "Export Error", name.text());
+                jqUnit.assertEquals("The description should be rendered", "An error occured during the creation of the export. Please see documentation for possible resolutions.", desc.html());
+                start();
+            };
+            var assertModel = function (newModel) {
+                jqUnit.assertDeepEq("The model should be updated", model, newModel);
+            };
+            createControls(CONTROLS_CONTAINER, {
+                listeners: {
+                    afterRender: function (that) {
+                        if (that["**-renderer-trigger-0"]) {
+                            that.events.afterModelChanged.addListener(assertModel);
+                            that.updateModel(model);
+                        } else {
+                            assertRender(that);
+                        }
+                    }
+                }
+            });
+            
+        });
 
         controlsTests.asyncTest("Export Control Click", function () {
             jqUnit.expect(4);
