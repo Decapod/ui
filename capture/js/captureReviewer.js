@@ -137,7 +137,7 @@ var decapod = decapod || {};
         strings: {
             captureIndex: "Capture #%0",
             deletedIndex: "Deleted Capture #%0",
-            deletedMessage: "",
+            deletedMessage: "Press the Camera Button to continue capturing.",
             del: "Delete"
         },
         model: {
