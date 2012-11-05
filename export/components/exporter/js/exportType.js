@@ -693,6 +693,28 @@ var decapod = decapod || {};
                 },
                 {
                     type: "fluid.renderer.condition",
+                    condition: that.model.showExportError,
+                    trueTree: {
+                        status: {
+                            decorators: {
+                                type: "fluid",
+                                func: "decapod.status",
+                                options: {
+                                    model: {
+                                        currentStatus: "error",
+                                        "error": {
+                                            name: "Export Error",
+                                            description: "An error occured during the creation of the export. Please see documentation for possible resolutions.",
+                                            style: "ds-status-error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    type: "fluid.renderer.condition",
                     condition: that.model.showExportProgress,
                     trueTree: {
                         progress: {
@@ -772,7 +794,8 @@ var decapod = decapod || {};
         selectors: {
             trigger: ".dc-exportControls-trigger",
             progress: ".dc-exportControls-progress",
-            complete: ".dc-exportControls-complete"
+            complete: ".dc-exportControls-complete",
+            status: ".dc-capture-status"
         },
         strings: {
             trigger: "Start Export",
@@ -793,6 +816,7 @@ var decapod = decapod || {};
                 listener: "{exportControls}.updateModel",
                 args: [{
                     showExportStart: false,
+                    showExportError: false,
                     showExportProgress: true,
                     showExportComplete: false
                 }]
@@ -800,6 +824,7 @@ var decapod = decapod || {};
         },
         model: {
             showExportStart: true,
+            showExportError: false,
             showExportProgress: false,
             showExportComplete: false,
             downloadURL: ""
