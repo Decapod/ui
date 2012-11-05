@@ -276,7 +276,8 @@ var decapod = decapod || {};
                         currentStatus: "{capturer}.model.status",
                         READY_FOR_CONVENTIONAL: {
                             name: "Ready to capture",
-                            description: "<p>Press the Camera Button to start.</p> <div class='ds-capturer-stereoUnavailable'><h2>Stereo 3D capturing: <i>unavailable</i>.</h2><br />See <a href=''>Help</a> for details.</div>",
+                            description: "<p>Press the Camera Button to start.</p> <div class='ds-capturer-stereoUnavailable'><h2>Stereo 3D capturing: <i>unavailable</i>.<br />See <a href=''>Help</a> for details.</div>",
+                            
                             style: "dc-status-ready ds-status-ready"
                         },
                         READY_FOR_STEREO: {
