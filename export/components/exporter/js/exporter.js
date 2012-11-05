@@ -190,6 +190,7 @@ var decapod = decapod || {};
         selectors: {
             title: ".dc-exporter-title",
             formats: ".dc-exporter-formats",
+            help: ".dc-exporter-help",
             uploadClear: ".dc-exporter-uploadClear",
             uploadContainer: ".dc-exporter-upload",
             uploadBrowse: ".dc-exporter-uploadBrowse",
@@ -203,7 +204,8 @@ var decapod = decapod || {};
         strings: {
             title: "Export Images to PDF",
             instructions: "Select 'Browse Files' to choose images to export.",
-            uploadClear: "Reset",
+            uploadClear: "Restart",
+            help: "Help",
             formats: "Select Export Option",
             pdfs: {
                 name: "PDF",
