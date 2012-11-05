@@ -1,5 +1,5 @@
 .ds-capturer-main {
-    width:40em;
+    width:50em;
     margin-left: auto;
     margin-right: auto;
 }
@@ -11,7 +11,7 @@
 }
 
 .ds-capturer-controls .ds-capturer-captureButton {
-    width: 23em;
+    width: 30em;
     height: 100%;
     background: url("../../../../core/styles/images/camera.png") center 1em no-repeat,  #fff;
     display: inline-block;
@@ -52,7 +52,7 @@
 
 .ds-capturer-state {
     display:block;
-    width: 23em;
+    width: 30em;
     overflow: auto;
     float: left;
 }
@@ -69,4 +69,62 @@
     display: none;
     width: 0px;
     height: 0px;
+}
+
+/* Status messages */
+
+.ds-status-title {
+    display: block;
+    height: 4.2em;
+    padding-left:4em;
+    padding-top:0.6em;
+    display:block;
+    line-height:2.1em;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.ds-status-noCameras{
+    background: url("../../../../core/styles/images/NO_CAMERAS.png") 0em 0em no-repeat;
+}
+
+.ds-status-ready {
+    background: url("../../../../core/styles/images/capture_ready.png") 0em 0em no-repeat;
+}
+
+.ds-status-cameraDisconnected {
+    background: url("../../../../core/styles/images/CAMERA_DISCONNECTED.png") 0em 0em no-repeat;
+}
+
+.ds-status-noCapture {
+    background: url("../../../../core/styles/images/NO_CAPTURE.png") 0em 0em no-repeat;
+}
+
+.ds-status-tooManyCameras {
+    background: url("../../../../core/styles/images/TOO_MANY_CAMERAS.png") 0em 0em no-repeat;
+}
+
+.ds-status-ready .ds-shared-status-description {
+    position:relative;
+    top: -3em;
+}
+
+.ds-status-ready .ds-shared-status-description p{
+    padding-left: 4.8em;
+}
+
+.ds-status-ready .ds-capturer-refresh {
+    position:relative;
+    bottom: 1.7em;
+}
+
+.ds-capturer-stereoUnavailable {
+    background: url("../../../../core/styles/images/stereo.png") 0em 0em no-repeat; -moz-opacity:0.4;
+    margin: 1em 0 1em 0;
+    display:block;
+    padding: 0.5em 0 0 7em;
+    height: 3em;
+}
+
+.ds-capturer-stereoUnavailable h2 {
 }
