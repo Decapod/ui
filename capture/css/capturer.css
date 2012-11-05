@@ -62,7 +62,10 @@
 }
 
 .ds-capturer-deleteImage {
+    background: url("../../../../core/styles/images/trash-28x28-blue.png") 0.5em center no-repeat;
+    background-size: 19px 19px;
     float: right;
+    padding-right: 0.8em;
 }
 
 .ds-capturer-download-frame {
