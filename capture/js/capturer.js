@@ -275,38 +275,38 @@ var decapod = decapod || {};
                     model: {
                         currentStatus: "{capturer}.model.status",
                         READY_FOR_CONVENTIONAL: {
-                            name: "Ready for conventional Capture",
-                            description: "3D stereo capture is unavailable. <br /> Press the Camera Button to start.",
-                            style: "dc-status-ready"
+                            name: "Ready to capture",
+                            description: "<p>Press the Camera Button to start.</p> <div class='ds-capturer-stereoUnavailable'><h2>Stereo 3D capturing: <i>unavailable</i>.</h2><br />See <a href=''>Help</a> for details.</div>",
+                            style: "dc-status-ready ds-status-ready"
                         },
                         READY_FOR_STEREO: {
-                            name: "Ready for stereo Capture",
-                            description: "Capable of capturing in stereo. <br />Press the Camera Button to start.",
-                            style: "dc-status-ready"
+                            name: "Ready to capture",
+                            description: "Capable of capturing Stereo 3D. <br />Press the Camera Button to start.",
+                            style: "dc-status-ready ds-status-ready"
                         },
                         NO_CAMERAS: {
                             name: "No camera detected",
                             description: "",
-                            style: "dc-status-noCameras"
+                            style: "dc-status-noCameras ds-status-noCameras"
                         },
                         CAMERA_DISCONNECTED: {
-                            name: "A camera has been disconnected.",
-                            description: "Check that the camera is plugged in and turned on.",
-                            style: "dc-status-cameraDisconnected"
+                            name: "Camera disconnected",
+                            description: "Check camera USB cable and battery.",
+                            style: "dc-status-cameraDisconnected ds-status-cameraDisconnected"
                         },
                         NO_CAPTURE: {
                             name: "Unable to capture",
-                            description: 'There was a problem with a camera. See <a href="">Help</a> documentation for possible fixes',
-                            style: "dc-status-noCapture"
+                            description: 'Problem with camera. See <a href="">Help</a> for possible fixes',
+                            style: "dc-status-noCapture ds-status-noCapture"
                         },
                         TOO_MANY_CAMERAS: {
-                            name: "Too many cameras detected",
+                            name: "Too many cameras",
                             description: "Connect only one or two cameras",
-                            style: "dc-status-tooManyCameras"
+                            style: "dc-status-tooManyCameras ds-status-tooManyCameras"
                         },
                         NO_EXPORT: {
                             name: "Unable to export",
-                            description: 'There was a problem with the export. See <a href="">Help</a> documentation for possible fixes',
+                            description: 'Problem with the export. See <a href="">Help</a> for possible fixes',
                             style: "dc-status-noExport"
                         }
                     }
