@@ -49,6 +49,15 @@ var decapod = decapod || {};
     };
     
     /**
+     * Determines if the response status indicates an error occurred with the export
+     * 
+     * @param {object} response, the response object returned from polling the export
+     */
+    decapod.exportPoller.isError = function (response) {
+        return response.status && response.status.toLowerCase() === "error";
+    };
+    
+    /**
      * Manages the response from a poll. 
      * If it is complete the poll complete event is fired.
      * If it is still in progress, another poll will be triggered after the delay set in the options.
@@ -61,6 +70,8 @@ var decapod = decapod || {};
         that.events.afterPoll.fire(response);
         if (that.isComplete(response)) {
             that.events.pollComplete.fire(response);
+        } else if (that.isError(response)) {
+            that.events.onError.fire(response);
         } else {
             setTimeout(function () {
                 that.poll();
@@ -90,12 +101,14 @@ var decapod = decapod || {};
         invokers: {
             poll: "decapod.exportPoller.poll",
             isComplete: "decapod.exportPoller.isComplete",
+            isError: "decapod.exportPoller.isError",
             handleResponse: "decapod.exportPoller.handleResponse"
         },
         events: {
             afterPoll: null,
             onPoll: null,
             onReady: null,
+            onError: null,
             pollComplete: null
         },
         delay: 5000,
