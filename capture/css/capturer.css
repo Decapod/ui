@@ -80,8 +80,10 @@
     padding-top:0.6em;
     display:block;
     line-height:2.1em;
-    font-weight: bold;
     font-size: 1.2em;
+    font-weight: bold;
+    color: #575757;
+    text-shadow: 1px 1px #fff;
 }
 
 .ds-status-noCameras{
@@ -126,7 +128,11 @@
     height: 3em;
 }
 
-.ds-capturer-stereoUnavailable h2 {
+.ds-capturer-stereoUnavailable span {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #575757;
+    text-shadow: 1px 1px #fff;
 }
 
 .ds-capturer-export-description {
@@ -134,4 +140,10 @@
     width: 11em;
     margin-right: 4em;
     padding-top: 1em;
+}
+
+.ds-captureReviewer-captureIMG {
+    margin-top: 1em;
+    width:100%;
+    
 }
