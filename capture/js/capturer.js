@@ -156,6 +156,10 @@ var decapod = decapod || {};
                             listener: "{capturer}.setLabel",
                             args: ["{captureControl}.container", "{capturer}.options.strings.captureInProgress"]
                         },
+                        "onClick.hideExportDesc": {
+                            listener: "{capturer}.displayElement",
+                            args: ["{capturer}.dom.exportDesc", false]
+                        },
                         "{captureSource}.events.postSuccess": [{
                             listener: "{captureControl}.setState",
                             args: ["enabled"]
@@ -218,6 +222,12 @@ var decapod = decapod || {};
                             args: ["{exportControl}.container", "{capturer}.options.strings.exportInProgress"]
                         },
                         "{captureSource}.events.getSuccess": [{
+                            listener: "{capturer}.displayElement",
+                            args: ["{capturer}.dom.exportDesc", true]
+                        }, {
+                            listener: "{capturer}.setLabel",
+                            args: ["{capturer}.dom.exportDesc", "{capturer}.options.markup.exportDesc"]
+                        }, {
                             listener: "{exportControl}.setState",
                             args: ["enabled"]
                         }, {
@@ -462,6 +472,7 @@ var decapod = decapod || {};
             help: ".dc-capturer-help",
             status: ".dc-capture-status",
             preview: ".dc-capturer-preview",
+            exportDesc: ".dc-capturer-export-description",
             downloadFrame: ".dc-capturer-download-frame"
         },
         strings: {
@@ -474,7 +485,8 @@ var decapod = decapod || {};
             loadMessage: "Checking cameras..."
         },
         markup: {
-            captureButton: "Capture<br /><span>(Keyboard shortcut: C)</span>"
+            captureButton: "Capture<br /><span>(Keyboard shortcut: C)</span>",
+            exportDesc: "If capturing with Stereo 3D, be sure to run the Decapod Calibration tool prior to dewarping the images. <br /><br />See <a href='help.html'>Help</a> or Decapod documentation for more details."
         },
         events: {
             onRestart: null,
@@ -553,7 +565,13 @@ var decapod = decapod || {};
                 listener: "{capturer}.events.onReady",
                 priority: "last"
             },
-            onRestart: "{captureSource}.delete",
+            onRestart: [
+                "{captureSource}.delete",
+                {
+                    listener: "{capturer}.displayElement",
+                    args: ["{capturer}.dom.exportDesc", false]
+                }
+            ],
             onTemplateReady: [
                 "{capturer}.initCapturerControls",
                 {
@@ -563,9 +581,19 @@ var decapod = decapod || {};
                 {
                     listener: "{capturer}.displayElement",
                     args: ["{capturer}.dom.preview", false]
+                },
+                {
+                    listener: "{capturer}.displayElement",
+                    args: ["{capturer}.dom.exportDesc", false]
                 }
             ],
-            onDelete: "{deleteStatusSource}.get",
+            onDelete: [
+                "{deleteStatusSource}.get",
+                {
+                    listener: "{capturer}.displayElement",
+                    args: ["{capturer}.dom.exportDesc", false]
+                }
+            ],
             onCameraStatusSourceAttached: {
                 listener: "{cameraStatusSource}.get",
                 args: [null]
