@@ -85,7 +85,7 @@ var decapod = decapod || {};
         };
         
         exporterTests.asyncTest("Init tests", function () {
-            jqUnit.expect(9);
+            jqUnit.expect(10);
             decapod.exporter(CONTAINER, {
                 listeners: {
                     afterExportersRendered: {
@@ -95,6 +95,7 @@ var decapod = decapod || {};
                             assertShowInstructions(that);
                             jqUnit.assertEquals("The title text should be rendered", str.title, that.locate("title").text());
                             jqUnit.assertEquals("The instructions text should be rendered", str.instructions, that.locate("instructions").text());
+                            jqUnit.assertEquals("The help text should be rendered", str.help, that.locate("help").text());
                             jqUnit.assertEquals("The uploadClear text should be rendered", str.uploadClear, that.locate("uploadClear").text());
                             jqUnit.assertEquals("The formats text should be rendered", str.formats, that.locate("formats").text());
                             jqUnit.assertFalse("The accordion should be enabled", that.accordion.container.accordion("option", "disabled"));
