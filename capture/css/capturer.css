@@ -174,8 +174,13 @@
     padding-top: 1em;
 }
 
+/** IMAGE REIVEWER STYLES **/
+
 .ds-captureReviewer-captureIMG {
     margin-top: 1em;
-    width:100%;
-    
+    width:100%;    
+}
+
+.ds-captureReviewer-deletedMessage {
+    margin-top: 1em;
 }
