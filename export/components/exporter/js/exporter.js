@@ -232,8 +232,10 @@ var decapod = decapod || {};
             onFinalInit: null,
             onImportStart: null, 
             onExportStart: null,
+            onError: null,
             afterQueueReady: null,
             afterExportComplete: null,
+            afterExportError: null,
             afterPDFExportersRendered: null, 
             afterImagePDFRender: null,
             afterOCRPDFRender: null,
@@ -264,7 +266,11 @@ var decapod = decapod || {};
             "afterExportComplete.setBusy": {
                 listener: "{exporter}.setBusy",
                 args: [false]
-            } 
+            },
+            "onError.setBusy": {
+                listener: "{exporter}.setBusy",
+                args: [false]
+            }
         },
         invokers: {
             renderStrings: "decapod.exporter.renderStrings",

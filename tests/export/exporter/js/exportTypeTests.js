@@ -1629,8 +1629,8 @@ var decapod = decapod || {};
             var assertRender = function (that) {
                 var name = $(".dc-status-name");
                 var desc = $(".dc-status-description");
-                jqUnit.assertEquals("The status name should be rendered", "Export Error", name.text());
-                jqUnit.assertEquals("The description should be rendered", "An error occured during the creation of the export. Please see documentation for possible resolutions.", desc.html());
+                jqUnit.assertEquals("The status name should be rendered", "Error creating export", name.text());
+                jqUnit.assertEquals("The description should be rendered", "See Help for more details.", desc.html());
                 start();
             };
             var assertModel = function (newModel) {
