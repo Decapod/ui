@@ -168,10 +168,30 @@
 }
 
 .ds-capturer-export-description {
-    float: right;
-    width: 11em;
-    margin-right: 4em;
-    padding-top: 1em;
+    float: left;
+    padding: 1em;
+    margin-left: 4em;
+    width: 16em;
+    background-color: #fbf3be;
+    -moz-border-radius: 0.2em;
+    border-radius: 0.2em;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+    box-shadow: 3px 3px 3px #888888
+}
+
+.ds-capturer-export-description:before {
+    content:"";
+    position: absolute;
+	bottom: -11px;
+    right: 13.7em;
+    top:11.6em;
+    width: 15px;
+    height: 15px;
+    background-color: #fbf3be;
+    -moz-transform: rotate(45deg); 
+    transform:rotate(45deg);
 }
 
 /** IMAGE REIVEWER STYLES **/
