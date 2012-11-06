@@ -1262,7 +1262,7 @@ var decapod = decapod || {};
         });
         
         progressTests.asyncTest("Rendering", function () {
-            jqUnit.expect(1);
+            jqUnit.expect(2);
             var assertRendering = function (that) {
                 decapod.testUtils.exportType.assertProgressRender(that);
                 start();
@@ -1329,7 +1329,7 @@ var decapod = decapod || {};
         });
         
         detailedProgressTests.asyncTest("update", function () {
-            jqUnit.expect(4);
+            jqUnit.expect(5);
             var stage = "books2pages";
             var triggerUpdate = function (that) {
                 that.update(stage);
@@ -1337,6 +1337,7 @@ var decapod = decapod || {};
             var assertUpdate = function (that, newModel, index) {
                 jqUnit.assertEquals("The newModel should have the updated stage", stage, newModel.currentStage);
                 jqUnit.assertEquals("The model should have been udpated", stage, that.model.currentStage);
+                jqUnit.assertEquals("The warning message should be rendered", that.options.strings.warning, that.locate("warning").text());
                 decapod.testUtils.exportType.assertFluidProgressState(that.progress, 0, "Creating export... Step 1 of 2.");
                 start();
             };
@@ -1559,7 +1560,7 @@ var decapod = decapod || {};
         });
         
         controlsTests.asyncTest("Change Model - show progress", function () {
-            jqUnit.expect(4);
+            jqUnit.expect(5);
             var model = {
                 showExportStart: false,
                 showExportError: false,
@@ -1652,7 +1653,7 @@ var decapod = decapod || {};
         });
 
         controlsTests.asyncTest("Export Control Click", function () {
-            jqUnit.expect(4);
+            jqUnit.expect(5);
             var fireClick = function (that) {
                 var trigger = that["**-renderer-trigger-0"];
                 

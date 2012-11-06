@@ -97,6 +97,7 @@ var decapod = decapod || {};
     decapod.testUtils.exportType.assertProgressRender = function (that) {
         var str = that.options.strings;
         jqUnit.assertEquals("The progress text should be rendered", str.message, that.locate("message").text());
+        jqUnit.assertEquals("The warning text should be rendered", str.warning, that.locate("warning").text());
     };
     
     decapod.testUtils.exportType.assertFluidProgressState = function (that, percent, label) {

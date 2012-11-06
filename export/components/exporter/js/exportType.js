@@ -796,6 +796,7 @@ var decapod = decapod || {};
         strings : {
             trigger : "Start Export",
             progressMessage : "Export Progress",
+            progressWarning: "Progress Warning",
             download : "Download",
             restart : "Start Over"
         },
@@ -995,6 +996,9 @@ var decapod = decapod || {};
         return {
             message : {
                 messagekey : "message"
+            },
+            warning: {
+                messagekey: "warning"
             }
         };
     };
@@ -1014,10 +1018,12 @@ var decapod = decapod || {};
         finalInitFunction : "decapod.exportControls.progress.finalInit",
         produceTree : "decapod.exportControls.progress.produceTree",
         selectors : {
-            message : ".dc-exportControls-progress-message"
+            message : ".dc-exportControls-progress-message",
+            warning: ".dc-exportControls-warning"
         },
         strings : {
-            message : "Export Progress"
+            message : "Export Progress",
+            warning: "Warning Message"
         },
         events : {
             afterFetchResources : null,
@@ -1120,12 +1126,14 @@ var decapod = decapod || {};
         preInitFunction : "decapod.exportControls.detailedProgress.preInit",
         finalInitFunction : "decapod.exportControls.detailedProgress.finalInit",
         selectors : {
-            progress : ".dc-exportControls-detailedProgress-progress"
+            progress : ".dc-exportControls-detailedProgress-progress",
+            warning: ".dc-exportControls-warning"
         },
         strings : {
             initialProgressMessage : "Creating export...",
             inProgressMessage : "Creating export... Step %step of %steps.",
-            completeProgressMessage : "Creating export... Done!"
+            completeProgressMessage : "Creating export... Done!",
+            warning: "Warning Message"
         },
         events : {
             afterFetchResources : null,
@@ -1158,7 +1166,15 @@ var decapod = decapod || {};
                     strings : {
                         ariaDoneText : "{detailedProgress}.options.strings.completeProgressMessage"
                     },
-                    initiallyHidden : false
+                    initiallyHidden : false,
+                    listeners: {
+                        "onAttach": {
+                            listener: function (that) {
+                                that.locate("warning").text(that.options.strings.warning);
+                            },
+                            args: ["{detailedProgress}"]
+                        }
+                    }
                 }
             }
         },
