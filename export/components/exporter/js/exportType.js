@@ -22,7 +22,7 @@ limitations under the License.
 
 var decapod = decapod || {};
 
-(function($) {
+(function ($) {
 
     /************************
      * decapod.exportPoller *
@@ -35,7 +35,7 @@ var decapod = decapod || {};
      *
      * @param {object} that, the component
      */
-    decapod.exportPoller.poll = function(that) {
+    decapod.exportPoller.poll = function (that) {
         that.events.onPoll.fire();
     };
 
@@ -44,7 +44,7 @@ var decapod = decapod || {};
      *
      * @param {object} response, the response object returned from polling the export
      */
-    decapod.exportPoller.isComplete = function(response) {
+    decapod.exportPoller.isComplete = function (response) {
         return response.status && response.status.toLowerCase() === "complete";
     };
 
@@ -53,7 +53,7 @@ var decapod = decapod || {};
      *
      * @param {object} response, the response object returned from polling the export
      */
-    decapod.exportPoller.isError = function(response) {
+    decapod.exportPoller.isError = function (response) {
         return response.status && response.status.toLowerCase() === "error";
     };
 
@@ -65,7 +65,7 @@ var decapod = decapod || {};
      * @param {object} that, the component
      * @param {object} response, the response object returned from polling the export
      */
-    decapod.exportPoller.handleResponse = function(that, response) {
+    decapod.exportPoller.handleResponse = function (that, response) {
         that.response = response;
         that.events.afterPoll.fire(response);
         if (that.isComplete(response)) {
@@ -73,24 +73,24 @@ var decapod = decapod || {};
         } else if (that.isError(response)) {
             that.events.onError.fire(response);
         } else {
-            setTimeout(function() {
+            setTimeout(function () {
                 that.poll();
             }, that.options.delay);
         }
     };
 
-    decapod.exportPoller.preInit = function(that) {
+    decapod.exportPoller.preInit = function (that) {
         /*
          * Work around for FLUID-4709
          * This method is overwritten by the framework after initComponent executes.
          * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
          */
-        that.handleResponse = function(response) {
+        that.handleResponse = function (response) {
             that.handleResponse(response);
         };
     };
 
-    decapod.exportPoller.finalInit = function(that) {
+    decapod.exportPoller.finalInit = function (that) {
         that.events.onReady.fire();
     };
 
@@ -140,7 +140,7 @@ var decapod = decapod || {};
 
     fluid.registerNamespace("decapod.exportInfo");
 
-    decapod.exportInfo.produceTree = function(that) {
+    decapod.exportInfo.produceTree = function (that) {
         return {
             name : {
                 messagekey : "name"
@@ -151,8 +151,8 @@ var decapod = decapod || {};
         };
     };
 
-    decapod.exportInfo.finalInit = function(that) {
-        decapod.fetchResources(that.options.resources, function(resourceSpec) {
+    decapod.exportInfo.finalInit = function (that) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -201,7 +201,7 @@ var decapod = decapod || {};
      * @param {object} that, the component
      * @param {string} selector, one of the selectors from the options.
      */
-    decapod.pdfExportOptions.hide = function(that, selector) {
+    decapod.pdfExportOptions.hide = function (that, selector) {
         that.locate(selector).hide();
     };
 
@@ -211,7 +211,7 @@ var decapod = decapod || {};
      * @param {object} that, the component
      * @param {string} selector, one of the selectors from the options.
      */
-    decapod.pdfExportOptions.show = function(that, selector) {
+    decapod.pdfExportOptions.show = function (that, selector) {
         that.locate(selector).show();
     };
 
@@ -224,7 +224,7 @@ var decapod = decapod || {};
      * @param {string} elPath, an EL Path into the model
      * @param {object} value, some value to compare against the value refrenced by the El Path
      */
-    decapod.pdfExportOptions.showIfModelValue = function(that, selector, elPath, value) {
+    decapod.pdfExportOptions.showIfModelValue = function (that, selector, elPath, value) {
         if (fluid.get(that.model, elPath) === value) {
             that.show(selector);
         } else {
@@ -238,7 +238,7 @@ var decapod = decapod || {};
      *
      * @param {object} that, the component
      */
-    decapod.pdfExportOptions.disable = function(that) {
+    decapod.pdfExportOptions.disable = function (that) {
         that.events.onDisable.fire(that);
     };
 
@@ -248,7 +248,7 @@ var decapod = decapod || {};
      *
      * @param {object} that, the component
      */
-    decapod.pdfExportOptions.enable = function(that) {
+    decapod.pdfExportOptions.enable = function (that) {
         that.events.onEnable.fire(that);
     };
 
@@ -259,44 +259,44 @@ var decapod = decapod || {};
      * @param {string} elPath, an EL Path into the model
      * @param {string} representing the name of the customSetting selection
      */
-    decapod.pdfExportOptions.isValid = function(that, elPath, customSetting) {
+    decapod.pdfExportOptions.isValid = function (that, elPath, customSetting) {
         return fluid.get(that.model, elPath) === customSetting ? that.outputSettings.isValid() : true;
     };
 
-    decapod.pdfExportOptions.preInit = function(that) {
+    decapod.pdfExportOptions.preInit = function (that) {
         /*
          * Work around for FLUID-4709
          * These methods are overwritten by the framework after initComponent executes.
          * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
          */
-        that.hide = function(selector) {
+        that.hide = function (selector) {
             that.hide(selector);
         };
-        that.show = function(selector) {
+        that.show = function (selector) {
             that.show(selector);
         };
-        that.showIfModelValue = function(selector, elPath, value) {
+        that.showIfModelValue = function (selector, elPath, value) {
             that.showIfModelValue(selector, elPath, value);
         };
-        that.disable = function() {
+        that.disable = function () {
             that.disable();
         };
-        that.enable = function() {
+        that.enable = function () {
             that.enable();
         };
     };
 
-    decapod.pdfExportOptions.finalInit = function(that) {
+    decapod.pdfExportOptions.finalInit = function (that) {
         // creates a property called isValid. Doesn't work for <IE9.
         Object.defineProperty(that, "isValid", {
             get : that.isValidImp
         });
 
-        that.applier.modelChanged.addListener("*", function(newModel, oldModel) {
+        that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
 
-        decapod.fetchResources(that.options.resources, function(resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
         });
@@ -421,9 +421,9 @@ var decapod = decapod || {};
      *
      * @param {object} that, the component
      */
-    decapod.outputSettings.enable = function(that) {
+    decapod.outputSettings.enable = function (that) {
         var settings = fluid.copy(that.model.settings);
-        $.each(settings, function(idx, setting) {
+        $.each(settings, function (idx, setting) {
             delete setting.attrs.disabled;
         });
         that.applier.requestChange("settings", settings);
@@ -435,9 +435,9 @@ var decapod = decapod || {};
      *
      * @param {object} that, the component
      */
-    decapod.outputSettings.disable = function(that) {
+    decapod.outputSettings.disable = function (that) {
         var settings = fluid.copy(that.model.settings);
-        $.each(settings, function(idx, setting) {
+        $.each(settings, function (idx, setting) {
             setting.attrs.disabled = "disabled";
         });
         that.applier.requestChange("settings", settings);
@@ -452,7 +452,7 @@ var decapod = decapod || {};
      * @param {object} bounds, the max and min boundary for the value
      * @param {function} failureCallback, a function to run if the value fails validation
      */
-    decapod.outputSettings.intValidation = function(value, changeRequest, bounds, failureCallback) {
+    decapod.outputSettings.intValidation = function (value, changeRequest, bounds, failureCallback) {
         var regexp = /\D/i;
         var requestedVal = parseInt(value, 10);
         var isValid = !isNaN(requestedVal) && !regexp.test(value) && requestedVal >= parseInt(bounds.min, 10) && requestedVal <= parseInt(bounds.max, 10);
@@ -467,10 +467,10 @@ var decapod = decapod || {};
      *
      * @param {object} that, the component
      */
-    decapod.outputSettings.bindValidators = function(that) {
-        $.each(that.model.settings, function(idx, setting) {
+    decapod.outputSettings.bindValidators = function (that) {
+        $.each(that.model.settings, function (idx, setting) {
             var guardPath = "settings." + idx + ".value";
-            that.applier.guards.addListener(guardPath, function(model, changeRequest) {
+            that.applier.guards.addListener(guardPath, function (model, changeRequest) {
                 var excess = fluid.pathUtil.getExcessPath(changeRequest.path, guardPath);
                 var value = fluid.get(changeRequest.value, excess);
                 return decapod.outputSettings.intValidation(value, changeRequest, setting.attrs, that.events.onValidationError.fire);
@@ -485,7 +485,7 @@ var decapod = decapod || {};
      * @param {object} changeRequest, the change request object from the change applier
      * @param {string} status, a string representing the status of setting in the change request
      */
-    decapod.outputSettings.setStatus = function(that, changeRequest, status) {
+    decapod.outputSettings.setStatus = function (that, changeRequest, status) {
         changeRequest = fluid.isArrayable(changeRequest) ? changeRequest[0] : changeRequest;
         var index = parseInt(changeRequest.path.split(".")[1], 10);
         if (!isNaN(index)) {
@@ -500,7 +500,7 @@ var decapod = decapod || {};
      * @param {number} index, the index of the item to set the status on
      * @param {string} status, a string representing the status of setting in the change request
      */
-    decapod.outputSettings.setStatusByIndex = function(that, index, status) {
+    decapod.outputSettings.setStatusByIndex = function (that, index, status) {
         status = !!status;
         // forces status to be boolean
         if (that.isValid(index) !== status) {
@@ -525,12 +525,12 @@ var decapod = decapod || {};
      * @param {object} that, the component
      * @param {number} index, the index of the item to check the status of
      */
-    decapod.outputSettings.isValid = function(that, index) {
-        if ( typeof (index) === "number") {
+    decapod.outputSettings.isValid = function (that, index) {
+        if (typeof (index) === "number") {
             return that.status[index];
         }
         var status = true;
-        $.each(that.status, function(idx, isValid) {
+        $.each(that.status, function (idx, isValid) {
             status = isValid;
             return status;
         });
@@ -538,46 +538,46 @@ var decapod = decapod || {};
         return status;
     };
 
-    decapod.outputSettings.preInit = function(that) {
+    decapod.outputSettings.preInit = function (that) {
         /*
          * Work around for FLUID-4709
          * These methods are overwritten by the framework after initComponent executes.
          * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
          */
-        that.enable = function() {
+        that.enable = function () {
             that.enable();
         };
 
-        that.disable = function() {
+        that.disable = function () {
             that.disable();
         };
 
-        that.setStatus = function(changeRequest, status) {
+        that.setStatus = function (changeRequest, status) {
             that.setStatus(changeRequest, status);
         };
 
-        that.setStatusByIndex = function(index, status) {
+        that.setStatusByIndex = function (index, status) {
             that.setStatusByIndex(index, status);
         };
 
-        that.isValid = function(index) {
+        that.isValid = function (index) {
             that.isValid(index);
         };
     };
 
-    decapod.outputSettings.finalInit = function(that) {
-        that.applier.modelChanged.addListener("settings", function(newModel, oldModel, changeRequest) {
+    decapod.outputSettings.finalInit = function (that) {
+        that.applier.modelChanged.addListener("settings", function (newModel, oldModel, changeRequest) {
             that.events.afterModelChanged.fire(newModel, oldModel, changeRequest);
         });
 
         that.status = [];
-        $.each(that.model.settings, function(idx) {
+        $.each(that.model.settings, function (idx) {
             that.status[idx] = true;
         });
 
         that.bindValidators();
 
-        decapod.fetchResources(that.options.resources, function(resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -586,7 +586,7 @@ var decapod = decapod || {};
         that.events.onReady.fire(that);
     };
 
-    decapod.outputSettings.produceTree = function(that) {
+    decapod.outputSettings.produceTree = function (that) {
         return {
             expander : {
                 type : "fluid.renderer.repeat",
@@ -677,7 +677,7 @@ var decapod = decapod || {};
 
     fluid.registerNamespace("decapod.exportControls");
 
-    decapod.exportControls.produceTree = function(that) {
+    decapod.exportControls.produceTree = function (that) {
         return {
             expander : [{
                 type : "fluid.renderer.condition",
@@ -744,37 +744,37 @@ var decapod = decapod || {};
      * @param {string} modelPath, an EL Path into the model
      * @param {object} value, the value to set
      */
-    decapod.exportControls.updateModel = function(that, modelPath, value) {
+    decapod.exportControls.updateModel = function (that, modelPath, value) {
         that.applier.requestChange(modelPath, value);
     };
 
-    decapod.exportControls.preInit = function(that) {
+    decapod.exportControls.preInit = function (that) {
         /*
         * Work around for FLUID-4709
         * These methods are overwritten by the framework after initComponent executes.
         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
         */
         // Similar to the comment above but specifically a work around for FLUID-4334
-        that.refreshView = function() {
+        that.refreshView = function () {
             that.renderer.refreshView();
         };
 
-        that.updateModel = function(newModel) {
+        that.updateModel = function (newModel) {
             that.updateModel(newModel);
         };
 
         // work around for FLUID-4192
-        that.initialRender = function() {
+        that.initialRender = function () {
             setTimeout(that.refreshView, 1);
         };
     };
 
-    decapod.exportControls.finalInit = function(that) {
-        that.applier.modelChanged.addListener("*", function(newModel, oldModel) {
+    decapod.exportControls.finalInit = function (that) {
+        that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
 
-        decapod.fetchResources(that.options.resources, function(resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.controls.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
         });
@@ -860,10 +860,10 @@ var decapod = decapod || {};
      *
      * @param {object} model, the components model
      */
-    decapod.exportControls.trigger.assertState = function(model) {
+    decapod.exportControls.trigger.assertState = function (model) {
         var conditions = true;
 
-        $.each(model, function(idx, condition) {
+        $.each(model, function (idx, condition) {
             if (!condition) {
                 conditions = condition;
                 return false;
@@ -873,7 +873,7 @@ var decapod = decapod || {};
         return conditions;
     };
 
-    decapod.exportControls.trigger.produceTree = function(that) {
+    decapod.exportControls.trigger.produceTree = function (that) {
         return {
             expander : [{
                 type : "fluid.renderer.condition",
@@ -898,7 +898,7 @@ var decapod = decapod || {};
                         decorators : [{
                             type : "jQuery",
                             func : "click",
-                            args : function() {
+                            args : function () {
                                 that.events.afterTriggered.fire();
                             }
                         }]
@@ -915,31 +915,31 @@ var decapod = decapod || {};
      * @param {string} condition, the condition to change the status of in the model
      * @param {boolean} status, the value to set
      */
-    decapod.exportControls.trigger.updateModel = function(that, condition, status) {
+    decapod.exportControls.trigger.updateModel = function (that, condition, status) {
         that.applier.requestChange(condition, status);
     };
 
-    decapod.exportControls.trigger.preInit = function(that) {
+    decapod.exportControls.trigger.preInit = function (that) {
         /*
         * Work around for FLUID-4709
         * These methods are overwritten by the framework after initComponent executes.
         * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
         */
         // Similar to the comment above but specifically a work around for FLUID-4334
-        that.refreshView = function() {
+        that.refreshView = function () {
             that.renderer.refreshView();
         };
-        that.updateModel = function(condition, status) {
+        that.updateModel = function (condition, status) {
             that.updateModel(condition, status);
         };
     };
 
-    decapod.exportControls.trigger.finalInit = function(that) {
-        that.applier.modelChanged.addListener("*", function(newModel, oldModel) {
+    decapod.exportControls.trigger.finalInit = function (that) {
+        that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
 
-        decapod.fetchResources(that.options.resources, function(resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -992,7 +992,7 @@ var decapod = decapod || {};
 
     fluid.registerNamespace("decapod.exportControls.progress");
 
-    decapod.exportControls.progress.produceTree = function(that) {
+    decapod.exportControls.progress.produceTree = function (that) {
         return {
             message : {
                 messagekey : "message"
@@ -1003,8 +1003,8 @@ var decapod = decapod || {};
         };
     };
 
-    decapod.exportControls.progress.finalInit = function(that) {
-        decapod.fetchResources(that.options.resources, function(resourceSpec) {
+    decapod.exportControls.progress.finalInit = function (that) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
@@ -1049,7 +1049,7 @@ var decapod = decapod || {};
      * @param {object} that, the component
      * @param {string} stage, the stage to set as the currentStage in the model
      */
-    decapod.exportControls.detailedProgress.update = function(that, stage) {
+    decapod.exportControls.detailedProgress.update = function (that, stage) {
         that.applier.requestChange("currentStage", stage);
     };
 
@@ -1059,7 +1059,7 @@ var decapod = decapod || {};
      *
      * @param {object} that, the component
      */
-    decapod.exportControls.detailedProgress.setProgress = function(that) {
+    decapod.exportControls.detailedProgress.setProgress = function (that) {
         var index = $.inArray(that.model.currentStage, that.model.stages);
         if (index >= 0) {
             var numStages = that.model.stages.length;
@@ -1078,42 +1078,42 @@ var decapod = decapod || {};
      * @param {object} that, the component
      * @param {boolean}, if truthy, it will trigger the progress to hide.
      */
-    decapod.exportControls.detailedProgress.finish = function(that, hide) {
+    decapod.exportControls.detailedProgress.finish = function (that, hide) {
         that.progress.update(100, that.options.strings.completeProgressMessage);
         if (hide) {
             that.progress.hide();
         }
     };
 
-    decapod.exportControls.detailedProgress.preInit = function(that) {
+    decapod.exportControls.detailedProgress.preInit = function (that) {
         /*
          * Work around for FLUID-4709
          * These methods are overwritten by the framework after initComponent executes.
          * This preInit function guarantees that functions which forward to the overwritten versions are available during the event binding phase.
          */
-        that.update = function(stage) {
+        that.update = function (stage) {
             that.update(stage);
         };
 
-        that.setProgress = function() {
+        that.setProgress = function () {
             that.setProgress();
         };
 
-        that.finish = function(hide) {
+        that.finish = function (hide) {
             that.finish(hide);
         };
     };
 
-    decapod.exportControls.detailedProgress.finalInit = function(that) {
-        that.applier.modelChanged.addListener("currentStage", function(newModel, oldModel, index) {
+    decapod.exportControls.detailedProgress.finalInit = function (that) {
+        that.applier.modelChanged.addListener("currentStage", function (newModel, oldModel, index) {
             that.events.afterModelChanged.fire(newModel, oldModel, $.inArray(newModel.currentStage, newModel.stages));
         });
 
-        that.applier.guards.addListener("currentStage", function(model, changeRequest) {
+        that.applier.guards.addListener("currentStage", function (model, changeRequest) {
             return $.inArray(changeRequest.value, model.stages) >= 0;
         });
 
-        decapod.fetchResources(that.options.resources, function(resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.progress.locate("label").text(that.options.strings.initialProgressMessage);
@@ -1198,11 +1198,11 @@ var decapod = decapod || {};
      * @param {object} that, the component
      * @param {string} url, the url to set the model's downloadURL to
      */
-    decapod.exportControls.complete.updateModel = function(that, url) {
+    decapod.exportControls.complete.updateModel = function (that, url) {
         that.applier.requestChange("downloadURL", url);
     };
 
-    decapod.exportControls.complete.produceTree = function(that) {
+    decapod.exportControls.complete.produceTree = function (that) {
         return {
             download : {
                 linktext : {
@@ -1216,12 +1216,12 @@ var decapod = decapod || {};
         };
     };
 
-    decapod.exportControls.complete.finalInit = function(that) {
-        that.applier.modelChanged.addListener("*", function(newModel, oldModel) {
+    decapod.exportControls.complete.finalInit = function (that) {
+        that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
 
-        decapod.fetchResources(that.options.resources, function(resourceSpec) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
             that.refreshView();
