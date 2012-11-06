@@ -39,7 +39,7 @@ var decapod = decapod || {};
      */
     decapod.exporter.renderStrings = function (that) {
         $.each(that.options.strings, function (key, str) {
-            if (typeof (str) === "string") {
+            if (typeof (str) === "string" && that.options.selectors[key]) {
                 that.locate(key).text(str);
             }
         });
@@ -143,6 +143,12 @@ var decapod = decapod || {};
         uploader.strategy.local.disableBrowseButton();
     };
     
+    decapod.exporter.pageUnloadWarning = function (that) {
+        window.onbeforeunload = function () {
+            return that.options.strings.pageUnloadWarning;
+        };
+    };
+    
     decapod.exporter.preInit = function (that) {
         /*
          * Work around for FLUID-4709
@@ -170,9 +176,13 @@ var decapod = decapod || {};
         that.setBusy = function (isBusy) {
             that.setBusy(isBusy);
         };
+        that.pageUnloadWarning = function () {
+            that.pageUnloadWarning();
+        };
     };
     
     decapod.exporter.finalInit = function (that) {
+        that.pageUnloadWarning();
         that.showInstructions();
         that.renderStrings();
         that.events.onFinalInit.fire();
@@ -190,6 +200,7 @@ var decapod = decapod || {};
         selectors: {
             title: ".dc-exporter-title",
             formats: ".dc-exporter-formats",
+            help: ".dc-exporter-help",
             uploadClear: ".dc-exporter-uploadClear",
             uploadContainer: ".dc-exporter-upload",
             uploadBrowse: ".dc-exporter-uploadBrowse",
@@ -203,7 +214,9 @@ var decapod = decapod || {};
         strings: {
             title: "Export Images to PDF",
             instructions: "Select 'Browse Files' to choose images to export.",
-            uploadClear: "Reset",
+            uploadClear: "Restart",
+            help: "Help",
+            pageUnloadWarning: "Leaving the page could result in loss of export data.",
             formats: "Select Export Option",
             pdfs: {
                 name: "PDF",
@@ -230,8 +243,10 @@ var decapod = decapod || {};
             onFinalInit: null,
             onImportStart: null, 
             onExportStart: null,
+            onError: null,
             afterQueueReady: null,
             afterExportComplete: null,
+            afterExportError: null,
             afterPDFExportersRendered: null, 
             afterImagePDFRender: null,
             afterOCRPDFRender: null,
@@ -262,7 +277,11 @@ var decapod = decapod || {};
             "afterExportComplete.setBusy": {
                 listener: "{exporter}.setBusy",
                 args: [false]
-            } 
+            },
+            "onError.setBusy": {
+                listener: "{exporter}.setBusy",
+                args: [false]
+            }
         },
         invokers: {
             renderStrings: "decapod.exporter.renderStrings",
@@ -273,7 +292,8 @@ var decapod = decapod || {};
             disableImport: "decapod.exporter.disableImport",
             showInstructions: "decapod.exporter.showInstructions",
             showStatus: "decapod.exporter.showStatus",
-            setBusy: "decapod.exporter.setBusy"
+            setBusy: "decapod.exporter.setBusy",
+            pageUnloadWarning: "decapod.exporter.pageUnloadWarning"
         },
         components: {
             progressiveEnhancementChecker: {
@@ -291,8 +311,10 @@ var decapod = decapod || {};
                         "-100": "%numErrors files exceeded the queue limit",
                         "-110": "%numErrors files exceeded the size limit",
                         "-120": "%numErrors files were empty (0 bytes)",
-                        "-130": "%numErrors files had an invalid file type"
-                    }
+                        "-130": "%numErrors files had an invalid file type",
+                        "-250": "%numErrors files were ignored by the server. May have not been valid image type."
+                    },
+                    ignoreFromTotals: ["-200", "-210", "-220", "-230", "-240", "-250", "-260", "-270", "-280", "-290"]
                 }
             },
             uploader: {
@@ -387,6 +409,9 @@ var decapod = decapod || {};
                             {
                                 listener: "{exporter}.disableImport",
                                 priority: "last"
+                            },
+                            {
+                                listener: "{importStatus}.renderStatuses"
                             }
                         ],
                         "{importStatus}.renderer.events.afterRender": "{exporter}.validateQueue"

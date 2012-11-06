@@ -167,9 +167,21 @@ var decapod = decapod || {};
                     listener: "{exportControls}.updateModel",
                     args: [{
                         showExportStart: false,
+                        showExportError: false,
                         showExportProgress: false,
                         showExportComplete: true,
                         downloadURL: "{arguments}.0.url"
+                    }]
+                },
+                "{pdfExporter}.events.onError": {
+                    priority: "first",
+                    listener: "{exportControls}.updateModel",
+                    args: [{
+                        showExportStart: false,
+                        showExportError: true,
+                        showExportProgress: false,
+                        showExportComplete: false,
+                        downloadURL: ""
                     }]
                 }
             }
@@ -260,7 +272,8 @@ var decapod = decapod || {};
             },
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
-                "afterRender.afterImagePDFRender": "{exporter}.events.afterImagePDFRender"
+                "afterRender.afterImagePDFRender": "{exporter}.events.afterImagePDFRender",
+                "onError": "{exporter}.events.onError"
             },
             components: {
                 dataSource: {
@@ -293,7 +306,8 @@ var decapod = decapod || {};
             },
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
-                "afterRender.afterOCRPDFRender": "{exporter}.events.afterOCRPDFRender"
+                "afterRender.afterOCRPDFRender": "{exporter}.events.afterOCRPDFRender",
+                "onError": "{exporter}.events.onError"
             },
             components: {
                 dataSource: {
@@ -335,7 +349,8 @@ var decapod = decapod || {};
             },
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
-                "afterRender.afterTracedPDFRender": "{exporter}.events.afterTracedPDFRender"
+                "afterRender.afterTracedPDFRender": "{exporter}.events.afterTracedPDFRender",
+                "onError": "{exporter}.events.onError"
             },
             components: {
                 dataSource: {
@@ -377,7 +392,8 @@ var decapod = decapod || {};
             },
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
-                "afterRender.afterFontMatchedPDFRender": "{exporter}.events.afterFontMatchedPDFRender"
+                "afterRender.afterFontMatchedPDFRender": "{exporter}.events.afterFontMatchedPDFRender",
+                "onError": "{exporter}.events.onError"
             },
             components: {
                 dataSource: {
@@ -407,7 +423,8 @@ var decapod = decapod || {};
             strings: "{exporter}.options.strings.images.formatStrings.0",
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
-                "afterRender.afterTIFFRender": "{exporter}.events.afterTIFFRender"
+                "afterRender.afterTIFFRender": "{exporter}.events.afterTIFFRender",
+                "onError": "{exporter}.events.onError"
             },
             components: {
                 dataSource: {
@@ -437,7 +454,8 @@ var decapod = decapod || {};
             strings: "{exporter}.options.strings.images.formatStrings.1",
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
-                "afterRender.afterPNGRender": "{exporter}.events.afterPNGRender"
+                "afterRender.afterPNGRender": "{exporter}.events.afterPNGRender",
+                "onError": "{exporter}.events.onError"
             },
             components: {
                 dataSource: {
@@ -490,6 +508,9 @@ var decapod = decapod || {};
     });
     fluid.demands("decapod.exporter.setBusy", ["decapod.exporter"], {
         args: ["{exporter}", "{arguments}.0"]
+    });
+    fluid.demands("decapod.exporter.pageUnloadWarning", ["decapod.exporter"], {
+        args: ["{exporter}"]
     });
 
     /*****************
