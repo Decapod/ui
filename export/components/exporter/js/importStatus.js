@@ -55,7 +55,9 @@ var decapod = decapod || {};
     decapod.importStatus.totalNumErrors = function (that) {
         var total = 0;
         $.each(that.model.errors, function (errorName, numFiles) {
-            total += numFiles;
+            if ($.inArray(String(errorName), that.options.ignoreFromTotals) < 0) {
+                total += numFiles;
+            }
         });
         return total;
     };
@@ -149,6 +151,7 @@ var decapod = decapod || {};
             valid: 0,
             errors: {}
         },
+        ignoreFromTotals: [],
         strings: {
             "total": "%totalNumFiles files found."
             // error messages use %errorName and %numErrors for the template

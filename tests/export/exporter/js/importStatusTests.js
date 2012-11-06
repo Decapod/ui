@@ -156,10 +156,37 @@ var decapod = decapod || {};
                 }
             };
             var that = decapod.importStatus(CONTAINER, {model: model});
-            var mockThat = {model: model};
+            var mockThat = {
+                model: model,
+                options: {
+                    ignoreFromTotals: []
+                }
+            };
             
             jqUnit.assertEquals("The total number of errors should be calculated - global function", 3, decapod.importStatus.totalNumErrors(mockThat));
             jqUnit.assertEquals("The total number of errors should be calculated - through the component", 3, that.totalNumErrors());
+        });
+        
+        tests.test("totalNumErrors - ignored errors", function () {
+            var model = {
+                errors: {
+                    "-100": 1,
+                    "-200": 2
+                }
+            };
+            var that = decapod.importStatus(CONTAINER, {
+                model: model,
+                ignoreFromTotals: ["-200"]
+            });
+            var mockThat = {
+                model: model,
+                options: {
+                    ignoreFromTotals: ["-200"]
+                }
+            };
+            
+            jqUnit.assertEquals("The total number of errors should be calculated - global function", 1, decapod.importStatus.totalNumErrors(mockThat));
+            jqUnit.assertEquals("The total number of errors should be calculated - through the component", 1, that.totalNumErrors());
         });
         
         tests.test("totalNumFiles", function () {
@@ -172,6 +199,21 @@ var decapod = decapod || {};
             };
             var that = decapod.importStatus(CONTAINER, {model: model});
             jqUnit.assertEquals("The total number of files should be calculated - through the component", 5, that.totalNumFiles());
+        });
+        
+        tests.test("totalNumFiles - ignored errors", function () {
+            var model = {
+                valid: 2,
+                errors: {
+                    "-100": 1,
+                    "-200": 2
+                }
+            };
+            var that = decapod.importStatus(CONTAINER, {
+                model: model,
+                ignoreFromTotals: ["-200"]
+            });
+            jqUnit.assertEquals("The total number of files should be calculated - through the component", 3, that.totalNumFiles());
         });
         
         tests.test("totalMessage", function () {
