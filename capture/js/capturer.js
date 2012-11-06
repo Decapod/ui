@@ -276,7 +276,7 @@ var decapod = decapod || {};
                         currentStatus: "{capturer}.model.status",
                         READY_FOR_CONVENTIONAL: {
                             name: "Ready to capture",
-                            description: "<p>Press the Camera Button to start.</p> <div class='ds-capturer-stereoUnavailable'><h2>Stereo 3D capturing: <i>unavailable</i>.<br />See <a href=''>Help</a> for details.</div>",
+                            description: "<p>Press the Camera Button to start.</p> <div class='ds-capturer-stereoUnavailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>unavailable</i></span>.<br />See <a href=''>Help</a> for details.</div>",
                             
                             style: "dc-status-ready ds-status-ready"
                         },
@@ -487,7 +487,7 @@ var decapod = decapod || {};
         },
         markup: {
             captureButton: "Capture<br /><span>(Keyboard shortcut: C)</span>",
-            exportDesc: "If capturing with Stereo 3D, be sure to run the Decapod Calibration tool prior to dewarping the images. <br /><br />See <a href='help.html'>Help</a> or Decapod documentation for more details."
+            exportDesc: "If capturing with Stereo 3D, run Decapod Calibration before dewarping images. <br /><br />See <a href='help.html'>Help</a> or Decapod documentation for details."
         },
         events: {
             onRestart: null,
