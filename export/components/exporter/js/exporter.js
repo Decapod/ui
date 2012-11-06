@@ -311,8 +311,10 @@ var decapod = decapod || {};
                         "-100": "%numErrors files exceeded the queue limit",
                         "-110": "%numErrors files exceeded the size limit",
                         "-120": "%numErrors files were empty (0 bytes)",
-                        "-130": "%numErrors files had an invalid file type"
-                    }
+                        "-130": "%numErrors files had an invalid file type",
+                        "-250": "%numErrors files were ignored by the server. May have not been valid image type."
+                    },
+                    ignoreFromTotals: ["-200", "-210", "-220", "-230", "-240", "-250", "-260", "-270", "-280", "-290"]
                 }
             },
             uploader: {
@@ -407,6 +409,9 @@ var decapod = decapod || {};
                             {
                                 listener: "{exporter}.disableImport",
                                 priority: "last"
+                            },
+                            {
+                                listener: "{importStatus}.renderStatuses"
                             }
                         ],
                         "{importStatus}.renderer.events.afterRender": "{exporter}.validateQueue"
