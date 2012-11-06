@@ -128,7 +128,7 @@ var decapod = decapod || {};
         });
 
         imageExporterTests.asyncTest("onExportStart event", function () {
-            jqUnit.expect(4);
+            jqUnit.expect(5);
             var assertEvent = function (that) {
                 jqUnit.assertTrue("The onExportStart event should have fired", true);
                 decapod.testUtils.exportType.assertShowProgressControls(that.exportControls);
