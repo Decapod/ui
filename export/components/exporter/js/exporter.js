@@ -143,7 +143,7 @@ var decapod = decapod || {};
         uploader.strategy.local.disableBrowseButton();
     };
     
-    decapod.exporter.pageUnloadWarning = function () {
+    decapod.exporter.pageUnloadWarning = function (that) {
         window.onbeforeunload = function () {
             return that.options.strings.pageUnloadWarning;
         };
