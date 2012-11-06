@@ -127,6 +127,7 @@ var decapod = decapod || {};
     decapod.exporter.test.pageUnloadWarning = function () {};
     
     fluid.demands("decapod.exporter.pageUnloadWarning", ["decapod.exporter", "decapod.test"], {
-        funcName: "decapod.exporter.test.pageUnloadWarning"
+        funcName: "decapod.exporter.test.pageUnloadWarning",
+        args: ["{exporter}"]
     });
 })(jQuery);
