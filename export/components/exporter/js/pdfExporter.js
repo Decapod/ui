@@ -115,6 +115,28 @@ var decapod = decapod || {};
                 },
                 {
                     type: "fluid.renderer.condition",
+                    condition: that.model.showExportError,
+                    trueTree: {
+                        status: {
+                            decorators: {
+                                type: "fluid",
+                                func: "decapod.status",
+                                options: {
+                                    model: {
+                                        currentStatus: "error",
+                                        "error": {
+                                            name: "Error creating export",
+                                            description: "See Help for more details.",
+                                            style: "ds-status-error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    type: "fluid.renderer.condition",
                     condition: that.model.showExportProgress,
                     trueTree: {
                         progress: {
@@ -206,6 +228,7 @@ var decapod = decapod || {};
             afterExportOptionsRender: null,
             afterExportControlsRender: null,
             afterExportInfoRender: null,
+            onError: null,
             onExportStart: null,
             onExportStatusUpdate: null,
             onCorrection: null,
@@ -327,7 +350,8 @@ var decapod = decapod || {};
                         },
                         "{dataSource}.events.success": "{exportPoller}.poll",
                         "{exportPoller}.events.pollComplete": "{pdfExporter}.events.afterPollComplete",
-                        "{exportPoller}.events.afterPoll": "{pdfExporter}.events.onExportStatusUpdate"
+                        "{exportPoller}.events.afterPoll": "{pdfExporter}.events.onExportStatusUpdate",
+                        "{exportPoller}.events.onError": "{pdfExporter}.events.onError"
                     }
                 }
             },

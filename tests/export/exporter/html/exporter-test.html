@@ -21,6 +21,8 @@
         <script src="../../../../core/js/customMerge.js"></script>
         <script src="../../../../core/js/decapodRequests.js"></script>
         <script src="../../../../core/js/decapodRequestsDemands.js"></script>
+        <script src="../../../../core/js/status.js"></script>
+        <script src="../../../../core/js/statusDemands.js"></script>
         <script src="../../../../export/components/accordion/js/accordion.js"></script>
         <script src="../../../../export/components/accordion/js/accordionDemands.js"></script>
         <script src="../../../../core/js/eventBinder.js"></script>
@@ -54,21 +56,25 @@
         <div id="qunit-fixture">
             <section class="dc-exporter ds-shared-decapod">
                 
-                <!-- NAVIGATION BAR -->
-                <nav class="ds-shared-navigationBar">
-                    <ul class="ds-shared-navigationBar-flatList">
-                        <li><p class="ds-shared-navigationBar-currentBreadcrumb">Decapod 0.5</p></li>
+                <!-- TITLE BAR -->
+                <header class="ds-shared-titleBar">
+                    <ul class="ds-shared-titleBar-flatList">
+                        <li><p>Decapod 0.7</p></li>
                     </ul>
-                </nav>
+                </header>
     
                 <!-- DECAPOD EXPORT INTERFACE -->
                 <section class="ds-shared-mainPane">
                     <header>
                         <h1 class="dc-exporter-title">Exporter Title</h1>
+                        <menu class="ds-shared-menuBar">
+                            <a class="dc-exporter-help ds-shared-linkButton ds-shared-helpButton" href="">Help link text</a>
+                            <a class="dc-exporter-uploadClear ds-shared-linkButton ds-shared-restartButton" href="">Restart link text</a>
+                        </menu>
                     </header>
                     
-                    <section class="dc-exporter-upload ds-exporter-upload ds-shared-indent1">
-                        <div class="dc-exporter-importMessages ds-exporter-importMessages">
+                    <section class="dc-exporter-upload ds-exporter-upload">
+                        <div class="dc-exporter-importMessages ds-shared-insetContentArea">
                             <p class="dc-exporter-instructions">Instructions go here.</p>
                             <div class="dc-exporter-importStatus">
                                 <ul>
@@ -77,19 +83,19 @@
                             </div>
                         </div>
                         
-                        <div class="ds-exporter-uploadControls">
-                            <a class="dc-exporter-uploadClear ds-exporter-uploadClear ds-exporter-uploadClear-dim" href="">Clear link text</a>
-                            <span class="dc-exporter-uploadBrowse ds-shared-grey-button ds-exporter-uploadBrowse">
-                                <span class="flc-uploader-button-browse-text ds-exporter-uploadBrowseText">Browse files</span>
+                        <div class="ds-shared-uploadControls">
+                            <span class="dc-exporter-uploadBrowse ds-shared-grey-button ds-shared-uploadBrowse">
+                                <!--Due to FLUID-4726 the browseText, "Browse Files", needs to be set here in the template-->
+                                <span class="flc-uploader-button-browse-text ds-shared-uploadBrowseText">Browse Files</span>
                             </span>
                         </div>
                     </section>
                     
                     
-                    <section class="dc-exporter-formatGroup dc-exporter-accordion ds-exporter-accordion ds-exporter-formatGroup">
-                        <h2 class="dc-exporter-formats">Exporter format types go below</h2>
-                        <section class="dc-exporter-pdfs">PDF Export Types</section>
-                        <section class="dc-exporter-images">Image Export Types</section>
+                    <section class="dc-exporter-formatGroup dc-exporter-accordion ds-exporter-accordion ds-exporter-formatGroup ds-shared-indent1">
+                        <h2 class="dc-exporter-formats ">Exporter format types go below</h2>
+                        <section class="dc-exporter-pdfs"></section>
+                        <section class="dc-exporter-images"></section>
                     </section>
                 </section>
                 

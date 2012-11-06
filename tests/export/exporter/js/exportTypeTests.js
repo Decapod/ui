@@ -126,6 +126,10 @@ var decapod = decapod || {};
             url: "../../../mock-book/images/pdf/mockBook.pdf"
         };
         
+        var errorResponse = {
+            status: "error"
+        };
+        
         var inProgressResponse = {
             status: "in progress"
         };
@@ -165,6 +169,13 @@ var decapod = decapod || {};
             jqUnit.assertFalse("isComplete should return false", that.isComplete(inProgressResponse));
         });
         
+        exportPollerTests.test("isError", function () {
+            var that = decapod.exportPoller();
+            
+            jqUnit.assertTrue("isComplete should return true", that.isError(errorResponse));
+            jqUnit.assertFalse("isComplete should return false", that.isError(inProgressResponse));
+        });
+        
         exportPollerTests.asyncTest("handleResponse", function () {
             jqUnit.expect(4);
             var that = decapod.exportPoller({delay: 10});
@@ -178,6 +189,17 @@ var decapod = decapod || {};
                 start();
             });
             that.handleResponse(inProgressResponse);
+        });
+        
+        exportPollerTests.asyncTest("handleResponse - error", function () {
+            jqUnit.expect(2);
+            var that = decapod.exportPoller({delay: 10});
+            that.events.onError.addListener(function () {
+                jqUnit.assertTrue("The onError event should have fired", true);
+                jqUnit.assertDeepEq("The response should be set", errorResponse, that.response);
+                start();
+            });
+            that.handleResponse(errorResponse);
         });
         
         exportPollerTests.asyncTest("Datasource Integration - onPoll", function () {
@@ -1540,6 +1562,7 @@ var decapod = decapod || {};
             jqUnit.expect(4);
             var model = {
                 showExportStart: false,
+                showExportError: false,
                 showExportProgress: true,
                 showExportComplete: false
             };
@@ -1569,6 +1592,7 @@ var decapod = decapod || {};
             jqUnit.expect(6);
             var model = {
                 showExportStart: false,
+                showExportError: false,
                 showExportProgress: false,
                 showExportComplete: true
             };
@@ -1594,6 +1618,38 @@ var decapod = decapod || {};
             
         });
         
+        controlsTests.asyncTest("Change Model - show error message", function () {
+            jqUnit.expect(3);
+            var model = {
+                showExportStart: false,
+                showExportError: true,
+                showExportProgress: false,
+                showExportComplete: false
+            };
+            var assertRender = function (that) {
+                var name = $(".dc-status-name");
+                var desc = $(".dc-status-description");
+                jqUnit.assertEquals("The status name should be rendered", "Error creating export", name.text());
+                jqUnit.assertEquals("The description should be rendered", "See Help for more details.", desc.html());
+                start();
+            };
+            var assertModel = function (newModel) {
+                jqUnit.assertDeepEq("The model should be updated", model, newModel);
+            };
+            createControls(CONTROLS_CONTAINER, {
+                listeners: {
+                    afterRender: function (that) {
+                        if (that["**-renderer-trigger-0"]) {
+                            that.events.afterModelChanged.addListener(assertModel);
+                            that.updateModel(model);
+                        } else {
+                            assertRender(that);
+                        }
+                    }
+                }
+            });
+            
+        });
 
         controlsTests.asyncTest("Export Control Click", function () {
             jqUnit.expect(4);

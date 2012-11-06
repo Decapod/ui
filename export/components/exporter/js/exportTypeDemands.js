@@ -39,9 +39,21 @@ var decapod = decapod || {};
                     listener: "{exportControls}.updateModel",
                     args: [{
                         showExportStart: false,
+                        showExportError: false,
                         showExportProgress: false,
                         showExportComplete: true,
                         downloadURL: "{arguments}.0.url"
+                    }]
+                },
+                "{pdfExporter}.events.onError": {
+                    priority: "first",
+                    listener: "{exportControls}.updateModel",
+                    args: [{
+                        showExportStart: false,
+                        showExportError: true,
+                        showExportProgress: false,
+                        showExportComplete: false,
+                        downloadURL: ""
                     }]
                 }
             }

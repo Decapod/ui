@@ -58,6 +58,7 @@ var decapod = decapod || {};
             afterExportComplete: null,
             afterExportControlsRender: null,
             afterExportInfoRender: null,
+            onError: null,
             onExportStart: null,
             onEventBinderReady: null,
             onExportPollerReady: null,
@@ -120,7 +121,8 @@ var decapod = decapod || {};
                             args: [null]
                         },
                         "{dataSource}.events.success": "{exportPoller}.poll",
-                        "{exportPoller}.events.pollComplete": "{imageExporter}.events.afterExportComplete"
+                        "{exportPoller}.events.pollComplete": "{imageExporter}.events.afterExportComplete",
+                        "{exportPoller}.events.onError": "{imageExporter}.events.onError"
                     }
                 }
             },
