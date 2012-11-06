@@ -1,0 +1,208 @@
+.ds-capturer-main {
+    width:50em;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 3em;
+}
+
+.ds-capturer-controls {
+    float: left;
+    margin-bottom: 1em;
+    height:6em;
+    width: 42em;
+}
+
+.ds-capturer-controls .ds-capturer-captureButton {
+    width: 30em;
+    height: 100%;
+    background: url("../../../../core/styles/images/camera.png") center 1em no-repeat, -moz-linear-gradient(top,  #ffffff,  #ededed);
+    display: inline-block;
+    padding: 3.3em 0 0 0;
+    text-align:center;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.ds-capturer-controls .ds-capturer-captureButton:hover {
+    background: url("../../../../core/styles/images/camera.png") center 1em no-repeat, -moz-linear-gradient(top, #ededed, #ffffff);
+    cursor:pointer;
+}
+
+.ds-capturer-controls .ds-capturer-captureButton[disabled]:hover {
+    cursor:default;
+    background: url("../../../../core/styles/images/camera.png") center 1em no-repeat, -moz-linear-gradient(top,  #ffffff,  #ededed);
+}
+
+.ds-capturer-controls .ds-capturer-exportButton {
+    width: 10em;
+    margin-left: 2em;
+    height: 100%;
+    display: inline-block;
+    padding: 3.3em 0 0;
+    float: right;
+    text-align: center;
+    background: url("../../../../core/styles/images/camera.png") center 1em no-repeat, -moz-linear-gradient(top,  #ffffff,  #ededed);
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.ds-capturer-controls .ds-capturer-exportButton:hover {
+    cursor:pointer;
+    background: url("../../../../core/styles/images/camera.png") center 1em no-repeat, -moz-linear-gradient(top,  #ededed, #ffffff);
+}
+
+.ds-capturer-controls .ds-capturer-exportButton[disabled]:hover {
+    cursor:default;
+    background: url("../../../../core/styles/images/camera.png") center 1em no-repeat, -moz-linear-gradient(top,  #ffffff,  #ededed);
+}
+
+.ds-capturer-refresh {
+    background: url("../../../../core/styles/images/refresh-28x28-blue.png") 0.4em center no-repeat;
+    background-size: 19px 19px;
+    width: 4.5em;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+
+.ds-capturer-controls span {
+    font-size: 0.8em;
+}
+
+.ds-capturer-state {
+    display:block;
+    width: 30em;
+    overflow: auto;
+    float: left;
+}
+
+.ds-capturer-state h2 {
+    display: inline;
+}
+
+.ds-capturer-deleteImage {
+    background: url("../../../../core/styles/images/trash-28x28-blue.png") 0.5em center no-repeat;
+    background-size: 19px 19px;
+    float: right;
+    padding-right: 0.8em;
+}
+
+.ds-capturer-deleteImage.ds-button-disabled,
+.ds-capturer-deleteImage.ds-button-disabled:hover {
+    opacity: 0.4;
+    color: #000;
+    text-decoration: none;
+    background: url("../../../../core/styles/images/trash-28x28-grey.png") 0.5em center no-repeat;
+    background-size: 19px 19px;    
+    cursor:default;    
+}
+
+.ds-capturer-download-frame {
+    display: none;
+    width: 0px;
+    height: 0px;
+}
+
+/* Status messages */
+
+.ds-status-title {
+    display: block;
+    height: 4.2em;
+    padding-left:4em;
+    padding-top:0.6em;
+    display:block;
+    line-height:2.1em;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #575757;
+    text-shadow: 1px 1px #fff;
+}
+
+.ds-status-noCameras{
+    background: url("../../../../core/styles/images/NO_CAMERAS.png") 0em 0em no-repeat;
+}
+
+.ds-status-ready {
+    background: url("../../../../core/styles/images/capture_ready.png") 0em 0em no-repeat;
+}
+
+.ds-status-cameraDisconnected {
+    background: url("../../../../core/styles/images/CAMERA_DISCONNECTED.png") 0em 0em no-repeat;
+}
+
+.ds-status-noCapture {
+    background: url("../../../../core/styles/images/NO_CAPTURE.png") 0em 0em no-repeat;
+}
+
+.ds-status-tooManyCameras {
+    background: url("../../../../core/styles/images/TOO_MANY_CAMERAS.png") 0em 0em no-repeat;
+}
+
+.ds-status-ready .ds-shared-status-description {
+    position:relative;
+    top: -3em;
+}
+
+.ds-status-ready .ds-shared-status-description p{
+    padding-left: 4.8em;
+}
+
+.ds-status-ready .ds-capturer-refresh {
+    position:relative;
+    bottom: 1.7em;
+}
+
+.ds-capturer-stereoUnavailable {
+    background: url("../../../../core/styles/images/stereo.png") 0em 0em no-repeat; -moz-opacity:0.4;
+    margin: 1em 0 1em 0;
+    display:block;
+    padding: 0.5em 0 0 7em;
+    height: 3em;
+}
+
+.ds-capturer-stereoUnavailable span {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #575757;
+    text-shadow: 1px 1px #fff;
+}
+
+.ds-capturer-export-description {
+    float: left;
+    padding: 1em;
+    margin-left: 4em;
+    width: 16em;
+    background-color: #fbf3be;
+    -moz-border-radius: 0.2em;
+    border-radius: 0.2em;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+    box-shadow: 3px 3px 3px #888888
+}
+
+.ds-capturer-export-description:before {
+    content:"";
+    position: absolute;
+	bottom: -11px;
+    right: 13.7em;
+    top:11.6em;
+    width: 15px;
+    height: 15px;
+    background-color: #fbf3be;
+    -moz-transform: rotate(45deg); 
+    transform:rotate(45deg);
+}
+
+/** IMAGE REIVEWER STYLES **/
+
+.ds-captureReviewer-captureIMG {
+    margin-top: 1em;
+    width:100%;    
+}
+
+.ds-captureReviewer-deletedMessage {
+    margin-top: 1em;
+}
