@@ -39,7 +39,7 @@ var decapod = decapod || {};
      */
     decapod.exporter.renderStrings = function (that) {
         $.each(that.options.strings, function (key, str) {
-            if (typeof (str) === "string") {
+            if (typeof (str) === "string" && that.options.selectors[key]) {
                 that.locate(key).text(str);
             }
         });
@@ -143,6 +143,12 @@ var decapod = decapod || {};
         uploader.strategy.local.disableBrowseButton();
     };
     
+    decapod.exporter.pageUnloadWarning = function () {
+        window.onbeforeunload = function () {
+            return that.options.strings.pageUnloadWarning;
+        };
+    };
+    
     decapod.exporter.preInit = function (that) {
         /*
          * Work around for FLUID-4709
@@ -170,9 +176,13 @@ var decapod = decapod || {};
         that.setBusy = function (isBusy) {
             that.setBusy(isBusy);
         };
+        that.pageUnloadWarning = function () {
+            that.pageUnloadWarning();
+        };
     };
     
     decapod.exporter.finalInit = function (that) {
+        that.pageUnloadWarning();
         that.showInstructions();
         that.renderStrings();
         that.events.onFinalInit.fire();
@@ -206,6 +216,7 @@ var decapod = decapod || {};
             instructions: "Select 'Browse Files' to choose images to export.",
             uploadClear: "Restart",
             help: "Help",
+            pageUnloadWarning: "Leaving the page could result in loss of export data.",
             formats: "Select Export Option",
             pdfs: {
                 name: "PDF",
@@ -281,7 +292,8 @@ var decapod = decapod || {};
             disableImport: "decapod.exporter.disableImport",
             showInstructions: "decapod.exporter.showInstructions",
             showStatus: "decapod.exporter.showStatus",
-            setBusy: "decapod.exporter.setBusy"
+            setBusy: "decapod.exporter.setBusy",
+            pageUnloadWarning: "decapod.exporter.pageUnloadWarning"
         },
         components: {
             progressiveEnhancementChecker: {
