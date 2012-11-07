@@ -700,10 +700,20 @@ var decapod = decapod || {};
                             func : "decapod.status",
                             options : {
                                 model : {
-                                    currentStatus : "error",
-                                    "error" : {
+                                    currentStatus : "EXPORT_ERROR",
+                                    "EXPORT_ERROR" : {
                                         name : "Error creating export",
                                         description : "See Help for more details.",
+                                        style : "ds-status-error"
+                                    },
+                                    "FILES_IGNORED": {
+                                        name : "Some files were ignored",
+                                        description : "They may not have been valid image files.",
+                                        style : "ds-status-error"
+                                    },
+                                    "FILES_IGNORED_AND_EXPORT_ERROR": {
+                                        name : "Some files were ignored and an error creating export occured",
+                                        description : "The ignored files may not have been valid image files. See Help for more details.",
                                         style : "ds-status-error"
                                     }
                                 }

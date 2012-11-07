@@ -122,12 +122,22 @@ var decapod = decapod || {};
                                 type: "fluid",
                                 func: "decapod.status",
                                 options: {
-                                    model: {
-                                        currentStatus: "error",
-                                        "error": {
-                                            name: "Error creating export",
-                                            description: "See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
-                                            style: "ds-exporter-status-error"
+                                    model : {
+                                        currentStatus : "EXPORT_ERROR",
+                                        "EXPORT_ERROR" : {
+                                            name : "Error creating export",
+                                            description : "See Help for more details.",
+                                            style : "ds-status-error"
+                                        },
+                                        "FILES_IGNORED": {
+                                            name : "Some files were ignored",
+                                            description : "They may not have been valid image files.",
+                                            style : "ds-status-error"
+                                        },
+                                        "FILES_IGNORED_AND_EXPORT_ERROR": {
+                                            name : "Some files were ignored and an error creating export occured",
+                                            description : "The ignored files may not have been valid image files. See Help for more details.",
+                                            style : "ds-status-error"
                                         }
                                     }
                                 }
