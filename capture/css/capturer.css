@@ -107,8 +107,16 @@
 
 /* Status messages */
 
-.ds-status-title {
-    display: block;
+.ds-shared-status-title {
+    /* add additional styles to the existing status title */
+    height: 4.2em;
+    padding-left:4em;
+    padding-top:0.6em;
+    line-height:2.1em;
+    font-size: 1.2em;
+ 
+
+    /*display: block;
     height: 4.2em;
     padding-left:4em;
     padding-top:0.6em;
@@ -117,7 +125,7 @@
     font-size: 1.2em;
     font-weight: bold;
     color: #575757;
-    text-shadow: 1px 1px #fff;
+    text-shadow: 1px 1px #fff;*/
 }
 
 .ds-status-noCameras{
