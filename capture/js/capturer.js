@@ -282,7 +282,7 @@ var decapod = decapod || {};
                         },
                         READY_FOR_STEREO: {
                             name: "Ready to capture",
-                            description: "Capable of capturing Stereo 3D. <br />Press the Camera Button to start.",
+                            description: "<p>Press the Camera Button to start.</p> <div class='ds-capturer-stereoAvailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>available</i></span>.<br />See <a href=''>Help</a> for details.</div>",
                             style: "dc-status-ready ds-status-ready"
                         },
                         NO_CAMERAS: {

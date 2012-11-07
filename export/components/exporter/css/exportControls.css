@@ -29,9 +29,24 @@
 
 .ds-exportControls-complete-links {
     margin: 0 auto;
-    width: 256px;
+    text-align:center;
 }
 
+
+.ds-exporter-status-error {
+    width: 15em;
+    background: url("../../../../core/styles/images/export-22x22.png") 10px 12px no-repeat, url("../../../../core/styles/images/question.png") 0 0 no-repeat;
+    margin: 0 auto;
+}
+
+.ds-exporter-status-error .ds-shared-status-title {
+    font-weight:bold;
+    margin-left: 3em;
+}
+
+.ds-exporter-status-error .ds-shared-status-description {
+    margin-left:3em;
+}
 
 .ds-exportControls-complete-links  a{
     -moz-transition: background-color 0.2s ease;
@@ -53,9 +68,10 @@
 
 .ds-exportControls-complete-download {
     background: url("../../../../core/styles/images/download-28x28-blue.png") 5px center no-repeat;
-
+    background-size: 19px 19px;
 }
 
 .ds-exportControls-complete-restart {
     background: url("../../../../core/styles/images/restart-28x28-blue.png") 5px center no-repeat;
+    background-size: 19px 19px;
 }
