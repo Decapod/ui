@@ -351,9 +351,6 @@ var decapod = decapod || {};
                         afterFileDialog: "lastMultifileInput"
                     },
                     events: {
-                        onFileError: {
-                            event: "onQueueError"
-                        },
                         afterFilesSelected: {
                             event: "afterFileDialog"
                         }
@@ -377,7 +374,7 @@ var decapod = decapod || {};
                             listener: "{exporter}.showStatus",
                             priority: "0"
                         },
-                        onFileError: {
+                        "onQueueError.addError": {
                             listener: "{importStatus}.addError",
                             args: ["{arguments}.1"]
                         }
