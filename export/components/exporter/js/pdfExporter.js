@@ -217,7 +217,7 @@ var decapod = decapod || {};
             initialProgressMessage: "Creating export...",
             inProgressMessage: "Creating export... Step %step of %steps.",
             completeProgressMessage: "Creating export... Done!",
-            warning: "Progress Warning",
+            warning: "Note: Refreshing the browser will cancel the export.",
             download: "Download PDF",  
             restart: "Start Over"
         },
