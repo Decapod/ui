@@ -123,7 +123,7 @@ var decapod = decapod || {};
                                 func: "decapod.status",
                                 options: {
                                     model : {
-                                        currentStatus : "EXPORT_ERROR",
+                                        currentStatus : that.model.errorStatus,
                                         "EXPORT_ERROR" : {
                                             name : "Error creating export",
                                             description : "See Help for more details.",
