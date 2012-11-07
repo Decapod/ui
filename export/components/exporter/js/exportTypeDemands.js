@@ -78,7 +78,8 @@ var decapod = decapod || {};
                 template: "{exportControls}.options.resources.progress"
             },
             strings: {
-                message: "{exportControls}.options.strings.progressMessage"
+                message: "{exportControls}.options.strings.progressMessage",
+                warning: "{exportControls}.options.strings.progressWarning"
             }
         }
     });

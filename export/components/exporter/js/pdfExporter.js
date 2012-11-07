@@ -126,8 +126,8 @@ var decapod = decapod || {};
                                         currentStatus: "error",
                                         "error": {
                                             name: "Error creating export",
-                                            description: "See Help for more details.",
-                                            style: "ds-status-error"
+                                            description: "See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
+                                            style: "ds-exporter-status-error"
                                         }
                                     }
                                 }
@@ -217,6 +217,7 @@ var decapod = decapod || {};
             initialProgressMessage: "Creating export...",
             inProgressMessage: "Creating export... Step %step of %steps.",
             completeProgressMessage: "Creating export... Done!",
+            warning: "Note: Refreshing the browser will cancel the export.",
             download: "Download PDF",  
             restart: "Start Over"
         },
