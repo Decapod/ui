@@ -6,10 +6,22 @@
         
         <link rel="stylesheet" type="text/css" href="../../lib/infusion/framework/fss/css/fss-reset-global.css" />
         <link rel="stylesheet" type="text/css" href="../../core/styles/css/decapod.css" />
-        <link rel="stylesheet" type="text/css" href="../css/dewarper.css" />
+        <link rel="stylesheet" type="text/css" href="../../core/styles/css/stereo.css" />
+
+        <!-- Required JavaScript modules for the Exporter component. -->
+        <script type="text/javascript" src="../../lib/infusion/MyInfusion.js"></script>
+        <script type="text/javascript" src="../../core/js/decapodContext.js"></script>
+        <script type="text/javascript" src="../../core/js/decapodRequestsDemands.js"></script>
+        <script type="text/javascript" src="../../core/js/decapodRequests.js"></script>
+        <script type="text/javascript" src="../../core/js/eventBinder.js"></script> 
+        <script type="text/javascript" src="../../core/js/statusDemands.js"></script>
+        <script type="text/javascript" src="../../core/js/status.js"></script>
+        <script type="text/javascript" src="../../core/js/buttonDemands.js"></script>
+        <script type="text/javascript" src="../../core/js/button.js"></script>
+        <script type="text/javascript" src="../../core/js/stereo.js"></script>
     </head>
     
-    <body/>        
+    <body class="ds-dewarp">        
         <section class="ds-shared-decapod">
             
             <!-- TITLE BAR -->
@@ -19,39 +31,20 @@
                 </ul>
             </header>
 
-            <!-- DECAPOD CAPTURE INTERFACE -->
-            <section class="ds-shared-mainPane">
-                <header>
-                    <h1>Dewarp Title</h1>
-                    
-                    <menu class="ds-shared-menuBar">
-                        <a class="ds-shared-linkButton ds-shared-helpButton" href="">Help link text</a>
-                    </menu>
-                </header>
-
-                <section class="ds-dewarper-main ds-shared-indent1">
-                    <div class="ds-shared-insetContentArea">
-                        <p>Instructions go here.</p>
-                        <div>
-                            <ul>
-                                <li>No Status Messages Yet</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="ds-shared-uploadControls">
-                        <span class="ds-shared-grey-button ds-shared-uploadBrowse">
-                        	<!--Due to FLUID-4726 the browseText, "Browse Files", needs to be set here in the template-->
-                            <span class="ds-shared-uploadBrowseText">Browse Files</span>
-                        </span>
-                    </div>
-
-                    <form class="ds-dewarper-dewarpControls">
-                        <button class="ds-shared-grey-button"><span>Dewarp All Captures</span></button>
-                    </form>
-
-                </section>
+            <!-- DECAPOD CALIBRATE INTERFACE -->
+            <section class="dc-stereo ds-shared-mainPane">
             </section>
+
+            <!-- FOOTER -->
+            <footer>
+            </footer>
         </section>
+        <script>
+            decapod.stereo(".dc-stereo", {
+                strings: {
+                    title: "Stereo Camera Calibrator",
+                }
+            });
+        </script>
     </body>
 </html>

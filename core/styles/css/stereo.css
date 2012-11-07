@@ -1,0 +1,28 @@
+.ds-stereo-main {
+    width:27em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ds-stereo-stereoControls {
+    margin-top: 1.25em;
+}
+
+.ds-calibrate .ds-stereo-stereoControls {
+    height: 4.7em;
+}
+
+.ds-stereo-stereoControls .ds-shared-grey-button {
+    height: 4.7em;
+    background: url("../../styles/images/export-22x22.png") 100px center no-repeat, -moz-linear-gradient(top,  #ffffff,  #ececec);
+}
+
+.ds-stereo-stereoControls .ds-shared-grey-button[disabled],
+.ds-stereo-stereoControls .ds-shared-grey-button[disabled]:hover {
+    background: url("../../styles/images/export-22x22-grey.png") 100px center no-repeat;
+}
+
+.ds-stereo-stereoControls .ds-shared-grey-button:hover {
+    background: url("../../styles/images/export-22x22.png") 100px center no-repeat, -moz-linear-gradient(top,  #ececec, #ffffff);
+}
+
