@@ -128,7 +128,7 @@
     text-shadow: 1px 1px #fff;*/
 }
 
-.ds-status-noCameras{
+.ds-capturer-state .ds-status-noCameras{
     background: url("../../../../core/styles/images/NO_CAMERAS.png") 0em 0em no-repeat;
 }
 
@@ -136,15 +136,15 @@
     background: url("../../../../core/styles/images/capture_ready.png") 0em 0em no-repeat;
 }
 
-.ds-status-cameraDisconnected {
+.ds-capturer-state .ds-status-cameraDisconnected {
     background: url("../../../../core/styles/images/CAMERA_DISCONNECTED.png") 0em 0em no-repeat;
 }
 
-.ds-status-noCapture {
+.ds-capturer-state .ds-status-noCapture {
     background: url("../../../../core/styles/images/NO_CAPTURE.png") 0em 0em no-repeat;
 }
 
-.ds-status-tooManyCameras {
+.ds-capturer-state .ds-status-tooManyCameras {
     background: url("../../../../core/styles/images/TOO_MANY_CAMERAS.png") 0em 0em no-repeat;
 }
 
@@ -163,7 +163,7 @@
 }
 
 .ds-capturer-stereoUnavailable {
-    background: url("../../../../core/styles/images/stereo.png") 0em 0em no-repeat; -moz-opacity:0.4;
+    background:  url("../../../../core/styles/images/cross.png") 0em 0em no-repeat, url("../../../../core/styles/images/stereo.png") 0em 0em no-repeat;
     margin: 1em 0 1em 0;
     display:block;
     padding: 0.5em 0 0 7em;
@@ -171,6 +171,21 @@
 }
 
 .ds-capturer-stereoUnavailable span {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #575757;
+    text-shadow: 1px 1px #fff;
+}
+
+.ds-capturer-stereoAvailable {
+    background:  url("../../../../core/styles/images/checkmark.png") 0em 0em no-repeat, url("../../../../core/styles/images/stereo.png") 0em 0em no-repeat;
+    margin: 1em 0 1em 0;
+    display:block;
+    padding: 0.5em 0 0 7em;
+    height: 3em;
+}
+
+.ds-capturer-stereoAvailable span {
     font-size: 1.2em;
     font-weight: bold;
     color: #575757;
