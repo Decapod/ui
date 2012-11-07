@@ -53,6 +53,7 @@ var decapod = decapod || {};
                         showExportError: true,
                         showExportProgress: false,
                         showExportComplete: false,
+                        errorStatus: "EXPORT_ERROR",
                         downloadURL: ""
                     }]
                 }
