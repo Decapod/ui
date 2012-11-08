@@ -555,7 +555,7 @@ var decapod = decapod || {};
             onStatusAttached: null,
             onCaptureReviewerAttached: null,
             onExportControllerAttached: null,
-            onCaptureControllerAttached: null,
+            onCaptureControllerAttached: null
         },
         listeners: {
             onReadySuccess: {
