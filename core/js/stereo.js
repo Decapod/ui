@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Declare dependencies
-/*global setTimeout, window, decapod:true, fluid, jQuery*/
+/*global decapod:true, fluid, jQuery*/
 
 // JSLint options 
 /*jslint white: true, funcinvoke: true, undef: true, newcap: true, nomen: true, regexp: true, bitwise: true, browser: true, forin: true, maxerr: 100, indent: 4 */
@@ -23,6 +23,8 @@ limitations under the License.
 var decapod = decapod || {};
 
 (function ($) {
+
+    "use strict";
 
     /*********************
      *  decapod.stereo *
@@ -57,7 +59,13 @@ var decapod = decapod || {};
             status: {
                 type: "decapod.stereo.status",
                 createOnEvent: "afterRender",
-                container: "{decapod.stereo}.dom.status"
+                container: "{decapod.stereo}.dom.status",
+                options: {
+                    events: {
+                        hideInitial: "{decapod.stereo}.events.onFileSelected",
+                        statusUpdated: "{decapod.stereo}.events.statusUpdated"
+                    }
+                }
             }
         },
         selectorsToIgnore: ["start", "status"],
@@ -98,7 +106,8 @@ var decapod = decapod || {};
         },
         nickName: "decapod.stereo",
         events: {
-            onFileSelected: null
+            onFileSelected: null,
+            statusUpdated: null
         }
     });
 
@@ -115,9 +124,9 @@ var decapod = decapod || {};
     };
     
     decapod.stereo.finalInit = function (that) {
-        decapod.fetchResources(that.options.resources, function (resourceSpec) {
-           that.refreshView();
-       });
+        decapod.fetchResources(that.options.resources, function () {
+            that.refreshView();
+        });
     };
 
     fluid.fetchResources.primeCacheFromResources("decapod.stereo");
@@ -125,6 +134,7 @@ var decapod = decapod || {};
     fluid.defaults("decapod.stereo.status", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
         renderOnInit: true,
+        preInitFunction: "decapod.stereo.status.preInit",
         strings: {
             initialMessage: "Select \"Browse Files\" button to choose archive."
         },
@@ -132,23 +142,133 @@ var decapod = decapod || {};
             initialMessage: ".dc-stereo-status-initialMessage",
             message: ".dc-stereo-status-message"
         },
+        selectorsToIgnore: "message",
+        events: {
+            hideInitial: null,
+            statusUpdated: null
+        },
+        listeners: {
+            hideInitial: {
+                listener: "{that}.hideInitialMessage"
+            },
+            statusUpdated: {
+                listener: "{that}.onStatusUpdated",
+                priority: "first"
+            }
+        },
+        components: {
+            message: {
+                type: "decapod.stereo.status.message",
+                container: "{decapod.stereo.status}.dom.message",
+                createOnEvent: "statusUpdated"
+            }
+        },
         protoTree: {
             initialMessage: {
                 messagekey: "initialMessage"
-            },
-            message: {
-                decorators: {
+            }
+        }
+    });
+
+    decapod.stereo.status.preInit = function (that) {
+        that.hideInitialMessage = function () {
+            that.locate("initialMessage").hide();
+        };
+        that.onStatusUpdated = function (status) {
+            that.options.components.message.type =
+                fluid.model.composeSegments("decapod.stereo.status.message",
+                    status);
+        };
+    };
+
+    fluid.defaults("decapod.stereo.status.spinner", {
+        gradeNames: ["fluid.viewComponent", "autoInit"],
+        postInitFunction: "decapod.stereo.status.spinner.postInit",
+        styles: {
+            spinner: "ds-shared-spinner",
+            outerCircle: "ds-shared-spinner-outerCircle",
+            innerCircle: "ds-shared-spinner-innerCircle",
+            dot: "ds-shared-spinner-dot"
+        }
+    });
+
+    decapod.stereo.status.spinner.postInit = function (that) {
+        var styles = that.options.styles,
+            spinner = $("<div></div>").addClass(styles.outerCircle)
+                .after($("<div></div>").addClass(styles.innerCircle))
+                .after($("<div></div>").addClass(styles.dot))
+                .wrapAll($("<div></div>").addClass(styles.spinner))
+                .parent("div");
+        that.container.before(spinner);
+    };
+
+    fluid.defaults("decapod.stereo.status.message", {
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        preInitFunction: "decapod.stereo.status.message.preInit",
+        selectors: {
+            text: ".dc-stereo-status-message-text"
+        },
+        styles: {
+            text: "ds-stereo-status-message-text"
+        },
+        strings: {
+            text: ""
+        },
+        renderOnInit: true,
+        protoTree: {
+            text: {
+                messagekey: "text",
+                decorators: {"addClass": "{styles}.text"}
+            }
+        },
+        nickName: "decapod.stereo.status.message"
+    });
+
+    decapod.stereo.status.message.preInit = function (that) {
+        that.nickName = "decapod.stereo.status.message";
+    };
+
+    fluid.defaults("decapod.stereo.status.message.WORKING", {
+        gradeNames: ["decapod.stereo.status.message", "autoInit"],
+        strings: {
+            text: "Working..."
+        },
+        protoTree: {
+            text: {
+                messagekey: "text",
+                decorators: [{"addClass": "{styles}.text"}, {
                     type: "fluid",
-                    func: "decapod.stereo.status.message"
+                    func: "decapod.stereo.status.spinner"
+                }]
+            }
+        }
+    });
+
+    fluid.defaults("decapod.stereo.status.message.READY_TO_CALIBRATE", {
+        gradeNames: ["decapod.stereo.status.message", "autoInit"],
+        strings: {
+            text: "Ready to calibrate."
+        }
+    });
+
+    fluid.defaults("decapod.stereo.status.message.CAPTURES_FOUND", {
+        gradeNames: ["decapod.stereo.status.message", "autoInit"],
+        model: {
+            captures: 0
+        },
+        strings: {
+            text: "%captures captures found."
+        },
+        protoTree: {
+            text: {
+                messagekey: "text",
+                args: {
+                    captures: "${captures}"
                 }
             }
         }
     });
 
-    fluid.defaults("decapod.stereo.status.message", {
-        gradeNames: ["fluid.rendererComponent", "autoInit"]
-    });
-    
     fluid.defaults("decapod.stereo.browse", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
         selectors: {
@@ -181,9 +301,22 @@ var decapod = decapod || {};
         url: ""
     });
 
+    fluid.defaults("decapod.stereo.browse.input.calibrator", {
+        gradeNames: ["decapod.stereo.browse.input", "autoInit"],
+        url: "./images",
+        status: "CAPTURES_FOUND"
+    });
+
+    fluid.defaults("decapod.stereo.browse.input.dewarper", {
+        gradeNames: ["decapod.stereo.browse.input", "autoInit"],
+        url: "./captures",
+        status: "READY_TO_CALIBRATE"
+    });
+
     decapod.stereo.browse.input.postInit = function (that) {
         that.container.change(function () {
-            that.events.onFileSelected.fire(this.files);
+            that.files = this.files;
+            that.events.onFileSelected.fire();
         });
     };
 
