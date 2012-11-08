@@ -35,7 +35,8 @@ var decapod = decapod || {};
             title: ".dc-stereo-title",
             help: ".dc-stereo-help",
             start: ".dc-stereo-start",
-            browse: ".dc-stereo-browse"
+            browse: ".dc-stereo-browse",
+            status: ".dc-stereo-status"
         },
         components: {
             start: {
@@ -51,8 +52,14 @@ var decapod = decapod || {};
                     },
                     listeners: {}
                 }
+            },
+            status: {
+                type: "decapod.stereo.status",
+                createOnEvent: "afterRender",
+                container: "{stereo}.dom.status"
             }
         },
+        selectorsToIgnore: ["start", "status"],
         protoTree: {
             title: {
                 messagekey: "title"
@@ -63,7 +70,6 @@ var decapod = decapod || {};
                     messagekey: "help"
                 }
             },
-            start: {},
             browse: {
                 decorators: {
                     type: "fluid",
@@ -88,6 +94,9 @@ var decapod = decapod || {};
                     dataType: "html"
                 }
             }
+        },
+        events: {
+            onFileSelected: null
         }
     });
     
@@ -96,12 +105,30 @@ var decapod = decapod || {};
            that.refreshView();
        });
     };
+
+    fluid.fetchResources.primeCacheFromResources("decapod.stereo");
+
+    fluid.defaults("decapod.stereo.status", {
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        renderOnInit: true,
+        strings: {
+            initialMessage: "Select \"Browse Files\" button to choose archive."
+        },
+        selectors: {
+            initialMessage: ".dc-stereo-status-initialMessage"
+        },
+        protoTree: {
+            initialMessage: {
+                messagekey: "initialMessage"
+            }
+        }
+    });
     
     fluid.defaults("decapod.stereo.browse", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
         selectors: {
             browseLabel: ".dc-stereo-browseLabel",
-            browseInput: ".ds-stereo-browseInput"
+            browseInput: ".dc-stereo-browseInput"
         },
         strings: {
             browse: "{decapod.stereo}.options.strings.browse"
@@ -121,9 +148,17 @@ var decapod = decapod || {};
     });
 
     fluid.defaults("decapod.stereo.browse.input", {
-        gradeNames: ["fluid.viewComponent", "autoInit"]
+        gradeNames: ["fluid.viewComponent", "autoInit"],
+        postInitFunction: "decapod.stereo.browse.input.postInit",
+        events: {
+            onFileSelected: "{decapod.stereo}.events.onFileSelected"
+        }
     });
 
-    fluid.fetchResources.primeCacheFromResources("decapod.stereo");
+    decapod.stereo.browse.input.postInit = function (that) {
+        that.container.change(function () {
+            that.events.onFileSelected.fire(this.files);
+        });
+    };
 
 })(jQuery);
