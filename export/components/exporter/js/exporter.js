@@ -54,6 +54,15 @@ var decapod = decapod || {};
      */
     decapod.exporter.startImport = function (that, exportType) {
         that.exportType = exportType;
+        // TODO: Should move this to a listeners block. Currently the order of instantiation isn't enforced enough to ensure that all the necessary parts are available.
+        that.uploader.events.onFileError.addListener(
+            function () {
+                var exportControls = that.exportType.exportControls;
+                var model = fluid.copy(exportControls.model);
+                model.fileError = true;
+                exportControls.updateModel(model);
+            }, "addError", null, "first"
+        );
         that.events.onImportStart.fire();
     };
     

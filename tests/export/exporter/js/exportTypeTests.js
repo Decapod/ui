@@ -1725,8 +1725,10 @@ var decapod = decapod || {};
             var model = {
                 showExportStart : false,
                 showExportError : false,
+                showFileError: false,
                 showExportProgress : true,
-                showExportComplete : false
+                showExportComplete : false,
+                fileError: false
             };
             var assertRender = function(that) {
                 decapod.testUtils.exportType.assertShowProgressControls(that);
@@ -1755,8 +1757,10 @@ var decapod = decapod || {};
             var model = {
                 showExportStart : false,
                 showExportError : false,
+                showFileError: false,
                 showExportProgress : false,
-                showExportComplete : true
+                showExportComplete : true,
+                fileError: false
             };
             var assertRender = function(that) {
                 decapod.testUtils.exportType.assertShowCompleteControls(that);
@@ -1780,20 +1784,56 @@ var decapod = decapod || {};
 
         });
 
-        controlsTests.asyncTest("Change Model - show error message", function() {
+        controlsTests.asyncTest("Change Model - show export error message", function() {
             jqUnit.expect(3);
             var model = {
                 showExportStart : false,
                 showExportError : true,
+                showFileError: false,
                 showExportProgress : false,
                 showExportComplete : false,
-                errorStatus: "EXPORT_ERROR"
+                fileError: false
             };
             var assertRender = function(that) {
                 var name = $(".dc-status-name");
                 var desc = $(".dc-status-description");
                 jqUnit.assertEquals("The status name should be rendered", "Error creating export", name.text());
                 jqUnit.assertEquals("The description should be rendered", "See Help for more details.", desc.html());
+                start();
+            };
+            var assertModel = function(newModel) {
+                jqUnit.assertDeepEq("The model should be updated", model, newModel);
+            };
+            createControls(CONTROLS_CONTAINER, {
+                listeners : {
+                    afterRender : function(that) {
+                        if (that["**-renderer-trigger-0"]) {
+                            that.events.afterModelChanged.addListener(assertModel);
+                            that.updateModel(model);
+                        } else {
+                            assertRender(that);
+                        }
+                    }
+                }
+            });
+
+        });
+        
+        controlsTests.asyncTest("Change Model - show file error message", function() {
+            jqUnit.expect(3);
+            var model = {
+                showExportStart : false,
+                showExportError : false,
+                showFileError: true,
+                showExportProgress : false,
+                showExportComplete : false,
+                fileError: true
+            };
+            var assertRender = function(that) {
+                var name = $(".dc-status-name");
+                var desc = $(".dc-status-description");
+                jqUnit.assertEquals("The status name should be rendered", "Some files were ignored", name.text());
+                jqUnit.assertEquals("The description should be rendered", "They may not have been valid image files.", desc.html());
                 start();
             };
             var assertModel = function(newModel) {

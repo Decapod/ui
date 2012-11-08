@@ -694,26 +694,37 @@ var decapod = decapod || {};
                 type : "fluid.renderer.condition",
                 condition : that.model.showExportError,
                 trueTree : {
-                    status : {
+                    exportError : {
                         decorators : {
                             type : "fluid",
                             func : "decapod.status",
                             options : {
                                 model : {
-                                    currentStatus : that.model.errorStatus,
+                                    currentStatus : "EXPORT_ERROR",
                                     "EXPORT_ERROR" : {
                                         name : "Error creating export",
                                         description : "See Help for more details.",
                                         style : "ds-status-error"
-                                    },
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }, {
+                type : "fluid.renderer.condition",
+                condition : that.model.showFileError,
+                trueTree : {
+                    fileError : {
+                        decorators : {
+                            type : "fluid",
+                            func : "decapod.status",
+                            options : {
+                                model : {
+                                    currentStatus : "FILES_IGNORED",
                                     "FILES_IGNORED": {
                                         name : "Some files were ignored",
                                         description : "They may not have been valid image files.",
-                                        style : "ds-status-error"
-                                    },
-                                    "FILES_IGNORED_AND_EXPORT_ERROR": {
-                                        name : "Some files were ignored and an error creating export occured",
-                                        description : "The ignored files may not have been valid image files. See Help for more details.",
                                         style : "ds-status-error"
                                     }
                                 }
@@ -801,7 +812,8 @@ var decapod = decapod || {};
             trigger : ".dc-exportControls-trigger",
             progress : ".dc-exportControls-progress",
             complete : ".dc-exportControls-complete",
-            status : ".dc-capture-status"
+            exportError : ".dc-exportControls-exportError",
+            fileError : ".dc-exportControls-fileError"
         },
         strings : {
             trigger : "Start Export",
@@ -824,18 +836,20 @@ var decapod = decapod || {};
                 args : [{
                     showExportStart : false,
                     showExportError : false,
+                    showFileError: false,
                     showExportProgress : true,
                     showExportComplete : false,
-                    errorStatus: "{exportControls}.model.errorStatus"
+                    fileError: "{exportControls}.model.fileError"
                 }]
             }
         },
         model : {
             showExportStart : true,
             showExportError : false,
+            showFileError: false,
             showExportProgress : false,
             showExportComplete : false,
-            errorStatus: "",
+            fileError: false,
             downloadURL : ""
         },
         invokers : {

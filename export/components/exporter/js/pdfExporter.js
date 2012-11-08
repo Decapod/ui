@@ -112,31 +112,21 @@ var decapod = decapod || {};
                             }
                         }
                     }
-                },
+                }, 
                 {
-                    type: "fluid.renderer.condition",
-                    condition: that.model.showExportError,
-                    trueTree: {
-                        status: {
-                            decorators: {
-                                type: "fluid",
-                                func: "decapod.status",
-                                options: {
+                    type : "fluid.renderer.condition",
+                    condition : that.model.showExportError,
+                    trueTree : {
+                        exportError : {
+                            decorators : {
+                                type : "fluid",
+                                func : "decapod.status",
+                                options : {
                                     model : {
-                                        currentStatus : that.model.errorStatus,
+                                        currentStatus : "EXPORT_ERROR",
                                         "EXPORT_ERROR" : {
                                             name : "Error creating export",
                                             description : "See Help for more details.",
-                                            style : "ds-status-error"
-                                        },
-                                        "FILES_IGNORED": {
-                                            name : "Some files were ignored",
-                                            description : "They may not have been valid image files.",
-                                            style : "ds-status-error"
-                                        },
-                                        "FILES_IGNORED_AND_EXPORT_ERROR": {
-                                            name : "Some files were ignored and an error creating export occured",
-                                            description : "The ignored files may not have been valid image files. See Help for more details.",
                                             style : "ds-status-error"
                                         }
                                     }
@@ -144,7 +134,29 @@ var decapod = decapod || {};
                             }
                         }
                     }
-                },
+                }, 
+                {
+                    type : "fluid.renderer.condition",
+                    condition : that.model.showFileError,
+                    trueTree : {
+                        fileError : {
+                            decorators : {
+                                type : "fluid",
+                                func : "decapod.status",
+                                options : {
+                                    model : {
+                                        currentStatus : "FILES_IGNORED",
+                                        "FILES_IGNORED": {
+                                            name : "Some files were ignored",
+                                            description : "They may not have been valid image files.",
+                                            style : "ds-status-error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }, 
                 {
                     type: "fluid.renderer.condition",
                     condition: that.model.showExportProgress,
