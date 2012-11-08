@@ -31,6 +31,7 @@ var decapod = decapod || {};
     fluid.defaults("decapod.stereo", {
         gradeNames: ["autoInit", "fluid.rendererComponent"],
         finalInitFunction: "decapod.stereo.finalInit",
+        preInitFunction: "decapod.stereo.preInit",
         selectors: {
             title: ".dc-stereo-title",
             help: ".dc-stereo-help",
@@ -42,10 +43,10 @@ var decapod = decapod || {};
             start: {
                 type: "decapod.button",
                 createOnEvent: "afterRender",
-                container: "{stereo}.dom.start",
+                container: "{decapod.stereo}.dom.start",
                 options: {
                     strings: {
-                        label: "{stereo}.options.strings.start"
+                        label: "{decapod.stereo}.options.strings.start"
                     },
                     model: {
                         "state": "disabled"
@@ -56,7 +57,7 @@ var decapod = decapod || {};
             status: {
                 type: "decapod.stereo.status",
                 createOnEvent: "afterRender",
-                container: "{stereo}.dom.status"
+                container: "{decapod.stereo}.dom.status"
             }
         },
         selectorsToIgnore: ["start", "status"],
@@ -95,10 +96,23 @@ var decapod = decapod || {};
                 }
             }
         },
+        nickName: "decapod.stereo",
         events: {
             onFileSelected: null
         }
     });
+
+    fluid.defaults("decapod.dewarper", {
+        gradeNames: ["decapod.stereo", "autoInit"]
+    });
+
+    fluid.defaults("decapod.calibrator", {
+        gradeNames: ["decapod.stereo", "autoInit"]
+    });
+
+    decapod.stereo.preInit = function (that) {
+        that.nickName = "decapod.stereo";
+    };
     
     decapod.stereo.finalInit = function (that) {
         decapod.fetchResources(that.options.resources, function (resourceSpec) {
