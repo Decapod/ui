@@ -818,7 +818,7 @@ var decapod = decapod || {};
         strings : {
             trigger : "Start Export",
             progressMessage : "Export Progress",
-            progressWarning: "Progress Warning",
+            progressWarning: "Note: Refreshing the browser will cancel the export.",
             download : "Download",
             restart : "Start Over"
         },
