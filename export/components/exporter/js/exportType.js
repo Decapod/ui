@@ -825,7 +825,8 @@ var decapod = decapod || {};
                     showExportStart : false,
                     showExportError : false,
                     showExportProgress : true,
-                    showExportComplete : false
+                    showExportComplete : false,
+                    errorStatus: "{exportControls}.model.errorStatus"
                 }]
             }
         },

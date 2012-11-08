@@ -42,6 +42,7 @@ var decapod = decapod || {};
                         showExportError: false,
                         showExportProgress: false,
                         showExportComplete: true,
+                        errorStatus: "{exportControls}.model.errorStatus",
                         downloadURL: "{arguments}.0.url"
                     }]
                 },
