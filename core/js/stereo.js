@@ -129,13 +129,24 @@ var decapod = decapod || {};
             initialMessage: "Select \"Browse Files\" button to choose archive."
         },
         selectors: {
-            initialMessage: ".dc-stereo-status-initialMessage"
+            initialMessage: ".dc-stereo-status-initialMessage",
+            message: ".dc-stereo-status-message"
         },
         protoTree: {
             initialMessage: {
                 messagekey: "initialMessage"
+            },
+            message: {
+                decorators: {
+                    type: "fluid",
+                    func: "decapod.stereo.status.message"
+                }
             }
         }
+    });
+
+    fluid.defaults("decapod.stereo.status.message", {
+        gradeNames: ["fluid.rendererComponent", "autoInit"]
     });
     
     fluid.defaults("decapod.stereo.browse", {
@@ -166,7 +177,8 @@ var decapod = decapod || {};
         postInitFunction: "decapod.stereo.browse.input.postInit",
         events: {
             onFileSelected: "{decapod.stereo}.events.onFileSelected"
-        }
+        },
+        url: ""
     });
 
     decapod.stereo.browse.input.postInit = function (that) {
