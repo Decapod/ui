@@ -61,7 +61,10 @@ var decapod = decapod || {};
                 var model = fluid.copy(exportControls.model);
                 model.fileError = true;
                 exportControls.updateModel(model);
-            }, "addError", null, "first"
+            },
+            "addError",
+            null,
+            "first"
         );
         that.events.onImportStart.fire();
     };
