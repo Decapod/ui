@@ -255,7 +255,7 @@ var decapod = decapod || {};
         
         capturerTests.asyncTest("onNoCaptures", function () {
             jqUnit.expect(4);
-            var statusCode = "NO_CAPTURE";
+            var statusCode = "READY_FOR_STEREO";
             var options = {
                 listeners: {
                     onNoCaptures: {
@@ -274,7 +274,7 @@ var decapod = decapod || {};
                             that.events.onReadyToCapture.addListener(function () {
                                 jqUnit.assertTrue("onReadyToCapture event should have been fired", true);
                             });
-                            that.events.onNoCaptures.fire(statusCode);
+                            that.events.onNoCaptures.fire();
                         },
                         args: ["{capturer}"]
                     }
