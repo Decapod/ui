@@ -25,49 +25,104 @@ var decapod = decapod || {};
 (function ($) {
 
     /*********************
-     *  decapod.calibrator *
+     *  decapod.stereo *
      *********************/
 
-     fluid.defaults("decapod.stereo", {
-         gradeNames: ["autoInit", "fluid.rendererComponent"],
-         finalInitFunction: "decapod.stereo.finalInit",
-         selectors: {
-             title: ".dc-stereo-title",
-             help: ".dc-stereo-help"
-         },
-         protoTree: {
-             title: {
-                 messagekey: "title"
-             },
-             help: {
-                 target: "${help}",
-                 linktext: {
-                     messagekey: "help"
-                 }
-             }
-         },
-         model: {
-             help: "#"
-         },
-         strings: {
-             help: "Help"
-         },
-         resources: {
-             template: {
-                 url: "../../core/html/stereoTemplate.html",
-                 forceCache: true,
-                 options: {
-                     dataType: "html"
-                 }
-             }
-         }
-     });
+    fluid.defaults("decapod.stereo", {
+        gradeNames: ["autoInit", "fluid.rendererComponent"],
+        finalInitFunction: "decapod.stereo.finalInit",
+        selectors: {
+            title: ".dc-stereo-title",
+            help: ".dc-stereo-help",
+            start: ".dc-stereo-start",
+            browse: ".dc-stereo-browse"
+        },
+        components: {
+            start: {
+                type: "decapod.button",
+                createOnEvent: "afterRender",
+                container: "{stereo}.dom.start",
+                options: {
+                    strings: {
+                        label: "{stereo}.options.strings.start"
+                    },
+                    model: {
+                        "state": "disabled"
+                    },
+                    listeners: {}
+                }
+            }
+        },
+        protoTree: {
+            title: {
+                messagekey: "title"
+            },
+            help: {
+                target: "${help}",
+                linktext: {
+                    messagekey: "help"
+                }
+            },
+            start: {},
+            browse: {
+                decorators: {
+                    type: "fluid",
+                    func: "decapod.stereo.browse"
+                }
+            }
+        },
+        model: {
+            help: "#"
+        },
+        strings: {
+            help: "Help",
+            title: "",
+            start: "",
+            browse: "Browse Files"
+        },
+        resources: {
+            template: {
+                url: "../../core/html/stereoTemplate.html",
+                forceCache: true,
+                options: {
+                    dataType: "html"
+                }
+            }
+        }
+    });
+    
+    decapod.stereo.finalInit = function (that) {
+        decapod.fetchResources(that.options.resources, function (resourceSpec) {
+           that.refreshView();
+       });
+    };
+    
+    fluid.defaults("decapod.stereo.browse", {
+        gradeNames: ["fluid.rendererComponent", "autoInit"],
+        selectors: {
+            browseLabel: ".dc-stereo-browseLabel",
+            browseInput: ".ds-stereo-browseInput"
+        },
+        strings: {
+            browse: "{decapod.stereo}.options.strings.browse"
+        },
+        protoTree: {
+            browseLabel: {
+                messagekey: "browse"
+            },
+            browseInput: {
+                decorators: {
+                    type: "fluid",
+                    func: "decapod.stereo.browse.input"
+                }
+            }
+        },
+        renderOnInit: true
+    });
 
-     decapod.stereo.finalInit = function (that) {
-         decapod.fetchResources(that.options.resources, function (resourceSpec) {
-            that.refreshView();
-        });
-     };
+    fluid.defaults("decapod.stereo.browse.input", {
+        gradeNames: ["fluid.viewComponent", "autoInit"]
+    });
 
     fluid.fetchResources.primeCacheFromResources("decapod.stereo");
 
