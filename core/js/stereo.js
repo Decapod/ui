@@ -107,7 +107,26 @@ var decapod = decapod || {};
         nickName: "decapod.stereo",
         events: {
             onFileSelected: null,
-            statusUpdated: null
+            statusUpdated: null,
+            onUploadSuccess: null,
+            onUploadError: null,
+            onUploadProgress: null
+        },
+        listeners: {
+            onUploadSuccess: {
+                listener: "{that}.events.statusUpdated.fire",
+                args: ["{that}.options.statuses.uploadSuccess"]
+            },
+            onUploadError: {
+                listener: "{that}.events.statusUpdated.fire"
+                // TODO: Parse error and get code for grade message for message.
+            }
+        },
+        statuses: {
+            uploadSuccess: ""
+        },
+        urls: {
+            upload: ""
         }
     });
 
@@ -295,27 +314,50 @@ var decapod = decapod || {};
     fluid.defaults("decapod.stereo.browse.input", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
         postInitFunction: "decapod.stereo.browse.input.postInit",
+        preInitFunction: "decapod.stereo.browse.input.preInit",
         events: {
-            onFileSelected: "{decapod.stereo}.events.onFileSelected"
+            onFileSelected: "{decapod.stereo}.events.onFileSelected",
+            onSuccess: "{decapod.stereo}.events.onUploadSuccess",
+            onError: "{decapod.stereo}.events.onUploadError",
+            onProgress: "{decapod.stereo}.events.onUploadProgress"
         },
-        url: ""
+        listeners: {
+            onFileSelected: "{that}.upload"
+        },
+        url: "{decapod.stereo}.options.urls.upload"
     });
 
-    fluid.defaults("decapod.stereo.browse.input.calibrator", {
-        gradeNames: ["decapod.stereo.browse.input", "autoInit"],
-        url: "./images",
-        status: "CAPTURES_FOUND"
-    });
-
-    fluid.defaults("decapod.stereo.browse.input.dewarper", {
-        gradeNames: ["decapod.stereo.browse.input", "autoInit"],
-        url: "./captures",
-        status: "READY_TO_CALIBRATE"
-    });
+    decapod.stereo.browse.input.preInit = function (that) {
+        that.onProgress = function (event) {
+            that.events.onProgress.fire({
+                loaded: event.loaded,
+                total: event.total
+            });
+        };
+        that.xhr = function () {
+            var xhr = $.ajaxSettings.xhr();
+            if (!xhr.upload) {
+                return xhr;
+            }
+            xhr.upload.addEventListener("progress", that.onProgress, false);
+        };
+        that.upload = function () {
+            var data = new FormData();
+            data.append("file", that.file);
+            $.ajax({
+                url: that.options.url,
+                type: "PUT",
+                data: data,
+                xhr: that.xhr,
+                success: that.events.onSuccess.fire,
+                error: that.events.onError.fire
+            });
+        };
+    };
 
     decapod.stereo.browse.input.postInit = function (that) {
         that.container.change(function () {
-            that.files = this.files;
+            that.file = this.files[0];
             that.events.onFileSelected.fire();
         });
     };
