@@ -119,13 +119,13 @@ var decapod = decapod || {};
                 listeners: {
                     onReady: {
                         listener: function (that) {
-                            that.uploader.events.onFileError.addListener(function () {
+                            that.uploader.events.onQueueError.addListener(function () {
                                 jqUnit.assertEquals("The error should be added", 1, that.importStatus.model.errors["-100"]);
                                 jqUnit.assertEquals("The total number of files should be updated", 1, that.importStatus.totalNumFiles());
                                 jqUnit.assertEquals("The number of errors should be updated", 1, that.importStatus.totalNumErrors());
                                 start();
                             });
-                            that.uploader.events.onFileError.fire({}, -100);
+                            that.uploader.events.onQueueError.fire({}, -100);
                         },
                         args: ["{exporter}"]
                     }
@@ -172,7 +172,7 @@ var decapod = decapod || {};
                 that.uploader.events.afterFilesSelected.addListener(function () {
                     assertions(that);
                 });
-                that.uploader.events.onFileError.fire({}, -100);
+                that.uploader.events.onQueueError.fire({}, -100);
                 that.uploader.events.afterFileDialog.fire(10);
             };
             decapod.exporter(CONTAINER, {

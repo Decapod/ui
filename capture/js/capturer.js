@@ -40,6 +40,7 @@ var decapod = decapod || {};
 
     decapod.capturer.cameraStatusSuccess = function (that, response) {
         if (response.statusCode === 'READY_FOR_CONVENTIONAL' || response.statusCode === 'READY_FOR_STEREO') {
+            that.applier.requestChange("status", response.statusCode);
             that.events.onCameraReady.fire();
         } else {
             that.events.onError.fire(response, response.statusCode);
@@ -48,7 +49,7 @@ var decapod = decapod || {};
     
     decapod.capturer.captureStatusSuccess = function (that, response) {
         if (response.totalCaptures === 0) {
-            that.events.onNoCaptures.fire(response.statusCode);
+            that.events.onNoCaptures.fire();
         } else {
             that.events.onCapturesRetrieved.fire(response);
         }
@@ -434,7 +435,7 @@ var decapod = decapod || {};
                             args: ["{status}.dom.container", true]
                         }, {
                             listener: "{status}.updateStatus",
-                            args: ["{arguments}.0"]
+                            args: ["{capturer}.model.status"]
                         }, {
                             listener: "{exportControl}.setState",
                             args: ["disabled"]
@@ -555,7 +556,7 @@ var decapod = decapod || {};
             onStatusAttached: null,
             onCaptureReviewerAttached: null,
             onExportControllerAttached: null,
-            onCaptureControllerAttached: null,
+            onCaptureControllerAttached: null
         },
         listeners: {
             onReadySuccess: {

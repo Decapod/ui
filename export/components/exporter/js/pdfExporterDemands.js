@@ -47,8 +47,10 @@ var decapod = decapod || {};
                     args: [{
                         showExportStart: false,
                         showExportError: false,
+                        showFileError: "{exportControls}.model.fileError",
                         showExportProgress: false,
                         showExportComplete: true,
+                        fileError: "{exportControls}.model.fileError",
                         downloadURL: "{arguments}.0.url"
                     }]
                 },
@@ -58,8 +60,10 @@ var decapod = decapod || {};
                     args: [{
                         showExportStart: false,
                         showExportError: true,
+                        showFileError: false,
                         showExportProgress: false,
                         showExportComplete: false,
+                        fileError: "{exportControls}.model.fileError",
                         downloadURL: ""
                     }]
                 }
