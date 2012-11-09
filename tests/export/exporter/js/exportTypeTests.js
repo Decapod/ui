@@ -1797,8 +1797,9 @@ var decapod = decapod || {};
             var assertRender = function (that) {
                 var name = $(".dc-status-name");
                 var desc = $(".dc-status-description");
+                var expected = $("<div>").html("<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>");
                 jqUnit.assertEquals("The status name should be rendered", "Error creating export", name.text());
-                jqUnit.assertEquals("The description should be rendered", "See Help for more details.", desc.html());
+                jqUnit.assertEquals("The description should be rendered", expected.html(), desc.html().replace("\n", "")); // After pulling the text from the DOM it added newline character at the end, which was causing the test to fail. This removes that.
                 start();
             };
             var assertModel = function (newModel) {
@@ -1816,7 +1817,6 @@ var decapod = decapod || {};
                     }
                 }
             });
-
         });
         
         controlsTests.asyncTest("Change Model - show file error message", function () {
