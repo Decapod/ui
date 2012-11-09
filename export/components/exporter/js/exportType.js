@@ -703,8 +703,8 @@ var decapod = decapod || {};
                                     currentStatus : "EXPORT_ERROR",
                                     "EXPORT_ERROR" : {
                                         name : "Error creating export",
-                                        description : "See Help for more details.",
-                                        style : "ds-status-error"
+                                        description : "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
+                                        style : "ds-exporter-status-error"
                                     }
                                 }
                             }
@@ -725,7 +725,7 @@ var decapod = decapod || {};
                                     "FILES_IGNORED": {
                                         name : "Some files were ignored",
                                         description : "They may not have been valid image files.",
-                                        style : "ds-status-error"
+                                        style : "ds-exporter-status-error"
                                     }
                                 }
                             }
