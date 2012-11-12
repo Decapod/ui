@@ -108,11 +108,16 @@ var decapod = decapod || {};
         events: {
             onFileSelected: null,
             statusUpdated: null,
+            onUploadStart: null,
             onUploadSuccess: null,
             onUploadError: null,
             onUploadProgress: null
         },
         listeners: {
+            onUploadStart: {
+                listener: "{that}.events.statusUpdated.fire",
+                args: ["{that}.options.statuses.working"]
+            },
             onUploadSuccess: {
                 listener: "{that}.events.statusUpdated.fire",
                 args: ["{that}.options.statuses.uploadSuccess"]
@@ -123,7 +128,8 @@ var decapod = decapod || {};
             }
         },
         statuses: {
-            uploadSuccess: ""
+            uploadSuccess: "",
+            working: "WORKING"
         },
         urls: {
             upload: ""
@@ -317,12 +323,16 @@ var decapod = decapod || {};
         preInitFunction: "decapod.stereo.browse.input.preInit",
         events: {
             onFileSelected: "{decapod.stereo}.events.onFileSelected",
+            onStart: "{decapod.stereo}.events.onUploadStart",
             onSuccess: "{decapod.stereo}.events.onUploadSuccess",
             onError: "{decapod.stereo}.events.onUploadError",
             onProgress: "{decapod.stereo}.events.onUploadProgress"
         },
         listeners: {
-            onFileSelected: "{that}.upload"
+            onFileSelected: [
+                "{that}.events.onStart.fire",
+                "{that}.upload"
+            ]
         },
         url: "{decapod.stereo}.options.urls.upload"
     });
@@ -335,11 +345,9 @@ var decapod = decapod || {};
             });
         };
         that.xhr = function () {
-            var xhr = $.ajaxSettings.xhr();
-            if (!xhr.upload) {
-                return xhr;
-            }
-            xhr.upload.addEventListener("progress", that.onProgress, false);
+            var thisXhr = $.ajaxSettings.xhr();
+            thisXhr.upload.addEventListener("progress", that.onProgress, false);
+            return thisXhr;
         };
         that.upload = function () {
             var data = new FormData();
@@ -347,10 +355,15 @@ var decapod = decapod || {};
             $.ajax({
                 url: that.options.url,
                 type: "PUT",
+                cache: false,
+                contentType: false,
+                processData: false,
                 data: data,
                 xhr: that.xhr,
                 success: that.events.onSuccess.fire,
-                error: that.events.onError.fire
+                error: function () {
+                    that.events.onError.fire();
+                }
             });
         };
     };
