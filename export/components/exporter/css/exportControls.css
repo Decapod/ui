@@ -18,7 +18,7 @@
 }
 
 .ds-exporter-exportControls {
-    padding-top: 10px;
+    padding-top: 0.8em;
     height: auto;
 }
 
@@ -28,7 +28,7 @@
 
 
 .ds-exportControls-complete-links {
-    margin: 0 auto;
+    margin: 1em auto 1em auto;
     text-align:center;
 }
 
