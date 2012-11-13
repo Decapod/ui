@@ -320,15 +320,27 @@ var decapod = decapod || {};
             value: "{decapod.stereo.status}.response.captureIndex",
             max: "{decapod.stereo.status}.response.numCaptures"
         },
+        strings: {
+            valuetext: "{decapod.stereo}.options.strings.progress"
+        },
         styles: {
             progress: "ds-stereo-progress",
         }
     });
 
     decapod.stereo.status.progress.postInit = function (that) {
-        var progress = $("<progress></progress>")
-            .addClass(that.options.styles.progress)
-            .attr(that.model);
+        var model = that.model,
+            progress = $("<progress></progress>")
+                .addClass(that.options.styles.progress)
+                .attr(model)
+                .attr({
+                    "aria-valuenow": model.value,
+                    "aria-valuemax": model.max,
+                    "aria-valuemin": 0,
+                    "aria-valuetext": fluid.stringTemplate(
+                        that.options.strings.valuetext, model)
+                    }
+                );
         that.container.prepend(progress);
     };
 
