@@ -45,7 +45,11 @@ var decapod = decapod || {};
             processSource: {
                 type: "decapod.dataSource",
                 options: {
-                    url: "{decapod.stereo}.options.urls.process"
+                    url: "{decapod.stereo}.options.urls.process",
+                    events: {
+                        putSuccess: "{decapod.stereo}.events.onProcessStartSuccess",
+                        putError: "{decapod.stereo}.events.onProcessStartError"
+                    }
                 }
             },
             start: {
@@ -60,11 +64,15 @@ var decapod = decapod || {};
                         "state": "disabled"
                     },
                     listeners: {
-                        "onClick.start": {
-                            listener: "{processSource}.put",
-                            args: [null]
-                        },
+                        onClick: [{
+                            listener: "{start}.setState",
+                            args: ["disabled"]
+                        }, "{decapod.stereo}.events.onProcessStart.fire"],
                         "{decapod.stereo}.events.onUploadSuccess": {
+                            listener: "{start}.setState",
+                            args: ["enabled"]
+                        },
+                        "{decapod.stereo}.events.onProcessStartError": {
                             listener: "{start}.setState",
                             args: ["enabled"]
                         }
@@ -125,12 +133,19 @@ var decapod = decapod || {};
             statusUpdated: null,
             onUploadStart: null,
             onUploadSuccess: null,
-            onUploadError: null
+            onUploadError: null,
+            onProcessStart: null,
+            onProcessStartError: null,
+            onProcessStartSuccess: null
         },
         listeners: {
+            onProcessStart: [{
+                listener: "{that}.events.statusUpdated.fire",
+                args: ["{decapod.stereo}.options.statuses.working"]
+            }, "{that}.startProcess"],
             onUploadStart: {
                 listener: "{that}.events.statusUpdated.fire",
-                args: ["{that}.options.statuses.working", "{arguments}.0"]
+                args: ["{that}.options.statuses.working"]
             },
             onUploadSuccess: {
                 listener: "{that}.events.statusUpdated.fire",
@@ -138,14 +153,23 @@ var decapod = decapod || {};
             },
             onUploadError: {
                 listener: "{that}.events.statusUpdated.fire"
+            },
+            onProcessStartError: {
+                listener: "{that}.events.statusUpdated.fire"
+            },
+            onProcessStartSuccess: {
+                listener: "{that}.events.statusUpdated.fire",
+                args: ["{that}.options.statuses.processing"]
             }
         },
         statuses: {
             uploadSuccess: "",
-            working: "WORKING"
+            working: "WORKING",
+            processing: ""
         },
         urls: {
-            upload: ""
+            upload: "",
+            process: ""
         }
     });
 
@@ -157,8 +181,27 @@ var decapod = decapod || {};
         gradeNames: ["decapod.stereo", "autoInit"]
     });
 
+    fluid.demands("processSource", "decapod.stereo", {
+        options: "{options}"
+    });
+
+    fluid.demands("processSource", ["decapod.fileSystem", "decapod.dewarper"], {
+        options: {
+            url: "../../mock-data/dewarp/mockDewarpedArchive.json"
+        }
+    });
+
+    fluid.demands("processSource", ["decapod.fileSystem", "decapod.calibrator"], {
+        options: {
+            url: "../../mock-data/calibrate/mockCalibrate.json"
+        }
+    });
+
     decapod.stereo.preInit = function (that) {
         that.nickName = "decapod.stereo";
+        that.startProcess = function () {
+            that.processSource.put();
+        };
     };
     
     decapod.stereo.finalInit = function (that) {
@@ -324,6 +367,10 @@ var decapod = decapod || {};
         },
         strings: {
             browse: "{decapod.stereo}.options.strings.browse"
+        },
+        listeners: {
+            "{decapod.stereo}.events.onProcessStart": "{that}.disable",
+            "{decapod.stereo}.events.onProcessStartError": "{that}.enable"
         },
         protoTree: {
             browseLabel: {
