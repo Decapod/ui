@@ -42,6 +42,12 @@ var decapod = decapod || {};
             status: ".dc-stereo-status"
         },
         components: {
+            processSource: {
+                type: "decapod.dataSource",
+                options: {
+                    url: "{decapod.stereo}.options.urls.process"
+                }
+            },
             start: {
                 type: "decapod.button",
                 createOnEvent: "afterRender",
@@ -53,7 +59,16 @@ var decapod = decapod || {};
                     model: {
                         "state": "disabled"
                     },
-                    listeners: {}
+                    listeners: {
+                        "onClick.start": {
+                            listener: "{processSource}.put",
+                            args: [null]
+                        },
+                        "{decapod.stereo}.events.onUploadSuccess": {
+                            listener: "{start}.setState",
+                            args: ["enabled"]
+                        }
+                    }
                 }
             },
             status: {
@@ -116,11 +131,11 @@ var decapod = decapod || {};
         listeners: {
             onUploadStart: {
                 listener: "{that}.events.statusUpdated.fire",
-                args: ["{that}.options.statuses.working"]
+                args: ["{that}.options.statuses.working", "{arguments}.0"]
             },
             onUploadSuccess: {
                 listener: "{that}.events.statusUpdated.fire",
-                args: ["{that}.options.statuses.uploadSuccess"]
+                args: ["{that}.options.statuses.uploadSuccess", "{arguments}.0"]
             },
             onUploadError: {
                 listener: "{that}.events.statusUpdated.fire"
@@ -198,15 +213,8 @@ var decapod = decapod || {};
         that.hideInitialMessage = function () {
             that.locate("initialMessage").hide();
         };
-        function handleError (error) {
-            if (error) {
-                that.error = error;
-            } else {
-                delete that.error;
-            }
-        }
-        that.onStatusUpdated = function (status, error) {
-            handleError(error);
+        that.onStatusUpdated = function (status, response) {
+            that.response = response;
             that.options.components.message.type =
                 fluid.model.composeSegments("decapod.stereo.status.message",
                     status);
@@ -263,7 +271,7 @@ var decapod = decapod || {};
     fluid.defaults("decapod.stereo.status.message.ERROR", {
         gradeNames: ["decapod.stereo.status.message", "autoInit"],
         strings: {
-            text: "{decapod.stereo.status}.error.msg"
+            text: "{decapod.stereo.status}.response.msg"
         }
     });
 
@@ -293,7 +301,7 @@ var decapod = decapod || {};
     fluid.defaults("decapod.stereo.status.message.CAPTURES_FOUND", {
         gradeNames: ["decapod.stereo.status.message", "autoInit"],
         model: {
-            captures: 0
+            captures: "{decapod.stereo.status}.response.numCaptures"
         },
         strings: {
             text: "%captures captures found."
@@ -310,6 +318,7 @@ var decapod = decapod || {};
 
     fluid.defaults("decapod.stereo.browse", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
+        preInitFunction: "decapod.stereo.browse.preInit",
         selectors: {
             browseLabel: ".dc-stereo-browseLabel",
             browseInput: ".dc-stereo-browseInput"
@@ -331,6 +340,33 @@ var decapod = decapod || {};
         renderOnInit: true
     });
 
+    decapod.stereo.browse.preInit = function (that) {
+        that.enable = function () {
+            that.container.removeAttr("disabled");
+        };
+        that.disable = function () {
+            that.container.attr("disabled", "disabled");
+        };
+    };
+
+    fluid.demands("decapod.stereo.browse.input", "decapod.stereo.browse", {
+        options: "{options}"
+    });
+
+    fluid.demands("decapod.stereo.browse.input", ["decapod.stereo.browse",
+        "decapod.fileSystem", "decapod.dewarper"], {
+        options: {
+            url: "../../mock-data/dewarp/mockCaptures.json"
+        }
+    });
+
+    fluid.demands("decapod.stereo.browse.input", ["decapod.stereo.browse",
+        "decapod.fileSystem", "decapod.calibrator"], {
+        options: {
+            url: "../../mock-data/calibrate/mockImages.json"
+        }
+    });
+
     fluid.defaults("decapod.stereo.browse.input", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
         postInitFunction: "decapod.stereo.browse.input.postInit",
@@ -346,7 +382,10 @@ var decapod = decapod || {};
             onFileSelected: [
                 "{that}.events.onStart.fire",
                 "{that}.upload"
-            ]
+            ],
+            onStart: "{decapod.stereo.browse}.disable",
+            onError: "{decapod.stereo.browse}.enable",
+            onSuccess: "{decapod.stereo.browse}.enable"
         },
         url: "{decapod.stereo}.options.urls.upload"
     });
@@ -373,8 +412,11 @@ var decapod = decapod || {};
                 contentType: false,
                 processData: false,
                 data: data,
+                dataType: "json",
                 xhr: that.xhr,
-                success: that.events.onSuccess.fire,
+                success: function (response) {
+                    that.events.onSuccess.fire(response);   
+                },
                 error: function (xhr) {
                     var error = JSON.parse(xhr.responseText);
                     that.events.onError.fire("ERROR", error);
