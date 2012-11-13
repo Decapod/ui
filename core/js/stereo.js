@@ -391,7 +391,7 @@ var decapod = decapod || {};
         },
         model: {
             startOver: "{decapod.stereo}.options.urls.startOver",
-            download: ""
+            download: "{decapod.stereo.status}.response.url"
         },
         protoTree: {
             text: {
