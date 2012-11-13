@@ -127,7 +127,8 @@ var decapod = decapod || {};
             download: "Download",
             startOver: "Start Over",
             working: "Working...",
-            ready: ""
+            ready: "",
+            progress: ""
         },
         resources: {
             template: {
@@ -174,8 +175,8 @@ var decapod = decapod || {};
                 listener: "{that}.events.statusUpdated.fire"
             },
             onProcessStartSuccess: {
-                listener: "{that}.events.statusUpdated.fire",
-                args: ["{that}.options.statuses.processing"]
+                listener: "{processSource}.get",
+                args: [null]
             },
             onProcessProgressSuccess: {
                 listener: "{that}.processProgress",
@@ -312,6 +313,25 @@ var decapod = decapod || {};
         that.container.prepend(spinner);
     };
 
+    fluid.defaults("decapod.stereo.status.progress", {
+        gradeNames: ["fluid.viewComponent", "autoInit"],
+        postInitFunction: "decapod.stereo.status.progress.postInit",
+        model: {
+            value: "{decapod.stereo.status}.response.captureIndex",
+            max: "{decapod.stereo.status}.response.numCaptures"
+        },
+        styles: {
+            progress: "ds-stereo-progress",
+        }
+    });
+
+    decapod.stereo.status.progress.postInit = function (that) {
+        var progress = $("<progress></progress>")
+            .addClass(that.options.styles.progress)
+            .attr(that.model);
+        that.container.prepend(progress);
+    };
+
     fluid.defaults("decapod.stereo.status.message", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
         preInitFunction: "decapod.stereo.status.message.preInit",
@@ -416,10 +436,6 @@ var decapod = decapod || {};
         components: {
             processSource: "{processSource}"
         },
-        events: {
-            inProgress: null,
-            complete: null
-        },
         delay: 2000,
         finalInitFunction: "decapod.stereo.status.message.processing.finalInit"
     });
@@ -431,7 +447,27 @@ var decapod = decapod || {};
     };
 
     fluid.defaults("decapod.stereo.status.message.DEWARPING", {
-        gradeNames: ["decapod.stereo.status.message.processing", "autoInit"]
+        gradeNames: ["decapod.stereo.status.message.processing", "autoInit"],
+        model: {
+            value: "{decapod.stereo.status}.response.captureIndex",
+            max: "{decapod.stereo.status}.response.numCaptures"
+        },
+        strings: {
+            text: "{decapod.stereo}.options.strings.progress"
+        },
+        protoTree: {
+            text: {
+                messagekey: "text",
+                args: {
+                    value: "${value}",
+                    max: "${max}"
+                },
+                decorators: [{"addClass": "{styles}.text"}, {
+                    type: "fluid",
+                    func: "decapod.stereo.status.progress"
+                }]
+            }
+        }
     });
 
     fluid.defaults("decapod.stereo.status.message.WORKING_CALIBRATION", {
