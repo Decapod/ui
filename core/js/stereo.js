@@ -334,6 +334,7 @@ var decapod = decapod || {};
                 .addClass(that.options.styles.progress)
                 .attr(model)
                 .attr({
+                    "role": "progressbar",
                     "aria-valuenow": model.value,
                     "aria-valuemax": model.max,
                     "aria-valuemin": 0,
