@@ -125,8 +125,7 @@ var decapod = decapod || {};
             statusUpdated: null,
             onUploadStart: null,
             onUploadSuccess: null,
-            onUploadError: null,
-            onUploadProgress: null
+            onUploadError: null
         },
         listeners: {
             onUploadStart: {
@@ -375,8 +374,7 @@ var decapod = decapod || {};
             onFileSelected: "{decapod.stereo}.events.onFileSelected",
             onStart: "{decapod.stereo}.events.onUploadStart",
             onSuccess: "{decapod.stereo}.events.onUploadSuccess",
-            onError: "{decapod.stereo}.events.onUploadError",
-            onProgress: "{decapod.stereo}.events.onUploadProgress"
+            onError: "{decapod.stereo}.events.onUploadError"
         },
         listeners: {
             onFileSelected: [
@@ -391,17 +389,6 @@ var decapod = decapod || {};
     });
 
     decapod.stereo.browse.input.preInit = function (that) {
-        that.onProgress = function (event) {
-            that.events.onProgress.fire({
-                loaded: event.loaded,
-                total: event.total
-            });
-        };
-        that.xhr = function () {
-            var thisXhr = $.ajaxSettings.xhr();
-            thisXhr.upload.addEventListener("progress", that.onProgress, false);
-            return thisXhr;
-        };
         that.upload = function () {
             var data = new FormData();
             data.append("file", that.file);
@@ -413,7 +400,6 @@ var decapod = decapod || {};
                 processData: false,
                 data: data,
                 dataType: "json",
-                xhr: that.xhr,
                 success: function (response) {
                     that.events.onSuccess.fire(response);   
                 },
