@@ -124,7 +124,6 @@ var decapod = decapod || {};
             },
             onUploadError: {
                 listener: "{that}.events.statusUpdated.fire"
-                // TODO: Parse error and get code for grade message for message.
             }
         },
         statuses: {
@@ -199,7 +198,15 @@ var decapod = decapod || {};
         that.hideInitialMessage = function () {
             that.locate("initialMessage").hide();
         };
-        that.onStatusUpdated = function (status) {
+        function handleError (error) {
+            if (error) {
+                that.error = error;
+            } else {
+                delete that.error;
+            }
+        }
+        that.onStatusUpdated = function (status, error) {
+            handleError(error);
             that.options.components.message.type =
                 fluid.model.composeSegments("decapod.stereo.status.message",
                     status);
@@ -224,7 +231,7 @@ var decapod = decapod || {};
                 .after($("<div></div>").addClass(styles.dot))
                 .wrapAll($("<div></div>").addClass(styles.spinner))
                 .parent("div");
-        that.container.before(spinner);
+        that.container.prepend(spinner);
     };
 
     fluid.defaults("decapod.stereo.status.message", {
@@ -252,6 +259,13 @@ var decapod = decapod || {};
     decapod.stereo.status.message.preInit = function (that) {
         that.nickName = "decapod.stereo.status.message";
     };
+
+    fluid.defaults("decapod.stereo.status.message.ERROR", {
+        gradeNames: ["decapod.stereo.status.message", "autoInit"],
+        strings: {
+            text: "{decapod.stereo.status}.error.msg"
+        }
+    });
 
     fluid.defaults("decapod.stereo.status.message.WORKING", {
         gradeNames: ["decapod.stereo.status.message", "autoInit"],
@@ -361,8 +375,9 @@ var decapod = decapod || {};
                 data: data,
                 xhr: that.xhr,
                 success: that.events.onSuccess.fire,
-                error: function () {
-                    that.events.onError.fire();
+                error: function (xhr) {
+                    var error = JSON.parse(xhr.responseText);
+                    that.events.onError.fire("ERROR", error);
                 }
             });
         };
