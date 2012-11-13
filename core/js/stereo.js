@@ -48,7 +48,9 @@ var decapod = decapod || {};
                     url: "{decapod.stereo}.options.urls.process",
                     events: {
                         putSuccess: "{decapod.stereo}.events.onProcessStartSuccess",
-                        putError: "{decapod.stereo}.events.onProcessStartError"
+                        putError: "{decapod.stereo}.events.onProcessStartError",
+                        getSuccess: "{decapod.stereo}.events.onProcessProgressSuccess",
+                        getError: "{decapod.stereo}.events.onProcessError"
                     }
                 }
             },
@@ -73,6 +75,10 @@ var decapod = decapod || {};
                             args: ["enabled"]
                         },
                         "{decapod.stereo}.events.onProcessStartError": {
+                            listener: "{start}.setState",
+                            args: ["enabled"]
+                        },
+                        "{decapod.stereo}.events.onProcessError": {
                             listener: "{start}.setState",
                             args: ["enabled"]
                         }
@@ -116,7 +122,12 @@ var decapod = decapod || {};
             help: "Help",
             title: "",
             start: "",
-            browse: "Browse Files"
+            browse: "Browse Files",
+            complete: "",
+            download: "Download",
+            startOver: "Start Over",
+            working: "Working...",
+            ready: ""
         },
         resources: {
             template: {
@@ -136,7 +147,9 @@ var decapod = decapod || {};
             onUploadError: null,
             onProcessStart: null,
             onProcessStartError: null,
-            onProcessStartSuccess: null
+            onProcessStartSuccess: null,
+            onProcessError: null,
+            onProcessProgressSuccess: null
         },
         listeners: {
             onProcessStart: [{
@@ -157,19 +170,28 @@ var decapod = decapod || {};
             onProcessStartError: {
                 listener: "{that}.events.statusUpdated.fire"
             },
+            onProcessError: {
+                listener: "{that}.events.statusUpdated.fire"
+            },
             onProcessStartSuccess: {
                 listener: "{that}.events.statusUpdated.fire",
                 args: ["{that}.options.statuses.processing"]
+            },
+            onProcessProgressSuccess: {
+                listener: "{that}.processProgress",
+                args: ["{arguments}.0"]
             }
         },
         statuses: {
             uploadSuccess: "",
             working: "WORKING",
-            processing: ""
+            processing: "",
+            complete: "COMPLETE"
         },
         urls: {
             upload: "",
-            process: ""
+            process: "",
+            startOver: ""
         }
     });
 
@@ -201,6 +223,12 @@ var decapod = decapod || {};
         that.nickName = "decapod.stereo";
         that.startProcess = function () {
             that.processSource.put();
+        };
+        that.processProgress = function (response) {
+            var status = response.status === "complete" ?
+                that.options.statuses.complete :
+                that.options.statuses.processing;
+            that.events.statusUpdated.fire(status, response);
         };
     };
     
@@ -288,7 +316,9 @@ var decapod = decapod || {};
         gradeNames: ["fluid.rendererComponent", "autoInit"],
         preInitFunction: "decapod.stereo.status.message.preInit",
         selectors: {
-            text: ".dc-stereo-status-message-text"
+            text: ".dc-stereo-status-message-text",
+            startOver: ".dc-stereo-status-message-startOver",
+            download: ".dc-stereo-status-message-download"
         },
         styles: {
             text: "ds-stereo-status-message-text"
@@ -303,8 +333,19 @@ var decapod = decapod || {};
                 decorators: {"addClass": "{styles}.text"}
             }
         },
-        nickName: "decapod.stereo.status.message"
+        nickName: "decapod.stereo.status.message",
+        resources: {
+            template: {
+                url: "../../core/html/messageTemplate.html",
+                forceCache: true,
+                options: {
+                    dataType: "html"
+                }
+            }
+        }
     });
+
+    fluid.fetchResources.primeCacheFromResources("decapod.stereo.status.message");
 
     decapod.stereo.status.message.preInit = function (that) {
         that.nickName = "decapod.stereo.status.message";
@@ -317,10 +358,47 @@ var decapod = decapod || {};
         }
     });
 
+    fluid.defaults("decapod.stereo.status.message.COMPLETE", {
+        gradeNames: ["decapod.stereo.status.message", "autoInit"],
+        strings: {
+            text: "{decapod.stereo}.options.strings.complete",
+            startOver: "{decapod.stereo}.options.strings.startOver",
+            download: "{decapod.stereo}.options.strings.download"
+        },
+        styles: {
+            startOver: "ds-stereo-status-message-startOver",
+            download: "ds-stereo-status-message-download"
+        },
+        model: {
+            startOver: "{decapod.stereo}.options.urls.startOver",
+            download: ""
+        },
+        protoTree: {
+            text: {
+                messagekey: "text",
+                decorators: {"addClass": "{styles}.text"}
+            },
+            startOver: {
+                target: "${startOver}",
+                linktext: {
+                    messagekey: "startOver"
+                },
+                decorators: {"addClass": "{styles}.startOver"}
+            },
+            download: {
+                target: "${download}",
+                linktext: {
+                    messagekey: "download"
+                },
+                decorators: {"addClass": "{styles}.download"}
+            }
+        }
+    });
+
     fluid.defaults("decapod.stereo.status.message.WORKING", {
         gradeNames: ["decapod.stereo.status.message", "autoInit"],
         strings: {
-            text: "Working..."
+            text: "{decapod.stereo}.options.strings.working"
         },
         protoTree: {
             text: {
@@ -333,10 +411,38 @@ var decapod = decapod || {};
         }
     });
 
+    fluid.defaults("decapod.stereo.status.message.processing", {
+        gradeNames: ["decapod.stereo.status.message", "autoInit"],
+        components: {
+            processSource: "{processSource}"
+        },
+        events: {
+            inProgress: null,
+            complete: null
+        },
+        delay: 2000,
+        finalInitFunction: "decapod.stereo.status.message.processing.finalInit"
+    });
+
+    decapod.stereo.status.message.processing.finalInit = function (that) {
+        setTimeout(function () {
+            that.processSource.get();
+        }, that.options.delay);
+    };
+
+    fluid.defaults("decapod.stereo.status.message.DEWARPING", {
+        gradeNames: ["decapod.stereo.status.message.processing", "autoInit"]
+    });
+
+    fluid.defaults("decapod.stereo.status.message.WORKING_CALIBRATION", {
+        gradeNames: ["decapod.stereo.status.message.WORKING",
+            "decapod.stereo.status.message.processing", "autoInit"]
+    });
+
     fluid.defaults("decapod.stereo.status.message.READY_TO_CALIBRATE", {
         gradeNames: ["decapod.stereo.status.message", "autoInit"],
         strings: {
-            text: "Ready to calibrate."
+            text: "{decapod.stereo}.options.strings.ready"
         }
     });
 
@@ -346,7 +452,7 @@ var decapod = decapod || {};
             captures: "{decapod.stereo.status}.response.numCaptures"
         },
         strings: {
-            text: "%captures captures found."
+            text: "{decapod.stereo}.options.strings.ready"
         },
         protoTree: {
             text: {
@@ -370,7 +476,8 @@ var decapod = decapod || {};
         },
         listeners: {
             "{decapod.stereo}.events.onProcessStart": "{that}.disable",
-            "{decapod.stereo}.events.onProcessStartError": "{that}.enable"
+            "{decapod.stereo}.events.onProcessStartError": "{that}.enable",
+            "{decapod.stereo}.events.onProcessError": "{that}.enable"
         },
         protoTree: {
             browseLabel: {
