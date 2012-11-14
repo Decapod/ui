@@ -55,6 +55,14 @@ var decapod = decapod || {};
         }
     };
     
+    decapod.capturer.bindCaptureKeypress = function (that) {
+        $(document).keypress(function (event) {
+            if(event.charCode === 99) { // the char code for the 'c' key
+                that.captureControl.container.click();
+            }
+        });
+    };
+    
     decapod.capturer.initCapturerControls = function (that) {
         that.locate("title").text(that.options.strings.title);
         that.locate("help").text(that.options.strings.help);
@@ -114,6 +122,9 @@ var decapod = decapod || {};
         
         that.setLabel = function (container, label) {
             that.setLabel(container, label);
+        };
+        that.bindCaptureKeypress = function () {
+            that.bindCaptureKeypress();
         };
     };
     
@@ -604,13 +615,17 @@ var decapod = decapod || {};
                 listener: "{capturer}.displayElement",
                 priority: "first",
                 args: ["{capturer}.dom.load", false]
+            },
+            onCaptureControllerAttached: {
+                listener: "{capturer}.bindCaptureKeypress"
             }
         },
         invokers: {
             download: "decapod.capturer.download",
             displayElement: "decapod.capturer.displayElement",
             initCapturerControls: "decapod.capturer.initCapturerControls",
-            setLabel: "decapod.capturer.setLabel"
+            setLabel: "decapod.capturer.setLabel",
+            bindCaptureKeypress: "decapod.capturer.bindCaptureKeypress"
         },
         resources: {
             template: {
