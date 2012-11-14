@@ -43,13 +43,18 @@
             decapod.calibrator(".dc-stereo", {
                 strings: {
                     title: "Stereo Camera Calibrator",
-                    start: "Calibrate"
+                    start: "Calibrate",
+                    ready: "Ready to calibrate.",
+                    complete: "Calibration complete."
                 },
                 urls: {
-                    upload: "./images"
+                    upload: "../../images",
+                    process: "../../calibrate",
+                    startOver: "calibrator.html"
                 },
                 statuses: {
-                    uploadSuccess: "READY_TO_CALIBRATE"
+                    uploadSuccess: "READY_TO_CALIBRATE",
+                    processing: "WORKING_CALIBRATION"
                 }
             });
         </script>

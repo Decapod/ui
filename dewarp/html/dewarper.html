@@ -43,13 +43,19 @@
             decapod.dewarper(".dc-stereo", {
                 strings: {
                     title: "Dewarp Stereo Captures",
-                    start: "Dewarp Captures"
+                    start: "Dewarp Captures",
+                    ready: "%captures captures found.",
+                    complete: "Dewarping complete.",
+                    progress: "Dewarping catpure %value of %max."
                 },
                 urls: {
-                    upload: "./captures"
+                    upload: "../../captures",
+                    process: "../../dewarpedArchive",
+                    startOver: "dewarper.html"
                 },
                 statuses: {
-                    uploadSuccess: "CAPTURES_FOUND"
+                    uploadSuccess: "CAPTURES_FOUND",
+                    processing: "DEWARPING"
                 }
             });
         </script>
