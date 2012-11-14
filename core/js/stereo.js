@@ -363,7 +363,10 @@ var decapod = decapod || {};
         protoTree: {
             text: {
                 messagekey: "text",
-                decorators: {"addClass": "{styles}.text"}
+                decorators: {
+                    type: "fluid",
+                    func: "decapod.stereo.status.message.decorator"
+                }
             }
         },
         nickName: "decapod.stereo.status.message",
@@ -379,6 +382,20 @@ var decapod = decapod || {};
     });
 
     fluid.fetchResources.primeCacheFromResources("decapod.stereo.status.message");
+
+    fluid.defaults("decapod.stereo.status.message.decorator", {
+        gradeNames: ["fluid.viewComponent", "autoInit"],
+        postInitFunction: "decapod.stereo.status.message.decorator.postInit",
+        styles: {
+            text: "{decapod.stereo.status.message}.options.styles.text"
+        }
+    });
+
+    decapod.stereo.status.message.decorator.postInit = function (that) {
+        that.container
+            .addClass(that.options.styles.text)
+            .attr("role", "status");
+    };
 
     decapod.stereo.status.message.preInit = function (that) {
         that.nickName = "decapod.stereo.status.message";
@@ -409,7 +426,10 @@ var decapod = decapod || {};
         protoTree: {
             text: {
                 messagekey: "text",
-                decorators: {"addClass": "{styles}.text"}
+                decorators: {
+                    type: "fluid",
+                    func: "decapod.stereo.status.message.decorator"
+                }
             },
             startOver: {
                 target: "${startOver}",
@@ -436,7 +456,10 @@ var decapod = decapod || {};
         protoTree: {
             text: {
                 messagekey: "text",
-                decorators: [{"addClass": "{styles}.text"}, {
+                decorators: [{
+                    type: "fluid",
+                    func: "decapod.stereo.status.message.decorator"
+                }, {
                     type: "fluid",
                     func: "decapod.stereo.status.spinner"
                 }]
@@ -475,7 +498,10 @@ var decapod = decapod || {};
                     value: "${value}",
                     max: "${max}"
                 },
-                decorators: [{"addClass": "{styles}.text"}, {
+                decorators: [{
+                    type: "fluid",
+                    func: "decapod.stereo.status.message.decorator"
+                }, {
                     type: "fluid",
                     func: "decapod.stereo.status.progress"
                 }]
@@ -508,7 +534,11 @@ var decapod = decapod || {};
                 messagekey: "text",
                 args: {
                     captures: "${captures}"
-                }
+                },
+                decorators: [{
+                    type: "fluid",
+                    func: "decapod.stereo.status.message.decorator"
+                }]
             }
         }
     });
