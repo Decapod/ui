@@ -1234,7 +1234,13 @@ var decapod = decapod || {};
                 linktext : {
                     messagekey : "download"
                 },
-                target : "${downloadURL}"
+                target : "${downloadURL}",
+                decorators: {
+                    type: "attrs",
+                    attributes: {
+                        target: "_new"
+                    }
+                }
             },
             restart : {
                 messagekey : "restart"
