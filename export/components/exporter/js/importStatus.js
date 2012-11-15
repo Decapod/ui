@@ -160,6 +160,14 @@ var decapod = decapod || {};
     
     fluid.registerNamespace("decapod.importStatus.renderer");
     
+    decapod.importStatus.renderer.addAria = function (that) {
+        that.container.attr("role", "status");
+    };
+    
+    decapod.importStatus.renderer.finalInit = function (that) {
+        that.addAria();
+    };
+    
     decapod.importStatus.renderer.produceTree = function (that) {
         return {
             expander: {
@@ -176,6 +184,7 @@ var decapod = decapod || {};
     
     fluid.defaults("decapod.importStatus.renderer", {
         gradeNames: ["fluid.rendererComponent", "autoInit"],
+        finalInitFunction: "decapod.importStatus.renderer.finalInit",
         selectors: {
             statusMessages: ".dc-importStatus-renderer-statusMessage" 
         },
@@ -184,7 +193,10 @@ var decapod = decapod || {};
             statuses: []
         },
         produceTree: "decapod.importStatus.renderer.produceTree",
-        renderOnInit: true
+        renderOnInit: true,
+        invokers: {
+            addAria: "decapod.importStatus.renderer.addAria"
+        }
     });
     
 })(jQuery);

@@ -358,7 +358,10 @@ var decapod = decapod || {};
                 for (var i = 0; i < statuses.length; i++) {
                     jqUnit.assertEquals("The status message should be rendered", statuses[i], that.locate("statusMessages").eq(i).text());
                 }
-                start();
+            };
+            var assertOnCreate = function (that) {
+                    jqUnit.assertEquals("The container should have a role of status", "status", that.container.attr("role"));
+                    start();
             };
             decapod.importStatus.renderer(RENDER_CONTAINER, {
                 model: {
@@ -368,6 +371,9 @@ var decapod = decapod || {};
                     afterRender: {
                         listener: assertRender,
                         priority: "last"
+                    },
+                    onCreate: {
+                        listener: assertOnCreate
                     }
                 }
             });

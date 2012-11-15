@@ -171,6 +171,9 @@ var decapod = decapod || {};
     fluid.demands("decapod.exportControls.detailedProgress.finish", ["decapod.exportControls.detailedProgress"], {
         args: ["{detailedProgress}", "{arguments}.0"]
     });
+    fluid.demands("decapod.exportControls.progress.addAria", ["decapod.exportControls.progress"], {
+        args: ["{progress}"]
+    });
     fluid.demands("decapod.pdfExportOptions.hide", ["decapod.pdfExportOptions"], {
         args: ["{pdfExportOptions}", "{arguments}.0"]
     });
