@@ -112,29 +112,51 @@ var decapod = decapod || {};
                             }
                         }
                     }
-                },
+                }, 
                 {
-                    type: "fluid.renderer.condition",
-                    condition: that.model.showExportError,
-                    trueTree: {
-                        status: {
-                            decorators: {
-                                type: "fluid",
-                                func: "decapod.status",
-                                options: {
-                                    model: {
-                                        currentStatus: "error",
-                                        "error": {
-                                            name: "Error creating export",
-                                            description: "See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
-                                            style: "ds-exporter-status-error"
+                    type : "fluid.renderer.condition",
+                    condition : that.model.showExportError,
+                    trueTree : {
+                        exportError : {
+                            decorators : {
+                                type : "fluid",
+                                func : "decapod.status",
+                                options : {
+                                    model : {
+                                        currentStatus : "EXPORT_ERROR",
+                                        "EXPORT_ERROR" : {
+                                            name : "Error creating export",
+                                            description : "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
+                                            style : "ds-exporter-status-error"
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                },
+                }, 
+                {
+                    type : "fluid.renderer.condition",
+                    condition : that.model.showFileError,
+                    trueTree : {
+                        fileError : {
+                            decorators : {
+                                type : "fluid",
+                                func : "decapod.status",
+                                options : {
+                                    model : {
+                                        currentStatus : "FILES_IGNORED",
+                                        "FILES_IGNORED": {
+                                            name : "Some files were ignored",
+                                            description : "They may not have been valid image files.",
+                                            style : "ds-exporter-status-error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }, 
                 {
                     type: "fluid.renderer.condition",
                     condition: that.model.showExportProgress,

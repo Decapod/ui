@@ -694,17 +694,38 @@ var decapod = decapod || {};
                 type : "fluid.renderer.condition",
                 condition : that.model.showExportError,
                 trueTree : {
-                    status : {
+                    exportError : {
                         decorators : {
                             type : "fluid",
                             func : "decapod.status",
                             options : {
                                 model : {
-                                    currentStatus : "error",
-                                    "error" : {
+                                    currentStatus : "EXPORT_ERROR",
+                                    "EXPORT_ERROR" : {
                                         name : "Error creating export",
-                                        description : "See Help for more details.",
-                                        style : "ds-status-error"
+                                        description : "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
+                                        style : "ds-exporter-status-error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }, {
+                type : "fluid.renderer.condition",
+                condition : that.model.showFileError,
+                trueTree : {
+                    fileError : {
+                        decorators : {
+                            type : "fluid",
+                            func : "decapod.status",
+                            options : {
+                                model : {
+                                    currentStatus : "FILES_IGNORED",
+                                    "FILES_IGNORED": {
+                                        name : "Some files were ignored",
+                                        description : "They may not have been valid image files.",
+                                        style : "ds-exporter-status-error"
                                     }
                                 }
                             }
@@ -791,12 +812,13 @@ var decapod = decapod || {};
             trigger : ".dc-exportControls-trigger",
             progress : ".dc-exportControls-progress",
             complete : ".dc-exportControls-complete",
-            status : ".dc-capture-status"
+            exportError : ".dc-exportControls-exportError",
+            fileError : ".dc-exportControls-fileError"
         },
         strings : {
             trigger : "Start Export",
             progressMessage : "Export Progress",
-            progressWarning: "Progress Warning",
+            progressWarning: "Note: Refreshing the browser will cancel the export.",
             download : "Download",
             restart : "Start Over"
         },
@@ -814,16 +836,20 @@ var decapod = decapod || {};
                 args : [{
                     showExportStart : false,
                     showExportError : false,
+                    showFileError: false,
                     showExportProgress : true,
-                    showExportComplete : false
+                    showExportComplete : false,
+                    fileError: "{exportControls}.model.fileError"
                 }]
             }
         },
         model : {
             showExportStart : true,
             showExportError : false,
+            showFileError: false,
             showExportProgress : false,
             showExportComplete : false,
+            fileError: false,
             downloadURL : ""
         },
         invokers : {
@@ -1208,7 +1234,13 @@ var decapod = decapod || {};
                 linktext : {
                     messagekey : "download"
                 },
-                target : "${downloadURL}"
+                target : "${downloadURL}",
+                decorators: {
+                    type: "attrs",
+                    attributes: {
+                        target: "_new"
+                    }
+                }
             },
             restart : {
                 messagekey : "restart"

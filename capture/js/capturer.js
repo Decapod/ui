@@ -40,6 +40,7 @@ var decapod = decapod || {};
 
     decapod.capturer.cameraStatusSuccess = function (that, response) {
         if (response.statusCode === 'READY_FOR_CONVENTIONAL' || response.statusCode === 'READY_FOR_STEREO') {
+            that.applier.requestChange("status", response.statusCode);
             that.events.onCameraReady.fire();
         } else {
             that.events.onError.fire(response, response.statusCode);
@@ -48,10 +49,18 @@ var decapod = decapod || {};
     
     decapod.capturer.captureStatusSuccess = function (that, response) {
         if (response.totalCaptures === 0) {
-            that.events.onNoCaptures.fire(response.statusCode);
+            that.events.onNoCaptures.fire();
         } else {
             that.events.onCapturesRetrieved.fire(response);
         }
+    };
+    
+    decapod.capturer.bindCaptureKeypress = function (that) {
+        $(document).keypress(function (event) {
+            if(event.charCode === 99) { // the char code for the 'c' key
+                that.captureControl.container.click();
+            }
+        });
     };
     
     decapod.capturer.initCapturerControls = function (that) {
@@ -113,6 +122,9 @@ var decapod = decapod || {};
         
         that.setLabel = function (container, label) {
             that.setLabel(container, label);
+        };
+        that.bindCaptureKeypress = function () {
+            that.bindCaptureKeypress();
         };
     };
     
@@ -434,7 +446,7 @@ var decapod = decapod || {};
                             args: ["{status}.dom.container", true]
                         }, {
                             listener: "{status}.updateStatus",
-                            args: ["{arguments}.0"]
+                            args: ["{capturer}.model.status"]
                         }, {
                             listener: "{exportControl}.setState",
                             args: ["disabled"]
@@ -555,7 +567,7 @@ var decapod = decapod || {};
             onStatusAttached: null,
             onCaptureReviewerAttached: null,
             onExportControllerAttached: null,
-            onCaptureControllerAttached: null,
+            onCaptureControllerAttached: null
         },
         listeners: {
             onReadySuccess: {
@@ -603,13 +615,17 @@ var decapod = decapod || {};
                 listener: "{capturer}.displayElement",
                 priority: "first",
                 args: ["{capturer}.dom.load", false]
+            },
+            onCaptureControllerAttached: {
+                listener: "{capturer}.bindCaptureKeypress"
             }
         },
         invokers: {
             download: "decapod.capturer.download",
             displayElement: "decapod.capturer.displayElement",
             initCapturerControls: "decapod.capturer.initCapturerControls",
-            setLabel: "decapod.capturer.setLabel"
+            setLabel: "decapod.capturer.setLabel",
+            bindCaptureKeypress: "decapod.capturer.bindCaptureKeypress"
         },
         resources: {
             template: {
