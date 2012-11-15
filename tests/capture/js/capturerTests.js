@@ -48,7 +48,7 @@ var decapod = decapod || {};
         };
         
         capturerTests.asyncTest("Init", function () {
-            jqUnit.expect(17);
+            jqUnit.expect(19);
             var expectedStrings = {
                 title: "Test Capture",
                 help: "Test Help Link",
@@ -70,7 +70,9 @@ var decapod = decapod || {};
                             jqUnit.assertEquals("The help link text should have been set properly", expectedStrings.help, that.locate("help").text());
                             jqUnit.assertEquals("The restart link text should have been set properly", expectedStrings.restart, that.locate("restart").text());
                             jqUnit.assertEquals("The export button text should have been set properly", expectedStrings.exportButton, that.locate("exportButton").text());
+                            jqUnit.assertEquals("The aria on the export button should have been set properly", "polite", that.locate("exportButton").attr("aria-live"));
                             jqUnit.assertEquals("The capture button text should have been set properly", expectedMarkup.captureButton, that.locate("captureButton").html());
+                            jqUnit.assertEquals("The aria on the capture button should have been set properly", "polite", that.locate("captureButton").attr("aria-live"));
                             
                             jqUnit.assertFalse("The capture button should have been enabled", that.locate("captureButton").attr("aria-disabled"));
                             jqUnit.assertFalse("The export button should have been enabled", that.locate("exportButton").attr("aria-disabled"));

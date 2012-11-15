@@ -37,5 +37,8 @@ var decapod = decapod || {};
     fluid.demands("decapod.capturer.bindCaptureKeypress", ["decapod.capturer"], {
         args: ["{capturer}"]
     });
+    fluid.demands("decapod.capturer.addAria", ["decapod.capturer"], {
+        args: ["{capturer}"]
+    });
     
 })(jQuery);

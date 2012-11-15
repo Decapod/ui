@@ -123,9 +123,19 @@ var decapod = decapod || {};
         that.setLabel = function (container, label) {
             that.setLabel(container, label);
         };
+        
         that.bindCaptureKeypress = function () {
             that.bindCaptureKeypress();
         };
+
+        that.addAria = function () {
+            that.addAria();
+        };
+    };
+    
+    decapod.capturer.addAria = function (that) {
+        that.captureControl.container.attr("aria-live", "polite")
+        that.exportControl.container.attr("aria-live", "polite")
     };
     
     decapod.capturer.finalInit = function (that) {
@@ -578,6 +588,9 @@ var decapod = decapod || {};
                 listener: "{capturer}.events.onReady",
                 priority: "last"
             },
+            onReady: {
+                listener: "{capturer}.addAria"
+            },
             onRestart: [
                 "{captureSource}.delete",
                 {
@@ -625,7 +638,8 @@ var decapod = decapod || {};
             displayElement: "decapod.capturer.displayElement",
             initCapturerControls: "decapod.capturer.initCapturerControls",
             setLabel: "decapod.capturer.setLabel",
-            bindCaptureKeypress: "decapod.capturer.bindCaptureKeypress"
+            bindCaptureKeypress: "decapod.capturer.bindCaptureKeypress",
+            addAria: "decapod.capturer.addAria"
         },
         resources: {
             template: {
