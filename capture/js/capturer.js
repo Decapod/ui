@@ -288,13 +288,13 @@ var decapod = decapod || {};
                         currentStatus: "{capturer}.model.status",
                         READY_FOR_CONVENTIONAL: {
                             name: "Ready to capture",
-                            description: "<p>Press the Camera Button to start.</p> <div class='ds-capturer-stereoUnavailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>unavailable</i></span>.<br />See <a href=''>Help</a> for details.</div>",
+                            description: "<p>Press the Camera Button to start.</p> <div class='ds-capturer-stereoUnavailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>unavailable</i></span>.<br />See <a href='help.html' target='_new'>Help</a> for details.</div>",
                             
                             style: "dc-status-ready ds-status-ready"
                         },
                         READY_FOR_STEREO: {
                             name: "Ready to capture",
-                            description: "<p>Press the Camera Button to start.</p> <div class='ds-capturer-stereoAvailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>available</i></span>.<br />See <a href=''>Help</a> for details.</div>",
+                            description: "<p>Press the Camera Button to start.</p> <div class='ds-capturer-stereoAvailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>available</i></span>.<br />See <a href='help.html' target='_new'>Help</a> for details.</div>",
                             style: "dc-status-ready ds-status-ready"
                         },
                         NO_CAMERAS: {
@@ -309,7 +309,7 @@ var decapod = decapod || {};
                         },
                         NO_CAPTURE: {
                             name: "Unable to capture",
-                            description: 'Problem with camera. See <a href="">Help</a> for possible fixes',
+                            description: 'Problem with camera. See <a href="help.html" target="_new">Help</a> for possible fixes',
                             style: "dc-status-noCapture ds-status-noCapture"
                         },
                         TOO_MANY_CAMERAS: {
@@ -319,7 +319,7 @@ var decapod = decapod || {};
                         },
                         NO_EXPORT: {
                             name: "Unable to export",
-                            description: 'Problem with the export. See <a href="">Help</a> for possible fixes',
+                            description: 'Problem with the export. See <a href="help.html" target="_new">Help</a> for possible fixes',
                             style: "dc-status-noExport"
                         }
                     }
