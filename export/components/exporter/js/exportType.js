@@ -1028,8 +1028,18 @@ var decapod = decapod || {};
             }
         };
     };
+    
+    decapod.exportControls.progress.addAria = function (that) {
+        that.container.attr({
+            "role": "progressbar",
+            "aria-valuemin": 0,
+            "aria-valuemax": 100
+        });
+    };
 
     decapod.exportControls.progress.finalInit = function (that) {
+        that.addAria();
+        
         decapod.fetchResources(that.options.resources, function (resourceSpec) {
             that.container.append(that.options.resources.template.resourceText);
             that.events.afterFetchResources.fire(resourceSpec);
@@ -1054,6 +1064,9 @@ var decapod = decapod || {};
         events : {
             afterFetchResources : null,
             onReady : null
+        },
+        invokers: {
+            addAria: "decapod.exportControls.progress.addAria"
         },
         resources : {
             template : {

@@ -1405,6 +1405,27 @@ var decapod = decapod || {};
                 }
             });
         });
+        
+        progressTests.asyncTest("aria", function () {
+            jqUnit.expect(3);
+            var assertOnReady = function (that) {
+                jqUnit.assertEquals("The role should be set", "progressbar", that.container.attr("role"));
+                jqUnit.assertEquals("The aria-valuemin should be set", "0", that.container.attr("aria-valuemin"));
+                jqUnit.assertEquals("The aria-valuemax should be set", "100", that.container.attr("aria-valuemax"));
+            };
+            createProgress(PROGRESS_CONTAINER, {
+                listeners : {
+                    onReady : {
+                        listener: assertOnReady,
+                        args: ["{progress}"]
+                    },
+                    afterRender : {
+                        listener : start,
+                        priority : "last"
+                    }
+                }
+            });
+        });
 
         progressTests.asyncTest("Fetch Resources", function () {
             jqUnit.expect(1);
