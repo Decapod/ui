@@ -36,5 +36,8 @@ var decapod = decapod || {};
     fluid.demands("decapod.status.validateStatusChange", ["decapod.status"], {
         args: ["{status}", "{arguments}.0", "{arguments}.1"]
     });
+    fluid.demands("decapod.status.addAria", ["decapod.status"], {
+        args: ["{status}"]
+    });
     
 })(jQuery);
