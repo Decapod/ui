@@ -703,7 +703,7 @@ var decapod = decapod || {};
                                     currentStatus : "EXPORT_ERROR",
                                     "EXPORT_ERROR" : {
                                         name : "Error creating export",
-                                        description : "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
+                                        description : "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
                                         style : "ds-exporter-status-error"
                                     }
                                 }
