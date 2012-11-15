@@ -75,14 +75,18 @@ var decapod = decapod || {};
         });
         
         statusTests.asyncTest("onReady", function () {
-            jqUnit.expect(1);
-            var assertOnReady = function () {
+            jqUnit.expect(2);
+            var assertOnReady = function (that) {
                 jqUnit.assertTrue("The onReady event should have fired", true);
+                jqUnit.assertEquals("The status role should be set", "status", that.container.attr("role"));
                 start();
             };
             decapod.status(".dc-status", {
                 listeners: {
-                    onReady: assertOnReady
+                    onReady: {
+                        listener: assertOnReady,
+                        args: ["{status}"]
+                    }
                 },
                 model: MODEL
             });

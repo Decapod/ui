@@ -53,6 +53,10 @@ var decapod = decapod || {};
         
         return accept;
     };
+    
+    decapod.status.addAria = function (that) {
+        that.container.attr("role", "status");
+    };
 
     decapod.status.produceTree = function (that) {
         var status = that.model[that.model.currentStatus];
@@ -88,6 +92,7 @@ var decapod = decapod || {};
     };
 
     decapod.status.finalInit = function (that) {
+        that.addAria();
         that.applier.modelChanged.addListener("currentStatus", function (newModel, oldModel) {
             that.events.afterStatusChanged.fire(newModel.currentStatus, oldModel.currentStatus);
         });
@@ -124,7 +129,8 @@ var decapod = decapod || {};
         invokers: {
             updateStatus: "decapod.status.updateStatus",
             updateStatusStyle: "decapod.status.updateStatusStyle",
-            validateStatusChange: "decapod.status.validateStatusChange"
+            validateStatusChange: "decapod.status.validateStatusChange",
+            addAria: "decapod.status.addAria"
         }
     });
 })(jQuery);
