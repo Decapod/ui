@@ -106,6 +106,12 @@ var decapod = decapod || {};
                 target: "${help}",
                 linktext: {
                     messagekey: "help"
+                },
+                decorators: {
+                    type: "attrs",
+                    attributes: {
+                        target: "_new"
+                    }
                 }
             },
             browse: {
@@ -116,7 +122,7 @@ var decapod = decapod || {};
             }
         },
         model: {
-            help: "#"
+            help: "help.html"
         },
         strings: {
             help: "Help",
