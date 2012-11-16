@@ -185,6 +185,7 @@ var decapod = decapod || {};
             onError: "{decapod.stereo.browse}.enable",
             onSuccess: "{decapod.stereo.browse}.enable"
         },
+        errorStatus: "{decapod.stereo}.options.statuses.error",
         url: "{decapod.stereo.browse}.options.url",
         nickName: "decapod.stereo.browse.input"
     });
@@ -227,7 +228,7 @@ var decapod = decapod || {};
                 },
                 error: function (xhr) {
                     var error = JSON.parse(xhr.responseText);
-                    that.events.onError.fire("ERROR", error);
+                    that.events.onError.fire(that.options.errorStatus, error);
                 }
             });
         };

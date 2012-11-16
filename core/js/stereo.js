@@ -169,7 +169,8 @@ var decapod = decapod || {};
                 listener: "{that}.events.statusUpdated.fire"
             },
             onProcessError: {
-                listener: "{that}.events.statusUpdated.fire"
+                listener: "{that}.events.statusUpdated.fire",
+                args: ["{decapod.stereo}.options.statuses.error", "{arguments}.0"] //TODO
             },
             onProcessStartSuccess: {
                 listener: "{processSource}.get",
@@ -195,6 +196,7 @@ var decapod = decapod || {};
             uploadSuccess: "",
             working: "WORKING",
             processing: "",
+            error: "ERROR",
             complete: "COMPLETE"
         },
         urls: {
