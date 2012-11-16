@@ -48,10 +48,11 @@ var decapod = decapod || {};
         var buttonTests = jqUnit.testCase("decapod.button");
         
         buttonTests.test("Init", function () {
-            jqUnit.expect(3);
+            jqUnit.expect(4);
             var that = decapod.button(CONTAINER);
             jqUnit.assertTrue("The component should have initialized", that);
             jqUnit.assertEquals("The role attribue of the process button is set properly", $(CONTAINER).attr("role"), "button");
+            jqUnit.assertEquals("The tabindex should be set", "0", $(CONTAINER).attr("tabindex"));
             jqUnit.assertEquals("The initial button text should have been set", $(CONTAINER).text(), that.options.strings.label);
         });
        
