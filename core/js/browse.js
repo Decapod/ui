@@ -77,7 +77,7 @@ var decapod = decapod || {};
             }
         },
         renderOnInit: true,
-        url: "{decapod.stereo}.options.url.upload",
+        url: "{decapod.stereo}.options.urls.upload",
         nickName: "decapod.stereo.browse"
     });
 
@@ -93,7 +93,7 @@ var decapod = decapod || {};
         strings: {
             browseMessage: "{decapod.stereo}.options.strings.step1"
         },
-        url: "{decapod.stereo}.options.url.uploadCaptures",
+        url: "{decapod.stereo}.options.urls.uploadCaptures",
         protoTree: {
             browseMessage: {
                 messagekey: "browseMessage"
@@ -128,7 +128,7 @@ var decapod = decapod || {};
             "{decapod.stereo}.events.onProcessError": "{that}.enable"
         },
         disabledOnInit: true,
-        url: "{decapod.stereo}.options.url.uploadCalibration",
+        url: "{decapod.stereo}.options.urls.uploadCalibration",
         protoTree: {
             browseMessage: {
                 messagekey: "browseMessage"
