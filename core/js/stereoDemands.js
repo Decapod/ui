@@ -30,9 +30,9 @@ var decapod = decapod || {};
      *  stereo Demands*
      *********************/
 
-    fluid.demands("processSource", "decapod.stereo", {
-        options: "{options}"
-    });
+    fluid.demands("processSource", "decapod.dewarper", {});
+
+    fluid.demands("processSource", "decapod.calibrator", {});
 
     fluid.demands("processSource", ["decapod.fileSystem", "decapod.dewarper"], {
         options: {
@@ -46,21 +46,37 @@ var decapod = decapod || {};
         }
     });
 
-    fluid.demands("decapod.stereo.browse.input", "decapod.stereo.browse", {
-        options: "{options}"
-    });
+    fluid.demands("status", "decapod.calibrator", {});
 
-    fluid.demands("decapod.stereo.browse.input", ["decapod.stereo.browse",
-        "decapod.fileSystem", "decapod.dewarper"], {
+    fluid.demands("status", "decapod.dewarper", {
         options: {
-            url: "../../mock-data/dewarp/mockCaptures.json"
+            listeners: {
+                "{decapod.stereo}.events.onCapturesFileSelected": {
+                    listener: "{decapod.stereo.status}.events.hideInitial.fire",
+                    priority: "first"
+                }
+            }
         }
     });
 
-    fluid.demands("decapod.stereo.browse.input", ["decapod.stereo.browse",
-        "decapod.fileSystem", "decapod.calibrator"], {
+    fluid.demands("start", "decapod.calibrator", {});
+
+    fluid.demands("start", "decapod.dewarper", {
         options: {
-            url: "../../mock-data/calibrate/mockImages.json"
+            listeners: {
+                "{decapod.stereo}.events.onCalibrationSuccess": {
+                    listener: "{start}.setState",
+                    args: ["enabled"]
+                },
+                "{decapod.stereo}.events.onCapturesFileSelected": {
+                    listener: "{start}.setState",
+                    args: ["disabled"]
+                },
+                "{decapod.stereo}.events.onCalibrationFileSelected": {
+                    listener: "{start}.setState",
+                    args: ["disabled"]
+                }
+            }
         }
     });
 
