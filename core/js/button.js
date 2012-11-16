@@ -78,7 +78,10 @@ var decapod = decapod || {};
 
     decapod.button.finalInit = function (that) {
         var button = that.container;
-        button.attr("role", "button");
+        button.attr({
+            "role": "button",
+            "tabindex": that.options.tabindex
+        });
         button.html(that.options.strings.label);
 
         that.applier.modelChanged.addListener("state", function (newModel) {
@@ -120,6 +123,7 @@ var decapod = decapod || {};
                 listener: "{button}.handleState"
             }
         },
+        tabindex: 0,
         preventDefault: true // prevent the default action of the underlying element (e.g. activing the href on a anchor tag) 
     });
     
