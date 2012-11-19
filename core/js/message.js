@@ -147,10 +147,10 @@ var decapod = decapod || {};
         errorCode: "{decapod.stereo.status}.response.error_code",
         msg: "{decapod.stereo.status}.response.msg",
         strings: "{decapod.stereo}.options.strings",
-        preInitFunction: "decapod.stereo.status.message.ERROR.preInit"
+        postInitFunction: "decapod.stereo.status.message.ERROR.postInit"
     });
 
-    decapod.stereo.status.message.ERROR.preInit = function (that) {
+    decapod.stereo.status.message.ERROR.postInit = function (that) {
         var msg = that.options.strings[that.options.errorCode] ||
                   that.options.msg ||
                   that.options.strings.error;
