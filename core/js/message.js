@@ -144,13 +144,14 @@ var decapod = decapod || {};
 
     fluid.defaults("decapod.stereo.status.message.ERROR", {
         gradeNames: ["decapod.stereo.status.message", "autoInit"],
-        errorCode: "{decapod.stereo.status}.response.error_code",
+        errorCode: "{decapod.stereo.status}.response.ERROR_CODE",
         msg: "{decapod.stereo.status}.response.msg",
         strings: "{decapod.stereo}.options.strings",
-        postInitFunction: "decapod.stereo.status.message.ERROR.postInit"
+        preInitFunction: "decapod.stereo.status.message.ERROR.preInit"
     });
 
-    decapod.stereo.status.message.ERROR.postInit = function (that) {
+    decapod.stereo.status.message.ERROR.preInit = function (that) {
+        decapod.stereo.status.message.preInit(that);
         var msg = that.options.strings[that.options.errorCode] ||
                   that.options.msg ||
                   that.options.strings.error;

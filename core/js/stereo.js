@@ -134,7 +134,7 @@ var decapod = decapod || {};
             working: "Working...",
             ready: "",
             progress: "",
-            BAD_ZIP: "Selected file does not seem to be an archive.",
+            BAD_ZIP: "The zip file is invalid.",
             NO_STEREO_IMAGES: "Selected archive does not appear to have stereo images.",
             NOT_ENOUGH_IMAGES: "No enough calibration images.",
             error: "Unknown Error"
