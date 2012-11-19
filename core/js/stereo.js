@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 // Declare dependencies
-/*global decapod:true, fluid, jQuery*/
+/*global decapod:true, fluid*/
 
 // JSLint options 
 /*jslint white: true, funcinvoke: true, undef: true, newcap: true, nomen: true, regexp: true, bitwise: true, browser: true, forin: true, maxerr: 100, indent: 4 */
 
 var decapod = decapod || {};
 
-(function ($) {
+(function () {
 
     "use strict";
 
@@ -175,8 +175,7 @@ var decapod = decapod || {};
                 listener: "{that}.events.statusUpdated.fire"
             },
             onProcessError: {
-                listener: "{that}.events.statusUpdated.fire",
-                args: ["{decapod.stereo}.options.statuses.error", "{arguments}.0"] //TODO
+                listener: "{that}.processError"
             },
             onProcessStartSuccess: {
                 listener: "{processSource}.get",
@@ -224,6 +223,10 @@ var decapod = decapod || {};
         that.nickName = "decapod.stereo";
         that.startProcess = function () {
             that.processSource.put();
+        };
+        that.processError = function (xhr) {
+            var error = JSON.parse(xhr.responseText);
+            that.events.statusUpdated.fire(that.options.statuses.error, error);
         };
         that.processProgress = function (response) {
             var status = response.status === "complete" ?
@@ -292,4 +295,4 @@ var decapod = decapod || {};
         };
     };
 
-})(jQuery);
+})();
