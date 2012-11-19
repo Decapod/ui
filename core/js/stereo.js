@@ -90,8 +90,13 @@ var decapod = decapod || {};
                 createOnEvent: "afterRender",
                 container: "{decapod.stereo}.dom.status",
                 options: {
+                    listeners: {
+                        "{decapod.stereo}.events.onFileSelected": {
+                            listener: "{decapod.stereo.status}.events.hideInitial.fire",
+                            priority: "first"
+                        }
+                    },
                     events: {
-                        hideInitial: "{decapod.stereo}.events.onFileSelected",
                         statusUpdated: "{decapod.stereo}.events.statusUpdated"
                     }
                 }
@@ -140,6 +145,7 @@ var decapod = decapod || {};
             template: {
                 url: "../../core/html/stereoTemplate.html",
                 forceCache: true,
+                fetchClass: "template",
                 options: {
                     dataType: "html"
                 }
@@ -147,11 +153,13 @@ var decapod = decapod || {};
         },
         nickName: "decapod.stereo",
         events: {
-            onFileSelected: null,
             statusUpdated: null,
+
+            onFileSelected: null,
             onUploadStart: null,
             onUploadSuccess: null,
             onUploadError: null,
+
             onProcessStart: null,
             onProcessStartError: null,
             onProcessStartSuccess: null,
@@ -163,6 +171,21 @@ var decapod = decapod || {};
                 listener: "{that}.events.statusUpdated.fire",
                 args: ["{decapod.stereo}.options.statuses.working"]
             }, "{that}.startProcess"],
+            onProcessStartError: {
+                listener: "{that}.events.statusUpdated.fire"
+            },
+            onProcessError: {
+                listener: "{that}.events.statusUpdated.fire",
+                args: ["{decapod.stereo}.options.statuses.error", "{arguments}.0"] //TODO
+            },
+            onProcessStartSuccess: {
+                listener: "{processSource}.get",
+                args: [null]
+            },
+            onProcessProgressSuccess: {
+                listener: "{that}.processProgress",
+                args: ["{arguments}.0"]
+            },
             onUploadStart: {
                 listener: "{that}.events.statusUpdated.fire",
                 args: ["{that}.options.statuses.working"]
@@ -173,26 +196,13 @@ var decapod = decapod || {};
             },
             onUploadError: {
                 listener: "{that}.events.statusUpdated.fire"
-            },
-            onProcessStartError: {
-                listener: "{that}.events.statusUpdated.fire"
-            },
-            onProcessError: {
-                listener: "{that}.events.statusUpdated.fire"
-            },
-            onProcessStartSuccess: {
-                listener: "{processSource}.get",
-                args: [null]
-            },
-            onProcessProgressSuccess: {
-                listener: "{that}.processProgress",
-                args: ["{arguments}.0"]
             }
         },
         statuses: {
             uploadSuccess: "",
             working: "WORKING",
             processing: "",
+            error: "ERROR",
             complete: "COMPLETE"
         },
         urls: {
@@ -226,7 +236,7 @@ var decapod = decapod || {};
     decapod.stereo.finalInit = function (that) {
         decapod.fetchResources(that.options.resources, function () {
             that.refreshView();
-        });
+        }, {amalgamateClasses: ["template"]});
     };
 
     fluid.fetchResources.primeCacheFromResources("decapod.stereo");
@@ -280,96 +290,6 @@ var decapod = decapod || {};
                 fluid.model.composeSegments("decapod.stereo.status.message",
                     status);
         };
-    };
-
-    fluid.defaults("decapod.stereo.browse", {
-        gradeNames: ["fluid.rendererComponent", "autoInit"],
-        preInitFunction: "decapod.stereo.browse.preInit",
-        selectors: {
-            browseLabel: ".dc-stereo-browseLabel",
-            browseInput: ".dc-stereo-browseInput"
-        },
-        strings: {
-            browse: "{decapod.stereo}.options.strings.browse"
-        },
-        listeners: {
-            "{decapod.stereo}.events.onProcessStart": "{that}.disable",
-            "{decapod.stereo}.events.onProcessStartError": "{that}.enable",
-            "{decapod.stereo}.events.onProcessError": "{that}.enable"
-        },
-        protoTree: {
-            browseLabel: {
-                messagekey: "browse"
-            },
-            browseInput: {
-                decorators: {
-                    type: "fluid",
-                    func: "decapod.stereo.browse.input"
-                }
-            }
-        },
-        renderOnInit: true
-    });
-
-    decapod.stereo.browse.preInit = function (that) {
-        that.enable = function () {
-            that.container.removeAttr("disabled");
-        };
-        that.disable = function () {
-            that.container.attr("disabled", "disabled");
-        };
-    };
-
-    fluid.defaults("decapod.stereo.browse.input", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
-        postInitFunction: "decapod.stereo.browse.input.postInit",
-        preInitFunction: "decapod.stereo.browse.input.preInit",
-        events: {
-            onFileSelected: "{decapod.stereo}.events.onFileSelected",
-            onStart: "{decapod.stereo}.events.onUploadStart",
-            onSuccess: "{decapod.stereo}.events.onUploadSuccess",
-            onError: "{decapod.stereo}.events.onUploadError"
-        },
-        listeners: {
-            onFileSelected: [
-                "{that}.events.onStart.fire",
-                "{that}.upload"
-            ],
-            onStart: "{decapod.stereo.browse}.disable",
-            onError: "{decapod.stereo.browse}.enable",
-            onSuccess: "{decapod.stereo.browse}.enable"
-        },
-        url: "{decapod.stereo}.options.urls.upload"
-    });
-
-    decapod.stereo.browse.input.preInit = function (that) {
-        that.upload = function () {
-            var data = new FormData();
-            data.append("file", that.file);
-            $.ajax({
-                url: that.options.url,
-                type: "PUT",
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: data,
-                dataType: "json",
-                success: function (response) {
-                    that.events.onSuccess.fire(response);   
-                },
-                error: function (xhr) {
-                    var error = JSON.parse(xhr.responseText);
-                    that.events.onError.fire("ERROR", error);
-                }
-            });
-        };
-    };
-
-    decapod.stereo.browse.input.postInit = function (that) {
-        that.container.change(function () {
-            that.file = this.files[0];
-            that.events.onFileSelected.fire();
-        });
     };
 
 })(jQuery);

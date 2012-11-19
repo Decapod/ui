@@ -114,6 +114,7 @@ var decapod = decapod || {};
             template: {
                 url: "../../core/html/messageTemplate.html",
                 forceCache: true,
+                fetchClass: "template",
                 options: {
                     dataType: "html"
                 }
@@ -258,6 +259,13 @@ var decapod = decapod || {};
         gradeNames: ["decapod.stereo.status.message", "autoInit"],
         strings: {
             text: "{decapod.stereo}.options.strings.ready"
+        }
+    });
+
+    fluid.defaults("decapod.stereo.status.message.READY_TO_DEWARP", {
+        gradeNames: ["decapod.stereo.status.message", "autoInit"],
+        strings: {
+            text: "{decapod.stereo}.options.strings.readyToDewarp"
         }
     });
 
