@@ -34,4 +34,16 @@
 	font-style: italic; 
 }
 
-.ds-stereo-browseMessage {}
+.ds-dewarp .ds-shared-uploadControls .ds-shared-uploadBrowse {
+    position: relative;
+    top: 0.7em;
+}
+
+.ds-stereo-browseMessage {
+	line-height: 4em;
+}
+
+.ds-shared-spinner {
+    padding-right: 0.5em;
+    vertical-align: middle;
+}
