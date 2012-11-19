@@ -57,8 +57,8 @@ var decapod = decapod || {};
         gradeNames: ["fluid.viewComponent", "autoInit"],
         postInitFunction: "decapod.stereo.status.progress.postInit",
         model: {
-            value: "{decapod.stereo.status}.response.captureIndex",
-            max: "{decapod.stereo.status}.response.numCaptures"
+            value: "{decapod.stereo.status}.response.currentCapture",
+            max: "{decapod.stereo.status}.response.numOfCaptures"
         },
         strings: {
             valuetext: "{decapod.stereo}.options.strings.progress"
@@ -226,8 +226,8 @@ var decapod = decapod || {};
     fluid.defaults("decapod.stereo.status.message.DEWARPING", {
         gradeNames: ["decapod.stereo.status.message.processing", "autoInit"],
         model: {
-            value: "{decapod.stereo.status}.response.captureIndex",
-            max: "{decapod.stereo.status}.response.numCaptures"
+            value: "{decapod.stereo.status}.response.currentCapture",
+            max: "{decapod.stereo.status}.response.numOfCaptures"
         },
         strings: {
             text: "{decapod.stereo}.options.strings.progress"
@@ -272,7 +272,7 @@ var decapod = decapod || {};
     fluid.defaults("decapod.stereo.status.message.CAPTURES_FOUND", {
         gradeNames: ["decapod.stereo.status.message", "autoInit"],
         model: {
-            captures: "{decapod.stereo.status}.response.numCaptures"
+            captures: "{decapod.stereo.status}.response.numOfCaptures"
         },
         strings: {
             text: "{decapod.stereo}.options.strings.ready"
