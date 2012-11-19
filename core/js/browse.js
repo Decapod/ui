@@ -96,7 +96,8 @@ var decapod = decapod || {};
         url: "{decapod.stereo}.options.urls.uploadCaptures",
         protoTree: {
             browseMessage: {
-                messagekey: "browseMessage"
+                messagekey: "browseMessage",
+                decorators: {addClass: "{styles}.browseMessage"}
             },
             browseLabel: {
                 messagekey: "browse"
@@ -131,7 +132,8 @@ var decapod = decapod || {};
         url: "{decapod.stereo}.options.urls.uploadCalibration",
         protoTree: {
             browseMessage: {
-                messagekey: "browseMessage"
+                messagekey: "browseMessage",
+                decorators: {addClass: "{styles}.browseMessage"}
             },
             browseLabel: {
                 messagekey: "browse"
