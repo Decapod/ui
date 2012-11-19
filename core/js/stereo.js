@@ -133,7 +133,11 @@ var decapod = decapod || {};
             startOver: "Start Over",
             working: "Working...",
             ready: "",
-            progress: ""
+            progress: "",
+            BAD_ZIP: "Selected file does not seem to be an archive.",
+            NO_STEREO_IMAGES: "Selected archive does not appear to have stereo images.",
+            NOT_ENOUGH_IMAGES: "No enough calibration images.",
+            error: "Unknown Error"
         },
         resources: {
             template: {
