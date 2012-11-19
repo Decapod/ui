@@ -21,6 +21,8 @@
         <script type="text/javascript" src="../../core/js/stereoDemands.js"></script>
         <script type="text/javascript" src="../../core/js/stereo.js"></script>
         <script type="text/javascript" src="../../core/js/message.js"></script>
+        <script type="text/javascript" src="../../core/js/browse.js"></script>
+        <script type="text/javascript" src="../../core/js/browseDemands.js"></script>
     </head>
     
     <body class="ds-dewarp">        
@@ -43,20 +45,86 @@
         </section>
         <script>
             decapod.dewarper(".dc-stereo", {
+                events: {
+                    onCapturesFileSelected: null,
+                    onCapturesUploadStart: null,
+                    onCapturesUploadSuccess: null,
+                    onCapturesUploadError: null,
+
+                    onCalibrationFileSelected: null,
+                    onCalibrationUploadStart: null,
+                    onCalibrationSuccess: null,
+                    onCalibrationError: null
+                },
+                listeners: {
+                    onCapturesUploadStart: {
+                        listener: "{that}.events.statusUpdated.fire",
+                        args: ["{that}.options.statuses.working"]
+                    },
+                    onCapturesUploadSuccess: {
+                        listener: "{that}.events.statusUpdated.fire",
+                        args: ["{that}.options.statuses.uploadCapturesSuccess", "{arguments}.0"]
+                    },
+                    onCapturesUploadError: {
+                        listener: "{that}.events.statusUpdated.fire"
+                    },
+                    onCalibrationUploadStart: {
+                        listener: "{that}.events.statusUpdated.fire",
+                        args: ["{that}.options.statuses.working"]
+                    },
+                    onCalibrationSuccess: {
+                        listener: "{that}.events.statusUpdated.fire",
+                        args: ["{that}.options.statuses.uploadCalibrationSuccess", "{arguments}.0"]
+                    },
+                    onCalibrationError: {
+                        listener: "{that}.events.statusUpdated.fire"
+                    }
+                },
+                selectors: {
+                    browseCalibration: ".dc-stereo-browseCalibration",
+                },
+                protoTree: {
+                    title: {
+                        messagekey: "title"
+                    },
+                    help: {
+                        target: "${help}",
+                        linktext: {
+                            messagekey: "help"
+                        }
+                    },
+                    browse: {
+                        decorators: {
+                            type: "fluid",
+                            func: "decapod.stereo.browse.captures"
+                        }
+                    },
+                    browseCalibration: {
+                        decorators: {
+                            type: "fluid",
+                            func: "decapod.stereo.browse.calibration"
+                        }
+                    }
+                },
                 strings: {
                     title: "Dewarp Stereo Captures",
                     start: "Dewarp Captures",
                     ready: "%captures captures found.",
+                    readyToDewarp: "Ready to dewarp.",
                     complete: "Dewarping complete.",
-                    progress: "Dewarping catpure %value of %max."
+                    progress: "Dewarping catpure %value of %max.",
+                    step1: "Step 1: Choose Stereo Captures",
+                    step2: "Step 2: Choose Calibration Information"
                 },
                 urls: {
-                    upload: "../../captures",
+                    uploadCaptures: "../../captures",
+                    uploadCalibration: "../../calibration",
                     process: "../../dewarpedArchive",
                     startOver: "dewarper.html"
                 },
                 statuses: {
-                    uploadSuccess: "CAPTURES_FOUND",
+                    uploadCapturesSuccess: "CAPTURES_FOUND",
+                    uploadCalibrationSuccess: "READY_TO_DEWARP",
                     processing: "DEWARPING"
                 }
             });
