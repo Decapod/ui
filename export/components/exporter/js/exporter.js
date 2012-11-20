@@ -224,7 +224,7 @@ var decapod = decapod || {};
             accordionContainer: ".dc-exporter-accordion"
         },
         strings: {
-            title: "Export Images to PDF",
+            title: "PDF and Image Export",
             instructions: "Select 'Browse Files' to choose images to export.",
             uploadClear: "Restart",
             help: "Help",
