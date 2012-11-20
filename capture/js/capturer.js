@@ -328,8 +328,8 @@ var decapod = decapod || {};
                             style: "dc-status-tooManyCameras ds-status-tooManyCameras"
                         },
                         NO_EXPORT: {
-                            name: "Unable to export.",
-                            description: 'Problem with the export. See <a href="help.html" target="_new">Help</a> for possible fixes.',
+                            name: "Unable to create download.",
+                            description: 'Problem creating the file to download. See <a href="help.html" target="_new">Help</a> for possible fixes.',
                             style: "dc-status-noExport"
                         }
                     }
