@@ -768,6 +768,10 @@ var decapod = decapod || {};
     decapod.exportControls.updateModel = function (that, modelPath, value) {
         that.applier.requestChange(modelPath, value);
     };
+    
+    decapod.exportControls.addAria = function (that) {
+        that.container.attr("aria-live", "polite");
+    };
 
     decapod.exportControls.preInit = function (that) {
         /*
@@ -788,9 +792,15 @@ var decapod = decapod || {};
         that.initialRender = function () {
             setTimeout(that.refreshView, 1);
         };
+        
+        that.addAria = function () {
+            that.addAria();
+        };
     };
 
     decapod.exportControls.finalInit = function (that) {
+        that.addAria();
+        
         that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
             that.events.afterModelChanged.fire(newModel, oldModel);
         });
@@ -853,7 +863,8 @@ var decapod = decapod || {};
             downloadURL : ""
         },
         invokers : {
-            updateModel : "decapod.exportControls.updateModel"
+            updateModel : "decapod.exportControls.updateModel",
+            addAria: "decapod.exportControls.addAria"
         },
         resources : {
             controls : {

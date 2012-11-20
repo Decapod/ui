@@ -144,10 +144,19 @@ var decapod = decapod || {};
 
     fluid.defaults("decapod.stereo.status.message.ERROR", {
         gradeNames: ["decapod.stereo.status.message", "autoInit"],
-        strings: {
-            text: "{decapod.stereo.status}.response.msg"
-        }
+        errorCode: "{decapod.stereo.status}.response.ERROR_CODE",
+        msg: "{decapod.stereo.status}.response.msg",
+        strings: "{decapod.stereo}.options.strings",
+        preInitFunction: "decapod.stereo.status.message.ERROR.preInit"
     });
+
+    decapod.stereo.status.message.ERROR.preInit = function (that) {
+        decapod.stereo.status.message.preInit(that);
+        var msg = that.options.strings[that.options.errorCode] ||
+                  that.options.msg ||
+                  that.options.strings.error;
+        that.options.strings.text = msg;
+    };
 
     fluid.defaults("decapod.stereo.status.message.COMPLETE", {
         gradeNames: ["decapod.stereo.status.message", "autoInit"],
