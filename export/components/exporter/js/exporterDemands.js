@@ -282,7 +282,7 @@ var decapod = decapod || {};
             components: {
                 dataSource: {
                     options: {
-                        url: "http://localhost:8080/library/decapod-export/export/pdf/type1"
+                        url: "http://localhost:8083/library/decapod-export/export/pdf/type1"
                     }
                 },
                 exportPoller: {
@@ -290,7 +290,7 @@ var decapod = decapod || {};
                         components: {
                             dataSource: {
                                 options: {
-                                    url: "http://localhost:8080/library/decapod-export/export/pdf/type1"
+                                    url: "http://localhost:8083/library/decapod-export/export/pdf/type1"
                                 }
                             }
                         }
@@ -316,7 +316,7 @@ var decapod = decapod || {};
             components: {
                 dataSource: {
                     options: {
-                        url: "http://localhost:8080/library/decapod-export/export/pdf/type2"
+                        url: "http://localhost:8083/library/decapod-export/export/pdf/type2"
                     }
                 },
                 exportPoller: {
@@ -324,7 +324,7 @@ var decapod = decapod || {};
                         components: {
                             dataSource: {
                                 options: {
-                                    url: "http://localhost:8080/library/decapod-export/export/pdf/type2"
+                                    url: "http://localhost:8083/library/decapod-export/export/pdf/type2"
                                 }
                             }
                         }
@@ -359,7 +359,7 @@ var decapod = decapod || {};
             components: {
                 dataSource: {
                     options: {
-                        url: "http://localhost:8080/library/decapod-export/export/pdf/type3"
+                        url: "http://localhost:8083/library/decapod-export/export/pdf/type3"
                     }
                 },
                 exportPoller: {
@@ -367,7 +367,7 @@ var decapod = decapod || {};
                         components: {
                             dataSource: {
                                 options: {
-                                    url: "http://localhost:8080/library/decapod-export/export/pdf/type3"
+                                    url: "http://localhost:8083/library/decapod-export/export/pdf/type3"
                                 }
                             }
                         }
@@ -402,7 +402,7 @@ var decapod = decapod || {};
             components: {
                 dataSource: {
                     options: {
-                        url: "http://localhost:8080/library/decapod-export/export/pdf/type4"
+                        url: "http://localhost:8083/library/decapod-export/export/pdf/type4"
                     }
                 },
                 exportPoller: {
@@ -410,7 +410,7 @@ var decapod = decapod || {};
                         components: {
                             dataSource: {
                                 options: {
-                                    url: "http://localhost:8080/library/decapod-export/export/pdf/type4"
+                                    url: "http://localhost:8083/library/decapod-export/export/pdf/type4"
                                 }
                             }
                         }
@@ -433,7 +433,7 @@ var decapod = decapod || {};
             components: {
                 dataSource: {
                     options: {
-                        url: "http://localhost:8080/library/decapod-export/export/image/tiff"
+                        url: "http://localhost:8083/library/decapod-export/export/image/tiff"
                     }
                 },
                 exportPoller: {
@@ -441,7 +441,7 @@ var decapod = decapod || {};
                         components: {
                             dataSource: {
                                 options: {
-                                    url: "http://localhost:8080/library/decapod-export/export/image/tiff"
+                                    url: "http://localhost:8083/library/decapod-export/export/image/tiff"
                                 }
                             }
                         }
@@ -464,7 +464,7 @@ var decapod = decapod || {};
             components: {
                 dataSource: {
                     options: {
-                        url: "http://localhost:8080/library/decapod-export/export/image/png"
+                        url: "http://localhost:8083/library/decapod-export/export/image/png"
                     }
                 },
                 exportPoller: {
@@ -472,7 +472,7 @@ var decapod = decapod || {};
                         components: {
                             dataSource: {
                                 options: {
-                                    url: "http://localhost:8080/library/decapod-export/export/image/png"
+                                    url: "http://localhost:8083/library/decapod-export/export/image/png"
                                 }
                             }
                         }
