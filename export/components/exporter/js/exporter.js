@@ -480,7 +480,7 @@ var decapod = decapod || {};
             dataSource: {
                 type: "decapod.dataSource",
                 options: {
-                    url: "http://localhost:8080/library/decapod-export/"
+                    url: "http://localhost:8083/library/decapod-export/"
                 }
             }
         }
