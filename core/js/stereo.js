@@ -136,7 +136,7 @@ var decapod = decapod || {};
             browse: "Browse Files",
             complete: "",
             download: "Download",
-            startOver: "Start Over",
+            startOver: "Restart",
             working: "Working...",
             ready: "",
             progress: "",
