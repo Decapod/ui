@@ -502,14 +502,14 @@ var decapod = decapod || {};
             title: "Capture",
             help: "Help",
             restart: "Restart",
-            exportButton: "Export Captures",
-            exportInProgress: "Creating Archive...",
-            captureInProgress: "Taking Picture...",
+            exportButton: "Download Captures",
+            exportInProgress: "Creating archive...",
+            captureInProgress: "Taking picture...",
             loadMessage: "Checking cameras..."
         },
         markup: {
-            captureButton: "Capture<br /><span>(Keyboard shortcut: C)</span>",
-            exportDesc: "If capturing with Stereo 3D, run Decapod Calibration before dewarping images. <br /><br />See <a href='help.html'>Help</a> or Decapod documentation for details."
+            captureButton: "Capture<br /><span>(Keyboard shortcut: c)</span>",
+            exportDesc: "If capturing with Stereo 3D, run Decapod Stereo 3D Calibration before dewarping images. <br /><br />See <a href='help.html'>Help</a> or Decapod documentation for details."
         },
         events: {
             onRestart: null,
