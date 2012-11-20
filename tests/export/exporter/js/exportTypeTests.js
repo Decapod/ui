@@ -1726,8 +1726,9 @@ var decapod = decapod || {};
         });
 
         controlsTests.asyncTest("Initial Rendering", function () {
-            jqUnit.expect(4);
+            jqUnit.expect(5);
             var assertRender = function (that) {
+                jqUnit.assertEquals("The aria-live attribute should be set", "polite", that.container.attr("aria-live"));
                 decapod.testUtils.exportType.assertShowTriggerControls(that);
                 start();
             };
