@@ -124,7 +124,7 @@ ul.ds-shared-titleBar-flatList {
     border-right: 1px solid rgba(120,132,120,0.2);    
 }
 
-.ds-shared-mainPane h1 {
+.ds-shared-decapod h1 {
     font-size: 24px;
     font-weight: bold;
     color: #575757;
@@ -249,7 +249,7 @@ ul.ds-shared-titleBar-flatList {
 /* Change the size of the main content area depending on the size of screen. */
 
 @media screen and (max-width: 1100px) {
-    .ds-shared-mainPane {
+    .ds-shared-mainPane, .ds-shared-help {
         position: absolute;
         right: 0px;
         top:43px;
@@ -258,7 +258,7 @@ ul.ds-shared-titleBar-flatList {
 }
 
 @media screen and (max-width: 840px) {
-    .ds-shared-mainPane {
+    .ds-shared-mainPane,.ds-shared-help {
         margin-left: 0px;
         min-width: 0%;
         max-width: 100%;
@@ -492,3 +492,55 @@ ul.ds-shared-titleBar-flatList {
 .fl-uploader-dim:hover {
     border: 1px solid #FFFFFF;
 }
+
+/** HELP STYLES **/
+
+.ds-shared-help {
+    width: 700px;
+    min-width: 300px;
+
+}
+.ds-shared-help p {
+    margin: 1em 0 1em 6em;
+}
+
+.ds-shared-help h1 {
+    margin: 1em 0 0 1em;
+}
+
+.ds-shared-help h2 {
+    margin: 2em 0 1em 5em;
+}
+
+.ds-shared-help h3 {
+    margin: 1em 0 1em 6em;
+    background: -moz-linear-gradient(top,  #ededed, #ffffff);
+}
+
+.ds-shared-help ul {
+    margin: 1em 0 1em 6em;
+}
+
+.ds-shared-help li {
+    margin-bottom: 0.5em;
+}
+
+.ds-shared-help ul li,
+.ds-shared-help ol li ul li {
+    list-style: disc inside none;
+}
+
+.ds-shared-help ol {
+    margin: 1em 0 1em 6em;
+}
+
+.ds-shared-help ol li {
+    list-style: decimal inside none;
+}
+
+.ds-shared-help .note {
+    font-weight: bold;
+    padding-left: 2em;
+    background: url("../images/exclaimation-icon-18x18.png") 0 center no-repeat;
+}
+
