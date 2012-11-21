@@ -40,8 +40,10 @@ var decapod = decapod || {};
                     args: [{
                         showExportStart: false,
                         showExportError: false,
+                        showFileError: "{exportControls}.model.fileError",
                         showExportProgress: false,
                         showExportComplete: true,
+                        fileError: "{exportControls}.model.fileError",
                         downloadURL: "{arguments}.0.url"
                     }]
                 },
@@ -51,8 +53,10 @@ var decapod = decapod || {};
                     args: [{
                         showExportStart: false,
                         showExportError: true,
+                        showFileError: false,
                         showExportProgress: false,
                         showExportComplete: false,
+                        fileError: "{exportControls}.model.fileError",
                         downloadURL: ""
                     }]
                 }
@@ -152,6 +156,9 @@ var decapod = decapod || {};
     fluid.demands("decapod.exportControls.updateModel", ["decapod.exportControls"], {
         args: ["{exportControls}", "", "{arguments}.0"]
     });
+    fluid.demands("decapod.exportControls.addAria", ["decapod.exportControls"], {
+        args: ["{exportControls}"]
+    });
     fluid.demands("decapod.exportControls.trigger.updateModel", ["decapod.exportControls.trigger"], {
         args: ["{trigger}", "{arguments}.0", "{arguments}.1"]
     });
@@ -166,6 +173,9 @@ var decapod = decapod || {};
     });
     fluid.demands("decapod.exportControls.detailedProgress.finish", ["decapod.exportControls.detailedProgress"], {
         args: ["{detailedProgress}", "{arguments}.0"]
+    });
+    fluid.demands("decapod.exportControls.progress.addAria", ["decapod.exportControls.progress"], {
+        args: ["{progress}"]
     });
     fluid.demands("decapod.pdfExportOptions.hide", ["decapod.pdfExportOptions"], {
         args: ["{pdfExportOptions}", "{arguments}.0"]

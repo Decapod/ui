@@ -48,7 +48,7 @@ var decapod = decapod || {};
         };
         
         capturerTests.asyncTest("Init", function () {
-            jqUnit.expect(17);
+            jqUnit.expect(19);
             var expectedStrings = {
                 title: "Test Capture",
                 help: "Test Help Link",
@@ -70,7 +70,9 @@ var decapod = decapod || {};
                             jqUnit.assertEquals("The help link text should have been set properly", expectedStrings.help, that.locate("help").text());
                             jqUnit.assertEquals("The restart link text should have been set properly", expectedStrings.restart, that.locate("restart").text());
                             jqUnit.assertEquals("The export button text should have been set properly", expectedStrings.exportButton, that.locate("exportButton").text());
+                            jqUnit.assertEquals("The aria on the export button should have been set properly", "polite", that.locate("exportButton").attr("aria-live"));
                             jqUnit.assertEquals("The capture button text should have been set properly", expectedMarkup.captureButton, that.locate("captureButton").html());
+                            jqUnit.assertEquals("The aria on the capture button should have been set properly", "polite", that.locate("captureButton").attr("aria-live"));
                             
                             jqUnit.assertFalse("The capture button should have been enabled", that.locate("captureButton").attr("aria-disabled"));
                             jqUnit.assertFalse("The export button should have been enabled", that.locate("exportButton").attr("aria-disabled"));
@@ -211,7 +213,7 @@ var decapod = decapod || {};
                 listeners: {
                     "onReady.test": {
                         listener: function (that) {
-                            that.events.onReady.removeListener("test")
+                            that.events.onReady.removeListener("test");
                             that.events.onReadyToCapture.addListener(function () {
                                 jqUnit.assertTrue("onReadyToCapture event should have been fired", true);
                                 jqUnit.notVisible("The load element should not be visible", that.locate("load"));
@@ -233,7 +235,7 @@ var decapod = decapod || {};
                 listeners: {
                     "onReady.test": {
                         listener: function (that) {
-                            that.events.onReady.removeListener("test")
+                            that.events.onReady.removeListener("test");
                             that.events.onReadyToCapture.addListener(function () {
                                 start();
                             });
@@ -241,7 +243,7 @@ var decapod = decapod || {};
                                 jqUnit.assertTrue("captureStatusSource success event should have been fired", true);
                             });
                             that.events.onCameraReady.addListener(function () {
-                                jqUnit.assertEquals("The captureControl should be enabled", "enabled",that.captureControl.model.state);
+                                jqUnit.assertEquals("The captureControl should be enabled", "enabled", that.captureControl.model.state);
                             }, null, null, "last");
                             that.events.onCameraReady.fire();
                         },
@@ -255,7 +257,7 @@ var decapod = decapod || {};
         
         capturerTests.asyncTest("onNoCaptures", function () {
             jqUnit.expect(4);
-            var statusCode = "NO_CAPTURE";
+            var statusCode = "READY_FOR_STEREO";
             var options = {
                 listeners: {
                     onNoCaptures: {
@@ -270,11 +272,11 @@ var decapod = decapod || {};
                     },
                     "onReady.test": {
                         listener: function (that) {
-                            that.events.onReady.removeListener("test")
+                            that.events.onReady.removeListener("test");
                             that.events.onReadyToCapture.addListener(function () {
                                 jqUnit.assertTrue("onReadyToCapture event should have been fired", true);
                             });
-                            that.events.onNoCaptures.fire(statusCode);
+                            that.events.onNoCaptures.fire();
                         },
                         args: ["{capturer}"]
                     }
@@ -287,7 +289,6 @@ var decapod = decapod || {};
         capturerTests.asyncTest("onCapturesRetrieved", function () {
             jqUnit.expect(3);
             var response = {"totalCaptures": 1, "lastCaptureIndex": 1};
-            var count = 0;
             var options = {
                 listeners: {
                     "onReady.test": {
@@ -301,8 +302,8 @@ var decapod = decapod || {};
                                 // jqUnit.assertTrue("imageSource getSuccess event should have been fired", true);
                             // });
                             that.events.onCapturesRetrieved.addListener(function () {
-                                jqUnit.assertEquals("The captureControl should be enabled", "enabled",that.captureControl.model.state);
-                                jqUnit.assertEquals("The exportControl should be enabled", "enabled",that.exportControl.model.state);
+                                jqUnit.assertEquals("The captureControl should be enabled", "enabled", that.captureControl.model.state);
+                                jqUnit.assertEquals("The exportControl should be enabled", "enabled", that.exportControl.model.state);
                                 jqUnit.assertEquals("The caputreReviewer model should have been updated", response.totalCaptures, that.captureReviewer.model.captureIndex);
                             }, null, null, "last");
                             that.events.onCapturesRetrieved.fire(response);
@@ -318,7 +319,6 @@ var decapod = decapod || {};
         capturerTests.asyncTest("onError", function () {
             jqUnit.expect(5);
             var statusCode = "NO_CAMERAS";
-            var count = 0;
             var options = {
                 listeners: {
                     "onError": {
