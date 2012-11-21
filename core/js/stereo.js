@@ -111,6 +111,12 @@ var decapod = decapod || {};
                 target: "${help}",
                 linktext: {
                     messagekey: "help"
+                },
+                decorators: {
+                    type: "attrs",
+                    attributes: {
+                        target: "_new"
+                    }
                 }
             },
             browse: {
@@ -121,7 +127,7 @@ var decapod = decapod || {};
             }
         },
         model: {
-            help: "#"
+            help: "help.html"
         },
         strings: {
             help: "Help",
@@ -130,7 +136,7 @@ var decapod = decapod || {};
             browse: "Browse Files",
             complete: "",
             download: "Download",
-            startOver: "Start Over",
+            startOver: "Restart",
             working: "Working...",
             ready: "",
             progress: "",

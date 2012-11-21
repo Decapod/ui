@@ -36,6 +36,6 @@ var decapod = decapod || {};
     fluid.demands("decapod.importStatus.errorMessage", "decapod.importStatus", ["{importStatus}", "{arguments}.0"]);
     fluid.demands("decapod.importStatus.messages", "decapod.importStatus", ["{importStatus}"]);
     fluid.demands("decapod.importStatus.renderStatuses", "decapod.importStatus", ["{importStatus}"]);
-
+    fluid.demands("decapod.importStatus.renderer.addAria", "decapod.importStatus.renderer", ["{renderer}"]);
     
 })(jQuery);

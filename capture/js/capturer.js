@@ -40,6 +40,7 @@ var decapod = decapod || {};
 
     decapod.capturer.cameraStatusSuccess = function (that, response) {
         if (response.statusCode === 'READY_FOR_CONVENTIONAL' || response.statusCode === 'READY_FOR_STEREO') {
+            that.applier.requestChange("status", response.statusCode);
             that.events.onCameraReady.fire();
         } else {
             that.events.onError.fire(response, response.statusCode);
@@ -48,10 +49,18 @@ var decapod = decapod || {};
     
     decapod.capturer.captureStatusSuccess = function (that, response) {
         if (response.totalCaptures === 0) {
-            that.events.onNoCaptures.fire(response.statusCode);
+            that.events.onNoCaptures.fire();
         } else {
             that.events.onCapturesRetrieved.fire(response);
         }
+    };
+    
+    decapod.capturer.bindCaptureKeypress = function (that) {
+        $(document).keypress(function (event) {
+            if(event.charCode === 99) { // the char code for the 'c' key
+                that.captureControl.container.click();
+            }
+        });
     };
     
     decapod.capturer.initCapturerControls = function (that) {
@@ -114,6 +123,19 @@ var decapod = decapod || {};
         that.setLabel = function (container, label) {
             that.setLabel(container, label);
         };
+        
+        that.bindCaptureKeypress = function () {
+            that.bindCaptureKeypress();
+        };
+
+        that.addAria = function () {
+            that.addAria();
+        };
+    };
+    
+    decapod.capturer.addAria = function (that) {
+        that.captureControl.container.attr("aria-live", "polite")
+        that.exportControl.container.attr("aria-live", "polite")
     };
     
     decapod.capturer.finalInit = function (that) {
@@ -275,39 +297,39 @@ var decapod = decapod || {};
                     model: {
                         currentStatus: "{capturer}.model.status",
                         READY_FOR_CONVENTIONAL: {
-                            name: "Ready to capture",
-                            description: "<p>Press the Camera Button to start.</p> <div class='ds-capturer-stereoUnavailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>unavailable</i></span>.<br />See <a href=''>Help</a> for details.</div>",
+                            name: "Ready to capture.",
+                            description: "<p>Press 'Capture' button to start.</p> <div class='ds-capturer-stereoUnavailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>unavailable</i></span>.<br />See <a href='help.html' target='_new'>Help</a> for details.</div>",
                             
                             style: "dc-status-ready ds-status-ready"
                         },
                         READY_FOR_STEREO: {
-                            name: "Ready to capture",
-                            description: "<p>Press the Camera Button to start.</p> <div class='ds-capturer-stereoAvailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>available</i></span>.<br />See <a href=''>Help</a> for details.</div>",
+                            name: "Ready to capture.",
+                            description: "<p>Press 'Capture' button to start.</p> <div class='ds-capturer-stereoAvailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>available</i></span>.<br />See <a href='help.html' target='_new'>Help</a> for details.</div>",
                             style: "dc-status-ready ds-status-ready"
                         },
                         NO_CAMERAS: {
-                            name: "No camera detected",
+                            name: "No camera detected.",
                             description: "",
                             style: "dc-status-noCameras ds-status-noCameras"
                         },
                         CAMERA_DISCONNECTED: {
-                            name: "Camera disconnected",
-                            description: "Check camera USB cable and battery.",
+                            name: "Camera disconnected.",
+                            description: "Check camera USB cables and batteries.",
                             style: "dc-status-cameraDisconnected ds-status-cameraDisconnected"
                         },
                         NO_CAPTURE: {
-                            name: "Unable to capture",
-                            description: 'Problem with camera. See <a href="">Help</a> for possible fixes',
+                            name: "Unable to capture.",
+                            description: 'Problem with camera. See <a href="help.html" target="_new">Help</a> for possible fixes.',
                             style: "dc-status-noCapture ds-status-noCapture"
                         },
                         TOO_MANY_CAMERAS: {
-                            name: "Too many cameras",
-                            description: "Connect only one or two cameras",
+                            name: "Too many cameras.",
+                            description: "Connect only one or two cameras.",
                             style: "dc-status-tooManyCameras ds-status-tooManyCameras"
                         },
                         NO_EXPORT: {
-                            name: "Unable to export",
-                            description: 'Problem with the export. See <a href="">Help</a> for possible fixes',
+                            name: "Unable to create download.",
+                            description: 'Problem creating the file to download. See <a href="help.html" target="_new">Help</a> for possible fixes.',
                             style: "dc-status-noExport"
                         }
                     }
@@ -434,7 +456,7 @@ var decapod = decapod || {};
                             args: ["{status}.dom.container", true]
                         }, {
                             listener: "{status}.updateStatus",
-                            args: ["{arguments}.0"]
+                            args: ["{capturer}.model.status"]
                         }, {
                             listener: "{exportControl}.setState",
                             args: ["disabled"]
@@ -480,14 +502,14 @@ var decapod = decapod || {};
             title: "Capture",
             help: "Help",
             restart: "Restart",
-            exportButton: "Export Captures",
-            exportInProgress: "Creating Archive...",
-            captureInProgress: "Taking Picture...",
+            exportButton: "Download Captures",
+            exportInProgress: "Creating archive...",
+            captureInProgress: "Taking picture...",
             loadMessage: "Checking cameras..."
         },
         markup: {
-            captureButton: "Capture<br /><span>(Keyboard shortcut: C)</span>",
-            exportDesc: "If capturing with Stereo 3D, run Decapod Calibration before dewarping images. <br /><br />See <a href='help.html'>Help</a> or Decapod documentation for details."
+            captureButton: "Capture<br /><span>(Keyboard shortcut: c)</span>",
+            exportDesc: "If capturing with Stereo 3D, run Decapod Stereo 3D Calibration before dewarping images. <br /><br />See <a href='help.html'>Help</a> or Decapod documentation for details."
         },
         events: {
             onRestart: null,
@@ -555,7 +577,7 @@ var decapod = decapod || {};
             onStatusAttached: null,
             onCaptureReviewerAttached: null,
             onExportControllerAttached: null,
-            onCaptureControllerAttached: null,
+            onCaptureControllerAttached: null
         },
         listeners: {
             onReadySuccess: {
@@ -565,6 +587,9 @@ var decapod = decapod || {};
             onReadyError: {
                 listener: "{capturer}.events.onReady",
                 priority: "last"
+            },
+            onReady: {
+                listener: "{capturer}.addAria"
             },
             onRestart: [
                 "{captureSource}.delete",
@@ -603,13 +628,18 @@ var decapod = decapod || {};
                 listener: "{capturer}.displayElement",
                 priority: "first",
                 args: ["{capturer}.dom.load", false]
+            },
+            onCaptureControllerAttached: {
+                listener: "{capturer}.bindCaptureKeypress"
             }
         },
         invokers: {
             download: "decapod.capturer.download",
             displayElement: "decapod.capturer.displayElement",
             initCapturerControls: "decapod.capturer.initCapturerControls",
-            setLabel: "decapod.capturer.setLabel"
+            setLabel: "decapod.capturer.setLabel",
+            bindCaptureKeypress: "decapod.capturer.bindCaptureKeypress",
+            addAria: "decapod.capturer.addAria"
         },
         resources: {
             template: {
