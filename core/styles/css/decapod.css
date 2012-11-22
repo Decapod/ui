@@ -148,6 +148,10 @@ ul.ds-shared-titleBar-flatList {
     text-shadow: 1px 1px #fff;
 }
 
+.ds-shared-decapod em {
+    font-weight: bold;
+}
+
 .ds-shared-mainPane header {
     margin-bottom: 15px;
 }
@@ -509,7 +513,7 @@ ul.ds-shared-titleBar-flatList {
 }
 
 .ds-shared-help h2 {
-    margin: 2em 0 1em 5em;
+    margin: 2em 0 1em 1.5em;
 }
 
 .ds-shared-help h3 {
@@ -539,8 +543,17 @@ ul.ds-shared-titleBar-flatList {
 }
 
 .ds-shared-help .note {
-    font-weight: bold;
-    padding-left: 2em;
-    background: url("../images/exclaimation-icon-18x18.png") 0 center no-repeat;
+    padding: 0.7em 0 0.7em 2em;
+    background: url("../images/exclaimation-icon-18x18.png") 0 0.7em no-repeat;
+    border-top: 2px dotted #dfdfdf;
+    border-bottom: 2px dotted #dfdfdf;
+}
+
+.ds-shared-help dt {
+    width: 10em;
+    text-align: right;
+}
+
+.ds-shared-help dd {
 }
 
