@@ -148,6 +148,10 @@ ul.ds-shared-titleBar-flatList {
     text-shadow: 1px 1px #fff;
 }
 
+.ds-shared-decapod em {
+    font-weight: bold;
+}
+
 .ds-shared-mainPane header {
     margin-bottom: 15px;
 }
@@ -493,54 +497,5 @@ ul.ds-shared-titleBar-flatList {
     border: 1px solid #FFFFFF;
 }
 
-/** HELP STYLES **/
 
-.ds-shared-help {
-    width: 700px;
-    min-width: 300px;
-
-}
-.ds-shared-help p {
-    margin: 1em 0 1em 6em;
-}
-
-.ds-shared-help h1 {
-    margin: 1em 0 0 1em;
-}
-
-.ds-shared-help h2 {
-    margin: 2em 0 1em 5em;
-}
-
-.ds-shared-help h3 {
-    margin: 1em 0 1em 6em;
-    background: -moz-linear-gradient(top,  #ededed, #ffffff);
-}
-
-.ds-shared-help ul {
-    margin: 1em 0 1em 6em;
-}
-
-.ds-shared-help li {
-    margin-bottom: 0.5em;
-}
-
-.ds-shared-help ul li,
-.ds-shared-help ol li ul li {
-    list-style: disc inside none;
-}
-
-.ds-shared-help ol {
-    margin: 1em 0 1em 6em;
-}
-
-.ds-shared-help ol li {
-    list-style: decimal inside none;
-}
-
-.ds-shared-help .note {
-    font-weight: bold;
-    padding-left: 2em;
-    background: url("../images/exclaimation-icon-18x18.png") 0 center no-repeat;
-}
 

@@ -1,0 +1,68 @@
+/** HELP STYLES **/
+
+.ds-shared-help {
+    width: 700px;
+    min-width: 300px;
+
+}
+.ds-shared-help p {
+    margin: 1em 0 1em 6em;
+}
+
+.ds-shared-help h1 {
+    margin: 1em 0 0 1em;
+}
+
+.ds-shared-help h2 {
+    margin: 2em 0 1em 1.5em;
+}
+
+.ds-shared-help h3 {
+    margin: 1em 0 1em 6em;
+    background: -moz-linear-gradient(top,  #ededed, #ffffff);
+}
+
+.ds-shared-help ul {
+    margin: 1em 0 1em 6em;
+}
+
+.ds-shared-help li {
+    margin-bottom: 0.5em;
+}
+
+.ds-shared-help ul li,
+.ds-shared-help ol li ul li {
+    list-style: disc inside none;
+}
+
+.ds-shared-help ol {
+    margin: 1em 0 1em 6em;
+}
+
+.ds-shared-help ol li {
+    list-style: decimal inside none;
+}
+
+.ds-shared-help .note {
+    padding: 0.7em 0 0.7em 2em;
+    background: url("../images/exclaimation-icon-18x18.png") 0 0.7em no-repeat;
+    border-top: 2px dotted #dfdfdf;
+    border-bottom: 2px dotted #dfdfdf;
+}
+
+.ds-shared-help dt {
+    width: 10em;
+    text-align: right;
+}
+
+.ds-shared-help dd {
+}
+
+.ds-shared-help .help-image-example {
+    width: 250px;
+    border: 1px solid #aaa;
+}
+
+.ds-shared-help code {
+    display:inline;
+}

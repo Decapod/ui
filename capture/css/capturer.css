@@ -42,7 +42,7 @@
     padding: 3.3em 0 0;
     float: right;
     text-align: center;
-    background: url("../../../../core/styles/images/camera.png") center 1em no-repeat, -moz-linear-gradient(top,  #ffffff,  #ededed);
+    background: url("../../../../core/styles/images/export-22x22.png") center 1em no-repeat, -moz-linear-gradient(top,  #ffffff,  #ededed);
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
@@ -50,12 +50,12 @@
 
 .ds-capturer-controls .ds-capturer-exportButton:hover {
     cursor:pointer;
-    background: url("../../../../core/styles/images/camera.png") center 1em no-repeat, -moz-linear-gradient(top,  #ededed, #ffffff);
+    background: url("../../../../core/styles/images/export-22x22.png") center 1em no-repeat, -moz-linear-gradient(top,  #ededed, #ffffff);
 }
 
 .ds-capturer-controls .ds-capturer-exportButton[disabled]:hover {
     cursor:default;
-    background: url("../../../../core/styles/images/camera.png") center 1em no-repeat, -moz-linear-gradient(top,  #ffffff,  #ededed);
+    background: url("../../../../core/styles/images/export-22x22-grey.png") center 1em no-repeat, -moz-linear-gradient(top,  #ffffff,  #ededed);
 }
 
 .ds-capturer-refresh {
