@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="../../../../lib/infusion/framework/fss/css/fss-reset-global.css" />
+        <link rel="stylesheet" type="text/css" href="../../core/styles/css/decapod.css" />
+        <link rel="stylesheet" type="text/css" href="../../core/styles/css/help.css" />
+
+        <title>Decapod Help - Dewarp</title>
+    </head>
+
+    <body>
+
+        <section class="ds-shared-decapod ds-shared-help">
+
+            <h1>Decapod Help - Dewarp</h1>
+
+            <h2>What is Dewarp?</h2>
+            <p>Dewarp is the process of taking a set of stereo images and its camera calibration data to produce a flattened version of the content.</p>
+
+            <h3>Example Input Stereo 3D Pair:</h3>
+            <p>
+            <img class="help-image-example" src="../../core/help/images/dewarp-input-1.jpg" alt="An example input image to dewarp - an image of an open book as captured by the left camera of a stereo pair.">
+            <img class="help-image-example" src="../../core/help/images/dewarp-input-2.jpg" alt="An example input image to dewarp - an image of an open book as captured by the right camera of a stereo pair.">
+            </p>
+
+            <h3>Example Dewarp Output:</h3>
+            <p>
+            <img class="help-image-example" src="../../core/help/images/dewarp-output-1.jpg" alt="An example dewarp output - the left page of the book is separated and dewarped.">
+            <img class="help-image-example" src="../../core/help/images/dewarp-output-2.jpg" alt="An example dewarp output - the right page of the book is separated and dewarped.">
+            </p>
+
+            <h2>How to Dewarp Stero 3D Captures</h2>
+
+            <ol>
+                <li> Locate the ZIP file containing the stereo images that are to be dewarped. If the stereo images were captured using Decapod’s Capture tool, the images will be in a ZIP file called “capture.zip”. 
+
+                    <p class="note"><em>Note:</em><br />
+                    Stereo images should follow a required filenaming pattern. Refer to "Naming Stereo Images" below.
+                    </p>
+                </li>
+
+                <li> Locate calibration data.</li>
+                <li> Locate images.</li>
+                <li> Select "Dewarp" to begin the dewarp process.</li>
+                <li> When prompted, save the dewarped file to a safe location.</li>
+            </ol>
+
+            <h2>Naming Stereo Images</h2>
+            <p>Decapod’s Dewarping tool expects the stereo images to be named in the following manner: <code>capture-[capture #]-[camera #].jpg</code>
+
+            <p>For example:</p>
+                
+            <ul>
+                <li> <code>capture-01-1.jpg, capture-01-2.jpg, capture-02-1.jpg, capture-02-2.jpg ...</code></li>
+                <li> <code>capture-01-0.png, capture-01-1.png,capture-02-0.png, capture-02-1.png ...</code></li>
+            </ul>
+
+            <p>For each [capture #] there will be two images - one from Camera 1 (i.e. left) and one from Camera 2 (i.e. right). If the images do not follow this format, then the Dewarp tool may not be able to process the images and may give undesired output.</p>
+
+            <p> If images were captured using Decapod’s Capture tool, by default the images should already be named to follow this format.</p>
+
+        </section>
+    </body>
+</html>

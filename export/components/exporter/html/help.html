@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="../../../../lib/infusion/framework/fss/css/fss-reset-global.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../core/styles/css/decapod.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../core/styles/css/help.css" />
+
+        <title>Decapod Help - PDF and Image Converter</title>
+    </head>
+
+    <body>
+
+        <section class="ds-shared-decapod ds-shared-help">
+
+            <h1>Decapod Help - PDF and Image Converter</h1>
+
+            <h2>Introduction</h2>
+
+            <p>The Decapod PDF and Image Converter takes a set of image files, and converts those images into a PDF document or into an archive of images.</p>
+
+            <h2>How to use the PDF and Image Converter</h2>
+
+            <ol>
+                <li>Select “Browse Files” and choose the image files to process. Multiple images can be selected by performing one of the following actions:
+                    <ul>
+                        <li>CTRL + A to select all files in a directory.</li>
+                        <li>Select a range of files by selecting the first file, and with the SHIFT key depressed, select the last file.</li>
+                        <li>Select a random group of files by press and holding the CTRL key and then selecting all the files to be processed.</li>
+                    </ul>
+                </li>
+                <li>Choose one of the six formats.</li>
+                <li>Modify any options if needed.</li>
+                <li>Select “Start Conversion” to begin the conversion process. Depending on the format selected and the capabilities of the system, this may take a few seconds to a few hours.</li>
+                <li>Save the file when prompted.</li>
+            </ol>
+
+            <h2>Formats</h2>
+
+            <h3>Image PDF</h3>
+            <p>A basic PDF where each page of the output PDF document is an embedded image. Each image file selected will appear as a page in the document. OCR is not performed on the content, so it is not selectable or searchable.</p>
+
+            <p>Since the Image PDF option does not do additional processing on the input images, it is suitable for all types of content requiring the convenience of a PDF document.</p>
+
+            <p>This format is ideal for:</p>
+
+            <ul>
+                <li> Hand-written text.</li>
+                <li> Content with many illustrations, graphics, or photos.</li>
+                <li> Content with irregular and unconventional layout.</li>
+                <li> Content which visual fidelity is important.</li>
+            </ul>
+
+            <h3>Image PDF with OCR Text</h3>
+
+            <p>Identical to the Image PDF option, but with the addition of OCR performed on the content. Each image file selected will appear as a page in the document, with OCR text embedded behind each image on each page. The text can be searched and selected.</p>
+
+            <p>At this time, Decapod’s OCR only supports Latin-based script.</p>
+
+            <p>Image PDF with OCR Text is ideal for:</p>
+
+            <ul>
+                <li> Content with machine printed Latin script text.</li>
+                <li> Content with traditional, column style layouts.</li>
+            </ul>
+
+            <p><span class="note">Note:</span><br />
+            Attempting to generate a PDF with OCR text with content that has irregular layouts, non-Latin type / script, or lots of visual elements may produce unpredictable results.</p>
+
+            <h3>Computer Traced PDF</h3>
+
+            <p>Computer traced PDF attempts to recreate the input image’s content by tracing it in black and white. This process produces an extremely compact PDF file that is easily redistributed.</p>
+
+            <p>However, this format works best with machine-produced text and is not ideal for tracing complex content like images and diagrams.</p>
+
+            <p><span class="note">Note:</span><br />
+            This format outputs a black and white document. If colour preservation is needed, use an Image PDF, TIFF, or PNG formats.</p>
+
+            <p>Computer Traced PDF is ideal for:</p>
+            <ul>
+                <li> Creating a very compact PDF document where colour fidelity is not a concern.</li>
+                <li> Situations where storage or distribution of content is desired.</li>
+                <li> Great for viewing on different screens and devices.</li>
+            </ul>
+
+            <h3>Font generated PDF</h3>
+            <p>Font generated PDF attempts to match the size and shape of each character of text to a TrueType font. This results in an extremely compact document that is easily redistributed and viewed on different screens and devices.</p>
+
+            <p><span class="note">Note:</span><br />
+            This format outputs a black and white document. If colour preservation is needed, use an Image PDF, TIFF, or PNG formats.</p>
+
+            <p>Computer Traced PDF is ideal for:<br />
+            <ul>
+            <li> Creating a very compact PDF document where colour fidelity is not a concern.</li>
+            <li> Situations where storage or distribution of content is desired.</li>
+            <li> Great for viewing on different screens and devices.</li>
+            </ul>
+
+            <h3>TIFF</h3>
+            <p>TIFF format is the industry standard file format for digital archiving and preservation. This format option will produce a 24-bit colour TIFF with compression.</p>
+
+            <h3>PNG</h3>
+            <p>PNG is a popular image interchange format used in both online and print publication. This format option will produce a 24-bit colour PNG.</p>
+        </section>
+    </body>
+</html>
+

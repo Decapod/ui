@@ -1,0 +1,9 @@
+Infusion 1.5-Snapshot 
+----------------------
+rev: f7dbbdfec8e3e47dc0a97299da89066f8bbc5d0c
+Created: August 23, 2012
+
+Custom Build
+------------
+Includes: Uploader, Renderer
+Type: Source
