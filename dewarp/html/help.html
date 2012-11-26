@@ -47,13 +47,14 @@
             </ol>
 
             <h2>Naming Stereo Images</h2>
-            <p>Decapod’s Dewarping tool expects the stereo images to be named in the following manner: <code>capture-[capture #]-[camera #].jpg</code>
+            <p>Decapod’s Dewarping tool expects the stereo images to be named in the following manner: <code>capture-[capture #]-[camera #].[extension]</code>
 
             <p>For example:</p>
                 
             <ul>
                 <li> <code>capture-01-1.jpg, capture-01-2.jpg, capture-02-1.jpg, capture-02-2.jpg ...</code></li>
                 <li> <code>capture-01-0.png, capture-01-1.png,capture-02-0.png, capture-02-1.png ...</code></li>
+                <li> Decapod supports dewarping of TIFF, PNG, and JPEG files.
             </ul>
 
             <p>For each [capture #] there will be two images - one from Camera 1 (i.e. left) and one from Camera 2 (i.e. right). If the images do not follow this format, then the Dewarp tool may not be able to process the images and may give undesired output.</p>
