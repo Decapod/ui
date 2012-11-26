@@ -278,6 +278,13 @@ var decapod = decapod || {};
         }
     });
 
+    fluid.defaults("decapod.stereo.status.message.CALIBRATION_READY", {
+        gradeNames: ["decapod.stereo.status.message", "autoInit"],
+        strings: {
+            text: "{decapod.stereo}.options.strings.calibrationReady"
+        }
+    });
+
     fluid.defaults("decapod.stereo.status.message.CAPTURES_FOUND", {
         gradeNames: ["decapod.stereo.status.message", "autoInit"],
         model: {

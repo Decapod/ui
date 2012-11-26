@@ -152,6 +152,58 @@ var decapod = decapod || {};
         url: "../../mock-data/dewarp/mockImages.json"
     });
 
+    fluid.defaults("decapod.stereo.browse.colourPicker", {
+        gradeNames: ["autoInit", "decapod.stereo.browse"],
+        strings: {
+            browseMessage: "{decapod.stereo}.options.strings.step3",
+            browse: "{decapod.stereo}.options.strings.colourPicker"
+        },
+        selectorsToIgnore: ["browseLabel", "browseInput"],
+        styles: {
+            button: "ds-stereo-colorPicker"
+        },
+        listeners: {
+            "{decapod.stereo}.events.onCalibrationSuccess": "{that}.enable",
+            "{decapod.stereo}.events.onCapturesFileSelected": "{that}.disable",
+            "{decapod.stereo}.events.onCalibrationFileSelected": "{that}.disable",
+            "{decapod.stereo}.events.onProcessStart": "{that}.disable",
+            "{decapod.stereo}.events.onProcessStartError": "{that}.enable",
+            "{decapod.stereo}.events.onProcessError": "{that}.enable"
+        },
+        resources: {
+            template: {
+                url: "colorPickerTemplate.html",
+                forceCache: true,
+                fetchClass: "template",
+                options: {
+                    dataType: "html"
+                }
+            }
+        },
+        disabledOnInit: true,
+        url: "{decapod.stereo}.options.urls.colourPicker",
+        protoTree: {
+            button: {
+                messagekey: "browse",
+                decorators: [{
+                    type: "fluid",
+                    func: "decapod.stereo.browse.input.colourPicker"
+                }, {addClass: "{styles}.button"}]
+            },
+            browseMessage: {
+                messagekey: "browseMessage",
+                decorators: {addClass: "{styles}.browseMessage"}
+            }
+        }
+    });
+
+    fluid.fetchResources.primeCacheFromResources("decapod.stereo.browse.colourPicker");
+
+    fluid.defaults("decapod.stereo.browse.colourPicker.local", {
+        gradeNames: ["decapod.stereo.browse.colourPicker", "autoInit"],
+        url: "../../mock-data/dewarp/mockColourPicker.json"
+    });
+
     decapod.stereo.browse.preInit = function (that) {
         that.nickName = "decapod.stereo.browse";
         that.enable = function () {
@@ -212,11 +264,26 @@ var decapod = decapod || {};
         }
     });
 
+    fluid.defaults("decapod.stereo.browse.input.colourPicker", {
+        gradeNames: ["autoInit", "decapod.stereo.browse.input"],
+        postInitFunction: "decapod.stereo.browse.input.colourPicker.postInit",
+        events: {
+            onStart: "{decapod.stereo}.events.onColourPickerStart",
+            onSuccess: "{decapod.stereo}.events.onColourPickerSuccess",
+            onError: "{decapod.stereo}.events.onColourPickerError"
+        }
+    });
+
+    decapod.stereo.browse.input.colourPicker.postInit = function (that) {
+        that.container.click(function () {
+            that.events.onStart.fire();
+            that.upload();
+        });
+    };
+
     decapod.stereo.browse.input.preInit = function (that) {
         that.nickName = "decapod.stereo.browse.input";
-        that.upload = function () {
-            var data = new FormData();
-            data.append("file", that.file);
+        that.upload = function (data) {
             $.ajax({
                 url: that.options.url,
                 type: "PUT",
@@ -229,7 +296,12 @@ var decapod = decapod || {};
                     that.events.onSuccess.fire(response);
                 },
                 error: function (xhr) {
-                    var error = JSON.parse(xhr.responseText);
+                    var error;
+                    try {
+                        error = JSON.parse(xhr.responseText);
+                    } catch (err) {
+                        error = err;
+                    }
                     that.events.onError.fire(that.options.errorStatus, error);
                 }
             });
@@ -238,8 +310,9 @@ var decapod = decapod || {};
 
     decapod.stereo.browse.input.postInit = function (that) {
         that.container.change(function () {
-            that.file = this.files[0];
-            that.events.onFileSelected.fire();
+            var data = new FormData();
+            data.append("file", this.files[0]);
+            that.events.onFileSelected.fire(data);
         });
     };
 

@@ -54,7 +54,11 @@
                     onCalibrationFileSelected: null,
                     onCalibrationUploadStart: null,
                     onCalibrationSuccess: null,
-                    onCalibrationError: null
+                    onCalibrationError: null,
+
+                    onColourPickerStart: null,
+                    onColourPickerSuccess: null,
+                    onColourPickerError: null
                 },
                 listeners: {
                     onCapturesUploadStart: {
@@ -78,10 +82,22 @@
                     },
                     onCalibrationError: {
                         listener: "{that}.events.statusUpdated.fire"
+                    },
+                    onColourPickerStart: {
+                        listener: "{that}.events.statusUpdated.fire",
+                        args: ["{that}.options.statuses.working"]
+                    },
+                    onColourPickerSuccess: {
+                        listener: "{that}.events.statusUpdated.fire",
+                        args: ["{that}.options.statuses.colourPickerSuccess", "{arguments}.0"]
+                    },
+                    onColourPickerError: {
+                        listener: "{that}.events.statusUpdated.fire"
                     }
                 },
                 selectors: {
                     browseCalibration: ".dc-stereo-browseCalibration",
+                    colourPicker: ".dc-stereo-colourPicker"
                 },
                 protoTree: {
                     title: {
@@ -104,27 +120,38 @@
                             type: "fluid",
                             func: "decapod.stereo.browse.calibration"
                         }
+                    },
+                    colourPicker: {
+                        decorators: {
+                            type: "fluid",
+                            func: "decapod.stereo.browse.colourPicker"
+                        }
                     }
                 },
                 strings: {
                     title: "Dewarp Stereo Captures",
                     start: "Dewarp Captures",
                     ready: "%captures captures found.",
+                    calibrationReady: "Calibration information found.",
                     readyToDewarp: "Ready to dewarp.",
                     complete: "Dewarping complete.",
                     progress: "Dewarping catpure %value of %max.",
+                    colourPicker: "Pick Colour",
                     step1: "Step 1: Choose Stereo Captures",
-                    step2: "Step 2: Choose Calibration Information"
+                    step2: "Step 2: Choose Calibration Information",
+                    step3: "Step 3: Select boundary colour"
                 },
                 urls: {
                     uploadCaptures: "../../captures",
                     uploadCalibration: "../../calibration",
+                    colourPicker: "../../colourPicker",
                     process: "../../dewarpedArchive",
                     startOver: "dewarper.html"
                 },
                 statuses: {
                     uploadCapturesSuccess: "CAPTURES_FOUND",
-                    uploadCalibrationSuccess: "READY_TO_DEWARP",
+                    uploadCalibrationSuccess: "CALIBRATION_READY",
+                    colourPickerSuccess: "READY_TO_DEWARP",
                     processing: "DEWARPING"
                 }
             });
