@@ -45,4 +45,9 @@ var decapod = decapod || {};
         funcName: "decapod.stereo.browse.calibration.local"
     });
 
+    fluid.demands("decapod.stereo.browse.colourPicker", "decapod.stereo", {});
+    fluid.demands("decapod.stereo.browse.colourPicker", ["decapod.stereo", "decapod.fileSystem"], {
+        funcName: "decapod.stereo.browse.colourPicker.local"
+    });
+
 })(jQuery);

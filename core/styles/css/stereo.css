@@ -47,3 +47,13 @@
     padding-right: 0.5em;
     vertical-align: middle;
 }
+
+.ds-shared-uploadBrowse.ds-stereo-colorPicker {
+    font-family: "Droid Sans",arial,serif;
+    font-size: 11pt;
+    text-align: right;
+    width: 8em;
+    height: 2.15em;
+    vertical-align: super;
+    padding-top: 0px;
+}

@@ -64,11 +64,15 @@ var decapod = decapod || {};
     fluid.demands("start", "decapod.dewarper", {
         options: {
             listeners: {
-                "{decapod.stereo}.events.onCalibrationSuccess": {
+                "{decapod.stereo}.events.onColourPickerSuccess": {
                     listener: "{start}.setState",
                     args: ["enabled"]
                 },
                 "{decapod.stereo}.events.onCapturesFileSelected": {
+                    listener: "{start}.setState",
+                    args: ["disabled"]
+                },
+                "{decapod.stereo}.events.onColourPickerStart": {
                     listener: "{start}.setState",
                     args: ["disabled"]
                 },
