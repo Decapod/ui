@@ -66,3 +66,7 @@
 .ds-shared-help code {
     display:inline;
 }
+
+.ds-shared-help figure {
+    margin-left: 12em;
+}
