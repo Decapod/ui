@@ -82,6 +82,9 @@ var decapod = decapod || {};
             "role": "button",
             "tabindex": that.options.tabindex
         });
+        button.fluid("activatable", function (evt) {
+            button.click();
+        });
         button.html(that.options.strings.label);
 
         that.applier.modelChanged.addListener("state", function (newModel) {
