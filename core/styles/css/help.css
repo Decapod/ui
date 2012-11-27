@@ -50,18 +50,21 @@
     border-bottom: 2px dotted #dfdfdf;
 }
 
-.ds-shared-help dt {
-    width: 10em;
-    text-align: right;
-}
-
-.ds-shared-help dd {
+.ds-shared-help figcaption {
+    width:30em;
 }
 
 .ds-shared-help .help-image-example {
     width: 250px;
     border: 1px solid #aaa;
+    padding: 2px;
 }
+
+.ds-shared-help a .help-image-example {
+    width: 250px;
+    border: 3px solid #1C75BC;
+}
+
 
 .ds-shared-help code {
     display:inline;
