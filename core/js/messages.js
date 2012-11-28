@@ -56,10 +56,7 @@ decapod.globalMessages = {
 	exporter_pdf_outputSettings_a5: "A5 (148x210 mm)",
 	exporter_pdf_outputSettings_letter: "Letter (216x279mm)",
 	exporter_pdf_outputSettings_custom: "Custom",
-	/*
-	 * name : "Some files were ignored",
-                                            description : "They may not have been valid image files.",
-	 */
+
 	exporter_pdfExportStatus_exportError_name: "Error creating export",
 	exporter_pdfExportStatus_exportError_description: "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
 	exporter_pdfExportStatus_filesIgnored_name: "Some files were ignored",
