@@ -29,7 +29,7 @@ var decapod = decapod || {};
         var assertRender = function (that, expectedModel) {
             var del = that.locate("del");
             jqUnit.assertEquals("The delete link should have the button role set", "button", del.attr("role"));
-            jqUnit.assertEquals("The delete text should be rendered", that.options.strings.del, del.text());
+            jqUnit.assertEquals("The delete text should be rendered", decapod.globalMessages.capturer_captureReviewer_del, del.text());
             jqUnit.assertEquals("The capture index should be rendered", "Capture #" + expectedModel.captureIndex, that.locate("captureIndex").text());
             var captures = that.locate("captureIMG");
             jqUnit.assertEquals("There should be two images rendered", expectedModel.captures.length, captures.length);
@@ -41,7 +41,7 @@ var decapod = decapod || {};
         var assertDeletedRender = function (that, deletedCaptureIndex) {
             var del = that.locate("del");
             jqUnit.assertEquals("The deleteIndex is rendered", "Deleted Capture #" + deletedCaptureIndex, that.locate("captureIndex").text());
-            jqUnit.assertEquals("The delete message should be rendered", that.options.strings.deletedMessage, that.locate("deletedMessage").text());
+            jqUnit.assertEquals("The delete message should be rendered", decapod.globalMessages.capturer_captureReviewer_deletedMessage, that.locate("deletedMessage").text());
             jqUnit.assertTrue("The delete link should be disabled", del.attr("disabled"));
             jqUnit.assertTrue("The delete links should have the aria-disabled set", del.attr("aria-disabled"));
             jqUnit.assertEquals("The delete link should have the button role set", "button", del.attr("role"));

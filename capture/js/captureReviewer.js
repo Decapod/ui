@@ -47,7 +47,7 @@ var decapod = decapod || {};
                     func: "decapod.button",
                     options: {
                         strings: {
-                            label: that.options.strings.del
+                            label: decapod.globalMessages.capturer_captureReviewer_del
                         },
                         model: {
                             state: isDeleted ? "disabled" : "enabled"
@@ -66,16 +66,16 @@ var decapod = decapod || {};
                 condition: isDeleted,
                 trueTree: {
                     captureIndex: {
-                        messagekey: "deletedIndex",
+                        messagekey: "capturer_captureReviewer_deletedIndex",
                         args: [that.model.captureIndex]
                     },
                     deletedMessage: {
-                        messagekey: "deletedMessage"
+                        messagekey: "capturer_captureReviewer_deletedMessage"
                     }
                 },
                 falseTree: {
                     captureIndex: {
-                        messagekey: "captureIndex",
+                        messagekey: "capturer_captureReviewer_captureIndex",
                         args: [that.model.captureIndex]
                     },
                     capturesContainer: {}, //forces the captureContainer to render (needed so that it will be removed in the trueTree)
@@ -124,6 +124,7 @@ var decapod = decapod || {};
         gradeNames: ["fluid.rendererComponent", "autoInit"],
         preInitFunction: "decapod.captureReviewer.preInit",
         finalInitFunction: "decapod.captureReviewer.finalInit",
+        parentBundle: "{globalBundle}",
         produceTree: "decapod.captureReviewer.produceTree",
         selectors: {
             captureIndex: ".dc-captureReviewer-captureIndex",
@@ -135,10 +136,10 @@ var decapod = decapod || {};
         },
         repeatingSelectors: ["captures"],
         strings: {
-            captureIndex: "Capture #%0",
-            deletedIndex: "Deleted Capture #%0",
-            deletedMessage: "Press 'Capture' button to continue capturing.",
-            del: "Delete"
+            // captureIndex: "Capture #%0",
+            // deletedIndex: "Deleted Capture #%0",
+            // deletedMessage: "Press 'Capture' button to continue capturing.",
+            // del: "Delete"
         },
         model: {
             captureIndex: "",

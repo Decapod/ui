@@ -499,17 +499,17 @@ var decapod = decapod || {};
             downloadFrame: ".dc-capturer-download-frame"
         },
         strings: {
-            title: "Capture",
-            help: "Help",
-            restart: "Restart",
-            exportButton: "Download Captures",
-            exportInProgress: "Creating archive...",
-            captureInProgress: "Taking picture...",
-            loadMessage: "Checking cameras..."
+            title: decapod.globalMessages.capturer_title,
+            help: decapod.globalMessages.capturer_help,
+            restart: decapod.globalMessages.capturer_restart,
+            exportButton: decapod.globalMessages.capturer_exportButton,
+            exportInProgress: decapod.globalMessages.capturer_exportInProgress,
+            captureInProgress: decapod.globalMessages.capturer_captureInProgress,
+            loadMessage: decapod.globalMessages.capturer_loadMessage
         },
         markup: {
-            captureButton: "Capture<br /><span>(Keyboard shortcut: c)</span>",
-            exportDesc: "If capturing with Stereo 3D, run Decapod Stereo 3D Calibration before dewarping images. <br /><br />See <a href='help.html'>Help</a> or Decapod documentation for details."
+            captureButton: decapod.globalMessages.capturer_markup_captureButton,
+            exportDesc: decapod.globalMessages.capturer_markup_exportDesc
         },
         events: {
             onRestart: null,
