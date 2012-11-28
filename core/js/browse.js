@@ -156,7 +156,15 @@ var decapod = decapod || {};
         gradeNames: ["autoInit", "decapod.stereo.browse"],
         strings: {
             browseMessage: "{decapod.stereo}.options.strings.step3",
-            browse: "{decapod.stereo}.options.strings.colourPicker"
+            browse: "{decapod.stereo}.options.strings.colourPicker",
+            instructions: "{decapod.stereo}.options.strings.instructions",
+            instructionsStep1: "{decapod.stereo}.options.strings.instructionsStep1",
+            instructionsStep2: "{decapod.stereo}.options.strings.instructionsStep2"
+        },
+        selectors: {
+            instructions: ".dc-colorPicker-instructions",
+            instructionsStep1: ".dc-colorPicker-instructionsStep1",
+            instructionsStep2: ".dc-colorPicker-instructionsStep2"
         },
         selectorsToIgnore: ["browseLabel", "browseInput"],
         styles: {
@@ -183,6 +191,15 @@ var decapod = decapod || {};
         disabledOnInit: true,
         url: "{decapod.stereo}.options.urls.colourPicker",
         protoTree: {
+            instructions: {
+                messagekey: "instructions"
+            },
+            instructionsStep1: {
+                messagekey: "instructionsStep1"
+            },
+            instructionsStep2: {
+                messagekey: "instructionsStep2"
+            },
             button: {
                 messagekey: "browse",
                 decorators: [{
