@@ -407,9 +407,6 @@ var decapod = decapod || {};
                 container: "{pdfExporter}.dom.pdfExportOptions",
                 createOnEvent: "afterFetchResources",
                 options: {
-                    // strings: {
-                        // outputLabel: "{pdfExporter}.options.strings.documentResolutionLabel",
-                    // },
                     model: "{pdfExporter}.model.exportOptions",
                     resources: {
                         template: "{pdfExporter}.options.resources.pdfExportOptions",

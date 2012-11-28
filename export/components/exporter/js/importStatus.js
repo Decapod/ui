@@ -153,8 +153,7 @@ var decapod = decapod || {};
         },
         ignoreFromTotals: [],
         strings: {
-            "total": "%totalNumFiles files found."
-            // error messages use %errorName and %numErrors for the template
+            "total": decapod.globalMessages.exporter_importStatus_total
         }
     });
     
