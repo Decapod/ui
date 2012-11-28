@@ -109,7 +109,7 @@ var decapod = decapod || {};
         finalInitFunction: "decapod.status.finalInit",
         produceTree: "decapod.status.produceTree",
         strings: {
-            refresh: "Refresh"
+            refresh: decapod.globalMessages.core_status
         },
         selectors: {
             name: ".dc-status-name",
