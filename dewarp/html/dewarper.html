@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Decapod Stereo 3D Dewarp</title>
+        
+        <link rel="stylesheet" type="text/css" href="../../lib/infusion/framework/fss/css/fss-reset-global.css" />
+        <link rel="stylesheet" type="text/css" href="../../core/styles/css/decapod.css" />
+        <link rel="stylesheet" type="text/css" href="../../core/styles/css/stereo.css" />
+
+        <!-- Required JavaScript modules for the Exporter component. -->
+        <script type="text/javascript" src="../../lib/infusion/MyInfusion.js"></script>
+        <script type="text/javascript" src="../../core/js/decapodContext.js"></script>
+        <script type="text/javascript" src="../../core/js/decapodRequestsDemands.js"></script>
+        <script type="text/javascript" src="../../core/js/decapodRequests.js"></script>
+        <script type="text/javascript" src="../../core/js/eventBinder.js"></script> 
+        <script type="text/javascript" src="../../core/js/statusDemands.js"></script>
+        <script type="text/javascript" src="../../core/js/status.js"></script>
+        <script type="text/javascript" src="../../core/js/buttonDemands.js"></script>
+        <script type="text/javascript" src="../../core/js/button.js"></script>
+        <script type="text/javascript" src="../../core/js/stereoDemands.js"></script>
+        <script type="text/javascript" src="../../core/js/stereo.js"></script>
+        <script type="text/javascript" src="../../core/js/message.js"></script>
+        <script type="text/javascript" src="../../core/js/browse.js"></script>
+        <script type="text/javascript" src="../../core/js/browseDemands.js"></script>
+    </head>
+    
+    <body class="ds-dewarp">        
+        <section class="ds-shared-decapod">
+            
+            <!-- TITLE BAR -->
+            <header class="ds-shared-titleBar">
+                <ul class="ds-shared-titleBar-flatList">
+                    <li><p>Decapod 0.7</p></li>
+                </ul>
+            </header>
+
+            <!-- DECAPOD CALIBRATE INTERFACE -->
+            <section class="dc-stereo ds-shared-mainPane">
+            </section>
+
+            <!-- FOOTER -->
+            <footer>
+            </footer>
+        </section>
+        <script>
+            decapod.dewarper(".dc-stereo", {
+                events: {
+                    onCapturesFileSelected: null,
+                    onCapturesUploadStart: null,
+                    onCapturesUploadSuccess: null,
+                    onCapturesUploadError: null,
+
+                    onCalibrationFileSelected: null,
+                    onCalibrationUploadStart: null,
+                    onCalibrationSuccess: null,
+                    onCalibrationError: null,
+
+                    onColourPickerStart: null,
+                    onColourPickerSuccess: null,
+                    onColourPickerError: null
+                },
+                listeners: {
+                    onCapturesUploadStart: {
+                        listener: "{that}.events.statusUpdated.fire",
+                        args: ["{that}.options.statuses.working"]
+                    },
+                    onCapturesUploadSuccess: {
+                        listener: "{that}.events.statusUpdated.fire",
+                        args: ["{that}.options.statuses.uploadCapturesSuccess", "{arguments}.0"]
+                    },
+                    onCapturesUploadError: {
+                        listener: "{that}.events.statusUpdated.fire"
+                    },
+                    onCalibrationUploadStart: {
+                        listener: "{that}.events.statusUpdated.fire",
+                        args: ["{that}.options.statuses.working"]
+                    },
+                    onCalibrationSuccess: {
+                        listener: "{that}.events.statusUpdated.fire",
+                        args: ["{that}.options.statuses.uploadCalibrationSuccess", "{arguments}.0"]
+                    },
+                    onCalibrationError: {
+                        listener: "{that}.events.statusUpdated.fire"
+                    },
+                    onColourPickerStart: {
+                        listener: "{that}.events.statusUpdated.fire",
+                        args: ["{that}.options.statuses.working"]
+                    },
+                    onColourPickerSuccess: {
+                        listener: "{that}.events.statusUpdated.fire",
+                        args: ["{that}.options.statuses.colourPickerSuccess", "{arguments}.0"]
+                    },
+                    onColourPickerError: {
+                        listener: "{that}.events.statusUpdated.fire"
+                    }
+                },
+                selectors: {
+                    browseCalibration: ".dc-stereo-browseCalibration",
+                    colourPicker: ".dc-stereo-colourPicker"
+                },
+                protoTree: {
+                    title: {
+                        messagekey: "title"
+                    },
+                    help: {
+                        target: "${help}",
+                        linktext: {
+                            messagekey: "help"
+                        }
+                    },
+                    browse: {
+                        decorators: {
+                            type: "fluid",
+                            func: "decapod.stereo.browse.captures"
+                        }
+                    },
+                    browseCalibration: {
+                        decorators: {
+                            type: "fluid",
+                            func: "decapod.stereo.browse.calibration"
+                        }
+                    },
+                    colourPicker: {
+                        decorators: {
+                            type: "fluid",
+                            func: "decapod.stereo.browse.colourPicker"
+                        }
+                    }
+                },
+                strings: {
+                    title: "Stereo 3D Dewarp",
+                    start: "Dewarp",
+                    ready: "%captures captures found.",
+                    calibrationReady: "Calibration information found.",
+                    readyToDewarp: "Ready to dewarp.",
+                    complete: "Dewarping complete.",
+                    progress: "Dewarping catpure %value of %max.",
+                    colourPicker: "Pick Colour",
+                    step1: "Step 1: Choose Stereo 3D Captures",
+                    step2: "Step 2: Choose Stereo 3D Calibration Information",
+                    step3: "Step 3: Select boundary colour",
+                    instructions: "Instructions - The colour picker expects 2 mouse clicks:",
+                    instructionsStep1: "First mouse click chooses the page seperator colour.",
+                    instructionsStep2: "Second mouse click chooses the background colour."
+                },
+                urls: {
+                    uploadCaptures: "../../captures",
+                    uploadCalibration: "../../calibration",
+                    colourPicker: "../../colourPicker",
+                    process: "../../dewarpedArchive",
+                    startOver: "dewarper.html"
+                },
+                statuses: {
+                    uploadCapturesSuccess: "CAPTURES_FOUND",
+                    uploadCalibrationSuccess: "CALIBRATION_READY",
+                    colourPickerSuccess: "READY_TO_DEWARP",
+                    processing: "DEWARPING"
+                }
+            });
+        </script>
+    </body>
+</html>
