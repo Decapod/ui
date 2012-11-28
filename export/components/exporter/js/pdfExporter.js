@@ -232,9 +232,7 @@ var decapod = decapod || {};
         strings: {
             name: "Format type label",
             description: "A delectable medley of bits and bytes to satisfy every platform",
-            documentResolutionLabel: "Output Image resolution:",
-            documentDimensionsLabel: "Output dimensions:",
-            documentDimensions: "A4(210 x 297mm / 8.3 x 11.7in.)",
+            documentResolutionLabel: "Output:",
             exportControl: "Start Export",
             initialProgressMessage: "Creating export...",
             inProgressMessage: "Creating export... Step %step of %steps.",
@@ -413,9 +411,7 @@ var decapod = decapod || {};
                 createOnEvent: "afterFetchResources",
                 options: {
                     strings: {
-                        documentResolutionLabel: "{pdfExporter}.options.strings.documentResolutionLabel",
-                        documentDimensionsLabel: "{pdfExporter}.options.strings.documentDimensionsLabel",
-                        documentDimensions: "{pdfExporter}.options.strings.documentDimensions"
+                        outputLabel: "{pdfExporter}.options.strings.documentResolutionLabel",
                     },
                     model: "{pdfExporter}.model.exportOptions",
                     resources: {

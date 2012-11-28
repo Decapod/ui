@@ -230,6 +230,19 @@ var decapod = decapod || {};
             help: "Help",
             pageUnloadWarning: "Leaving the page could result in loss of export data.",
             formats: "Select Export Option",
+            uploader: {
+                buttons: {
+                    addMore: "Browse Files"
+                }
+            },
+            uploadStatusMessages: {
+                "total": "%totalNumFiles files found.",
+                "-100": "%numErrors files exceeded the queue limit",
+                "-110": "%numErrors files exceeded the size limit",
+                "-120": "%numErrors files were empty (0 bytes)",
+                "-130": "%numErrors files had an invalid file type",
+                "-250": "%numErrors files were ignored by the server. May have not been valid image type."
+            },
             pdfs: {
                 name: "PDF",
                 formatStrings: [
@@ -319,13 +332,7 @@ var decapod = decapod || {};
                 type: "decapod.importStatus",
                 container: "{exporter}.dom.importStatusContainer",
                 options: {
-                    strings: {
-                        "-100": "%numErrors files exceeded the queue limit",
-                        "-110": "%numErrors files exceeded the size limit",
-                        "-120": "%numErrors files were empty (0 bytes)",
-                        "-130": "%numErrors files had an invalid file type",
-                        "-250": "%numErrors files were ignored by the server. May have not been valid image type."
-                    },
+                    strings: "{exporter}.options.strings.uploadStatusMessages",
                     ignoreFromTotals: ["-200", "-210", "-220", "-230", "-240", "-250", "-260", "-270", "-280", "-290"]
                 }
             },
@@ -354,11 +361,7 @@ var decapod = decapod || {};
                         browseButton: "{exporter}.options.selectors.uploadBrowse",
                         lastMultifileInput: ".flc-uploader-html5-input:visible"
                     },
-                    strings: {
-                        buttons: {
-                            addMore: "Browse Files"
-                        }
-                    },
+                    strings: "{exporter}.options.strings.uploader",
                     focusWithEvent: {
                         afterFileDialog: "lastMultifileInput"
                     },
