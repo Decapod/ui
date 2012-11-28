@@ -224,41 +224,14 @@ var decapod = decapod || {};
             accordionContainer: ".dc-exporter-accordion"
         },
         strings: {
-            title: "PDF and Image Export",
-            instructions: "Select 'Browse Files' to choose images to export.",
-            uploadClear: "Restart",
-            help: "Help",
-            pageUnloadWarning: "Leaving the page could result in loss of export data.",
-            formats: "Select Export Option",
-            uploader: {
-                buttons: {
-                    addMore: "Browse Files"
-                }
-            },
-            uploadStatusMessages: {
-                "total": "%totalNumFiles files found.",
-                "-100": "%numErrors files exceeded the queue limit",
-                "-110": "%numErrors files exceeded the size limit",
-                "-120": "%numErrors files were empty (0 bytes)",
-                "-130": "%numErrors files had an invalid file type",
-                "-250": "%numErrors files were ignored by the server. May have not been valid image type."
-            },
-            pdfs: {
-                name: "PDF",
-                formatStrings: [
-                    {name: "1. Image PDF", description: "Export each image as a page in a PDF document. Export process is quick and generates a basic PDF."},
-                    {name: "2. Image PDF with OCR Text", description: "OCR is performed on images, and resulting text is embedded in the PDF."},
-                    {name: "3. Computer Traced PDF with OCR Text", description: "Content of each image is traced by the computer, OCR'ed, and output to a PDF. The process takes longer, but results is a much smaller PDF."},
-                    {name: "4. Font Matched PDF with OCR Text", description: "Text on image is matched to a True-Type font resulting in a very compact PDF. Works best with Latin script."}
-                ]
-            },
-            images: {
-                name: "Image",
-                formatStrings: [
-                    {name: "5. TIFF", description: ""},
-                    {name: "6. PNG", description: ""}
-                ]
-            }
+            title: decapod.globalMessages.exporter_title,
+            instructions: decapod.globalMessages.exporter_instructions,
+            uploadClear: decapod.globalMessages.exporter_uploadClear,
+            help: decapod.globalMessages.exporter_help,
+            pageUnloadWarning: decapod.globalMessages.exporter_pageUnloadWarning,
+            formats: decapod.globalMessages.exporter_formats,
+            pdfsName: decapod.globalMessages.exporter_pdfFormat_name,
+            imagesName: decapod.globalMessages.exporter_imageFormat_name
         },
         styles: {
             busy: "ds-shared-busy"
@@ -332,7 +305,14 @@ var decapod = decapod || {};
                 type: "decapod.importStatus",
                 container: "{exporter}.dom.importStatusContainer",
                 options: {
-                    strings: "{exporter}.options.strings.uploadStatusMessages",
+                    strings: {
+                    	"total": decapod.globalMessages.exporter_importStatus_total,
+                	    "-100": decapod.globalMessages.exporter_importStatus_100,
+						"-110": decapod.globalMessages.exporter_importStatus_110,
+						"-120": decapod.globalMessages.exporter_importStatus_120,
+					    "-130": decapod.globalMessages.exporter_importStatus_130,
+					    "-250": decapod.globalMessages.exporter_importStatus_250,
+                    },
                     ignoreFromTotals: ["-200", "-210", "-220", "-230", "-240", "-250", "-260", "-270", "-280", "-290"]
                 }
             },
@@ -361,7 +341,11 @@ var decapod = decapod || {};
                         browseButton: "{exporter}.options.selectors.uploadBrowse",
                         lastMultifileInput: ".flc-uploader-html5-input:visible"
                     },
-                    strings: "{exporter}.options.strings.uploader",
+                    strings: {
+						buttons: {
+		                    addMore: decapod.globalMessages.exporter_uploader_browseFiles
+		                }
+	                },
                     focusWithEvent: {
                         afterFileDialog: "lastMultifileInput"
                     },
@@ -435,7 +419,7 @@ var decapod = decapod || {};
                 container: "{exporter}.dom.pdfs",
                 options: {
                     strings: {
-                        name: "{exporter}.options.strings.pdfs.name"
+                        name: "{exporter}.options.strings.pdfsName"
                     },
                     listeners: {
                         "afterRender.exporter": "{exporter}.events.afterPDFExportersRendered"
@@ -450,7 +434,7 @@ var decapod = decapod || {};
                 container: "{exporter}.dom.images",
                 options: {
                     strings: {
-                        name: "{exporter}.options.strings.images.name"
+                        name: "{exporter}.options.strings.imagesName"
                     },
                     listeners: {
                         "afterRender.exporter": "{exporter}.events.afterImageExportersRendered"

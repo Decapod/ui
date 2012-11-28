@@ -46,12 +46,8 @@ var decapod = decapod || {};
             controls: ".dc-imageExporter-controls"
         },
         strings: {
-            name: "Format type label",
-            discription: "",
-            exportControl: "Start Export",
-            progressMessage: "Creating export",
-            download: "Download",  
-            restart: "Start Over"
+            name: "",
+            discription: ""
         },
         events: {
             afterFetchResources: null,
@@ -160,12 +156,6 @@ var decapod = decapod || {};
                 container: "{imageExporter}.dom.controls",
                 createOnEvent: "afterFetchResources",
                 options: {
-                    strings: {
-                        trigger: "{imageExporter}.options.strings.exportControl",
-                        progressMessage: "{imageExporter}.options.strings.progressMessage",
-                        download: "{imageExporter}.options.strings.download",
-                        restart: "{imageExporter}.options.strings.restart"
-                    },
                     resources: {
                         controls: "{imageExporter}.options.resources.controls",
                         trigger: "{imageExporter}.options.resources.trigger",

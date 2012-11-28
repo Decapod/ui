@@ -62,7 +62,7 @@ var decapod = decapod || {};
     decapod.select.produceTree = function (that) {
         return {
             label: {
-                messagekey: "label"
+                messagekey: "exporter_select_label"
             },
             choices: {
                 "selection": "${selection}",
@@ -110,13 +110,13 @@ var decapod = decapod || {};
         gradeNames: ["fluid.rendererComponent", "autoInit"],
         preInitFunction: "decapod.select.preInit",
         finalInitFunction: "decapod.select.finalInit",
+        parentBundle: "{globalBundle}",
         produceTree: "decapod.select.produceTree",
         selectors: {
             label: ".dc-select-label",
             choices: ".dc-select-choices"
         },
         strings: {
-            label: ""
         },
         model: {}, // in the form {selection: "", choices: [], names: []}
         events: {
