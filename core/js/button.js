@@ -84,7 +84,7 @@ var decapod = decapod || {};
         });
         button.fluid("activatable", function (evt) {
             if (that.options.preventDefault) {
-                event.preventDefault();
+                evt.preventDefault();
             }
             button.click();
         });
