@@ -27,15 +27,15 @@
 
             <p>To perform calibration, a checkerboard pattern is held in full view of both cameras and pictures are taken. Between taking each pair of photos, the checkerboard is tilted differently or its position changed before another photo is taken.</p>
 
-            <p>A total of 23 pairs of photos are taken during this process.</p>
+            <p>A minimum of 23 pairs of photos are taken during this process.</p>
 
-            <p>Once 23 pairs are ready, they are processed through the Stereo 3D Calibration tool. The Stereo 3D Calibration tool generates a  file containing the calibration information, which is then saved to a user-specified location.</p>
+            <p>Once the image pairs are ready, they are processed through the Stereo 3D Calibration tool. The Stereo 3D Calibration tool generates a  file containing the calibration information, which is then saved to a user-specified location.</p>
 
             <ol>
-                <li> Take 23 pairs of photos of the checkerboard pattern in different positions and orientations. For more detailed instructions, refer to the "How to Capture Calibration Photos" section in this document.</li>
-                <li> Create a ZIP file containing all 23 image pairs (46 images total).</li>
+                <li> Take at least 23 pairs of photos of the checkerboard pattern in different positions and orientations. For more detailed instructions, refer to the "How to Capture Calibration Photos" section in this document.</li>
+                <li> Create a ZIP file containing all calibration image pairs (at least 23 pairs / 46 images total).</li>
                 <li> Launch Firefox and load the Stereo 3D Calibration tool by entering the server’s address in the location bar. By default the address is: <a href="http://localhost:8080/"><code>http://localhost:8080/</code></a>.</li>
-                <li> Add the ZIP file containing the 23 image pairs (created in Step 2 above) and select “Calibrate” to begin the calibration process.<p class="note"><em>Note:</em><br />
+                <li> Add the ZIP file containing the image pairs (created in Step 2 above) and select “Calibrate” to begin the calibration process.<p class="note"><em>Note:</em><br />
                 Calibration may take up to 2 hours to complete with high resolution images.</p></li>
                 <li> When calibration is complete, save the file <code>calibration.zip</code> to a location when prompted.</li>
             </ol>
@@ -50,18 +50,12 @@
 
             <p>Once the equipment is in place, take 23 pairs of photos of the checkerboard. The checkerboard can be positioned in any way in front of the cameras as long as the following requirements are satisfied:</p>
 
-            <ul>
-                <li> the checkerboard is fully visible from both cameras.</li>
-                <li> the cameras do not get bumped or changed.</li>
-            </ul>
-
-            <h3>Capture procedure:</h3>
             <ol>
-                <li> Position checkerboard in front of cameras, and ensure checkerboard is visible from both cameras. If checkerboard is not completely visible, then adjust the cameras higher, or place the subject lower.</li>
-                <li> Take test captures to ensure proper positioning. These test captures should be deleted and not be included in the final set of 23 pairs of images.</li>
+                <li> Position checkerboard in front of cameras, and <em>ensure checkerboard is visible from both cameras</em>. If checkerboard is not completely visible, then adjust the cameras higher, or place the subject lower.</li>
+                <li> Take test captures to ensure proper positioning. These test captures should be deleted and not be included in the final set of calibration images.</li>
                 <li> While holding the checkerboard still, take a picture with both cameras. The Decapod capture tool can be helpful in this situation as it can take pictures from both cameras simultaneously.</li>
                 <li> Change the tilt / position / orientation of the checkerboard while ensuring it is viewable by both cameras.</li>
-                <li> Repeat Steps 3 to 4 until 23 pairs of photos are taken.</li>
+                <li> Repeat Steps 3 to 4 until at least 23 pairs of photos are taken.</li>
             </ol>
 
             <p class="note"><em>Note:</em><br />
@@ -70,24 +64,30 @@
             <p>For additional examples and instruction of how to do this calibration, please visit the Decapod wiki: <a href="http://wiki.fluidproject.org/display/fluid/Decapod">http://wiki.fluidproject.org/display/fluid/Decapod</a>
             </p>
 
-            <h2>Calibration Image File Names</h2>
+            <h2>Calibration Image File Names (Applies to Untethered Capture Only)</h2>
 
             <p class="note"><em>Note:</em><br />
             The calibration image filenames should follow an expected format, otherwise the Stereo 3D Calibration will not work.</p>
 
-            <p>Stereo 3D Calibration expected 23 image pairs that follow this filename format: <code>capture-[capture #]-[camera #].[extension]</code>. Decapod supports dewarping of TIFF, PNG, and JPEG files.</p>
+            <p>Stereo 3D Calibration expects at least 23 image pairs that follow this filename format: <code>capture-[capture #]-[camera #].[extension]</code>. Decapod supports dewarping of TIFF, PNG, and JPEG files.</p>
                 
-            <p><em>Example 1:</em> <code>capture-01-1.jpg, capture-01-2.jpg, capture-02-1.jpg, capture-02-2.jpg ...</code></p>
-            <p>In this example, images with "<code>XXXXX-01-XX.jpg</code>" are a matching stereo pair - left and right photos of the same checkerboard pattern position. 
-            Images ending with "<code>XXXXX-XXX-1.jpg</code> are photos taken with the left camera, and "<code>XXXXX-XXX-2.jpg</code>" are photos taken with right camera. </p> 
-
-
-            <p><em>Example 2:</em> <code>capture-01-0.png, capture-01-1.png,capture-02-0.png, capture-02-1.png ...</code></p>
-            <p>Similar to Example 1, but with slightly different file name pattern and different file format. The camera numbers can be any number as long as the numbers identifying the left and right cameras are consistent for all 23 image pairs.</p> 
+            <p><em>Example:</em></p>
+            <ul>
+            <li> capture-01-1.jpg (left image first)</li>
+            <li> capture-01-2.jpg (right image)</li>
+            <li> capture-02-1.jpg</li>
+            <li> capture-02-2.jpg</li>
+            <li> ... </li>
+            <li> capture-23-1.jpg (left image first)</li>
+            <li> capture-23-2.jpg (right image)</li>
             </ul>
 
+            <p>In this example, images are grouped in pairs. In each pair there is a left and right image as indicated by "-1" and "-2" respectively.</p>
 
-            <h2>Using Decapod’s Capture Tool to do Calibration</h2>
+            <p class="note"><em>Note:</em><br />
+	        The left image should always come before the right image in a pair (like in the above example). Reversing this order will cause calibration to give inaccurate results.</p>
+
+            <h2>Using Decapod’s Capture Tool to do Calibration (Applies to Tethered Capture Only)</h2>
             <p>Decapod’s Capture application can make the calibration process easier by:
             <ul>
                 <li> taking photos simultaneously from both cameras which can be faster than triggering the cameras manually.</li>

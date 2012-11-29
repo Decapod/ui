@@ -37,7 +37,7 @@ var decapod = decapod || {};
     // assertions
     decapod.testUtils.exportType.assertSelectRender = function (that) {
         var selected = $(":selected", that.locate("choices"));
-        jqUnit.assertEquals("The text for the label should be set", that.options.strings.label, that.locate("label").text());
+        jqUnit.assertEquals("The text for the label should be set", decapod.globalMessages.exporter_select_label, that.locate("label").text());
         $("option", that.locate("choices")).each(function (idx, elm) {
             var opt = $(elm);
             jqUnit.assertEquals("The text for the " + idx + " option should be set", that.model.names[idx], opt.text());

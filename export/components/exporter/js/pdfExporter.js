@@ -125,8 +125,8 @@ var decapod = decapod || {};
                                     model : {
                                         currentStatus : "EXPORT_ERROR",
                                         "EXPORT_ERROR" : {
-                                            name : "Error creating export",
-                                            description : "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
+                                            name : decapod.globalMessages.exporter_pdfExportStatus_exportError_name,
+                                            description : decapod.globalMessages.exporter_pdfExportStatus_exportError_description,
                                             style : "ds-exporter-status-error"
                                         }
                                     }
@@ -147,8 +147,8 @@ var decapod = decapod || {};
                                     model : {
                                         currentStatus : "FILES_IGNORED",
                                         "FILES_IGNORED": {
-                                            name : "Some files were ignored",
-                                            description : "They may not have been valid image files.",
+                                            name : decapod.globalMessages.exporter_pdfExportStatus_filesIgnored_name,
+                                            description : decapod.globalMessages.exporter_pdfExportStatus_filesIgnored_description,
                                             style : "ds-exporter-status-error"
                                         }
                                     }
@@ -230,18 +230,8 @@ var decapod = decapod || {};
             controls: ".dc-pdfExporter-controls"
         },
         strings: {
-            name: "Format type label",
-            description: "A delectable medley of bits and bytes to satisfy every platform",
-            documentResolutionLabel: "Output Image resolution:",
-            documentDimensionsLabel: "Output dimensions:",
-            documentDimensions: "A4(210 x 297mm / 8.3 x 11.7in.)",
-            exportControl: "Start Export",
-            initialProgressMessage: "Creating export...",
-            inProgressMessage: "Creating export... Step %step of %steps.",
-            completeProgressMessage: "Creating export... Done!",
-            warning: "Note: Refreshing the browser will cancel the export.",
-            download: "Download PDF",  
-            restart: "Start Over"
+            name: "",
+            description: ""
         },
         events: {
             afterFetchResources: null,
@@ -286,7 +276,12 @@ var decapod = decapod || {};
         model: {
             exportStages: [],
             exportOptions: {
-                output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]},
+                output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: [
+                	decapod.globalMessages.exporter_pdf_outputSettings_a4,
+					decapod.globalMessages.exporter_pdf_outputSettings_a5,
+					decapod.globalMessages.exporter_pdf_outputSettings_letter,
+					decapod.globalMessages.exporter_pdf_outputSettings_custom
+            	]},
                 outputSettings: {
                     settings: [
                         {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},
@@ -412,11 +407,6 @@ var decapod = decapod || {};
                 container: "{pdfExporter}.dom.pdfExportOptions",
                 createOnEvent: "afterFetchResources",
                 options: {
-                    strings: {
-                        documentResolutionLabel: "{pdfExporter}.options.strings.documentResolutionLabel",
-                        documentDimensionsLabel: "{pdfExporter}.options.strings.documentDimensionsLabel",
-                        documentDimensions: "{pdfExporter}.options.strings.documentDimensions"
-                    },
                     model: "{pdfExporter}.model.exportOptions",
                     resources: {
                         template: "{pdfExporter}.options.resources.pdfExportOptions",
@@ -448,12 +438,6 @@ var decapod = decapod || {};
                 createOnEvent: "onExportOptionsReady",
                 options: {
                     produceTree: "decapod.pdfExporter.exportControlsProduceTree",
-                    strings: {
-                        trigger: "{pdfExporter}.options.strings.exportControl",
-                        progressMessage: "{pdfExporter}.options.strings.progressMessage",
-                        download: "{pdfExporter}.options.strings.download",
-                        restart: "{pdfExporter}.options.strings.restart"
-                    },
                     resources: {
                         controls: "{pdfExporter}.options.resources.controls",
                         trigger: "{pdfExporter}.options.resources.trigger",

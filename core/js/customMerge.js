@@ -77,8 +77,11 @@ var decapod = decapod || {};
      */
     fluid.defaults("decapod.rendererComponentCustomMerge", {
         gradeNames: ["fluid.rendererComponent"],
+        parentBundle: "{globalBundle}",
         mergePolicy: {
             model: decapod.customMerge.extend
+        },
+        strings: {
         }
     });
 })(jQuery);
