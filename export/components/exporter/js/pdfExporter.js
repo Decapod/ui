@@ -114,20 +114,20 @@ var decapod = decapod || {};
                     }
                 }, 
                 {
-                    type : "fluid.renderer.condition",
-                    condition : that.model.showExportError,
-                    trueTree : {
-                        exportError : {
-                            decorators : {
-                                type : "fluid",
-                                func : "decapod.status",
-                                options : {
-                                    model : {
-                                        currentStatus : "EXPORT_ERROR",
-                                        "EXPORT_ERROR" : {
-                                            name : decapod.globalMessages.exporter_pdfExportStatus_exportError_name,
-                                            description : decapod.globalMessages.exporter_pdfExportStatus_exportError_description,
-                                            style : "ds-exporter-status-error"
+                    type: "fluid.renderer.condition",
+                    condition: that.model.showExportError,
+                    trueTree: {
+                        exportError: {
+                            decorators: {
+                                type: "fluid",
+                                func: "decapod.status",
+                                options: {
+                                    model: {
+                                        currentStatus: "EXPORT_ERROR",
+                                        "EXPORT_ERROR": {
+                                            name: decapod.globalMessages.exporter_pdfExportStatus_exportError_name,
+                                            description: decapod.globalMessages.exporter_pdfExportStatus_exportError_description,
+                                            style: "ds-exporter-status-error"
                                         }
                                     }
                                 }
@@ -136,20 +136,20 @@ var decapod = decapod || {};
                     }
                 }, 
                 {
-                    type : "fluid.renderer.condition",
-                    condition : that.model.showFileError,
-                    trueTree : {
-                        fileError : {
-                            decorators : {
-                                type : "fluid",
-                                func : "decapod.status",
-                                options : {
-                                    model : {
-                                        currentStatus : "FILES_IGNORED",
+                    type: "fluid.renderer.condition",
+                    condition: that.model.showFileError,
+                    trueTree: {
+                        fileError: {
+                            decorators: {
+                                type: "fluid",
+                                func: "decapod.status",
+                                options: {
+                                    model: {
+                                        currentStatus: "FILES_IGNORED",
                                         "FILES_IGNORED": {
-                                            name : decapod.globalMessages.exporter_pdfExportStatus_filesIgnored_name,
-                                            description : decapod.globalMessages.exporter_pdfExportStatus_filesIgnored_description,
-                                            style : "ds-exporter-status-error"
+                                            name: decapod.globalMessages.exporter_pdfExportStatus_filesIgnored_name,
+                                            description: decapod.globalMessages.exporter_pdfExportStatus_filesIgnored_description,
+                                            style: "ds-exporter-status-error"
                                         }
                                     }
                                 }
@@ -277,11 +277,11 @@ var decapod = decapod || {};
             exportStages: [],
             exportOptions: {
                 output: {selection: "a4", choices: ["a4", "a5", "letter", "custom"], names: [
-                	decapod.globalMessages.exporter_pdf_outputSettings_a4,
-					decapod.globalMessages.exporter_pdf_outputSettings_a5,
-					decapod.globalMessages.exporter_pdf_outputSettings_letter,
-					decapod.globalMessages.exporter_pdf_outputSettings_custom
-            	]},
+                    decapod.globalMessages.exporter_pdf_outputSettings_a4,
+                    decapod.globalMessages.exporter_pdf_outputSettings_a5,
+                    decapod.globalMessages.exporter_pdf_outputSettings_letter,
+                    decapod.globalMessages.exporter_pdf_outputSettings_custom
+                ]},
                 outputSettings: {
                     settings: [
                         {value: "210", name: "width", unit: "mm", attrs: {type: "number", min: "1", max: "300"}},

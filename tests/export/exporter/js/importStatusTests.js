@@ -360,8 +360,8 @@ var decapod = decapod || {};
                 }
             };
             var assertOnCreate = function (that) {
-                    jqUnit.assertEquals("The container should have a role of status", "status", that.container.attr("role"));
-                    start();
+                jqUnit.assertEquals("The container should have a role of status", "status", that.container.attr("role"));
+                start();
             };
             decapod.importStatus.renderer(RENDER_CONTAINER, {
                 model: {

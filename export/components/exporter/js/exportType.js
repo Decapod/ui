@@ -95,39 +95,39 @@ var decapod = decapod || {};
     };
 
     fluid.defaults("decapod.exportPoller", {
-        gradeNames : ["fluid.eventedComponent", "autoInit"],
-        preInitFunction : "decapod.exportPoller.preInit",
-        finalInitFunction : "decapod.exportPoller.finalInit",
-        invokers : {
-            poll : "decapod.exportPoller.poll",
-            isComplete : "decapod.exportPoller.isComplete",
-            isError : "decapod.exportPoller.isError",
-            handleResponse : "decapod.exportPoller.handleResponse"
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        preInitFunction: "decapod.exportPoller.preInit",
+        finalInitFunction: "decapod.exportPoller.finalInit",
+        invokers: {
+            poll: "decapod.exportPoller.poll",
+            isComplete: "decapod.exportPoller.isComplete",
+            isError: "decapod.exportPoller.isError",
+            handleResponse: "decapod.exportPoller.handleResponse"
         },
-        events : {
-            afterPoll : null,
-            onPoll : null,
-            onReady : null,
-            onError : null,
-            pollComplete : null
+        events: {
+            afterPoll: null,
+            onPoll: null,
+            onReady: null,
+            onError: null,
+            pollComplete: null
         },
-        delay : 5000,
-        components : {
-            eventBinder : {
-                type : "decapod.exportPoller.eventBinder",
-                priority : "last",
-                options : {
-                    listeners : {
-                        "{exportPoller}.events.onPoll" : "{dataSource}.get"
+        delay: 5000,
+        components: {
+            eventBinder: {
+                type: "decapod.exportPoller.eventBinder",
+                priority: "last",
+                options: {
+                    listeners: {
+                        "{exportPoller}.events.onPoll": "{dataSource}.get"
                     }
                 }
             },
-            dataSource : {
-                type : "decapod.dataSource",
-                priority : "first",
-                options : {
-                    listeners : {
-                        "success.handler" : "{exportPoller}.handleResponse"
+            dataSource: {
+                type: "decapod.dataSource",
+                priority: "first",
+                options: {
+                    listeners: {
+                        "success.handler": "{exportPoller}.handleResponse"
                     }
                 }
             }
@@ -142,11 +142,11 @@ var decapod = decapod || {};
 
     decapod.exportInfo.produceTree = function (that) {
         return {
-            name : {
-                messagekey : "name"
+            name: {
+                messagekey: "name"
             },
-            description : {
-                messagekey : "description"
+            description: {
+                messagekey: "description"
             }
         };
     };
@@ -166,21 +166,21 @@ var decapod = decapod || {};
      * This includes the name and description.
      */
     fluid.defaults("decapod.exportInfo", {
-        gradeNames : ["decapod.rendererComponentCustomMerge", "autoInit"],
-        finalInitFunction : "decapod.exportInfo.finalInit",
-        produceTree : "decapod.exportInfo.produceTree",
-        selectors : {
-            name : ".dc-exportInfo-name",
-            description : ".dc-exportInfo-description"
+        gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
+        finalInitFunction: "decapod.exportInfo.finalInit",
+        produceTree: "decapod.exportInfo.produceTree",
+        selectors: {
+            name: ".dc-exportInfo-name",
+            description: ".dc-exportInfo-description"
         },
-        events : {
-            afterFetchResources : null,
-            onReady : null
+        events: {
+            afterFetchResources: null,
+            onReady: null
         },
-        resources : {
-            template : {
-                url : "../html/exportInfoTemplate.html",
-                forceCache : true
+        resources: {
+            template: {
+                url: "../html/exportInfoTemplate.html",
+                forceCache: true
             }
         }
     });
@@ -285,7 +285,7 @@ var decapod = decapod || {};
     decapod.pdfExportOptions.finalInit = function (that) {
         // creates a property called isValid. Doesn't work for <IE9.
         Object.defineProperty(that, "isValid", {
-            get : that.isValidImp
+            get: that.isValidImp
         });
 
         that.applier.modelChanged.addListener("*", function (newModel, oldModel) {
@@ -299,103 +299,103 @@ var decapod = decapod || {};
     };
 
     fluid.defaults("decapod.pdfExportOptions", {
-        gradeNames : ["decapod.viewComponentCustomMerge", "autoInit"],
-        preInitFunction : "decapod.pdfExportOptions.preInit",
-        finalInitFunction : "decapod.pdfExportOptions.finalInit",
-        produceTree : "decapod.pdfExportOptions.produceTree",
-        selectors : {
-            output : ".dc-pdfExportOptions-output",
-            outputSettings : ".dc-pdfExportOptions-outputSettings"
+        gradeNames: ["decapod.viewComponentCustomMerge", "autoInit"],
+        preInitFunction: "decapod.pdfExportOptions.preInit",
+        finalInitFunction: "decapod.pdfExportOptions.finalInit",
+        produceTree: "decapod.pdfExportOptions.produceTree",
+        selectors: {
+            output: ".dc-pdfExportOptions-output",
+            outputSettings: ".dc-pdfExportOptions-outputSettings"
         },
-        model : {
-            output : {}, // in the form {selection: "", choices: [], names: []}
-            outputSettings : {
-                settings : [] //in the form {value: "", name: "", unit: "", attrs: {}}
+        model: {
+            output: {}, // in the form {selection: "", choices: [], names: []}
+            outputSettings: {
+                settings: [] //in the form {value: "", name: "", unit: "", attrs: {}}
             }
         },
-        events : {
-            afterFetchResources : null,
-            afterModelChanged : null,
-            afterColourRender : null,
-            afterOutputRender : null,
-            afterOutputSettingsRender : null,
-            afterRender : {
-                events : {
-                    output : "afterOutputRender",
-                    outputSettings : "afterOutputSettingsRender"
+        events: {
+            afterFetchResources: null,
+            afterModelChanged: null,
+            afterColourRender: null,
+            afterOutputRender: null,
+            afterOutputSettingsRender: null,
+            afterRender: {
+                events: {
+                    output: "afterOutputRender",
+                    outputSettings: "afterOutputSettingsRender"
                 },
-                args : ["{pdfExportOptions}"]
+                args: ["{pdfExportOptions}"]
             },
-            onOutputReady : null,
-            onOutputSettingsReady : null,
-            onReady : {
-                events : {
-                    output : "onOutputReady",
-                    outputSettings : "onOutputSettingsReady"
+            onOutputReady: null,
+            onOutputSettingsReady: null,
+            onReady: {
+                events: {
+                    output: "onOutputReady",
+                    outputSettings: "onOutputSettingsReady"
                 },
-                args : ["{pdfExportOptions}"]
+                args: ["{pdfExportOptions}"]
             },
-            onDisable : null,
-            onEnable : null
+            onDisable: null,
+            onEnable: null
         },
-        invokers : {
-            hide : "decapod.pdfExportOptions.hide",
-            show : "decapod.pdfExportOptions.show",
-            showIfModelValue : "decapod.pdfExportOptions.showIfModelValue",
-            disable : "decapod.pdfExportOptions.disable",
-            enable : "decapod.pdfExportOptions.enable",
-            isValidImp : "decapod.pdfExportOptions.isValid"
+        invokers: {
+            hide: "decapod.pdfExportOptions.hide",
+            show: "decapod.pdfExportOptions.show",
+            showIfModelValue: "decapod.pdfExportOptions.showIfModelValue",
+            disable: "decapod.pdfExportOptions.disable",
+            enable: "decapod.pdfExportOptions.enable",
+            isValidImp: "decapod.pdfExportOptions.isValid"
         },
-        components : {
-            output : {
-                type : "decapod.select",
-                container : "{pdfExportOptions}.dom.output",
-                createOnEvent : "afterFetchResources",
-                options : {
-                    model : "{pdfExportOptions}.model.output",
-                    listeners : {
-                        "onReady.onOutputReady" : "{pdfExportOptions}.events.onOutputReady",
-                        "afterRender.afterOutputRender" : "{pdfExportOptions}.events.afterOutputRender",
-                        "afterSelectionChanged.parent" : {
-                            listener : "{pdfExportOptions}.applier.requestChange",
-                            args : ["output.selection", "{arguments}.0"]
+        components: {
+            output: {
+                type: "decapod.select",
+                container: "{pdfExportOptions}.dom.output",
+                createOnEvent: "afterFetchResources",
+                options: {
+                    model: "{pdfExportOptions}.model.output",
+                    listeners: {
+                        "onReady.onOutputReady": "{pdfExportOptions}.events.onOutputReady",
+                        "afterRender.afterOutputRender": "{pdfExportOptions}.events.afterOutputRender",
+                        "afterSelectionChanged.parent": {
+                            listener: "{pdfExportOptions}.applier.requestChange",
+                            args: ["output.selection", "{arguments}.0"]
                         },
-                        "{pdfExportOptions}.events.onDisable" : "{select}.disable",
-                        "{pdfExportOptions}.events.onEnable" : "{select}.enable"
+                        "{pdfExportOptions}.events.onDisable": "{select}.disable",
+                        "{pdfExportOptions}.events.onEnable": "{select}.enable"
                     }
                 }
             },
-            outputSettings : {
-                type : "decapod.outputSettings",
-                createOnEvent : "afterFetchResources",
-                container : "{pdfExportOptions}.dom.outputSettings",
-                options : {
-                    model : "{pdfExportOptions}.model.outputSettings",
-                    listeners : {
-                        "onReady.onOutputSettingsReady" : "{pdfExportOptions}.events.onOutputSettingsReady",
-                        "afterRender.afterOutputSettingsRender" : "{pdfExportOptions}.events.afterOutputSettingsRender",
-                        "afterModelChanged.parent" : {
-                            listener : "{pdfExportOptions}.applier.requestChange",
-                            args : ["outputSettings", "{arguments}.0"]
+            outputSettings: {
+                type: "decapod.outputSettings",
+                createOnEvent: "afterFetchResources",
+                container: "{pdfExportOptions}.dom.outputSettings",
+                options: {
+                    model: "{pdfExportOptions}.model.outputSettings",
+                    listeners: {
+                        "onReady.onOutputSettingsReady": "{pdfExportOptions}.events.onOutputSettingsReady",
+                        "afterRender.afterOutputSettingsRender": "{pdfExportOptions}.events.afterOutputSettingsRender",
+                        "afterModelChanged.parent": {
+                            listener: "{pdfExportOptions}.applier.requestChange",
+                            args: ["outputSettings", "{arguments}.0"]
                         },
-                        "{pdfExportOptions}.events.onDisable" : "{outputSettings}.disable",
-                        "{pdfExportOptions}.events.onEnable" : "{outputSettings}.enable"
+                        "{pdfExportOptions}.events.onDisable": "{outputSettings}.disable",
+                        "{pdfExportOptions}.events.onEnable": "{outputSettings}.enable"
                     }
                 }
             }
         },
-        resources : {
-            template : {
-                url : "../html/pdfExportOptionsTemplate.html",
-                forceCache : true
+        resources: {
+            template: {
+                url: "../html/pdfExportOptionsTemplate.html",
+                forceCache: true
             },
-            select : {
-                url : "../../select/html/selectTemplate.html",
-                forceCache : true
+            select: {
+                url: "../../select/html/selectTemplate.html",
+                forceCache: true
             },
-            outputSettings : {
-                url : "../html/outputSettingsTemplate.html",
-                forceCache : true
+            outputSettings: {
+                url: "../html/outputSettingsTemplate.html",
+                forceCache: true
             }
         }
     });
@@ -578,26 +578,26 @@ var decapod = decapod || {};
 
     decapod.outputSettings.produceTree = function (that) {
         return {
-            expander : {
-                type : "fluid.renderer.repeat",
-                repeatID : "settings:",
-                controlledBy : "settings",
-                pathAs : "setting",
-                valueAs : "settingVal",
-                tree : {
-                    label : "${{setting}.name}",
-                    val : {
-                        value : "${{setting}.value}",
-                        decorators : {
-                            type : "attrs",
-                            attributes : "${{setting}.attrs}"
+            expander: {
+                type: "fluid.renderer.repeat",
+                repeatID: "settings:",
+                controlledBy: "settings",
+                pathAs: "setting",
+                valueAs: "settingVal",
+                tree: {
+                    label: "${{setting}.name}",
+                    val: {
+                        value: "${{setting}.value}",
+                        decorators: {
+                            type: "attrs",
+                            attributes: "${{setting}.attrs}"
                         }
                     },
-                    unit : "${{setting}.unit}",
-                    errorMessage : {
-                        messagekey : "exporter_outputSettings_errorMessage",
+                    unit: "${{setting}.unit}",
+                    errorMessage: {
+                        messagekey: "exporter_outputSettings_errorMessage",
                         // Work around for FLUID-4737, passing in the arguments in the array style instead of passing in an object directly
-                        args : ["{settingVal}.attrs.min", "{settingVal}.attrs.max"]
+                        args: ["{settingVal}.attrs.min", "{settingVal}.attrs.max"]
 
                     }
                 }
@@ -606,53 +606,53 @@ var decapod = decapod || {};
     };
 
     fluid.defaults("decapod.outputSettings", {
-        gradeNames : ["decapod.rendererComponentCustomMerge", "autoInit"],
-        preInitFunction : "decapod.outputSettings.preInit",
-        finalInitFunction : "decapod.outputSettings.finalInit",
-        produceTree : "decapod.outputSettings.produceTree",
-        selectors : {
-            settings : ".dc-outputSettings-settings",
-            label : ".dc-outputSettings-label",
-            val : ".dc-outputSettings-value",
-            unit : ".dc-outputSettings-unit",
-            errorMessage : ".dc-outputSettings-errorMessage"
+        gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
+        preInitFunction: "decapod.outputSettings.preInit",
+        finalInitFunction: "decapod.outputSettings.finalInit",
+        produceTree: "decapod.outputSettings.produceTree",
+        selectors: {
+            settings: ".dc-outputSettings-settings",
+            label: ".dc-outputSettings-label",
+            val: ".dc-outputSettings-value",
+            unit: ".dc-outputSettings-unit",
+            errorMessage: ".dc-outputSettings-errorMessage"
         },
-        repeatingSelectors : ["settings"],
-        model : {
-            settings : [] //in the form {value: "", name: "", unit: "", attrs: {}}
+        repeatingSelectors: ["settings"],
+        model: {
+            settings: [] //in the form {value: "", name: "", unit: "", attrs: {}}
         },
-        styles : {
-            invalidEntry : "ds-outputSettings-invalidEntry"
+        styles: {
+            invalidEntry: "ds-outputSettings-invalidEntry"
         },
-        events : {
-            afterFetchResources : null,
-            afterModelChanged : null,
-            onValidationError : null,
-            onCorrection : null,
-            onReady : null
+        events: {
+            afterFetchResources: null,
+            afterModelChanged: null,
+            onValidationError: null,
+            onCorrection: null,
+            onReady: null
         },
-        listeners : {
-            "onValidationError.setStatus" : {
-                listener : "{outputSettings}.setStatus",
-                args : ["{arguments}.0", false]
+        listeners: {
+            "onValidationError.setStatus": {
+                listener: "{outputSettings}.setStatus",
+                args: ["{arguments}.0", false]
             },
-            "afterModelChanged.setStatus" : {
-                listener : "{outputSettings}.setStatus",
-                args : ["{arguments}.2", true]
+            "afterModelChanged.setStatus": {
+                listener: "{outputSettings}.setStatus",
+                args: ["{arguments}.2", true]
             }
         },
-        invokers : {
-            disable : "decapod.outputSettings.disable",
-            enable : "decapod.outputSettings.enable",
-            bindValidators : "decapod.outputSettings.bindValidators",
-            setStatus : "decapod.outputSettings.setStatus",
-            setStatusByIndex : "decapod.outputSettings.setStatusByIndex",
-            isValid : "decapod.outputSettings.isValid"
+        invokers: {
+            disable: "decapod.outputSettings.disable",
+            enable: "decapod.outputSettings.enable",
+            bindValidators: "decapod.outputSettings.bindValidators",
+            setStatus: "decapod.outputSettings.setStatus",
+            setStatusByIndex: "decapod.outputSettings.setStatusByIndex",
+            isValid: "decapod.outputSettings.isValid"
         },
-        resources : {
-            template : {
-                url : "../html/outputSettingsTemplate.html",
-                forceCache : true
+        resources: {
+            template: {
+                url: "../html/outputSettingsTemplate.html",
+                forceCache: true
             }
         }
     });
@@ -665,32 +665,32 @@ var decapod = decapod || {};
 
     decapod.exportControls.produceTree = function (that) {
         return {
-            expander : [{
-                type : "fluid.renderer.condition",
-                condition : that.model.showExportStart,
-                trueTree : {
-                    trigger : {
-                        decorators : {
-                            type : "fluid",
-                            func : "decapod.exportControls.trigger"
+            expander: [{
+                type: "fluid.renderer.condition",
+                condition: that.model.showExportStart,
+                trueTree: {
+                    trigger: {
+                        decorators: {
+                            type: "fluid",
+                            func: "decapod.exportControls.trigger"
                         }
                     }
                 }
             }, {
-                type : "fluid.renderer.condition",
-                condition : that.model.showExportError,
-                trueTree : {
-                    exportError : {
-                        decorators : {
-                            type : "fluid",
-                            func : "decapod.status",
-                            options : {
-                                model : {
-                                    currentStatus : "EXPORT_ERROR",
-                                    "EXPORT_ERROR" : {
-                                        name : decapod.globalMessages.exporter_imageExportStatus_exportError_name,
-                                        description : decapod.globalMessages.exporter_imageExportStatus_exportError_description,
-                                        style : "ds-exporter-status-error"
+                type: "fluid.renderer.condition",
+                condition: that.model.showExportError,
+                trueTree: {
+                    exportError: {
+                        decorators: {
+                            type: "fluid",
+                            func: "decapod.status",
+                            options: {
+                                model: {
+                                    currentStatus: "EXPORT_ERROR",
+                                    "EXPORT_ERROR": {
+                                        name: decapod.globalMessages.exporter_imageExportStatus_exportError_name,
+                                        description: decapod.globalMessages.exporter_imageExportStatus_exportError_description,
+                                        style: "ds-exporter-status-error"
                                     }
                                 }
                             }
@@ -698,20 +698,20 @@ var decapod = decapod || {};
                     }
                 }
             }, {
-                type : "fluid.renderer.condition",
-                condition : that.model.showFileError,
-                trueTree : {
-                    fileError : {
-                        decorators : {
-                            type : "fluid",
-                            func : "decapod.status",
-                            options : {
-                                model : {
-                                    currentStatus : "FILES_IGNORED",
+                type: "fluid.renderer.condition",
+                condition: that.model.showFileError,
+                trueTree: {
+                    fileError: {
+                        decorators: {
+                            type: "fluid",
+                            func: "decapod.status",
+                            options: {
+                                model: {
+                                    currentStatus: "FILES_IGNORED",
                                     "FILES_IGNORED": {
-                                        name : decapod.globalMessages.exporter_imageExportStatus_filesIgnored_name,
-                                        description : decapod.globalMessages.exporter_imageExportStatus_filesIgnored_description,
-                                        style : "ds-exporter-status-error"
+                                        name: decapod.globalMessages.exporter_imageExportStatus_filesIgnored_name,
+                                        description: decapod.globalMessages.exporter_imageExportStatus_filesIgnored_description,
+                                        style: "ds-exporter-status-error"
                                     }
                                 }
                             }
@@ -719,24 +719,24 @@ var decapod = decapod || {};
                     }
                 }
             }, {
-                type : "fluid.renderer.condition",
-                condition : that.model.showExportProgress,
-                trueTree : {
-                    progress : {
-                        decorators : {
-                            type : "fluid",
-                            func : "decapod.exportControls.progress"
+                type: "fluid.renderer.condition",
+                condition: that.model.showExportProgress,
+                trueTree: {
+                    progress: {
+                        decorators: {
+                            type: "fluid",
+                            func: "decapod.exportControls.progress"
                         }
                     }
                 }
             }, {
-                type : "fluid.renderer.condition",
-                condition : that.model.showExportComplete,
-                trueTree : {
-                    complete : {
-                        decorators : {
-                            type : "fluid",
-                            func : "decapod.exportControls.complete"
+                type: "fluid.renderer.condition",
+                condition: that.model.showExportComplete,
+                trueTree: {
+                    complete: {
+                        decorators: {
+                            type: "fluid",
+                            func: "decapod.exportControls.complete"
                         }
                     }
                 }
@@ -800,67 +800,67 @@ var decapod = decapod || {};
     };
 
     fluid.defaults("decapod.exportControls", {
-        gradeNames : ["decapod.rendererComponentCustomMerge", "autoInit"],
-        finalInitFunction : "decapod.exportControls.finalInit",
-        preInitFunction : "decapod.exportControls.preInit",
-        produceTree : "decapod.exportControls.produceTree",
-        selectors : {
-            trigger : ".dc-exportControls-trigger",
-            progress : ".dc-exportControls-progress",
-            complete : ".dc-exportControls-complete",
-            exportError : ".dc-exportControls-exportError",
-            fileError : ".dc-exportControls-fileError"
+        gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
+        finalInitFunction: "decapod.exportControls.finalInit",
+        preInitFunction: "decapod.exportControls.preInit",
+        produceTree: "decapod.exportControls.produceTree",
+        selectors: {
+            trigger: ".dc-exportControls-trigger",
+            progress: ".dc-exportControls-progress",
+            complete: ".dc-exportControls-complete",
+            exportError: ".dc-exportControls-exportError",
+            fileError: ".dc-exportControls-fileError"
         },
-        events : {
-            afterFetchResources : null,
-            afterModelChanged : null,
-            onExportTrigger : null,
-            onReady : null
+        events: {
+            afterFetchResources: null,
+            afterModelChanged: null,
+            onExportTrigger: null,
+            onReady: null
         },
-        listeners : {
-            "afterModelChanged.refreshView" : "{exportControls}.refreshView",
-            "afterFetchResources.render" : "{exportControls}.initialRender",
-            "onExportTrigger.updateModel" : {
-                listener : "{exportControls}.updateModel",
-                args : [{
-                    showExportStart : false,
-                    showExportError : false,
+        listeners: {
+            "afterModelChanged.refreshView": "{exportControls}.refreshView",
+            "afterFetchResources.render": "{exportControls}.initialRender",
+            "onExportTrigger.updateModel": {
+                listener: "{exportControls}.updateModel",
+                args: [{
+                    showExportStart: false,
+                    showExportError: false,
                     showFileError: false,
-                    showExportProgress : true,
-                    showExportComplete : false,
+                    showExportProgress: true,
+                    showExportComplete: false,
                     fileError: "{exportControls}.model.fileError"
                 }]
             }
         },
-        model : {
-            showExportStart : true,
-            showExportError : false,
+        model: {
+            showExportStart: true,
+            showExportError: false,
             showFileError: false,
-            showExportProgress : false,
-            showExportComplete : false,
+            showExportProgress: false,
+            showExportComplete: false,
             fileError: false,
-            downloadURL : ""
+            downloadURL: ""
         },
-        invokers : {
-            updateModel : "decapod.exportControls.updateModel",
+        invokers: {
+            updateModel: "decapod.exportControls.updateModel",
             addAria: "decapod.exportControls.addAria"
         },
-        resources : {
-            controls : {
-                url : "../html/exportControlsTemplate.html",
-                forceCache : true
+        resources: {
+            controls: {
+                url: "../html/exportControlsTemplate.html",
+                forceCache: true
             },
-            trigger : {
-                url : "../html/exportControlsTriggerTemplate.html",
-                forceCache : true
+            trigger: {
+                url: "../html/exportControlsTriggerTemplate.html",
+                forceCache: true
             },
-            progress : {
-                url : "../html/exportControlsProgressTemplate.html",
-                forceCache : true
+            progress: {
+                url: "../html/exportControlsProgressTemplate.html",
+                forceCache: true
             },
-            complete : {
-                url : "../html/exportControlsCompleteTemplate.html",
-                forceCache : true
+            complete: {
+                url: "../html/exportControlsCompleteTemplate.html",
+                forceCache: true
             }
         }
     });
@@ -891,30 +891,30 @@ var decapod = decapod || {};
 
     decapod.exportControls.trigger.produceTree = function (that) {
         return {
-            expander : [{
-                type : "fluid.renderer.condition",
-                condition : {
-                    funcName : "decapod.exportControls.trigger.assertState",
-                    args : [that.model]
+            expander: [{
+                type: "fluid.renderer.condition",
+                condition: {
+                    funcName: "decapod.exportControls.trigger.assertState",
+                    args: [that.model]
                 },
-                falseTree : {
-                    trigger : {
-                        messagekey : "exporter_exportControls_trigger_trigger",
-                        decorators : {
-                            type : "attrs",
-                            attributes : {
-                                disabled : "disabled"
+                falseTree: {
+                    trigger: {
+                        messagekey: "exporter_exportControls_trigger_trigger",
+                        decorators: {
+                            type: "attrs",
+                            attributes: {
+                                disabled: "disabled"
                             }
                         }
                     }
                 },
-                trueTree : {
-                    trigger : {
-                        messagekey : "exporter_exportControls_trigger_trigger",
-                        decorators : [{
-                            type : "jQuery",
-                            func : "click",
-                            args : function () {
+                trueTree: {
+                    trigger: {
+                        messagekey: "exporter_exportControls_trigger_trigger",
+                        decorators: [{
+                            type: "jQuery",
+                            func: "click",
+                            args: function () {
                                 that.events.afterTriggered.fire();
                             }
                         }]
@@ -971,30 +971,30 @@ var decapod = decapod || {};
      * requirements not met.
      */
     fluid.defaults("decapod.exportControls.trigger", {
-        gradeNames : ["decapod.rendererComponentCustomMerge", "autoInit"],
-        preInitFunction : "decapod.exportControls.trigger.preInit",
-        finalInitFunction : "decapod.exportControls.trigger.finalInit",
-        produceTree : "decapod.exportControls.trigger.produceTree",
-        selectors : {
-            trigger : ".dc-exportControls-trigger-exportControl"
+        gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
+        preInitFunction: "decapod.exportControls.trigger.preInit",
+        finalInitFunction: "decapod.exportControls.trigger.finalInit",
+        produceTree: "decapod.exportControls.trigger.produceTree",
+        selectors: {
+            trigger: ".dc-exportControls-trigger-exportControl"
         },
-        events : {
-            afterFetchResources : null,
-            afterModelChanged : null,
-            afterTriggered : null,
-            onReady : null
+        events: {
+            afterFetchResources: null,
+            afterModelChanged: null,
+            afterTriggered: null,
+            onReady: null
         },
-        listeners : {
-            "afterModelChanged.internal" : "{trigger}.refreshView"
+        listeners: {
+            "afterModelChanged.internal": "{trigger}.refreshView"
         },
-        model : {}, // in the form, {condition: boolean}
-        invokers : {
-            updateModel : "decapod.exportControls.trigger.updateModel"
+        model: {}, // in the form, {condition: boolean}
+        invokers: {
+            updateModel: "decapod.exportControls.trigger.updateModel"
         },
-        resources : {
-            template : {
-                url : "../html/exportControlsTriggerTemplate.html",
-                forceCache : true
+        resources: {
+            template: {
+                url: "../html/exportControlsTriggerTemplate.html",
+                forceCache: true
             }
         }
     });
@@ -1007,8 +1007,8 @@ var decapod = decapod || {};
 
     decapod.exportControls.progress.produceTree = function (that) {
         return {
-            message : {
-                messagekey : "exporter_exportControls_progress_message"
+            message: {
+                messagekey: "exporter_exportControls_progress_message"
             },
             warning: {
                 messagekey: "exporter_exportControls_progress_warning"
@@ -1037,24 +1037,24 @@ var decapod = decapod || {};
     };
 
     fluid.defaults("decapod.exportControls.progress", {
-        gradeNames : ["decapod.rendererComponentCustomMerge", "autoInit"],
-        finalInitFunction : "decapod.exportControls.progress.finalInit",
-        produceTree : "decapod.exportControls.progress.produceTree",
-        selectors : {
-            message : ".dc-exportControls-progress-message",
+        gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
+        finalInitFunction: "decapod.exportControls.progress.finalInit",
+        produceTree: "decapod.exportControls.progress.produceTree",
+        selectors: {
+            message: ".dc-exportControls-progress-message",
             warning: ".dc-exportControls-warning"
         },
-        events : {
-            afterFetchResources : null,
-            onReady : null
+        events: {
+            afterFetchResources: null,
+            onReady: null
         },
         invokers: {
             addAria: "decapod.exportControls.progress.addAria"
         },
-        resources : {
-            template : {
-                url : "../html/exportControlsProgressTemplate.html",
-                forceCache : true
+        resources: {
+            template: {
+                url: "../html/exportControlsProgressTemplate.html",
+                forceCache: true
             }
         }
     });
@@ -1087,8 +1087,8 @@ var decapod = decapod || {};
             var numStages = that.model.stages.length;
             var percentage = (index / numStages) * 100;
             that.progress.update(percentage, fluid.stringTemplate(that.options.strings.inProgressMessage, {
-                step : ++index,
-                steps : numStages
+                step: ++index,
+                steps: numStages
             }));
             // index is incremented to make it start at 1 instead of 0.
         }
@@ -1144,51 +1144,51 @@ var decapod = decapod || {};
     };
 
     fluid.defaults("decapod.exportControls.detailedProgress", {
-        gradeNames : ["decapod.viewComponentCustomMerge", "autoInit"],
-        preInitFunction : "decapod.exportControls.detailedProgress.preInit",
-        finalInitFunction : "decapod.exportControls.detailedProgress.finalInit",
-        selectors : {
-            progress : ".dc-exportControls-detailedProgress-progress",
+        gradeNames: ["decapod.viewComponentCustomMerge", "autoInit"],
+        preInitFunction: "decapod.exportControls.detailedProgress.preInit",
+        finalInitFunction: "decapod.exportControls.detailedProgress.finalInit",
+        selectors: {
+            progress: ".dc-exportControls-detailedProgress-progress",
             warning: ".dc-exportControls-warning"
         },
-        strings : {
-            initialProgressMessage : decapod.globalMessages.exporter_exportControls_detailedProgress_initialProgressMessage,
-            inProgressMessage : decapod.globalMessages.exporter_exportControls_detailedProgress_inProgressMessage,
-            completeProgressMessage : decapod.globalMessages.exporter_exportControls_detailedProgress_completeProgressMessage,
+        strings: {
+            initialProgressMessage: decapod.globalMessages.exporter_exportControls_detailedProgress_initialProgressMessage,
+            inProgressMessage: decapod.globalMessages.exporter_exportControls_detailedProgress_inProgressMessage,
+            completeProgressMessage: decapod.globalMessages.exporter_exportControls_detailedProgress_completeProgressMessage,
             warning: decapod.globalMessages.exporter_exportControls_detailedProgress_warning
         },
-        events : {
-            afterFetchResources : null,
-            afterModelChanged : null,
-            onReady : null
+        events: {
+            afterFetchResources: null,
+            afterModelChanged: null,
+            onReady: null
         },
-        listeners : {
-            afterModelChanged : {
-                listener : "{detailedProgress}.setProgress"
+        listeners: {
+            afterModelChanged: {
+                listener: "{detailedProgress}.setProgress"
             }
         },
-        model : {
-            stages : [],
-            currentStage : ""
+        model: {
+            stages: [],
+            currentStage: ""
         },
-        invokers : {
-            update : "decapod.exportControls.detailedProgress.update",
-            setProgress : "decapod.exportControls.detailedProgress.setProgress",
-            finish : "decapod.exportControls.detailedProgress.finish"
+        invokers: {
+            update: "decapod.exportControls.detailedProgress.update",
+            setProgress: "decapod.exportControls.detailedProgress.setProgress",
+            finish: "decapod.exportControls.detailedProgress.finish"
         },
-        components : {
-            progress : {
-                type : "fluid.progress",
-                createOnEvent : "afterFetchResources",
-                container : "{detailedProgress}.dom.progress",
-                options : {
-                    selectors : {
-                        displayElement : "{detailedProgress}.dom.progress"
+        components: {
+            progress: {
+                type: "fluid.progress",
+                createOnEvent: "afterFetchResources",
+                container: "{detailedProgress}.dom.progress",
+                options: {
+                    selectors: {
+                        displayElement: "{detailedProgress}.dom.progress"
                     },
-                    strings : {
-                        ariaDoneText : decapod.globalMessages.exporter_exportControls_detailedProgress_completeProgressMessage
+                    strings: {
+                        ariaDoneText: decapod.globalMessages.exporter_exportControls_detailedProgress_completeProgressMessage
                     },
-                    initiallyHidden : false,
+                    initiallyHidden: false,
                     listeners: {
                         "onAttach": {
                             listener: function (that) {
@@ -1200,10 +1200,10 @@ var decapod = decapod || {};
                 }
             }
         },
-        resources : {
-            template : {
-                url : "../html/exportControlsDetailedProgressTemplate.html",
-                forceCache : true
+        resources: {
+            template: {
+                url: "../html/exportControlsDetailedProgressTemplate.html",
+                forceCache: true
             }
         }
     });
@@ -1226,11 +1226,11 @@ var decapod = decapod || {};
 
     decapod.exportControls.complete.produceTree = function (that) {
         return {
-            download : {
-                linktext : {
-                    messagekey : "exporter_exportControls_complete_download"
+            download: {
+                linktext: {
+                    messagekey: "exporter_exportControls_complete_download"
                 },
-                target : "${downloadURL}",
+                target: "${downloadURL}",
                 decorators: {
                     type: "attrs",
                     attributes: {
@@ -1238,8 +1238,8 @@ var decapod = decapod || {};
                     }
                 }
             },
-            restart : {
-                messagekey : "exporter_exportControls_complete_restart"
+            restart: {
+                messagekey: "exporter_exportControls_complete_restart"
             }
         };
     };
@@ -1259,28 +1259,28 @@ var decapod = decapod || {};
     };
 
     fluid.defaults("decapod.exportControls.complete", {
-        gradeNames : ["decapod.rendererComponentCustomMerge", "autoInit"],
-        finalInitFunction : "decapod.exportControls.complete.finalInit",
-        produceTree : "decapod.exportControls.complete.produceTree",
-        invokers : {
-            updateModel : "decapod.exportControls.complete.updateModel"
+        gradeNames: ["decapod.rendererComponentCustomMerge", "autoInit"],
+        finalInitFunction: "decapod.exportControls.complete.finalInit",
+        produceTree: "decapod.exportControls.complete.produceTree",
+        invokers: {
+            updateModel: "decapod.exportControls.complete.updateModel"
         },
-        selectors : {
-            download : ".dc-exportControls-complete-download",
-            restart : ".dc-exportControls-complete-restart"
+        selectors: {
+            download: ".dc-exportControls-complete-download",
+            restart: ".dc-exportControls-complete-restart"
         },
-        events : {
-            afterModelChanged : null,
-            afterFetchResources : null,
-            onReady : null
+        events: {
+            afterModelChanged: null,
+            afterFetchResources: null,
+            onReady: null
         },
-        model : {
-            downloadURL : ""
+        model: {
+            downloadURL: ""
         },
-        resources : {
-            template : {
-                url : "../html/exportControlsCompleteTemplate.html",
-                forceCache : true
+        resources: {
+            template: {
+                url: "../html/exportControlsCompleteTemplate.html",
+                forceCache: true
             }
         }
     });

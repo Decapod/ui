@@ -47,7 +47,7 @@ var decapod = decapod || {};
     // Convenience Functions: component creators
     var generateCompositeComponent = function (component, container, resources, options) {
         var opts = {
-            resources : resources
+            resources: resources
         };
 
         fluid.merge("replace", opts, options || {});
@@ -55,8 +55,8 @@ var decapod = decapod || {};
     };
     var generateComponent = function (component, container, templateURL, options) {
         var resources = {
-            template : {
-                url : templateURL
+            template: {
+                url: templateURL
             }
         };
         return generateCompositeComponent(component, container, resources, options);
@@ -72,21 +72,21 @@ var decapod = decapod || {};
 
     var createControls = function (container, options) {
         var resources = {
-            controls : {
-                url : CONTROLS_TEMPLATE,
-                forceCache : true
+            controls: {
+                url: CONTROLS_TEMPLATE,
+                forceCache: true
             },
-            trigger : {
-                url : TRIGGER_TEMPLATE,
-                forceCache : true
+            trigger: {
+                url: TRIGGER_TEMPLATE,
+                forceCache: true
             },
-            progress : {
-                url : PROGRESS_TEMPLATE,
-                forceCache : true
+            progress: {
+                url: PROGRESS_TEMPLATE,
+                forceCache: true
             },
-            complete : {
-                url : COMPLETE_TEMPLATE,
-                forceCache : true
+            complete: {
+                url: COMPLETE_TEMPLATE,
+                forceCache: true
             }
         };
         return generateCompositeComponent("decapod.exportControls", container, resources, options);
@@ -122,16 +122,16 @@ var decapod = decapod || {};
         var exportPollerTests = jqUnit.testCase("decapod.exportPoller");
 
         var completeResponse = {
-            status : "complete",
-            url : "../../../mock-book/images/pdf/mockBook.pdf"
+            status: "complete",
+            url: "../../../mock-book/images/pdf/mockBook.pdf"
         };
 
         var errorResponse = {
-            status : "error"
+            status: "error"
         };
 
         var inProgressResponse = {
-            status : "in progress"
+            status: "in progress"
         };
 
         exportPollerTests.test("Init tests", function () {
@@ -146,8 +146,8 @@ var decapod = decapod || {};
                 start();
             };
             decapod.exportPoller({
-                listeners : {
-                    onReady : assertOnReady
+                listeners: {
+                    onReady: assertOnReady
                 }
             });
         });
@@ -179,7 +179,7 @@ var decapod = decapod || {};
         exportPollerTests.asyncTest("handleResponse", function () {
             jqUnit.expect(4);
             var that = decapod.exportPoller({
-                delay : 10
+                delay: 10
             });
             that.events.onPoll.addListener(function () {
                 jqUnit.assertTrue("The onPoll event should have fired", true);
@@ -196,7 +196,7 @@ var decapod = decapod || {};
         exportPollerTests.asyncTest("handleResponse - error", function () {
             jqUnit.expect(2);
             var that = decapod.exportPoller({
-                delay : 10
+                delay: 10
             });
             that.events.onError.addListener(function () {
                 jqUnit.assertTrue("The onError event should have fired", true);
@@ -247,9 +247,9 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The onReady event should have fired", true);
             };
             createExportInfo(INFO_CONTAINER, {
-                listeners : {
-                    onReady : assertOnReady,
-                    afterRender : start
+                listeners: {
+                    onReady: assertOnReady,
+                    afterRender: start
                 }
             });
         });
@@ -261,8 +261,8 @@ var decapod = decapod || {};
                 start();
             };
             createExportInfo(INFO_CONTAINER, {
-                listeners : {
-                    afterFetchResources : assertFetchResources
+                listeners: {
+                    afterFetchResources: assertFetchResources
                 }
             });
         });
@@ -278,8 +278,8 @@ var decapod = decapod || {};
             };
             createExportInfo(INFO_CONTAINER, {
                 strings: expectedStrings,
-                listeners : {
-                    afterRender : assertRender
+                listeners: {
+                    afterRender: assertRender
                 }
             });
         });
@@ -291,32 +291,32 @@ var decapod = decapod || {};
         var outputSettingsTests = jqUnit.testCase("decapod.pdfExportOptions.outputSettingsTests");
 
         var defaultOutputSettingsModel = {
-            settings : [{
-                value : "210",
-                name : "width",
-                unit : "mm",
-                attrs : {
-                    type : "number",
-                    min : "1",
-                    max : "300"
+            settings: [{
+                value: "210",
+                name: "width",
+                unit: "mm",
+                attrs: {
+                    type: "number",
+                    min: "1",
+                    max: "300"
                 }
             }, {
-                value : "297",
-                name : "height",
-                unit : "mm",
-                attrs : {
-                    type : "number",
-                    min : "1",
-                    max : "300"
+                value: "297",
+                name: "height",
+                unit: "mm",
+                attrs: {
+                    type: "number",
+                    min: "1",
+                    max: "300"
                 }
             }, {
-                value : "200",
-                name : "resolution",
-                unit : "dpi",
-                attrs : {
-                    type : "number",
-                    min : "50",
-                    max : "600"
+                value: "200",
+                name: "resolution",
+                unit: "dpi",
+                attrs: {
+                    type: "number",
+                    min: "50",
+                    max: "600"
                 }
             }]
         };
@@ -336,10 +336,10 @@ var decapod = decapod || {};
                 start();
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model : fluid.copy(defaultOutputSettingsModel),
-                listeners : {
-                    onReady : assertOnReady,
-                    afterRender : assertInit
+                model: fluid.copy(defaultOutputSettingsModel),
+                listeners: {
+                    onReady: assertOnReady,
+                    afterRender: assertInit
                 }
             });
         });
@@ -350,13 +350,13 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model : defaultOutputSettingsModel,
-                listeners : {
-                    afterFetchResources : {
-                        listener : assertFetch,
-                        priority : "last"
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterFetchResources: {
+                        listener: assertFetch,
+                        priority: "last"
                     },
-                    afterRender : function () {
+                    afterRender: function () {
                         start();
                     }
                 }
@@ -375,38 +375,38 @@ var decapod = decapod || {};
                 start();
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model : defaultOutputSettingsModel,
-                listeners : {
-                    afterModelChanged : {
-                        listener : assertChange,
-                        priority : "last"
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertChange,
+                        priority: "last"
                     },
-                    afterRender : triggerEvent
+                    afterRender: triggerEvent
                 }
             });
         });
 
         outputSettingsTests.test("decapod.outputSettings.intValidation", function () {
             var bounds = {
-                min : "1",
-                max : "300"
+                min: "1",
+                max: "300"
             };
             var validChangeRequests = [{
-                value : 2
+                value: 2
             }, {
-                value : "2"
+                value: "2"
             }];
 
             var invalidChangeRequests = [{
-                value : "0"
+                value: "0"
             }, {
-                value : "301"
+                value: "301"
             }, {
-                value : "2a"
+                value: "2a"
             }, {
-                value : ";2"
+                value: ";2"
             }, {
-                value : "three"
+                value: "three"
             }];
 
             $.each(validChangeRequests, function (idx, changeRequest) {
@@ -432,11 +432,11 @@ var decapod = decapod || {};
                 start();
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model : defaultOutputSettingsModel,
-                listeners : {
-                    afterRender : {
-                        listener : assertStatusChange,
-                        priority : "last"
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterRender: {
+                        listener: assertStatusChange,
+                        priority: "last"
                     }
                 }
             });
@@ -456,15 +456,15 @@ var decapod = decapod || {};
                 jqUnit.assertEquals("The index should be returned", idx, index);
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model : defaultOutputSettingsModel,
-                listeners : {
-                    afterRender : {
-                        listener : assertStatusChange,
-                        priority : "last"
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterRender: {
+                        listener: assertStatusChange,
+                        priority: "last"
                     },
-                    onCorrection : {
-                        listener : assertOnCorrection,
-                        priority : "last"
+                    onCorrection: {
+                        listener: assertOnCorrection,
+                        priority: "last"
                     }
                 }
             });
@@ -474,9 +474,9 @@ var decapod = decapod || {};
             jqUnit.expect(1);
             var idx = 0;
             var changeRequest = {
-                path : "settings." + idx + ".value",
-                value : "400",
-                type : "ADD"
+                path: "settings." + idx + ".value",
+                value: "400",
+                type: "ADD"
             };
             var assertStatusChange = function (that) {
                 that.setStatus(changeRequest, false);
@@ -484,11 +484,11 @@ var decapod = decapod || {};
                 start();
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model : defaultOutputSettingsModel,
-                listeners : {
-                    afterRender : {
-                        listener : assertStatusChange,
-                        priority : "last"
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterRender: {
+                        listener: assertStatusChange,
+                        priority: "last"
                     }
                 }
             });
@@ -498,9 +498,9 @@ var decapod = decapod || {};
             jqUnit.expect(3);
             var idx = 0;
             var changeRequest = {
-                path : "settings." + idx + ".value",
-                value : "400",
-                type : "ADD"
+                path: "settings." + idx + ".value",
+                value: "400",
+                type: "ADD"
             };
             var assertStatusChange = function (that) {
                 that.status[idx] = false;
@@ -513,15 +513,15 @@ var decapod = decapod || {};
                 jqUnit.assertDeepEq("The changeRequest should be returned", idx, index);
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model : defaultOutputSettingsModel,
-                listeners : {
-                    afterRender : {
-                        listener : assertStatusChange,
-                        priority : "last"
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterRender: {
+                        listener: assertStatusChange,
+                        priority: "last"
                     },
-                    onCorrection : {
-                        listener : assertOnCorrection,
-                        priority : "last"
+                    onCorrection: {
+                        listener: assertOnCorrection,
+                        priority: "last"
                     }
                 }
             });
@@ -549,11 +549,11 @@ var decapod = decapod || {};
                 start();
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model : defaultOutputSettingsModel,
-                listeners : {
-                    afterRender : {
-                        listener : assertIsValid,
-                        priority : "last"
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterRender: {
+                        listener: assertIsValid,
+                        priority: "last"
                     }
                 }
             });
@@ -566,34 +566,34 @@ var decapod = decapod || {};
             var newDPI = "0";
             var eventCall = 0;
             var expected = [{
-                changeRequest : {
-                    path : "settings.0.value",
-                    value : "400",
-                    type : "ADD"
+                changeRequest: {
+                    path: "settings.0.value",
+                    value: "400",
+                    type: "ADD"
                 },
-                bounds : {
-                    min : "1",
-                    max : "300"
+                bounds: {
+                    min: "1",
+                    max: "300"
                 }
             }, {
-                changeRequest : {
-                    path : "settings.1.value",
-                    value : "400",
-                    type : "ADD"
+                changeRequest: {
+                    path: "settings.1.value",
+                    value: "400",
+                    type: "ADD"
                 },
-                bounds : {
-                    min : "1",
-                    max : "300"
+                bounds: {
+                    min: "1",
+                    max: "300"
                 }
             }, {
-                changeRequest : {
-                    path : "settings.2.value",
-                    value : "0",
-                    type : "ADD"
+                changeRequest: {
+                    path: "settings.2.value",
+                    value: "0",
+                    type: "ADD"
                 },
-                bounds : {
-                    min : "50",
-                    max : "600"
+                bounds: {
+                    min: "50",
+                    max: "600"
                 }
             }];
             var origModel;
@@ -622,17 +622,17 @@ var decapod = decapod || {};
                 }
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model : defaultOutputSettingsModel,
-                listeners : {
-                    afterModelChanged : {
-                        listener : assertChange,
-                        priority : "last"
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertChange,
+                        priority: "last"
                     },
-                    afterRender : triggerEvent,
-                    onValidationError : {
-                        listener : assertValidation,
-                        args : ["{arguments}.0", "{arguments}.1", "{outputSettings}"],
-                        priority : "last"
+                    afterRender: triggerEvent,
+                    onValidationError: {
+                        listener: assertValidation,
+                        args: ["{arguments}.0", "{arguments}.1", "{outputSettings}"],
+                        priority: "last"
                     }
                 }
             });
@@ -657,19 +657,19 @@ var decapod = decapod || {};
             };
 
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model : defaultOutputSettingsModel,
-                listeners : {
-                    afterModelChanged : {
-                        listener : assertChanged,
-                        args : ["{outputSettings}"],
-                        priority : "last"
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertChanged,
+                        args: ["{outputSettings}"],
+                        priority: "last"
                     },
-                    onCorrection : {
-                        listener : assertCorrection,
-                        args : ["{outputSettings}"],
-                        priority : "last"
+                    onCorrection: {
+                        listener: assertCorrection,
+                        args: ["{outputSettings}"],
+                        priority: "last"
                     },
-                    afterRender : triggerEvent
+                    afterRender: triggerEvent
                 }
             });
         });
@@ -695,14 +695,14 @@ var decapod = decapod || {};
                 assertDisabled(that.model.settings);
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model : defaultOutputSettingsModel,
-                listeners : {
-                    afterModelChanged : {
-                        listener : assertChange,
-                        args : ["{arguments}.0", "{outputSettings}"],
-                        priority : "last"
+                model: defaultOutputSettingsModel,
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertChange,
+                        args: ["{arguments}.0", "{outputSettings}"],
+                        priority: "last"
                     },
-                    "afterRender.trigger" : triggerEvent
+                    "afterRender.trigger": triggerEvent
                 }
             });
         });
@@ -711,35 +711,35 @@ var decapod = decapod || {};
             jqUnit.expect(27);
 
             var model = {
-                settings : [{
-                    value : "210",
-                    name : "width",
-                    unit : "mm",
-                    attrs : {
-                        type : "number",
-                        min : "1",
-                        max : "300",
-                        disabled : "disabled"
+                settings: [{
+                    value: "210",
+                    name: "width",
+                    unit: "mm",
+                    attrs: {
+                        type: "number",
+                        min: "1",
+                        max: "300",
+                        disabled: "disabled"
                     }
                 }, {
-                    value : "297",
-                    name : "height",
-                    unit : "mm",
-                    attrs : {
-                        type : "number",
-                        min : "1",
-                        max : "300",
-                        disabled : "disabled"
+                    value: "297",
+                    name: "height",
+                    unit: "mm",
+                    attrs: {
+                        type: "number",
+                        min: "1",
+                        max: "300",
+                        disabled: "disabled"
                     }
                 }, {
-                    value : "200",
-                    name : "resolution",
-                    unit : "dpi",
-                    attrs : {
-                        type : "number",
-                        min : "50",
-                        max : "600",
-                        disabled : "disabled"
+                    value: "200",
+                    name: "resolution",
+                    unit: "dpi",
+                    attrs: {
+                        type: "number",
+                        min: "50",
+                        max: "600",
+                        disabled: "disabled"
                     }
                 }]
             };
@@ -763,14 +763,14 @@ var decapod = decapod || {};
                 assertEnabled(that.model.settings);
             };
             createOutputSettings(OUTPUT_SETTINGS_CONTAINER, {
-                model : model,
-                listeners : {
-                    afterModelChanged : {
-                        listener : assertChange,
-                        args : ["{arguments}.0", "{outputSettings}"],
-                        priority : "last"
+                model: model,
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertChange,
+                        args: ["{arguments}.0", "{outputSettings}"],
+                        priority: "last"
                     },
-                    "afterRender.trigger" : triggerEvent
+                    "afterRender.trigger": triggerEvent
                 }
             });
         });
@@ -782,38 +782,38 @@ var decapod = decapod || {};
         var pdfExportOptionsTests = jqUnit.testCase("decapod.pdfExportOptions");
 
         var defaultPDFExportOptionsModel = {
-            output : {
-                selection : "a4",
-                choices : ["a4", "a5", "letter", "custom"],
-                names : ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]
+            output: {
+                selection: "a4",
+                choices: ["a4", "a5", "letter", "custom"],
+                names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]
             },
-            outputSettings : {
-                settings : [{
-                    value : "210",
-                    name : "width",
-                    unit : "mm",
-                    attrs : {
-                        type : "number",
-                        min : "1",
-                        max : "300"
+            outputSettings: {
+                settings: [{
+                    value: "210",
+                    name: "width",
+                    unit: "mm",
+                    attrs: {
+                        type: "number",
+                        min: "1",
+                        max: "300"
                     }
                 }, {
-                    value : "297",
-                    name : "height",
-                    unit : "mm",
-                    attrs : {
-                        type : "number",
-                        min : "1",
-                        max : "300"
+                    value: "297",
+                    name: "height",
+                    unit: "mm",
+                    attrs: {
+                        type: "number",
+                        min: "1",
+                        max: "300"
                     }
                 }, {
-                    value : "200",
-                    name : "resolution",
-                    unit : "dpi",
-                    attrs : {
-                        type : "number",
-                        min : "50",
-                        max : "600"
+                    value: "200",
+                    name: "resolution",
+                    unit: "dpi",
+                    attrs: {
+                        type: "number",
+                        min: "50",
+                        max: "600"
                     }
                 }]
             }
@@ -832,23 +832,23 @@ var decapod = decapod || {};
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                model : defaultPDFExportOptionsModel,
-                listeners : {
-                    onReady : assertOnReady,
-                    afterRender : assertInit
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    onReady: assertOnReady,
+                    afterRender: assertInit
                 },
-                resources : {
-                    template : {
-                        url : PDF_EXPORT_OPTIONS_TEMPLATE,
-                        forceCache : true
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
                     },
-                    select : {
-                        url : SELECT_TEMPLATE,
-                        forceCache : true
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
                     },
-                    outputSettings : {
-                        url : OUTPUT_SETTINGS_TEMPLATE,
-                        forceCache : true
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
@@ -860,25 +860,25 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                model : defaultPDFExportOptionsModel,
-                listeners : {
-                    afterFetchResources : assertFetchResources,
-                    afterRender : function () {
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterFetchResources: assertFetchResources,
+                    afterRender: function () {
                         start();
                     }
                 },
-                resources : {
-                    template : {
-                        url : PDF_EXPORT_OPTIONS_TEMPLATE,
-                        forceCache : true
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
                     },
-                    select : {
-                        url : SELECT_TEMPLATE,
-                        forceCache : true
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
                     },
-                    outputSettings : {
-                        url : OUTPUT_SETTINGS_TEMPLATE,
-                        forceCache : true
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
@@ -892,22 +892,22 @@ var decapod = decapod || {};
             };
 
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                model : defaultPDFExportOptionsModel,
-                listeners : {
-                    afterRender : assertRender
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: assertRender
                 },
-                resources : {
-                    template : {
-                        url : PDF_EXPORT_OPTIONS_TEMPLATE,
-                        forceCache : true
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
                     },
-                    select : {
-                        url : SELECT_TEMPLATE,
-                        forceCache : true
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
                     },
-                    outputSettings : {
-                        url : OUTPUT_SETTINGS_TEMPLATE,
-                        forceCache : true
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
@@ -924,22 +924,22 @@ var decapod = decapod || {};
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                model : defaultPDFExportOptionsModel,
-                listeners : {
-                    afterRender : testHide
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: testHide
                 },
-                resources : {
-                    template : {
-                        url : PDF_EXPORT_OPTIONS_TEMPLATE,
-                        forceCache : true
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
                     },
-                    select : {
-                        url : SELECT_TEMPLATE,
-                        forceCache : true
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
                     },
-                    outputSettings : {
-                        url : OUTPUT_SETTINGS_TEMPLATE,
-                        forceCache : true
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
@@ -956,22 +956,22 @@ var decapod = decapod || {};
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                model : defaultPDFExportOptionsModel,
-                listeners : {
-                    afterRender : testHide
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: testHide
                 },
-                resources : {
-                    template : {
-                        url : PDF_EXPORT_OPTIONS_TEMPLATE,
-                        forceCache : true
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
                     },
-                    select : {
-                        url : SELECT_TEMPLATE,
-                        forceCache : true
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
                     },
-                    outputSettings : {
-                        url : OUTPUT_SETTINGS_TEMPLATE,
-                        forceCache : true
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
@@ -988,22 +988,22 @@ var decapod = decapod || {};
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                model : defaultPDFExportOptionsModel,
-                listeners : {
-                    afterRender : testHide
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: testHide
                 },
-                resources : {
-                    template : {
-                        url : PDF_EXPORT_OPTIONS_TEMPLATE,
-                        forceCache : true
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
                     },
-                    select : {
-                        url : SELECT_TEMPLATE,
-                        forceCache : true
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
                     },
-                    outputSettings : {
-                        url : OUTPUT_SETTINGS_TEMPLATE,
-                        forceCache : true
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
@@ -1020,22 +1020,22 @@ var decapod = decapod || {};
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                model : defaultPDFExportOptionsModel,
-                listeners : {
-                    afterRender : testHide
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: testHide
                 },
-                resources : {
-                    template : {
-                        url : PDF_EXPORT_OPTIONS_TEMPLATE,
-                        forceCache : true
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
                     },
-                    select : {
-                        url : SELECT_TEMPLATE,
-                        forceCache : true
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
                     },
-                    outputSettings : {
-                        url : OUTPUT_SETTINGS_TEMPLATE,
-                        forceCache : true
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
@@ -1053,26 +1053,26 @@ var decapod = decapod || {};
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                model : defaultPDFExportOptionsModel,
-                listeners : {
-                    afterRender : changeVal,
-                    afterModelChanged : {
-                        listener : assertModelChange,
-                        args : ["{arguments}.0", "{pdfExportOptions}"]
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: changeVal,
+                    afterModelChanged: {
+                        listener: assertModelChange,
+                        args: ["{arguments}.0", "{pdfExportOptions}"]
                     }
                 },
-                resources : {
-                    template : {
-                        url : PDF_EXPORT_OPTIONS_TEMPLATE,
-                        forceCache : true
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
                     },
-                    select : {
-                        url : SELECT_TEMPLATE,
-                        forceCache : true
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
                     },
-                    outputSettings : {
-                        url : OUTPUT_SETTINGS_TEMPLATE,
-                        forceCache : true
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
@@ -1090,26 +1090,26 @@ var decapod = decapod || {};
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                model : defaultPDFExportOptionsModel,
-                listeners : {
-                    afterRender : changeVal,
-                    afterModelChanged : {
-                        listener : assertModelChange,
-                        args : ["{arguments}.0", "{pdfExportOptions}"]
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: changeVal,
+                    afterModelChanged: {
+                        listener: assertModelChange,
+                        args: ["{arguments}.0", "{pdfExportOptions}"]
                     }
                 },
-                resources : {
-                    template : {
-                        url : PDF_EXPORT_OPTIONS_TEMPLATE,
-                        forceCache : true
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
                     },
-                    select : {
-                        url : SELECT_TEMPLATE,
-                        forceCache : true
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
                     },
-                    outputSettings : {
-                        url : OUTPUT_SETTINGS_TEMPLATE,
-                        forceCache : true
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
@@ -1127,26 +1127,26 @@ var decapod = decapod || {};
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                model : defaultPDFExportOptionsModel,
-                listeners : {
-                    "afterRender.trigger" : trigger,
-                    onDisable : {
-                        listener : assertDisable,
-                        priority : "last"
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    "afterRender.trigger": trigger,
+                    onDisable: {
+                        listener: assertDisable,
+                        priority: "last"
                     }
                 },
-                resources : {
-                    template : {
-                        url : PDF_EXPORT_OPTIONS_TEMPLATE,
-                        forceCache : true
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
                     },
-                    select : {
-                        url : SELECT_TEMPLATE,
-                        forceCache : true
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
                     },
-                    outputSettings : {
-                        url : OUTPUT_SETTINGS_TEMPLATE,
-                        forceCache : true
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
@@ -1155,41 +1155,41 @@ var decapod = decapod || {};
         pdfExportOptionsTests.asyncTest("enable", function () {
             jqUnit.expect(5);
             var model = {
-                output : {
-                    selection : "a4",
-                    choices : ["a4", "a5", "letter", "custom"],
-                    names : ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]
+                output: {
+                    selection: "a4",
+                    choices: ["a4", "a5", "letter", "custom"],
+                    names: ["A4 (210x297 mm)", "A5 (148x210 mm)", "Letter (216x279mm)", "Custom"]
                 },
-                outputSettings : {
-                    settings : [{
-                        value : "210",
-                        name : "width",
-                        unit : "mm",
-                        attrs : {
-                            type : "number",
-                            min : "1",
-                            max : "300",
-                            disabled : "disabled"
+                outputSettings: {
+                    settings: [{
+                        value: "210",
+                        name: "width",
+                        unit: "mm",
+                        attrs: {
+                            type: "number",
+                            min: "1",
+                            max: "300",
+                            disabled: "disabled"
                         }
                     }, {
-                        value : "297",
-                        name : "height",
-                        unit : "mm",
-                        attrs : {
-                            type : "number",
-                            min : "1",
-                            max : "300",
-                            disabled : "disabled"
+                        value: "297",
+                        name: "height",
+                        unit: "mm",
+                        attrs: {
+                            type: "number",
+                            min: "1",
+                            max: "300",
+                            disabled: "disabled"
                         }
                     }, {
-                        value : "200",
-                        name : "resolution",
-                        unit : "dpi",
-                        attrs : {
-                            type : "number",
-                            min : "50",
-                            max : "600",
-                            disabled : "disabled"
+                        value: "200",
+                        name: "resolution",
+                        unit: "dpi",
+                        attrs: {
+                            type: "number",
+                            min: "50",
+                            max: "600",
+                            disabled: "disabled"
                         }
                     }]
                 }
@@ -1205,26 +1205,26 @@ var decapod = decapod || {};
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                model : model,
-                listeners : {
-                    "afterRender.trigger" : trigger,
-                    onEnable : {
-                        listener : assertEnable,
-                        priority : "last"
+                model: model,
+                listeners: {
+                    "afterRender.trigger": trigger,
+                    onEnable: {
+                        listener: assertEnable,
+                        priority: "last"
                     }
                 },
-                resources : {
-                    template : {
-                        url : PDF_EXPORT_OPTIONS_TEMPLATE,
-                        forceCache : true
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
                     },
-                    select : {
-                        url : SELECT_TEMPLATE,
-                        forceCache : true
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
                     },
-                    outputSettings : {
-                        url : OUTPUT_SETTINGS_TEMPLATE,
-                        forceCache : true
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
@@ -1241,22 +1241,22 @@ var decapod = decapod || {};
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
-                model : defaultPDFExportOptionsModel,
-                listeners : {
-                    afterRender : assertIsValid
+                model: defaultPDFExportOptionsModel,
+                listeners: {
+                    afterRender: assertIsValid
                 },
-                resources : {
-                    template : {
-                        url : PDF_EXPORT_OPTIONS_TEMPLATE,
-                        forceCache : true
+                resources: {
+                    template: {
+                        url: PDF_EXPORT_OPTIONS_TEMPLATE,
+                        forceCache: true
                     },
-                    select : {
-                        url : SELECT_TEMPLATE,
-                        forceCache : true
+                    select: {
+                        url: SELECT_TEMPLATE,
+                        forceCache: true
                     },
-                    outputSettings : {
-                        url : OUTPUT_SETTINGS_TEMPLATE,
-                        forceCache : true
+                    outputSettings: {
+                        url: OUTPUT_SETTINGS_TEMPLATE,
+                        forceCache: true
                     }
                 }
             });
@@ -1279,11 +1279,11 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The onReady event should have fired", true);
             };
             createTrigger(TRIGGER_CONTAINER, {
-                listeners : {
-                    onReady : assertOnReady,
-                    afterRender : {
-                        listener : start,
-                        priority : "last"
+                listeners: {
+                    onReady: assertOnReady,
+                    afterRender: {
+                        listener: start,
+                        priority: "last"
                     }
                 }
             });
@@ -1296,8 +1296,8 @@ var decapod = decapod || {};
                 start();
             };
             createTrigger(TRIGGER_CONTAINER, {
-                listeners : {
-                    afterFetchResources : assertFetchResources
+                listeners: {
+                    afterFetchResources: assertFetchResources
                 }
             });
         });
@@ -1309,10 +1309,10 @@ var decapod = decapod || {};
                 start();
             };
             createTrigger(TRIGGER_CONTAINER, {
-                listeners : {
-                    afterRender : {
-                        listener : assertRendering,
-                        priority : "last"
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
                     }
                 }
             });
@@ -1333,24 +1333,24 @@ var decapod = decapod || {};
                 that.events.afterRender.addListener(assertRendering);
                 jqUnit.assertTrue("The afterModelChanged event should have fired", true);
                 jqUnit.assertDeepEq("The new Model should be updated", {
-                    testCondition : false
+                    testCondition: false
                 }, newModel);
                 jqUnit.assertFalse("The model's 'testCondition' value should be set to false", that.model.test);
             };
             createTrigger(TRIGGER_CONTAINER, {
-                model : {
-                    testCondition : true
+                model: {
+                    testCondition: true
                 },
-                listeners : {
-                    afterModelChanged : {
-                        listener : assertModelChanged,
-                        args : ["{trigger}", "{arguments}.0"],
-                        priority : "first"
+                listeners: {
+                    afterModelChanged: {
+                        listener: assertModelChanged,
+                        args: ["{trigger}", "{arguments}.0"],
+                        priority: "first"
                     },
-                    "afterRender.initial" : {
-                        listener : setup,
-                        args : ["{trigger}"],
-                        priority : "last"
+                    "afterRender.initial": {
+                        listener: setup,
+                        args: ["{trigger}"],
+                        priority: "last"
                     }
                 }
             });
@@ -1367,18 +1367,18 @@ var decapod = decapod || {};
                 start();
             };
             createTrigger(TRIGGER_CONTAINER, {
-                events : {
-                    triggered : {
-                        event : "afterTriggered"
+                events: {
+                    triggered: {
+                        event: "afterTriggered"
                     }
                 },
-                listeners : {
-                    afterRender : {
-                        listener : clickTrigger,
-                        priority : "last"
+                listeners: {
+                    afterRender: {
+                        listener: clickTrigger,
+                        priority: "last"
                     },
-                    triggered : {
-                        listener : assertEvent
+                    triggered: {
+                        listener: assertEvent
                     }
                 }
             });
@@ -1401,11 +1401,11 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The onReady event should have fired", true);
             };
             createProgress(PROGRESS_CONTAINER, {
-                listeners : {
-                    onReady : assertOnReady,
-                    afterRender : {
-                        listener : start,
-                        priority : "last"
+                listeners: {
+                    onReady: assertOnReady,
+                    afterRender: {
+                        listener: start,
+                        priority: "last"
                     }
                 }
             });
@@ -1419,14 +1419,14 @@ var decapod = decapod || {};
                 jqUnit.assertEquals("The aria-valuemax should be set", "100", that.container.attr("aria-valuemax"));
             };
             createProgress(PROGRESS_CONTAINER, {
-                listeners : {
-                    onReady : {
+                listeners: {
+                    onReady: {
                         listener: assertOnReady,
                         args: ["{progress}"]
                     },
-                    afterRender : {
-                        listener : start,
-                        priority : "last"
+                    afterRender: {
+                        listener: start,
+                        priority: "last"
                     }
                 }
             });
@@ -1439,8 +1439,8 @@ var decapod = decapod || {};
                 start();
             };
             createProgress(PROGRESS_CONTAINER, {
-                listeners : {
-                    afterFetchResources : assertFetchResources
+                listeners: {
+                    afterFetchResources: assertFetchResources
                 }
             });
         });
@@ -1452,10 +1452,10 @@ var decapod = decapod || {};
                 start();
             };
             createProgress(TRIGGER_CONTAINER, {
-                listeners : {
-                    afterRender : {
-                        listener : assertRendering,
-                        priority : "last"
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
                     }
                 }
             });
@@ -1475,8 +1475,8 @@ var decapod = decapod || {};
                 start();
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
-                listeners : {
-                    onReady : assertInit
+                listeners: {
+                    onReady: assertInit
                 }
             });
         });
@@ -1487,9 +1487,9 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The resourceText is filled out", resourceSpec.template.resourceText);
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
-                listeners : {
-                    afterFetchResources : assertFetchResources,
-                    onReady : start
+                listeners: {
+                    afterFetchResources: assertFetchResources,
+                    onReady: start
                 }
             });
         });
@@ -1502,12 +1502,12 @@ var decapod = decapod || {};
                 start();
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
-                model : {
-                    stages : ["books2pages", "ocro2pdf.py"],
-                    currentStage : "ocro2pdf.py"
+                model: {
+                    stages: ["books2pages", "ocro2pdf.py"],
+                    currentStage: "ocro2pdf.py"
                 },
-                listeners : {
-                    onReady : assertSetProgress
+                listeners: {
+                    onReady: assertSetProgress
                 }
             });
         });
@@ -1526,16 +1526,16 @@ var decapod = decapod || {};
                 start();
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
-                model : {
-                    stages : ["books2pages", "ocro2pdf.py"],
-                    currentStage : ""
+                model: {
+                    stages: ["books2pages", "ocro2pdf.py"],
+                    currentStage: ""
                 },
-                listeners : {
-                    onReady : triggerUpdate,
-                    afterModelChanged : {
-                        listener : assertUpdate,
-                        args : ["{detailedProgress}", "{arguments}.0", "{arguments}.2"],
-                        priority : "last"
+                listeners: {
+                    onReady: triggerUpdate,
+                    afterModelChanged: {
+                        listener: assertUpdate,
+                        args: ["{detailedProgress}", "{arguments}.0", "{arguments}.2"],
+                        priority: "last"
                     }
                 }
             });
@@ -1553,16 +1553,16 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The afterModelChanged event shouldn't have fired", false);
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
-                model : {
-                    stages : ["books2pages", "ocro2pdf.py"],
-                    currentStage : ""
+                model: {
+                    stages: ["books2pages", "ocro2pdf.py"],
+                    currentStage: ""
                 },
-                listeners : {
-                    onReady : triggerUpdate,
-                    afterModelChanged : {
-                        listener : assertUpdate,
-                        args : ["{detailedProgress}", "{arguments}.0", "{arguments}.2"],
-                        priority : "last"
+                listeners: {
+                    onReady: triggerUpdate,
+                    afterModelChanged: {
+                        listener: assertUpdate,
+                        args: ["{detailedProgress}", "{arguments}.0", "{arguments}.2"],
+                        priority: "last"
                     }
                 }
             });
@@ -1576,12 +1576,12 @@ var decapod = decapod || {};
                 start();
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
-                model : {
-                    stages : ["books2pages", "ocro2pdf.py"],
-                    currentStage : ""
+                model: {
+                    stages: ["books2pages", "ocro2pdf.py"],
+                    currentStage: ""
                 },
-                listeners : {
-                    onReady : assertFinish
+                listeners: {
+                    onReady: assertFinish
                 }
             });
         });
@@ -1597,20 +1597,20 @@ var decapod = decapod || {};
                 start();
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
-                model : {
-                    stages : ["books2pages", "ocro2pdf.py"],
-                    currentStage : ""
+                model: {
+                    stages: ["books2pages", "ocro2pdf.py"],
+                    currentStage: ""
                 },
-                listeners : {
-                    onReady : assertFinish
+                listeners: {
+                    onReady: assertFinish
                 },
-                components : {
-                    progress : {
-                        options : {
-                            listeners : {
-                                afterProgressHidden : {
-                                    listener : assertHidden,
-                                    args : ["{progress}"]
+                components: {
+                    progress: {
+                        options: {
+                            listeners: {
+                                afterProgressHidden: {
+                                    listener: assertHidden,
+                                    args: ["{progress}"]
                                 }
                             }
                         }
@@ -1636,11 +1636,11 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The onReady event should have fired", true);
             };
             createComplete(COMPLETE_CONTAINER, {
-                listeners : {
-                    onReady : assertOnReady,
-                    afterRender : {
-                        listener : start,
-                        priority : "last"
+                listeners: {
+                    onReady: assertOnReady,
+                    afterRender: {
+                        listener: start,
+                        priority: "last"
                     }
                 }
             });
@@ -1653,8 +1653,8 @@ var decapod = decapod || {};
                 start();
             };
             createComplete(COMPLETE_CONTAINER, {
-                listeners : {
-                    afterFetchResources : assertFetchResources
+                listeners: {
+                    afterFetchResources: assertFetchResources
                 }
             });
         });
@@ -1666,10 +1666,10 @@ var decapod = decapod || {};
                 start();
             };
             createComplete(COMPLETE_CONTAINER, {
-                listeners : {
-                    afterRender : {
-                        listener : assertRendering,
-                        priority : "last"
+                listeners: {
+                    afterRender: {
+                        listener: assertRendering,
+                        priority: "last"
                     }
                 }
             });
@@ -1682,7 +1682,7 @@ var decapod = decapod || {};
             that.events.afterModelChanged.addListener(function (newModel) {
                 jqUnit.assertTrue("The afterModelChanged event should have fired", true);
                 jqUnit.assertDeepEq("The newModel should be returned", {
-                    downloadURL : newURL
+                    downloadURL: newURL
                 }, newModel);
                 jqUnit.assertEquals("The model should be updated with the new url", newURL, that.model.downloadURL);
                 start();
@@ -1702,14 +1702,14 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The onReady event should have fired", true);
             };
             createControls(CONTROLS_CONTAINER, {
-                listeners : {
-                    onReady : assertOnReady,
-                    afterFetchResources : {
-                        listener : function () {
+                listeners: {
+                    onReady: assertOnReady,
+                    afterFetchResources: {
+                        listener: function () {
                             jqUnit.assertTrue("The component should have initialized", true);
                             start();
                         },
-                        priority : "last"
+                        priority: "last"
                     }
                 }
             });
@@ -1724,8 +1724,8 @@ var decapod = decapod || {};
                 start();
             };
             createControls(CONTROLS_CONTAINER, {
-                listeners : {
-                    afterFetchResources : assertFetchResources
+                listeners: {
+                    afterFetchResources: assertFetchResources
                 }
             });
         });
@@ -1738,10 +1738,10 @@ var decapod = decapod || {};
                 start();
             };
             createControls(CONTROLS_CONTAINER, {
-                listeners : {
-                    afterRender : {
-                        listener : assertRender,
-                        priority : "last"
+                listeners: {
+                    afterRender: {
+                        listener: assertRender,
+                        priority: "last"
                     }
                 }
             });
@@ -1750,11 +1750,11 @@ var decapod = decapod || {};
         controlsTests.asyncTest("Change Model - show progress", function () {
             jqUnit.expect(5);
             var model = {
-                showExportStart : false,
-                showExportError : false,
+                showExportStart: false,
+                showExportError: false,
                 showFileError: false,
-                showExportProgress : true,
-                showExportComplete : false,
+                showExportProgress: true,
+                showExportComplete: false,
                 fileError: false
             };
             var assertRender = function (that) {
@@ -1765,8 +1765,8 @@ var decapod = decapod || {};
                 jqUnit.assertDeepEq("The model should be updated", model, newModel);
             };
             createControls(CONTROLS_CONTAINER, {
-                listeners : {
-                    afterRender : function (that) {
+                listeners: {
+                    afterRender: function (that) {
                         if (that["**-renderer-trigger-0"]) {
                             that.events.afterModelChanged.addListener(assertModel);
                             that.updateModel(model);
@@ -1782,11 +1782,11 @@ var decapod = decapod || {};
         controlsTests.asyncTest("Change Model - show complete", function () {
             jqUnit.expect(6);
             var model = {
-                showExportStart : false,
-                showExportError : false,
+                showExportStart: false,
+                showExportError: false,
                 showFileError: false,
-                showExportProgress : false,
-                showExportComplete : true,
+                showExportProgress: false,
+                showExportComplete: true,
                 fileError: false
             };
             var assertRender = function (that) {
@@ -1797,8 +1797,8 @@ var decapod = decapod || {};
                 jqUnit.assertDeepEq("The model should be updated", model, newModel);
             };
             createControls(CONTROLS_CONTAINER, {
-                listeners : {
-                    afterRender : function (that) {
+                listeners: {
+                    afterRender: function (that) {
                         if (that["**-renderer-trigger-0"]) {
                             that.events.afterModelChanged.addListener(assertModel);
                             that.updateModel(model);
@@ -1814,11 +1814,11 @@ var decapod = decapod || {};
         controlsTests.asyncTest("Change Model - show export error message", function () {
             jqUnit.expect(3);
             var model = {
-                showExportStart : false,
-                showExportError : true,
+                showExportStart: false,
+                showExportError: true,
                 showFileError: false,
-                showExportProgress : false,
-                showExportComplete : false,
+                showExportProgress: false,
+                showExportComplete: false,
                 fileError: false
             };
             var assertRender = function (that) {
@@ -1833,8 +1833,8 @@ var decapod = decapod || {};
                 jqUnit.assertDeepEq("The model should be updated", model, newModel);
             };
             createControls(CONTROLS_CONTAINER, {
-                listeners : {
-                    afterRender : function (that) {
+                listeners: {
+                    afterRender: function (that) {
                         if (that["**-renderer-trigger-0"]) {
                             that.events.afterModelChanged.addListener(assertModel);
                             that.updateModel(model);
@@ -1849,11 +1849,11 @@ var decapod = decapod || {};
         controlsTests.asyncTest("Change Model - show file error message", function () {
             jqUnit.expect(3);
             var model = {
-                showExportStart : false,
-                showExportError : false,
+                showExportStart: false,
+                showExportError: false,
                 showFileError: true,
-                showExportProgress : false,
-                showExportComplete : false,
+                showExportProgress: false,
+                showExportComplete: false,
                 fileError: true
             };
             var assertRender = function (that) {
@@ -1867,8 +1867,8 @@ var decapod = decapod || {};
                 jqUnit.assertDeepEq("The model should be updated", model, newModel);
             };
             createControls(CONTROLS_CONTAINER, {
-                listeners : {
-                    afterRender : function (that) {
+                listeners: {
+                    afterRender: function (that) {
                         if (that["**-renderer-trigger-0"]) {
                             that.events.afterModelChanged.addListener(assertModel);
                             that.updateModel(model);
@@ -1899,16 +1899,16 @@ var decapod = decapod || {};
                 start();
             };
             createControls(CONTROLS_CONTAINER, {
-                events : {
-                    testClick : {
-                        event : "onExportTrigger"
+                events: {
+                    testClick: {
+                        event: "onExportTrigger"
                     }
                 },
-                listeners : {
-                    afterRender : fireClick,
-                    testClick : {
-                        listener : assertClick,
-                        priority : "last"
+                listeners: {
+                    afterRender: fireClick,
+                    testClick: {
+                        listener: assertClick,
+                        priority: "last"
                     }
                 }
             });

@@ -57,7 +57,7 @@ var decapod = decapod || {};
     
     decapod.capturer.bindCaptureKeypress = function (that) {
         $(document).keypress(function (event) {
-            if(event.charCode === 99) { // the char code for the 'c' key
+            if (event.charCode === 99) { // the char code for the 'c' key
                 that.captureControl.container.click();
             }
         });
@@ -134,8 +134,8 @@ var decapod = decapod || {};
     };
     
     decapod.capturer.addAria = function (that) {
-        that.captureControl.container.attr("aria-live", "polite")
-        that.exportControl.container.attr("aria-live", "polite")
+        that.captureControl.container.attr("aria-live", "polite");
+        that.exportControl.container.attr("aria-live", "polite");
     };
     
     decapod.capturer.finalInit = function (that) {

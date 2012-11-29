@@ -64,7 +64,7 @@ var decapod = decapod || {};
             valuetext: "{decapod.stereo}.options.strings.progress"
         },
         styles: {
-            progress: "ds-stereo-progress",
+            progress: "ds-stereo-progress"
         }
     });
 
@@ -78,10 +78,8 @@ var decapod = decapod || {};
                     "aria-valuenow": model.value,
                     "aria-valuemax": model.max,
                     "aria-valuemin": 0,
-                    "aria-valuetext": fluid.stringTemplate(
-                        that.options.strings.valuetext, model)
-                    }
-                );
+                    "aria-valuetext": fluid.stringTemplate(that.options.strings.valuetext, model)
+                });
         that.container.prepend(progress);
     };
 
