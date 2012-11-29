@@ -78,6 +78,9 @@ decapod.globalMessages = {
     exporter_importStatus_130: "%numErrors files had an invalid file type",
     exporter_importStatus_250: "%numErrors files were ignored by the server. May have not been valid image type.",
     
+    // There is a bug in the Fluid Infusion Uploader that prevents this from working properly.
+    // The work around is to adjust the text in the exporter.html file.
+    // See: http://issues.fluidproject.org/browse/DECA-289
     exporter_uploader_browseFiles: "Browse Files",
     
     exporter_title: "PDF and Image Export",
