@@ -76,10 +76,9 @@ var decapod = decapod || {};
         });
     };
     
-    decapod.testUtils.exportType.assertexportInfoRender = function (that) {
-        var str = that.options.strings;
-        jqUnit.assertEquals("The format name should have been rendered", str.name, that.locate("name").text());
-        jqUnit.assertEquals("The description should be rendered", str.description, that.locate("description").text());
+    decapod.testUtils.exportType.assertexportInfoRender = function (that, expectedName, expectedDesc) {
+        jqUnit.assertEquals("The format name should have been rendered", expectedName, that.locate("name").text());
+        jqUnit.assertEquals("The description should be rendered", expectedDesc, that.locate("description").text());
     };
     
     decapod.testUtils.exportType.assertPDFOptionsRender = function (that) {
