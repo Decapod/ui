@@ -46,9 +46,8 @@ var decapod = decapod || {};
         styles: {
             browseMessage: "ds-stereo-browseMessage"
         },
-        strings: {
-            browse: "{decapod.stereo}.options.strings.browse"
-        },
+        parentBundle: "{globalBundle}",
+        strings: {},
         listeners: {
             "{decapod.stereo}.events.onProcessStart": "{that}.disable",
             "{decapod.stereo}.events.onProcessStartError": "{that}.enable",
@@ -57,7 +56,7 @@ var decapod = decapod || {};
         disabledOnInit: false,
         protoTree: {
             browseLabel: {
-                messagekey: "browse"
+                messagekey: "stereo_browse"
             },
             browseInput: {
                 decorators: {
@@ -90,17 +89,14 @@ var decapod = decapod || {};
 
     fluid.defaults("decapod.stereo.browse.captures", {
         gradeNames: ["autoInit", "decapod.stereo.browse"],
-        strings: {
-            browseMessage: "{decapod.stereo}.options.strings.step1"
-        },
         url: "{decapod.stereo}.options.urls.uploadCaptures",
         protoTree: {
             browseMessage: {
-                messagekey: "browseMessage",
+                messagekey: "stereo_step1",
                 decorators: {addClass: "{styles}.browseMessage"}
             },
             browseLabel: {
-                messagekey: "browse"
+                messagekey: "stereo_browse"
             },
             browseInput: {
                 decorators: {
@@ -118,9 +114,6 @@ var decapod = decapod || {};
 
     fluid.defaults("decapod.stereo.browse.calibration", {
         gradeNames: ["autoInit", "decapod.stereo.browse"],
-        strings: {
-            browseMessage: "{decapod.stereo}.options.strings.step2"
-        },
         listeners: {
             "{decapod.stereo}.events.onCapturesUploadSuccess": "{that}.enable",
             "{decapod.stereo}.events.onCapturesFileSelected": "{that}.disable",
@@ -132,11 +125,11 @@ var decapod = decapod || {};
         url: "{decapod.stereo}.options.urls.uploadCalibration",
         protoTree: {
             browseMessage: {
-                messagekey: "browseMessage",
+                messagekey: "stereo_step2",
                 decorators: {addClass: "{styles}.browseMessage"}
             },
             browseLabel: {
-                messagekey: "browse"
+                messagekey: "stereo_browse"
             },
             browseInput: {
                 decorators: {
@@ -154,13 +147,6 @@ var decapod = decapod || {};
 
     fluid.defaults("decapod.stereo.browse.colourPicker", {
         gradeNames: ["autoInit", "decapod.stereo.browse"],
-        strings: {
-            browseMessage: "{decapod.stereo}.options.strings.step3",
-            browse: "{decapod.stereo}.options.strings.colourPicker",
-            instructions: "{decapod.stereo}.options.strings.instructions",
-            instructionsStep1: "{decapod.stereo}.options.strings.instructionsStep1",
-            instructionsStep2: "{decapod.stereo}.options.strings.instructionsStep2"
-        },
         selectors: {
             instructions: ".dc-colorPicker-instructions",
             instructionsStep1: ".dc-colorPicker-instructionsStep1",
@@ -192,23 +178,23 @@ var decapod = decapod || {};
         url: "{decapod.stereo}.options.urls.colourPicker",
         protoTree: {
             instructions: {
-                messagekey: "instructions"
+                messagekey: "stereo_instructions"
             },
             instructionsStep1: {
-                messagekey: "instructionsStep1"
+                messagekey: "stereo_instructionsStep1"
             },
             instructionsStep2: {
-                messagekey: "instructionsStep2"
+                messagekey: "stereo_instructionsStep2"
             },
             button: {
-                messagekey: "browse",
+                messagekey: "stereo_colourPicker",
                 decorators: [{
                     type: "fluid",
                     func: "decapod.stereo.browse.input.colourPicker"
                 }, {addClass: "{styles}.button"}]
             },
             browseMessage: {
-                messagekey: "browseMessage",
+                messagekey: "stereo_step3",
                 decorators: {addClass: "{styles}.browseMessage"}
             }
         }

@@ -34,6 +34,7 @@ var decapod = decapod || {};
         gradeNames: ["autoInit", "fluid.rendererComponent"],
         finalInitFunction: "decapod.stereo.finalInit",
         preInitFunction: "decapod.stereo.preInit",
+        parentBundle: "{globalBundle}",
         selectors: {
             title: ".dc-stereo-title",
             help: ".dc-stereo-help",
@@ -110,7 +111,7 @@ var decapod = decapod || {};
             help: {
                 target: "${help}",
                 linktext: {
-                    messagekey: "help"
+                    messagekey: "stereo_help"
                 },
                 decorators: {
                     type: "attrs",
@@ -237,9 +238,8 @@ var decapod = decapod || {};
         gradeNames: ["fluid.rendererComponent", "autoInit"],
         renderOnInit: true,
         preInitFunction: "decapod.stereo.status.preInit",
-        strings: {
-            initialMessage: "{decapod.stereo}.options.strings.initialMessage"
-        },
+        parentBundle: "{globalBundle}",
+        strings: {},
         selectors: {
             initialMessage: ".dc-stereo-status-initialMessage",
             message: ".dc-stereo-status-message"
@@ -267,7 +267,7 @@ var decapod = decapod || {};
         },
         protoTree: {
             initialMessage: {
-                messagekey: "initialMessage"
+                messagekey: "stereo_initialMessage"
             }
         }
     });
