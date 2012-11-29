@@ -39,7 +39,7 @@ decapod.globalMessages = {
     exporter_decapod_exportControls_fileError_desc: "They may not have been valid image files.",
     exporter_decapod_exportControls_exportError_desc: "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
     
-    exporter_outputSettings_errorMessage : "Enter value from %0 to %1.",
+    exporter_outputSettings_errorMessage: "Enter value from %0 to %1.",
     
     exporter_select_label: "Output",
 

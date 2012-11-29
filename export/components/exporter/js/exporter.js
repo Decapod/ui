@@ -306,12 +306,12 @@ var decapod = decapod || {};
                 container: "{exporter}.dom.importStatusContainer",
                 options: {
                     strings: {
-                    	"total": decapod.globalMessages.exporter_importStatus_total,
-                	    "-100": decapod.globalMessages.exporter_importStatus_100,
-						"-110": decapod.globalMessages.exporter_importStatus_110,
-						"-120": decapod.globalMessages.exporter_importStatus_120,
-					    "-130": decapod.globalMessages.exporter_importStatus_130,
-					    "-250": decapod.globalMessages.exporter_importStatus_250,
+                        "total": decapod.globalMessages.exporter_importStatus_total,
+                        "-100": decapod.globalMessages.exporter_importStatus_100,
+                        "-110": decapod.globalMessages.exporter_importStatus_110,
+                        "-120": decapod.globalMessages.exporter_importStatus_120,
+                        "-130": decapod.globalMessages.exporter_importStatus_130,
+                        "-250": decapod.globalMessages.exporter_importStatus_250
                     },
                     ignoreFromTotals: ["-200", "-210", "-220", "-230", "-240", "-250", "-260", "-270", "-280", "-290"]
                 }
