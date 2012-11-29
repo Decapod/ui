@@ -139,7 +139,7 @@ var decapod = decapod || {};
                         listener: function (that) {
                             jqUnit.assertNotEquals("The href of the download iframe should have been set", that.locate("downloadFrame").attr("src"), "");
                             jqUnit.assertFalse("The export button should have been enabled", that.locate("exportButton").attr("aria-disabled"));
-                            jqUnit.assertEquals("The export button text should have been set back", that.options.strings.exportButton, that.locate("exportButton").text());
+                            jqUnit.assertEquals("The export button text should have been set back", decapod.globalMessages.capturer_exportButton, that.locate("exportButton").text());
                             jqUnit.isVisible("The export description should have been visible", that.locate("exportDesc"));
                             start();
                         },
@@ -164,7 +164,7 @@ var decapod = decapod || {};
                     onDelete: {
                         listener: function (that) {
                             jqUnit.assertUndefined("No images should have been displayed", that.captureReviewer.locate("captureIMG").attr("src"));
-                            jqUnit.assertEquals("The deleted message should have been displayed", fluid.stringTemplate(that.captureReviewer.options.strings.deletedIndex, {0: "1"}), that.captureReviewer.locate("captureIndex").text());
+                            jqUnit.assertEquals("The deleted message should have been displayed", fluid.stringTemplate(decapod.globalMessages.capturer_captureReviewer_deletedIndex, {0: "1"}), that.captureReviewer.locate("captureIndex").text());
                             jqUnit.notVisible("The export description should have been hidden", that.locate("exportDesc"));
                             start();
                         },

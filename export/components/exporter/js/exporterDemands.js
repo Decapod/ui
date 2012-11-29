@@ -270,7 +270,10 @@ var decapod = decapod || {};
     fluid.demands("decapod.imagePDF.pdfExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
         funcName: "decapod.pdfExporter",
         options: {
-            strings: "{exporter}.options.strings.pdfs.formatStrings.0",
+            strings: {
+            	name: decapod.globalMessages.exporter_imagePDF_name,
+            	description: decapod.globalMessages.exporter_imagePDF_description
+            },
             model: {
                 exportStages: ["books2pages", "ocro2pdf.py"]
             },
@@ -304,7 +307,10 @@ var decapod = decapod || {};
     fluid.demands("decapod.ocrPDF.pdfExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
         funcName: "decapod.pdfExporter",
         options: {
-            strings: "{exporter}.options.strings.pdfs.formatStrings.1",
+            strings: {
+            	name: decapod.globalMessages.exporter_ocrPDF_name,
+            	description: decapod.globalMessages.exporter_ocrPDF_description
+            },
             model: {
                 exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "ocro2pdf.py"]
             },
@@ -338,7 +344,10 @@ var decapod = decapod || {};
     fluid.demands("decapod.tracedPDF.pdfExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
         funcName: "decapod.pdfExporter",
         options: {
-            strings: "{exporter}.options.strings.pdfs.formatStrings.2",
+            strings: {
+            	name: decapod.globalMessages.exporter_tracedPDF_name,
+            	description: decapod.globalMessages.exporter_tracedPDF_description
+            },
             model: {
                 exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "binned-inter", "ocro2pdf.py"],
                 exportOptions: {
@@ -381,7 +390,10 @@ var decapod = decapod || {};
     fluid.demands("decapod.fontMatchedPDF.pdfExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
         funcName: "decapod.pdfExporter",
         options: {
-            strings: "{exporter}.options.strings.pdfs.formatStrings.3",
+            strings: {
+            	name: decapod.globalMessages.exporter_fontMatchedPDF_name,
+            	description: decapod.globalMessages.exporter_fontMatchedPDF_description
+            },
             model: {
                 exportStages: ["books2pages", "pages2lines", "lines2fsts", "fsts2text", "binned-inter", "fontGrouper.py", "ocro2pdf.py"],
                 exportOptions: {
@@ -424,7 +436,10 @@ var decapod = decapod || {};
     fluid.demands("decapod.tiff.imageExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
         funcName: "decapod.imageExporter",
         options: {
-            strings: "{exporter}.options.strings.images.formatStrings.0",
+            strings: {
+            	name: decapod.globalMessages.exporter_tiff_name,
+            	description: decapod.globalMessages.exporter_tiff_description
+            },
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
                 "afterRender.afterTIFFRender": "{exporter}.events.afterTIFFRender",
@@ -455,7 +470,10 @@ var decapod = decapod || {};
     fluid.demands("decapod.png.imageExporter", ["decapod.exporter", "decapod.exportFormatGroup"], {
         funcName: "decapod.imageExporter",
         options: {
-            strings: "{exporter}.options.strings.images.formatStrings.1",
+            strings: {
+            	name: decapod.globalMessages.exporter_png_name,
+            	description: decapod.globalMessages.exporter_png_description
+            },
             listeners: {
                 "afterExportComplete.finishExport": "{exporter}.finishExport",
                 "afterRender.afterPNGRender": "{exporter}.events.afterPNGRender",

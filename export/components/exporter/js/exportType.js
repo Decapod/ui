@@ -173,10 +173,6 @@ var decapod = decapod || {};
             name : ".dc-exportInfo-name",
             description : ".dc-exportInfo-description"
         },
-        strings : {
-            name : "Format type label",
-            description : "A delectable medley of bits and bytes to satisfy every platform"
-        },
         events : {
             afterFetchResources : null,
             onReady : null
@@ -317,9 +313,6 @@ var decapod = decapod || {};
                 settings : [] //in the form {value: "", name: "", unit: "", attrs: {}}
             }
         },
-        strings : {
-            outputLabel : "Output"
-        },
         events : {
             afterFetchResources : null,
             afterModelChanged : null,
@@ -369,9 +362,6 @@ var decapod = decapod || {};
                         },
                         "{pdfExportOptions}.events.onDisable" : "{select}.disable",
                         "{pdfExportOptions}.events.onEnable" : "{select}.enable"
-                    },
-                    strings : {
-                        label : "{pdfExportOptions}.options.strings.outputLabel"
                     }
                 }
             },
@@ -605,7 +595,7 @@ var decapod = decapod || {};
                     },
                     unit : "${{setting}.unit}",
                     errorMessage : {
-                        messagekey : "errorMessage",
+                        messagekey : "exporter_outputSettings_errorMessage",
                         // Work around for FLUID-4737, passing in the arguments in the array style instead of passing in an object directly
                         args : ["{settingVal}.attrs.min", "{settingVal}.attrs.max"]
 
@@ -630,10 +620,6 @@ var decapod = decapod || {};
         repeatingSelectors : ["settings"],
         model : {
             settings : [] //in the form {value: "", name: "", unit: "", attrs: {}}
-        },
-        strings : {
-            // Work around for FLUID-4737. Using the array positions instead of %min and %max
-            errorMessage : "Enter value from %0 to %1."
         },
         styles : {
             invalidEntry : "ds-outputSettings-invalidEntry"
@@ -702,8 +688,8 @@ var decapod = decapod || {};
                                 model : {
                                     currentStatus : "EXPORT_ERROR",
                                     "EXPORT_ERROR" : {
-                                        name : "Error creating export",
-                                        description : "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
+                                        name : decapod.globalMessages.exporter_imageExportStatus_exportError_name,
+                                        description : decapod.globalMessages.exporter_imageExportStatus_exportError_description,
                                         style : "ds-exporter-status-error"
                                     }
                                 }
@@ -723,8 +709,8 @@ var decapod = decapod || {};
                                 model : {
                                     currentStatus : "FILES_IGNORED",
                                     "FILES_IGNORED": {
-                                        name : "Some files were ignored",
-                                        description : "They may not have been valid image files.",
+                                        name : decapod.globalMessages.exporter_imageExportStatus_filesIgnored_name,
+                                        description : decapod.globalMessages.exporter_imageExportStatus_filesIgnored_description,
                                         style : "ds-exporter-status-error"
                                     }
                                 }
@@ -825,13 +811,6 @@ var decapod = decapod || {};
             exportError : ".dc-exportControls-exportError",
             fileError : ".dc-exportControls-fileError"
         },
-        strings : {
-            trigger : "Start Export",
-            progressMessage : "Export Progress",
-            progressWarning: "Note: Refreshing the browser will cancel the export.",
-            download : "Download",
-            restart : "Start Over"
-        },
         events : {
             afterFetchResources : null,
             afterModelChanged : null,
@@ -920,7 +899,7 @@ var decapod = decapod || {};
                 },
                 falseTree : {
                     trigger : {
-                        messagekey : "trigger",
+                        messagekey : "exporter_exportControls_trigger_trigger",
                         decorators : {
                             type : "attrs",
                             attributes : {
@@ -931,7 +910,7 @@ var decapod = decapod || {};
                 },
                 trueTree : {
                     trigger : {
-                        messagekey : "trigger",
+                        messagekey : "exporter_exportControls_trigger_trigger",
                         decorators : [{
                             type : "jQuery",
                             func : "click",
@@ -999,9 +978,6 @@ var decapod = decapod || {};
         selectors : {
             trigger : ".dc-exportControls-trigger-exportControl"
         },
-        strings : {
-            trigger : "Start Export"
-        },
         events : {
             afterFetchResources : null,
             afterModelChanged : null,
@@ -1032,10 +1008,10 @@ var decapod = decapod || {};
     decapod.exportControls.progress.produceTree = function (that) {
         return {
             message : {
-                messagekey : "message"
+                messagekey : "exporter_exportControls_progress_message"
             },
             warning: {
-                messagekey: "warning"
+                messagekey: "exporter_exportControls_progress_warning"
             }
         };
     };
@@ -1067,10 +1043,6 @@ var decapod = decapod || {};
         selectors : {
             message : ".dc-exportControls-progress-message",
             warning: ".dc-exportControls-warning"
-        },
-        strings : {
-            message : "Export Progress",
-            warning: "Warning Message"
         },
         events : {
             afterFetchResources : null,
@@ -1180,10 +1152,10 @@ var decapod = decapod || {};
             warning: ".dc-exportControls-warning"
         },
         strings : {
-            initialProgressMessage : "Creating export...",
-            inProgressMessage : "Creating export... Step %step of %steps.",
-            completeProgressMessage : "Creating export... Done!",
-            warning: "Warning Message"
+            initialProgressMessage : decapod.globalMessages.exporter_exportControls_detailedProgress_initialProgressMessage,
+            inProgressMessage : decapod.globalMessages.exporter_exportControls_detailedProgress_inProgressMessage,
+            completeProgressMessage : decapod.globalMessages.exporter_exportControls_detailedProgress_completeProgressMessage,
+            warning: decapod.globalMessages.exporter_exportControls_detailedProgress_warning
         },
         events : {
             afterFetchResources : null,
@@ -1214,7 +1186,7 @@ var decapod = decapod || {};
                         displayElement : "{detailedProgress}.dom.progress"
                     },
                     strings : {
-                        ariaDoneText : "{detailedProgress}.options.strings.completeProgressMessage"
+                        ariaDoneText : decapod.globalMessages.exporter_exportControls_detailedProgress_completeProgressMessage
                     },
                     initiallyHidden : false,
                     listeners: {
@@ -1256,7 +1228,7 @@ var decapod = decapod || {};
         return {
             download : {
                 linktext : {
-                    messagekey : "download"
+                    messagekey : "exporter_exportControls_complete_download"
                 },
                 target : "${downloadURL}",
                 decorators: {
@@ -1267,7 +1239,7 @@ var decapod = decapod || {};
                 }
             },
             restart : {
-                messagekey : "restart"
+                messagekey : "exporter_exportControls_complete_restart"
             }
         };
     };
@@ -1296,10 +1268,6 @@ var decapod = decapod || {};
         selectors : {
             download : ".dc-exportControls-complete-download",
             restart : ".dc-exportControls-complete-restart"
-        },
-        strings : {
-            download : "Download",
-            restart : "Start Over"
         },
         events : {
             afterModelChanged : null,
