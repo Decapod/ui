@@ -61,7 +61,7 @@ var decapod = decapod || {};
             jqUnit.assertEquals("The value should be set", setting.value, valueElm.val());
             jqUnit.assertEquals("The unit should be set", setting.unit, unitElms.eq(idx).text());
             // due to a work around for FLUID-4737, have to adjust the templating to use the array style.
-            jqUnit.assertEquals("The errorMessage should be set", fluid.stringTemplate(that.options.strings.errorMessage, [setting.attrs.min, setting.attrs.max]), errorElms.eq(idx).text());
+            jqUnit.assertEquals("The errorMessage should be set", fluid.stringTemplate(decapod.globalMessages.exporter_outputSettings_errorMessage, [setting.attrs.min, setting.attrs.max]), errorElms.eq(idx).text());
             $.each(setting.attrs, function (attr, val) {
                 jqUnit.assertEquals("The " + attr + " should be set", val, valueElm.attr(attr));
             }); 
@@ -88,16 +88,14 @@ var decapod = decapod || {};
     };
     
     decapod.testUtils.exportType.assertTriggerRender = function (that) {
-        var str = that.options.strings;
         var trigger = that.locate("trigger");
-        jqUnit.assertEquals("The export button should be rendered", str.trigger, trigger.text());
+        jqUnit.assertEquals("The export button should be rendered", decapod.globalMessages.exporter_exportControls_trigger_trigger, trigger.text());
         jqUnit.isVisible("The export control should be visible", trigger);
     };
     
     decapod.testUtils.exportType.assertProgressRender = function (that) {
-        var str = that.options.strings;
-        jqUnit.assertEquals("The progress text should be rendered", str.message, that.locate("message").text());
-        jqUnit.assertEquals("The warning text should be rendered", str.warning, that.locate("warning").text());
+        jqUnit.assertEquals("The progress text should be rendered", decapod.globalMessages.exporter_exportControls_progress_message, that.locate("message").text());
+        jqUnit.assertEquals("The warning text should be rendered", decapod.globalMessages.exporter_exportControls_progress_warning, that.locate("warning").text());
     };
     
     decapod.testUtils.exportType.assertFluidProgressState = function (that, percent, label) {
@@ -106,11 +104,10 @@ var decapod = decapod || {};
     };
     
     decapod.testUtils.exportType.assertCompleteRender = function (that) {
-        var str = that.options.strings;
         var downloadHREF = that.locate("download").attr("href").replace($(location).attr('href'), '');
-        jqUnit.assertEquals("The download text should be rendered", str.download, that.locate("download").text());
+        jqUnit.assertEquals("The download text should be rendered", decapod.globalMessages.exporter_exportControls_complete_download, that.locate("download").text());
         jqUnit.assertEquals("The download url should be set", that.model.downloadURL, downloadHREF);
-        jqUnit.assertEquals("The restart text should be set", str.restart, that.locate("restart").text());
+        jqUnit.assertEquals("The restart text should be set", decapod.globalMessages.exporter_exportControls_complete_restart, that.locate("restart").text());
     };
     
     decapod.testUtils.exportType.assertShowTriggerControls = function (that) {
