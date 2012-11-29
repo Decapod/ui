@@ -11,6 +11,7 @@
         <!-- Required JavaScript modules for the Exporter component. -->
         <script type="text/javascript" src="../../lib/infusion/MyInfusion.js"></script>
         <script type="text/javascript" src="../../core/js/decapodContext.js"></script>
+        <script type="text/javascript" src="../../core/js/messages.js"></script>
         <script type="text/javascript" src="../../core/js/decapodRequestsDemands.js"></script>
         <script type="text/javascript" src="../../core/js/decapodRequests.js"></script>
         <script type="text/javascript" src="../../core/js/eventBinder.js"></script> 
@@ -129,20 +130,30 @@
                     }
                 },
                 strings: {
-                    title: "Stereo 3D Dewarp",
-                    start: "Dewarp",
-                    ready: "%captures captures found.",
-                    calibrationReady: "Calibration information found.",
-                    readyToDewarp: "Ready to dewarp.",
-                    complete: "Dewarping complete.",
-                    progress: "Dewarping catpure %value of %max.",
-                    colourPicker: "Pick Colour",
-                    step1: "Step 1: Choose Stereo 3D Captures",
-                    step2: "Step 2: Choose Stereo 3D Calibration Information",
-                    step3: "Step 3: Select boundary colour",
-                    instructions: "Instructions - The colour picker expects 2 mouse clicks:",
-                    instructionsStep1: "First mouse click chooses the page seperator colour.",
-                    instructionsStep2: "Second mouse click chooses the background colour."
+                    initialMessage: decapod.globalMessages.stereo_initialMessage,
+                    title: decapod.globalMessages.stereo_title_dewarp,
+                    start: decapod.globalMessages.stereo_start_dewarp,
+                    ready: decapod.globalMessages.stereo_ready_dewarp,
+                    complete: decapod.globalMessages.stereo_complete_dewarp,
+                    working: decapod.globalMessages.stereo_working_dewarp,
+                    help: decapod.globalMessages.stereo_help,
+                    browse: decapod.globalMessages.stereo_browse,
+                    download: decapod.globalMessages.stereo_download,
+                    startOver: decapod.globalMessages.stereo_startOver,
+                    progress: decapod.globalMessages.stereo_progress_dewarp,
+                    BAD_ZIP: decapod.globalMessages.stereo_BAD_ZIP,
+                    NO_STEREO_IMAGES: decapod.globalMessages.stereo_NO_STEREO_IMAGES,
+                    NOT_ENOUGH_IMAGES: decapod.globalMessages.stereo_NOT_ENOUGH_IMAGES,
+                    error: decapod.globalMessages.stereo_error,
+                    calibrationReady: decapod.globalMessages.stereo_calibrationReady,
+                    readyToDewarp: decapod.globalMessages.stereo_readyToDewarp,
+                    colourPicker: decapod.globalMessages.stereo_colourPicker,
+                    step1: decapod.globalMessages.stereo_step1,
+                    step2: decapod.globalMessages.stereo_step2,
+                    step3: decapod.globalMessages.stereo_step3,
+                    instructions: decapod.globalMessages.stereo_instructions,
+                    instructionsStep1: decapod.globalMessages.stereo_instructionsStep1,
+                    instructionsStep2: decapod.globalMessages.stereo_instructionsStep2
                 },
                 urls: {
                     uploadCaptures: "../../captures",

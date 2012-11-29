@@ -11,6 +11,7 @@
         <!-- Required JavaScript modules for the Exporter component. -->
         <script type="text/javascript" src="../../lib/infusion/MyInfusion.js"></script>
         <script type="text/javascript" src="../../core/js/decapodContext.js"></script>
+        <script type="text/javascript" src="../../core/js/messages.js"></script>
         <script type="text/javascript" src="../../core/js/decapodRequestsDemands.js"></script>
         <script type="text/javascript" src="../../core/js/decapodRequests.js"></script>
         <script type="text/javascript" src="../../core/js/eventBinder.js"></script> 
@@ -46,11 +47,21 @@
         <script>
             decapod.calibrator(".dc-stereo", {
                 strings: {
-                    title: "Stereo 3D Calibration",
-                    start: "Calibrate",
-                    ready: "Ready to calibrate.",
-                    complete: "Calibration complete.",
-                    working: "Creating calibration data..."
+                    initialMessage: decapod.globalMessages.stereo_initialMessage,
+                    title: decapod.globalMessages.stereo_title_calibration,
+                    start: decapod.globalMessages.stereo_start_calibration,
+                    ready: decapod.globalMessages.stereo_ready_calibration,
+                    complete: decapod.globalMessages.stereo_complete_calibration,
+                    working: decapod.globalMessages.stereo_working_calibration,
+                    help: decapod.globalMessages.stereo_help,
+                    browse: decapod.globalMessages.stereo_browse,
+                    download: decapod.globalMessages.stereo_download,
+                    startOver: decapod.globalMessages.stereo_startOver,
+                    progress: decapod.globalMessages.stereo_progress_calibration,
+                    BAD_ZIP: decapod.globalMessages.stereo_BAD_ZIP,
+                    NO_STEREO_IMAGES: decapod.globalMessages.stereo_NO_STEREO_IMAGES,
+                    NOT_ENOUGH_IMAGES: decapod.globalMessages.stereo_NOT_ENOUGH_IMAGES,
+                    error: decapod.globalMessages.stereo_error
                 },
                 urls: {
                     upload: "../../images",
