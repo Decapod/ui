@@ -123,7 +123,43 @@ decapod.globalMessages = {
     capturer_captureReviewer_deletedMessage: "Press 'Capture' button to continue capturing.",
     capturer_captureReviewer_del: "Delete",
     
-    core_status: "Refresh"
+    core_status: "Refresh",
+
+    // Stereo 3D Common
+    stereo_initialMessage: "Select \"Browse Files\" button to choose archive.",
+    stereo_help: "Help",
+    stereo_browse: "Browse Files",
+    stereo_download: "Download",
+    stereo_startOver: "Restart",
+    stereo_BAD_ZIP: "The zip file is invalid.",
+    stereo_NO_STEREO_IMAGES: "Selected archive does not appear to have stereo images.",
+    stereo_NOT_ENOUGH_IMAGES: "No enough calibration images.",
+    stereo_error: "Unknown Error",
+
+    // Stereo 3D Dewarp
+    stereo_working_dewarp: "Working...",
+    stereo_title_dewarp: "Stereo 3D Dewarp",
+    stereo_start_dewarp: "Dewarp",
+    stereo_ready_dewarp: "%captures captures found.",
+    stereo_calibrationReady: "Calibration information found.",
+    stereo_readyToDewarp: "Ready to dewarp.",
+    stereo_progress_dewarp: "Dewarping catpure %value of %max.",
+    stereo_complete_dewarp: "Dewarping complete.",
+    stereo_colourPicker: "Pick Colour",
+    stereo_step1: "Step 1: Choose Stereo 3D Captures",
+    stereo_step2: "Step 2: Choose Stereo 3D Calibration Information",
+    stereo_step3: "Step 3: Select boundary colour",
+    stereo_instructions: "Instructions - The colour picker expects 2 mouse clicks:",
+    stereo_instructionsStep1: "First mouse click chooses the page seperator colour.",
+    stereo_instructionsStep2: "Second mouse click chooses the background colour.",
+
+    // Stereo 3D Calibration
+    stereo_progress_calibration: "",
+    stereo_title_calibration: "Stereo 3D Calibration",
+    stereo_start_calibration: "Calibrate",
+    stereo_ready_calibration: "Ready to calibrate.",
+    stereo_complete_calibration: "Calibration complete.",
+    stereo_working_calibration: "Creating calibration data..."
 
 };
 

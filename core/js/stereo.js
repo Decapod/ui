@@ -129,22 +129,7 @@ var decapod = decapod || {};
         model: {
             help: "help.html"
         },
-        strings: {
-            help: "Help",
-            title: "",
-            start: "",
-            browse: "Browse Files",
-            complete: "",
-            download: "Download",
-            startOver: "Restart",
-            working: "Working...",
-            ready: "",
-            progress: "",
-            BAD_ZIP: "The zip file is invalid.",
-            NO_STEREO_IMAGES: "Selected archive does not appear to have stereo images.",
-            NOT_ENOUGH_IMAGES: "No enough calibration images.",
-            error: "Unknown Error"
-        },
+        strings: {},
         resources: {
             template: {
                 url: "../../core/html/stereoTemplate.html",
@@ -253,7 +238,7 @@ var decapod = decapod || {};
         renderOnInit: true,
         preInitFunction: "decapod.stereo.status.preInit",
         strings: {
-            initialMessage: "Select \"Browse Files\" button to choose archive."
+            initialMessage: "{decapod.stereo}.options.strings.initialMessage"
         },
         selectors: {
             initialMessage: ".dc-stereo-status-initialMessage",
