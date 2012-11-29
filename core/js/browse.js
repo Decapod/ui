@@ -200,8 +200,6 @@ var decapod = decapod || {};
         }
     });
 
-    fluid.fetchResources.primeCacheFromResources("decapod.stereo.browse.colourPicker");
-
     fluid.defaults("decapod.stereo.browse.colourPicker.local", {
         gradeNames: ["decapod.stereo.browse.colourPicker", "autoInit"],
         url: "../../mock-data/dewarp/mockColourPicker.json"

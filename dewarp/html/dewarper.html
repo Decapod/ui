@@ -45,6 +45,9 @@
             </footer>
         </section>
         <script>
+            // Priming cache for colour picker template only (only for dewarp UI).
+            fluid.fetchResources.primeCacheFromResources("decapod.stereo.browse.colourPicker");
+
             decapod.dewarper(".dc-stereo", {
                 events: {
                     onCapturesFileSelected: null,
