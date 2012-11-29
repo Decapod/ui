@@ -52,26 +52,29 @@ decapod.globalMessages = {
     exporter_fontMatchedPDF_name: "4. Font Matched PDF with OCR Text",
     exporter_fontMatchedPDF_description: "Text on image is matched to a True-Type font resulting in a very compact PDF. Works best with Latin script.",
 
-	exporter_pdf_outputSettings_a4: "A4 (210x297 mm)",
-	exporter_pdf_outputSettings_a5: "A5 (148x210 mm)",
-	exporter_pdf_outputSettings_letter: "Letter (216x279mm)",
-	exporter_pdf_outputSettings_custom: "Custom",
+    exporter_pdf_outputSettings_a4: "A4 (210x297 mm)",
+    exporter_pdf_outputSettings_a5: "A5 (148x210 mm)",
+    exporter_pdf_outputSettings_letter: "Letter (216x279mm)",
+    exporter_pdf_outputSettings_custom: "Custom",
+    exporter_pdf_outputSettings_width: "width",
+    exporter_pdf_outputSettings_height: "height",
+    exporter_pdf_outputSettings_resolution: "resolution",
 
-	exporter_pdfExportStatus_exportError_name: "Error creating export",
-	exporter_pdfExportStatus_exportError_description: "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
-	exporter_pdfExportStatus_filesIgnored_name: "Some files were ignored",
-	exporter_pdfExportStatus_filesIgnored_description: "They may not have been valid image files.",
-	exporter_imageExportStatus_exportError_name: "Error creating export",
-	exporter_imageExportStatus_exportError_description: "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
-	exporter_imageExportStatus_filesIgnored_name: "Some files were ignored",
-	exporter_imageExportStatus_filesIgnored_description: "They may not have been valid image files.",
+    exporter_pdfExportStatus_exportError_name: "Error creating export",
+    exporter_pdfExportStatus_exportError_description: "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
+    exporter_pdfExportStatus_filesIgnored_name: "Some files were ignored",
+    exporter_pdfExportStatus_filesIgnored_description: "They may not have been valid image files.",
+    exporter_imageExportStatus_exportError_name: "Error creating export",
+    exporter_imageExportStatus_exportError_description: "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
+    exporter_imageExportStatus_filesIgnored_name: "Some files were ignored",
+    exporter_imageExportStatus_filesIgnored_description: "They may not have been valid image files.",
 
-	exporter_tiff_name: "5. TIFF",
-	exporter_tiff_description: "",
-	exporter_png_name: "6. PNG",
-	exporter_png_description: "",
-	
-	exporter_importStatus_total: "%totalNumFiles files found.",
+    exporter_tiff_name: "5. TIFF",
+    exporter_tiff_description: "",
+    exporter_png_name: "6. PNG",
+    exporter_png_description: "",
+
+    exporter_importStatus_total: "%totalNumFiles files found.",
     exporter_importStatus_100: "%numErrors files exceeded the queue limit",
     exporter_importStatus_110: "%numErrors files exceeded the size limit",
     exporter_importStatus_120: "%numErrors files were empty (0 bytes)",
@@ -164,5 +167,5 @@ decapod.globalMessages = {
 };
 
 fluid.staticEnvironment.globalBundle = fluid.messageResolver({
-	messageBase: decapod.globalMessages
+    messageBase: decapod.globalMessages
 });
