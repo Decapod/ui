@@ -84,6 +84,7 @@ var decapod = decapod || {};
     };
 
     fluid.defaults("decapod.stereo.status.message", {
+        parentBundle: "{globalBundle}",
         gradeNames: ["fluid.rendererComponent", "autoInit"],
         preInitFunction: "decapod.stereo.status.message.preInit",
         selectors: {
@@ -159,9 +160,7 @@ var decapod = decapod || {};
     fluid.defaults("decapod.stereo.status.message.COMPLETE", {
         gradeNames: ["decapod.stereo.status.message", "autoInit"],
         strings: {
-            text: "{decapod.stereo}.options.strings.complete",
-            startOver: "{decapod.stereo}.options.strings.startOver",
-            download: "{decapod.stereo}.options.strings.download"
+            text: "{decapod.stereo}.options.strings.complete"
         },
         styles: {
             startOver: "ds-stereo-status-message-startOver",
@@ -182,14 +181,14 @@ var decapod = decapod || {};
             startOver: {
                 target: "${startOver}",
                 linktext: {
-                    messagekey: "startOver"
+                    messagekey: "stereo_startOver"
                 },
                 decorators: {"addClass": "{styles}.startOver"}
             },
             download: {
                 target: "${download}",
                 linktext: {
-                    messagekey: "download"
+                    messagekey: "stereo_download"
                 },
                 decorators: {"addClass": "{styles}.download"}
             }
