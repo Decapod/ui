@@ -99,6 +99,21 @@ decapod.globalMessages = {
     
     capturer_markup_captureButton: "Capture<br /><span>(Keyboard shortcut: c)</span>",
     capturer_markup_exportDesc: "If capturing with Stereo 3D, run Decapod Stereo 3D Calibration before dewarping images. <br /><br />See <a href='help.html'>Help</a> or Decapod documentation for details.",
+    
+    capturer_readyForConventional_name: "Ready to capture.",
+    capturer_readyForConventional_description: "<p>Press 'Capture' button to start.</p> <div class='ds-capturer-stereoUnavailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>unavailable</i></span>.<br />See <a href='help.html' target='_new'>Help</a> for details.</div>",
+    capturer_readyForStereo_name: "Ready to capture.",
+    capturer_readyForStereo_description: "<p>Press 'Capture' button to start.</p> <div class='ds-capturer-stereoAvailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>available</i></span>.<br />See <a href='help.html' target='_new'>Help</a> for details.</div>",
+    capturer_noCameras_name: "No camera detected.",
+    capturer_noCameras_description: "",
+    capturer_camerasDisconnected_name: "Camera disconnected.",
+    capturer_camerasDisconnected_description: "Check camera USB cables and batteries.",
+    capturer_noCapture_name: "Unable to capture.",
+    capturer_noCapture_description: 'Problem with camera. See <a href="help.html" target="_new">Help</a> for possible fixes.',
+    capturer_tooManyCameras_name: "Too many cameras.",
+    capturer_tooManyCameras_description: "Connect only one or two cameras.",
+    capturer_noExport_name: "Unable to create download.",
+    capturer_noExport_description: 'Problem creating the file to download. See <a href="help.html" target="_new">Help</a> for possible fixes.',
 
     capturer_captureReviewer_captureIndex: "Capture #%0",
     capturer_captureReviewer_deletedIndex: "Deleted Capture #%0",
