@@ -297,39 +297,39 @@ var decapod = decapod || {};
                     model: {
                         currentStatus: "{capturer}.model.status",
                         READY_FOR_CONVENTIONAL: {
-                            name: "Ready to capture.",
-                            description: "<p>Press 'Capture' button to start.</p> <div class='ds-capturer-stereoUnavailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>unavailable</i></span>.<br />See <a href='help.html' target='_new'>Help</a> for details.</div>",
+                            name: decapod.globalMessages.capturer_readyForConventional_name,
+                            description: decapod.globalMessages.capturer_readyForConventional_description,
                             
                             style: "dc-status-ready ds-status-ready"
                         },
                         READY_FOR_STEREO: {
-                            name: "Ready to capture.",
-                            description: "<p>Press 'Capture' button to start.</p> <div class='ds-capturer-stereoAvailable'><span class='ds-capturer-stereoStatusSubtitle'>Stereo 3D capturing: <i>available</i></span>.<br />See <a href='help.html' target='_new'>Help</a> for details.</div>",
+                            name: decapod.globalMessages.capturer_readyForStereo_name,
+                            description: decapod.globalMessages.capturer_readyForStereo_description,
                             style: "dc-status-ready ds-status-ready"
                         },
                         NO_CAMERAS: {
-                            name: "No camera detected.",
-                            description: "",
+                            name: decapod.globalMessages.capturer_noCameras_name,
+                            description: decapod.globalMessages.capturer_noCameras_description,
                             style: "dc-status-noCameras ds-status-noCameras"
                         },
                         CAMERA_DISCONNECTED: {
-                            name: "Camera disconnected.",
-                            description: "Check camera USB cables and batteries.",
+                            name: decapod.globalMessages.capturer_camerasDisconnected_name,
+                            description: decapod.globalMessages.capturer_camerasDisconnected_description,
                             style: "dc-status-cameraDisconnected ds-status-cameraDisconnected"
                         },
                         NO_CAPTURE: {
-                            name: "Unable to capture.",
-                            description: 'Problem with camera. See <a href="help.html" target="_new">Help</a> for possible fixes.',
+                            name: decapod.globalMessages.capturer_noCapture_name,
+                            description: decapod.globalMessages.capturer_noCapture_description,
                             style: "dc-status-noCapture ds-status-noCapture"
                         },
                         TOO_MANY_CAMERAS: {
-                            name: "Too many cameras.",
-                            description: "Connect only one or two cameras.",
+                            name: decapod.globalMessages.capturer_tooManyCameras_name,
+                            description: decapod.globalMessages.capturer_tooManyCameras_description,
                             style: "dc-status-tooManyCameras ds-status-tooManyCameras"
                         },
                         NO_EXPORT: {
-                            name: "Unable to create download.",
-                            description: 'Problem creating the file to download. See <a href="help.html" target="_new">Help</a> for possible fixes.',
+                            name: decapod.globalMessages.capturer_noExport_name,
+                            description: decapod.globalMessages.capturer_noExport_description,
                             style: "dc-status-noExport"
                         }
                     }
