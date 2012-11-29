@@ -132,14 +132,19 @@ var decapod = decapod || {};
         });
         
         pdfExporterTests.asyncTest("Rendering", function () {
+            var expectedStrings = {
+                name: "test name",
+                description: "test description"
+            };
             var assertRendering = function (that) {
-                decapod.testUtils.exportType.assertexportInfoRender(that.exportInfo);
+                decapod.testUtils.exportType.assertexportInfoRender(that.exportInfo, expectedStrings.name, expectedStrings.description);
                 decapod.testUtils.exportType.assertPDFOptionsRender(that.exportOptions);
                 decapod.testUtils.exportType.assertShowTriggerControls(that.exportControls);
                 jqUnit.notVisible("The outputSettings container should be hidden", that.exportOptions.locate("outputSettings"));
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {
+                strings: expectedStrings,
                 listeners: {
                     afterRender: {
                         listener: assertRendering,

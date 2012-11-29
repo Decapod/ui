@@ -268,15 +268,16 @@ var decapod = decapod || {};
         });
 
         exportInfoTests.asyncTest("Rendering", function () {
+            var expectedStrings = {
+                name: "PDF export",
+                description: "exporting in progress"
+            };
             var assertRender = function (that) {
-                decapod.testUtils.exportType.assertexportInfoRender(that);
+                decapod.testUtils.exportType.assertexportInfoRender(that, expectedStrings.name, expectedStrings.description);
                 start();
             };
             createExportInfo(INFO_CONTAINER, {
-                strings: {
-                	name: "PDF export",
-                	description: "exporting in progress"
-                },
+                strings: expectedStrings,
                 listeners : {
                     afterRender : assertRender
                 }

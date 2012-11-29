@@ -111,12 +111,17 @@ var decapod = decapod || {};
         });
         
         imageExporterTests.asyncTest("Rendering", function () {
+            var expectedStrings = {
+                name: "test name",
+                description: "test description"
+            };
             var assertRendering = function (that) {
-                decapod.testUtils.exportType.assertexportInfoRender(that.exportInfo);
+                decapod.testUtils.exportType.assertexportInfoRender(that.exportInfo, expectedStrings.name, expectedStrings.description);
                 decapod.testUtils.exportType.assertShowTriggerControls(that.exportControls);
                 start();
             };
             createImageExporter(IMAGE_EXPORTER_CONTAINER, {
+                strings: expectedStrings,
                 listeners: {
                     afterRender: {
                         listener: assertRendering,
