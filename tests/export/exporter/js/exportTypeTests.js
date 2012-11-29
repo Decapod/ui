@@ -827,7 +827,7 @@ var decapod = decapod || {};
                 jqUnit.assertTrue("The component should have initialized", that);
                 jqUnit.assertDeepEq("The output model should be set", that.model.output, that.output.model);
                 jqUnit.assertDeepEq("The output settings model should be set", that.model.outputSettings, that.outputSettings.model);
-                jqUnit.assertEquals("The output label string should be set", that.options.strings.outputLabel, that.output.options.strings.label);
+                jqUnit.assertEquals("The output label string should be set", decapod.globalMessages.exporter_select_label, that.output.locate("label").text());
                 start();
             };
             createPDFExportOptions(PDF_EXPORT_OPTIONS_CONTAINER, {
