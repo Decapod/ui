@@ -136,10 +136,6 @@ var decapod = decapod || {};
         },
         repeatingSelectors: ["captures"],
         strings: {
-            // captureIndex: "Capture #%0",
-            // deletedIndex: "Deleted Capture #%0",
-            // deletedMessage: "Press 'Capture' button to continue capturing.",
-            // del: "Delete"
         },
         model: {
             captureIndex: "",
