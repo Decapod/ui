@@ -273,6 +273,10 @@ var decapod = decapod || {};
                 start();
             };
             createExportInfo(INFO_CONTAINER, {
+                strings: {
+                	name: "PDF export",
+                	description: "exporting in progress"
+                },
                 listeners : {
                     afterRender : assertRender
                 }
