@@ -181,7 +181,7 @@ var decapod = decapod || {};
             jqUnit.expect(3);
             var assertEvent = function (that, response) {
                 jqUnit.assertTrue("The onExportStatusUpdate event should have fired", true);
-                decapod.testUtils.exportType.assertFluidProgressState(that.exportControls["**-renderer-progress-0"].progress, 0, "Creating export... Step 1 of 2.");
+                decapod.testUtils.exportType.assertFluidProgressState(that.exportControls["**-renderer-progress-0"].progress, 0, "Working... Step 1 of 2.");
                 start();
             };
             createPDFExporter(PDF_EXPORTER_CONTAINER, {

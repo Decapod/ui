@@ -1498,7 +1498,7 @@ var decapod = decapod || {};
             jqUnit.expect(2);
             var assertSetProgress = function (that) {
                 that.setProgress();
-                decapod.testUtils.exportType.assertFluidProgressState(that.progress, 50, "Creating export... Step 2 of 2.");
+                decapod.testUtils.exportType.assertFluidProgressState(that.progress, 50, "Working... Step 2 of 2.");
                 start();
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
@@ -1522,7 +1522,7 @@ var decapod = decapod || {};
                 jqUnit.assertEquals("The newModel should have the updated stage", stage, newModel.currentStage);
                 jqUnit.assertEquals("The model should have been udpated", stage, that.model.currentStage);
                 jqUnit.assertEquals("The warning message should be rendered", that.options.strings.warning, that.locate("warning").text());
-                decapod.testUtils.exportType.assertFluidProgressState(that.progress, 0, "Creating export... Step 1 of 2.");
+                decapod.testUtils.exportType.assertFluidProgressState(that.progress, 0, "Working... Step 1 of 2.");
                 start();
             };
             createDetailedProgress(DETAILED_PROGRESS_CONTAINER, {
@@ -1825,7 +1825,7 @@ var decapod = decapod || {};
                 var name = $(".dc-status-name");
                 var desc = $(".dc-status-description");
                 var expected = $("<div>").html("<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>");
-                jqUnit.assertEquals("The status name should be rendered", "Error creating export", name.text());
+                jqUnit.assertEquals("The status name should be rendered", "Error creating images", name.text());
                 jqUnit.assertEquals("The description should be rendered", expected.html(), desc.html().replace("\n", "")); // After pulling the text from the DOM it added newline character at the end, which was causing the test to fail. This removes that.
                 start();
             };
