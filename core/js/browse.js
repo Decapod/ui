@@ -251,6 +251,14 @@ var decapod = decapod || {};
         if (that.options.disabledOnInit) {
             that.disable();
         }
+        var button = that.locate("button");
+        that.locate("browseInput")
+            .focus(function () {
+                button.addClass("ds-stereo-focus");
+            })
+            .blur(function () {
+                button.removeClass("ds-stereo-focus");
+            });
     };
 
     fluid.defaults("decapod.stereo.browse.input", {

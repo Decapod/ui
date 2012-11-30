@@ -16,6 +16,10 @@
     height: 4.7em;
     background: url("../../styles/images/export-22x22.png") 100px center no-repeat, -moz-linear-gradient(top,  #ffffff,  #ececec);
 }
+.ds-shared-grey-button.ds-stereo-focus {
+    -moz-outline-radius: 6px;
+    outline: 2px solid #989898;
+}
 
 .ds-stereo-stereoControls .ds-shared-grey-button[disabled],
 .ds-stereo-stereoControls .ds-shared-grey-button[disabled]:hover {
