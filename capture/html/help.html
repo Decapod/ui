@@ -41,7 +41,7 @@
 <p>Other digital cameras may work with Decapod, but the camera control software used has limitations so it is hard to specify which models are supported. Digital SLR cameras have a higher probability of working with Decapod, in particular Canon and Nikon branded DSLR cameras.</p>
 
 <p>Decapod v0.7  uses gphoto 2.4.11 and libgphoto 2.4.13 open source camera control libraries. To see a list of cameras supported by gphoto visit this website: 
-http://gphoto.org/proj/libgphoto2/support.php.</p>
+<a href="http://gphoto.org/proj/libgphoto2/support.php">http://gphoto.org/proj/libgphoto2/support.php</a>.</p>
 
 <p class="note"><em>Note:</em><br /> 
 The cameras listed by gphoto may be out of date and may not work with Decapod - the gphoto camera support list should be used as a reference or a starting point to discover supported cameras.</p>
@@ -56,7 +56,7 @@ The cameras listed by gphoto may be out of date and may not work with Decapod - 
 
 <p>For Decapod it is recommended that images be captured at a fixed, consistent focal length. This ensures consistent images when capturing, and if capturing in stereo 3D, reduces the likelihood of poor calibration and dewarping results. For this reason, some precaution must be taken with cameras with interchangeable lenses or cameras with zoom lenses.</p>
 
-<p>Zoom lenses can be used however, but keep in mind that it may be more difficult to make text sizes to appear consistent from image to image.</p>
+<p>Zoom lenses can be used however, but keep in mind that it may be more difficult to make text sizes appear consistent from image to image.</p>
 
 <p>With stereo 3D capture, it is not recommended that zoom lenses be used since the dewarping process depends on both stereo 3D images to be nearly identical save for the differences in position of the cameras. If zoom lenses must be used, then take care to make the focal length / zoom level identical.</p>
 
@@ -117,20 +117,20 @@ Remove any memory cards from the cameras prior to attaching to the Decapod syste
 
 <h3>Connecting Cameras to Decapod</h3>
 <p class="note"><em>Note:</em><br />
-When setting up Decapod, the left camera must be attached to the Decapod system first, then the right camera. Doing this out of order may cause stereo capture and subsequent dewarping to not perform properly.
+When setting up Decapod, the right camera must be attached to the Decapod system first, then the left camera. Doing this out of order may cause stereo capture and subsequent dewarping to not perform properly.
 </p>
 
 <p>Currently, Decapod requires that the left camera captures first then the right camera. To ensure that this is done properly, follow the these steps:</p>
 
 <ul>
-<li> Turn on the left camera.
+<li> Turn on the right camera.
 <li> Remove any memory cards if present.
-<li> Connect the left camera to the Decapod system with a USB cable.
-<li> Repeat steps 1 to 3 for the right camera.
+<li> Connect the right camera to the Decapod system with a USB cable.
+<li> Repeat steps 1 to 3 for the left camera.
 </ul>
 
 <p class="note"><em>Note:</em><br />
-If any camera is disconnected during capture, both cameras should be disconnected and reconnected in the manner stated above (left camera first, then right camera). If this is done in reverse order, stereo 3D dewarp may not perform properly.
+If any camera is disconnected during capture, both cameras should be disconnected and reconnected in the manner stated above (right camera first, then left camera). If this is done in reverse order, stereo 3D dewarp may not perform properly. In addition, any existing captures will need to be exported and saved. You will need to restart the capture process to continue capturing.
 </p>
 
 <h3>Page Separator and Background Colour</h3>
@@ -144,7 +144,7 @@ If any camera is disconnected during capture, both cameras should be disconnecte
 
 <h3>Lighting</h3>
 
-<p>Proper lighting is critical for getting good results from stereo capture and subsequent dewarping. The environment should be very well light so that the book content is uniformly lit from edge to edge. Dark shadows should be minimized if possible, especially if it obscures text.</p>
+<p>Proper lighting is critical for getting good results from stereo capture and subsequent dewarping. The environment should be very well lit so that the book content is uniformly lit from edge to edge. Dark shadows should be minimized if possible, especially if it obscures text.</p>
 
 <p>Glossy paper is problematic as it will create white "hot spots" on the page surface where light reflects. In this situation, care should be taken to redirect light so that the content is still evenly lit without the glare.</p>
 
@@ -226,7 +226,7 @@ Before capturing in stereo, it is recommended that Stereo 3D Calibration be run.
 <li> Check that the cable is properly attached.</li>
 </ul>
 
-<p>Try disconnecting and reconnecting all cameras. If two cameras are being used for stereo 3D captures, make sure to connect the left camera first, then the right.</p>
+<p>Try disconnecting and reconnecting all cameras. If two cameras are being used for stereo 3D captures, make sure to connect the right camera first, then the left.</p>
 
 <h2>Message: “There was a problem with a camera.”</h2>
 
@@ -270,6 +270,7 @@ Before capturing in stereo, it is recommended that Stereo 3D Calibration be run.
 <ul>
 <li> Cameras are not the same resolution, or the resulting images from each camera do not match.</li>
 <li> The camera models are not identical.</li>
+<li> There is only 1 camera connected.</li>
 </ul>
 
 <p>If you wish to have images usable in Stereo 3D Dewarp, two identical supported cameras need to be connected to Decapod.</p>
