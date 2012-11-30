@@ -15,269 +15,287 @@
 
             <h1>Decapod Help - Capture</h1>
 
-<h2>Tethered and Untethered Capturing</h2>
+            <h2>Tethered and Untethered Capturing</h2>
 
-<p>Decapod supports tethered and untethered capturing.</p>
+            <p>Decapod supports tethered and untethered capturing.</p>
 
-<p>Tethered capture means that the cameras are attached to the Decapod system using USB cables, and the Decapod Capture tool controls the cameras and downloading of images.</p>
+            <p>Tethered capture means that the cameras are attached to the Decapod system using USB cables, and the Decapod Capture tool controls the cameras and downloading of images.</p>
 
-<p>With untethered capture, the images are saved to memory cards and then imported into Decapod.</p>
+            <p>With untethered capture, the images are saved to memory cards and then imported into Decapod.</p>
 
-<p>With tethered capture, the Decapod software manages all the file naming and ordering, whereas untethered capture requires the user to manage files manually. Tethering support is only available on a select number of cameras.</p>
+            <p>With tethered capture, the Decapod software manages all the file naming and ordering, whereas untethered capture requires the user to manage files manually. Tethering support is only available on a select number of cameras.</p>
 
-<h2>Tethered Capturing</h2>
+            <h2>Need More Help?</h2>
+            <p>If you have read through this Help document and still need help, please visit the Decapod wiki:<br />
+ <a href="http://wiki.fluidproject.org/display/fluid/Decapod">http://wiki.fluidproject.org/display/fluid/Decapod</a></p>
 
-<p>Decapod has been tested to work with the following cameras when tethered:</p>
-<ul>
-<li> Nikon D7000</li>
-<li> Nikon D90</li>
-<li> Canon Powershot G10</li>
-<li> Canon Rebel T3i</li>
-<li> Canon EOS 600D</li>
-</ul>
+            <p>There you will find more information about:</p>
+            <ul>
+                <li> Decapod software (capture, dewarp, conversion, calibration).</li>
+                <li> Decapod equipment (cameras, stereo bars, tripods and supports).</li>
+                <li> Links to contacting the project team and the larger Decapod community.</li>
+            </ul>
 
-<h3>What about other cameras?</h3>
+            <h2>Tethered Capturing</h2>
 
-<p>Other digital cameras may work with Decapod, but the camera control software used has limitations so it is hard to specify which models are supported. Digital SLR cameras have a higher probability of working with Decapod, in particular Canon and Nikon branded DSLR cameras.</p>
+            <p>Decapod has been tested to work with the following cameras when tethered:</p>
+            <ul>
+                <li> Nikon D7000</li>
+                <li> Nikon D90</li>
+                <li> Canon Powershot G10</li>
+                <li> Canon Rebel T3i</li>
+                <li> Canon EOS 600D</li>
+            </ul>
 
-<p>Decapod v0.7  uses gphoto 2.4.11 and libgphoto 2.4.13 open source camera control libraries. To see a list of cameras supported by gphoto visit this website: 
-<a href="http://gphoto.org/proj/libgphoto2/support.php">http://gphoto.org/proj/libgphoto2/support.php</a>.</p>
+            <h3>What about other cameras?</h3>
 
-<p class="note"><em>Note:</em><br /> 
-The cameras listed by gphoto may be out of date and may not work with Decapod - the gphoto camera support list should be used as a reference or a starting point to discover supported cameras.</p>
+            <p>Other digital cameras may work with Decapod, but the camera control software used has limitations so it is hard to specify which models are supported. Digital SLR cameras have a higher probability of working with Decapod, in particular Canon and Nikon branded DSLR cameras.</p>
 
-<h2>Camera Resolution</h2>
+            <p>Decapod v0.7  uses gphoto 2.4.11 and libgphoto 2.4.13 open source camera control libraries. To see a list of cameras supported by gphoto visit this website: 
+            <a href="http://gphoto.org/proj/libgphoto2/support.php">http://gphoto.org/proj/libgphoto2/support.php</a>.</p>
+            <ul>
+                <li> Two identical supported cameras (same make and model, and controllable by Decapod).</li>
+                <li> A structure for mounting the cameras so they are side-by-side and oriented the same way. Commonly referred to as a "stereo bar".</li>
+                <li> Two USB cables to connect the cameras to the computer running Decapod.</li>
+                <li> A solid, brightly coloured background (i.e. bright green, or bright blue) to photograph against.</li>
+                <li> A coloured stick, pipe cleaner, or piece of string that is distinctly a different colour than the book content and background (i.e. bright red).</li>
+            </ul>
 
-<p>Since Decapod was built to digitize printed material, cameras capable of 10 mega-pixels or more is recommended.</p>
+            <p class="note"><em>Note:</em><br /> 
+            The cameras listed by gphoto may be out of date and may not work with Decapod - the gphoto camera support list should be used as a reference or a starting point to discover supported cameras.</p>
 
-<p>If doing stereo 3D captures, the stereo 3D dewarping process will reduce the overall image resolution. Therefore higher resolution cameras are recommended for stereo 3D capturing.</p>
+            <h2>Camera Resolution</h2>
 
-<h2>Cameras with Interchangeable or Zoom Lenses</h2>
+            <p>Since Decapod was built to digitize printed material, cameras capable of 10 mega-pixels or more is recommended.</p>
 
-<p>For Decapod it is recommended that images be captured at a fixed, consistent focal length. This ensures consistent images when capturing, and if capturing in stereo 3D, reduces the likelihood of poor calibration and dewarping results. For this reason, some precaution must be taken with cameras with interchangeable lenses or cameras with zoom lenses.</p>
+            <p>If doing stereo 3D captures, the stereo 3D dewarping process will reduce the overall image resolution. Therefore higher resolution cameras are recommended for stereo 3D capturing.</p>
 
-<p>Zoom lenses can be used however, but keep in mind that it may be more difficult to make text sizes appear consistent from image to image.</p>
+            <h2>Cameras with Interchangeable or Zoom Lenses</h2>
 
-<p>With stereo 3D capture, it is not recommended that zoom lenses be used since the dewarping process depends on both stereo 3D images to be nearly identical save for the differences in position of the cameras. If zoom lenses must be used, then take care to make the focal length / zoom level identical.</p>
+            <p>For Decapod it is recommended that images be captured at a fixed, consistent focal length. This ensures consistent images when capturing, and if capturing in stereo 3D, reduces the likelihood of poor calibration and dewarping results. For this reason, some precaution must be taken with cameras with interchangeable lenses or cameras with zoom lenses.</p>
 
-<p>If the camera has a built-in zoom lens and is supported by Decapod, then the system will use default settings without the need for controlling zoom / focal length.</p>
+            <p>Zoom lenses can be used however, but keep in mind that it may be more difficult to make text sizes appear consistent from image to image.</p>
 
-<h2>Have a camera that works with Decapod? Let us know.</h2>
+            <p>With stereo 3D capture, it is not recommended that zoom lenses be used since the dewarping process depends on both stereo 3D images to be nearly identical save for the differences in position of the cameras. If zoom lenses must be used, then take care to make the focal length / zoom level identical.</p>
 
-<p>If you have successfully used a camera with Decapod that has not been documented, please let us know. Send a message to the Decapod user group: <a href="https://groups.google.com/forum/?fromgroups#!forum/decapod">Link to Decapod User Group</a>.</p>
+            <p>If the camera has a built-in zoom lens and is supported by Decapod, then the system will use default settings without the need for controlling zoom / focal length.</p>
 
-<h2>How to: Stereo 3D Capture</h2>
+            <h2>Have a camera that works with Decapod? Let us know.</h2>
 
-<p>Decapod can use two cameras in stereo to remove distortions of a book surface so that it looks flat. </p>
+            <p>If you have successfully used a camera with Decapod that has not been documented, please let us know. Send a message to the Decapod user group: <a href="https://groups.google.com/forum/?fromgroups#!forum/decapod">Link to Decapod User Group</a>.</p>
 
-<h3>Stereo 3D Capture Requirements</h3>
+            <h2>How to: Stereo 3D Capture</h2>
 
-<p>To use stereo 3D capture, the following requirements need to be met:</p>
-<ul>
-<li> Two identical supported cameras (same make and model, and controllable by Decapod).</li>
-<li> A structure for mounting the cameras so they are side-by-side and oriented the same way. Commonly referred to as a "stereo bar".</li>
-<li> Two USB cables to connect the cameras to the computer running Decapod.</li>
-<li> A solid, brightly coloured background (i.e. bright green, or bright blue) to photograph against.</li>
-<li> A coloured stick, pipe cleaner, or piece of string that is distinctly a different colour than the book content and background (i.e. bright red).</li>
-</ul>
+            <p>Decapod can use two cameras in stereo to remove distortions of a book surface so that it looks flat. </p>
 
-<p>There may be additional equipment you may want to use, but the above five items are the basic requirements for stereo 3D capture.</p>
+            <h3>Stereo 3D Capture Requirements</h3>
 
-<h3>What if I don’t have matching cameras or don’t want to use Stereo Capture?</h3>
+            <p>To use stereo 3D capture, the following requirements need to be met:</p>
+            <ul>
+                <li> Two identical supported cameras (same make and model, and controllable by Decapod).</li>
+                <li> A structure for mounting the cameras so they are side-by-side and oriented the same way. Commonly referred to as a "stereo bar".</li>
+                <li> Two USB cables to connect the cameras to the computer running Decapod.</li>
+                <li> A solid, brightly coloured background (i.e. bright green, or bright blue) to photograph against.</li>
+                <li> A coloured stick, pipe cleaner, or piece of string that is distinctly a different colour than the book content and background (i.e. bright red).</li>
+            </ul>
 
-<p>Decapod also supports capturing of images using one or two cameras in a conventional manner. See “Conventional Capture” below for more details.</p>
+            <p>There may be additional equipment you may want to use, but the above five items are the basic requirements for stereo 3D capture.</p>
 
-<h3>Stereo 3D Capture Setup</h3>
+            <h3>What if I don’t have matching cameras or don’t want to use Stereo Capture?</h3>
 
-<p class="note"><em>Note:</em><br />
-Remove any memory cards from the cameras prior to attaching to the Decapod system. If a memory card is present in the camera and the camera is connected to Decapod, the operating system may mount the memory card and prevent Decapod from using the cameras. You will have to disconnect the USB cable, remove the memory card, and then reconnect the cable.</p>
+            <p>Decapod also supports capturing of images using one or two cameras in a conventional manner. See “Conventional Capture” below for more details.</p>
 
-<h3>Mounting Stereo Cameras</h3>
-<p>Cameras to be used in stereo 3D capture are mounted side by side, and face the same direction. To make mounting of stereo cameras easier, “stereo bars” can be acquired from camera equipment retailers. For your reference, the Decapod Project has used and tested the following stereo bars:</p>
+            <h3>Stereo 3D Capture Setup</h3>
 
-<ul>
-<li> Manfrotto 430 long plate</li>
-<li> Manfrotto 131DDB accessory bar</li>
-<li> Sunway Goto stereo bar</li>
-</ul>
+            <p class="note"><em>Note:</em><br />
+            Remove any memory cards from the cameras prior to attaching to the Decapod system. If a memory card is present in the camera and the camera is connected to Decapod, the operating system may mount the memory card and prevent Decapod from using the cameras. You will have to disconnect the USB cable, remove the memory card, and then reconnect the cable.</p>
 
-<p>You can also make your own stereo bar - the Decapod project has provided a free template and guide on how to do this which can be found on the Decapod wiki: <a href="http://wiki.fluidproject.org/display/fluid/Decapod">http://wiki.fluidproject.org/display/fluid/Decapod</a>.</p>
+            <h3>Mounting Stereo Cameras</h3>
+            <p>Cameras to be used in stereo 3D capture are mounted side by side, and face the same direction. To make mounting of stereo cameras easier, “stereo bars” can be acquired from camera equipment retailers. For your reference, the Decapod Project has used and tested the following stereo bars:</p>
 
-<p>The pair of cameras are mounted on the stereo bar so that they are as closely adjacent as possible and facing perpendicular (90 degrees) to the subject.</p>
+            <ul>
+                <li> Manfrotto 430 long plate</li>
+                <li> Manfrotto 131DDB accessory bar</li>
+                <li> Sunway Goto stereo bar</li>
+            </ul>
 
-<p>Stereo camera position examples:</p>
+            <p>You can also make your own stereo bar - the Decapod project has provided a free template and guide on how to do this which can be found on the Decapod wiki: <a href="http://wiki.fluidproject.org/display/fluid/Decapod">http://wiki.fluidproject.org/display/fluid/Decapod</a>.</p>
 
-<figure><img class="help-image-example" src="../../core/help/images/stereo-camera-diagrams-01.png" alt="Good position: cameras are close together and perpendicular to surface."><figcaption>Good: cameras are close together and perpendicular to surface.</figcaption></figure>
+            <p>The pair of cameras are mounted on the stereo bar so that they are as closely adjacent as possible and facing perpendicular (90 degrees) to the subject.</p>
 
-<figure><img class="help-image-example" src="../../core/help/images/stereo-camera-diagrams-02.png" alt="Poor position: both cameras are angled differently and not perpendicular to the surface."><figcaption>Poor: cameras angled differently and not perpendicular to surface.</figcaption></figure>
+            <p>Stereo camera position examples:</p>
 
-<figure><img class="help-image-example" src="../../core/help/images/stereo-camera-diagrams-03.png" alt="Poor position: one camera is perpendicular to the surface, but the other is not."><figcaption>Poor: one camera is angled differently and not perpendicular to surface.</figcaption></figure>
+            <figure><img class="help-image-example" src="../../core/help/images/stereo-camera-diagrams-01.png" alt="Good position: cameras are close together and perpendicular to surface."><figcaption>Good: cameras are close together and perpendicular to surface.</figcaption></figure>
 
-<figure><img class="help-image-example" src="../../core/help/images/stereo-camera-diagrams-04.png" alt="Poor position: cameras are too far apart."><figcaption>Poor: cameras are too far apart.</figcaption></figure>
+            <figure><img class="help-image-example" src="../../core/help/images/stereo-camera-diagrams-02.png" alt="Poor position: both cameras are angled differently and not perpendicular to the surface."><figcaption>Poor: cameras angled differently and not perpendicular to surface.</figcaption></figure>
 
-<h3>Connecting Cameras to Decapod</h3>
-<p class="note"><em>Note:</em><br />
-When setting up Decapod, the right camera must be attached to the Decapod system first, then the left camera. Doing this out of order may cause stereo capture and subsequent dewarping to not perform properly.
-</p>
+            <figure><img class="help-image-example" src="../../core/help/images/stereo-camera-diagrams-03.png" alt="Poor position: one camera is perpendicular to the surface, but the other is not."><figcaption>Poor: one camera is angled differently and not perpendicular to surface.</figcaption></figure>
 
-<p>Currently, Decapod requires that the left camera captures first then the right camera. To ensure that this is done properly, follow the these steps:</p>
+            <figure><img class="help-image-example" src="../../core/help/images/stereo-camera-diagrams-04.png" alt="Poor position: cameras are too far apart."><figcaption>Poor: cameras are too far apart.</figcaption></figure>
 
-<ul>
-<li> Turn on the right camera.
-<li> Remove any memory cards if present.
-<li> Connect the right camera to the Decapod system with a USB cable.
-<li> Repeat steps 1 to 3 for the left camera.
-</ul>
+            <h3>Connecting Cameras to Decapod</h3>
+            <p class="note"><em>Note:</em><br />
+            When setting up Decapod, the right camera must be attached to the Decapod system first, then the left camera. Doing this out of order may cause stereo capture and subsequent dewarping to not perform properly.
+            </p>
 
-<p class="note"><em>Note:</em><br />
-If any camera is disconnected during capture, both cameras should be disconnected and reconnected in the manner stated above (right camera first, then left camera). If this is done in reverse order, stereo 3D dewarp may not perform properly. In addition, any existing captures will need to be exported and saved. You will need to restart the capture process to continue capturing.
-</p>
+            <p>Currently, Decapod requires that the left camera captures first then the right camera. To ensure that this is done properly, follow the these steps:</p>
 
-<h3>Page Separator and Background Colour</h3>
-<p>Stereo 3D capture in Decapod requires a solid coloured background, and an object to serve as a page separator.</p>
-<p>The background is recommended to be a bright green or bright blue, similar to the characteristics of ChromaKey blue and ChromaKey green. ChomaKey blue has an RGB value (0 0 255), and ChromaKey green has RGB value (0 255 0). When positioning the book on the background, it is recommended that some background is visible by both cameras.</p>
+            <ul>
+                <li> Turn on the right camera.
+                <li> Remove any memory cards if present.
+                <li> Connect the right camera to the Decapod system with a USB cable.
+                <li> Repeat steps 1 to 3 for the left camera.
+            </ul>
 
-<p>The page separator is placed in the centre spine (or "gutter") of the book for each page spread while it is photographed. The page separator can be a string, a drinking straw, or a pipe cleaner, and must be a solid colour different than the background colour and the colours in the book. Bright red is a good colour if the background is blue or green.</p>
+            <p class="note"><em>Note:</em><br />
+            If any camera is disconnected during capture, both cameras should be disconnected and reconnected in the manner stated above (right camera first, then left camera). If this is done in reverse order, stereo 3D dewarp may not perform properly. In addition, any existing captures will need to be exported and saved. You will need to restart the capture process to continue capturing.
+            </p>
 
-<figure><a href="../../core/help/images/dewarp-input-1.jpg"><img class="help-image-example" src="../../core/help/images/dewarp-input-1.jpg" alt="An open book on a green background. Down the middle gutter / spine of the open book is a red string which acts as a page separator."></a><figcaption>A solid background and a page separator is required during stereo 3D capture.</figcaption></figure>
+            <h3>Page Separator and Background Colour</h3>
+            <p>Stereo 3D capture in Decapod requires a solid coloured background, and an object to serve as a page separator.</p>
+            <p>The background is recommended to be a bright green or bright blue, similar to the characteristics of ChromaKey blue and ChromaKey green. ChomaKey blue has an RGB value (0 0 255), and ChromaKey green has RGB value (0 255 0). When positioning the book on the background, it is recommended that some background is visible by both cameras.</p>
 
+            <p>The page separator is placed in the centre spine (or "gutter") of the book for each page spread while it is photographed. The page separator can be a string, a drinking straw, or a pipe cleaner, and must be a solid colour different than the background colour and the colours in the book. Bright red is a good colour if the background is blue or green.</p>
 
-<h3>Lighting</h3>
+            <figure><a href="../../core/help/images/dewarp-input-1.jpg"><img class="help-image-example" src="../../core/help/images/dewarp-input-1.jpg" alt="An open book on a green background. Down the middle gutter / spine of the open book is a red string which acts as a page separator."></a><figcaption>A solid background and a page separator is required during stereo 3D capture.</figcaption></figure>
 
-<p>Proper lighting is critical for getting good results from stereo capture and subsequent dewarping. The environment should be very well lit so that the book content is uniformly lit from edge to edge. Dark shadows should be minimized if possible, especially if it obscures text.</p>
 
-<p>Glossy paper is problematic as it will create white "hot spots" on the page surface where light reflects. In this situation, care should be taken to redirect light so that the content is still evenly lit without the glare.</p>
+            <h3>Lighting</h3>
 
+            <p>Proper lighting is critical for getting good results from stereo capture and subsequent dewarping. The environment should be very well lit so that the book content is uniformly lit from edge to edge. Dark shadows should be minimized if possible, especially if it obscures text.</p>
 
-<h3>Position Cameras and Content</h3>
+            <p>Glossy paper is problematic as it will create white "hot spots" on the page surface where light reflects. In this situation, care should be taken to redirect light so that the content is still evenly lit without the glare.</p>
 
-<p>Following the setup of equipment documented above (also see <a href="http://wiki.fluidproject.org/display/fluid/Decapod+Stereo+3D+Equipment+Guide">the Decapod wiki</a>), the cameras should be positioned perfectly perpendicular (90 degrees) to the subject. In most situations this means placing the content on a flat surface (with the solid blue or green coloured background) and have the cameras aim down at the book.</p>
 
-<p>When taking pictures with the stereo cameras, the complete open book (edge to edge) should be seen in the resulting images. It is recommended that users take test photos first to ensure proper positioning of cameras and content, before committing to large quantities of work.</p>
+            <h3>Position Cameras and Content</h3>
 
-<h3>Running Stereo Capture</h3>
+            <p>Following the setup of equipment documented above (also see <a href="http://wiki.fluidproject.org/display/fluid/Decapod+Stereo+3D+Equipment+Guide">the Decapod wiki</a>), the cameras should be positioned perfectly perpendicular (90 degrees) to the subject. In most situations this means placing the content on a flat surface (with the solid blue or green coloured background) and have the cameras aim down at the book.</p>
 
-<p>Using the Firefox web browser, load Decapod by entering the Capture web address into the location bar. By default the address is: <a href="http://localhost:8081">http://localhost:8081</a>.</p>
+            <p>When taking pictures with the stereo cameras, the complete open book (edge to edge) should be seen in the resulting images. It is recommended that users take test photos first to ensure proper positioning of cameras and content, before committing to large quantities of work.</p>
 
-<p>If the Decapod server can not be loaded at the default address, or if the server is not running, please see your Decapod administrator for assistance.</p>
+            <h3>Running Stereo Capture</h3>
 
-<p>When the Decapod Capture interface loads, the attached cameras are checked to ensure they will function properly (you may hear the cameras take pictures at this time). If the cameras are matching and supported by the system, then you will receive a message stating that capture is ready and that stereo 3D capture is available.</p>
+            <p>Using the Firefox web browser, load Decapod by entering the Capture web address into the location bar. By default the address is: <a href="http://localhost:8081">http://localhost:8081</a>.</p>
 
-<p class="note"><em>Note:</em><br />
-Before capturing in stereo, it is recommended that Stereo 3D Calibration be run. Without the calibration information, dewarping the stereo 3D images will not be possible.</p>
+            <p>If the Decapod server can not be loaded at the default address, or if the server is not running, please see your Decapod administrator for assistance.</p>
 
-<h3>Downloading Images</h3>
-<p>When all capturing is complete, the stereo images can be saved by selecting the “Download Captures” button. After a short delay, there will be a prompt to download and save the archive containing all the captured images.</p>
+            <p>When the Decapod Capture interface loads, the attached cameras are checked to ensure they will function properly (you may hear the cameras take pictures at this time). If the cameras are matching and supported by the system, then you will receive a message stating that capture is ready and that stereo 3D capture is available.</p>
 
-<h3>Calibration</h3>
-<p>To dewarp stereo images, the camera positions used for Stereo Capture need to be recorded and its calibration information generated. To do this, it is recommended that Decapod’s Stereo 3D Calibration tool be run before doing stereo capture work.</p>
+            <p class="note"><em>Note:</em><br />
+            Before capturing in stereo, it is recommended that Stereo 3D Calibration be run. Without the calibration information, dewarping the stereo 3D images will not be possible.</p>
 
-<p>For more information about stereo 3D calibration, see the Help documentation in the Decapod Stereo 3D Calibration tool, or the <a href="http://wiki.fluidproject.org/display/fluid/Decapod">Decapod wiki</a>.</p> 
+            <h3>Downloading Images</h3>
+            <p>When all capturing is complete, the stereo images can be saved by selecting the “Download Captures” button. After a short delay, there will be a prompt to download and save the archive containing all the captured images.</p>
 
-<h2>How to: Conventional Capture</h2>
+            <h3>Calibration</h3>
+            <p>To dewarp stereo images, the camera positions used for Stereo Capture need to be recorded and its calibration information generated. To do this, it is recommended that Decapod’s Stereo 3D Calibration tool be run before doing stereo capture work.</p>
 
-<p>One or two cameras can be attached to take pictures. With two cameras attached, one camera can capture one page, with the other capturing the facing page. Unlike Stereo Capture, conventional capturing does not require matching cameras.</p>
+            <p>For more information about stereo 3D calibration, see the Help documentation in the Decapod Stereo 3D Calibration tool, or the <a href="http://wiki.fluidproject.org/display/fluid/Decapod">Decapod wiki</a>.</p> 
 
-<h3>Conventional Capture Requirements</h3>
+            <h2>How to: Conventional Capture</h2>
 
-<p>The following is required to perform conventional capture with Decapod:</p>
-<ul>
-<li> One or two supported cameras.</li>
-<li> USB cables to connect cameras to Decapod system.</li>
-</ul>
+            <p>One or two cameras can be attached to take pictures. With two cameras attached, one camera can capture one page, with the other capturing the facing page. Unlike Stereo Capture, conventional capturing does not require matching cameras.</p>
 
-<p>There may be additional equipment you may want to use, but the above 2 items are the basic requirements for Stereo Capture.</p>
+            <h3>Conventional Capture Requirements</h3>
 
-<h3>Conventional Capture Setup</h3>
+            <p>The following is required to perform conventional capture with Decapod:</p>
+            <ul>
+                <li> One or two supported cameras.</li>
+                <li> USB cables to connect cameras to Decapod system.</li>
+            </ul>
 
-<p>The setup for conventional capturing typically involves mounting the cameras to a support structure like a tripod or a copystand. The cameras are then positioned to take photos of the material.</p>
+            <p>There may be additional equipment you may want to use, but the above 2 items are the basic requirements for Stereo Capture.</p>
 
-<p>If using two cameras, typically one camera will capture one page and the other camera captures the opposite page.</p>
+            <h3>Conventional Capture Setup</h3>
 
-<h3>Running Conventional Capture</h3>
+            <p>The setup for conventional capturing typically involves mounting the cameras to a support structure like a tripod or a copystand. The cameras are then positioned to take photos of the material.</p>
 
-<p>Using the Firefox web browser, load Decapod by entering the Capture web address into the location bar. By default the address is: <a href="http://localhost:8081">http://localhost:8081</a>.</p>
+            <p>If using two cameras, typically one camera will capture one page and the other camera captures the opposite page.</p>
 
-<p>If the Decapod server can not be loaded at the default address, or if the server is not running, please see your Decapod administrator for assistance.</p>
+            <h3>Running Conventional Capture</h3>
 
-<p>When the Decapod Capture interface loads, the attached cameras are checked to ensure they will function properly (you may hear the cameras take pictures at this time). If the cameras are supported by the system, then you will receive a message stating that Capture is ready.</p>
+            <p>Using the Firefox web browser, load Decapod by entering the Capture web address into the location bar. By default the address is: <a href="http://localhost:8081">http://localhost:8081</a>.</p>
 
-<p>If there is only 1 camera attached, or if there are two cameras and they are not identical, then there will be a message stating that stereo 3D capture is unavailable. For conventional capture, this message can be ignored.</p>
+            <p>If the Decapod server can not be loaded at the default address, or if the server is not running, please see your Decapod administrator for assistance.</p>
 
-<p>With the cameras set up properly, work can begin by selecting the Capture button.</p>
+            <p>When the Decapod Capture interface loads, the attached cameras are checked to ensure they will function properly (you may hear the cameras take pictures at this time). If the cameras are supported by the system, then you will receive a message stating that Capture is ready.</p>
 
-<h2>Message: “No camera detected"</h2>
+            <p>If there is only 1 camera attached, or if there are two cameras and they are not identical, then there will be a message stating that stereo 3D capture is unavailable. For conventional capture, this message can be ignored.</p>
 
-<p>If this message is displayed, check the following:</p>
-<ul>
-<li> The cameras have power / batteries and are turned on.</li>
-<li> The USB cables are securely attached.</li>
-<li> The are no memory cards in the cameras. If there was a memory card inserted, remove the memory card, and turn off-and-on the camera.</li>
-</ul>
+            <p>With the cameras set up properly, work can begin by selecting the Capture button.</p>
 
-<p>If all of the above was attempted and the message still occurs, the camera is likely not supported by Decapod.</p>
+            <h2>Message: “No camera detected"</h2>
 
-<h2>Message: "A camera has been disconnected."</h2>
+            <p>If this message is displayed, check the following:</p>
+            <ul>
+                <li> The cameras have power / batteries and are turned on.</li>
+                <li> The USB cables are securely attached.</li>
+                <li> The are no memory cards in the cameras. If there was a memory card inserted, remove the memory card, and turn off-and-on the camera.</li>
+            </ul>
 
-<p>This message is displayed when a camera that was being used for capturing becomes unavailable.</p>
+            <p>If all of the above was attempted and the message still occurs, the camera is likely not supported by Decapod.</p>
 
-<ul>
-<li> Check to see the camera has power.</li>
-<li> Check that the cable is properly attached.</li>
-</ul>
+            <h2>Message: "A camera has been disconnected."</h2>
 
-<p>Try disconnecting and reconnecting all cameras. If two cameras are being used for stereo 3D captures, make sure to connect the right camera first, then the left.</p>
+            <p>This message is displayed when a camera that was being used for capturing becomes unavailable.</p>
 
-<h2>Message: “There was a problem with a camera.”</h2>
+            <ul>
+                <li> Check to see the camera has power.</li>
+                <li> Check that the cable is properly attached.</li>
+            </ul>
 
-<p>This message is displayed when a camera is supported, but a setting or configuration option is incorrect. The following are some possible solutions:</p>
-<ul>
-<li> Check that the camera can focus on a subject properly. Try repositioning the camera closer or further from the subject and try again.</li>
-<li> The camera’s file format is not JPEG, TIFF or PNG - change the appropriate setting on the camera and try again.</li>
-</ul>
+            <p>Try disconnecting and reconnecting all cameras. If two cameras are being used for stereo 3D captures, make sure to connect the right camera first, then the left.</p>
 
-<h2>Message: "Too many cameras detected"</h2>
+            <h2>Message: “There was a problem with a camera.”</h2>
 
-<p>This message is displayed when there are too many cameras attached to the Decapod system. Decapod only supports 1 or 2 cameras.</p>
+            <p>This message is displayed when a camera is supported, but a setting or configuration option is incorrect. The following are some possible solutions:</p>
+            <ul>
+                <li> Check that the camera can focus on a subject properly. Try repositioning the camera closer or further from the subject and try again.</li>
+                <li> The camera’s file format is not JPEG, TIFF or PNG - change the appropriate setting on the camera and try again.</li>
+            </ul>
 
-<h2>Message: "Unable to create download"</h2>
+            <h2>Message: "Too many cameras detected"</h2>
 
-<p>This message is displayed when there is a problem creating the archive of captured images. Possible reasons for this error to occur:</p>
-<ul>
-<li> Not enough disk space to generate the archive file</li>
-</ul>
+            <p>This message is displayed when there are too many cameras attached to the Decapod system. Decapod only supports 1 or 2 cameras.</p>
 
-<h2>Message: “Unable to capture”</h2>
+            <h2>Message: "Unable to create download"</h2>
 
-<p>This message appears when there is a problem with a camera. This problem may occur when:</p>
-<ul>
-<li> The camera is unable to focus.</li>
-<li> Cable has disconnected or the camera has no power.</li>
-<li> A memory card is present in the camera and is mounted by the operating system.</li>
-<li> The Capture server has malfunctioned.</li>
-<li> The camera may not be fully supported by the system.</li>
-</ul>
+            <p>This message is displayed when there is a problem creating the archive of captured images. Possible reasons for this error to occur:</p>
+            <ul>
+                <li> Not enough disk space to generate the archive file</li>
+            </ul>
 
-<p>To try to remedy this, ensure that the batteries are charged, the subject is within the focusing distance, and a memory card is not inserted. In the case of the Capture server malfunctioning, please contact the Decapod administrator. </p>
+            <h2>Message: “Unable to capture”</h2>
 
-<h2>Message: “Stereo Unavailable”</h2>
+            <p>This message appears when there is a problem with a camera. This problem may occur when:</p>
+            <ul>
+                <li> The camera is unable to focus.</li>
+                <li> Cable has disconnected or the camera has no power.</li>
+                <li> A memory card is present in the camera and is mounted by the operating system.</li>
+                <li> The Capture server has malfunctioned.</li>
+                <li> The camera may not be fully supported by the system.</li>
+            </ul>
 
-<p>This is a warning message stating that the resulting captures will not be usable for Stereo 3D Dewarp since the cameras do appear to be identical.</p>
+            <p>To try to remedy this, ensure that the batteries are charged, the subject is within the focusing distance, and a memory card is not inserted. In the case of the Capture server malfunctioning, please contact the Decapod administrator. </p>
 
-<p>Capturing may proceed if this message is displayed - just note that Stereo 3D Dewarp will not work on the resulting images.</p>
+            <h2>Message: “Stereo Unavailable”</h2>
 
-<p>Reasons for this message to occur:</p>
-<ul>
-<li> Cameras are not the same resolution, or the resulting images from each camera do not match.</li>
-<li> The camera models are not identical.</li>
-<li> There is only 1 camera connected.</li>
-</ul>
+            <p>This is a warning message stating that the resulting captures will not be usable for Stereo 3D Dewarp since the cameras do appear to be identical.</p>
 
-<p>If you wish to have images usable in Stereo 3D Dewarp, two identical supported cameras need to be connected to Decapod.</p>
+            <p>Capturing may proceed if this message is displayed - just note that Stereo 3D Dewarp will not work on the resulting images.</p>
 
-<h2>Message: “Ready to Capture”</h2>
+            <p>Reasons for this message to occur:</p>
+            <ul>
+                <li> Cameras are not the same resolution, or the resulting images from each camera do not match.</li>
+                <li> The camera models are not identical.</li>
+                <li> There is only 1 camera connected.</li>
+            </ul>
 
-<p>This message appears when the cameras are ready to begin capturing and no errors have been detected. Select the Capture button to begin.</p>
+            <p>If you wish to have images usable in Stereo 3D Dewarp, two identical supported cameras need to be connected to Decapod.</p>
+
+            <h2>Message: “Ready to Capture”</h2>
+
+            <p>This message appears when the cameras are ready to begin capturing and no errors have been detected. Select the Capture button to begin.</p>
 
         </section>
     </body>
