@@ -53,6 +53,7 @@
 }
 
 .ds-shared-uploadBrowse.ds-stereo-colorPicker {
+    color: #000;
     font-family: "Droid Sans",arial,serif;
     font-size: 11pt;
     text-align: right;
@@ -60,4 +61,7 @@
     height: 2.15em;
     vertical-align: super;
     padding-top: 0px;
+}
+.ds-shared-uploadBrowse.ds-stereo-colorPicker[disabled] {
+    cursor: default;
 }
