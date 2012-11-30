@@ -26,15 +26,15 @@ decapod.globalMessages = {
     exporter_exportControls_complete_download: "Download",
     exporter_exportControls_complete_restart: "Start Over",
 
-    exporter_exportControls_detailedProgress_initialProgressMessage: "Creating export...",
-    exporter_exportControls_detailedProgress_inProgressMessage: "Creating export... Step %step of %steps.",
-    exporter_exportControls_detailedProgress_completeProgressMessage: "Creating export... Done!",
-    exporter_exportControls_detailedProgress_warning: "Note: Refreshing the browser will cancel the export.",
+    exporter_exportControls_detailedProgress_initialProgressMessage: "Working...",
+    exporter_exportControls_detailedProgress_inProgressMessage: "Working... Step %step of %steps.",
+    exporter_exportControls_detailedProgress_completeProgressMessage: "Working... Done!",
+    exporter_exportControls_detailedProgress_warning: "Note: Refreshing the browser will cancel the conversion.",
     
-    exporter_exportControls_progress_message: "Creating export",
-    exporter_exportControls_progress_warning: "Note: Refreshing the browser will cancel the export.",
+    exporter_exportControls_progress_message: "Creating files",
+    exporter_exportControls_progress_warning: "Note: Refreshing the browser will cancel the conversion.",
 
-    exporter_exportControls_trigger_trigger: "Start Export",
+    exporter_exportControls_trigger_trigger: "Start Conversion",
 
     exporter_decapod_exportControls_fileError_desc: "They may not have been valid image files.",
     exporter_decapod_exportControls_exportError_desc: "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
@@ -44,7 +44,7 @@ decapod.globalMessages = {
     exporter_select_label: "Output",
 
     exporter_imagePDF_name: "1. Image PDF",
-    exporter_imagePDF_description: "Export each image as a page in a PDF document. Export process is quick and generates a basic PDF.",
+    exporter_imagePDF_description: "Convert each image as a page in a PDF document. Conversion process is quick and generates a basic PDF.",
     exporter_ocrPDF_name: "2. Image PDF with OCR Text",
     exporter_ocrPDF_description: "OCR is performed on images, and resulting text is embedded in the PDF.",
     exporter_tracedPDF_name: "3. Computer Traced PDF with OCR Text",
@@ -60,11 +60,11 @@ decapod.globalMessages = {
     exporter_pdf_outputSettings_height: "height",
     exporter_pdf_outputSettings_resolution: "resolution",
 
-    exporter_pdfExportStatus_exportError_name: "Error creating export",
+    exporter_pdfExportStatus_exportError_name: "Error creating PDF",
     exporter_pdfExportStatus_exportError_description: "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
     exporter_pdfExportStatus_filesIgnored_name: "Some files were ignored",
     exporter_pdfExportStatus_filesIgnored_description: "They may not have been valid image files.",
-    exporter_imageExportStatus_exportError_name: "Error creating export",
+    exporter_imageExportStatus_exportError_name: "Error creating images",
     exporter_imageExportStatus_exportError_description: "<div>See Help for more details.</div><div class='ds-exportControls-complete-links'><a href='help.html' target='_new' class='ds-shared-helpButton'>Help</a><a href='' class='ds-shared-restartButton'>Restart</a>",
     exporter_imageExportStatus_filesIgnored_name: "Some files were ignored",
     exporter_imageExportStatus_filesIgnored_description: "They may not have been valid image files.",
@@ -86,12 +86,12 @@ decapod.globalMessages = {
     // See: http://issues.fluidproject.org/browse/DECA-289
     exporter_uploader_browseFiles: "Browse Files",
     
-    exporter_title: "PDF and Image Export",
-    exporter_instructions: "Select 'Browse Files' to choose images to export.",
+    exporter_title: "PDF and Image Conversion",
+    exporter_instructions: "Select 'Browse Files' to choose images to convert.",
     exporter_uploadClear: "Restart",
     exporter_help: "Help",
-    exporter_pageUnloadWarning: "Leaving the page could result in loss of export data.",
-    exporter_formats: "Select Export Option",
+    exporter_pageUnloadWarning: "Leaving the page could result in loss of conversion data.",
+    exporter_formats: "Select Option",
     exporter_pdfFormat_name: "PDF",
     exporter_imageFormat_name: "Image",
 
