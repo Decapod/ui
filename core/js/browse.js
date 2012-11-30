@@ -93,16 +93,26 @@ var decapod = decapod || {};
         protoTree: {
             browseMessage: {
                 messagekey: "stereo_step1",
-                decorators: {addClass: "{styles}.browseMessage"}
+                decorators: [{
+                    addClass: "{styles}.browseMessage"
+                }, {
+                    attrs: {
+                        id: "captures-message"
+                    }
+                }]
             },
             browseLabel: {
                 messagekey: "stereo_browse"
             },
             browseInput: {
-                decorators: {
+                decorators: [{
                     type: "fluid",
                     func: "decapod.stereo.browse.input.captures"
-                }
+                }, {
+                    attrs: {
+                        "aria-describedby": "captures-message"
+                    }
+                }]
             }
         }
     });
@@ -126,16 +136,26 @@ var decapod = decapod || {};
         protoTree: {
             browseMessage: {
                 messagekey: "stereo_step2",
-                decorators: {addClass: "{styles}.browseMessage"}
+                decorators: [{
+                    addClass: "{styles}.browseMessage"
+                }, {
+                    attrs: {
+                        id: "calibration-message"
+                    }
+                }]
             },
             browseLabel: {
                 messagekey: "stereo_browse"
             },
             browseInput: {
-                decorators: {
+                decorators: [{
                     type: "fluid",
                     func: "decapod.stereo.browse.input.calibration"
-                }
+                }, {
+                    attrs: {
+                        "aria-describedby": "calibration-message"
+                    }
+                }]
             }
         }
     });
@@ -191,11 +211,23 @@ var decapod = decapod || {};
                 decorators: [{
                     type: "fluid",
                     func: "decapod.stereo.browse.input.colourPicker"
-                }, {addClass: "{styles}.button"}]
+                }, {
+                    addClass: "{styles}.button"
+                }, {
+                    attrs: {
+                        "aria-describedby": "colourPicker-message"
+                    }
+                }]
             },
             browseMessage: {
                 messagekey: "stereo_step3",
-                decorators: {addClass: "{styles}.browseMessage"}
+                decorators: [{
+                    addClass: "{styles}.browseMessage"
+                }, {
+                    attrs: {
+                        id: "colourPicker-message"
+                    }
+                }]
             }
         }
     });
