@@ -1,0 +1,67 @@
+.ds-stereo-main {
+    width:31em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ds-stereo-stereoControls {
+    margin-top: 1.25em;
+}
+
+.ds-calibrate .ds-stereo-stereoControls {
+    height: 4.7em;
+}
+
+.ds-stereo-stereoControls .ds-shared-grey-button {
+    height: 4.7em;
+    background: url("../../styles/images/export-22x22.png") 100px center no-repeat, -moz-linear-gradient(top,  #ffffff,  #ececec);
+}
+.ds-shared-grey-button.ds-stereo-focus {
+    -moz-outline-radius: 6px;
+    outline: 2px solid #989898;
+}
+
+.ds-stereo-stereoControls .ds-shared-grey-button[disabled],
+.ds-stereo-stereoControls .ds-shared-grey-button[disabled]:hover {
+    background: url("../../styles/images/export-22x22-grey.png") 100px center no-repeat;
+}
+
+.ds-stereo-stereoControls .ds-shared-grey-button:hover {
+    background: url("../../styles/images/export-22x22.png") 100px center no-repeat, -moz-linear-gradient(top,  #ececec, #ffffff);
+}
+
+.ds-stereo-progress {
+	width: 100%;
+}
+
+.ds-stereo-status-message-text {
+	font-style: italic; 
+}
+
+.ds-dewarp .ds-shared-uploadControls .ds-shared-uploadBrowse {
+    position: relative;
+    top: 0.7em;
+}
+
+.ds-stereo-browseMessage {
+	line-height: 4em;
+}
+
+.ds-shared-spinner {
+    padding-right: 0.5em;
+    vertical-align: middle;
+}
+
+.ds-shared-uploadBrowse.ds-stereo-colorPicker {
+    color: #000;
+    font-family: "Droid Sans",arial,serif;
+    font-size: 11pt;
+    text-align: right;
+    width: 8em;
+    height: 2.15em;
+    vertical-align: super;
+    padding-top: 0px;
+}
+.ds-shared-uploadBrowse.ds-stereo-colorPicker[disabled] {
+    cursor: default;
+}
